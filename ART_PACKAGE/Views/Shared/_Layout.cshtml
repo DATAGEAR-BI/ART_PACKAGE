@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        DataGear-ART
+    </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    
+    <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link href="~/dist/css/AdminLTE.css" rel="stylesheet" />
+    <link href="~/dist/css/skins/skin-blue.css" rel="stylesheet" />
+    <!-- jQuery 3 -->
+
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+
+  
+
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+    <div @*class="wrapper"*@>
+        <!-- Main Header -->
+
+        <partial name="_Header" />
+        <!-- Left side column. contains the logo and sidebar -->
+        <partial name="_Sidebar" />
+        <!-- Content Wrapper. Contains page content -->
+
+        <div class="content-wrapper container-fluid" id="main-page" style="padding-top:5%">
+            <!-- Content Header (Page header) -->
+            @RenderBody()
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <!--<footer class="main-footer">-->
+        <!-- Default to the left -->
+        <!--<strong>Copyright © @DateTime.Now.Year <a href="http://Datagearbi.com">By DataGear Teams</a>.</strong> All rights reserved.
+        </footer>-->
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            window.sessionStorage.setItem('sidebarShown', true);
+        });
+
+        $(document).on('expanded.pushMenu', function () {
+
+            window.sessionStorage.setItem('sidebarShown', true);
+
+        });
+        $(document).on('collapsed.pushMenu', function () {
+            window.sessionStorage.setItem('sidebarShown', false);
+
+        });
+    </script>
+    
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        $(document).ready(function () {
+
+            if (window.sessionStorage.getItem('sidebarShown')) {
+
+                $('[data-toggle="push-menu"]').pushMenu('toggle');
+
+            }
+        });
+    </script>
+</body>
+</html>
+@*<a class="k-button" href="\#" onclick="return toolbar_click()"><span class="k-icon k-i-excel"></span>Export To CSV</a>*@
+
+
+@*hiiiiiiiiiii*@

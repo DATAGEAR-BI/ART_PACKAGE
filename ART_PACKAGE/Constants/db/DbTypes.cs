@@ -1,0 +1,8 @@
+﻿namespace ART_PACKAGE.Constants.db
+{
+    public static class DbTypes
+    {
+        public const string SqlServer = "SQLSERVER";
+        public const string Oracle = "ORACLE";
+    }
+}

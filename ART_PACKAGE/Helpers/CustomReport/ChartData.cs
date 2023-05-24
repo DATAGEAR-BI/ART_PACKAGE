@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+
+namespace ART_PACKAGE.Helpers.CustomReportHelpers
+{
+    public class ChartData<T>
+    {
+        public string ChartId { get; set; }
+        public string Cat { get; set; }
+        public string Val { get; set; }
+        public string Title { get; set; }
+        public List<T> Data { get; set; }
+
+    }
+}

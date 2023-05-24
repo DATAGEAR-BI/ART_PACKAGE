@@ -1,0 +1,107 @@
+﻿@model List<IEnumerable<Dictionary<string, object>>>
+@{
+    Layout = null;
+    var recordPerPage = 17;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+     
+        body {
+            overflow: visible;
+        }
+        .brk{
+            page-break-after: always;
+        }
+        table{
+            width : 100%;
+        }
+        thead {
+            display: table-header-group;
+        }
+
+        tfoot {
+            display: table-row-group;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+        td {
+
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        td div {
+            height : auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        @if (!Model.First().Any())
+        {
+            <div>there is no data</div>
+        }
+        else
+        {
+            var length = Model.First().Count();
+            var counter = 0;
+            
+            for (int i = 0; i < length; i += recordPerPage)
+            {
+                for (int j = 0; j < Model.Count; j++)
+                {
+                    counter++;
+                    var keys = Model[j].First().Keys;
+                    var data = Model[j].Skip((i / recordPerPage) * recordPerPage).Take(recordPerPage);
+                    
+                        <table class="table table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    @foreach (var key in keys)
+                                    {
+                                        <td>@key</td>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in data)
+                                {
+                                    <tr>
+                                        @foreach (var key in keys)
+                                        {
+
+
+                                            <td>
+                                                <div>
+                                                    @item[key]
+                                                </div>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    <hr style="  border: 1px solid black;" />
+                    <div class="brk text-center"> Printed on: @DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
+                    }
+            }
+
+        }
+        
+    </div>
+</body>
+</html>
