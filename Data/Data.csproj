@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DGCMGMT\**" />
+    <Compile Remove="FCF71\**" />
+    <EmbeddedResource Remove="DGCMGMT\**" />
+    <EmbeddedResource Remove="FCF71\**" />
+    <None Remove="DGCMGMT\**" />
+    <None Remove="FCF71\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
   </ItemGroup>
 

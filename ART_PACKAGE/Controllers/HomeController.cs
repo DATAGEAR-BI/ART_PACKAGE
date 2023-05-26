@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Models;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Models;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.AspNetCore.Authorization;
@@ -12,13 +13,15 @@ namespace ART_PACKAGE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DGCMGMTContext dgcmgmt;
-        private readonly FCF71Context fcf71;
-        public HomeController(ILogger<HomeController> logger, DGCMGMTContext dgcmgmt, FCF71Context fcf71)
+        private readonly AuthContext _db;
+        /*private readonly DGCMGMTContext dgcmgmt;
+        private readonly FCF71Context fcf71;*/
+        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/)
         {
             _logger = logger;
-            this.dgcmgmt = dgcmgmt;
-            this.fcf71 = fcf71;
+            this._db = db;
+            /*this.dgcmgmt = dgcmgmt;
+            this.fcf71 = fcf71;*/
         }
 
         public IActionResult Index()
@@ -40,10 +43,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult CardsData()
         {
-            var numberOfCustomers = fcf71.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            var numberOfPepCustomers = fcf71.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            var numberOfAccounts = fcf71.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            var numberOfHighRiskCustomers = fcf71.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+            var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+            var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+            var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+            var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
             return Ok(new
             {
@@ -57,7 +60,7 @@ namespace ART_PACKAGE.Controllers
         public IActionResult getChartsData()
         {
 
-            var dateData = dgcmgmt.ArtHomeCasesDates.ToList().GroupBy(x => x.Year).Select(x => new
+            var dateData = _db.ArtHomeCasesDates.ToList().GroupBy(x => x.Year).Select(x => new
             {
                 year = x.Key.ToString(),
                 value = x.Sum(x => x.NumberOfCases),
@@ -67,8 +70,8 @@ namespace ART_PACKAGE.Controllers
                     value = m.Sum(x => x.NumberOfCases)
                 })
             });
-            var statusData = dgcmgmt.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases });
-            var typesData = dgcmgmt.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases }); ;
+            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases });
+            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases }); ;
 
 
 

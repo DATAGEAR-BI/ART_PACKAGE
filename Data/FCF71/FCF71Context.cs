@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.FCF71
 {
-    public class FCF71Context : DbContext
+    public class FCF71Context : AuthContext
     {
         public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
         public virtual DbSet<ArtHomeAlertsPerStatus> ArtHomeAlertsPerStatuses { get; set; } = null!;

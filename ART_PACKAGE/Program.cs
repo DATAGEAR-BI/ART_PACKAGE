@@ -24,7 +24,6 @@ var FCF71Connection = builder.Configuration.GetConnectionString("FCF71Connection
 
 var dbType = builder.Configuration.GetValue<string>("dbType").ToUpper();
 
-
 builder.Services.AddDbContext<AuthContext>(options => _ = dbType switch
 {
     DbTypes.SqlServer => options.UseSqlServer(
@@ -42,31 +41,7 @@ builder.Services.AddDbContext<AuthContext>(options => _ = dbType switch
     _ => throw new Exception($"Unsupported provider: {dbType}")
 });
 
-builder.Services.AddDbContext<DGCMGMTContext>(options => _ = dbType switch
-{
-    DbTypes.SqlServer => options.UseSqlServer(
-        DGCMGMTConnection,
-        x => x.MigrationsAssembly("SqlServerMigrations")
-        ),
-    DbTypes.Oracle => options.UseOracle(
-        DGCMGMTConnection,
-        x => x.MigrationsAssembly("OracleMigrations")
-        ),
-    _ => throw new Exception($"Unsupported provider: {dbType}")
-});
 
-builder.Services.AddDbContext<FCF71Context>(options => _ = dbType switch
-{
-    DbTypes.SqlServer => options.UseSqlServer(
-        FCF71Connection,
-        x => x.MigrationsAssembly("SqlServerMigrations")
-        ),
-    DbTypes.Oracle => options.UseOracle(
-        FCF71Connection,
-        x => x.MigrationsAssembly("OracleMigrations")
-        ),
-    _ => throw new Exception($"Unsupported provider: {dbType}")
-});
 
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
@@ -100,9 +75,7 @@ var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-var dgcmgmtContext = scope.ServiceProvider.GetRequiredService<DGCMGMTContext>();
 authContext.Database.Migrate();
-dgcmgmtContext.Database.Migrate();
 
 
 // Configure the HTTP request pipeline.

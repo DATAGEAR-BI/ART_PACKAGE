@@ -7,18 +7,18 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
     public class DBFactory
     {
 
-        private readonly DGCMGMTContext _DGCMGMT;
-
-        public DBFactory(DGCMGMTContext dGCMGMT)
+        private readonly AuthContext _db;
+        
+        public DBFactory(AuthContext db)
         {
-            _DGCMGMT = dGCMGMT;
+            _db = db;
         }
 
         public DbContext GetDbInstance(string schemaName)
         {
 
             if (schemaName == DbSchema.DGCMGMT.ToString())
-                return _DGCMGMT;
+                return _db;
             else
                 return null;
         }

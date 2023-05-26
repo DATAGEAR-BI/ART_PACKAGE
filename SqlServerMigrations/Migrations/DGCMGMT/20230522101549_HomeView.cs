@@ -8,9 +8,12 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($@"USE [DGECM]
+            migrationBuilder.Sql($@"
+                                        
+                                        USE [ART_DB]
                                         GO
-
+                                        CREATE SCHEMA [DGCmgmt];
+                                        GO
                                         /****** Object:  View [DGCmgmt].[ART_HOME_CASES_DATE]    Script Date: 5/21/2023 4:03:07 PM ******/
                                         SET ANSI_NULLS ON
                                         GO
@@ -28,7 +31,7 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
                                         Day(a.create_date) Day_,
                                         count(a.case_rk) Number_Of_Cases
                                         from
-                                        dgcmgmt.case_live A
+                                        dgecm.dgcmgmt.case_live A
                                         group by 
                                         YEAR(a.create_date),
                                         Month(a.create_date),
@@ -43,7 +46,7 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
 
 
 
-                                        USE [DGECM]
+                                        USE [ART_DB]
                                         GO
 
                                         /****** Object:  View [DGCmgmt].[ART_HOME_CASES_STATUS]    Script Date: 5/21/2023 4:03:37 PM ******/
@@ -58,7 +61,7 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
                                          b.val_desc CASE_STATUS,
                                            count(a.case_rk) Number_Of_Cases
                                         from
-                                        dgcmgmt.case_live A 
+                                        dgecm.dgcmgmt.case_live A 
                                         LEFT JOIN
                                         DGCMGMT.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_STAT_CD) AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                         group by
@@ -69,7 +72,7 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
                                         ---------------------------------------------------------------------------------------------------
 
 
-                                        USE [DGECM]
+                                        USE [ART_DB]
                                         GO
 
                                         /****** Object:  View [DGCmgmt].[ART_HOME_CASES_TYPES]    Script Date: 5/21/2023 4:04:26 PM ******/
@@ -85,8 +88,8 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
                                            count(a.case_rk) Number_Of_Cases
   
                                           from
-                                        dgcmgmt.case_live A 
-                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL CASE_TYPE 
+                                        dgecm.dgcmgmt.case_live A 
+                                        LEFT JOIN dgecm.dgcmgmt.REF_TABLE_VAL CASE_TYPE 
                                         ON CASE_TYPE.VAL_CD = a.CASE_TYPE_CD
                                         AND CASE_TYPE.REF_TABLE_NAME='RT_CASE_TYPE'
                                         group by
@@ -98,7 +101,9 @@ namespace SqlServerMigrations.Migrations.DGCMGMT
         {
             migrationBuilder.Sql($@"DROP VIEW [DGCmgmt].[ART_HOME_CASES_DATE]
                                         DROP VIEW [DGCmgmt].[ART_HOME_CASES_STATUS]
-                                        DROP VIEW [DGCmgmt].[ART_HOME_CASES_TYPES]");
+                                        DROP VIEW [DGCmgmt].[ART_HOME_CASES_TYPES]
+                                        --this to drop [DGCmgmt] schema
+                                        DROP SCHEMA [DGCmgmt]");
         }
     }
 }

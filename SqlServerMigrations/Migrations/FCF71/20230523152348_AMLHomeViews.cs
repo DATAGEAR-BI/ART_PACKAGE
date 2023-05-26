@@ -10,9 +10,12 @@ namespace SqlServerMigrations.Migrations.FCF71
         {
             migrationBuilder.Sql($@"
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
-
+                CREATE SCHEMA [FCFKC];
+                GO
+                CREATE SCHEMA [FCFCORE];
+                GO
                 /****** Object:  View [FCFKC].[ART_HOME_ALERTS_PER_STATUS]    Script Date: 5/22/2023 10:11:01 AM ******/
                 SET ANSI_NULLS ON
                 GO
@@ -23,9 +26,9 @@ namespace SqlServerMigrations.Migrations.FCF71
                 create view [FCFKC].[ART_HOME_ALERTS_PER_STATUS] as
                 select  (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end) ALERT_STATUS,
                 count(FSK_ALERT.alert_id) Alerts_Count
-                FROM fcfkc.FSK_ALERT FSK_ALERT 
+                FROM fcf71.fcfkc.FSK_ALERT FSK_ALERT 
                 LEFT JOIN 
-                FCFKC.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
+                fcf71.fcfkc.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
                 and ALERT_STATUS.LOV_TYPE_NAME='RT_ALERT_STATUS' AND ALERT_STATUS.Lov_Language_Desc='en'
                 group by (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end);
 
@@ -35,8 +38,9 @@ namespace SqlServerMigrations.Migrations.FCF71
                 -------------------------------------------------------------------------------
 
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
+                
 
                 /****** Object:  View [FCFKC].[ART_HOME_ALERTS_PER_DATE]    Script Date: 5/22/2023 10:22:37 AM ******/
                 SET ANSI_NULLS ON
@@ -53,7 +57,7 @@ namespace SqlServerMigrations.Migrations.FCF71
                 FORMAT(a.create_date,'MMM') Month__,
                 Day(a.create_date) Day_,
                 count(a.alert_id) Number_Of_ALerts
-                from  fcfkc.FSK_ALERT a
+                from  fcf71.fcfkc.FSK_ALERT a
                 group by 
                 YEAR(a.create_date),
                 Month(a.create_date),
@@ -67,7 +71,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 ---------------------------------------------------------------------------
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
 
                 /****** Object:  View [FCFCORE].[ART_HOME_NUMBER_OF_CUSTOMERS]    Script Date: 5/22/2023 11:12:40 AM ******/
@@ -79,14 +83,14 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 create view [FCFCORE].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
                 select  count(*) Number_Of_Customers
-                FROM fcfcore.FSC_PARTY_DIM a
+                FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y';
                 GO
 
 
                 ---------------------------------------------------------------------------
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
 
                 /****** Object:  View [FCFCORE].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS]    Script Date: 5/22/2023 11:21:05 AM ******/
@@ -98,7 +102,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 create view [FCFCORE].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
                 select  count(*) Number_Of_PEP_Customers
-                FROM fcfcore.FSC_PARTY_DIM a
+                FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
                 and a.politically_exposed_person_ind = 'Y';
                 GO
@@ -106,7 +110,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 ----------------------------------------------------------------------
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
 
                 /****** Object:  View [FCFCORE].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS]    Script Date: 5/22/2023 11:20:09 AM ******/
@@ -118,7 +122,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 create view [FCFCORE].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
                 select  count(*) Number_Of_High_Risk_Customers
-                FROM fcfcore.FSC_PARTY_DIM a
+                FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
                 and a.risk_classification = '3';
                 GO
@@ -126,7 +130,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 ---------------------------------------------------------------------------
 
-                USE [fcf71]
+                USE [ART_DB]
                 GO
 
                 /****** Object:  View [FCFCORE].[ART_HOME_Number_Of_Accounts]    Script Date: 5/22/2023 11:22:35 AM ******/
@@ -138,7 +142,7 @@ namespace SqlServerMigrations.Migrations.FCF71
 
                 create view [FCFCORE].[ART_HOME_Number_Of_Accounts] AS
                 select  count(*) Number_Of_Accounts
-                FROM fcfcore.FSC_ACCOUNT_DIM a
+                FROM fcf71.fcfcore.FSC_ACCOUNT_DIM a
                 where a.change_current_ind = 'Y';
                 GO
 
@@ -158,7 +162,8 @@ namespace SqlServerMigrations.Migrations.FCF71
                                 DROP VIEW [FCFCORE].[ART_HOME_NUMBER_OF_CUSTOMERS]
                                 DROP VIEW [FCFKC].[ART_HOME_ALERTS_PER_DATE]
                                 DROP VIEW [FCFKC].[ART_HOME_ALERTS_PER_STATUS]
-
+                                DROP SCHEMA [FCFCORE]
+                                DROP SCHEMA [FCFKC]
                                 ");
         }
     }
