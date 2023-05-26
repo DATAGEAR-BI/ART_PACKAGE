@@ -79,7 +79,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_CASES_DATE", schema: "DGCMGMT");
+            entity.ToView("ART_HOME_CASES_DATE", schema: "ART_DB");
 
             entity.Property(e => e.Day)
                 .HasColumnType("int")
@@ -103,7 +103,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_CASES_STATUS", schema: "DGCMGMT");
+            entity.ToView("ART_HOME_CASES_STATUS", schema: "ART_DB");
 
             entity.Property(e => e.CaseStatus)
                 .HasMaxLength(9)
@@ -120,7 +120,7 @@ public class AuthContext : IdentityDbContext<AppUser>
             
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_CASES_TYPES", schema: "DGCMGMT");
+            entity.ToView("ART_HOME_CASES_TYPES", schema: "ART_DB");
 
             entity.Property(e => e.CaseType)
                 .HasMaxLength(400)
@@ -137,7 +137,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_ALERTS_PER_DATE", "FCFKC");
+            entity.ToView("ART_HOME_ALERTS_PER_DATE", "ART_DB");
 
             entity.Property(e => e.Month).HasMaxLength(4000);
 
@@ -148,7 +148,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_ALERTS_PER_STATUS", "FCFKC");
+            entity.ToView("ART_HOME_ALERTS_PER_STATUS", "ART_DB");
 
             entity.Property(e => e.AlertStatus)
                 .HasMaxLength(100)
@@ -161,7 +161,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_Number_Of_Accounts", "FCFCORE");
+            entity.ToView("ART_HOME_Number_Of_Accounts", "ART_DB");
 
             entity.Property(e => e.NumberOfAccounts).HasColumnName("Number_Of_Accounts");
         });
@@ -170,7 +170,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "FCFCORE");
+            entity.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART_DB");
 
             entity.Property(e => e.NumberOfCustomers).HasColumnName("Number_Of_Customers");
         });
@@ -179,7 +179,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS", "FCFCORE");
+            entity.ToView("ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS", "ART_DB");
 
             entity.Property(e => e.NumberOfHighRiskCustomers).HasColumnName("Number_Of_High_Risk_Customers");
         });
@@ -188,7 +188,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             entity.HasNoKey();
 
-            entity.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "FCFCORE");
+            entity.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
 
             entity.Property(e => e.NumberOfPepCustomers).HasColumnName("Number_Of_PEP_Customers");
         });
