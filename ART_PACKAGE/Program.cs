@@ -89,9 +89,11 @@ foreach (var migration in migrationFiles)
 var migrationsHubDirectory = Directory.GetFiles($"../{migrationPath}/MIgrationsHub");
 foreach (var migration in migrationsHubDirectory)
 {
-
+    Console.WriteLine("migration"+ migration);
+    Console.WriteLine( $"migrationhub=>>>>{migration} ");
+    Console.WriteLine( $"migrationsFile=>>>>{migration.Replace("MIgrationsHub", "Migrations")}");
     if (!migration.ToLower().Contains("snapshot.cs") && migrationsToApply.Any(x => migration.ToLower().Contains(x.ToLower())))
-        File.Move($"../{migrationPath}/MIgrationsHub/{migration}", $"../{migrationPath}/Migrations/{migration}");
+        File.Copy(migration,migration.Replace("MIgrationsHub", "Migrations"));
 }
 authContext.Database.Migrate();
 
