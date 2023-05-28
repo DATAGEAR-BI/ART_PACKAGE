@@ -78,12 +78,21 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 var migrationFiles = Directory.GetFiles($"../{migrationPath}/Migrations");
-/*foreach (var migration in migrationFiles)
+
+foreach (var migration in migrationFiles)
 {
 
-    if (!migration.ToLower().Contains("snapshot.cs") && !migrationsToApply.Any(x => migration.ToLower().Contains(x.ToLower())))
-        File.Delete(migration);
-}*/
+    if (!migration.ToLower().Contains("snapshot.cs") )
+        File.Delete($"{migration}");
+}
+
+var migrationsHubDirectory = Directory.GetFiles($"../{migrationPath}/MIgrationsHub");
+foreach (var migration in migrationsHubDirectory)
+{
+
+    if (!migration.ToLower().Contains("snapshot.cs") && migrationsToApply.Any(x => migration.ToLower().Contains(x.ToLower())))
+        File.Move($"../{migrationPath}/MIgrationsHub/{migration}", $"../{migrationPath}/Migrations/{migration}");
+}
 authContext.Database.Migrate();
 
 
