@@ -83,5 +83,29 @@ namespace ART_PACKAGE.Controllers
             });
 
         }
+
+
+
+        public IActionResult GetAmlChartsData()
+        {
+            var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            {
+                year = x.Key.ToString(),
+                value = x.Sum(x => x.NumberOfAlerts),
+                monthData = x.GroupBy(m => m.Month).Select(m => new
+                {
+                    Month = m.Key.ToString(),
+                    value = m.Sum(x => x.NumberOfAlerts)
+                })
+            });
+
+            var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
+
+            return Ok(new
+            {
+                dates = dateData,
+                statuses = alertsPerStatus
+            });
+        }
     }
 }
