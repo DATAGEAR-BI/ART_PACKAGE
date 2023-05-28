@@ -117,7 +117,7 @@ public class AuthContext : IdentityDbContext<AppUser>
 
         modelBuilder.Entity<ArtHomeCasesType>(entity =>
         {
-            
+
             entity.HasNoKey();
 
             entity.ToView("ART_HOME_CASES_TYPES", schema: "ART_DB");

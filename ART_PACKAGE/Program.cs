@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Constants.db;
 using System.Configuration;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -13,6 +12,9 @@ using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.LDap;
 using Data.FCF71;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -21,19 +23,19 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 var connectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
 var DGCMGMTConnection = builder.Configuration.GetConnectionString("DGCMGMTConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
 var FCF71Connection = builder.Configuration.GetConnectionString("FCF71Connection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-
+var migrationsToApply = builder.Configuration.GetSection("migrations").Get<List<string>>();
 var dbType = builder.Configuration.GetValue<string>("dbType").ToUpper();
-
+var migrationPath = dbType == Data.Constants.db.DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 builder.Services.AddDbContext<AuthContext>(options => _ = dbType switch
 {
-    DbTypes.SqlServer => options.UseSqlServer(
+    Data.Constants.db.DbTypes.SqlServer => options.UseSqlServer(
         connectionString,
         x => x.MigrationsAssembly("SqlServerMigrations")
         ),
 
 
 
-    DbTypes.Oracle => options.UseOracle(
+    Data.Constants.db.DbTypes.Oracle => options.UseOracle(
         connectionString,
         x => x.MigrationsAssembly("OracleMigrations")
         ),
@@ -75,7 +77,13 @@ var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-authContext.Database.Migrate();
+var migrationFiles = Directory.GetFiles($"../{migrationPath}/Migrations");
+//foreach (var migration in migrationFiles)
+//{
+//    if (!migrationsToApply.Any(x => migration.ToLower().Contains(x.ToLower())))
+//        File.Delete(migration);
+//}
+//authContext.Database.Migrate();
 
 
 // Configure the HTTP request pipeline.

@@ -4,6 +4,7 @@ using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SqlServerMigrations.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    partial class AuthContextModelSnapshot : ModelSnapshot
+    [Migration("20230528103002_SanctionHomeViews")]
+    partial class SanctionHomeViews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,15 +93,15 @@ namespace SqlServerMigrations.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b223d4e2-845f-4aa6-a855-2fe1cac45672",
+                            ConcurrencyStamp = "463ead85-acce-4d0c-b8a3-76e45b25b244",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELZyg+q/YniL+p+e/+UMNY+mzePPiHs9l7OCGuNNWW3G84o6o00H/cP6clAKG9Z2+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK0rKzU3uIs/bDyPtsJTEU8VQnjMX/6xuKpoQkq1cBz18pJguE3s5xyn8vhBlcQCEw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d49583bb-f917-4f26-ae51-6314c05d4e54",
+                            SecurityStamp = "70d89b4a-48b6-4e94-91e8-613554fd237d",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -327,21 +329,21 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "ce3b0172-4232-4285-a626-a61a14e8fe45",
+                            ConcurrencyStamp = "841d5529-2a00-4697-af5f-8de93b703ed3",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "089ae465-223a-43d7-bed1-0a4ed5494b66",
+                            ConcurrencyStamp = "9c49b487-6b70-4da9-9d1f-3cff95b8523b",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "c690d60c-bd7d-4eab-8cd1-fb8548d68594",
+                            ConcurrencyStamp = "11d96252-d0c6-428b-8122-5a9424f66efd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

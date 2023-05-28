@@ -1,4 +1,4 @@
-﻿namespace ART_PACKAGE.Constants.db
+﻿namespace Data.Constants.db
 {
     public static class DbTypes
     {
