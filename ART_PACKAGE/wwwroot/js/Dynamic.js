@@ -663,7 +663,6 @@ function onClick(e) {
 }
 
 function createCollection(di, prop) {
-    console.log(di, prop);
     var columns = di;
     var html = "<table>";
     console.log("hi", columns);
@@ -674,8 +673,6 @@ function createCollection(di, prop) {
             html += "</td></tr>";
         }
     }
-
-
     html += "</table>";
     return html;
 }
