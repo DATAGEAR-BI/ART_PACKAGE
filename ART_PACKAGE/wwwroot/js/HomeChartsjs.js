@@ -29,7 +29,7 @@ getData().then(x => {
 
     makeDatesChart(dateData, "date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month");
     makedynamicChart(0, typeData, "Cases Per Type", "type", "numberOfCases", "caseType");
-    makedynamicChart(0, statusData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
+    makedynamicChart(0, statusData, "Cases Per Status", "status", "numberOfCases", "caseStatus");
 
 
 })

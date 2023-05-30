@@ -21,8 +21,6 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     EnvironmentName = "Development",
 });
 var connectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-var DGCMGMTConnection = builder.Configuration.GetConnectionString("DGCMGMTConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-var FCF71Connection = builder.Configuration.GetConnectionString("FCF71Connection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
 var migrationsToApply = builder.Configuration.GetSection("migrations").Get<List<string>>();
 var dbType = builder.Configuration.GetValue<string>("dbType").ToUpper();
 var migrationPath = dbType == Data.Constants.db.DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
@@ -77,13 +75,6 @@ var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-//var migrationFiles = Directory.GetFiles($"../{migrationPath}/Migrations");
-//foreach (var migration in migrationFiles)
-//{
-
-//    if (!migration.ToLower().Contains("snapshot.cs") && !migrationsToApply.Any(x => migration.ToLower().Contains(x.ToLower())))
-//        File.Delete(migration);
-//}
 
 authContext.Database.Migrate();
 

@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MIgrationsHub\**" />
     <Compile Remove="Migrations\DGCMGMT\**" />
     <Compile Remove="Migrations\FCF71\**" />
+    <EmbeddedResource Remove="MIgrationsHub\**" />
     <EmbeddedResource Remove="Migrations\DGCMGMT\**" />
     <EmbeddedResource Remove="Migrations\FCF71\**" />
+    <None Remove="MIgrationsHub\**" />
     <None Remove="Migrations\DGCMGMT\**" />
     <None Remove="Migrations\FCF71\**" />
   </ItemGroup>

@@ -813,7 +813,6 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }));
             return sort;
         }
-
         private static BinaryExpression MapOp<T>(MemberExpression prop, ConstantExpression constant, string op)
         {
             switch (op)

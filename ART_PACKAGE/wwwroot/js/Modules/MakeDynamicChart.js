@@ -990,7 +990,7 @@ export function makedynamicChart(
     columnsColorFunc
 ) {
     var chart = document.getElementById(divId);
-    chart.style.height = "600px";
+    chart.style.height = "50vw";
     switch (chartType) {
         case types.pie:
             callPieChart(data, title, divId, chartValue, chartCategory);
