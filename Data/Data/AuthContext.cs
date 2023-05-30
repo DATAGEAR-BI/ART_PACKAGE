@@ -78,7 +78,8 @@ public class AuthContext : IdentityDbContext<AppUser>
             ModelCreatingConfigurator.SqlServerOnModelCreating(modelBuilder);
 
         if (this.Database.IsOracle())
-            ModelCreatingConfigurator.SqlServerOnModelCreating(modelBuilder);
+            ModelCreatingConfigurator.OracleOnModelCreating(modelBuilder);
+
 
     }
 }

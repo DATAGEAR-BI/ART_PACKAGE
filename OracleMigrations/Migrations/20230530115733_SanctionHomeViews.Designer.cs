@@ -3,78 +3,79 @@ using System;
 using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-
 using Microsoft.EntityFrameworkCore.Migrations;
-
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace SqlServerMigrations.Migrations
+namespace OracleMigrations.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20230518122117_intializeDb")]
-    partial class intializeDb
+    [Migration("20230530115733_SanctionHomeViews")]
+    partial class SanctionHomeViews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasDefaultSchema("ART")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.HasKey("Id");
 
@@ -84,24 +85,24 @@ namespace SqlServerMigrations.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasFilter("\"NormalizedUserName\" IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers", "ART");
 
                     b.HasData(
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0819029a-bdb2-48cc-854e-d3cdf8081021",
+                            ConcurrencyStamp = "bbe1230e-db74-4907-9dfc-a9cbe16e62cc",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOAn7F9uuQBhlgUPQfvuCLuLHx5eIbjAL7FESC5Z4wIsrWGoVMYSPvikaQZWXPn4VA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOtuvQOxdLwsTGQ07tdQp3t2Bd2X96RskB3Xv6umtv4MHITiT3Ld7nYbUdCFbi7Ilw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c74356f8-7e90-45c7-8b02-e7af841884db",
+                            SecurityStamp = "e0fe0153-b44c-4fed-95b4-a72311b5ee6d",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -111,116 +112,239 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<int>("Schema")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Table")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ArtSavedCustomReport");
+                    b.ToTable("ArtSavedCustomReport", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsChart", b =>
                 {
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Column")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("ReportId", "Column", "Type");
 
-                    b.ToTable("ArtSavedReportsChart", (string)null);
+                    b.ToTable("ArtSavedReportsChart", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsColumns", b =>
                 {
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Column")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("ReportId", "Column");
 
-                    b.ToTable("ArtSavedReportsColumns");
+                    b.ToTable("ArtSavedReportsColumns", "ART");
+                });
+
+            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesDate", b =>
+                {
+                    b.Property<decimal?>("Day")
+                        .HasColumnType("int")
+                        .HasColumnName("DAY");
+
+                    b.Property<string>("Month")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .IsUnicode(false)
+                        .HasColumnType("VARCHAR2(36)")
+                        .HasColumnName("MONTH");
+
+                    b.Property<decimal?>("NumberOfCases")
+                        .HasColumnType("int")
+                        .HasColumnName("NUMBER_OF_CASES");
+
+                    b.Property<decimal?>("Year")
+                        .HasColumnType("int")
+                        .HasColumnName("YEAR");
+
+                    b.ToView("ART_HOME_CASES_DATE");
+                });
+
+            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesStatus", b =>
+                {
+                    b.Property<string>("CaseStatus")
+                        .HasMaxLength(9)
+                        .IsUnicode(false)
+                        .HasColumnType("VARCHAR2(9)")
+                        .HasColumnName("CASE_STATUS");
+
+                    b.Property<decimal?>("NumberOfCases")
+                        .HasColumnType("int")
+                        .HasColumnName("NUMBER_OF_CASES");
+
+                    b.ToView("ART_HOME_CASES_STATUS");
+                });
+
+            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesType", b =>
+                {
+                    b.Property<string>("CaseType")
+                        .HasMaxLength(400)
+                        .IsUnicode(false)
+                        .HasColumnType("VARCHAR2(400)")
+                        .HasColumnName("CASE_TYPE");
+
+                    b.Property<decimal?>("NumberOfCases")
+                        .HasColumnType("int")
+                        .HasColumnName("NUMBER_OF_CASES");
+
+                    b.ToView("ART_HOME_CASES_TYPES");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerDate", b =>
+                {
+                    b.Property<int?>("Day")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("Month")
+                        .HasMaxLength(4000)
+                        .HasColumnType("NCLOB");
+
+                    b.Property<int?>("NumberOfAlerts")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBER_OF_ALERTS");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.ToView("ART_HOME_ALERTS_PER_DATE", "ART");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerStatus", b =>
+                {
+                    b.Property<string>("AlertStatus")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("ALERT_STATUS");
+
+                    b.Property<int?>("AlertsCount")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ALERTS_COUNT");
+
+                    b.ToView("ART_HOME_ALERTS_PER_STATUS", "ART");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfAccount", b =>
+                {
+                    b.Property<int?>("NumberOfAccounts")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBER_OF_ACCOUNTS");
+
+                    b.ToView("ART_HOME_NUMBER_OF_ACCOUNTS", "ART");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfCustomer", b =>
+                {
+                    b.Property<int?>("NumberOfCustomers")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBER_OF_CUSTOMERS");
+
+                    b.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfHighRiskCustomer", b =>
+                {
+                    b.Property<int?>("NumberOfHighRiskCustomers")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBER_OF_HIGH_RISK_CUSTOMERS");
+
+                    b.ToView("ART_NUMBER_OF_HIGH_RISK_CUSTS", "ART");
+                });
+
+            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfPepCustomer", b =>
+                {
+                    b.Property<int?>("NumberOfPepCustomers")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBER_OF_PEP_CUSTOMERS");
+
+                    b.ToView("ART_NUMBER_OF_PEP_CUSTOMERS", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasFilter("\"NormalizedName\" IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles", "ART");
 
                     b.HasData(
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "b3d5236f-7003-4e01-93d8-bbb61fe06dac",
+                            ConcurrencyStamp = "94844d05-fda0-4f31-a9ab-96b937fb656d",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "fdd11011-3aec-4181-813b-24b08849fa67",
+                            ConcurrencyStamp = "8f80ca92-ffd4-488f-87ad-376879666f60",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "47f62125-0e90-4978-84fa-90987ab4dce6",
+                            ConcurrencyStamp = "5d024bc2-4711-4cae-b769-86766c7c34ea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -230,89 +354,89 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", "ART");
 
                     b.HasData(
                         new
@@ -335,22 +459,22 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", b =>

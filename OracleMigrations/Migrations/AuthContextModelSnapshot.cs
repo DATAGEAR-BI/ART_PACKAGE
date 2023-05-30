@@ -17,6 +17,7 @@ namespace OracleMigrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("ART")
                 .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -84,22 +85,22 @@ namespace OracleMigrations.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("\"NormalizedUserName\" IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers", "ART");
 
                     b.HasData(
                         new
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e578d5a0-5486-4351-96cf-efa79b9f66f9",
+                            ConcurrencyStamp = "bbe1230e-db74-4907-9dfc-a9cbe16e62cc",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHbmWKq4Yj35D4dzpabMKABxHJEzB0JSydVYKPML0vxHJcX1v7gwi98UZ9fK0Wn1tA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOtuvQOxdLwsTGQ07tdQp3t2Bd2X96RskB3Xv6umtv4MHITiT3Ld7nYbUdCFbi7Ilw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f658bf51-899b-4b9b-a9f2-e9cfae025f8f",
+                            SecurityStamp = "e0fe0153-b44c-4fed-95b4-a72311b5ee6d",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -138,7 +139,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ArtSavedCustomReport", (string)null);
+                    b.ToTable("ArtSavedCustomReport", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsChart", b =>
@@ -158,7 +159,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasKey("ReportId", "Column", "Type");
 
-                    b.ToTable("ArtSavedReportsChart", (string)null);
+                    b.ToTable("ArtSavedReportsChart", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsColumns", b =>
@@ -171,7 +172,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasKey("ReportId", "Column");
 
-                    b.ToTable("ArtSavedReportsColumns");
+                    b.ToTable("ArtSavedReportsColumns", "ART");
                 });
 
             modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesDate", b =>
@@ -195,7 +196,7 @@ namespace OracleMigrations.Migrations
                         .HasColumnType("int")
                         .HasColumnName("YEAR");
 
-                    b.ToView("ART_HOME_CASES_DATE", "ART_DB");
+                    b.ToView("ART_HOME_CASES_DATE");
                 });
 
             modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesStatus", b =>
@@ -210,7 +211,7 @@ namespace OracleMigrations.Migrations
                         .HasColumnType("int")
                         .HasColumnName("NUMBER_OF_CASES");
 
-                    b.ToView("ART_HOME_CASES_STATUS", "ART_DB");
+                    b.ToView("ART_HOME_CASES_STATUS");
                 });
 
             modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesType", b =>
@@ -225,7 +226,7 @@ namespace OracleMigrations.Migrations
                         .HasColumnType("int")
                         .HasColumnName("NUMBER_OF_CASES");
 
-                    b.ToView("ART_HOME_CASES_TYPES", "ART_DB");
+                    b.ToView("ART_HOME_CASES_TYPES");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerDate", b =>
@@ -239,12 +240,12 @@ namespace OracleMigrations.Migrations
 
                     b.Property<int?>("NumberOfAlerts")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Number_Of_ALerts");
+                        .HasColumnName("NUMBER_OF_ALERTS");
 
                     b.Property<int?>("Year")
                         .HasColumnType("NUMBER(10)");
 
-                    b.ToView("ART_HOME_ALERTS_PER_DATE", "ART_DB");
+                    b.ToView("ART_HOME_ALERTS_PER_DATE", "ART");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerStatus", b =>
@@ -256,45 +257,45 @@ namespace OracleMigrations.Migrations
 
                     b.Property<int?>("AlertsCount")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Alerts_Count");
+                        .HasColumnName("ALERTS_COUNT");
 
-                    b.ToView("ART_HOME_ALERTS_PER_STATUS", "ART_DB");
+                    b.ToView("ART_HOME_ALERTS_PER_STATUS", "ART");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfAccount", b =>
                 {
                     b.Property<int?>("NumberOfAccounts")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Number_Of_Accounts");
+                        .HasColumnName("NUMBER_OF_ACCOUNTS");
 
-                    b.ToView("ART_HOME_Number_Of_Accounts", "ART_DB");
+                    b.ToView("ART_HOME_NUMBER_OF_ACCOUNTS", "ART");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfCustomer", b =>
                 {
                     b.Property<int?>("NumberOfCustomers")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Number_Of_Customers");
+                        .HasColumnName("NUMBER_OF_CUSTOMERS");
 
-                    b.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART_DB");
+                    b.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfHighRiskCustomer", b =>
                 {
                     b.Property<int?>("NumberOfHighRiskCustomers")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Number_Of_High_Risk_Customers");
+                        .HasColumnName("NUMBER_OF_HIGH_RISK_CUSTOMERS");
 
-                    b.ToView("ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS", "ART_DB");
+                    b.ToView("ART_NUMBER_OF_HIGH_RISK_CUSTS", "ART");
                 });
 
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfPepCustomer", b =>
                 {
                     b.Property<int?>("NumberOfPepCustomers")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("Number_Of_PEP_Customers");
+                        .HasColumnName("NUMBER_OF_PEP_CUSTOMERS");
 
-                    b.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
+                    b.ToView("ART_NUMBER_OF_PEP_CUSTOMERS", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -321,27 +322,27 @@ namespace OracleMigrations.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("\"NormalizedName\" IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles", "ART");
 
                     b.HasData(
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "a0c98e82-69a7-45a6-bbc7-af490f414e01",
+                            ConcurrencyStamp = "94844d05-fda0-4f31-a9ab-96b937fb656d",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "99293149-880f-4cb1-9308-dc3840cad3f4",
+                            ConcurrencyStamp = "8f80ca92-ffd4-488f-87ad-376879666f60",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "f822d63f-7181-4190-aca5-fa1d8c3096d0",
+                            ConcurrencyStamp = "5d024bc2-4711-4cae-b769-86766c7c34ea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -369,7 +370,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -394,7 +395,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -418,7 +419,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", "ART");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -433,7 +434,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", "ART");
 
                     b.HasData(
                         new
@@ -471,7 +472,7 @@ namespace OracleMigrations.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", "ART");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", b =>

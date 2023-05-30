@@ -62,7 +62,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        name: "FK_RoleClaims_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
@@ -86,7 +86,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_ArtSavedCustomReport", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArtSavedCustomReport_AspNetUsers_UserId",
+                        name: "FK_Report_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -107,7 +107,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        name: "FK_UserClaims_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -127,7 +127,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        name: "FK_UserLogins_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -145,13 +145,13 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        name: "FK_UserRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_UserRoles_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -171,7 +171,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        name: "FK_UserTokens_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -191,7 +191,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_ArtSavedReportsChart", x => new { x.ReportId, x.Column, x.Type });
                     table.ForeignKey(
-                        name: "FK_ArtSavedReportsChart_ArtSavedCustomReport_ReportId",
+                        name: "FK_ReportsChart_ReportId",
                         column: x => x.ReportId,
                         principalTable: "ArtSavedCustomReport",
                         principalColumn: "Id",
@@ -209,7 +209,7 @@ namespace OracleMigrations.Migrations
                 {
                     table.PrimaryKey("PK_ArtSavedReportsColumns", x => new { x.ReportId, x.Column });
                     table.ForeignKey(
-                        name: "FK_ArtSavedReportsColumns_ArtSavedCustomReport_ReportId",
+                        name: "FK_ReportsColumns_ReportId",
                         column: x => x.ReportId,
                         principalTable: "ArtSavedCustomReport",
                         principalColumn: "Id",
@@ -247,12 +247,12 @@ namespace OracleMigrations.Migrations
                 values: new object[] { "e60411ee-1127-4f5e-8f03-367ef13017a6", "8e445865-a24d-4543-a6c6-9443d048cdb9" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArtSavedCustomReport_UserId",
+                name: "IX_CustomReport_UserId",
                 table: "ArtSavedCustomReport",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
+                name: "IX_RoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
 
@@ -264,17 +264,17 @@ namespace OracleMigrations.Migrations
                 filter: "\"NormalizedName\" IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
+                name: "IX_UserClaims_UserId",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
+                name: "IX_UserLogins_UserId",
                 table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
+                name: "IX_UserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
 

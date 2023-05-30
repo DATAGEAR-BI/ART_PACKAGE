@@ -3,16 +3,16 @@ using System;
 using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace SqlServerMigrations.Migrations
+namespace OracleMigrations.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20230528114201_AMLHomeViews")]
+    [Migration("20230529145350_AMLHomeViews")]
     partial class AMLHomeViews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,59 +22,59 @@ namespace SqlServerMigrations.Migrations
                 .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.HasKey("Id");
 
@@ -84,7 +84,7 @@ namespace SqlServerMigrations.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasFilter("\"NormalizedUserName\" IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
 
@@ -93,15 +93,15 @@ namespace SqlServerMigrations.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b223d4e2-845f-4aa6-a855-2fe1cac45672",
+                            ConcurrencyStamp = "5f782cb4-decf-47f9-a119-99b0caa5ab24",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELZyg+q/YniL+p+e/+UMNY+mzePPiHs9l7OCGuNNWW3G84o6o00H/cP6clAKG9Z2+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBUj4IR24S+8IRg4Z0Lm/Ee1NAcaQ/tCoXgAmR34HRdY03oDEoVH3fFK2q1KBNs5aw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d49583bb-f917-4f26-ae51-6314c05d4e54",
+                            SecurityStamp = "7d91c942-33f1-4bab-8210-720c3bbc1d63",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -111,30 +111,30 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<int>("Schema")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Table")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
@@ -146,17 +146,17 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsChart", b =>
                 {
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Column")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("ReportId", "Column", "Type");
 
@@ -166,10 +166,10 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsColumns", b =>
                 {
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Column")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("ReportId", "Column");
 
@@ -178,7 +178,7 @@ namespace SqlServerMigrations.Migrations
 
             modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesDate", b =>
                 {
-                    b.Property<int?>("Day")
+                    b.Property<decimal?>("Day")
                         .HasColumnType("int")
                         .HasColumnName("DAY");
 
@@ -186,14 +186,14 @@ namespace SqlServerMigrations.Migrations
                         .IsRequired()
                         .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(36)")
+                        .HasColumnType("VARCHAR2(36)")
                         .HasColumnName("MONTH");
 
-                    b.Property<int?>("NumberOfCases")
+                    b.Property<decimal?>("NumberOfCases")
                         .HasColumnType("int")
                         .HasColumnName("NUMBER_OF_CASES");
 
-                    b.Property<int?>("Year")
+                    b.Property<decimal?>("Year")
                         .HasColumnType("int")
                         .HasColumnName("YEAR");
 
@@ -205,10 +205,10 @@ namespace SqlServerMigrations.Migrations
                     b.Property<string>("CaseStatus")
                         .HasMaxLength(9)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(9)")
+                        .HasColumnType("VARCHAR2(9)")
                         .HasColumnName("CASE_STATUS");
 
-                    b.Property<int?>("NumberOfCases")
+                    b.Property<decimal?>("NumberOfCases")
                         .HasColumnType("int")
                         .HasColumnName("NUMBER_OF_CASES");
 
@@ -220,10 +220,10 @@ namespace SqlServerMigrations.Migrations
                     b.Property<string>("CaseType")
                         .HasMaxLength(400)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(400)")
+                        .HasColumnType("VARCHAR2(400)")
                         .HasColumnName("CASE_TYPE");
 
-                    b.Property<int?>("NumberOfCases")
+                    b.Property<decimal?>("NumberOfCases")
                         .HasColumnType("int")
                         .HasColumnName("NUMBER_OF_CASES");
 
@@ -233,18 +233,18 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerDate", b =>
                 {
                     b.Property<int?>("Day")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Month")
                         .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
+                        .HasColumnType("NCLOB");
 
                     b.Property<int?>("NumberOfAlerts")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Number_Of_ALerts");
 
                     b.Property<int?>("Year")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.ToView("ART_HOME_ALERTS_PER_DATE", "ART_DB");
                 });
@@ -253,11 +253,11 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<string>("AlertStatus")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("NVARCHAR2(100)")
                         .HasColumnName("ALERT_STATUS");
 
                     b.Property<int?>("AlertsCount")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Alerts_Count");
 
                     b.ToView("ART_HOME_ALERTS_PER_STATUS", "ART_DB");
@@ -266,7 +266,7 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfAccount", b =>
                 {
                     b.Property<int?>("NumberOfAccounts")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Number_Of_Accounts");
 
                     b.ToView("ART_HOME_Number_Of_Accounts", "ART_DB");
@@ -275,7 +275,7 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfCustomer", b =>
                 {
                     b.Property<int?>("NumberOfCustomers")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Number_Of_Customers");
 
                     b.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART_DB");
@@ -284,7 +284,7 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfHighRiskCustomer", b =>
                 {
                     b.Property<int?>("NumberOfHighRiskCustomers")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Number_Of_High_Risk_Customers");
 
                     b.ToView("ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS", "ART_DB");
@@ -293,7 +293,7 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfPepCustomer", b =>
                 {
                     b.Property<int?>("NumberOfPepCustomers")
-                        .HasColumnType("int")
+                        .HasColumnType("NUMBER(10)")
                         .HasColumnName("Number_Of_PEP_Customers");
 
                     b.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
@@ -302,26 +302,26 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("NVARCHAR2(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasFilter("\"NormalizedName\" IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
 
@@ -329,21 +329,21 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "ce3b0172-4232-4285-a626-a61a14e8fe45",
+                            ConcurrencyStamp = "b5911f98-3cc2-4510-b1be-ef0ca16cec98",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "089ae465-223a-43d7-bed1-0a4ed5494b66",
+                            ConcurrencyStamp = "064871bf-fddc-453c-a3df-428274f803a4",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "c690d60c-bd7d-4eab-8cd1-fb8548d68594",
+                            ConcurrencyStamp = "f4fda307-d637-4a5e-92b6-3f411f9c8332",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -353,19 +353,19 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
@@ -378,19 +378,19 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("Id");
 
@@ -403,18 +403,18 @@ namespace SqlServerMigrations.Migrations
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -426,10 +426,10 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -458,18 +458,18 @@ namespace SqlServerMigrations.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
