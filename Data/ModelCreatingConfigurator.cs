@@ -206,6 +206,18 @@ namespace Data
                 entity.Property(e => e.Month).HasMaxLength(4000);
 
                 entity.Property(e => e.NumberOfAlerts).HasColumnName("Number_Of_ALerts".ToUpper());
+                entity.Property(e => e.Day)
+                   .HasColumnName("DAY");
+
+                entity.Property(e => e.Month)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NumberOfAlerts)
+                    .HasColumnName("NUMBER_OF_ALERTS");
+                entity.Property(e => e.Year)
+                    .HasColumnName("YEAR");
             });
 
             modelBuilder.Entity<ArtHomeAlertsPerStatus>(entity =>

@@ -2,6 +2,7 @@
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using Oracle.ManagedDataAccess.Client;
 
 using System.Data;
@@ -109,12 +110,23 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             var isOracle = db.Database.IsOracle();
             string sql = "";
             string sqlCount = "";
-            var progection = string.Join(", ", columns);
+            string oracleNormalizedName = "";
+            var progection = string.Join(", ", isOracle ? columns.Select(x => @$"""{x}""") : columns);
             var restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
 
+            if (isOracle)
+            {
+                oracleNormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
+            }
+            if (isSqlServer)
+            {
 
-            if (isSqlServer) sqlCount = string.Format(DataCountSql["sqlserver"], view, restriction);
-            else if (isOracle) sqlCount = string.Format(DataCountSql["oracle"], view, restriction);
+                sqlCount = string.Format(DataCountSql["sqlserver"], view, restriction);
+            }
+            else if (isOracle)
+            {
+                sqlCount = string.Format(DataCountSql["oracle"], oracleNormalizedName, restriction);
+            };
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
                                              : new OracleConnection(db.Database.GetConnectionString());
@@ -131,7 +143,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 orderBy = string.IsNullOrEmpty(orderBy) ? "" : "ORDER BY " + orderBy;
 
             if (isSqlServer) sql = string.Format(DataSql["sqlserver"], progection, view, restriction, orderBy, skip, take);
-            else if (isOracle) sql = string.Format(DataSql["oracle"], progection, view, restriction, orderBy, skip, take);
+            else if (isOracle) sql = string.Format(DataSql["oracle"], progection, oracleNormalizedName, restriction, orderBy, skip, take);
 
 
 

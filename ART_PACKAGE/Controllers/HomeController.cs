@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -83,8 +84,6 @@ namespace ART_PACKAGE.Controllers
             });
 
         }
-
-
 
         public IActionResult GetAmlChartsData()
         {

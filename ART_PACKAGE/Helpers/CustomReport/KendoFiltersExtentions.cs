@@ -169,7 +169,13 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     }
                     finally
                     {
+                        if(dbtype == "oracle")
+                            _sb.Append(@$"""{ i.field}"" {v}");
+                        else
+                        {
                         _sb.Append($"{i.field} {v}");
+
+                        }
                     }
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
