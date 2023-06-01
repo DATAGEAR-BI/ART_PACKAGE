@@ -1,10 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Areas.Identity.Data.Configrations;
 using Data;
+using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
@@ -19,7 +21,8 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; }
     public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; }
     public virtual DbSet<ArtHomeCasesType> ArtHomeCasesTypes { get; set; }
-
+    public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; }
+    public virtual DbSet<ArtSystemPreformance> ArtSystemPerformances { get; set; } = null!;
     //AML
     public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
     public virtual DbSet<ArtHomeAlertsPerStatus> ArtHomeAlertsPerStatuses { get; set; } = null!;
@@ -81,5 +84,12 @@ public class AuthContext : IdentityDbContext<AppUser>
             ModelCreatingConfigurator.OracleOnModelCreating(modelBuilder);
 
 
+    }
+
+
+    public IEnumerable<T> ExecuteProc<T>(string SPName, params SqlParameter[] parameters) where T : class
+    {
+        var sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
+        return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
     }
 }
