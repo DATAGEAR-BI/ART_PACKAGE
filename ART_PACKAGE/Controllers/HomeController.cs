@@ -90,7 +90,13 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-
+        public IActionResult Test()
+        {
+            var data = _db.ExecuteProc<ArtSystemPrefPerStatus>(SPNames.ST_SYSTEM_PERF_PER_STATUS
+                , new SqlParameter("@V_START_DATE", SqlDbType.Date) { Value = new DateTime(2020, 1, 1) }
+                , new SqlParameter("@V_END_DATE", SqlDbType.Date) { Value = new DateTime(2023, 1, 1) });
+            return Ok(data);
+        }
 
 
         public IActionResult GetAmlChartsData()

@@ -74,6 +74,8 @@ namespace Data
             });
 
             modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
+
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {
                 entity.HasNoKey();
@@ -168,6 +170,81 @@ namespace Data
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("TRANSACTION_TYPE");
+
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("UPDATE_USER_ID");
+
+                entity.Property(e => e.ValidFromDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("VALID_FROM_DATE");
+            });
+
+            modelBuilder.Entity<ArtUserPerformance>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_USER_PERFORMANCE", "ART_DB");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .HasColumnName("ACTION");
+
+                entity.Property(e => e.ActionUser)
+                    .HasMaxLength(60)
+                    .HasColumnName("ACTION_USER");
+
+                entity.Property(e => e.AsssignedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ASSSIGNED_TIME");
+
+                entity.Property(e => e.CaseDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("CASE_DESC");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseRk)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("CASE_RK");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseTypeCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("CASE_TYPE_CD");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_IN_DAYS");
+
+                entity.Property(e => e.DurationsInHours).HasColumnName("DURATIONS_IN_HOURS");
+
+                entity.Property(e => e.DurationsInMinutes).HasColumnName("DURATIONS_IN_MINUTES");
+
+                entity.Property(e => e.DurationsInSeconds).HasColumnName("DURATIONS_IN_SECONDS");
+
+                entity.Property(e => e.LockedBy)
+                    .HasMaxLength(60)
+                    .HasColumnName("LOCKED_BY");
+
+                entity.Property(e => e.Priority)
+                    .HasMaxLength(4000)
+                    .HasColumnName("PRIORITY");
+
+                entity.Property(e => e.ReleasedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("RELEASED_DATE");
 
                 entity.Property(e => e.UpdateUserId)
                     .HasMaxLength(60)
