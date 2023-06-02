@@ -16,11 +16,11 @@
     UserPerformanceSummary: "/UserPerformanceSummary/GetData",
     SanctionListUpdateSummary: "/SanctionListUpdateSummary/GetData",
     PartyListUpdateSummary: "/PartyListUpdateSummary/GetData",
-    SystemPerformance: "/SystemPerformance/GetDatal",
-    UserPerformance: "/UserPerformance/GetDatal",
-    SanctionManualSearchDetails: "/SanctionManualSearchDetails/GetDatal",
-    VaPartyListUpdateDetails: "/VaPartyListUpdateDetails/GetDatal",
-    VaSanctionListUpdateDetails: "/VaSanctionListUpdateDetails/GetDatal",
+    SystemPerformance: "/SystemPerformance/GetData",
+    UserPerformance: "/UserPerformance/GetData",
+    SanctionManualSearchDetails: "/SanctionManualSearchDetails/GetData",
+    VaPartyListUpdateDetails: "/VaPartyListUpdateDetails/GetData",
+    VaSanctionListUpdateDetails: "/VaSanctionListUpdateDetails/GetData",
     SanctionAllCasesDetailNew: "/SanctionAllCasesDetailsNew/GetData",
 
 
