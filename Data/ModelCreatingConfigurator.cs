@@ -75,6 +75,7 @@ namespace Data
 
             modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
 
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {
