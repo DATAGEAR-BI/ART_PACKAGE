@@ -58,6 +58,30 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 "ValidFromDate",
             }
             }
+            },
+            { nameof(UserPerformanceController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   "CaseRk","ValidFromDate","CreateUserId" } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                                                                { "CaseTypeCd", new DisplayNameAndFormat { DisplayName = "Case Type"}},
+                                                                { "CaseDesc", new DisplayNameAndFormat { DisplayName = "Case Description"}},
+                                                                { "CaseStatus", new DisplayNameAndFormat { DisplayName = "Case Status"}},
+                                                                { "Priority", new DisplayNameAndFormat { DisplayName = "Priority"}},
+                                                                { "LockedBy", new DisplayNameAndFormat { DisplayName = "Locked By"}},
+                                                                { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                                                                { "UpdateUserId", new DisplayNameAndFormat { DisplayName = "Updated By"}},
+                                                                { "AsssignedTime", new DisplayNameAndFormat { DisplayName = "Assigned Time"}},
+                                                                { "ActionUser", new DisplayNameAndFormat { DisplayName = "Action User"}},
+                                                                { "Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                                                                { "ReleasedDate", new DisplayNameAndFormat { DisplayName = "Released Date"}},
+                                                                { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
+                                                                { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
+                                                                { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
+                                                                { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                                                        }
+                                }
             }
         };
 
