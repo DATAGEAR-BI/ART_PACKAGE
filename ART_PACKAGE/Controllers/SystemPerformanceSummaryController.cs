@@ -42,27 +42,27 @@ namespace DataGear_RV_Ver_1._7.Controllers
             //var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
             //var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
             //var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
-            var sd = new SqlParameter("startDate", SqlDbType.Date)
+            var sd = new SqlParameter("V_START_DATE", SqlDbType.Date)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("endDate", SqlDbType.Date)
+            var ed = new SqlParameter("V_END_DATE", SqlDbType.Date)
             {
                 Value = endDate
             };
-            var sd1 = new SqlParameter("startDate", SqlDbType.Date)
+            var sd1 = new SqlParameter("V_START_DATE", SqlDbType.Date)
             {
                 Value = startDate
             };
-            var ed1 = new SqlParameter("endDate", SqlDbType.Date)
+            var ed1 = new SqlParameter("V_END_DATE", SqlDbType.Date)
             {
                 Value = endDate
             };
-            var sd3 = new SqlParameter("startDate", SqlDbType.Date)
+            var sd3 = new SqlParameter("V_START_DATE", SqlDbType.Date)
             {
                 Value = startDate
             };
-            var ed3 = new SqlParameter("endDate", SqlDbType.Date)
+            var ed3 = new SqlParameter("V_END_DATE", SqlDbType.Date)
             {
                 Value = endDate
             };

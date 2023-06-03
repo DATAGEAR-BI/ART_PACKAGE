@@ -356,6 +356,28 @@ export const Filters = {
             { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
 
         ]
+    },
+    UserPerformancePerActionUser: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "case_id", field: "case_id", label: "Case ID", operators: ['equal'], type: "string" },
+                //{ id: "case_status", field: "case_status", label: "Case Status", type: "string", ...multiSelectSetting("/DropDownHelper/GetSanctionCasesStatusDropDown") },
+                //{ id: "case_type", field: "case_type", label: "Case Type", type: "string", ...multiSelectSetting("/DropDownHelper/GetSanctionAllCasesTypesDropDown") },
+                //{ id: "create_user", field: "create_user", label: "Create User", type: "string", ...multiSelectSetting("/DropDownHelper/GetCreateUserDropDown") },
+                //{ id: "prev_status_user", field: "prev_status_user", label: "Prev Status User", type: "string", ...multiSelectSetting("/DropDownHelper/GetPrevStatusUserDropDown") },
+                //{ id: "prev_status", field: "prev_status", label: "Prev Status", type: "string", ...multiSelectSetting("/DropDownHelper/GetPrevStatusDropDown") },
+                ////{ id: "ColumnsNames", field: "ColumnsNames", label: "ColumnsNames", type: "string" }
+            ]
+        },
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
     }
 }
 

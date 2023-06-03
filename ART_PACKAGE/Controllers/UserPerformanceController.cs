@@ -9,6 +9,7 @@ using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using Data.DGECM;
 
 namespace DataGear_RV_Ver_1._7.Controllers
 {
@@ -19,6 +20,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
         private readonly AuthContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
+        private readonly DGECMContext db = new DGECMContext();
 
         public UserPerformanceController(AuthContext _context,Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv)
         {
@@ -40,18 +42,18 @@ namespace DataGear_RV_Ver_1._7.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"CaseTypeCd".ToLower(),dbdgcmgmt.RefTableVals
-                    //   .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
-                    //   //.Where(b => b.DisplayOrdrNo == 0 || b.DisplayOrdrNo == 5)
-                    //   .Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"CaseStatus".ToLower(),dbdgcmgmt.RefTableVals
-                    //            .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                    //           // .Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                    //            .Select(x=>x.ValDesc)
-                    //            .ToDynamicList() },
-                    //{"Priority".ToLower(),dbdgcmgmt.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                    //    .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() },
+                    {"CaseTypeCd".ToLower(),db.RefTableVals
+                       .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
+                       //.Where(b => b.DisplayOrdrNo == 0 || b.DisplayOrdrNo == 5)
+                       .Select(x=>x.ValDesc).ToDynamicList() },
+                    {"CaseStatus".ToLower(),db.RefTableVals
+                                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
+                               // .Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
+                                .Select(x=>x.ValDesc)
+                                .ToDynamicList() },
+                    {"Priority".ToLower(),db.RefTableVals
+                        .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
+                        .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

@@ -21,10 +21,12 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; }
     public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; }
     public virtual DbSet<ArtHomeCasesType> ArtHomeCasesTypes { get; set; }
-    public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; }
-    public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; }
+    public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; } = null!;
+    public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; } = null!;
     public virtual DbSet<ArtSystemPreformance> ArtSystemPerformances { get; set; } = null!;
     public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
+    public  virtual DbSet<ArtUserPerformancePerActionUser> ArtUserPerformancePerActionUsers { get; set; } = null!;
+    public  virtual DbSet<ArtUserPerformPerAction> ArtUserPerformPerActions { get; set; } = null!;
     //AML
     public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
     public virtual DbSet<ArtSystemPrefPerStatus> ArtSystemPrefPerStatuses { get; set; } = null!;

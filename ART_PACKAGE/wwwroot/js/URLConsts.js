@@ -22,6 +22,7 @@
     VaPartyListUpdateDetails: "/VaPartyListUpdateDetails/GetData",
     VaSanctionListUpdateDetails: "/VaSanctionListUpdateDetails/GetData",
     SanctionAllCasesDetailNew: "/SanctionAllCasesDetailsNew/GetData",
+    UserPerformancePerActionUser: "/UserPerformancePerActionUser/GetData"
 
 
 }

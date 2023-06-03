@@ -11,6 +11,7 @@ using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using Data.DGECM;
 
 namespace DataGear_RV_Ver_1._7.Controllers
 {
@@ -18,6 +19,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
     public class SystemPerformanceController : Controller
     {
         private readonly AuthContext context;
+        private readonly DGECMContext db = new DGECMContext();
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
 
@@ -39,27 +41,27 @@ namespace DataGear_RV_Ver_1._7.Controllers
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
 
-                //DropDownColumn = new Dictionary<string, List<dynamic>>
-                //{
-                //    ////{"CaseType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseType).Distinct().ToDynamicList() },
-                //    ////{"CaseStatus".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseStatus).Distinct().ToDynamicList() },
-                //    ////{"Priority".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.Priority).Distinct().ToDynamicList() },
-                //    ////{"TransactionDirection".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionDirection).Distinct().ToDynamicList() },
-                //    ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
-                //    ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
-                //    ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
+                DropDownColumn = new Dictionary<string, List<dynamic>>
+                {
+                    ////{"CaseType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseType).Distinct().ToDynamicList() },
+                    ////{"CaseStatus".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseStatus).Distinct().ToDynamicList() },
+                    ////{"Priority".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.Priority).Distinct().ToDynamicList() },
+                    ////{"TransactionDirection".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionDirection).Distinct().ToDynamicList() },
+                    ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
+                    ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
+                    ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
 
-                //    {"CaseType".ToLower(),context.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
-                //    {"CaseStatus".ToLower(),context.RefTableVals
-                //        .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                //        //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                //        //.Where(b => b.DisplayOrdrNo==0)
-                //        .Select(x=>x.ValDesc).ToDynamicList() },
-                //    {"Priority".ToLower(),context.RefTableVals
-                //        .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                //        .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
+                    {"CaseType".ToLower(),db.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
+                    {"CaseStatus".ToLower(),db.RefTableVals
+                        .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
+                        //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
+                        //.Where(b => b.DisplayOrdrNo==0)
+                        .Select(x=>x.ValDesc).ToDynamicList() },
+                    {"Priority".ToLower(),db.RefTableVals
+                        .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
+                        .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
 
-                //};
+                };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
