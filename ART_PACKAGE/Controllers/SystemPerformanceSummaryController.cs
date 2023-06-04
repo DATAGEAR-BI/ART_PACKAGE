@@ -42,29 +42,29 @@ namespace DataGear_RV_Ver_1._7.Controllers
             //var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
             //var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
             //var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
-            var sd = new SqlParameter("V_START_DATE", SqlDbType.Date)
+            var sd = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = startDate
+                Value = DateTime.Parse(startDate)
             };
-            var ed = new SqlParameter("V_END_DATE", SqlDbType.Date)
+            var ed = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = endDate
+                Value = DateTime.Parse(endDate)
             };
-            var sd1 = new SqlParameter("V_START_DATE", SqlDbType.Date)
+            var sd1 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = startDate
+                Value = DateTime.Parse(startDate)
             };
-            var ed1 = new SqlParameter("V_END_DATE", SqlDbType.Date)
+            var ed1 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = endDate
+                Value = DateTime.Parse(endDate)
             };
-            var sd3 = new SqlParameter("V_START_DATE", SqlDbType.Date)
+            var sd3 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = startDate
+                Value = DateTime.Parse(startDate)
             };
-            var ed3 = new SqlParameter("V_END_DATE", SqlDbType.Date)
+            var ed3 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = endDate
+                Value = DateTime.Parse(endDate)
             };
 
             chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SPNames.ST_SYSTEM_PERF_PER_DIRECTION,sd,ed);
@@ -79,8 +79,8 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     ChartId = "StSystemPerfPerStatus",
                     Data = chart1Data.ToList(),
                     Title = "Cases Per Status",
-                    Cat = "CASE_STATUS",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Cat = "case_status",
+                    Val = "Total_Number_of_Cases"
 
                 },
                 new ChartData<ArtSystemPerfPerType>
@@ -89,7 +89,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     Data = chart2data.ToList(),
                     Title = "Cases Per Type",
                     Cat = "CASE_TYPE",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "Total_Number_of_Cases"
                 },
                 new ChartData<ArtSystemPrefPerDirection>
                 {
@@ -97,7 +97,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     Data = chart3Data.ToList(),
                     Title = "Cases Per Trans Deriction",
                     Cat = "TREANSACTION_DIRECTION",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "Total_Number_of_Cases"
                 }
             };
 

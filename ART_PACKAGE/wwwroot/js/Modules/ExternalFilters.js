@@ -378,7 +378,26 @@ export const Filters = {
             { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
 
         ]
-    }
+    },
+    UserPerformPerAction: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                //{ id: "case_id", field: "case_id", label: "Case ID", operators: ['equal'], type: "string" },
+                //{ id: "case_status", field: "case_status", label: "Case Status", type: "string", ...multiSelectSetting("/DropDownHelper/GetSanctionCasesStatusDropDown") },
+                //{ id: "case_type", field: "case_type", label: "Case Type", type: "string", ...multiSelectSetting("/DropDownHelper/GetSanctionAllCasesTypesDropDown") },
+
+            ]
+        },
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
 }
 
 

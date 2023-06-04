@@ -33,25 +33,25 @@ namespace DataGear_RV_Ver_1._7.Controllers
         public IActionResult GetData([FromBody] StoredReq para)
         {
 
-            IQueryable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
             var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
             var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("V_START_DATE", SqlDbType.VarChar)
+            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("V_END_DATE", SqlDbType.VarChar)
+            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
 
-            data = (IQueryable<ArtUserPerformancePerActionUser>)context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
+            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
 
 
 
 
-            var Data = data.CallData<ArtUserPerformancePerActionUser>(para.req);
+            var Data = data.AsQueryable().CallData<ArtUserPerformancePerActionUser>(para.req);
 
 
             var result = new
@@ -76,42 +76,42 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IQueryable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
             var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
             var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("V_START_DATE", SqlDbType.VarChar)
+            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("V_END_DATE", SqlDbType.VarChar)
+            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
 
-            data = (IQueryable<ArtUserPerformancePerActionUser>)context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
+            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
 
-            var bytes = await data.ExportToCSV<ArtUserPerformancePerActionUser>(para.req);
+            var bytes = await data.AsQueryable().ExportToCSV<ArtUserPerformancePerActionUser>(para.req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IQueryable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
             var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
             var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("V_START_DATE", SqlDbType.VarChar)
+            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("V_END_DATE", SqlDbType.VarChar)
+            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
 
-            data = (IQueryable<ArtUserPerformancePerActionUser>)context.ExecuteProc<ArtUserPerformancePerActionUser>("ART_ST_USER_PERFORMANCE_PER_ACTION_USER", sd, ed);
+            data = context.ExecuteProc<ArtUserPerformancePerActionUser>("ART_ST_USER_PERFORMANCE_PER_ACTION_USER", sd, ed);
             ViewData["title"] = "User Performance Per Action User Report";
             ViewData["desc"] = "";
             var bytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5

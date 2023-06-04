@@ -176,20 +176,23 @@
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
                                     </a>
-                                    <ul class="treeview-menu">
-                                        <li class="active ">
-                                            <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
-                                        </li>
-                                        <li class="active ">
-                                            <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
-                                        </li>
-                                        <li class="active ">
-                                            <a href="@Url.Action("Index", "UserPerfAvgPrevStatusUser")"><i class="glyphicon glyphicon-tasks"></i> <span>Avg Previous Status & User</span></a>
-                                        </li>
-                                        <li class="active ">
-                                            <a href="@Url.Action("Index", "UserPerfAvgPrevUser")"><i class="glyphicon glyphicon-tasks"></i> <span>Avg Previous User</span></a>
-                                        </li>
-                                    </ul>
+                                <ul class="treeview-menu">
+                                    @*<li class="active ">
+                                    <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                    </li>*@
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "UserPerformPerAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "UserPerformancePerActionUser")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action User</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "UserPerformancePerUserAndAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per User And Action</span></a>
+                                    </li>
+                                </ul>
                                 </li>
 
                                 <li class="treeview">

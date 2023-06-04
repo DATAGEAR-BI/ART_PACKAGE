@@ -8,15 +8,15 @@ namespace Data.Data
 {
     public class ArtUserPerformPerAction
     {
-        public string ACTION { get; set; }
-        public decimal? TOTAL_NUMBER_OF_CASES { get; set; }
-        public decimal? DURATIONS_IN_SECONDS { get; set; }
-        public decimal? AVG_DURATIONS_IN_SECONDS { get; set; }
-        public decimal? DURATIONS_IN_MINUTES { get; set; }
-        public decimal? AVG_DURATIONS_IN_MINUTES { get; set; }
-        public decimal? DURATIONS_IN_HOURS { get; set; }
-        public decimal? AVG_DURATIONS_IN_HOURS { get; set; }
-        public decimal? DURATIONS_IN_DAYS { get; set; }
-        public decimal? AVG_DURATIONS_IN_DAYS { get; set; }
+        public string action { get; set; }
+        public int? Total_Number_Of_Cases { get; set; }
+        public int? durations_in_seconds { get; set; }
+        public int? AVG_durations_in_seconds { get; set; }
+        public int? durations_in_minutes { get; set; }
+        public int? AVG_durations_in_minutes { get; set; }
+        public int? durations_in_hours { get; set; }
+        public int? AVG_durations_in_hours { get; set; }
+        public int? durations_in_days { get; set; }
+        public int? AVG_durations_in_days { get; set; }
     }
 }
