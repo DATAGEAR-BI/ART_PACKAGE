@@ -66,18 +66,20 @@ namespace SqlServerMigrations.Migrations
 
 ");
             //ART_USER_PERFORMANCE => View
-            migrationBuilder.Sql($@"SET ANSI_NULLS ON
-                                            GO
+            migrationBuilder.Sql($@"
+                                  /****** Object:  View [ART_DB].[ART_USER_PERFORMANCE]    Script Date: 04/06/2023 11:20:12 ******/
+                                  SET ANSI_NULLS ON
+                                  GO
 
-                                            SET QUOTED_IDENTIFIER ON
-                                            GO
+                                  SET QUOTED_IDENTIFIER ON
+                                  GO
 
-                                                CREATE VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
+                                  CREATE VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
                                                 select 
                                                     a.CASE_RK,
                                                     a.CASE_ID,
                                                     a.VALID_FROM_DATE ,
-                                                    a.CASE_TYPE_CD,
+                                                    T.VAL_DESC CASE_TYPE_CD,
                                                     c.VAL_DESC CASE_STATUS,
                                                     h.VAL_DESC PRIORITY,
                                                     a.CASE_DESC,
@@ -106,6 +108,8 @@ namespace SqlServerMigrations.Migrations
 
                                             LEFT JOIN [DGECM].dgcmgmt.REF_TABLE_VAL H
                                             ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY'
+											LEFT JOIN
+                                            [DGECM].dgcmgmt.REF_TABLE_VAL T ON lower(T.VAL_CD) = lower(a.Case_Type_Cd) AND T.REF_TABLE_NAME = 'RT_CASE_TYPE' 
 
                                             left JOIN [DGECM].dgcmgmt.ECM_EVENT I
                                             on I.BUSINESS_OBJECT_RK=a.CASE_RK   AND I.EVENT_TYPE_CD in('ACTVCWF','UPDCWF')
@@ -130,7 +134,10 @@ namespace SqlServerMigrations.Migrations
                                                     SUBSTRING(I.EVENT_DESC, CHARINDEX(':', I.EVENT_DESC) + 6, LEN(I.EVENT_DESC)) else
                                                     SUBSTRING(I.EVENT_DESC, CHARINDEX(':', I.EVENT_DESC) + 2, LEN(I.EVENT_DESC))  end) is not null
                                             ;
-                                            GO
+                                        GO
+
+
+
                                             ");
             //ART_ST_SYSTEM_PERF_PER_DIRECTION => Stored P
             migrationBuilder.Sql($@"SET ANSI_NULLS ON

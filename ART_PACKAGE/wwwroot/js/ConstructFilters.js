@@ -7,8 +7,9 @@ import { Spinner } from "../lib/spin.js/spin.js"
 var exRules = [];
 class ExternalFilter extends HTMLElement {
     f = [];
-    filterRulesObject = [];
+    //filterRulesObject = [];
     constructor() {
+        this.filterRulesObject = [];
         super();
         var spinnerstyle = document.createElement("link");
         spinnerstyle.rel = "stylesheet";
@@ -64,48 +65,6 @@ class ExternalFilter extends HTMLElement {
                 this.hiddenFiltersRules();
             }
         });
-
-        //var goToDetailsBtn = document.createElement("button");
-        //goToDetailsBtn.innerText = "Go to details";
-        //goToDetailsBtn.classList.add("col-xs-2", "col-md-2", "col-sm-2", "btn", "btn-primary");
-
-
-        //goToDetailsBtn.onclick = () => {
-
-        //    var rlz = []
-        //    var rules = $(filtercontrol).queryBuilder('getRules');
-
-        //    var g = [...rules.rules].reduce((group, product) => {
-        //        const { id } = product;
-        //        group[id] = !group[id] ? [] : group[id];
-        //        group[id].push(product);
-        //        return group;
-        //    }, {});
-        //    var arr = [];
-        //    for (var prop in g) {
-        //        arr.push(g[prop]);
-        //    }
-        //    if (arr.some(x => x.length > 1)) {
-        //        console.log("error");
-        //    } else {
-        //        rlz = Array.prototype.concat.apply([], arr);
-        //        rlz = [...exRules].map(x => {
-        //            if (Array.isArray(x.value)) {
-        //                x.value = [...x.value].join(",");
-        //            }
-        //            return x;
-        //        });
-        //    }
-        //    var fils = GoToDeatailsUrls[key].filtersOrder;
-        //    var detailsUrl = GoToDeatailsUrls[key].url;
-        //    [...fils].forEach(x => {
-        //        if (rlz.some(f => f.id == x)) {
-        //            var rl = rlz.filter(f => f.id == x);
-        //            detailsUrl += `${rl[0].id}=${rl[0].value}&`
-        //        }
-        //    });
-        //    window.open(detailsUrl, "_blank");
-        //}
 
 
 

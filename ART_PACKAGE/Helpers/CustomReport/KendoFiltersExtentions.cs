@@ -303,7 +303,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                         {
                             var value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date.ToString());
+                            query += string.Format(DateOpForC[i.@operator], $"DbFunctions.TruncateTime(para.{i.field})", value.Date);
                         }
                         else if (propType.IsEnum)
                         {
