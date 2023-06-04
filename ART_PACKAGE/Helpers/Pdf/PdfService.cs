@@ -128,7 +128,7 @@ namespace ART_PACKAGE.Services.Pdf
 
 
 
-
+            //return await pdf.BuildFile(ControllerContext);
 
             var outputStream = new MemoryStream();
             var document = new Document();
@@ -136,33 +136,12 @@ namespace ART_PACKAGE.Services.Pdf
             var coverReader = new PdfReader(await coverPdf.BuildFile(ControllerContext));
             var bodyReader = new PdfReader(await pdf.BuildFile(ControllerContext));
             document.Open();
-            //var tasks = new List<Task<PdfReader>>();
-            //pdfs.ToList().ForEach(x =>
-            //{
-            //    var t = Task.Run(async () =>
-            //    {
-            //        return new PdfReader(await x.BuildFile(ControllerContext));
-            //    });
-            //    tasks.Add(t);
-            //});
-            //var memoryStreams = await Task.WhenAll(tasks);
-
-            //var first = memoryStreams.Min(x=>x.NumberOfPages);
             writer.AddPage(writer.GetImportedPage(coverReader, 1));
             for (int i = 1; i <= bodyReader.NumberOfPages; i++)
             {
                 writer.AddPage(writer.GetImportedPage(bodyReader, i));
 
             }
-            //for (int i = 1; i <= first; i++)
-            //{
-            //    foreach (var reader in memoryStreams)
-            //    {
-            //        writer.AddPage(writer.GetImportedPage(reader, i));
-
-            //    }
-
-            //}
 
             document.Close();
 

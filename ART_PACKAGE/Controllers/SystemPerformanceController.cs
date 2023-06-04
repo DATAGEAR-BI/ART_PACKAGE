@@ -51,15 +51,15 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
                     ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
 
-                    {"CaseType".ToLower(),new List<string> { "hi" , "hello"}.ToDynamicList() },
-                    //{"CaseStatus".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                    //    //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                    //    //.Where(b => b.DisplayOrdrNo==0)
-                    //    .Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"Priority".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                    //    .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
+                    {"CaseType".ToLower(),db.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
+                    {"CaseStatus".ToLower(),db.RefTableVals
+                        .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
+                        //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
+                        //.Where(b => b.DisplayOrdrNo==0)
+                        .Select(x=>x.ValDesc).ToDynamicList() },
+                    {"Priority".ToLower(),db.RefTableVals
+                        .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
+                        .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
 
                 };
             }
