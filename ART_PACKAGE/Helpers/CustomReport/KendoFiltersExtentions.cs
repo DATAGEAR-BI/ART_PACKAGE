@@ -11,6 +11,7 @@ using System.Globalization;
 using CsvHelper.Configuration;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
@@ -169,11 +170,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     }
                     finally
                     {
-                        if(dbtype == "oracle")
-                            _sb.Append(@$"""{ i.field}"" {v}");
+                        if (dbtype == "oracle")
+                            _sb.Append(@$"""{i.field}"" {v}");
                         else
                         {
-                        _sb.Append($"{i.field} {v}");
+                            _sb.Append($"{i.field} {v}");
 
                         }
                     }
@@ -280,14 +281,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
-
-
                             }
                             else
                             {
                                 var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
-
                             }
                         }
                         _sb.Append(query);
@@ -296,8 +294,16 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     {
                         if (propType.Name == typeof(string).Name)
                         {
-                            var value = ((JsonElement)i.value).ToObject<string>();
-                            query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
+                            }
+                            else
+                            {
+                                var value = ((JsonElement)i.value).ToObject<string>();
+                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
+                            }
+                
                         }
                         else if (propType.Name == typeof(DateTime).Name)
                         {
