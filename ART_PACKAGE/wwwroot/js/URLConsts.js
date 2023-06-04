@@ -24,7 +24,7 @@
     SanctionAllCasesDetailNew: "/SanctionAllCasesDetailsNew/GetData",
     UserPerformancePerActionUser: "/UserPerformancePerActionUser/GetData",
     UserPerformPerAction: "/UserPerformPerAction/GetData",
-
+    UserPerformancePerUserAndAction: "/UserPerformancePerUserAndAction/GetData",
 
 }
 

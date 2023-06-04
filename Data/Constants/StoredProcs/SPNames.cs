@@ -13,5 +13,6 @@ namespace Data.Constants.StoredProcs
         public static readonly string ST_SYSTEM_PERF_PER_TYPE = "[ART_DB].[ART_ST_SYSTEM_PERF_PER_TYPE]";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER]";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION]";
+        public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION]";
     }
 }

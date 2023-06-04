@@ -44,27 +44,27 @@ namespace DataGear_RV_Ver_1._7.Controllers
             //var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
             var sd = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(startDate)
+                Value = startDate
             };
             var ed = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(endDate)
+                Value = endDate
             };
             var sd1 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(startDate)
+                Value = startDate
             };
             var ed1 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(endDate)
+                Value = endDate
             };
             var sd3 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(startDate)
+                Value = startDate
             };
             var ed3 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = DateTime.Parse(endDate)
+                Value = endDate
             };
 
             chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SPNames.ST_SYSTEM_PERF_PER_DIRECTION,sd,ed);
