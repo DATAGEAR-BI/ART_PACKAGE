@@ -72,6 +72,7 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
+RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
@@ -102,5 +103,5 @@ app.MapControllerRoute(
 
 app.Run();
 
-RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)app.Environment);
+
 
