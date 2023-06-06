@@ -7,9 +7,8 @@ import { Spinner } from "../lib/spin.js/spin.js"
 var exRules = [];
 class ExternalFilter extends HTMLElement {
     f = [];
-    //filterRulesObject = [];
+    filterRulesObject = [];
     constructor() {
-        this.filterRulesObject = [];
         super();
         var spinnerstyle = document.createElement("link");
         spinnerstyle.rel = "stylesheet";
