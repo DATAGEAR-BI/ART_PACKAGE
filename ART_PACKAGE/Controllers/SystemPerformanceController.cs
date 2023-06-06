@@ -13,7 +13,7 @@ using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Data.DGECM;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class SystemPerformanceController : Controller
