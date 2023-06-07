@@ -12,6 +12,7 @@ using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Data.DGECM;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataGear_RV_Ver_1._7.Controllers
 {
@@ -19,16 +20,22 @@ namespace DataGear_RV_Ver_1._7.Controllers
     public class SystemPerformanceController : Controller
     {
         private readonly AuthContext context;
-        private readonly DGECMContext db = new DGECMContext();
+        private readonly DGECMContext db;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
 
-        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv)
+        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
         {
-            this._env = env; _pdfSrv = pdfSrv; context = _context;
+            this._env = env; _pdfSrv = pdfSrv;
+            context = _context;
+            this.db = db;
         }
 
-
+        public IActionResult Test()
+        {
+            var data = context.ArtSystemPerformances.Where(x => x.CreateDate.Date.CompareTo(new DateTime(2022, 04, 12).Date) == 0).Take(10);
+            return Ok(data);
+        }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtSystemPreformance> data = context.ArtSystemPerformances.AsQueryable();

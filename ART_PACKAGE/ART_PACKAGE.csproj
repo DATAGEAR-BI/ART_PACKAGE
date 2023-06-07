@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Helpers\DropDown\DropDownService.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="wwwroot\bower_components\bootstrap\.bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\CHANGELOG.md" />

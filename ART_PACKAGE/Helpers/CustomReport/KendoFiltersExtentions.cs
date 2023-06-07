@@ -229,47 +229,38 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var value = ((JsonElement)i.value).ToObject<string>();
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value);
-
                             }
                         }
                         else if (underlyingType.Name == typeof(DateTime).Name)
                         {
-
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(DateOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
                                 query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToString());
-
                             }
                         }
                         else if (underlyingType.IsEnum)
                         {
-
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 var Gmethod = method.MakeGenericMethod(underlyingType);
                                 var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
-
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
-
                             }
                         }
                         else
@@ -303,7 +294,6 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                                 var value = ((JsonElement)i.value).ToObject<string>();
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
                             }
-                
                         }
                         else if (propType.Name == typeof(DateTime).Name)
                         {
