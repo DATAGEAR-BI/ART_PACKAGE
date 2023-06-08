@@ -20,11 +20,12 @@ namespace ART_PACKAGE.Controllers
         private readonly AuthContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
-        private readonly DGECMContext db = new DGECMContext();
+        private readonly DGECMContext db;
 
-        public UserPerformanceController(AuthContext _context,Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv)
+        public UserPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
         {
-            this._env = env; _pdfSrv = pdfSrv;context = _context;
+            this._env = env; _pdfSrv = pdfSrv; context = _context;
+            this.db = db;
         }
 
         //private readonly CMC_AUDIT_TEST.ModelContext dbcmcaudit = new CMC_AUDIT_TEST.ModelContext();

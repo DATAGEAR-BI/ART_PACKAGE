@@ -56,7 +56,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
 
     // Create chart instance
     var columnChart = chart.createChild(am4charts.XYChart);
-
+    
     // Create axes
     var categoryAxis = columnChart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20
@@ -65,7 +65,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     categoryAxis.renderer.inversed = true;
 
     var valueAxis = columnChart.xAxes.push(new am4charts.ValueAxis());
-    valueAxis.renderer.labels.template.fontSize = 20
+    valueAxis.renderer.labels.template.fontSize = 20;
 
     // Create series
     var columnSeries = columnChart.series.push(new am4charts.ColumnSeries());
@@ -83,7 +83,11 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     valueLabel.label.hideOversized = false;
     valueLabel.label.truncate = false;
     valueLabel.label.dx = 10;
+    columnChart.cursor = new am4charts.XYCursor();
+    columnChart.cursor.behavior = "zoomX";
+    var scrollbar = new am4charts.XYChartScrollbar();
 
+    columnChart.scrollbarX = scrollbar;
 
     /**
      * Pie chart
