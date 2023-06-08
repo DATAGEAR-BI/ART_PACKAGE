@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
 
-            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
+            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
 
 
 
@@ -89,7 +89,7 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
 
-            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
+            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, sd, ed);
 
             var bytes = await data.AsQueryable().ExportToCSV<ArtUserPerformancePerActionUser>(para.req);
             return File(bytes, "text/csv");

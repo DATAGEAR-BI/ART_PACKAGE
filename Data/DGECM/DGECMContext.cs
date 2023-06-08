@@ -20,52 +20,12 @@ namespace Data.DGECM
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("Arabic_100_CI_AI");
+            if (this.Database.IsSqlServer())
+                ModelCreatingConfigurator.DGECMSqlServerOnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<RefTableVal>(entity =>
-            {
-                entity.HasKey(e => new { e.RefTableName, e.ValCd })
-                    .HasName("Ref_Table_Val_Pk");
+            if (this.Database.IsOracle())
+                ModelCreatingConfigurator.DGECMOracleOnModelCreating(modelBuilder);
 
-                entity.ToTable("Ref_Table_Val", "DGCmgmt");
-
-                entity.Property(e => e.RefTableName)
-                    .HasMaxLength(30)
-                    .HasColumnName("Ref_Table_Name");
-
-                entity.Property(e => e.ValCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Val_Cd");
-
-                entity.Property(e => e.ActiveFlg)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Active_Flg")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Deleted).HasColumnName("DELETED");
-
-                entity.Property(e => e.DisplayOrdrNo)
-                    .HasColumnType("numeric(6, 0)")
-                    .HasColumnName("Display_Ordr_No");
-
-                entity.Property(e => e.ParentRefTableName)
-                    .HasMaxLength(30)
-                    .HasColumnName("Parent_Ref_Table_Name");
-
-                entity.Property(e => e.ParentValCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Parent_Val_Cd");
-
-                entity.Property(e => e.ValDesc)
-                    .HasMaxLength(4000)
-                    .HasColumnName("Val_Desc");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
-                    .HasConstraintName("REF_TABLE_VAL_FK1");
-            });
 
             OnModelCreatingPartial(modelBuilder);
         }

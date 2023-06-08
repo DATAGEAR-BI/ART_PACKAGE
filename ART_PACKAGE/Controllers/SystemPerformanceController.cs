@@ -38,7 +38,7 @@ namespace ART_PACKAGE.Controllers
         }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtSystemPreformance> data = context.ArtSystemPerformances.AsQueryable();
+            IQueryable<ArtSystemPerformance> data = context.ArtSystemPerformances.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -72,7 +72,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
-            var Data = data.CallData<ArtSystemPreformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtSystemPerformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -91,7 +91,7 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
             var data = context.ArtSystemPerformances;
-            var bytes = await data.ExportToCSV<ArtSystemPreformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
+            var bytes = await data.ExportToCSV<ArtSystemPerformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
@@ -100,7 +100,7 @@ namespace ART_PACKAGE.Controllers
         {
             var DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            var data = context.ArtSystemPerformances.CallData<ArtSystemPreformance>(req).Data.ToList();
+            var data = context.ArtSystemPerformances.CallData<ArtSystemPerformance>(req).Data.ToList();
             ViewData["title"] = "System Performance Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5

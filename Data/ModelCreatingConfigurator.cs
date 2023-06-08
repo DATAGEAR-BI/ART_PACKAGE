@@ -1,5 +1,6 @@
 ﻿using Data.Data;
 using Data.DGCMGMT;
+using Data.DGECM;
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -114,9 +115,9 @@ namespace Data
                     .HasColumnType("datetime")
                     .HasColumnName("CREATE_DATE");
 
-                entity.Property(e => e.CreateUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("CREATE_USER_ID");
+                //entity.Property(e => e.CreateUserId)
+                //    .HasMaxLength(60)
+                //    .HasColumnName("CREATE_USER_ID");
 
                 entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_IN_DAYS");
 
@@ -179,9 +180,9 @@ namespace Data
                     .HasMaxLength(60)
                     .HasColumnName("UPDATE_USER_ID");
 
-                entity.Property(e => e.ValidFromDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("VALID_FROM_DATE");
+                //entity.Property(e => e.ValidFromDate)
+                //    .HasColumnType("datetime")
+                //    .HasColumnName("VALID_FROM_DATE");
             });
 
             modelBuilder.Entity<ArtUserPerformance>(entity =>
@@ -320,7 +321,128 @@ namespace Data
             });
         }
 
+        public static void DGECMSqlServerOnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseCollation("Arabic_100_CI_AI");
+            modelBuilder.Entity<RefTableVal>(entity =>
+            {
+                entity.HasKey(e => new { e.RefTableName, e.ValCd })
+                    .HasName("Ref_Table_Val_Pk");
 
+                entity.ToTable("Ref_Table_Val", "DGCmgmt");
+
+                entity.Property(e => e.RefTableName)
+                    .HasMaxLength(30)
+                    .HasColumnName("Ref_Table_Name");
+
+                entity.Property(e => e.ValCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Val_Cd");
+
+                entity.Property(e => e.ActiveFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Active_Flg")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Deleted).HasColumnName("DELETED");
+
+                entity.Property(e => e.DisplayOrdrNo)
+                    .HasColumnType("numeric(6, 0)")
+                    .HasColumnName("Display_Ordr_No");
+
+                entity.Property(e => e.ParentRefTableName)
+                    .HasMaxLength(30)
+                    .HasColumnName("Parent_Ref_Table_Name");
+
+                entity.Property(e => e.ParentValCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Parent_Val_Cd");
+
+                entity.Property(e => e.ValDesc)
+                    .HasMaxLength(4000)
+                    .HasColumnName("Val_Desc");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
+                    .HasConstraintName("REF_TABLE_VAL_FK1");
+            });
+        }
+
+
+        public static void DGECMOracleOnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("DGCMGMT");
+
+            modelBuilder.Entity<RefTableVal>(entity =>
+            {
+                entity.HasKey(e => new { e.RefTableName, e.ValCd })
+                    .HasName("REF_TABLE_VAL_PK");
+
+                entity.ToTable("REF_TABLE_VAL");
+
+                entity.HasIndex(e => new { e.ParentRefTableName, e.ParentValCd }, "REF_TABLE_VAL_FK1");
+
+                entity.Property(e => e.RefTableName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("REF_TABLE_NAME");
+
+                entity.Property(e => e.ValCd)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("VAL_CD");
+
+                entity.Property(e => e.ActiveFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVE_FLG")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Deleted)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("DELETED")
+                    .HasDefaultValueSql("0")
+                    .IsFixedLength();
+
+                entity.Property(e => e.DisplayOrdrNo)
+                    .HasPrecision(6)
+                    .HasColumnName("DISPLAY_ORDR_NO");
+
+
+
+                entity.Property(e => e.ParentRefTableName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_REF_TABLE_NAME");
+
+                entity.Property(e => e.ParentValCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_VAL_CD");
+
+                entity.Property(e => e.ValDesc)
+                    .IsUnicode(false)
+                    .HasColumnName("VAL_DESC");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
+                    .HasConstraintName("REF_TABLE_VAL_FK1");
+            });
+
+            modelBuilder.HasSequence("CASE_RK_SEQ");
+
+            modelBuilder.HasSequence("CUST_RK_SEQ");
+
+            modelBuilder.HasSequence("EVENT_RK_SEQ");
+
+            modelBuilder.HasSequence("OCCS_RK_SEQ");
+
+            modelBuilder.HasSequence("USER_AUTH_DOMAIN_SEQUENCE");
+        }
         public static void OracleOnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ART");
@@ -391,83 +513,94 @@ namespace Data
             modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
 
-            modelBuilder.Entity<ArtSystemPreformance>(entity =>
+            modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SYSTEM_PERFORMANCE", "ART_DB");
+                entity.ToView("ART_SYSTEM_PERFORMANCE");
 
                 entity.Property(e => e.CaseDesc)
                     .HasMaxLength(100)
+                    .IsUnicode(false)
                     .HasColumnName("CASE_DESC");
 
                 entity.Property(e => e.CaseId)
                     .HasMaxLength(64)
+                    .IsUnicode(false)
                     .HasColumnName("CASE_ID");
 
-                entity.Property(e => e.CaseRk)
-                    .HasColumnType("numeric(10, 0)")
-                    .HasColumnName("CASE_RK");
-
                 entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("CASE_STATUS");
 
                 entity.Property(e => e.CaseType)
-                    .HasMaxLength(4000)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("CASE_TYPE");
 
                 entity.Property(e => e.ClientName)
-                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("CLIENT_NAME");
 
                 entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
                     .HasColumnName("CREATE_DATE");
 
-                entity.Property(e => e.CreateUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("CREATE_USER_ID");
+                entity.Property(e => e.DurationsInDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_DAYS");
 
-                entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_IN_DAYS");
+                entity.Property(e => e.DurationsInHours)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_HOURS");
 
-                entity.Property(e => e.DurationsInHours).HasColumnName("DURATIONS_IN_HOURS");
+                entity.Property(e => e.DurationsInMinutes)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_MINUTES");
 
-                entity.Property(e => e.DurationsInMinutes).HasColumnName("DURATIONS_IN_MINUTES");
-
-                entity.Property(e => e.DurationsInSeconds).HasColumnName("DURATIONS_IN_SECONDS");
+                entity.Property(e => e.DurationsInSeconds)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_SECONDS");
 
                 entity.Property(e => e.EcmLastStatusDate)
+                    .HasPrecision(6)
                     .HasColumnName("ECM_LAST_STATUS_DATE");
 
                 entity.Property(e => e.HitsCount)
-                    .HasMaxLength(250)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("HITS_COUNT");
 
                 entity.Property(e => e.IdentityNum)
-                    .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("IDENTITY_NUM");
 
                 entity.Property(e => e.InvestrUserId)
-                    .HasMaxLength(250)
+                    .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("INVESTR_USER_ID");
 
                 entity.Property(e => e.LockedBy)
                     .HasMaxLength(60)
+                    .IsUnicode(false)
                     .HasColumnName("LOCKED_BY");
 
                 entity.Property(e => e.Priority)
-                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("PRIORITY");
+
+                entity.Property(e => e.SwiftMessage)
+                    .HasColumnType("CLOB")
+                    .HasColumnName("SWIFT_MESSAGE");
 
                 entity.Property(e => e.SwiftReference)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("SWIFT_REFERENCE");
 
-                entity.Property(e => e.TransactionAmount).HasColumnName("TRANSACTION_AMOUNT");
+                entity.Property(e => e.TransactionAmount)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("TRANSACTION_AMOUNT");
 
                 entity.Property(e => e.TransactionCurrency)
                     .HasMaxLength(1000)
@@ -486,18 +619,14 @@ namespace Data
 
                 entity.Property(e => e.UpdateUserId)
                     .HasMaxLength(60)
+                    .IsUnicode(false)
                     .HasColumnName("UPDATE_USER_ID");
-
-                entity.Property(e => e.ValidFromDate)
-                  
-                    .HasColumnName("VALID_FROM_DATE");
             });
-
             modelBuilder.Entity<ArtUserPerformance>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_USER_PERFORMANCE", "ART_DB");
+                entity.ToView("ART_USER_PERFORMANCE", "ART");
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(256)

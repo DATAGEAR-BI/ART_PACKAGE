@@ -12,6 +12,7 @@ using Data.Constants.StoredProcs;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Data.Data;
+using Oracle.ManagedDataAccess.Client;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -90,7 +91,23 @@ namespace ART_PACKAGE.Controllers
 
         }
 
+        public IActionResult Test()
+        {
+            var sdch2 = new OracleParameter("startDate", OracleDbType.Varchar2, ParameterDirection.Input)
+            {
+                Value = "2020-01-01"
+            };
+            var edch2 = new OracleParameter("endDate", OracleDbType.Varchar2, ParameterDirection.Input)
+            {
+                Value = "2023-01-01"
+            };
+            var chart2output = new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)
+            {
 
+            };
+            var data = _db.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, sdch2, edch2, chart2output);
+            return Ok(data);
+        }
 
         public IActionResult GetAmlChartsData()
         {

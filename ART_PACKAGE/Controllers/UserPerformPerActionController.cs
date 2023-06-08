@@ -45,7 +45,7 @@ namespace ART_PACKAGE.Controllers
             {
                 Value = endDate
             };
-            data = context.ExecuteProc<ArtUserPerformPerAction>(SPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed);
+            data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed);
 
             var Data = data.AsQueryable().CallData<ArtUserPerformPerAction>(para.req);
 
@@ -90,7 +90,7 @@ namespace ART_PACKAGE.Controllers
             };
 
 
-            data = context.ExecuteProc<ArtUserPerformPerAction>(SPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
 
             var bytes = await data.AsQueryable().ExportToCSV<ArtUserPerformPerAction>(para.req);
             return File(bytes, "text/csv");
@@ -110,7 +110,7 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
 
-            data = context.ExecuteProc<ArtUserPerformPerAction>(SPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
 
             ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";

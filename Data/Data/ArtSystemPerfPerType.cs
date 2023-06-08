@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtSystemPerfPerType
     {
         public string? CASE_TYPE { get; set; }
-        public int Total_Number_of_Cases { get; set; }
+        public decimal Total_Number_of_Cases { get; set; }
     }
 }

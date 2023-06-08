@@ -8,7 +8,7 @@ namespace Data.Data
 {
     public class ArtSystemPrefPerStatus
     {
-        public string? case_status { get; set; }
-        public int Total_Number_of_Cases { get; set; }
+        public string? CASE_STATUS { get; set; }
+        public decimal TOTAL_NUMBER_OF_CASES { get; set; }
     }
 }

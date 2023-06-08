@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
             {
                 Value = endDate
             };
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
 
 
 
@@ -93,7 +93,7 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
 
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
 
 
             var bytes = await data.AsQueryable().ExportToCSV<ArtUserPerformPerUserAndAction>(para.req);
@@ -115,7 +115,7 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
 
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
             var bytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5

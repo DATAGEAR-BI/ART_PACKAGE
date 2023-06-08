@@ -11,6 +11,8 @@ using Microsoft.Data.SqlClient;
 using Data.Constants.StoredProcs;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using Data.Constants.db;
+using OracleInternal.SqlAndPlsqlParser.LocalParsing;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -20,12 +22,16 @@ namespace ART_PACKAGE.Controllers
         private readonly AuthContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IMemoryCache _cache;
+        private readonly IConfiguration _config;
+        private readonly string dbType;
 
-        public SystemPerformanceSummaryController(AuthContext _context,Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache)
+        public SystemPerformanceSummaryController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
         {
             this._env = env;
             _cache = cache;
             context = _context;
+            _config = config;
+            dbType = _config.GetValue<string>("dbType").ToUpper();
         }
 
         public IActionResult GetData([FromBody] StoredReq para)
@@ -37,39 +43,54 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtSystemPerfPerType> chart2data = Enumerable.Empty<ArtSystemPerfPerType>().AsQueryable();
 
 
-            var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value;
-            var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value;
-            //var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
-            //var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
-            //var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
-            var sd = new SqlParameter("@V_START_DATE", SqlDbType.Date)
+            //var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value;
+            //var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "enddate".ToLower())?.value;
+            ////var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
+            ////var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
+            ////var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
+            //var sd = new SqlParameter("@V_START_DATE", SqlDbType.Date)
+            //{
+            //    Value = startDate
+            //};
+            //var ed = new SqlParameter("@V_END_DATE", SqlDbType.Date)
+            //{
+            //    Value = endDate
+            //};
+            //var sd1 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
+            //{
+            //    Value = startDate
+            //};
+            //var ed1 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
+            //{
+            //    Value = endDate
+            //};
+            //var sd3 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
+            //{
+            //    Value = startDate
+            //};
+            //var ed3 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
+            //{
+            //    Value = endDate
+            //};
+            var chart1Params = para.procFilters.MapToParameters(dbType);
+            var chart2Params = para.procFilters.MapToParameters(dbType);
+            var chart3Params = para.procFilters.MapToParameters(dbType);
+            if (dbType == DbTypes.SqlServer)
             {
-                Value = startDate
-            };
-            var ed = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            {
-                Value = endDate
-            };
-            var sd1 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            {
-                Value = startDate
-            };
-            var ed1 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            {
-                Value = endDate
-            };
-            var sd3 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            {
-                Value = startDate
-            };
-            var ed3 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            {
-                Value = endDate
-            };
 
-            chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SPNames.ST_SYSTEM_PERF_PER_DIRECTION,sd,ed);
-            chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SPNames.ST_SYSTEM_PERF_PER_STATUS, sd1, ed1);
-            chart2data = context.ExecuteProc<ArtSystemPerfPerType>(SPNames.ST_SYSTEM_PERF_PER_TYPE, sd3,ed3);
+                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
+                chart2data = context.ExecuteProc<ArtSystemPerfPerType>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
+
+            }
+
+            if (dbType == DbTypes.Oracle)
+            {
+                chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
+                chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
+                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+
+            }
 
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);

@@ -8,12 +8,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
+using System.Data;
+using System.Data.Common;
 using System.Reflection.Emit;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
 public class AuthContext : IdentityDbContext<AppUser>
 {
+
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
     public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; }
@@ -23,7 +27,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtHomeCasesType> ArtHomeCasesTypes { get; set; }
     public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; } = null!;
     public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; } = null!;
-    public virtual DbSet<ArtSystemPreformance> ArtSystemPerformances { get; set; } = null!;
+    public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
     public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
     public virtual DbSet<ArtUserPerformancePerActionUser> ArtUserPerformancePerActionUsers { get; set; } = null!;
     public virtual DbSet<ArtUserPerformPerAction> ArtUserPerformPerActions { get; set; } = null!;
@@ -42,6 +46,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         : base(options)
     {
     }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -88,14 +93,62 @@ public class AuthContext : IdentityDbContext<AppUser>
 
         if (this.Database.IsOracle())
             ModelCreatingConfigurator.OracleOnModelCreating(modelBuilder);
-
-
+    }
+    public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
+    {
+        if (this.Database.IsSqlServer())
+            return this.SqlServerExecuteProc<T>(SPName, parameters);
+        if (this.Database.IsOracle())
+            return this.OracleExecuteProc<T>(SPName, parameters);
+        return Enumerable.Empty<T>();
     }
 
-
-    public IEnumerable<T> ExecuteProc<T>(string SPName, params SqlParameter[] parameters) where T : class
+    private IEnumerable<T> SqlServerExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
     {
         var sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
         return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
     }
+
+    private IEnumerable<T> OracleExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
+    {
+        var output = parameters.FirstOrDefault(x => x.Direction == ParameterDirection.Output);
+        if (output is null)
+            throw new NullReferenceException("there is no output parameter");
+
+        var command = this.Database.GetDbConnection().CreateCommand();
+        command.CommandText = SPName;
+        command.CommandType = CommandType.StoredProcedure;
+
+        command.Parameters.Add(output);
+        foreach (var param in parameters)
+        {
+            if (param.ParameterName == output.ParameterName)
+                continue;
+
+            command.Parameters.Add(param);
+        }
+        this.Database.OpenConnection();
+
+
+        using var reader = command.ExecuteReader();
+        var result = new List<T>();
+        var properties = typeof(T).GetProperties();
+        while (reader.Read())
+        {
+            var item = Activator.CreateInstance<T>();
+            foreach (var property in properties)
+            {
+                if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
+                {
+                    var value = reader[property.Name];
+                    property.SetValue(item, value);
+                }
+            }
+            result.Add(item);
+        }
+        this.Database.CloseConnection();
+        return result;
+
+    }
+
 }
