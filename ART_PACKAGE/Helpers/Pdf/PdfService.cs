@@ -44,48 +44,39 @@ namespace ART_PACKAGE.Services.Pdf
             };
 
 
+            return await pdf.BuildFile(ControllerContext);
 
 
 
 
+            //var outputStream = new MemoryStream();
+            //var document = new Document();
+            //var writer = new PdfCopy(document, outputStream);
+            //var coverReader = new PdfReader(await coverPdf.BuildFile(ControllerContext));
+            //var bodyReader = new PdfReader(await pdf.BuildFile(ControllerContext));
+            //document.Open();
+            ////var tasks = new List<Task<PdfReader>>();
+            ////pdfs.ToList().ForEach(x =>
+            ////{
+            ////    var t = Task.Run(async () =>
+            ////    {
+            ////        return new PdfReader(await x.BuildFile(ControllerContext));
+            ////    });
+            ////    tasks.Add(t);
+            ////});
+            ////var memoryStreams = await Task.WhenAll(tasks);
 
-            var outputStream = new MemoryStream();
-            var document = new Document();
-            var writer = new PdfCopy(document, outputStream);
-            var coverReader = new PdfReader(await coverPdf.BuildFile(ControllerContext));
-            var bodyReader = new PdfReader(await pdf.BuildFile(ControllerContext));
-            document.Open();
-            //var tasks = new List<Task<PdfReader>>();
-            //pdfs.ToList().ForEach(x =>
+            ////var first = memoryStreams.Min(x=>x.NumberOfPages);
+            //writer.AddPage(writer.GetImportedPage(coverReader, 1));
+            //for (int i = 1; i <= bodyReader.NumberOfPages; i++)
             //{
-            //    var t = Task.Run(async () =>
-            //    {
-            //        return new PdfReader(await x.BuildFile(ControllerContext));
-            //    });
-            //    tasks.Add(t);
-            //});
-            //var memoryStreams = await Task.WhenAll(tasks);
-
-            //var first = memoryStreams.Min(x=>x.NumberOfPages);
-            writer.AddPage(writer.GetImportedPage(coverReader, 1));
-            for (int i = 1; i <= bodyReader.NumberOfPages; i++)
-            {
-                writer.AddPage(writer.GetImportedPage(bodyReader, i));
-
-            }
-            //for (int i = 1; i <= first; i++)
-            //{
-            //    foreach (var reader in memoryStreams)
-            //    {
-            //        writer.AddPage(writer.GetImportedPage(reader, i));
-
-            //    }
+            //    writer.AddPage(writer.GetImportedPage(bodyReader, i));
 
             //}
 
-            document.Close();
+            //document.Close();
 
-            return outputStream.ToArray();
+            //return outputStream.ToArray();
         }
 
         public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data
@@ -128,45 +119,45 @@ namespace ART_PACKAGE.Services.Pdf
 
 
 
+            return await pdf.BuildFile(ControllerContext);
 
+            //var outputStream = new MemoryStream();
+            //var document = new Document();
+            //var writer = new PdfCopy(document, outputStream);
+            ////var coverReader = new PdfReader(await coverPdf.BuildFile(ControllerContext));
+            ////var bodyReader = new PdfReader();
+            //document.Open();
+            ////var tasks = new List<Task<PdfReader>>();
+            ////pdfs.ToList().ForEach(x =>
+            ////{
+            ////    var t = Task.Run(async () =>
+            ////    {
+            ////        return new PdfReader(await x.BuildFile(ControllerContext));
+            ////    });
+            ////    tasks.Add(t);
+            ////});
+            ////var memoryStreams = await Task.WhenAll(tasks);
 
-            var outputStream = new MemoryStream();
-            var document = new Document();
-            var writer = new PdfCopy(document, outputStream);
-            var coverReader = new PdfReader(await coverPdf.BuildFile(ControllerContext));
-            var bodyReader = new PdfReader(await pdf.BuildFile(ControllerContext));
-            document.Open();
-            //var tasks = new List<Task<PdfReader>>();
-            //pdfs.ToList().ForEach(x =>
+            ////var first = memoryStreams.Min(x=>x.NumberOfPages);
+            //writer.AddPage(writer.GetImportedPage(coverReader, 1));
+            //for (int i = 1; i <= bodyReader.NumberOfPages; i++)
             //{
-            //    var t = Task.Run(async () =>
-            //    {
-            //        return new PdfReader(await x.BuildFile(ControllerContext));
-            //    });
-            //    tasks.Add(t);
-            //});
-            //var memoryStreams = await Task.WhenAll(tasks);
-
-            //var first = memoryStreams.Min(x=>x.NumberOfPages);
-            writer.AddPage(writer.GetImportedPage(coverReader, 1));
-            for (int i = 1; i <= bodyReader.NumberOfPages; i++)
-            {
-                writer.AddPage(writer.GetImportedPage(bodyReader, i));
-
-            }
-            //for (int i = 1; i <= first; i++)
-            //{
-            //    foreach (var reader in memoryStreams)
-            //    {
-            //        writer.AddPage(writer.GetImportedPage(reader, i));
-
-            //    }
+            //    writer.AddPage(writer.GetImportedPage(bodyReader, i));
 
             //}
+            ////for (int i = 1; i <= first; i++)
+            ////{
+            ////    foreach (var reader in memoryStreams)
+            ////    {
+            ////        writer.AddPage(writer.GetImportedPage(reader, i));
 
-            document.Close();
+            ////    }
 
-            return outputStream.ToArray();
+            ////}
+
+            //document.Close();
+
+            //return outputStream.ToArray();
 
         }
 

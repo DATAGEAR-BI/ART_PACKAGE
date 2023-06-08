@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="DGCMGMT\**" />
-    <Compile Remove="FCF71\**" />
     <EmbeddedResource Remove="DGCMGMT\**" />
-    <EmbeddedResource Remove="FCF71\**" />
     <None Remove="DGCMGMT\**" />
-    <None Remove="FCF71\**" />
   </ItemGroup>
 
   <ItemGroup>

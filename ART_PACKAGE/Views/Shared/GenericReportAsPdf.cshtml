@@ -14,16 +14,19 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <style>
-     
+
         body {
             overflow: visible;
         }
-        .brk{
+
+        .brk {
             page-break-after: always;
         }
-        table{
-            width : 100%;
+
+        table {
+            width: 100%;
         }
+
         thead {
             display: table-header-group;
         }
@@ -35,21 +38,30 @@
         tr {
             page-break-inside: avoid;
         }
-        td {
 
+        td {
             text-align: center;
             vertical-align: middle;
             font-size: 14px;
         }
 
-        td div {
-            height : auto;
-            font-size: 12px;
-        }
+            td div {
+                height: auto;
+                font-size: 12px;
+            }
     </style>
 </head>
 <body>
     <div class="container-fluid">
+        <div class="jumbotron" style="height: 100%">
+            <h1 class="display-4">@ViewData["title"]</h1>
+            <p class="lead">@ViewData["desc"]</p>
+            <hr class="my-4">
+            <div class="d-flex justify-content-between">
+                <img src="~/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
+            </div>
+        </div>
+
         @if (!Model.First().Any())
         {
             <div>there is no data</div>
@@ -58,7 +70,7 @@
         {
             var length = Model.First().Count();
             var counter = 0;
-            
+
             for (int i = 0; i < length; i += recordPerPage)
             {
                 for (int j = 0; j < Model.Count; j++)
@@ -66,42 +78,42 @@
                     counter++;
                     var keys = Model[j].First().Keys;
                     var data = Model[j].Skip((i / recordPerPage) * recordPerPage).Take(recordPerPage);
-                    
-                        <table class="table table-striped">
-                            <thead class="thead-light">
+
+                    <table class="table table-striped">
+                        <thead class="thead-light">
+                            <tr>
+                                @foreach (var key in keys)
+                                {
+                                    <td>@key</td>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in data)
+                            {
                                 <tr>
                                     @foreach (var key in keys)
                                     {
-                                        <td>@key</td>
+
+
+                                        <td>
+                                            <div>
+                                                @item[key]
+                                            </div>
+                                        </td>
                                     }
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in data)
-                                {
-                                    <tr>
-                                        @foreach (var key in keys)
-                                        {
-
-
-                                            <td>
-                                                <div>
-                                                    @item[key]
-                                                </div>
-                                            </td>
-                                        }
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                            }
+                        </tbody>
+                    </table>
 
                     <hr style="  border: 1px solid black;" />
                     <div class="brk text-center"> Printed on: @DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
-                    }
+                }
             }
 
         }
-        
+
     </div>
 </body>
 </html>

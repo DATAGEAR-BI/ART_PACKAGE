@@ -11,6 +11,7 @@ using System.Globalization;
 using CsvHelper.Configuration;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
@@ -169,11 +170,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     }
                     finally
                     {
-                        if(dbtype == "oracle")
-                            _sb.Append(@$"""{ i.field}"" {v}");
+                        if (dbtype == "oracle")
+                            _sb.Append(@$"""{i.field}"" {v}");
                         else
                         {
-                        _sb.Append($"{i.field} {v}");
+                            _sb.Append($"{i.field} {v}");
 
                         }
                     }
@@ -228,47 +229,38 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var value = ((JsonElement)i.value).ToObject<string>();
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value);
-
                             }
                         }
                         else if (underlyingType.Name == typeof(DateTime).Name)
                         {
-
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(DateOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
                                 query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToString());
-
                             }
                         }
                         else if (underlyingType.IsEnum)
                         {
-
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
-
                             }
                             else
                             {
                                 var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 var Gmethod = method.MakeGenericMethod(underlyingType);
                                 var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
-
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
-
                             }
                         }
                         else
@@ -280,14 +272,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
-
-
                             }
                             else
                             {
                                 var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
-
                             }
                         }
                         _sb.Append(query);
@@ -296,14 +285,21 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     {
                         if (propType.Name == typeof(string).Name)
                         {
-                            var value = ((JsonElement)i.value).ToObject<string>();
-                            query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
+                            }
+                            else
+                            {
+                                var value = ((JsonElement)i.value).ToObject<string>();
+                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
+                            }
                         }
                         else if (propType.Name == typeof(DateTime).Name)
                         {
                             var value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date.ToString());
+                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date);
                         }
                         else if (propType.IsEnum)
                         {

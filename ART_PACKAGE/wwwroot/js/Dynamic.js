@@ -57,7 +57,9 @@ var ops = {
     lt: "Less Than",
 };
 var isHierarchy = document.getElementById("script").dataset.hierarchy;
+var reportName = "";
 var isColoredRows = document.getElementById("script").dataset.coloredrows;
+var pdfUrl = document.getElementById("script").dataset.pdfurl;
 var isextractRulesFinished = false;
 var isAllSelected = false;
 var selected = {};
@@ -120,6 +122,7 @@ function intializeGrid() {
         .then((d) => d.json())
         .then((d) => {
             total = d.total;
+            reportName = d.reportname;
             if (isHierarchy == "true") {
                 groupList = d.grouplist;
                 valList = d.vallist;
@@ -304,6 +307,14 @@ function generateGrid() {
 
                                             grid.select(`tr[data-uid="${res[0].uid}"]`);
                                         });
+
+                                        setTimeout(() => {
+                                            var selectall = document.querySelector("th > input.k-checkbox");
+                                            selectall.classList.remove("k-checkbox:checked");
+                                            selectall.setAttribute("aria-checked", 'false');
+                                            selectall.checked = false;
+                                            selectall.ariaChecked = false;
+                                        }, 5);
                                     }
                                 }
                                 var filter = options.data.filter;
@@ -375,13 +386,23 @@ function generateGrid() {
                 e.preventDefault();
                 var filter = { logic: "or", filters: [] };
                 var values = $(multiselects).data("kendoMultiSelect").value();
-                $.each(values, function (i, v) {
+                var op = multiselects.parentElement.parentElement.querySelector("select[title='Operator']").value
+                if (values && values.length > 0) {
+                    $.each(values, function (i, v) {
+                        filter.filters.push({
+                            field: e.field,
+                            operator: op,
+                            value: v,
+                        });
+                    });
+                } else {
                     filter.filters.push({
                         field: e.field,
-                        operator: "eq",
-                        value: v,
+                        operator: op,
+                        value: "",
                     });
-                });
+                }
+
                 var filters = $("#grid").data("kendoGrid").dataSource.filter();
                 if (filters) {
                     var remainingFilters = filters.filters.filter((x) => {
@@ -499,6 +520,39 @@ function generateGrid() {
 
     grid.thead.on("click", ".k-checkbox", onClick);
 
+    grid.tbody.on("click", ".k-checkbox", (e) => {
+        selected = Object.entries(selected).reduce((acc, [key, value]) => {
+            if (grid.dataSource.page() == key) {
+                acc[key] = value;
+            }
+            return acc;
+        }, {});
+        localStorage.setItem("selectedidz", JSON.stringify(selected));
+        if (isAllSelected) {
+            isAllSelected = false;
+            localStorage.setItem("isAllSelected", false);
+        }
+        else {
+
+            //console.log();
+
+            setTimeout(() => {
+                var selectall = document.querySelector("th > input.k-checkbox");
+                selectall.classList.remove("k-checkbox:checked");
+                selectall.setAttribute("aria-checked", 'false');
+                selectall.checked = false;
+                selectall.ariaChecked = false;
+            }, 5);
+
+
+
+            //if () {
+            //    console.log("all");
+            //}
+        }
+
+    });
+
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
@@ -517,10 +571,10 @@ function generateGrid() {
 
             if (isStoredProc) {
                 var csvhandler = Handlers["clientStoredPdExport"];
-                csvhandler(e, controller);
+                csvhandler(e, controller, reportName);
             } else {
                 var csvhandler = Handlers["clientPdExport"];
-                csvhandler(e, controller);
+                csvhandler(e, controller, reportName);
             }
         }
 
@@ -609,16 +663,15 @@ function createFiltersDiv(obj) {
     [...filters].forEach((x) => {
         if (x.field) {
             var existinp = document.getElementById(`${x.field}-0`);
-            var displayName = [...columns].filter(c => c.field == x.field)[0].title;
-            if (existinp) {
 
+            if (existinp) {
                 var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${displayName}=> ${oldVal},${ops[x.operator]} ${x.value}`;
+                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${x.value}`;
             } else {
                 var inp = document.createElement("input");
                 inp.id = x.field + "-0";
                 inp.type = "text";
-                inp.value = `${displayName}=> ${ops[x.operator]} ${x.value}`;
+                inp.value = `${x.field}=> ${ops[x.operator]} ${x.value}`;
                 inp.classList = ["form-control"];
                 inp.readOnly = true;
                 fDiv.appendChild(inp);
@@ -629,16 +682,16 @@ function createFiltersDiv(obj) {
         } else {
             [...x.filters].forEach((y) => {
                 var existinp = document.getElementById(`${y.field}-0`);
-                var displayName = [...columns].filter(c => c.field == y.field)[0].title;
+
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${displayName}=> ${oldVal},${ops[y.operator]} ${y.value
+                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${y.value
                         }`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
                     inp.type = "text";
-                    inp.value = `${displayName}=> ${ops[y.operator]} ${y.value}`;
+                    inp.value = `${y.field}=> ${ops[y.operator]} ${y.value}`;
                     inp.classList = ["form-control"];
                     inp.readOnly = true;
                     fDiv.appendChild(inp);
@@ -673,6 +726,8 @@ function createCollection(di, prop) {
             html += "</td></tr>";
         }
     }
+
+
     html += "</table>";
     return html;
 }
@@ -689,7 +744,7 @@ function generateColumns(response) {
         if (column.isDropDown) {
             var ops = {};
             var equal = { eq: "is equal to" };
-            if (column.type === "string") ops = { string: equal };
+            if (column.type === "string") ops = { string: { ...equal, isnull: "is null" } };
             else if (column.type === "date") ops = { date: equal };
             else if (column.type === "number") ops = { number: equal };
             else ops = { boolean: equal };
@@ -711,7 +766,7 @@ function generateColumns(response) {
         }
 
         var isCollection = column.isCollection;
-        console.log(isCollection);
+
         if (!column.isNullable) {
             if (isNumberField[column.name]) {
                 filter["operators"] = {
