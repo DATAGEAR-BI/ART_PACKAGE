@@ -95,7 +95,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     ChartId = "StSystemPerfPerTransDir",
                     Data = chart3Data.ToList(),
-                    Title = "Cases Per Trans Deriction",
+                    Title = "Cases Per Trans Direction",
                     Cat = "TREANSACTION_DIRECTION",
                     Val = "Total_Number_of_Cases"
                 }
