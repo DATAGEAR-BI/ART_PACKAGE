@@ -12,7 +12,7 @@ using Microsoft.Data.SqlClient;
 using Data.Constants.StoredProcs;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
     public class UserPerformPerActionController : Controller
     {

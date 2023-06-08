@@ -12,7 +12,7 @@ using Data.Constants.StoredProcs;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class SystemPerformanceSummaryController : Controller
@@ -95,7 +95,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                 {
                     ChartId = "StSystemPerfPerTransDir",
                     Data = chart3Data.ToList(),
-                    Title = "Cases Per Trans Deriction",
+                    Title = "Cases Per Trans Direction",
                     Cat = "TREANSACTION_DIRECTION",
                     Val = "Total_Number_of_Cases"
                 }
