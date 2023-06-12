@@ -26,7 +26,7 @@ namespace OracleMigrations.Migrations
                                             fcfkc.FSK_ALERTED_ENTITY FSK_ALERTED_ENTITY 
                                             left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y' 
+                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y' 
                                             LEFT JOIN
                                             FCFKC.FSK_LOV ALERTED_ENTITY_LEVEL 
                                             ON ALERTED_ENTITY_LEVEL.LOV_TYPE_CODE = FSK_ALERTED_ENTITY.ALERTED_ENTITY_LEVEL_CODE 
@@ -103,7 +103,7 @@ namespace OracleMigrations.Migrations
                                             and ALERT_SUB_CAT.LOV_TYPE_NAME='RT_CASE_SUBCATEGORY' AND ALERT_SUB_CAT.Lov_Language_Desc='en'
                                             left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.branch_code) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
   
                                             where FSK_ALERT.ALERT_STATUS_CODE='ACT'
         
@@ -151,7 +151,7 @@ namespace OracleMigrations.Migrations
                                             and ALERT_SUB_CAT.LOV_TYPE_NAME='RT_CASE_SUBCATEGORY' AND ALERT_SUB_CAT.Lov_Language_Desc='en'
                                             left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.branch_code) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                             LEFT JOIN 
                                             (SELECT A.ALERT_ID,EVENT_DESCRIPTION,A.CREATE_DATE,row_number() over (PARTITION by A.alert_id order by A.CREATE_DATE desc) Rank FROM FCFKC.FSK_ALERT_EVENT A 
                                             WHERE A.EVENT_TYPE_CODE in ('CLS','CLP','CLPA')
@@ -217,7 +217,7 @@ namespace OracleMigrations.Migrations
                                     FCFKC.FSK_LOV Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
                                     AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION' 
                                     LEFT JOIN
-                                    FSC_BRANCH_DIM BRANCH on trim(FSC_PARTY_DIM.branch_code) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    FCFCORE.FSC_BRANCH_DIM BRANCH on trim(FSC_PARTY_DIM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                     WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and FCFCORE.FSC_PARTY_DIM.CHANGE_CURRENT_IND='Y')
 ");
             migrationBuilder.Sql(@"--------------------------------------------------------
@@ -255,7 +255,7 @@ namespace OracleMigrations.Migrations
                                     AND ENTITY_LEVEL.LOV_TYPE_NAME ='RT_ENTITY_LEVEL' AND ENTITY_LEVEL.LOV_LANGUAGE_DESC ='en'
                                     left JOIN fcfcore.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
                                     LEFT JOIN 
-                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.branch_code) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
 
                                     WHERE
                                     CASE_STATUS.LOV_TYPE_DESC ='Open'
@@ -293,7 +293,7 @@ namespace OracleMigrations.Migrations
                                     AND ENTITY_LEVEL.LOV_TYPE_NAME ='RT_ENTITY_LEVEL' AND ENTITY_LEVEL.LOV_LANGUAGE_DESC ='en'
                                     left JOIN fcfcore.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
                                     LEFT JOIN 
-                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.branch_code) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                     WHERE
                                     CASE_STATUS.LOV_TYPE_DESC <>'Open'
                                     and entity_level_code ='PTY'");
@@ -365,7 +365,7 @@ namespace OracleMigrations.Migrations
                                         LEFT JOIN
                                             FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
                                              LEFT JOIN
-                                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON PARTY.party_main_branch_number = Party_Branch.BRANCH_NUMBER AND party_branch.change_current_ind = 'Y'
+                                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON PARTY.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER AND party_branch.change_current_ind = 'Y'
                                             WHERE PARTY.CHANGE_CURRENT_IND='Y'
                                         ");
             //procs
@@ -394,7 +394,7 @@ namespace OracleMigrations.Migrations
                             AND to_char(FSK_ALERT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             GROUP BY
                                     (case when FSK_ENTITY_QUEUE.OWNER_USERID is null then 'UNKNOWN' else FSK_ENTITY_QUEUE.OWNER_USERID end);
-                            END ART_ST_ALERT_PER_OWNER");
+                            END ART_ST_ALERT_PER_OWNER;;");
 
 
 
@@ -424,7 +424,7 @@ namespace OracleMigrations.Migrations
                             AND to_char(CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             group by ALERT_STATUS.LOV_TYPE_DESC 
                             ;
-                            END ART_ST_ALERTS_PER_STATUS");
+                            END ART_ST_ALERTS_PER_STATUS;;");
 
 
 
@@ -444,8 +444,8 @@ namespace OracleMigrations.Migrations
                             OPEN DATA_CUR FOR 
 
                             select CASE_CATEGORY.lov_type_desc CASE_CATEGORY ,count(1)NUMBER_OF_CASES
-                            FROM FSK_CASE CASE 
-                            LEFT JOIN FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
+                            FROM FCFKC.FSK_CASE CASE 
+                            LEFT JOIN FCFKC.FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
                             AND CASE_CATEGORY.LOV_TYPE_NAME ='RT_CASE_CATEGORY' AND CASE_CATEGORY.LOV_LANGUAGE_DESC ='en'
                             Where
                             to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -453,7 +453,7 @@ namespace OracleMigrations.Migrations
                             GROUP BY
                             CASE_CATEGORY.lov_type_desc
                             ;
-                            END ART_ST_CASES_PER_CATEGORY");
+                            END ART_ST_CASES_PER_CATEGORY;;");
 
 
 
@@ -472,8 +472,8 @@ namespace OracleMigrations.Migrations
                             OPEN DATA_CUR FOR 
 
                             select CASE_PRIORITY.lov_type_desc CASE_PRIORITY ,count(1)NUMBER_OF_CASES
-                            FROM FSK_CASE CASE 
-                            LEFT JOIN FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
+                            FROM FCFKC.FSK_CASE CASE 
+                            LEFT JOIN FCFKC.FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
                             AND CASE_PRIORITY.LOV_TYPE_NAME ='X_RT_PRIORITY' AND CASE_PRIORITY.LOV_LANGUAGE_DESC ='en'
                             Where
                             to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -481,7 +481,7 @@ namespace OracleMigrations.Migrations
                             GROUP BY
                             CASE_PRIORITY.lov_type_desc
                             ;
-                            END ART_ST_CASES_PER_PRIORITY
+                            END ART_ST_CASES_PER_PRIORITY;;
                             ");
 
 
@@ -502,8 +502,8 @@ namespace OracleMigrations.Migrations
                             SELECT 
                             case_status.lov_type_desc CASE_STATUS ,
                             COUNT(1)NUMBER_OF_CASES
-                            FROM FSK_CASE CASE 
-                            LEFT JOIN FSK_LOV CASE_STATUS 
+                            FROM FCFKC.FSK_CASE CASE 
+                            LEFT JOIN FCFKC.FSK_LOV CASE_STATUS 
                             ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE 
                             AND CASE_STATUS.LOV_TYPE_NAME ='FCF_CASE_STATUS' 
                             AND CASE_STATUS.LOV_LANGUAGE_DESC ='en' 
@@ -513,7 +513,7 @@ namespace OracleMigrations.Migrations
                             GROUP BY
                             case_status.lov_type_desc
                             ;
-                            END ART_ST_CASES_PER_STATUS
+                            END ART_ST_CASES_PER_STATUS;;
 
                             ");
 
@@ -523,26 +523,26 @@ namespace OracleMigrations.Migrations
                             --------------------------------------------------------
                             
 
-                              CREATE OR REPLACE NONEDITIONABLE PROCEDURE ""ART"".""ART_ST_CASES_PER_SUBCAT"" 
-                            (
-                              DATA_CUR OUT SYS_REFCURSOR 
-                            , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
-                            , V_END_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
-                            ) AS 
-                            BEGIN
-                            OPEN DATA_CUR FOR 
+                             CREATE OR REPLACE NONEDITIONABLE PROCEDURE ""ART"".""ART_ST_CASES_PER_SUBCAT"" 
+                                (
+                                  DATA_CUR OUT SYS_REFCURSOR 
+                                , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
+                                , V_END_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
+                                ) AS 
+                                BEGIN
+                                OPEN DATA_CUR FOR 
 
-                            select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY ,count(1)NUMBER_OF_CASES
-                            FROM FSK_CASE CASE 
-                            LEFT JOIN FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
-                            AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
-                            Where
-                            to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
-                            AND to_char(CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
-                            GROUP BY
-                            CASE_SUBCATEGORY.lov_type_desc
-                            ;
-                            END ART_ST_CASES_PER_SUBCAT
+                                select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY ,count(1)NUMBER_OF_CASES
+                                FROM FCFKC.FSK_CASE CASE 
+                                LEFT JOIN FCFKC.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
+                                AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
+                                Where
+                                to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
+                                AND to_char(CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
+                                GROUP BY
+                                CASE_SUBCATEGORY.lov_type_desc
+                                ;
+                                END ART_ST_CASES_PER_SUBCAT;;
 
                             ");
 
@@ -565,13 +565,13 @@ namespace OracleMigrations.Migrations
                             FROM            
                             FCFCORE.FSC_PARTY_DIM 
                             LEFT JOIN
-                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON FSC_PARTY_DIM.branch_code = Party_Branch.BRANCH_NUMBER 
+                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON FSC_PARTY_DIM.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER 
                             AND party_branch.change_current_ind = 'Y'
                             WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and fcfcore.fsc_party_dim.change_current_ind='Y')
                             and to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             group by Party_Branch.branch_name;
-                            END ART_ST_CUST_PER_BRANCH
+                            END ART_ST_CUST_PER_BRANCH;;
                             ");
             migrationBuilder.Sql(@"--------------------------------------------------------
                             --  DDL for Procedure ART_ST_CUST_PER_RISK
@@ -599,7 +599,7 @@ namespace OracleMigrations.Migrations
                             and to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             group by (case when Risk.lov_type_desc is null then 'UNKNOWN' else Risk.lov_type_desc end);
-                            END ART_ST_CUST_PER_RISK
+                            END ART_ST_CUST_PER_RISK;;
 ");
 
             migrationBuilder.Sql(@"--------------------------------------------------------
@@ -636,7 +636,7 @@ namespace OracleMigrations.Migrations
                             end
                             )
                             ;
-                            END ART_ST_CUST_PER_TYPE
+                            END ART_ST_CUST_PER_TYPE;;
 
                             ");
 
@@ -669,7 +669,7 @@ namespace OracleMigrations.Migrations
                             AND to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             group by PROPOSED_RISK_CLASS.LOV_TYPE_DESC;
 
-                            END ART_ST_AML_PROP_RISK_CLASS
+                            END ART_ST_AML_PROP_RISK_CLASS;;
 
                             ");
             migrationBuilder.Sql(@"--------------------------------------------------------
@@ -700,7 +700,7 @@ namespace OracleMigrations.Migrations
                             and to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
                             group by (case when Risk.lov_type_desc is null then 'UNKNOWN' else Risk.lov_type_desc end);
-                            END ART_ST_AML_RISK_CLASS
+                            END ART_ST_AML_RISK_CLASS;;
 ");
         }
 

@@ -180,6 +180,31 @@ namespace Data
                     .HasMaxLength(60)
                     .HasColumnName("UPDATE_USER_ID");
 
+                modelBuilder.Entity<ArtAlertedEntity>(entity =>
+                {
+                    entity.HasNoKey();
+
+                    entity.ToView("ART_ALERTED_ENTITY");
+
+                    entity.Property(e => e.CaseId)
+                        .HasMaxLength(64)
+                        .IsUnicode(false)
+                        .HasColumnName("CASE_ID");
+
+                    entity.Property(e => e.CreateDate)
+                        .HasPrecision(6)
+                        .HasColumnName("CREATE_DATE");
+
+                    entity.Property(e => e.Name)
+                        .HasColumnType("CLOB")
+                        .HasColumnName("NAME");
+
+                    entity.Property(e => e.PepInd)
+                        .HasColumnType("CLOB")
+                        .HasColumnName("PEP_IND");
+                });
+
+
                 //entity.Property(e => e.ValidFromDate)
                 //    .HasColumnType("datetime")
                 //    .HasColumnName("VALID_FROM_DATE");
@@ -318,6 +343,11 @@ namespace Data
                 entity.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
 
                 entity.Property(e => e.NumberOfPepCustomers).HasColumnName("Number_Of_PEP_Customers");
+            });
+            //for sake for build => toChange when convert to oracle
+            modelBuilder.Entity<ArtSystemPerformance>(entity =>
+            {
+                entity.HasNoKey();
             });
         }
 
@@ -795,6 +825,13 @@ namespace Data
                 entity.ToView("ART_NUMBER_OF_PEP_CUSTOMERS".ToUpper(), "ART");
 
                 entity.Property(e => e.NumberOfPepCustomers).HasColumnName("Number_Of_PEP_Customers".ToUpper());
+            });
+
+
+            //for sake for build => toChange when convert to SqlServer
+            modelBuilder.Entity<ArtSystemPreformance>(entity =>
+            {
+                entity.HasNoKey();
             });
         }
     }

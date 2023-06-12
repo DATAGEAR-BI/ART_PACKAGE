@@ -29,6 +29,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; } = null!;
     public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
     public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
+    public virtual DbSet<ArtSystemPreformance> ArtSystemPreformances { get; set; } = null!;
     public virtual DbSet<ArtAlertedEntity> ArtAlertedEntities { get; set; } = null!;
     public virtual DbSet<ArtUserPerformancePerActionUser> ArtUserPerformancePerActionUsers { get; set; } = null!;
     public virtual DbSet<ArtUserPerformPerAction> ArtUserPerformPerActions { get; set; } = null!;
