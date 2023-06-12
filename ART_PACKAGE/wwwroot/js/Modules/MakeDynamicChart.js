@@ -9,7 +9,8 @@ var types = {
     curvy: 5,
     curvedline: 6,
     clusteredbar: 7,
-    hbar: 8
+    hbar: 8,
+    line: 10
 }
 
 export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle) {
@@ -56,7 +57,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
 
     // Create chart instance
     var columnChart = chart.createChild(am4charts.XYChart);
-    
+
     // Create axes
     var categoryAxis = columnChart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20
@@ -718,28 +719,47 @@ function callDragDropChart(data, dragtitle, divId, chartValue, chartCategory) {
     });
 }
 
-function callLineChart(data, title, divId, categoryName) {
+function callLineChart(data, lineTitle, divId, chartValue, chartCategory) {
     am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
 
-    var container = am4core.create(divId, am4core.Container);
-    container.width = am4core.percent(100);
-    container.height = am4core.percent(100);
-    container.layout = "horizontal";
-    var chart = container.createChild(am4charts.XYChart);
-    var title = container.createChild(am4core.Label);
-    title.text = dragtitle;
-    title.rotation = 90;
+
 
     // Create chart instance
+    var chart = am4core.create(divId, am4charts.XYChart);
 
-    title.rotation = 90;
-    title.fontSize = 40;
-    title.valign = "middle";
-    title.align = "center";
-    title.paddingBottom = 5;
-
+    // Add data
     chart.data = data;
+
+    // Create axes
+    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.renderer.grid.template.location = 0;
+    dateAxis.renderer.minGridDistance = 40;
+    dateAxis.baseInterval = {
+        "timeUnit": "month",
+        "count": 1
+    }
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+    // Create series
+    function createSeries(field, name) {
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = field;
+        series.dataFields.dateX = name;
+        series.name = name;
+        series.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
+        series.strokeWidth = 2;
+
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.stroke = am4core.color("#fff");
+        bullet.circle.strokeWidth = 2;
+
+        bullet.tooltip = new am4core.Tooltip();
+        bullet.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
+        bullet.showTooltipOn = "always";
+
+    }
+
     chart.exporting.menu = new am4core.ExportMenu();
     chart.exporting.menu.items = [{
         "label": "...",
@@ -748,66 +768,39 @@ function callLineChart(data, title, divId, categoryName) {
         ]
     }];
 
-    // Create axes
-    //start
-    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.renderer.labels.template.fontSize = 20;
-    categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.dataFields.category = categoryName;
-    categoryAxis.renderer.minGridDistance = 100;
-    categoryAxis.align = "left";
-    //end
+    createSeries(chartValue, chartCategory);
+    chart.legend = new am4charts.Legend();
+    //chart.cursor = new am4charts.XYCursor();
 
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.renderer.labels.template.fontSize = 20;
-    // Create series
-    function createSeries(field, name) {
-        var series = chart.series.push(new am4charts.LineSeries());
-        series.dataFields.valueY = field;
-        series.dataFields.categoryX = categoryName;
-        series.name = name;
-        series.tooltipText = "" + name + ": [b]{valueY}[/]";
-        series.strokeWidth = 3;
-        series.segments.template.interactionsEnabled = true;
-        series.tooltip.label.orientation = "vertical";
+    //chart.scrollbarX = new am4core.Scrollbar();
+    //chart.scrollbarY = new am4core.Scrollbar();
 
-        if (categoryName == "Year") {
-            series.tooltip.label.interactionsEnabled = true;
+    var title = chart.titles.create();
+    title.text = lineTitle;
+    title.fontSize = 25;
+    title.marginBottom = 30;
+    // Zoom events
+    valueAxis.events.on("startchanged", valueAxisZoomed);
+    valueAxis.events.on("endchanged", valueAxisZoomed);
 
-            series.tooltip.events.on("hit", function () {
-                OnSerisLineClicked(name);
-            });
-            series.segments.template.events.on(
-                "hit",
-                (ev) => {
-                    OnSerisLineClicked(name);
-                },
-                this
-            );
-        } else {
-        }
-        // Create hover state
-        let hs = series.segments.template.states.create("hover");
-        hs.properties.strokeWidth = 10;
+    function valueAxisZoomed(ev) {
+        var start = ev.target.minZoomed;
+        var end = ev.target.maxZoomed;
 
-        series.smoothing = "monotoneX";
-
-        var bullet = series.bullets.push(new am4charts.CircleBullet());
-        bullet.circle.stroke = am4core.color("#fff");
-        bullet.circle.strokeWidth = 2;
-
-        return series;
     }
 
-    chart.legend = new am4charts.Legend();
+    dateAxis.events.on("startchanged", dateAxisChanged);
+    dateAxis.events.on("endchanged", dateAxisChanged);
+    function dateAxisChanged(ev) {
+        var start = new Date(ev.target.minZoomed);
+        var end = new Date(ev.target.maxZoomed);
+    }
+    chart.exporting.events.on("exportstarted", function (ev) {
+        //chart.series.bullets.showTooltipOn = "always";
+        chart.series.template.bulletsContainer
+        console.log(chart.series);
+    });
 
-    chart.legend.useDefaultMarker = true;
-    var marker = chart.legend.markers.template.children.getIndex(0);
-    marker.cornerRadius(12, 12, 12, 12);
-    marker.strokeWidth = 2;
-    marker.strokeOpacity = 1;
-    marker.stroke = am4core.color("#ccc");
-    chart.cursor = new am4charts.XYCursor();
 }
 
 
@@ -1020,6 +1013,10 @@ export function makedynamicChart(
         case types.clusteredbar:
             chart.style.height = "800px";
             callClusterd(data, title, divId);
+            break;
+        case types.line:
+            chart.style.height = "800px";
+            callLineChart(data, title, divId, chartValue, chartCategory);
             break;
         default:
             console.log("eror");

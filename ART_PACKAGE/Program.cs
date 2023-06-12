@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ART_PACKAGE.Areas.Identity.Data;
-using System.Configuration;
 using Serilog;
-using Serilog.Formatting.Compact;
 using Microsoft.AspNetCore.Http;
 using ART_PACKAGE.Helpers.Logging;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

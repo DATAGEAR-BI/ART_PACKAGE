@@ -25,6 +25,6 @@
     UserPerformancePerActionUser: "/UserPerformancePerActionUser/GetData",
     UserPerformPerAction: "/UserPerformPerAction/GetData",
     UserPerformancePerUserAndAction: "/UserPerformancePerUserAndAction/GetData",
-
+    AlertedEntities: "/AlertedEntities/GetData"
 }
 

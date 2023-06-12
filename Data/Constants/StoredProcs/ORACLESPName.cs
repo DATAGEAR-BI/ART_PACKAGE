@@ -10,6 +10,7 @@ namespace Data.Constants.StoredProcs
     {
 
         public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIRECTION";
+        public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART.ART_ST_SYSTEM_PERF_PER_DATE";
         public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART.ART_ST_SYSTEM_PERF_PER_STATUS";
         public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART.ART_ST_SYSTEM_PERF_PER_TYPE";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION_USER";

@@ -509,6 +509,7 @@ namespace Data
             modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtSystemPerfPerDate>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
@@ -622,6 +623,32 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("UPDATE_USER_ID");
             });
+
+            modelBuilder.Entity<ArtAlertedEntity>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ALERTED_ENTITY");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.Name)
+                    .HasColumnType("CLOB")
+                    .HasColumnName("NAME");
+
+                entity.Property(e => e.PepInd)
+                    .HasColumnType("CLOB")
+                    .HasColumnName("PEP_IND");
+            });
+
+
             modelBuilder.Entity<ArtUserPerformance>(entity =>
             {
                 entity.HasNoKey();

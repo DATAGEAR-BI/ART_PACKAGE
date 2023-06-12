@@ -1,7 +1,10 @@
 ﻿@using ART_PACKAGE.Helpers.CustomReportHelpers;
 @using ART_PACKAGE.Helpers.HTMLHelpers;
+@using Data.Constants.db;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var dbType = Configuration.GetValue<string>("dbType").ToUpper();
 }
 
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
@@ -53,8 +56,16 @@
     <div id="StSystemPerfPerStatus" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
  
     <div id="StSystemPerfPerType" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
-  
+    @if(dbType == DbTypes.SqlServer)
+    {
     <div id="StSystemPerfPerTransDir" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
+        
+    }
+
+    @if (dbType == DbTypes.Oracle)
+    {
+        <div id="StSystemPerfPerDate" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="10"></div>
+    }
 
 </div>
 

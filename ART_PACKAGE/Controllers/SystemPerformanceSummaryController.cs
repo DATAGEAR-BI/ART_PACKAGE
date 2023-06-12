@@ -13,6 +13,8 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Constants.db;
 using OracleInternal.SqlAndPlsqlParser.LocalParsing;
+using System.Globalization;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -39,6 +41,7 @@ namespace ART_PACKAGE.Controllers
 
 
             IEnumerable<ArtSystemPrefPerDirection> chart3Data = Enumerable.Empty<ArtSystemPrefPerDirection>().AsQueryable();
+            IEnumerable<ArtSystemPerfPerDate> chart4Data = Enumerable.Empty<ArtSystemPerfPerDate>().AsQueryable();
             IEnumerable<ArtSystemPrefPerStatus> chart1Data = Enumerable.Empty<ArtSystemPrefPerStatus>().AsQueryable();
             IEnumerable<ArtSystemPerfPerType> chart2data = Enumerable.Empty<ArtSystemPerfPerType>().AsQueryable();
 
@@ -88,7 +91,7 @@ namespace ART_PACKAGE.Controllers
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
 
             }
 
@@ -100,8 +103,8 @@ namespace ART_PACKAGE.Controllers
                     ChartId = "StSystemPerfPerStatus",
                     Data = chart1Data.ToList(),
                     Title = "Cases Per Status",
-                    Cat = "case_status",
-                    Val = "Total_Number_of_Cases"
+                    Cat = "CASE_STATUS",
+                    Val = "TOTAL_NUMBER_OF_CASES"
 
                 },
                 new ChartData<ArtSystemPerfPerType>
@@ -112,16 +115,32 @@ namespace ART_PACKAGE.Controllers
                     Cat = "CASE_TYPE",
                     Val = "Total_Number_of_Cases"
                 },
-                new ChartData<ArtSystemPrefPerDirection>
+
+
+            };
+            if (dbType == DbTypes.Oracle)
+            {
+                chartData.Add(new ChartData<dynamic>
+                {
+                    ChartId = "StSystemPerfPerDate",
+                    //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
+                    Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
+                    Title = "Cases Per Trans Direction",
+                    Cat = "Date",
+                    Val = "CASES"
+                });
+            }
+            if (dbType == DbTypes.SqlServer)
+            {
+                chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
                     ChartId = "StSystemPerfPerTransDir",
                     Data = chart3Data.ToList(),
                     Title = "Cases Per Trans Direction",
                     Cat = "TREANSACTION_DIRECTION",
                     Val = "Total_Number_of_Cases"
-                }
-            };
-
+                });
+            }
             return new ContentResult
             {
                 ContentType = "application/json",
