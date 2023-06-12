@@ -543,6 +543,7 @@ namespace Data
             modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+            
 
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {
@@ -1460,6 +1461,19 @@ namespace Data
                     .HasPrecision(10)
                     .HasColumnName("VERSION_NUMBER");
             });
+
+            modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerSubcat>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+
             //for sake for build => toChange when convert to SqlServer
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {
