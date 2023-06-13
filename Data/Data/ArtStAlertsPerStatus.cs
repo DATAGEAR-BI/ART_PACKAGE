@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Data.Data
+{
+    public class ArtStAlertsPerStatus
+    {
+        public string? ALERT_STATUS { get; set; }
+        public int ALERTS_COUNT { get; set; }
+    }
+}

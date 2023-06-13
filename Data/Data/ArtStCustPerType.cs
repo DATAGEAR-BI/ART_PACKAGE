@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Data.Data
+{
+    public class ArtStCustPerType
+    {
+        public string? CUSTOMER_TYPE { get; set; }
+        public int NUMBER_OF_CUSTOMERS { get; set; }
+    }
+}
