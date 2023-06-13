@@ -1,0 +1,842 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+<script src="~/js/FileExtraction.js"></script>
+<script src="~/js/site.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+
+
+<section class="content-header">
+    <h1>
+        Customers Details
+        <small>Presents all customers details</small>
+        <br />
+    </h1>
+</section>
+
+
+<div id="grid"></div>
+@section Scripts{
+
+
+    <script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="Customers"></script>
+}
+
+
+
+<!--@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />-->
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<!--<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/js/FileExtraction.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+<section class="content-header">
+    <h1>
+        Customers Details
+        <small>Presents all customers details </small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<!--<section class="content container-fluid">
+    <button type="button" id="ModelBTN" class="btn btn-primary text-center" style="display:block" data-toggle="modal"  data-target="#exampleModal" onclick="getDate()">
+        Filters .. <span class="glyphicon glyphicon-search">  </span>
+    </button>-->
+<!-- GRID -->
+<!--<div id="example">
+        <div id="grid"></div>
+        <div class="content text-center">
+            <button class="btn btn-primary" id="bck"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            <label id="pageNumber"></label>
+            <button class="btn btn-primary" id="nxt"><span class="glyphicon glyphicon-arrow-right"></span></button>
+            <label style="float:right" id="totalCount"></label>
+        </div>
+        <script>
+            $("#nxt").removeAttr("style").hide();
+            $("#bck").removeAttr("style").hide();
+
+            function CleartModelFilters() {
+                $('#CustomerName').val("");
+                $('#CustomerNumber').val("");
+                $('#CustomerType').val("");
+                $('#NonProfitOrgInd').val("");
+                $('#PoliticallyExposedPersonInd').val("");
+                $('#CharityDonationsInd').val("");
+                $('#RiskClassification').val("");
+                $('#ResidenceCountryName').val("");
+                $('#CitizenshipCountryName').val("");
+                $('#IndustryDesc').val("");
+                $('#BranchName').val("");
+                $('#BranchNumber').val("");
+                $('#CustomerIdentificationId').val("");
+                $('#CustomerIdentificationType').val("");
+                $('#CjoinDate').val("");
+                $('#CendDate').val("");
+                $('#OccupationDesc').val("");
+            };
+
+            var filtiredData;
+            var pageNum = 1;
+            var PageLimits = 0;
+            $('#bck').prop('disabled', true);
+
+            function PresentData() {
+
+                var CustomerName = $('#CustomerName').val();
+                var CustomerNumber = $('#CustomerNumber').val();
+                var CustomerType = $('#CustomerType').val();
+                var NonProfitOrgInd = $('#NonProfitOrgInd').val();
+                var PoliticallyExposedPersonInd = $('#PoliticallyExposedPersonInd').val();
+                var CharityDonationsInd = $('#CharityDonationsInd').val();
+                var RiskClassification = $('#RiskClassification').val();
+                var ResidenceCountryName = $('#ResidenceCountryName').val();
+                var CitizenshipCountryName = $('#CitizenshipCountryName').val();
+                var IndustryDesc = $('#IndustryDesc').val();
+                var BranchName = $('#BranchName').val();
+                var BranchNumber = $('#BranchNumber').val();
+                var CustomerIdentificationId = $('#CustomerIdentificationId').val();
+                var CustomerIdentificationType = $('#CustomerIdentificationType').val();
+                var CjoinDate = $('#CjoinDate').val();
+                var CendDate = $('#CendDate').val();
+                var OccupationDesc = $('#OccupationDesc').val();
+                console.log('data in pressendata= ', BranchNumber, ' customernumber= ', CustomerName)
+
+                var pageNum = 1;
+                $('#grid').empty(); // to prevent more than one render
+
+                $("#nxt").show();
+                $("#bck").show();
+                if (pageNum == 1) {
+                    $('#bck').prop('disabled', true);
+                }
+
+                $('#grid').empty(); // to prevent more than one render
+                $(document).ready(function () {
+                    $.getJSON("/Customers/getTotalCount", function (data) {
+                        $('#totalCount').text("Total Count : ( " + data + " ) Rows");
+                        PageLimits = Math.ceil(data / 600);
+                    });
+                });
+                //var PageLimits = 0;
+                //var pageNum = 1;
+                $('#pageNumber').empty();
+                $("#pageNumber").text(pageNum);
+                //$('#bck').prop('disabled', true);
+
+                callKendo();
+                $('#nxt').click(function () {
+
+                    if (pageNum == 1) {
+
+                        $('#grid').empty();
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        $('#bck').prop('disabled', true);
+
+                        callKendo();
+
+                    }
+                    if (pageNum < PageLimits) {
+                        $('#bck').prop('disabled', false);
+
+                        $('#grid').empty();
+                        //console.log("PageLimits_2 : " + PageLimits);
+                        pageNum += 1;
+                        if (PageLimits == pageNum) {
+                            $('#nxt').prop('disabled', true);
+                        }
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+                    } else {
+                        $('#nxt').prop('disabled', true);
+                        $('#grid').empty();
+                        callKendo();
+                    }
+
+                });
+                $('#bck').click(function () {
+                    $('#nxt').prop('disabled', false);
+                    console.log(pageNum);
+                    if (pageNum == 1) {
+                        $('#bck').prop('disabled', true);
+                        $('#grid').empty();
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+
+                    }
+                    else {
+                        console.log(pageNum);
+                        $('#grid').empty();
+
+                        pageNum -= 1;
+                        if (pageNum == 1) {
+                            $('#bck').prop('disabled', true);
+
+                        }
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+                    }
+                });
+                console.log("/Customers/GetData?page=" + pageNum + "&CustomerName=" + CustomerName + "&CustomerNumber=" + CustomerNumber + "&CUSTOMER_TYPE=" + CustomerType + "&NON_PROFIT_ORG_IND=" + NonProfitOrgInd + "&POLITICALLY_EXPOSED_PERSON_IND=" + PoliticallyExposedPersonInd + "&CHARITY_DONATIONS_IND=" + CharityDonationsInd + "&RISK_CLASSIFICATION=" + RiskClassification + "&RESIDENCE_COUNTRY_NAME=" + ResidenceCountryName + "&CITIZENSHIP_COUNTRY_NAME=" + CitizenshipCountryName + "&IndustryDesc=" + IndustryDesc + "&BRANCH_NAME=" + BranchName +"&BranchNumber=" + BranchNumber + "&CUSTOMER_IDENTIFICATION_ID=" + CustomerIdentificationId + "&CUSTOMER_IDENTIFICATION_TYPE=" + CustomerIdentificationType + "&CjoinDate=" + CjoinDate + "&CendDate=" + CendDate + "&OccupationDesc=" + OccupationDesc);
+
+                function callKendo() {
+
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "api",
+                            transport: {
+                                read: "/Customers/GetData?page=" + pageNum + "&CustomerName=" + CustomerName + "&CustomerNumber=" + CustomerNumber + "&CUSTOMER_TYPE=" + CustomerType + "&NON_PROFIT_ORG_IND=" + NonProfitOrgInd + "&POLITICALLY_EXPOSED_PERSON_IND=" + PoliticallyExposedPersonInd + "&CHARITY_DONATIONS_IND=" + CharityDonationsInd + "&RISK_CLASSIFICATION=" + RiskClassification + "&RESIDENCE_COUNTRY_NAME=" + ResidenceCountryName + "&CITIZENSHIP_COUNTRY_NAME=" + CitizenshipCountryName + "&IndustryDesc=" + IndustryDesc + "&BRANCH_NAME=" + BranchName + "&BranchNumber=" + BranchNumber + "&CUSTOMER_IDENTIFICATION_ID=" + CustomerIdentificationId + "&CUSTOMER_IDENTIFICATION_TYPE=" + CustomerIdentificationType + "&CjoinDate=" + CjoinDate + "&CendDate=" + CendDate + "&OccupationDesc=" + OccupationDesc
+
+                            },
+                            schema: {
+                                model: {
+                                    fields: {
+                                        CustomerName: { type: "string" },
+                                        CustomerNumber: { type: "string" },
+                                        CustomerSinceDate: { type: "date" },
+                                        CustomerType: { type: "string" },
+                                        NonProfitOrgInd: { type: "string" },
+                                        PoliticallyExposedPersonInd: { type: "string" },
+                                        CharityDonationsInd: { type: "string" },
+                                        RiskClassification: { type: "string" },
+                                        ResidenceCountryName: { type: "string" },
+                                        CitizenshipCountryName: { type: "string" },
+                                        StreetAddress1: { type: "string" },
+                                        CityName: { type: "string" },
+                                        CustomerDateOfBirth: { type: "date" },
+                                        OccupationDesc: { type: "string" },
+                                        MaritalStatusDesc: { type: "string" },
+                                        IndustryDesc: { type: "string" },
+                                        BranchName: { type: "string" },
+                                        BranchNumber: { type: "string" },
+                                        CustomerIdentificationId: { type: "string" },
+                                        CustomerIdentificationType: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 17,
+                            serverPaging: false,
+                            serverFiltering: false,
+                            serverSorting: false
+                        },
+                        height: 590,
+                        filterable: true ,
+                        pageable: {
+                            numeric: false,
+                            previousNext: false
+                        },
+                        sortable: { mode: "single", allowUnsort: true },
+                        scrollable: { virtual: true },
+                        reorderable: true,
+                        //pageable: true,
+                        resizable: true,
+                        selectable: "single",
+                        toolbar: [{ template: kendo.template($("#customTemplate").html()) }],
+                        //toolbar: ["excel"],
+                        //excel: {
+                        //    fileName: "Data_Export.xlsx",
+                        //    allPages: true,
+                        //    filterable: true
+                        //},
+
+                        columns: [
+                            { field: "CustomerName", width: 250, title: "Customer Name", stickable: true },
+                            { field: "CustomerNumber", width: 200, title: "Customer Number", stickable: true },
+                            { field: "CustomerSinceDate", width: 250, title: "Customer Since Date", format: "{0:MMM/dd/yyyy}", stickable: true },
+                            { field: "CustomerType", width: 150, title: "Customer Type", stickable: true },
+                            { field: "NonProfitOrgInd", width: 250, title: "Non Profit Org Ind", stickable: true },
+                            { field: "PoliticallyExposedPersonInd", width: 250, title: "PEP", stickable: true },
+                            { field: "CharityDonationsInd", width: 250, title: "Charity Donations Ind", stickable: true },
+                            { field: "RiskClassification", width: 100, title: "Risk Classification", stickable: true },
+                            { field: "ResidenceCountryName", width: 250, title: "Residence Country", stickable: true },
+                            { field: "CitizenshipCountryName", width: 250, title: "Citizenship Country", stickable: true },
+                            { field: "StreetAddress1", width: 250, title: "Street Address", stickable: true },
+                            { field: "CityName", width: 250, title: "City Name", stickable: true },
+                            { field: "CustomerDateOfBirth", width: 250, title: "Customer Date Of Birth", format: "{0:MMM/dd/yyyy}", stickable: true },
+                            { field: "OccupationDesc", width: 250, title: "Occupation Description", stickable: true },
+                            { field: "MaritalStatusDesc", width: 250, title: "Marital Status", stickable: true },
+                            { field: "IndustryDesc", width: 250, title: "Industry Description", stickable: true },
+                            { field: "BranchNumber", width: 150, title: "Branch Number", stickable: true },
+                            { field: "BranchName", width: 150, title: "Branch Name", stickable: true },
+                            { field: "CustomerIdentificationId", width: 250, title: "Customer Identification ID", stickable: true },
+                            { field: "CustomerIdentificationType", width: 250, title: "Customer Identification Type", stickable: true }
+                        ],
+                        dataBound: dataBounding
+                        , filterMenuInit: onFilterMenuInit
+                    });
+                }
+                function dataBounding() {
+
+                    console.log("dataBound");
+
+                    setTimeout(function () {
+
+                        var grid = $("#grid").data("kendoGrid");
+                        var dataSource = grid.dataSource;
+
+                        //records on current view / page
+                        var recordsOnCurrentView = dataSource.view().length;
+                        console.log("recordsOnCurrentView = " + recordsOnCurrentView);
+
+                        //total records
+                        var totalRecords = dataSource.total();
+                        console.log("totalRecords = " + totalRecords);
+
+                        if (totalRecords < 600) {
+                            // $('#bck').prop('disabled', true);
+                            $('#nxt').prop('disabled', true);
+                        } else {
+                            //$('#bck').prop('disabled', false);
+                            $('#nxt').prop('disabled', false);
+                        }
+
+                    }, 1000);
+
+                };
+                //START check box filter for scenario names
+                function onFilterMenuInit(e) {
+                    if (e.field == "CustomerType") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "NonProfitOrgInd") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "PoliticallyExposedPersonInd") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "CharityDonationsInd") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "RiskClassification") { initCheckboxFilter.call(this, e); };
+                    //if (e.field == "ResidenceCountryName") { initCheckboxFilter.call(this, e); };
+                    //if (e.field == "CitizenshipCountryName") { initCheckboxFilter.call(this, e); };
+                    //if (e.field == "CityName") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "MaritalStatusDesc") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "BranchName") { initCheckboxFilter.call(this, e); };
+                }
+
+                function initCheckboxFilter(e) {
+                    var popup = e.container.data("kendoPopup");
+                    var dataSource = this.dataSource;
+                    var field = e.field;
+                    var checkboxesDataSource = new kendo.data.DataSource({
+                        data: uniqueForField(dataSource.data(), field)
+                    });
+
+
+                    var helpTextElement = e.container.children(":first").children(":first");
+                    helpTextElement.nextUntil(":has(.k-button)").remove();
+                    var element = $("<div class='checkbox-container'></div>").insertAfter(helpTextElement).kendoListView({
+                        dataSource: checkboxesDataSource,
+                        template: "<div><input type='checkbox' value='#:" + field + "#'/>#:" + field + "#</div>"
+                    });
+                    e.container.find("[type='submit']").click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var filter = dataSource.filter() || { logic: "and", filters: [] };
+                        var fieldFilters = $.map(element.find(":checkbox:checked"), function (input) {
+                            return {
+                                field: field,
+                                operator: "eq",
+                                value: input.value
+                            };
+                        });
+                        if (fieldFilters.length) {
+                            removeFiltersForField(filter, field);
+                            filter.filters.push({
+                                logic: "or",
+                                filters: fieldFilters
+                            });
+                            dataSource.filter(filter);
+                        }
+                        popup.close();
+                    });
+                }
+
+                function removeFiltersForField(expression, field) {
+                    if (expression.filters) {
+                        expression.filters = $.grep(expression.filters, function (filter) {
+                            removeFiltersForField(filter, field);
+                            if (filter.filters) {
+                                return filter.filters.length;
+                            } else {
+                                return filter.field != field;
+                            }
+                        });
+                    }
+                }
+
+                function uniqueForField(data, field) {
+                    var map = {};
+                    var result = [];
+                    var item;
+                    for (var i = 0; i < data.length; i++) {
+                        item = data[i];
+                        if (!map[item[field]]) {
+                            result.push(item.toJSON());
+                            map[item[field]] = true;
+                        }
+                    }
+                    return result;
+                }
+                //END
+                //commented by ehab azab 20-9-2022
+                //$("#nxt").attr("disabled", false);
+                //$("#totalCount").attr("disabled", false);
+                //$("#pageNumber").attr("disabled", false);
+                //var bck = document.getElementById("#bck");
+                //bck.style.display = "none";
+                //var pageNumberLbel = document.getElementById("#pageNumber");
+                //pageNumberLbel.style.display = "block";
+                //var nxt = document.getElementById("#nxt");
+                //nxt.style.display = "none";
+                //var totalCountLbel = document.getElementById("#totalCount");
+                //totalCountLbel.style.display = "block";
+            };
+            function toolbar_click() {
+                var exportedColumns = getExportedColumns();
+                ExtractFiles("/FskRiskAssessment/Export?" + queryUrl + getTableHeaders() + exportedColumns, "FSKRiskAssesment");
+                //console.log("/Customers/Export?" + queryUrl + getTableHeaders() + getExportedColumns());
+            }
+        </script>
+    </div>
+</section>-->
+<!-- Charts Sections -->
+<!--<link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center"><strong> Customers Count Per Type</strong></h2>
+        <div id="Aml_Cust_Per_Type" style="height:600px"></div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $.getJSON("/Customers/Aml_Cust_Per_Type", function (data) {
+
+
+            am4core.useTheme(am4themes_animated);
+
+            am4core.addLicense("ch-custom-attribution");
+
+            var chart = am4core.create("Aml_Cust_Per_Type", am4charts.PieChart3D);
+
+            chart.legend = new am4charts.Legend();
+            chart.data = data;
+
+            chart.innerRadius = am4core.percent(40);
+
+            var series = chart.series.push(new am4charts.PieSeries3D());
+            series.dataFields.value = "NumberOfCustomers";
+            series.dataFields.category = "CustomerType";
+        });
+    });
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center"><strong> Customers Count Per Risk</strong></h2>
+        <div id="Aml_Cust_Per_Risk" style="height:600px"></div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $.getJSON("/Customers/Aml_Cust_Per_Risk", function (data) {
+            //console.log(data);
+
+            am4core.useTheme(am4themes_animated);
+
+            am4core.addLicense("ch-custom-attribution");
+
+            var chart = am4core.create("Aml_Cust_Per_Risk", am4charts.PieChart3D);
+
+            chart.legend = new am4charts.Legend();
+            chart.data = data;
+
+            chart.innerRadius = am4core.percent(40);
+
+            var series = chart.series.push(new am4charts.PieSeries3D());
+            series.dataFields.value = "NumberOfCustomers";
+            series.dataFields.category = "RiskClassification";
+        });
+    });
+</script>-->
+@*<div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center"><strong> Customers Count Per City</strong></h2>
+            <div id="Aml_Cust_Per_City" style="height:600px"></div>
+        </div>
+    </div>
+    <script>
+
+        $(document).ready(function () {
+
+            $.getJSON("/Customers/Aml_Cust_Per_City", function (data) {
+                console.log(data);
+
+                am4core.useTheme(am4themes_animated);
+
+                            .addLicense("ch-custom-attribution");
+
+                va r chart = am4core.create("Aml_Cust_Per_City", am4charts.PieChart3D);
+
+                chart.legend = new am4charts.Legend();
+                chart.data = data;
+
+                chart.innerRadius = am4core.percent(40);
+
+                var series = chart.series.push(new am4charts.PieSeries3D());
+                series.dataFields.value = "NumberOfCustomers";
+                series.dataFields.category = "CityName";
+            });
+        });
+    </script>*@
+@*<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center"><strong> Customers Count Per Branch</strong></h2>
+        <div id="Aml_Cust_Per_Branch" style="height:600px"></div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $.getJSON("/Customers/Aml_Cust_Per_Branch", function (data) {
+
+
+            am4core.useTheme(am4themes_animated);
+            am4core.addLicense("ch-custom-attribution");
+
+            if (chart) {
+                chart.dispose();
+            }
+
+            // Create chart instance
+            var chart = am4core.create("Aml_Cust_Per_Branch", am4charts.XYChart);
+
+            // Add data
+            chart.data = data;
+
+            // Create axes
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "BranchName";
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 15;
+
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+
+            // Create series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueX = "NumberOfCustomers";
+            series.dataFields.categoryY = "BranchName";
+            series.tooltipText = "{NumberOfCustomers}";
+            series.sequencedInterpolation = true;
+            series.defaultState.transitionDuration = 1000;
+            series.sequencedInterpolationDelay = 100;
+            series.columns.template.strokeOpacity = 0;
+
+            chart.cursor = new am4charts.XYCursor();
+            chart.cursor.behavior = "panY";
+            // series.columns.template.adapter.add("fill", function (fill, target) {
+            //    return chart.colors.getIndex(target.dataItem.index);
+            //});
+
+            // Set cell size in pixels
+            var cellSize = 15;
+            chart.events.on("datavalidated", function (ev) {
+
+                // Get objects of interest
+                var chart = ev.target;
+                var categoryAxis = chart.yAxes.getIndex(0);
+
+                // Calculate how we need to adjust chart height
+                var adjustHeight = chart.data.length * cellSize - categoryAxis.pixelHeight;
+
+                // get current chart height
+                var targetHeight = chart.pixelHeight + adjustHeight;
+
+                // Set it on chart's container
+                chart.svgContainer.htmlElement.style.height = targetHeight + "px";
+            });
+
+
+
+        });
+    });
+
+</script>-->*@
+
+<!--Filter Modal -->
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Filter Options </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="ModelBodyHTML">
+                <br />
+                <div class="row">
+                    <label class="col-md-2"> Customer Scince Date or after  </label>
+                    <input type="date" id="CjoinDate" class="col-md-3 text-infol" required />
+
+                    <label class="col-md-2">Customer Scince Date of before </label>
+                    <input type="date" id="CendDate" class="col-md-3 text-infol" required />
+                </div>
+
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Customer Name</label><input type="text" id="CustomerName" class="col-md-3 text-infol">
+                    <label class="col-md-2">Customer Number </label><input id="CustomerNumber" type="text" class="col-md-3 text-infol" />
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Customer Type</label>
+                    <select id="CustomerType" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                    <label class="col-md-2">Risk Classification</label>
+                    <select id="RiskClassification" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Non Profit Org Ind</label>
+                    <select id="NonProfitOrgInd" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                        <option>Y</option>
+                        <option>N</option>
+                    </select>
+                    <label class="col-md-2">PEP</label>
+                    <select id="PoliticallyExposedPersonInd" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                        <option>Y</option>
+                        <option>N</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Charity Donations Ind</label>
+                    <select id="CharityDonationsInd" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                        <option>Y</option>
+                        <option>N</option>
+                    </select>
+                    <label class="col-md-2">Residence Country Name</label>
+                    <select id="ResidenceCountryName" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Branch Number</label><input type="text" id="BranchNumber" class="col-md-3 text-infol"  />
+                    <label class="col-md-2">Branch Name</label><select id="BranchName" class="col-md-3 text-infol  selectpicker" data-live-search="true" multiple >
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Industry Description</label>
+                    <select id="IndustryDesc" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                    <label class="col-md-2">Customer Identification Type</label>
+                    <select id="CustomerIdentificationType" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Customer Identification ID</label><input type="text" id="CustomerIdentificationId" class="col-md-3 text-infol" />
+                    <label class="col-md-2">Occupation Description</label>
+                    <select id="OccupationDesc" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Citizenship Country</label>
+                    <select id="CitizenshipCountryName" class="col-md-3 text-infol selectpicker" data-live-search="true" multiple>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" style="float:left" onclick="CleartModelFilters()">Reset</button>
+
+                <button type="button" class="btn btn-success"  onclick="PresentData()" data-dismiss="modal">Apply Filters <span class="glyphicon glyphicon-search">  </span></button>
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!--Filter End Modal -->
+<!--<script>
+    function getDate() {
+        var today = new Date();
+
+        document.getElementById("CjoinDate").defaultValue = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        document.getElementById("CendDate").defaultValue = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        console.log(today.getFullYear());
+    }
+</script>
+
+<script>
+    // DropDown Filters Script
+    // Get Drop Down API data
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetBranchDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('BranchName');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].BranchName;
+                option.text = data[M].BranchName;
+                DropDown.appendChild(option);
+
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetCustomerTypeDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('CustomerType');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].CustomerType;
+                option.text = data[M].CustomerType;
+                DropDown.appendChild(option);
+
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetRiskClassificationDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('RiskClassification');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].LovTypeDesc;
+                option.text = data[M].LovTypeDesc;
+                DropDown.appendChild(option);
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetResidenceCountryNameDropDown", function (data) {
+
+
+            console.log(data);
+            var DropDown = document.getElementById('ResidenceCountryName');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].ResidenceCountryName;
+                option.text = data[M].ResidenceCountryName;
+                DropDown.appendChild(option);
+
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetCitizenshipCountryNameDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('CitizenshipCountryName');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].CitizenshipCountryName;
+                option.text = data[M].CitizenshipCountryName;
+                DropDown.appendChild(option);
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetCustomerIdentificationTypeDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('CustomerIdentificationType');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].PartyIdentificationTypeDesc1;
+                option.text = data[M].PartyIdentificationTypeDesc1;
+                DropDown.appendChild(option);
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetIndustryDescDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('IndustryDesc');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].IndustryDesc;
+                option.text = data[M].IndustryDesc;
+                DropDown.appendChild(option);
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+
+    $(document).ready(function () {
+        $.getJSON("/Customers/GetOccupationDescDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('OccupationDesc');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M].OccupationDesc;
+                option.text = data[M].OccupationDesc;
+                DropDown.appendChild(option);
+            }
+            $('.selectpicker').selectpicker('refresh').change(function () { toggleSelectAllFilters($(this)); }).trigger('change');
+        });
+    });
+</script>
+
+
+
+<style type="text/css">
+    .checkbox-container {
+        max-height: 200px;
+        overflow: auto;
+    }
+</style>
+
+                <partial name="_ExportPartialView" />-->

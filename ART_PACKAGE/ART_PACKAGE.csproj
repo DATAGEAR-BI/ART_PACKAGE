@@ -888,6 +888,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="Views\AlertDetails\Index.cshtml" />
+		<None Include="Views\AlertSummary\Index.cshtml" />
+		<None Include="Views\CasesDetails\Index.cshtml" />
+		<None Include="Views\CasesSummary\Index.cshtml" />
+		<None Include="Views\CustomersSummary\Index.cshtml" />
+		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\HighRisk\Index.cshtml" />
+		<None Include="Views\RiskAssessment\Index.cshtml" />
+		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\Triage\Index.cshtml" />
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />
