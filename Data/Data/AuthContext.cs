@@ -76,9 +76,7 @@ public class AuthContext : IdentityDbContext<AppUser>
                  .HasForeignKey(fk => fk.ReportId);
             });
 
-        modelBuilder.Entity<ArtSavedReportsChart>(
-
-            e =>
+        modelBuilder.Entity<ArtSavedReportsChart>(e =>
             {
                 e.HasKey(e => new { e.ReportId, e.Column, e.Type });
                 e.HasOne<ArtSavedCustomReport>(r => r.Report)
@@ -96,6 +94,29 @@ public class AuthContext : IdentityDbContext<AppUser>
                 .HasForeignKey(x => x.UserId);
 
         });
+
+
+        modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCasesPerSubcat>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+
+
+        modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtSystemPerfPerDate>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+
         if (this.Database.IsSqlServer())
             ModelCreatingConfigurator.SqlServerOnModelCreating(modelBuilder);
 
