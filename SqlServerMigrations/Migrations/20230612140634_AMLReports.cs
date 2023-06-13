@@ -880,13 +880,16 @@ namespace SqlServerMigrations.Migrations
 
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]");
+
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CASES_PER_STATUS]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]");
+
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]");
+
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_AML_PROP_RISK_CLASS]");
             migrationBuilder.Sql($"DROP PROCEDURE [ART_DB].[ART_ST_AML_RISK_CLASS]");
 

@@ -74,12 +74,7 @@ namespace Data
                     .HasColumnName("NUMBER_OF_CASES");
             });
 
-            modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+
 
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {
@@ -1150,17 +1145,6 @@ namespace Data
                     .HasColumnName("NUMBER_OF_CASES");
             });
 
-
-
-            modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtSystemPerfPerDate>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
-
-
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {
                 entity.HasNoKey();
@@ -1368,8 +1352,6 @@ namespace Data
 
                     .HasColumnName("VALID_FROM_DATE");
             });
-
-
 
             //AML
             modelBuilder.Entity<ArtHomeAlertsPerDate>(entity =>
@@ -2078,17 +2060,7 @@ namespace Data
                     .HasColumnName("VERSION_NUMBER");
             });
 
-            modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCasesPerSubcat>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+
 
             //for sake for build => toChange when convert to SqlServer
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
