@@ -706,7 +706,17 @@ namespace OracleMigrations.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_ALERT_PER_OWNER""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_ALERTS_PER_STATUS""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CASES_PER_CATEGORY""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CASES_PER_PRIORITY""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CASES_PER_STATUS""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CASES_PER_SUBCAT""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CUST_PER_BRANCH""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CUST_PER_RISK""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CUST_PER_TYPE""");
+            migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_AML_RISK_CLASS""");
+            
         }
     }
 }

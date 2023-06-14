@@ -1,10 +1,8 @@
-﻿using DataGear_RV_Ver_1._7.dbdgcmgmt;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PagedList;
 using Newtonsoft.Json;
 
 using Microsoft.AspNetCore.Authorization;
@@ -12,29 +10,35 @@ using System.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 //using MimeKit;
-using DataGear_RV_Ver_1._7.Utils;
-using DataGear_RV_Ver_1._7.Helpers;
-using DataGear_RV_Ver_1._7.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using System.Text;
-using DataGear_RV_Ver_1._7.StoredProcBase;
 using Microsoft.Extensions.Caching.Memory;
 using Oracle.ManagedDataAccess.Client;
-using DataGear_RV_Ver_1._7.Helpers.StoredProcsHelpers;
+using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using System.Collections;
 using System.Linq.Dynamic.Core;
+using ART_PACKAGE.Areas.Identity.Data;
+using Data.Data;
+using Data.Constants.db;
+using Data.Constants.StoredProcs;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
     public class CustomersSummaryController : Controller
     {
 
-        private readonly dbfcfcore.ModelContext dbfcfcore;
+        private readonly AuthContext dbfcfcore;
+        private readonly IConfiguration _config;
+        private readonly string dbType;
 
-        public CustomersSummaryController(dbfcfcore.ModelContext dbfcfcore, IMemoryCache cache)
+        public CustomersSummaryController(AuthContext dbfcfcore, IMemoryCache cache, IConfiguration config)
         {
             this.dbfcfcore = dbfcfcore;
+            _config = config;
+            dbType = _config.GetValue<string>("dbType").ToUpper();
 
         }
 
@@ -42,105 +46,33 @@ namespace DataGear_RV_Ver_1._7.Controllers
         {
 
 
-            IQueryable<StCustomerPerType> chart1Data = Enumerable.Empty<StCustomerPerType>().AsQueryable();
-            IQueryable<StCustomerPerRiskClass> chart2data = Enumerable.Empty<StCustomerPerRiskClass>().AsQueryable();
-            IQueryable<StCustomerPerBranch> chart3Data = Enumerable.Empty<StCustomerPerBranch>().AsQueryable();
+            IEnumerable<ArtStCustPerType> chart1Data = Enumerable.Empty<ArtStCustPerType>().AsQueryable();
+            IEnumerable<ArtStCustPerRisk> chart2data = Enumerable.Empty<ArtStCustPerRisk>().AsQueryable();
+            IEnumerable<ArtStCustPerBranch> chart3Data = Enumerable.Empty<ArtStCustPerBranch>().AsQueryable();
 
+            var chart1Params = para.procFilters.MapToParameters(dbType);
+            var chart2Params = para.procFilters.MapToParameters(dbType);
+            var chart3Params = para.procFilters.MapToParameters(dbType);
 
-            var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value;
-            var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value;
-            //var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
-            //var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
-            //var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
-            var sdch3 = new OracleParameter("startDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = startDate
-            };
-            var edch3 = new OracleParameter("endDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = endDate
-            };
-            //var ci = new OracleParameter("case_id", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_id
-
-            //};
-            //var ct = new OracleParameter("case_type", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_type
-
-            //};
-            //var cs = new OracleParameter("case_status", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_status
-
-            //};
-            var sdch1 = new OracleParameter("startDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = startDate
-            };
-            var edch1 = new OracleParameter("endDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = endDate
-            };
-            //var cich1 = new OracleParameter("case_id", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_id
-
-            //};
-            //var ctch1 = new OracleParameter("case_type", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_type
-
-            //};
-            //var csch1 = new OracleParameter("case_status", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_status
-
-            //};
-            var sdch2 = new OracleParameter("startDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = startDate
-            };
-            var edch2 = new OracleParameter("endDate", OracleDbType.Varchar2, ParameterDirection.Input)
-            {
-                Value = endDate
-            };
-            //var cich2 = new OracleParameter("case_id", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_id
-
-            //};
-            //var ctch2 = new OracleParameter("case_type", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_type
-
-            //};
-            //var csch2 = new OracleParameter("case_status", OracleDbType.Varchar2, ParameterDirection.Input)
-            //{
-            //    Value = case_status
-
-            //};
-
-            var chart3output = new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)
+            if (dbType == DbTypes.SqlServer)
             {
 
-            }; var chart1output = new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)
+                chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(SQLSERVERSPNames.ART_ST_CUST_PER_TYPE, chart1Params.ToArray());
+                chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(SQLSERVERSPNames.ART_ST_CUST_PER_RISK, chart2Params.ToArray());
+                chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(SQLSERVERSPNames.ART_ST_CUST_PER_BRANCH, chart3Params.ToArray());
+
+            }
+
+            if (dbType == DbTypes.Oracle)
             {
+                chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
+                chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
+                chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
 
-            }; var chart2output = new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)
-            {
+            }
 
-            };
-
-            chart3Data = dbfcfcore.ExecuteProc<StCustomerPerBranch>("ART_ST_CUST_SUMM_PER_BRANCH", chart3output, sdch3, edch3/*, ci, ct, cs*/);
-            chart1Data = dbfcfcore.ExecuteProc<StCustomerPerType>("ART_ST_CUST_SUMM_PER_TYPE", chart1output, sdch1, edch1/*, cich1, ctch1, csch1*/);
-            chart2data = dbfcfcore.ExecuteProc<StCustomerPerRiskClass>("ART_ST_CUST_SUMM_PER_RISK", chart2output, sdch2, edch2/*, cich2, ctch2, csch2*/);
-
-
-            //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
             var chartData = new ArrayList {
-                new ChartData<StCustomerPerType>
+                new ChartData<ArtStCustPerType>
                 {
                     ChartId = "StCustomerPerType",
                     Data = chart1Data.ToList(),
@@ -148,7 +80,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     Cat = "CUSTOMER_TYPE",
                     Val = "NUMBER_OF_CUSTOMERS"
                 },
-                new ChartData<StCustomerPerRiskClass>
+                new ChartData<ArtStCustPerRisk>
                 {
                     ChartId = "StCustomerPerRiskClass",
                     Data = chart2data.ToList(),
@@ -156,7 +88,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                     Cat = "RISK_CLASSIFICATION",
                     Val = "NUMBER_OF_CUSTOMERS"
                 },
-                new ChartData<StCustomerPerBranch>
+                new ChartData<ArtStCustPerBranch>
                 {
                     ChartId = "StCustomerPerBranch",
                     Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
@@ -176,6 +108,9 @@ namespace DataGear_RV_Ver_1._7.Controllers
                 }),
 
             };
+
+
+
         }
 
 

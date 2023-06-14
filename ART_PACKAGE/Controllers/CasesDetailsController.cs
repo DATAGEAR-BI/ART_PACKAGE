@@ -5,112 +5,43 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Caching.Memory;
-using DataGear_RV_Ver_1._7.Helpers;
-using DataGear_RV_Ver_1._7.Helpers.CustomReportHelpers;
-using DataGear_RV_Ver_1._7.Services;
-using DataGear_RV_Ver_1._7.dbfcfkc;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Services;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using DataGear_RV_Ver_1._7.Helpers;
-using DataGear_RV_Ver_1._7.Helpers.CustomReportHelpers;
-using DataGear_RV_Ver_1._7.dbfcfcore;
-using DataGear_RV_Ver_1._7.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.DropDown;
+using Data.Data;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
     public class CasesDetailsController : Controller
     {
-        private readonly dbfcfkc.ModelContext dbfcfkc;
+        private readonly AuthContext dbfcfkc;
 
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CasesDetailsController(dbfcfkc.ModelContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IServiceScopeFactory serviceScopeFactory)
+        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IServiceScopeFactory serviceScopeFactory)
         {
             this.dbfcfkc = dbfcfkc;
             _cache = cache;
             this._dropDown = dropDown;
             _serviceScopeFactory = serviceScopeFactory;
         }
-        [HttpPost]
-        public async Task<IActionResult> DeleteCases([FromBody] List<string> cases)
-        {
-
-            var errorDict = new Dictionary<int, string>();
-            var batchSize = 1; // set the size of each batch
-            var totalBatches = (int)Math.Ceiling((double)cases.Count / batchSize);
-
-            Parallel.For(0, totalBatches, async (batchIndex, loopState) =>
-            {
-                var batchCases = cases.OrderBy(x => x).Skip(batchIndex * batchSize).Take(batchSize).ToList();
-                using var scope = _serviceScopeFactory.CreateScope();
-                using var batchContext = scope.ServiceProvider.GetRequiredService<dbfcfkc.ModelContext>();
-
-                using var transaction = batchContext.Database.BeginTransaction();
-                try
-                {
-
-
-                    var alertCases = batchContext.FskAlertCases.Where(ac => batchCases.Contains(ac.CaseId.ToString()));
-                    var fskCases = batchContext.FskCases.Where(c => batchCases.Contains(c.CaseId.ToString()));
-                    var casesEntities = batchContext.FskCaseEntities.Where(ca => batchCases.Contains(ca.CaseId.ToString()));
-                    var CasesEvents = batchContext.FskCaseEvents.Where(ce => batchCases.Contains(ce.CaseId.ToString()));
-                    batchContext.RemoveRange(alertCases);
-                    batchContext.RemoveRange(fskCases);
-                    batchContext.RemoveRange(casesEntities);
-                    batchContext.RemoveRange(CasesEvents);
-
-                    await batchContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    await transaction.RollbackAsync();
-                    errorDict[batchIndex] = ex.Message;
-                    loopState.Stop();
-                }
-
-            });
-
-            if (errorDict.Keys.Count == totalBatches)
-                return BadRequest("Something went wrong try again in a minute");
-            else if (errorDict.Keys.Count > 0 && errorDict.Keys.Count != totalBatches)
-            {
-                var sb = new StringBuilder();
-                sb.AppendLine("not all cases deleted this batches failed : ");
-                sb.AppendJoin(",", errorDict.Keys);
-                return BadRequest(sb.ToString());
-            }
-            else
-            {
-                return Ok("Cases Deleted Successfully");
-            }
-
-
-
-
-
-            // Handle aggregate exception here...
-            //foreach (var ex in ae.InnerExceptions)
-            //{
-            //    // Handle inner exception here...
-            //}
-
-
-
-
-        }
+       
 
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<AmlCaseDetailView> data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            IQueryable<ArtAmlCaseDetailsView> data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -135,7 +66,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
             }
 
-            var Data = data.CallData<AmlCaseDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -169,8 +100,8 @@ namespace DataGear_RV_Ver_1._7.Controllers
         }*/
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<AmlCaseDetailView, GenericCsvClassMapper<AmlCaseDetailView, CasesDetailsController>>(para.Req);
+            var data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
+            var bytes = await data.ExportToCSV<ArtAmlCaseDetailsView, GenericCsvClassMapper<ArtAmlCaseDetailsView, CasesDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
         public IActionResult Index()
