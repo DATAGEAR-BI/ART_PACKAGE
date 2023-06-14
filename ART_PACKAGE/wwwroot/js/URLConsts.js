@@ -33,9 +33,9 @@
     Customers:"/Customers/GetData",
     HighRisk:"/HighRisk/GetData",
     AlertSummary:"/AlertSummary/GetData",
-    CasesSummary:"/AlertSummary/GetData",
+    CasesSummary:"/CasesSummary/GetData",
     CustomersSummary:"/CustomersSummary/GetData",
-    RiskSummary:"/RiskSummary/GetData"
+    RiskClassSummary:"/RiskSummary/GetData"
     
    
 

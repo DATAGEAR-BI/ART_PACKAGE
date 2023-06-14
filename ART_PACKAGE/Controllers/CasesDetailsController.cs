@@ -75,12 +75,12 @@ namespace ART_PACKAGE.Controllers
                 containsActions = false,
                 toolbar = new List<dynamic>
                 {
-                    new
+                    /*new
                     {
                         text = "Delete Cases",
                         id="dltCases",
                         show = User.IsInRole("Delete_Cases")
-                    }
+                    }*/
                 },
                 selectable = true,
             };
