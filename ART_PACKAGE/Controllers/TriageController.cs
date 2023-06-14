@@ -22,11 +22,11 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfkc;
         private readonly IMemoryCache _cache;
-        private readonly IDropDownService _dropDown;
-        public TriageController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown)
+        /*private readonly IDropDownService _dropDown;*/
+        public TriageController(AuthContext dbfcfkc, IMemoryCache cache/*, IDropDownService dropDown*/)
         {
             this.dbfcfkc = dbfcfkc;
-            _cache = cache; this._dropDown = dropDown;
+            _cache = cache; /*this._dropDown = dropDown;*/
         }
 
 
@@ -43,16 +43,16 @@ namespace ART_PACKAGE.Controllers
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
+                //DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    /*{"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }*/
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
+                //ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtAmlTriageView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAmlTriageView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
             var result = new
             {
                 data = Data.Data,

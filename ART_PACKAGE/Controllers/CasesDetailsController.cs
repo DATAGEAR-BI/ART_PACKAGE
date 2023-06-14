@@ -10,8 +10,7 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Services;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,11 +28,11 @@ namespace ART_PACKAGE.Controllers
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IServiceScopeFactory serviceScopeFactory)
+        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache/*, IDropDownService dropDown*/, IServiceScopeFactory serviceScopeFactory)
         {
             this.dbfcfkc = dbfcfkc;
             _cache = cache;
-            this._dropDown = dropDown;
+            /*this._dropDown = dropDown;*/
             _serviceScopeFactory = serviceScopeFactory;
         }
        
@@ -49,24 +48,25 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
+                //DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    //commented untill resolve drop down 
+                    /*{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
                     {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
                     {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown().ToDynamicList() },
                     {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
                     {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"Owner".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }
+                    {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }*/
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
+               // ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
 
             }
 
-            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
             var result = new
             {
                 data = Data.Data,

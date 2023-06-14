@@ -26,12 +26,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfcore;
         private readonly IMemoryCache _cache;
-        private readonly IDropDownService _dropDown;
-        public RiskAssessmentController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown)
+       /* private readonly IDropDownService _dropDown;*/
+        public RiskAssessmentController(AuthContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;
-            this._dropDown = dropDown;
+          /*  this._dropDown = dropDown;*/
         }
 
 
@@ -45,23 +45,23 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
+               // DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    /*{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown().ToDynamicList() },
                     {"CreateUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown().ToDynamicList() },
                     {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
                     {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
+                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }*/
 
                 };
             }
 
 
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
-            var Data = data.CallData<ArtRiskAssessmentView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            //var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
+            var Data = data.CallData<ArtRiskAssessmentView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
             var result = new
             {
                 data = Data.Data,

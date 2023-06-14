@@ -23,12 +23,12 @@ namespace ART_PACKAGE.Controllers
     public class AlertDetailsController : Controller
     {
         private readonly AuthContext dbfcfkc;
-        private readonly IDropDownService _dropDown;
-        public AlertDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown)
+/*        private readonly IDropDownService _dropDown;
+*/        public AlertDetailsController(AuthContext dbfcfkc, IMemoryCache cache/*, IDropDownService dropDown*/)
         {
             this.dbfcfkc = dbfcfkc;
 
-            this._dropDown = dropDown;
+           /* this._dropDown = dropDown;*/
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -40,28 +40,28 @@ namespace ART_PACKAGE.Controllers
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
+                //DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
                 var PEPlist = new List<dynamic>()
                     {
                         "Y","N"
                     };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
+                    /*{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
                     {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
                     {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
+                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },*/
                     {"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                   /* {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }*/
                 };
 
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
+                //ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
             }
 
 
 
-            var Data = data.CallData<ArtAmlAlertDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAmlAlertDetailView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
             var result = new
             {
                 data = Data.Data,

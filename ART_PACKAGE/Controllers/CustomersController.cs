@@ -24,12 +24,12 @@ namespace ART_PACKAGE.Controllers
 
         private readonly AuthContext dbfcfcore;
         private readonly IMemoryCache _cache;
-        private readonly IDropDownService _dropDown;
-        public CustomersController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown)
+        /*private readonly IDropDownService _dropDown;*/
+        public CustomersController(AuthContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;
-            this._dropDown = dropDown;
+            /*this._dropDown = dropDown;*/
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -42,30 +42,30 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
+                //DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
                 var Indlist = new List<dynamic>()
                     {
                         "Y","N"
                     };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"CustomerType".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
+                    /*{"CustomerType".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
+                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },*/
                     {"NonProfitOrgInd".ToLower(),Indlist.ToDynamicList() },
                     {"PoliticallyExposedPersonInd".ToLower(),Indlist.ToDynamicList() },
                     {"CharityDonationsInd".ToLower(),Indlist.ToDynamicList() },
-                    {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown().ToDynamicList() },
+                    /*{"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown().ToDynamicList() },
                     {"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown().ToDynamicList() },
                     {"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown().ToDynamicList() },
-                    {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown().ToDynamicList() }
+                    {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown().ToDynamicList() }*/
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
+                //ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
             }
 
 
-            var Data = data.CallData<ArtAmlCustomersDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAmlCustomersDetailsView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
             var result = new
             {
                 data = Data.Data,

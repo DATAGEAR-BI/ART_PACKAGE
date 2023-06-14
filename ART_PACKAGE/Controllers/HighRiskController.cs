@@ -24,11 +24,11 @@ namespace ART_PACKAGE.Controllers
     public class HighRiskController : Controller
     {
         private readonly AuthContext dbfcfcore;
-        private readonly IMemoryCache _cache; private readonly IDropDownService _dropDown;
-        public HighRiskController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown)
+        private readonly IMemoryCache _cache;/* private readonly IDropDownService _dropDown;*/
+        public HighRiskController(AuthContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/)
         {
             this.dbfcfcore = dbfcfcore;
-            _cache = cache; this._dropDown = dropDown;
+            _cache = cache;/* this._dropDown = dropDown;*/
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -40,7 +40,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
+                //DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //{"BranchName".ToLower(),dgcmgmt.ArtCaseTypesViews.Select(x => x.CaseType).ToDynamicList() },
