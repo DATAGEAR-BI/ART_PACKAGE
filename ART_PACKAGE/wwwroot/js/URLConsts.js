@@ -25,6 +25,19 @@
     UserPerformancePerActionUser: "/UserPerformancePerActionUser/GetData",
     UserPerformPerAction: "/UserPerformPerAction/GetData",
     UserPerformancePerUserAndAction: "/UserPerformancePerUserAndAction/GetData",
-    AlertedEntities: "/AlertedEntities/GetData"
+    AlertedEntities: "/AlertedEntities/GetData",
+    Triage:"/Triage/GetData",
+    RiskAssessment:"/RiskAssessment/GetData",
+    AlertDetails:"/AlertDetails/GetData",
+    CasesDetails:"/CasesDetails/GetData",
+    Customers:"/Customers/GetData",
+    HighRisk:"/HighRisk/GetData",
+    AlertSummary:"/AlertSummary/GetData",
+    CasesSummary:"/CasesSummary/GetData",
+    CustomersSummary:"/CustomersSummary/GetData",
+    RiskClassSummary:"/RiskSummary/GetData"
+    
+   
+
 }
 

@@ -93,19 +93,16 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Test()
         {
-            var sdch2 = new OracleParameter("startDate", OracleDbType.Varchar2, ParameterDirection.Input)
+            var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
             {
-                Value = "2020-01-01"
+                Value = DateTime.Parse("2020-01-01")
             };
-            var edch2 = new OracleParameter("endDate", OracleDbType.Varchar2, ParameterDirection.Input)
+            var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
             {
-                Value = "2023-01-01"
+                Value = DateTime.Parse("2023-01-01")
             };
-            var chart2output = new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)
-            {
 
-            };
-            var data = _db.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, sdch2, edch2, chart2output);
+            var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
             return Ok(data);
         }
 

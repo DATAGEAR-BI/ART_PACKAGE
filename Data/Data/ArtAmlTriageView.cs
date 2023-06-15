@@ -10,7 +10,7 @@
         public string? OwnerUserid { get; set; }
         public string? AlertedEntityLevel { get; set; }
         public decimal? AggregateAmt { get; set; }
-        public byte? AgeOldestAlert { get; set; }
-        public byte? AlertsCnt { get; set; }
+        public int? AgeOldestAlert { get; set; }
+        public int? AlertsCnt { get; set; }
     }
 }

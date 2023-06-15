@@ -1,10 +1,7 @@
 ﻿@using ART_PACKAGE.Helpers.CustomReportHelpers;
 @using ART_PACKAGE.Helpers.HTMLHelpers;
-@using Data.Constants.db;
-@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var dbType = Configuration.GetValue<string>("dbType").ToUpper();
 }
 
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
@@ -32,7 +29,7 @@
 <script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
 
 
-
+<link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
 <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
 <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
 <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
@@ -43,33 +40,26 @@
 
 <section class="content-header">
     <h1>
-        System Performance Summary Report
-        <small>This report presents the sanction cases summary per status, type and transaction direction</small>
+        Cases Summary
+        <small>Presents the cases summary in the charts</small>
         <br />
     </h1>
 </section>
 
 
-<filters-control data-key="SystemPerformanceSummary" data-chartsurl="SystemPerformanceSummary"></filters-control>
+<filters-control data-key="CasesSummary" data-chartsurl="CasesSummary"></filters-control>
 @*<div id="grid"></div>*@
 <div id="charts">
-    <div id="StSystemPerfPerStatus" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
- 
-    <div id="StSystemPerfPerType" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
-    @if(dbType == DbTypes.SqlServer)
-    {
-    <div id="StSystemPerfPerTransDir" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="2"></div>
-        
-    }
-
-    @if (dbType == DbTypes.Oracle)
-    {
-        <div id="StSystemPerfPerDate" class="col-sm-12 col-xs-12 col-md-12" style="height:600px;margin-bottom:5%" data-type="10"></div>
-    }
+    <div id="StCasesPerStatus" class="col-lg-6 col-md-6 col-sm-12" style="height:600px" data-type="2"></div>
+    <br />
+    <div id="StCasesPerCategory" class="col-lg-6 col-md-6 col-sm-12" style="height:600px" data-type="2"></div>
+    <br />
+    <div id="StCasesPerSubCategory" class="col-lg-6 col-md-6 col-sm-12" style="height:600px" data-type="2"></div>
+    <br />
+    <div id="StCasesPerPriority" class="col-lg-6 col-md-6 col-sm-12" style="height:600px" data-type="2"></div>
 
 </div>
 
 @section Scripts {
-    <script src="~/js/constructfilters.js" defer type="module"></script>
+    <script src="~/js/ConstructFilters.js" defer type="module"></script>
 }
-

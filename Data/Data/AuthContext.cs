@@ -95,7 +95,7 @@ public class AuthContext : IdentityDbContext<AppUser>
 
         });
 
-
+        //AML
         modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
@@ -108,7 +108,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
 
-
+        //Sanction
         modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
@@ -116,6 +116,12 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+
+        //GOAML
+        modelBuilder.Entity<ArtStGoAmlReportsPerType>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStGoAmlReportsPerStatus>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStGoAmlReportsPerIndicator>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
 
         if (this.Database.IsSqlServer())
             ModelCreatingConfigurator.SqlServerOnModelCreating(modelBuilder);
