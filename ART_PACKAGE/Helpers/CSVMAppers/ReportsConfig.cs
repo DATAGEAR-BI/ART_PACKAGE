@@ -10,6 +10,37 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public static readonly Dictionary<string, ReportConfig> CONFIG = new Dictionary<string, ReportConfig>
         {
+             { nameof(AlertDetailsController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                    "Val",
+                    "AlertsNotesFlag"
+                },
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"AlertId",new DisplayNameAndFormat { DisplayName ="Alert ID"}},
+                    {"AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
+                    {"AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
+                    {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                    {"PartyTypeDesc",new DisplayNameAndFormat { DisplayName ="Party Type"}},
+                    {"PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
+                    {"RunDate",new DisplayNameAndFormat { DisplayName ="Run Date"}},
+                    {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    {"CloseDate",new DisplayNameAndFormat { DisplayName ="Closed Date"}},
+                    {"MoneyLaunderingRiskScore",new DisplayNameAndFormat { DisplayName ="Money Laundering RiskScore"}},
+                    {"AlertTypeCd",new DisplayNameAndFormat { DisplayName ="Alert Type"}},
+                    {"AlertSubCat",new DisplayNameAndFormat { DisplayName ="Alert Sub-Category"}},
+                    {"AlertStatus",new DisplayNameAndFormat { DisplayName ="Alert Status"}},
+                    {"AlertDescription",new DisplayNameAndFormat { DisplayName ="Alert Description"}},
+                    {"ScenarioName",new DisplayNameAndFormat { DisplayName ="Scenario Name"}},
+                    {"ReportCloseRsn",new DisplayNameAndFormat { DisplayName ="Report Close Reason"}},
+                    {"ActualValuesText",new DisplayNameAndFormat { DisplayName ="Scenario Description"}},
+                    {"OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner "}},
+                    {"InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}}
+
+            }
+               }
+            },
             {
                 nameof(ReportController).ToLower(),new ReportConfig
                 {
@@ -157,6 +188,153 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"ReportId", new DisplayNameAndFormat { DisplayName = "Report ID"}},
                                {"Indicator", new DisplayNameAndFormat { DisplayName = "Indicator Code"}},
                                {"Description", new DisplayNameAndFormat { DisplayName = "Description"}}
+                    }
+                }
+            },
+              {
+                nameof(CasesDetailsController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>
+                    {
+                               "BranchNumber"
+                    },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                    {"CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
+                    {"EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                    {"EntityNumber",new DisplayNameAndFormat { DisplayName ="Entity Number"}},
+                    {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                    {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                    {"CasePriority",new DisplayNameAndFormat { DisplayName ="Case Priority"}},
+                    {"CaseCategory",new DisplayNameAndFormat { DisplayName ="Case Category"}},
+                    {"CaseSubCategory",new DisplayNameAndFormat { DisplayName ="Case Sub-Category"}},
+                    {"EntityLevel",new DisplayNameAndFormat { DisplayName ="Entity Level"}},
+                    {"CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
+                    {"Owner",new DisplayNameAndFormat { DisplayName ="Owner"}},
+                    {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    {"ClosedDate",new DisplayNameAndFormat { DisplayName ="Closed Date"}}
+                    }
+                }
+            },
+               {
+                nameof(CustomersController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>
+                    {
+                     "CustomerTaxId",
+                     "DoingBusinessAsName",
+                     "GovernorateName",
+                     "CustomerStatus",
+                     "StreetPostalCode",
+                     "StreetCountryCode",
+                     "StreetCountryName",
+                     "MailingAddress1",
+                     "MailingCityName",
+                     "MailingPostalCode",
+                     "MailingCountryName",
+                     "IsEmployee",
+                     "EmployeeNumber",
+                     "EmployerName",
+                     "EmployerPhoneNumber",
+                     "EmailAddress",
+                     "PhoneNumber1",
+                     "PhoneNumber2",
+                     "PhoneNumber3",
+                     "AnnualIncomeAmount",
+                     "NetWorthAmount",
+                     "LastRiskAssessmentDate",
+                     "ActiveFlg",
+                    },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                                  {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                                  {"CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                                  {"CustomerSinceDate",new DisplayNameAndFormat { DisplayName ="Customer Since Date"}},
+                                  {"CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
+                                  {"NonProfitOrgInd",new DisplayNameAndFormat { DisplayName ="Non Profit Org Ind"}},
+                                  {"PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
+                                  {"CharityDonationsInd",new DisplayNameAndFormat { DisplayName ="Charity Donations Ind"}},
+                                  {"RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+                                  {"ResidenceCountryName",new DisplayNameAndFormat { DisplayName ="Residence Country"}},
+                                  {"CitizenshipCountryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
+                                  {"StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
+                                  {"CityName",new DisplayNameAndFormat { DisplayName ="City Name"}},
+                                  {"CustomerDateOfBirth",new DisplayNameAndFormat { DisplayName ="Customer Date Of Birth"}},
+                                  {"OccupationDesc",new DisplayNameAndFormat { DisplayName ="Occupation Description"}},
+                                  {"MaritalStatusDesc",new DisplayNameAndFormat { DisplayName ="Marital Status"}},
+                                  {"IndustryDesc",new DisplayNameAndFormat { DisplayName ="Industry Description"}},
+                                  {"BranchNumber",new DisplayNameAndFormat { DisplayName ="Branch Number"}},
+                                  {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                                  {"CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
+                                  {"CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}}
+                    }
+                }
+            },
+
+               {
+                nameof(HighRiskController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                                {"PartyName",new DisplayNameAndFormat { DisplayName ="Party Name"}},
+                                {"PartyNumber",new DisplayNameAndFormat { DisplayName ="Party Number"}},
+                                {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                                {"BranchNumber",new DisplayNameAndFormat { DisplayName ="Branch Number"}},
+                                {"PartyDateOfBirth",new DisplayNameAndFormat { DisplayName ="Party Date Of Birth", Format =  "{0:MMM/dd/yyyy}"}},
+                                {"PartyIdentificationId",new DisplayNameAndFormat { DisplayName ="Party Identification ID"}},
+                                {"PhoneNumber1",new DisplayNameAndFormat { DisplayName ="Phone Number"}},
+                                {"PartyTaxId",new DisplayNameAndFormat { DisplayName ="Party Tax ID"}},
+                                {"MailingAddress1",new DisplayNameAndFormat { DisplayName ="Mailing Address"}},
+                                {"StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
+                                {"StreetCityName",new DisplayNameAndFormat { DisplayName ="Street City Name"}},
+                                {"ResidenceCountryName",new DisplayNameAndFormat { DisplayName ="Residence Country"}},
+                                {"CitizenshipCountryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
+                                {"PartyIdentificationTypeDesc",new DisplayNameAndFormat { DisplayName ="Party Identification Type"}},
+                                {"PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
+                                {"PartyTypeDesc",new DisplayNameAndFormat { DisplayName ="Party Type"}},
+                                {"RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+                                {"MailingCityName",new DisplayNameAndFormat { DisplayName ="Mailing City Name"}}
+                    }
+                  }
+            },
+               {
+                nameof(RiskAssessmentController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>{
+                        "RiskAssessmentDuration",
+                        "VersionNumber",
+                        "AssessmentCategoryCd",
+                        "AssessmentSubcategoryCd",
+                    },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {"PartyNumber",new DisplayNameAndFormat { DisplayName ="Party Number"}},
+                        {"PartyName",new DisplayNameAndFormat { DisplayName ="Party Name"}},
+                        {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {"AssessmentTypeCd",new DisplayNameAndFormat { DisplayName ="Assessment Type"}},
+                        {"RiskAssessmentId",new DisplayNameAndFormat { DisplayName ="Risk Assessment ID"}},
+                        {"OwnerUserLongId",new DisplayNameAndFormat { DisplayName ="Owner"}},
+                        {"CreateUserId",new DisplayNameAndFormat { DisplayName ="Create By"}},
+                        {"RiskStatus",new DisplayNameAndFormat { DisplayName ="Risk Status"}},
+                        {"RiskClass",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+                        {"ProposedRiskClass",new DisplayNameAndFormat { DisplayName ="Proposed Risk Classification"}}
+                    }
+                }
+            },
+                {
+                nameof(TriageController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                                "AlertedEntityLevel"
+                                //"Outstamt",
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
+                        {  "AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
+                        {  "BranchNumber",new DisplayNameAndFormat { DisplayName ="Branch Number"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "RiskScore",new DisplayNameAndFormat { DisplayName ="Risk Score"}},
+                        {  "OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner"}},
+                        {  "AggregateAmt",new DisplayNameAndFormat { DisplayName ="Aggregate Amount"}},
+                        {  "AgeOldestAlert",new DisplayNameAndFormat { DisplayName ="Alert Age"}},
+                        {  "AlertsCntSum",new DisplayNameAndFormat { DisplayName ="Alerts Count"}},
                     }
                 }
             },

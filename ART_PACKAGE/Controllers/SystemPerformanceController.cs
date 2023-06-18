@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
-
 using System.Linq.Dynamic.Core;
-
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
@@ -13,6 +10,7 @@ using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Data.DGECM;
 using Microsoft.EntityFrameworkCore;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -23,12 +21,15 @@ namespace ART_PACKAGE.Controllers
         private readonly DGECMContext db;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
+        private readonly IDropDownService _dropSrv;
 
-        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
+        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
-            this._env = env; _pdfSrv = pdfSrv;
+            this._env = env;
+            _pdfSrv = pdfSrv;
             context = _context;
             this.db = db;
+            _dropSrv = dropSrv;
         }
 
         public IActionResult Test()
@@ -38,7 +39,7 @@ namespace ART_PACKAGE.Controllers
         }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtSystemPerformance> data = context.ArtSystemPerformances.AsQueryable();
+            IQueryable<ArtSystemPreformance> data = context.ArtSystemPreformances.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -50,29 +51,18 @@ namespace ART_PACKAGE.Controllers
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    ////{"CaseType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseType).Distinct().ToDynamicList() },
-                    ////{"CaseStatus".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseStatus).Distinct().ToDynamicList() },
-                    ////{"Priority".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.Priority).Distinct().ToDynamicList() },
-                    ////{"TransactionDirection".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionDirection).Distinct().ToDynamicList() },
-                    ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
-                    ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
-                    ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
-
-                    {"CaseType".ToLower(),db.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
-                    {"CaseStatus".ToLower(),db.RefTableVals
-                        .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                        //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                        //.Where(b => b.DisplayOrdrNo==0)
-                        .Select(x=>x.ValDesc).ToDynamicList() },
-                    {"Priority".ToLower(),db.RefTableVals
-                        .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                        .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
-
+                    { "CaseType".ToLower()              , _dropSrv.GetCaseTypeDropDown()      .ToDynamicList()     },
+                    {"CaseStatus".ToLower()             , _dropSrv.GetCaseStatusDropDown()    .ToDynamicList()     },
+                    {"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
+                    {"TransactionDirection".ToLower()   ,_dropSrv.GetTransDirectionDropDown() .ToDynamicList()     },
+                    {"TransactionType".ToLower()        ,_dropSrv.GetTransTypeDropDown()      .ToDynamicList()     },
+                    {"UpdateUserId".ToLower()           ,_dropSrv.GetUpdateUserIdDropDown()          .ToDynamicList()     },
+                    {"InvestrUserId".ToLower()          ,_dropSrv.GetInvestagtorDropDown()          .ToDynamicList()     },
                 };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
-            var Data = data.CallData<ArtSystemPerformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtSystemPreformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -90,8 +80,8 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtSystemPerformances;
-            var bytes = await data.ExportToCSV<ArtSystemPerformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
+            var data = context.ArtSystemPreformances;
+            var bytes = await data.ExportToCSV<ArtSystemPreformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
@@ -100,7 +90,7 @@ namespace ART_PACKAGE.Controllers
         {
             var DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            var data = context.ArtSystemPerformances.CallData<ArtSystemPerformance>(req).Data.ToList();
+            var data = context.ArtSystemPreformances.CallData<ArtSystemPreformance>(req).Data.ToList();
             ViewData["title"] = "System Performance Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5

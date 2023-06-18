@@ -5,6 +5,8 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Services.Pdf;
+using ART_PACKAGE.Helpers.DropDown;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -12,11 +14,13 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext _context;
         private readonly IPdfService _pdfSrv;
+        private readonly IDropDownService _dropSrv;
 
-        public GOAMLReportIndicatorDetailsController(AuthContext context, IPdfService pdfSrv)
+        public GOAMLReportIndicatorDetailsController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             _context = context;
             _pdfSrv = pdfSrv;
+            _dropSrv = dropSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -31,13 +35,10 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"Indicator".ToLower(),_dropDown.GetReportIndicatorDropDown().ToDynamicList() },
-
-
+                    {"Indicator".ToLower(),_dropSrv.GetReportIndicatorDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = new List<string>
                 {
-
                 };
             }
 

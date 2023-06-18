@@ -16,6 +16,7 @@ using System.Reflection;
 using Rotativa.AspNetCore;
 using Data.DGECM;
 using ART_PACKAGE.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers.DropDown;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -24,7 +25,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 
 builder.Services.AddDbs(builder.Configuration);
-
+builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();

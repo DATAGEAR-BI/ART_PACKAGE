@@ -6,17 +6,21 @@ using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GOAMLReportsSuspectController : Controller
     {
         private readonly AuthContext _context;
-        //private readonly IDropDownService _dropDown;
-        public GOAMLReportsSuspectController(AuthContext context)
+        private readonly IDropDownService _dropDown;
+        private readonly IPdfService _pdfSrv;
+        public GOAMLReportsSuspectController(AuthContext context, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = context;
-            //this._dropDown = dropDown;
+            _dropDown = dropDown;
+            _pdfSrv = pdfSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -32,9 +36,9 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
 
-                    //{"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown().ToDynamicList() },
-                    //{"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown().ToDynamicList() },
-                    //{"Branch".ToLower(),_dropDown.GetReportAcctBranchDropDown().ToDynamicList() },
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown().ToDynamicList() },
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown().ToDynamicList() },
+                    {"Branch".ToLower(),_dropDown.GetReportAcctBranchDropDown().ToDynamicList() },
 
 
                 };
@@ -67,6 +71,19 @@ namespace ART_PACKAGE.Controllers
             var data = _context.ArtGoamlReportsSusbectParties.AsQueryable();
             var bytes = await data.ExportToCSV<ArtGoamlReportsSusbectParty, GenericCsvClassMapper<ArtGoamlReportsSusbectParty, GOAMLReportsSuspectController>>(para.Req);
             return File(bytes, "text/csv");
+        }
+
+
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            var DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].SkipList;
+            var data = _context.ArtGoamlReportsSusbectParties.CallData<ArtGoamlReportsSusbectParty>(req).Data.ToList();
+            ViewData["title"] = "System Performance Report";
+            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+            return File(pdfBytes, "application/pdf");
         }
 
 

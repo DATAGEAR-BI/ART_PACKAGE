@@ -1,13 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
@@ -19,6 +12,7 @@ using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
+using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -26,12 +20,14 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfcore;
         private readonly IMemoryCache _cache;
-       /* private readonly IDropDownService _dropDown;*/
-        public RiskAssessmentController(AuthContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/)
+        private readonly IDropDownService _dropDown;
+        private readonly IPdfService _pdfSrv;
+        public RiskAssessmentController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;
-          /*  this._dropDown = dropDown;*/
+            _dropDown = dropDown;
+            _pdfSrv = pdfSrv;
         }
 
 
@@ -45,23 +41,22 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-               // DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    /*{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown().ToDynamicList() },
                     {"CreateUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown().ToDynamicList() },
                     {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
                     {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }*/
-
+                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
                 };
             }
 
 
-            //var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
-            var Data = data.CallData<ArtRiskAssessmentView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
+            var Data = data.CallData<ArtRiskAssessmentView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,7 +80,18 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-       
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            var DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
+            var data = dbfcfcore.ArtRiskAssessmentViews.CallData<ArtRiskAssessmentView>(req).Data.ToList();
+            ViewData["title"] = "System Performance Report";
+            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+            return File(pdfBytes, "application/pdf");
+        }
+
 
 
         public IActionResult Index()

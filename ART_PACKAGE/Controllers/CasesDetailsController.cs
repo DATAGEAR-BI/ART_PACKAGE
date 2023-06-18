@@ -1,23 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Services;
 using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
-
 using ART_PACKAGE.Helpers.CSVMAppers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
+using System.Linq.Dynamic.Core;
+using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -27,15 +17,15 @@ namespace ART_PACKAGE.Controllers
 
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache/*, IDropDownService dropDown*/, IServiceScopeFactory serviceScopeFactory)
+        private readonly IPdfService _pdfSrv;
+        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _cache = cache;
-            /*this._dropDown = dropDown;*/
-            _serviceScopeFactory = serviceScopeFactory;
+            this._dropDown = dropDown;
+            _pdfSrv = pdfSrv;
         }
-       
+
 
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -48,25 +38,23 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                //DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    /*{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
                     {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
                     {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown().ToDynamicList() },
                     {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
                     {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"Owner".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }*/
-
+                    {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }
                 };
-               // ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
-
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
+            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -82,7 +70,7 @@ namespace ART_PACKAGE.Controllers
                         show = User.IsInRole("Delete_Cases")
                     }*/
                 },
-                selectable = true,
+
             };
 
             return new ContentResult
@@ -103,6 +91,18 @@ namespace ART_PACKAGE.Controllers
             var data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
             var bytes = await data.ExportToCSV<ArtAmlCaseDetailsView, GenericCsvClassMapper<ArtAmlCaseDetailsView, CasesDetailsController>>(para.Req);
             return File(bytes, "text/csv");
+        }
+
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            var DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
+            var data = dbfcfkc.ArtAmlCaseDetailsViews.CallData<ArtAmlCaseDetailsView>(req).Data.ToList();
+            ViewData["title"] = "System Performance Report";
+            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+            return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()
         {
