@@ -31,9 +31,6 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"Reportcode".ToLower(),dgcmgmt.ArtCaseTypesViews.Select(x => x.CaseType).ToDynamicList() },
-                    //{"Reportstatuscode".ToLower(),dgcmgmt.ArtCasesStatusFilters.Select(m => m.CaseStatus).ToDynamicList() },
-                    //{"Branch".ToLower(),dgcmgmt.ArtCasesStatusFilters.Select(m => m.CaseStatus).ToDynamicList() },
 
                     //{"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown().ToDynamicList() },
                     //{"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown().ToDynamicList() },

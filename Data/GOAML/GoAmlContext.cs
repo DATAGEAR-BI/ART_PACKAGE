@@ -18,19 +18,103 @@ namespace Data.GOAML
 
         public virtual DbSet<Report> Reports { get; set; } = null!;
         public virtual DbSet<ReportIndicatorType> ReportIndicatorTypes { get; set; } = null!;
+        public virtual DbSet<Taccount> Taccounts { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.1.45;Database=DGGOAML_NEW;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;TrustServerCertificate=True");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("Arabic_100_CI_AI");
+
+            modelBuilder.Entity<Taccount>(entity =>
+            {
+                entity.ToTable("TAccount", "target");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Account)
+                    .HasMaxLength(255)
+                    .HasColumnName("account");
+
+                entity.Property(e => e.AccountName)
+                    .HasMaxLength(255)
+                    .HasColumnName("accountName");
+
+                entity.Property(e => e.Balance)
+                    .HasColumnType("decimal(30, 5)")
+                    .HasColumnName("balance");
+
+                entity.Property(e => e.Beneficiary)
+                    .HasMaxLength(255)
+                    .HasColumnName("beneficiary");
+
+                entity.Property(e => e.BeneficiaryComment)
+                    .HasMaxLength(255)
+                    .HasColumnName("beneficiaryComment");
+
+                entity.Property(e => e.Branch)
+                    .HasMaxLength(255)
+                    .HasColumnName("branch");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("clientNumber");
+
+                entity.Property(e => e.Closed)
+                    .HasMaxLength(255)
+                    .HasColumnName("closed");
+
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(255)
+                    .HasColumnName("comments");
+
+                entity.Property(e => e.CurrencyCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("currencyCode");
+
+                entity.Property(e => e.DateBalance)
+                    .HasMaxLength(255)
+                    .HasColumnName("dateBalance");
+
+                entity.Property(e => e.Iban)
+                    .HasMaxLength(255)
+                    .HasColumnName("iban");
+
+                entity.Property(e => e.InstitutionCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("institutionCode");
+
+                entity.Property(e => e.InstitutionName)
+                    .HasMaxLength(255)
+                    .HasColumnName("institutionName");
+
+                entity.Property(e => e.IsEntity).HasColumnName("isEntity");
+
+                entity.Property(e => e.IsReviewed).HasColumnName("is_reviewed");
+
+                entity.Property(e => e.NonBankInstitution).HasColumnName("nonBankInstitution");
+
+                entity.Property(e => e.Opened)
+                    .HasMaxLength(255)
+                    .HasColumnName("opened");
+
+                entity.Property(e => e.PersonalAccountType)
+                    .HasMaxLength(255)
+                    .HasColumnName("personalAccountType");
+
+                entity.Property(e => e.ReportPartyTypeId).HasColumnName("reportPartyType_id");
+
+                entity.Property(e => e.StatusCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("statusCode");
+
+                entity.Property(e => e.Swift)
+                    .HasMaxLength(255)
+                    .HasColumnName("swift");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("updated_by");
+            });
 
             modelBuilder.Entity<Report>(entity =>
             {

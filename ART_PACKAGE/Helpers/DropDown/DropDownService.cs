@@ -1,5 +1,6 @@
 ﻿using Data.DGECM;
 using Data.FCF71;
+using Data.FCFKC;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -224,30 +225,29 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         }
 
-
         public List<string> GetReportstatuscodeDropDown()
         {
-            var distinct_value = dbgoaml.GoamlReportStatusMatviews.GroupBy(s => s.ReportStatus).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportStatusCode == null || string.IsNullOrEmpty(x.ReportStatusCode.Trim()) ? "UNKNOWN" : x.ReportStatusCode).Distinct().ToList();
             return distinct_value;
 
         }
 
         public List<string> GetReportTypeDropDown()
         {
-            var distinct_value = dbgoaml.GoamlReportTypeMatviews.GroupBy(s => s.Reporttype).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportCode == null || string.IsNullOrEmpty(x.ReportCode.Trim()) ? "UNKNOWN" : x.ReportCode).Distinct().ToList();
             return distinct_value;
 
         }
         public List<string> GetReportPriorityDropDown()
         {
-            var distinct_value = dbgoaml.GoamlReportPriorityMatviews.GroupBy(s => s.ReportPriority).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.GOAML.Reports.Select(x => x.Priority == null || string.IsNullOrEmpty(x.Priority.Trim()) ? "UNKNOWN" : x.Priority).Distinct().ToList();
             return distinct_value;
 
         }
 
         public List<string> GetReportIndicatorDropDown()
         {
-            var distinct_value = dbgoaml.ArtGoamlIndicatorFilterViews.GroupBy(s => s.Indicator).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.GOAML.ReportIndicatorTypes.Select(x => x.Indicator == null || string.IsNullOrEmpty(x.Indicator.Trim()) ? "UNKNOWN" : x.Indicator).Distinct().ToList();
             return distinct_value;
         }
 
@@ -255,18 +255,10 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetNonREntityBranchDropDown()
         {
-            var distinct_value = dbgoaml.GoamlReportEntitybranchMatviews.GroupBy(s => s.Rentitybranch).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.GOAML.Reports.Select(x => x.RentityBranch == null || string.IsNullOrEmpty(x.RentityBranch.Trim()) ? "UNKNOWN" : x.RentityBranch).Distinct().ToList();
             return distinct_value;
 
         }
-
-        public List<string> GetReportAcctBranchDropDown()
-        {
-            var distinct_value = dbgoaml.GoamlReportAcctBranchMatviews.GroupBy(s => s.Branch).Select(g => g.Key).ToList();
-            return distinct_value;
-
-        }
-
         public List<string> GetAppLebalDropDown()
         {
             var distinct_value = dbcmcaudit.VaLicenseds.GroupBy(s => s.AppLebal).Select(g => g.Key).OrderBy(s => s).ToList();
@@ -348,6 +340,12 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetCheckerCreatedByDropDown()
         {
             var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => !a.EnventName.Contains("Waiting")).GroupBy(s => s.Createdby).Select(g => g.Key).OrderBy(s => s).ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetReportAcctBranchDropDown()
+        {
+            var distinct_value = _dbSrv.GOAML.Taccounts.Select(x => x.Branch == null || string.IsNullOrEmpty(x.Branch.Trim()) ? "UNKNOWN" : x.Branch).Distinct().ToList();
             return distinct_value;
         }
     }
