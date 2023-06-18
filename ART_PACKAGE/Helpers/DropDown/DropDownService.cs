@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetPartyTypeDropDown()
         {
-            var distinct_value = dbfcfcore.PartyTypeMatviews.Select(x => x.CustomerType).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyTypeDesc == null || string.IsNullOrEmpty(x.PartyTypeDesc.Trim()) ? "UNKNOWN" : x.PartyTypeDesc.ToUpper()).Distinct().ToList();
             return distinct_value;
         }
 
@@ -42,7 +42,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetBranchNameDropDown()
         {
-            var distinct_value = dbfcfcore.FscBranchDims
+            var distinct_value = _dbSrv.CORE.FscBranchDims
                .Where(a => a.ChangeCurrentInd.Contains("Y"))
                .Where(b => b.BranchTypeDesc.Contains("BRANCH")).Select(x => x.BranchName)
                .ToList();
@@ -53,6 +53,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             var distinct_value = dbcmcaudit.VaPersonInfos.GroupBy(s => s.Name).Select(g => g.Key).ToList();
             return distinct_value;
+
 
         }
 
@@ -113,40 +114,39 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetResidenceCountryNameDropDown()
         {
-            var distinct_value = dbfcfcore.ResidenceCountryMatviews.Select(x => x.ResidenceCountryName).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
             return distinct_value;
-
         }
 
         public List<string> GetCitizenshipCountryNameDropDown()
         {
-            var distinct_value = dbfcfcore.CitizenshipCountryMatviews.Select(x => x.CitizenshipCountryName).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.CitizenshipCountryName == null || string.IsNullOrEmpty(x.CitizenshipCountryName.Trim()) ? "UNKNOWN" : x.CitizenshipCountryName).Distinct().ToList();
             return distinct_value;
 
         }
 
         public List<string> GetCustomerIdentificationTypeDropDown()
         {
-            var distinct_value = dbfcfcore.PartyIdentificationTypeDescs.Select(x => x.PartyIdentificationTypeDesc1).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.PartyIdentificationTypeDesc == null || string.IsNullOrEmpty(x.PartyIdentificationTypeDesc.Trim()) ? "UNKNOWN" : x.PartyIdentificationTypeDesc).Distinct().ToList();
             return distinct_value;
 
         }
 
         public List<string> GetIndustryDescDropDown()
         {
-            var distinct_value = dbfcfcore.IndustryDescMatviews.Select(x => x.IndustryDesc).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.IndustryDesc == null || string.IsNullOrEmpty(x.IndustryDesc.Trim()) ? "UNKNOWN" : x.IndustryDesc).Distinct().ToList();
             return distinct_value;
 
         }
 
         public List<string> GetOccupationDescDropDown()
         {
-            var distinct_value = dbfcfcore.OccupationDescMatviews.Select(x => x.OccupationDesc).ToList();
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.OccupationDesc == null || string.IsNullOrEmpty(x.OccupationDesc.Trim()) ? "UNKNOWN" : x.OccupationDesc).Distinct().ToList();
             return distinct_value;
         }
         public List<string> GetCaseTypeDropDown()
         {
-            var distinct_value = dbdgcmgmt.RefTableVals
+            var distinct_value = _dbSrv.ECM.RefTableVals
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
                 .Where(b => b.DisplayOrdrNo == 0 || b.DisplayOrdrNo == 5).Select(x => x.ValDesc)
                 .ToList();
@@ -183,7 +183,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetSystemCaseStatusDropDown()
         {
-            var distinct_value = dbdgcmgmt.RefTableVals
+            var distinct_value = _dbSrv.ECM.RefTableVals
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
                 .Where(b => b.DisplayOrdrNo == 0).Select(x => x.ValDesc)
@@ -194,19 +194,19 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetTransDirectionDropDown()
         {
-            var distinct_value = dbdgcmgmt.TransDirectionVals.GroupBy(s => s.TransDirection).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.ECM.TransDirectionVals.GroupBy(s => s.TransDirection).Select(g => g.Key).ToList();
             return distinct_value;
 
         }
         public List<string> GetTransTypeDropDown()
         {
-            var distinct_value = dbdgcmgmt.TransTypeVals.GroupBy(s => s.TransactionType).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.ECM.TransTypeVals.GroupBy(s => s.TransactionType).Select(g => g.Key).ToList();
             return distinct_value;
 
         }
         public List<string> GetPriorityDropDown()
         {
-            var distinct_value = dbdgcmgmt.RefTableVals
+            var distinct_value = _dbSrv.ECM.RefTableVals
                .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
                .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x => x.ValDesc)
                .ToList();
@@ -216,7 +216,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetUserCaseStatusDropDown()
         {
-            var distinct_value = dbdgcmgmt.RefTableVals
+            var distinct_value = _dbSrv.ECM.RefTableVals
                             .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                             .Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST")).Select(x => x.ValDesc)
                             .ToList();

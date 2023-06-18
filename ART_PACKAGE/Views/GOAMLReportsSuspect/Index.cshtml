@@ -1,0 +1,474 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+<script src="~/js/FileExtraction.js"></script>
+<script src="~/js/site.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+
+
+<section class="content-header">
+    <h1>
+        GOAML Reports Suspected Partites Details
+        <small>Presents details about the GOAML reports with the related suspected parties</small>
+        <br />
+    </h1>
+</section>
+
+
+<div id="grid"></div>
+@section Scripts{
+
+
+    <script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="GOAMLReportsSuspect"></script>
+}
+
+
+<!--@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br>
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />-->
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<!--<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+
+<section class="content-header">
+    <h1>
+        GOAML Reports Suspected Partites Details
+        <small>Presents details about the GOAML reports with the related suspected parties</small>
+    </h1>
+</section>-->
+<!-- Main content -->
+<!--<section class="content container-fluid">
+    <button type="button" id="ModelBTN" class="btn btn-primary text-center" style="display:block" data-toggle="modal" data-target="#exampleModal" onclick="getDate()">
+        Filters .. <span class="glyphicon glyphicon-search">  </span>
+    </button>-->
+<!-- GRID -->
+<!--<div id="example">
+
+        <div id="grid"></div>
+        <div class="content text-center">
+            <button class="btn btn-primary" id="bck"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            <label id="pageNumber"></label>
+            <button class="btn btn-primary" id="nxt"><span class="glyphicon glyphicon-arrow-right"></span></button>
+            <label style="float:right" id="totalCount"></label>
+        </div>
+        <script>
+            $("#nxt").removeAttr("style").hide();
+            $("#bck").removeAttr("style").hide();
+
+            function CleartModelFilters() {
+                $('#Id').val("");
+                $('#Reportcode').val("");
+                $('#Reportstatuscode').val("");
+                $('#Branch').val("");
+                $('#Reportcreateddatestart').val("");
+                $('#Reportcreateddateend').val("");
+            };
+
+            var filtiredData;
+            var pageNum = 1;
+            var PageLimits = 0;
+            $('#bck').prop('disabled', true);
+
+            function PresentData() {
+
+                var Id = $('#Id').val();
+                var Reportcode = $('#Reportcode').val();
+                var Reportstatuscode = $('#Reportstatuscode').val();
+                var Branch = $('#Branch').val();
+                var Reportcreateddatestart = $('#Reportcreateddatestart').val();
+                var Reportcreateddateend = $('#Reportcreateddateend').val();
+
+                var pageNum = 1;
+                $('#grid').empty(); // to prevent more than one render
+
+                $("#nxt").show();
+                $("#bck").show();
+                if (pageNum == 1) {
+                    $('#bck').prop('disabled', true);
+                }
+
+                $('#grid').empty(); // to prevent more than one render
+                $(document).ready(function () {
+                    $.getJSON("/GOAMLReportsSuspect/getTotalCount", function (data) {
+                        $('#totalCount').text("Total Count : ( " + data + " ) Rows");
+                        PageLimits = Math.ceil(data / 600);
+                    });
+                });
+                //var PageLimits = 0;
+                //var pageNum = 1;
+                $('#pageNumber').empty();
+                $("#pageNumber").text(pageNum);
+                //$('#bck').prop('disabled', true);
+
+                callKendo();
+                $('#nxt').click(function () {
+                    if (pageNum == 1) {
+
+                        $('#grid').empty();
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        $('#bck').prop('disabled', true);
+
+                        callKendo();
+
+
+                    }
+                    if (pageNum < PageLimits) {
+                        $('#bck').prop('disabled', false);
+
+                        $('#grid').empty();
+                        //console.log("PageLimits_2 : " + PageLimits);
+                        pageNum += 1;
+                        if (PageLimits == pageNum) {
+                            $('#nxt').prop('disabled', true);
+                        }
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+                    } else {
+                        $('#nxt').prop('disabled', true);
+                        $('#grid').empty();
+                        callKendo();
+                    }
+
+                });
+                $('#bck').click(function () {
+                    $('#nxt').prop('disabled', false);
+                    console.log(pageNum);
+                    if (pageNum == 1) {
+                        $('#bck').prop('disabled', true);
+                        $('#grid').empty();
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+
+                    }
+                    else {
+                        console.log(pageNum);
+                        $('#grid').empty();
+
+                        pageNum -= 1;
+                        if (pageNum == 1) {
+                            $('#bck').prop('disabled', true);
+
+                        }
+                        $('#pageNumber').empty();
+                        $("#pageNumber").text(pageNum);
+                        callKendo();
+                    }
+                });
+
+                function callKendo() {
+
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "api",
+                            transport: {
+                                read: "/GOAMLReportsSuspect/GetData?page=" + pageNum + "&Id=" + Id + "&Reportcode=" + Reportcode + "&Reportstatuscode=" + Reportstatuscode + "&Branch=" + Branch + "&Reportcreateddatestart=" + Reportcreateddatestart + "&Reportcreateddateend=" + Reportcreateddateend
+                            },
+                            schema: {
+                                model: {
+                                    fields: {
+                                        Id: { type: "string" },
+                                        Reportcode: { type: "string" },
+                                        Reportstatuscode: { type: "string" },
+                                        Reportcreateddate: { type: "date" },
+                                        Transactionnumber: { type: "string" },
+                                        Submissiondate: { type: "date" },
+                                        Entityreference: { type: "string" },
+                                        Fiurefnumber: { type: "string" },
+                                        Account: { type: "string" },
+                                        PartyId: { type: "string" },
+                                        PartyName: { type: "string" },
+                                        Partynumber: { type: "string" },
+                                        Activity: { type: "string" },
+                                        Reportcloseddate: { type: "date" },
+                                        Branch: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 17,
+                            serverPaging: false,
+                            serverFiltering: false,
+                            serverSorting: false
+                        },
+                        height: 590,
+                        //filterable: true,
+                        pageable: {
+                            numeric: false,
+                            previousNext: false
+                        },
+                        sortable: { mode: "single", allowUnsort: true },
+                        scrollable: { virtual: true },
+                        reorderable: true,
+                        // pageable: true,
+                        resizable: true,
+                        selectable: "single",
+                        toolbar: ["excel"],
+                        excel: {
+                            fileName: "Data_Export.xlsx",
+                            allPages: true,
+                            filterable: true
+                        },
+
+                        columns: [
+                            { field: "Id", width: 120, title: "Report ID", stickable: true },
+                            { field: "Reportcode", width: 160, title: "Report Type", stickable: true },
+                            { field: "Reportstatuscode", width: 160, title: "Report Status", stickable: true },
+                            { field: "Reportcreateddate", width: 160, title: "Create Date", format: "{0:MMM/dd/yyyy}", stickable: true },
+                            { field: "Transactionnumber", width: 180, title: "Transaction Number", stickable: true },
+                            { field: "Submissiondate", width: 160, title: "Submission Date", format: "{0:MMM/dd/yyyy}", stickable: true },
+                            { field: "Entityreference", width: 160, title: "Entity Reference", stickable: true },
+                            { field: "Fiurefnumber", width: 170, title: "FUI Reference Number", stickable: true },
+                            { field: "Account", width: 160, title: "Account", stickable: true },
+                            { field: "PartyId", width: 160, title: "Party ID", stickable: true },
+                            { field: "PartyName", width: 160, title: "Party Name", stickable: true },
+                            { field: "Partynumber", width: 160, title: "Party Number", stickable: true },
+                            { field: "Activity", width: 160, title: "Activity", stickable: true },
+                            { field: "Reportcloseddate", width: 160, title: "Close Date", format: "{0:MMM/dd/yyyy}", stickable: true },
+                            { field: "Branch", width: 160, title: "Branch", stickable: true }
+                        ],
+                        dataBound: dataBounding
+                        , filterMenuInit: onFilterMenuInit
+                    });
+                }
+                function dataBounding() {
+
+                    console.log("dataBound");
+
+                    setTimeout(function () {
+
+                        var grid = $("#grid").data("kendoGrid");
+                        var dataSource = grid.dataSource;
+
+                        //records on current view / page
+                        var recordsOnCurrentView = dataSource.view().length;
+                        console.log("recordsOnCurrentView = " + recordsOnCurrentView);
+
+                        //total records
+                        var totalRecords = dataSource.total();
+                        console.log("totalRecords = " + totalRecords);
+
+                        if (totalRecords < 600) {
+                            // $('#bck').prop('disabled', true);
+                            $('#nxt').prop('disabled', true);
+                        } else {
+                            //$('#bck').prop('disabled', false);
+                            $('#nxt').prop('disabled', false);
+                        }
+
+                    }, 1000);
+
+                };
+                //START check box filter for scenario names
+                function onFilterMenuInit(e) {
+                    if (e.field == "Reportcode") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "Priority") { initCheckboxFilter.call(this, e); };
+                    if (e.field == "Rentitybranch") { initCheckboxFilter.call(this, e); };
+                }
+
+                function initCheckboxFilter(e) {
+                    var popup = e.container.data("kendoPopup");
+                    var dataSource = this.dataSource;
+                    var field = e.field;
+                    var checkboxesDataSource = new kendo.data.DataSource({
+                        data: uniqueForField(dataSource.data(), field)
+                    });
+
+
+                    var helpTextElement = e.container.children(":first").children(":first");
+                    helpTextElement.nextUntil(":has(.k-button)").remove();
+                    var element = $("<div class='checkbox-container'></div>").insertAfter(helpTextElement).kendoListView({
+                        dataSource: checkboxesDataSource,
+                        template: "<div><input type='checkbox' value='#:" + field + "#'/>#:" + field + "#</div>"
+                    });
+                    e.container.find("[type='submit']").click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var filter = dataSource.filter() || { logic: "and", filters: [] };
+                        var fieldFilters = $.map(element.find(":checkbox:checked"), function (input) {
+                            return {
+                                field: field,
+                                operator: "eq",
+                                value: input.value
+                            };
+                        });
+                        if (fieldFilters.length) {
+                            removeFiltersForField(filter, field);
+                            filter.filters.push({
+                                logic: "or",
+                                filters: fieldFilters
+                            });
+                            dataSource.filter(filter);
+                        }
+                        popup.close();
+                    });
+                }
+
+                function removeFiltersForField(expression, field) {
+                    if (expression.filters) {
+                        expression.filters = $.grep(expression.filters, function (filter) {
+                            removeFiltersForField(filter, field);
+                            if (filter.filters) {
+                                return filter.filters.length;
+                            } else {
+                                return filter.field != field;
+                            }
+                        });
+                    }
+                }
+
+                function uniqueForField(data, field) {
+                    var map = {};
+                    var result = [];
+                    var item;
+                    for (var i = 0; i < data.length; i++) {
+                        item = data[i];
+                        if (!map[item[field]]) {
+                            result.push(item.toJSON());
+                            map[item[field]] = true;
+                        }
+                    }
+                    return result;
+                }
+                //END
+                $("#nxt").attr("disabled", false);
+                $("#totalCount").attr("disabled", false);
+                $("#pageNumber").attr("disabled", false);
+                var bck = document.getElementById("#bck");
+                bck.style.display = "none";
+                var pageNumberLbel = document.getElementById("#pageNumber");
+                pageNumberLbel.style.display = "block";
+                var nxt = document.getElementById("#nxt");
+                nxt.style.display = "none";
+                var totalCountLbel = document.getElementById("#totalCount");
+                totalCountLbel.style.display = "block";
+            };
+        </script>
+    </div>
+</section>-->
+<!--Filter Modal -->
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Filter Options </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="ModelBodyHTML">
+                <br />
+                <div class="row">
+                    <label class="col-md-2"> Creation Date or after  </label>
+                    <input type="date" id="Reportcreateddatestart" class="col-md-3 text-infol" />
+
+                    <label class="col-md-2">Creation Date of before </label>
+                    <input type="date" id="Reportcreateddateend" class="col-md-3 text-infol" />
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Report ID</label><input type="text" id="Id" class="col-md-3 text-infol">
+                    <label class="col-md-2">Report Type</label>
+                    <select id="Reportcode" type="text" class="col-md-3 text-infol">
+                        <option></option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="col-md-2">Report Status</label>
+                    <select type="text" id="Reportstatuscode" class="col-md-3 text-infol">
+                        <option></option>
+                    </select>
+                    <label class="col-md-2">Branch</label>
+                    <select type="text" id="Branch" class="col-md-3 text-infol">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" style="float:left" onclick="CleartModelFilters()">Reset</button>
+
+                <button type="button" class="btn btn-success" onclick="PresentData()" data-dismiss="modal">Apply Filters <span class="glyphicon glyphicon-search">  </span></button>
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!--Filter End Modal -->
+<!--DropDown Script Fitlers -->
+<!--<script>
+
+    $(document).ready(function () {
+        $.getJSON("/GOAMLReportsSuspect/GetReportAcctBranchDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('Branch');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M];
+                option.text = data[M];
+                DropDown.appendChild(option);
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        $.getJSON("/GOAMLReportsSuspect/GetReportTypeDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('Reportcode');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M];
+                option.text = data[M];
+                DropDown.appendChild(option);
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        $.getJSON("/GOAMLReportsSuspect/GetReportStatusDropDown", function (data) {
+            console.log(data);
+            var DropDown = document.getElementById('Reportstatuscode');
+            for (var M = 0; M < data.length; M++) {
+                var option = document.createElement("option");
+                option.value = data[M];
+                option.text = data[M];
+                DropDown.appendChild(option);
+            }
+        });
+    });
+</script>
+<script>
+    function getDate() {
+        var today = new Date();
+        document.getElementById("Reportcreateddatestart").defaultValue = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        document.getElementById("Reportcreateddateend").defaultValue = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+        console.log(today.getFullYear());
+    }
+</script>
+
+<style type="text/css">
+    .checkbox-container {
+        max-height: 200px;
+        overflow: auto;
+    }
+</style>-->

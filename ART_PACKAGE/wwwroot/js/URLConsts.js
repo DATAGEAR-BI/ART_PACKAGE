@@ -35,8 +35,13 @@
     AlertSummary:"/AlertSummary/GetData",
     CasesSummary:"/CasesSummary/GetData",
     CustomersSummary:"/CustomersSummary/GetData",
-    RiskClassSummary:"/RiskSummary/GetData"
-    
+    RiskClassSummary:"/RiskSummary/GetData",
+    //GoAml
+    GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
+    GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",
+    GOAMLReportIndicatorDetails: "/GOAMLReportIndicatorDetails/GetData",
+    GOAMLReportIndicatorSummary: "/GOAMLReportIndicatorSummary/GetData",
+    GOAMLReportsSuspect: "/GOAMLReportsSuspect/GetData",
    
 
 }

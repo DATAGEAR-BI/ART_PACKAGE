@@ -10,6 +10,10 @@ namespace Data.FCFKC
 {
     public class FCFKC : DbContext
     {
+        public FCFKC(DbContextOptions<FCFKC> opts) : base(opts)
+        {
+
+        }
         public virtual DbSet<FskLov> FskLovs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
 ﻿using Data.DGECM;
+using Data.GOAML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Data.FCF71
     public interface IDbService
     {
         public FCFKC.FCFKC KC { get; }
-        public FCFCORE CORE { get; }
+        public FCFCORE.fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public GoAmlContext GOAML { get; }
     }
 }

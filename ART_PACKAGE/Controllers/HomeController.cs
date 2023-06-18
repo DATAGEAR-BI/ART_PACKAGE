@@ -21,14 +21,16 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AuthContext _db;
+        private readonly IDbService _dbSrv;
         /*private readonly DGCMGMTContext dgcmgmt;
         private readonly FCF71Context fcf71;*/
-        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/)
+        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
         {
             _logger = logger;
             this._db = db;
+            _dbSrv = dbSrv;
             /*this.dgcmgmt = dgcmgmt;
-            this.fcf71 = fcf71;*/
+this.fcf71 = fcf71;*/
         }
 
         public IActionResult Index()
@@ -93,17 +95,20 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Test()
         {
-            var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            {
-                Value = DateTime.Parse("2020-01-01")
-            };
-            var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            {
-                Value = DateTime.Parse("2023-01-01")
-            };
+            //var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
+            //{
+            //    Value = DateTime.Parse("2020-01-01")
+            //};
+            //var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
+            //{
+            //    Value = DateTime.Parse("2023-01-01")
+            //};
 
-            var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
-            return Ok(data);
+            //var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
+            //return Ok(data);
+
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
+            return Ok(distinct_value);
         }
 
         public IActionResult GetAmlChartsData()

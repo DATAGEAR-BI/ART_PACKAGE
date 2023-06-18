@@ -15,43 +15,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System.Reflection;
 using Rotativa.AspNetCore;
 using Data.DGECM;
+using ART_PACKAGE.IServiceCollectionExtentions;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = "Development",
 });
-var connectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-var DGECMContextConnection = builder.Configuration.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-var migrationsToApply = builder.Configuration.GetSection("migrations").Get<List<string>>();
-var dbType = builder.Configuration.GetValue<string>("dbType").ToUpper();
-var migrationPath = dbType == Data.Constants.db.DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
-builder.Services.AddDbContext<AuthContext>(options => _ = dbType switch
-{
-    Data.Constants.db.DbTypes.SqlServer => options.UseSqlServer(
-        connectionString,
-        x => x.MigrationsAssembly("SqlServerMigrations")
-        ),
-    Data.Constants.db.DbTypes.Oracle => options.UseOracle(
-        connectionString,
-        x => x.MigrationsAssembly("OracleMigrations")
-        ),
-    _ => throw new Exception($"Unsupported provider: {dbType}")
-});
-
-builder.Services.AddDbContext<DGECMContext>(options => _ = dbType switch
-{
-    Data.Constants.db.DbTypes.SqlServer => options.UseSqlServer(
-        DGECMContextConnection,
-        x => x.MigrationsAssembly("SqlServerMigrations")
-        ),
-    Data.Constants.db.DbTypes.Oracle => options.UseOracle(
-        DGECMContextConnection,
-        x => x.MigrationsAssembly("OracleMigrations")
-        ),
-    _ => throw new Exception($"Unsupported provider: {dbType}")
-});
 
 
+builder.Services.AddDbs(builder.Configuration);
 
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();

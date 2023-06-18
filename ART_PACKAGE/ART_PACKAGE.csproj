@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Helpers\DropDown\DropDownService.cs" />
+	  <Compile Remove="Helpers\DropDown\DropDownService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -894,6 +894,10 @@
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\GOAMLReportIndicatorDetails\Index.cshtml" />
+		<None Include="Views\GOAMLReportsDetails\Index.cshtml" />
+		<None Include="Views\GOAMLReportsSummary\Index.cshtml" />
+		<None Include="Views\GOAMLReportsSuspect\Index.cshtml" />
 		<None Include="Views\HighRisk\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />

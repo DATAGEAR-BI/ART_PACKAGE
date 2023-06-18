@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtStGoAmlReportsPerIndicator
     {
         public string? INDICATOR { get; set; }
-        public decimal? NUMBER_OF_REPORTS { get; set; }
+        public int? NUMBER_OF_REPORTS { get; set; }
     }
 }

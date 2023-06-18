@@ -91,6 +91,75 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                         }
                                 }
             }
+            ,
+            {
+                nameof(GOAMLReportsSuspectController).ToLower(),new ReportConfig{
+                    SkipList=new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                                 {"Id", new DisplayNameAndFormat { DisplayName = "Report ID"}},
+                                 {"Reportcode", new DisplayNameAndFormat { DisplayName = "Report Type"}},
+                                 {"Reportstatuscode", new DisplayNameAndFormat { DisplayName = "Report Status"}},
+                                 {"Reportcreateddate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                                 {"Transactionnumber", new DisplayNameAndFormat { DisplayName = "Transaction Number"}},
+                                 {"Submissiondate", new DisplayNameAndFormat { DisplayName = "Submission Date"}},
+                                 {"Entityreference", new DisplayNameAndFormat { DisplayName = "Entity Reference"}},
+                                 {"Fiurefnumber", new DisplayNameAndFormat { DisplayName = "FUI Reference Number"}},
+                                 {"Account", new DisplayNameAndFormat { DisplayName = "Account"}},
+                                 {"PartyId", new DisplayNameAndFormat { DisplayName = "Party ID"}},
+                                 {"PartyName", new DisplayNameAndFormat { DisplayName = "Party Name"}},
+                                 {"Partynumber", new DisplayNameAndFormat { DisplayName = "Party Number"}},
+                                 {"Activity", new DisplayNameAndFormat { DisplayName = "Activity"}},
+                                 {"Reportcloseddate", new DisplayNameAndFormat { DisplayName = "Close Date"}},
+                                 {"Branch", new DisplayNameAndFormat { DisplayName = "Branch"}}
+                    }
+                }
+            },
+            {
+                nameof(GOAMLReportsDetailsController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>
+                    {
+                              "Version",
+                              "Isvalid",
+                              "Location",
+                              "Rentityid",
+                              "Reportcloseddate",
+                              "Reportrisksignificance",
+                              "Reportxml",
+                              "Submissioncode",
+                    },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                                 {"Id", new DisplayNameAndFormat { DisplayName = "Report ID"}},
+                                 {"Reportcode", new DisplayNameAndFormat { DisplayName = "Report Type"}},
+                                 {"Reportstatuscode", new DisplayNameAndFormat { DisplayName = "Report Status"}},
+                                 {"Reportcreateddate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                                 {"Submissiondate", new DisplayNameAndFormat { DisplayName = "Submission Date"}},
+                                 {"Priority", new DisplayNameAndFormat { DisplayName = "Priority"}},
+                                 {"Reportuserlockid", new DisplayNameAndFormat { DisplayName = "Locked By"}},
+                                 {"Reportcreatedby", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                                 {"Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                                 {"Currencycodelocal", new DisplayNameAndFormat { DisplayName = "Currency"}},
+                                 {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                                 {"Entityreference", new DisplayNameAndFormat { DisplayName = "Entity Reference"}},
+                                 {"Fiurefnumber", new DisplayNameAndFormat { DisplayName = "FUI Reference Number"}},
+                                 {"Rentitybranch", new DisplayNameAndFormat { DisplayName = "Branch"}},
+                                 {"Reportingpersontype", new DisplayNameAndFormat { DisplayName = "Reporting Person Type"}},
+                                 {"Reason", new DisplayNameAndFormat { DisplayName = "Reason"}}
+                    }
+                }
+            },
+            {
+                nameof(GOAMLReportIndicatorDetailsController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"ReportId", new DisplayNameAndFormat { DisplayName = "Report ID"}},
+                               {"Indicator", new DisplayNameAndFormat { DisplayName = "Indicator Code"}},
+                               {"Description", new DisplayNameAndFormat { DisplayName = "Description"}}
+                    }
+                }
+            },
         };
 
     }
