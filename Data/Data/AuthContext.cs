@@ -51,6 +51,20 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtGoamlReportsIndicator> ArtGoamlReportsIndicators { get; set; } = null!;
     public virtual DbSet<ArtGoamlReportsDetail> ArtGoamlReportsDetails { get; set; } = null!;
     public virtual DbSet<ArtGoamlReportsSusbectParty> ArtGoamlReportsSusbectParties { get; set; } = null!;
+    //Aduit
+    public virtual DbSet<ArtGroupsAuditView> ArtGroupsAuditViews { get; set; } = null!;
+    public virtual DbSet<ArtRolesAuditView> ArtRolesAuditViews { get; set; } = null!;
+    public virtual DbSet<ArtUsersAuditView> ArtUsersAuditViews { get; set; } = null!;
+    public virtual DbSet<LastLoginPerDayView> LastLoginPerDayViews { get; set; } = null!;
+    public virtual DbSet<ListGroupsRolesSummary> ListGroupsRolesSummaries { get; set; } = null!;
+    public virtual DbSet<ListGroupsSubGroupsSummary> ListGroupsSubGroupsSummaries { get; set; } = null!;
+    public virtual DbSet<ListOfDeletedUser> ListOfDeletedUsers { get; set; } = null!;
+    public virtual DbSet<ListOfGroup> ListOfGroups { get; set; } = null!;
+    public virtual DbSet<ListOfRole> ListOfRoles { get; set; } = null!;
+    public virtual DbSet<ListOfUser> ListOfUsers { get; set; } = null!;
+    public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
+    public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
+    public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
 
 
     public AuthContext(DbContextOptions<AuthContext> options)
