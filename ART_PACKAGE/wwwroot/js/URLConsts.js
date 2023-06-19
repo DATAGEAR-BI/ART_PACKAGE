@@ -55,8 +55,8 @@
     ListOfUser: "/ListOfUser/GetData",
     ListOfRole: "/ListOfRole/GetData",
     AuditUsers: "/AuditUsers/GetData",
-    AuditRoles: "AuditRoles/GetData",
-    AuditGroups:"AuditGroups/GetData",
+    AuditRoles: "/AuditRoles/GetData",
+    AuditGroups: "/AuditGroups/GetData",
 
 }
 

@@ -324,7 +324,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { nameof(LastLoginPerDayView.Logindatetime) , new DisplayNameAndFormat { DisplayName =  "Login Date" } }
                         }
                 }
-            }
+            },
 
             {
                 nameof(ListOfUserController).ToLower(),new ReportConfig
