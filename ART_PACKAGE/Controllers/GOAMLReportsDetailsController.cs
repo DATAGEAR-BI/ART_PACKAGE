@@ -6,6 +6,7 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Services.Pdf;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -13,12 +14,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext _context;
         private readonly IPdfService _pdfSrv;
-        //private readonly IDropDownService _dropDown;
-        public GOAMLReportsDetailsController(AuthContext context, IPdfService pdfSrv)
+        private readonly IDropDownService _dropDown;
+        public GOAMLReportsDetailsController(AuthContext context, IPdfService pdfSrv, IDropDownService dropDown)
         {
             this._context = context;
             _pdfSrv = pdfSrv;
-            //this._dropDown = dropDown;
+            this._dropDown = dropDown;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -33,10 +34,10 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsDetailsController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown().ToDynamicList() },
-                    //{"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown().ToDynamicList() },
-                    //{"Priority".ToLower(),_dropDown.GetReportPriorityDropDown().ToDynamicList() },
-                    //{"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown().ToDynamicList() },
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown().ToDynamicList() },
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown().ToDynamicList() },
+                    {"Priority".ToLower(),_dropDown.GetReportPriorityDropDown().ToDynamicList() },
+                    {"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown().ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsDetailsController).ToLower()].SkipList;
@@ -70,8 +71,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsDetailsController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsDetailsController).ToLower()].SkipList;
             var data = _context.ArtGoamlReportsDetails.CallData<ArtGoamlReportsDetail>(req).Data.ToList();
-            ViewData["title"] = "System Performance Report";
-            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            ViewData["title"] = " GOAML Reports Details";
+            ViewData["desc"] = "Presents details about the GOAML reports";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

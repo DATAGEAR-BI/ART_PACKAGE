@@ -37,7 +37,7 @@ namespace ART_PACKAGE.Helpers.DropDown
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
 
-            var distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd.Contains("Y")).Select(x => x.ScenarioName).ToList();
+            var distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) ? "UNKNOWN" : x.ScenarioName).Distinct().ToList();
             return distinct_value;
         }
 
@@ -48,13 +48,6 @@ namespace ART_PACKAGE.Helpers.DropDown
                .Where(b => b.BranchTypeDesc.Contains("BRANCH")).Select(x => x.BranchName)
                .ToList();
             return distinct_value;
-
-        }
-        public List<string> GetOwnerDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaPersonInfos.GroupBy(s => s.Name).Select(g => g.Key).ToList();
-            return distinct_value;
-
 
         }
 
@@ -177,7 +170,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<string> GetAssessmentSubCategoryCdDropDown()
         {
-            var distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentSubcategoryCd).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.AssessmentSubcategoryCd == null || string.IsNullOrEmpty(x.AssessmentSubcategoryCd.Trim()) ? "UNKNOWN" : x.AssessmentSubcategoryCd).Distinct().ToList();
             return distinct_value;
 
         }
@@ -195,13 +188,13 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetTransDirectionDropDown()
         {
-            var distinct_value = _dbSrv.ECM.TransDirectionVals.GroupBy(s => s.TransDirection).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) ? "UNKNOWN" : x.TransactionDirection).Distinct().ToList();
             return distinct_value;
 
         }
         public List<string> GetTransTypeDropDown()
         {
-            var distinct_value = _dbSrv.ECM.TransTypeVals.GroupBy(s => s.TransactionType).Select(g => g.Key).ToList();
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) ? "UNKNOWN" : x.TransactionType).Distinct().ToList();
             return distinct_value;
 
         }
@@ -259,93 +252,194 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
-        public List<string> GetAppLebalDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaLicenseds.GroupBy(s => s.AppLebal).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
+        //public List<string> GetOwnerDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaPersonInfos.GroupBy(s => s.Name).Select(g => g.Key).ToList();
+        //    return distinct_value;
+        //}
 
-        }
-        public List<string> GetProTypeDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaLicenseds.GroupBy(s => s.ProType).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
+        //public List<string> GetAppLebalDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaLicenseds.GroupBy(s => s.AppLebal).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
 
-        }
-        public List<string> GetGroupTypeDropDown()
-        {
-            var distinct_value = dbcmcaudit.ListAccessRightPerProfiles.GroupBy(s => s.Grouptype).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetGroupsDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaGroupInfos
-                .Where(a => a.Grouptype.StartsWith("Group")).Select(s => s.Name)
-                .OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetGroupRoleNameDropDown()
-        {
-            var distinct_value = dbcmcaudit.ListAccessRightPerProfiles.GroupBy(s => s.GroupName).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetRolesDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaGroupInfos
-                .Where(a => a.Grouptype.StartsWith("Role") || a.Grouptype.StartsWith("ROLE")).Select(g => g.Name)
-                .OrderBy(s => s).ToList();
-            return distinct_value;
+        //}
+        //public List<string> GetProTypeDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaLicenseds.GroupBy(s => s.ProType).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
 
-        }
-        public List<string> GetCapabilityGroupDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaUsercapabilities.GroupBy(s => s.CapabilitiyGroupName).Select(g => g.Key)
-                .OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetCapabilityNameDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaUsercapabilities.GroupBy(s => s.CapName).Select(g => g.Key)
-                .OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetUsernameDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Username).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetAppnameDropDown()
-        {
-            var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Appname).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
+        //}
+        //public List<string> GetGroupTypeDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.ListAccessRightPerProfiles.GroupBy(s => s.Grouptype).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetGroupsDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaGroupInfos
+        //        .Where(a => a.Grouptype.StartsWith("Group")).Select(s => s.Name)
+        //        .OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetGroupRoleNameDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.ListAccessRightPerProfiles.GroupBy(s => s.GroupName).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetRolesDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaGroupInfos
+        //        .Where(a => a.Grouptype.StartsWith("Role") || a.Grouptype.StartsWith("ROLE")).Select(g => g.Name)
+        //        .OrderBy(s => s).ToList();
+        //    return distinct_value;
+
+        //}
+        //public List<string> GetCapabilityGroupDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaUsercapabilities.GroupBy(s => s.CapabilitiyGroupName).Select(g => g.Key)
+        //        .OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetCapabilityNameDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaUsercapabilities.GroupBy(s => s.CapName).Select(g => g.Key)
+        //        .OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetUsernameDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Username).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetAppnameDropDown()
+        //{
+        //    var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Appname).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
 
 
-        public List<string> GetMakerEventNameDropDown()
-        {
-            var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => a.EnventName.Contains("Waiting")).GroupBy(s => s.EnventName).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
-        public List<string> GetCheckerEventNameDropDown()
-        {
-            var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => !a.EnventName.Contains("Waiting")).GroupBy(s => s.EnventName).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
+        //public List<string> GetMakerEventNameDropDown()
+        //{
+        //    var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => a.EnventName.Contains("Waiting")).GroupBy(s => s.EnventName).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
+        //public List<string> GetCheckerEventNameDropDown()
+        //{
+        //    var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => !a.EnventName.Contains("Waiting")).GroupBy(s => s.EnventName).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
 
-        public List<string> GetMakerCreatedByDropDown()
-        {
-            var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => a.EnventName.Contains("Waiting")).GroupBy(s => s.Createdby).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
+        //public List<string> GetMakerCreatedByDropDown()
+        //{
+        //    var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => a.EnventName.Contains("Waiting")).GroupBy(s => s.Createdby).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
 
-        public List<string> GetCheckerCreatedByDropDown()
-        {
-            var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => !a.EnventName.Contains("Waiting")).GroupBy(s => s.Createdby).Select(g => g.Key).OrderBy(s => s).ToList();
-            return distinct_value;
-        }
+        //public List<string> GetCheckerCreatedByDropDown()
+        //{
+        //    var distinct_value = dbdgsmcaudit.CheckereventAuds.Where(a => !a.EnventName.Contains("Waiting")).GroupBy(s => s.Createdby).Select(g => g.Key).OrderBy(s => s).ToList();
+        //    return distinct_value;
+        //}
 
         public List<string> GetReportAcctBranchDropDown()
         {
             var distinct_value = _dbSrv.GOAML.Taccounts.Select(x => x.Branch == null || string.IsNullOrEmpty(x.Branch.Trim()) ? "UNKNOWN" : x.Branch).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetOwnerDropDown()
+        {
+            var distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Distinct().ToList();
+            return distinct_value;
+        }
+
+
+        public List<string> GetAppLebalDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetProTypeDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetGroupTypeDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetGroupsDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetGroupRoleNameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetRolesDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetCapabilityGroupDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetCapabilityNameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetUsernameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetAppnameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetMakerEventNameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetCheckerEventNameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetMakerCreatedByDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetCheckerCreatedByDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetPartyIdentificationTypeDropDown()
+        {
+            var distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyIdentificationTypeDesc == null || string.IsNullOrEmpty(x.PartyIdentificationTypeDesc.Trim()) ? "UNKNOWN" : x.PartyIdentificationTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetUpdateUserIdDropDown()
+        {
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.UpdateUserId == null || string.IsNullOrEmpty(x.UpdateUserId.Trim()) ? "UNKNOWN" : x.UpdateUserId).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetInvestagtorDropDown()
+        {
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.PrimaryOwner == null || string.IsNullOrEmpty(x.PrimaryOwner.Trim()) ? "UNKNOWN" : x.PrimaryOwner).Distinct().ToList();
             return distinct_value;
         }
     }

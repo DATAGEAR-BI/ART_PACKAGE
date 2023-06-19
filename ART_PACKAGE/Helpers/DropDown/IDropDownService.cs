@@ -6,6 +6,7 @@ namespace ART_PACKAGE.Helpers.DropDown
     {
         public List<string> GetAlertStatusDropDown();
         public List<string> GetPartyTypeDropDown();
+        public List<string> GetPartyIdentificationTypeDropDown();
         public List<string> GetScenarioNameDropDown();
         public List<string> GetBranchNameDropDown();
         public List<string> GetOwnerDropDown();
@@ -56,6 +57,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetMakerCreatedByDropDown();
 
         public List<string> GetCheckerCreatedByDropDown();
+        public List<string> GetUpdateUserIdDropDown();
+        public List<string> GetInvestagtorDropDown();
 
     }
 }

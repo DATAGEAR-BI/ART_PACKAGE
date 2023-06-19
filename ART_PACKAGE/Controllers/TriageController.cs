@@ -15,6 +15,7 @@ using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
+using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -22,17 +23,15 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfkc;
         private readonly IMemoryCache _cache;
-        /*private readonly IDropDownService _dropDown;*/
-        public TriageController(AuthContext dbfcfkc, IMemoryCache cache/*, IDropDownService dropDown*/)
+        private readonly IDropDownService _dropDown;
+        private readonly IPdfService _pdfSrv;
+        public TriageController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
-            _cache = cache; /*this._dropDown = dropDown;*/
+            _cache = cache;
+            _dropDown = dropDown;
+            _pdfSrv = pdfSrv;
         }
-
-
-        //private readonly dbfcfkc.ModelContext db = new dbfcfkc.ModelContext();
-        //private readonly dbfcfcore.ModelContext dbfcfcore = new dbfcfcore.ModelContext();
-        //private readonly dbcmcaudit.ModelContext dbcmcaudit = new dbcmcaudit.ModelContext();
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
@@ -43,16 +42,16 @@ namespace ART_PACKAGE.Controllers
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                //DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    /*{"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }*/
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
                 };
-                //ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtAmlTriageView>(request, DropDownColumn/*, DisplayNames: DisplayNames, ColumnsToSkip*/);
+            var Data = data.CallData<ArtAmlTriageView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -81,18 +80,28 @@ namespace ART_PACKAGE.Controllers
             var data = dbfcfkc.ArtAmlTriageViews;
             if (exportDto.All)
             {
-
                 var bytes = await data.ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(exportDto.Req);
                 return File(bytes, "text/csv");
-
             }
             else
             {
                 var bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(all: false);
                 return File(bytes, "text/csv");
             }
-
         }
+
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            var DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
+            var data = dbfcfkc.ArtAmlTriageViews.CallData<ArtAmlTriageView>(req).Data.ToList();
+            ViewData["title"] = "Triage";
+            ViewData["desc"] = "Presents each entity with the related active alerts count";
+            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+            return File(pdfBytes, "application/pdf");
+        }
+
 
         public IActionResult Index()
         {

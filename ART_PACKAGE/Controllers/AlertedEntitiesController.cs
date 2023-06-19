@@ -1,10 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -12,10 +14,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext context;
         private readonly IPdfService _pdfSrv;
-        public AlertedEntitiesController(AuthContext context, IPdfService pdfSrv)
+        private readonly IDropDownService _dropSrv;
+        public AlertedEntitiesController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
+            _dropSrv = dropSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -39,22 +43,15 @@ namespace ART_PACKAGE.Controllers
                     ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
                     ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
                     ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
-
-                    //{"CaseType".ToLower(),db.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"CaseStatus".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                    //    //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                    //    //.Where(b => b.DisplayOrdrNo==0)
-                    //    .Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"Priority".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                    //    .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
-
+                    {"CaseType".ToLower(),_dropSrv.GetCaseTypeDropDown().ToDynamicList() },
+                    {"CaseStatus".ToLower(),_dropSrv.GetCaseStatusDropDown().ToDynamicList()},
+                    {"Priority".ToLower(),_dropSrv.GetPriorityDropDown().ToDynamicList() }
                 };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
 
             var Data = data.CallData<ArtAlertedEntity>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+
             var result = new
             {
                 data = Data.Data,
@@ -83,7 +80,7 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
             var data = context.ArtAlertedEntities.CallData<ArtAlertedEntity>(req).Data.ToList();
-            ViewData["title"] = "System Performance Report";
+            ViewData["title"] = "Alerted Entities Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
