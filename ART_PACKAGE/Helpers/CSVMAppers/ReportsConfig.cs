@@ -160,6 +160,32 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ListOfUsersRolesController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                               {"UserRole", new DisplayNameAndFormat { DisplayName = "User Role"}},
+                    }
+                }
+            },
+            {
+                nameof(ListOfUsersGroupController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                               {"MemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
+                    }
+                }
+            },
         };
 
     }
