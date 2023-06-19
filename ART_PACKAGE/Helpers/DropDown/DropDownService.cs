@@ -142,7 +142,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             var distinct_value = _dbSrv.ECM.RefTableVals
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
-                .Where(b => b.DisplayOrdrNo == 0 || b.DisplayOrdrNo == 5).Select(x => x.ValDesc)
+                .Select(x => x.ValDesc)
                 .ToList();
             return distinct_value;
 
@@ -180,7 +180,7 @@ namespace ART_PACKAGE.Helpers.DropDown
             var distinct_value = _dbSrv.ECM.RefTableVals
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                .Where(b => b.DisplayOrdrNo == 0).Select(x => x.ValDesc)
+                .Select(x => x.ValDesc)
                 .ToList();
             return distinct_value;
 
@@ -188,7 +188,9 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetTransDirectionDropDown()
         {
-            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) ? "UNKNOWN" : x.TransactionDirection).Distinct().ToList();
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "UNKNOWN" : x.TransactionDirection).Distinct()
+                .Select(x => x.ToUpper() == "I" ? "Input" : x.ToUpper() == "O" ? "Output" : x)
+           .ToList();
             return distinct_value;
 
         }

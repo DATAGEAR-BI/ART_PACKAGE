@@ -8,9 +8,9 @@ namespace Data.Data
 {
     public class ArtSystemPerfPerDate
     {
-        public decimal? YEAR { get; set; }
+        public int? YEAR { get; set; }
         public string MONTH { get; set; } = null!;
-        public decimal? DAY { get; set; }
-        public decimal? NUMBER_OF_CASES { get; set; }
+        public int? DAY { get; set; }
+        public int? NUMBER_OF_CASES { get; set; }
     }
 }

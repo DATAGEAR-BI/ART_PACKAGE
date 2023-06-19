@@ -47,9 +47,9 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                     { "CaseTypeCd".ToLower()              , _dropSrv.GetCaseTypeDropDown()    .ToDynamicList()     },
-                     {"CaseStatus".ToLower()             , _dropSrv.GetCaseStatusDropDown()    .ToDynamicList()     },
-                     {"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
+                    {"CaseTypeCd".ToLower()              , _dropSrv.GetCaseTypeDropDown()    .ToDynamicList()     },
+                    {"CaseStatus".ToLower()             , _dropSrv.GetUserCaseStatusDropDown()    .ToDynamicList()     },
+                    {"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

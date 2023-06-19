@@ -135,9 +135,13 @@ namespace ART_PACKAGE.Controllers
                 chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
                     ChartId = "StSystemPerfPerTransDir",
-                    Data = chart3Data.ToList(),
+                    Data = chart3Data.Select(x =>
+                    {
+                        x.TRANSACTION_DIRECTION ??= "UNKOWN";
+                        return x;
+                    }).ToList(),
                     Title = "Cases Per Trans Direction",
-                    Cat = "TREANSACTION_DIRECTION",
+                    Cat = "TRANSACTION_DIRECTION",
                     Val = "Total_Number_of_Cases"
                 });
             }

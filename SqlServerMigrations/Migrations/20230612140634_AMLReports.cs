@@ -21,7 +21,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
                               SELECT
                                     FSK_ALERTED_ENTITY.ALERTED_ENTITY_NAME ALERTED_ENTITY_NAME,
 		                            FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER ALERTED_ENTITY_NUMBER,
@@ -63,7 +63,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
                               SELECT 
                             ALERTED_ENTITY_NUMBER,
                             ALERTED_ENTITY_NAME,
@@ -213,7 +213,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                            CREATE VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
                               SELECT        
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_name customer_name,
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_number customer_number,
@@ -282,7 +282,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE  VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
                               SELECT 
                             ""CASE"".CASE_ID,
                             FSK_CASE_ENTITY.ENTITY_NAME,
@@ -369,7 +369,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
                             SELECT 
                                     FSC_PARTY_DIM.PARTY_NUMBER AS PARTY_NUMBER,
                                     FSC_PARTY_DIM.PARTY_TYPE_DESC AS PARTY_TYPE_DESC,
@@ -416,7 +416,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
+                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
                             SELECT
                                     RISK_STATUS.LOV_TYPE_DESC RISK_STATUS,
                                     RISK_CLASS.LOV_TYPE_DESC RISK_CLASS,
@@ -472,7 +472,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -514,7 +514,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -549,7 +549,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -583,7 +583,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -616,7 +616,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_STATUS]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_STATUS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -655,7 +655,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -689,7 +689,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -726,7 +726,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -760,7 +760,7 @@ namespace SqlServerMigrations.Migrations
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
                             (
                             @V_START_DATE date , 
                             @V_END_DATE date
@@ -804,7 +804,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_AML_PROP_RISK_CLASS]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_PROP_RISK_CLASS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -843,7 +843,7 @@ namespace SqlServerMigrations.Migrations
 
 
 
-                              CREATE PROCEDURE [ART_DB].[ART_ST_AML_RISK_CLASS]
+                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_RISK_CLASS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 

@@ -9,11 +9,11 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 
 public enum DbSchema
 {
-    [Option(DisplayName = "CORE", IsHidden = true)]
+    [Option(DisplayName = "FCF71")]
     CORE,
     [Option(DisplayName = "KC", IsHidden = true)]
     KC,
-    [Option(DisplayName = "DGCMGMT")]
+    [Option(DisplayName = "DGCMGMT", IsHidden = true)]
     DGCMGMT,
     [Option(DisplayName = "DGWLLOGS", IsHidden = true)]
     DGWLLOGS

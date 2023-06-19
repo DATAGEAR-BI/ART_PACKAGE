@@ -16,7 +16,7 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                        CREATE VIEW [ART_DB].[ART_SYSTEM_PERFORMANCE] (""CASE_ID"", ""CASE_RK"", ""VALID_FROM_DATE"", ""CASE_TYPE"", ""CASE_STATUS"", ""CASE_DESC"", ""PRIORITY"", ""CREATE_USER_ID"", ""INVESTR_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""TRANSACTION_TYPE"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_DIRECTION"", ""TRANSACTION_CURRENCY"", ""SWIFT_REFERENCE"", ""CLIENT_NAME"", ""IDENTITY_NUM"", ""LOCKED_BY"", ""ECM_LAST_STATUS_DATE"", ""HITS_COUNT"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
+                                        CREATE OR ALTER VIEW [ART_DB].[ART_SYSTEM_PERFORMANCE] (""CASE_ID"", ""CASE_RK"", ""VALID_FROM_DATE"", ""CASE_TYPE"", ""CASE_STATUS"", ""CASE_DESC"", ""PRIORITY"", ""CREATE_USER_ID"", ""INVESTR_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""TRANSACTION_TYPE"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_DIRECTION"", ""TRANSACTION_CURRENCY"", ""SWIFT_REFERENCE"", ""CLIENT_NAME"", ""IDENTITY_NUM"", ""LOCKED_BY"", ""ECM_LAST_STATUS_DATE"", ""HITS_COUNT"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
                                         select 
                                         a.CASE_ID, 
                                         a.CASE_RK, 
@@ -74,7 +74,7 @@ namespace SqlServerMigrations.Migrations
                                   SET QUOTED_IDENTIFIER ON
                                   GO
 
-                                  CREATE VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
+                                  CREATE OR ALTER VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
                                                 select 
                                                     a.CASE_RK,
                                                     a.CASE_ID,
@@ -144,7 +144,7 @@ namespace SqlServerMigrations.Migrations
                                         GO
                                         SET QUOTED_IDENTIFIER ON
                                         GO
-                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_DIRECTION] 
+                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_DIRECTION] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -163,7 +163,7 @@ namespace SqlServerMigrations.Migrations
                                         --[DGECM].dgcmgmt.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                         WHERE 
                                         --a.case_stat_cd in ('SC','ST') and 
-                                        a.case_type_cd = 'RTP'
+                                        a.case_type_cd = 'SWIFT'
                                         and
                                         CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
                                         GROUP BY
@@ -184,7 +184,7 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_STATUS] 
+                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_STATUS] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -212,7 +212,7 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_TYPE] 
+                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_TYPE] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -240,7 +240,7 @@ namespace SqlServerMigrations.Migrations
                                             SET QUOTED_IDENTIFIER ON
                                             GO
 
-                                              CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION] 
+                                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION] 
                                             (
                                             @V_START_DATE date , @V_END_DATE date
                                             ) AS 
@@ -276,7 +276,7 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER] 
+                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -310,7 +310,7 @@ namespace SqlServerMigrations.Migrations
                                             GO
                                             SET QUOTED_IDENTIFIER ON
                                             GO
-                                            CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION] 
+                                            CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION] 
                                             (
                                             @V_START_DATE date , @V_END_DATE date
                                             ) AS 
