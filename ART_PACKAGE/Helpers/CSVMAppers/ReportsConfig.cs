@@ -223,6 +223,31 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ListOfUserController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                               {"Address", new DisplayNameAndFormat { DisplayName = "Address"}},
+                               {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                               {"Phone", new DisplayNameAndFormat { DisplayName = "Phone"}},
+                               {"UserType", new DisplayNameAndFormat { DisplayName = "User Type"}},
+                               {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                               {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                               {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                               {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                               {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                               {"LastFailedLogin", new DisplayNameAndFormat { DisplayName = "Last Failed Login"}},
+                               {"CounterLock", new DisplayNameAndFormat { DisplayName = "Counter Lock"}},
+                               {"Active", new DisplayNameAndFormat { DisplayName = "Active"}},
+                               {"Enable", new DisplayNameAndFormat { DisplayName = "Enable"}},
+                    }
+                }
+            },
         };
 
     }

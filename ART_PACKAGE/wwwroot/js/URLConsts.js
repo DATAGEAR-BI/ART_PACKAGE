@@ -45,6 +45,6 @@
     ListOfUsersRole: "/ListOfUsersRoles/GetData",
     ListOfUsersGroup: "/ListOfUsersGroup/GetData",
     ListOfUsersAndGroupsRole:"/ListOfUsersAndGroupsRole/GetData",
-
+    ListOfUser:"/ListOfUser/GetData",
 }
 
