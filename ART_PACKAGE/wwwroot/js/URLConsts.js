@@ -43,7 +43,8 @@
     GOAMLReportIndicatorSummary: "/GOAMLReportIndicatorSummary/GetData",
     GOAMLReportsSuspect: "/GOAMLReportsSuspect/GetData",
     ListOfUsersRole: "/ListOfUsersRoles/GetData",
-    ListOfUsersGroup:"/ListOfUsersGroup/GetData",
+    ListOfUsersGroup: "/ListOfUsersGroup/GetData",
+    ListOfUsersAndGroupsRole:"/ListOfUsersAndGroupsRole/GetData",
 
 }
 

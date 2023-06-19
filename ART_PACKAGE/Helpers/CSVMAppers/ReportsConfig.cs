@@ -230,6 +230,20 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ListOfUsersAndGroupsRoleController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                               {"MemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
+                               {"RoleOfGroup", new DisplayNameAndFormat { DisplayName = "Role Of Group"}},
+                    }
+                }
+            },
         };
 
     }
