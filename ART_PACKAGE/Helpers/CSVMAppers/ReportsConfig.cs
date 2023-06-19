@@ -2,6 +2,7 @@
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using Data.Data;
 using System.Collections.Generic;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
@@ -23,7 +24,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
             }
     }
-            },{
+            },
+            {
                 nameof(AlertedEntitiesController).ToLower(),new ReportConfig
                 {
                    SkipList =  new List<string>()
@@ -161,7 +163,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
             },
 
-                        {
+            {
                 nameof(AuditGroupsController).ToLower(),new ReportConfig
                 {
                     SkipList = new List<string>(),
@@ -273,6 +275,57 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            { nameof(ListGroupsSubGroupsSummaryController).ToLower() , new ReportConfig {
+                DisplayNames = new Dictionary<string , DisplayNameAndFormat>
+                {
+                    { nameof(ListGroupsSubGroupsSummary.SubGroupName) , new DisplayNameAndFormat { DisplayName =  "Sub Group Name" } },
+                    { nameof(ListGroupsRolesSummary.GroupName) , new DisplayNameAndFormat { DisplayName =  "Group Name" } }
+                        }
+                }
+            },
+            { nameof(ListGroupsRolesSummaryController).ToLower() , new ReportConfig {
+                DisplayNames = new Dictionary<string , DisplayNameAndFormat>
+                {
+                    { nameof(ListGroupsRolesSummary.RoleName) , new DisplayNameAndFormat { DisplayName =  "Role Name" } },
+                    { nameof(ListGroupsRolesSummary.GroupName) , new DisplayNameAndFormat { DisplayName =  "Group Name" } }
+                        }
+                }
+            },{ nameof(ListOfGroupsController).ToLower() , new ReportConfig {
+                DisplayNames = new Dictionary<string , DisplayNameAndFormat>
+                {   { nameof(ListOfGroup.GroupName) , new DisplayNameAndFormat { DisplayName =  "Group Name" } },
+                    { nameof(ListOfGroup.GroupType) , new DisplayNameAndFormat { DisplayName =  "Group Type" } },
+                    { nameof(ListOfGroup.CreatedBy) , new DisplayNameAndFormat { DisplayName =  "Created By" } },
+                    { nameof(ListOfGroup.CreatedDate) , new DisplayNameAndFormat { DisplayName =  "Created Date" } },
+                    { nameof(ListOfGroup.DisplayName) , new DisplayNameAndFormat { DisplayName =  "Display Name" } },
+                    { nameof(ListOfGroup.LastUpdatedBy) , new DisplayNameAndFormat { DisplayName =  "Last Updated By" } },
+                    { nameof(ListOfGroup.LastUpdatedDate) , new DisplayNameAndFormat { DisplayName =  "Last Updated Date" } }, }
+                }
+            },
+            { nameof(ListOfDeletedUsersController).ToLower() , new ReportConfig {
+                DisplayNames = new Dictionary<string , DisplayNameAndFormat>
+                {
+                    { nameof(ListOfDeletedUser.UserType) , new DisplayNameAndFormat { DisplayName =  "User Type" } },
+                    { nameof(ListOfDeletedUser.UserName) , new DisplayNameAndFormat { DisplayName =  "User Name" } },
+                    { nameof(ListOfDeletedUser.CreatedBy) , new DisplayNameAndFormat { DisplayName =  "Created By" } },
+                    { nameof(ListOfDeletedUser.CreatedDate) , new DisplayNameAndFormat { DisplayName =  "Created Date" } },
+                    { nameof(ListOfDeletedUser.DisplayName) , new DisplayNameAndFormat { DisplayName =  "Display Name" } },
+                    { nameof(ListOfDeletedUser.LastFailedLogin) , new DisplayNameAndFormat { DisplayName =  "Last Failed Login" } },
+                    { nameof(ListOfDeletedUser.LastLoginDate) , new DisplayNameAndFormat { DisplayName =  "Last Login Date" } },
+                        }
+                }
+            },
+            { nameof(LastLoginPerDayController).ToLower() , new ReportConfig {
+                DisplayNames = new Dictionary<string , DisplayNameAndFormat>
+                {
+                    { nameof(LastLoginPerDayView.AppName) , new DisplayNameAndFormat { DisplayName =  "App Name" } },
+                    { nameof(LastLoginPerDayView.UserName) , new DisplayNameAndFormat { DisplayName =  "User Name" } },
+                    { nameof(LastLoginPerDayView.DeviceName) , new DisplayNameAndFormat { DisplayName =  "Device Name" } },
+                    { nameof(LastLoginPerDayView.DeviceType) , new DisplayNameAndFormat { DisplayName =  "Device Type" } },
+                    { nameof(LastLoginPerDayView.Logindatetime) , new DisplayNameAndFormat { DisplayName =  "Login Date" } }
+                        }
+                }
+            }
+
             {
                 nameof(ListOfUserController).ToLower(),new ReportConfig
                 {
