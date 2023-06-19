@@ -1,4 +1,5 @@
-﻿using Data.DGECM;
+﻿using Data.Audit;
+using Data.DGECM;
 using Data.GOAML;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace Data.FCF71
         public FCFCORE.fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
         public GoAmlContext GOAML { get; }
+        public AuditContext AUDIT { get; }
     }
 }

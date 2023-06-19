@@ -59,6 +59,19 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetCheckerCreatedByDropDown();
         public List<string> GetUpdateUserIdDropDown();
         public List<string> GetInvestagtorDropDown();
+        public List<string> GetGroupAudNameDropDown();
+        public List<string> GetUserAudNameDropDown();
+        public List<string> GetUserAudTypeDropDown();
+        public List<string> GetRoleAudNameDropDown();
+        public List<string> GetGroupNameDropDown();
+        public List<string> GetUserNameDropDown();
+        public List<string> GetUserTypeDropDown();
+        public List<string> GetRoleNameDropDown();
+        public List<string> GetRoleTypeDropDown();
+        public List<string> GetMemberUsersDropDown();
+        public List<string> GetAppNameDropDown();
+        public List<string> GetDeviceNameDropDown();
+        public List<string> GetDeviceTypeDropDown();
 
     }
 }
