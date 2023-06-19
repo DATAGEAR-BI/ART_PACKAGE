@@ -397,6 +397,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
                                {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
 
+                    }
+                }
+            },
               {
                 nameof(CasesDetailsController).ToLower(),new ReportConfig
                 {
