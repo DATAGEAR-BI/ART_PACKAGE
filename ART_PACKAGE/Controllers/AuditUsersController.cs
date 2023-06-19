@@ -10,6 +10,8 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Data.DGECM;
+using ART_PACKAGE.Helpers.DropDown;
+
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
@@ -19,11 +21,13 @@ namespace ART_PACKAGE.Controllers
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly DGECMContext db;
+        private readonly IDropDownService _dropSrv;
 
-        public AuditUsersController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
+        public AuditUsersController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
             this._env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
+            _dropSrv = dropSrv;
         }
 
         //private readonly CMC_AUDIT_TEST.ModelContext dbcmcaudit = new CMC_AUDIT_TEST.ModelContext();
@@ -41,18 +45,13 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"CaseTypeCd".ToLower(),db.RefTableVals
-                    //   .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
-                    //   //.Where(b => b.DisplayOrdrNo == 0 || b.DisplayOrdrNo == 5)
-                    //   .Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"CaseStatus".ToLower(),db.RefTableVals
-                    //            .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                    //           // .Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                    //            .Select(x=>x.ValDesc)
-                    //            .ToDynamicList() },
-                    //{"Priority".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                    //    .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() },
+                    {nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.CreatedBy)       .ToLower()     , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.LastUpdatedBy)   .ToLower()         , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()         , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.Action)          .ToLower()     , new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
+                    {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

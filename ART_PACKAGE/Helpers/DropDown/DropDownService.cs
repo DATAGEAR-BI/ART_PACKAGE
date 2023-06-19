@@ -367,7 +367,8 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetGroupTypeDropDown()
         {
-            throw new NotImplementedException();
+            var distinct_value = _dbSrv.AUDIT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.GroupType)).Select(x => x.GroupType).Distinct().ToList();
+            return distinct_value;
         }
 
         public List<string> GetGroupsDropDown()
@@ -440,6 +441,83 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetInvestagtorDropDown()
         {
             var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.PrimaryOwner == null || string.IsNullOrEmpty(x.PrimaryOwner.Trim()) ? "UNKNOWN" : x.PrimaryOwner).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetGroupAudNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.GroupDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetUserAudNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetRoleAudNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.RoleDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetGroupNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetUserNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetRoleNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetUserAudTypeDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetMemberUsersDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.AccountAuds.Where(x => !string.IsNullOrEmpty(x.AuthenticationDomain)).Select(x => x.AuthenticationDomain).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetAppNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.AppName)).Select(x => x.AppName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDeviceNameDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceName)).Select(x => x.DeviceName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDeviceTypeDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceType)).Select(x => x.DeviceType).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetUserTypeDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.UserDgs.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetRoleTypeDropDown()
+        {
+            var distinct_value = _dbSrv.AUDIT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.RoleType)).Select(x => x.RoleType).Distinct().ToList();
             return distinct_value;
         }
     }

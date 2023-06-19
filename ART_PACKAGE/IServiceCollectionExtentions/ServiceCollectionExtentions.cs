@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.Audit;
 using Data.Constants.db;
 using Data.DGECM;
 using Data.FCF71;
@@ -18,6 +19,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
             var FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
             var FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
             var GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
+            var DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
             var migrationsToApply = config.GetSection("migrations").Get<List<string>>();
             var dbType = config.GetValue<string>("dbType").ToUpper();
             var migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
@@ -84,6 +86,18 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 DbTypes.Oracle => options.UseOracle(
                     GOAMLContextConnection,
+                    x => x.MigrationsAssembly("OracleMigrations")
+                    ),
+                _ => throw new Exception($"Unsupported provider: {dbType}")
+            });
+            services.AddDbContext<AuditContext>(options => _ = dbType switch
+            {
+                DbTypes.SqlServer => options.UseSqlServer(
+                    DGUSERMANAGMENTContextConnection,
+                    x => x.MigrationsAssembly("SqlServerMigrations")
+                    ),
+                DbTypes.Oracle => options.UseOracle(
+                    DGUSERMANAGMENTContextConnection,
                     x => x.MigrationsAssembly("OracleMigrations")
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")

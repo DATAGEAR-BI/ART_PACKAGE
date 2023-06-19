@@ -10,6 +10,7 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using Data.DGECM;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -21,11 +22,12 @@ namespace ART_PACKAGE.Controllers
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly DGECMContext db;
-
-        public ListOfUserController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
+        private readonly IDropDownService dropDownService;
+        public ListOfUserController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropDownService)
         {
             this._env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
+            this.dropDownService = dropDownService;
         }
 
         //private readonly CMC_AUDIT_TEST.ModelContext dbcmcaudit = new CMC_AUDIT_TEST.ModelContext();
@@ -43,7 +45,10 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-
+                    { "UserName".ToLower(),dropDownService.GetUserNameDropDown().ToDynamicList() },
+                    { "UserType".ToLower(),dropDownService.GetUserTypeDropDown().ToDynamicList() },
+                    { "CreatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
+                    { "LastUpdatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].SkipList;
             }
