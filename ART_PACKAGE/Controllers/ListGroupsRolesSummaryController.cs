@@ -1,10 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -12,6 +14,7 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext context;
         private readonly IPdfService _pdfSrv;
+        private readonly IDropDownService _dropSrv;
         public ListGroupsRolesSummaryController(AuthContext context, IPdfService pdfSrv)
         {
             this.context = context;
@@ -32,23 +35,8 @@ namespace ART_PACKAGE.Controllers
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    ////{"CaseType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseType).Distinct().ToDynamicList() },
-                    ////{"CaseStatus".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseStatus).Distinct().ToDynamicList() },
-                    ////{"Priority".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.Priority).Distinct().ToDynamicList() },
-                    ////{"TransactionDirection".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionDirection).Distinct().ToDynamicList() },
-                    ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
-                    ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
-                    ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
-
-                    //{"CaseType".ToLower(),db.RefTableVals.Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE")).Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"CaseStatus".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
-                    //    //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
-                    //    //.Where(b => b.DisplayOrdrNo==0)
-                    //    .Select(x=>x.ValDesc).ToDynamicList() },
-                    //{"Priority".ToLower(),db.RefTableVals
-                    //    .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
-                    //    .Where(b => b.ValDesc.Equals("High") || b.ValDesc.Equals("Low") || b.ValDesc.Equals("Medium")).Select(x=>x.ValDesc).ToDynamicList() }
+                    {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
+                    {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()         , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
 
                 };
             }
