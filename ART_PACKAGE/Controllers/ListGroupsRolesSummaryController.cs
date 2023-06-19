@@ -15,10 +15,11 @@ namespace ART_PACKAGE.Controllers
         private readonly AuthContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
-        public ListGroupsRolesSummaryController(AuthContext context, IPdfService pdfSrv)
+        public ListGroupsRolesSummaryController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
+            _dropSrv = dropSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
