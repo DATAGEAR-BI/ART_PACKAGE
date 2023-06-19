@@ -13,8 +13,8 @@ namespace Data.Data
         public string GroupType { get; set; } = null!;
         public string? DisplayName { get; set; }
         public string? CreatedBy { get; set; }
-        public string? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string? LastUpdatedBy { get; set; }
-        public string? LastUpdatedDate { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
     }
 }

@@ -13,15 +13,14 @@ using Data.DGECM;
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
-    public class AuditRolesController : Controller
+    public class AuditUsersController : Controller
     {
-
         private readonly AuthContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly DGECMContext db;
 
-        public AuditRolesController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
+        public AuditUsersController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db)
         {
             this._env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
@@ -31,7 +30,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtRolesAuditView> data = context.ArtRolesAuditViews.AsQueryable();
+            IQueryable<ArtUsersAuditView> data = context.ArtUsersAuditViews.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -39,7 +38,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //{"CaseTypeCd".ToLower(),db.RefTableVals
@@ -60,7 +59,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtRolesAuditView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtUsersAuditView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -77,18 +76,18 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtRolesAuditViews;
-            var bytes = await data.ExportToCSV<ArtRolesAuditView, GenericCsvClassMapper<ArtRolesAuditView, AuditRolesController>>(para.Req);
+            var data = context.ArtUsersAuditViews;
+            var bytes = await data.ExportToCSV<ArtUsersAuditView, GenericCsvClassMapper<ArtUsersAuditView, AuditUsersController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].SkipList;
-            var data = context.ArtRolesAuditViews.CallData<ArtRolesAuditView>(req).Data.ToList();
-            ViewData["title"] = "Audit Roles Report";
-            ViewData["desc"] = "This report Presents all events of roles with the related information as below";
+            var DisplayNames = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].SkipList;
+            var data = context.ArtUsersAuditViews.CallData<ArtUsersAuditView>(req).Data.ToList();
+            ViewData["title"] = "Audit Users Report";
+            ViewData["desc"] = "This report Presents all events of users with the related information as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

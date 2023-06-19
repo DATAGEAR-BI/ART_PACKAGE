@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
@@ -9,11 +8,6 @@
 <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
 <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
 <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
-
-@*<link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>*@
 <script src="~/js/FileExtraction.js"></script>
 <script src="~/js/site.js"></script>
 <link href="~/css/site.css" rel="stylesheet" />
@@ -21,7 +15,8 @@
 
 <section class="content-header">
     <h1>
-        <small></small>
+        Audit Users Report
+        <small>This report Presents all events of users with the related information as below</small>
     </h1>
 </section>
 
@@ -30,7 +25,7 @@
 @section Scripts{
 
 
-    <script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="ListOfUsersRole"></script>
+    <script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="AuditUsers"></script>
 }
 
 

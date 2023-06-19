@@ -207,6 +207,35 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
             },
             {
+                nameof(AuditUsersController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+
+                                {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                                {"Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                                {"Address", new DisplayNameAndFormat { DisplayName = "Address"}},
+                                {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                                {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                                {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                                {"Phone", new DisplayNameAndFormat { DisplayName = "Phone"}},
+                                {"Status", new DisplayNameAndFormat { DisplayName = "Status"}},
+                                {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                                {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                                {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                                {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                                {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                                {"LastFailedLogin", new DisplayNameAndFormat { DisplayName = "Last Failed Login"}},
+                                {"Enable", new DisplayNameAndFormat { DisplayName = "Enable"}},
+                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names"}},
+                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+                                {"DomainAccounts", new DisplayNameAndFormat { DisplayName = "Domain Accounts"}}
+
+                    }
+                }
+            },
+            {
                 nameof(ListOfUsersRolesController).ToLower(),new ReportConfig
                 {
                     SkipList = new List<string>(),
@@ -296,6 +325,49 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
                 }
             }
+
+            {
+                nameof(ListOfUserController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                               {"Address", new DisplayNameAndFormat { DisplayName = "Address"}},
+                               {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                               {"Phone", new DisplayNameAndFormat { DisplayName = "Phone"}},
+                               {"UserType", new DisplayNameAndFormat { DisplayName = "User Type"}},
+                               {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                               {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                               {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                               {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                               {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                               {"LastFailedLogin", new DisplayNameAndFormat { DisplayName = "Last Failed Login"}},
+                               {"CounterLock", new DisplayNameAndFormat { DisplayName = "Counter Lock"}},
+                               {"Active", new DisplayNameAndFormat { DisplayName = "Active"}},
+                               {"Enable", new DisplayNameAndFormat { DisplayName = "Enable"}},
+                    }
+                }
+            },
+            {
+                nameof(ListOfRoleController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"RoleName", new DisplayNameAndFormat { DisplayName = "Role Name"}},
+                               {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"RoleType", new DisplayNameAndFormat { DisplayName = "Role Type"}},
+                               {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                               {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                               {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                               {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                    }
+                }
+            },
         };
 
     }

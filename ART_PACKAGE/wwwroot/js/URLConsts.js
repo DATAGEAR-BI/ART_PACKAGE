@@ -52,6 +52,11 @@
     ListOfDeletedUsers: "/ListOfDeletedUsers/GetData",
     ListOfGroups: "/ListOfGroups/GetData",
     LastLoginPerDay: "/LastLoginPerDay/GetData",
+    ListOfUser: "/ListOfUser/GetData",
+    ListOfRole: "/ListOfRole/GetData",
+    AuditUsers: "/AuditUsers/GetData",
+    AuditRoles: "AuditRoles/GetData",
+    AuditGroups:"AuditGroups/GetData",
 
 }
 
