@@ -298,6 +298,23 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ListOfRoleController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                               {"RoleName", new DisplayNameAndFormat { DisplayName = "Role Name"}},
+                               {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                               {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                               {"RoleType", new DisplayNameAndFormat { DisplayName = "Role Type"}},
+                               {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                               {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                               {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                               {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                    }
+                }
+            },
         };
 
     }
