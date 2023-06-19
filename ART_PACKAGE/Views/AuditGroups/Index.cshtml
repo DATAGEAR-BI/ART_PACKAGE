@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+<script src="~/js/FileExtraction.js"></script>
+<script src="~/js/site.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+
+
+<section class="content-header">
+    <h1>
+        Audit Groups Report
+        <small>This report Presents all events of groups and related information of maker and checker with the related information as below</small>
+    </h1>
+</section>
+
+
+<div id="grid"></div>
+@section Scripts{
+
+
+    <script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="AuditGroups"></script>
+}
+
+

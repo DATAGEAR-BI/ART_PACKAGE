@@ -160,6 +160,29 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+
+                        {
+                nameof(AuditGroupsController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+
+                                {"GroupName", new DisplayNameAndFormat { DisplayName = "Group Name"}},
+                                {"Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                                {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                                {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                                {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                                {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                                {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                                {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                                {"SubGroupNames", new DisplayNameAndFormat { DisplayName = "SubGroup Names"}},
+                                {"RoleNames", new DisplayNameAndFormat { DisplayName = "Role Names"}},
+                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+
+                    }
+                }
+            },
         };
 
     }
