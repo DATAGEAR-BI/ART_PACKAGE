@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-//using MimeKit;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using System.Reflection;
@@ -88,8 +87,8 @@ namespace ART_PACKAGE.Controllers
                     Val = "ALERTS_CNT_SUM"
                 }
             };
-           
-           
+
+
             return new ContentResult
             {
                 ContentType = "application/json",

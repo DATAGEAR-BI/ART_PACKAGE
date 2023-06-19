@@ -80,7 +80,7 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
             var data = context.ArtAlertedEntities.CallData<ArtAlertedEntity>(req).Data.ToList();
-            ViewData["title"] = "System Performance Report";
+            ViewData["title"] = "Alerted Entities Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

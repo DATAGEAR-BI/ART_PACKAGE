@@ -96,8 +96,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
             var data = dbfcfcore.ArtAmlCustomersDetailsViews.CallData<ArtAmlCustomersDetailsView>(req).Data.ToList();
-            ViewData["title"] = "System Performance Report";
-            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            ViewData["title"] = "Customers Details";
+            ViewData["desc"] = "Presents all customers details";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

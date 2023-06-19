@@ -85,8 +85,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
             var data = dbfcfcore.ArtRiskAssessmentViews.CallData<ArtRiskAssessmentView>(req).Data.ToList();
-            ViewData["title"] = "System Performance Report";
-            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            ViewData["title"] = "Risk Assessment Details";
+            ViewData["desc"] = "Presents the Risk details";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
