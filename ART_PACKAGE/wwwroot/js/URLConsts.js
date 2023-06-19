@@ -42,10 +42,15 @@
     GOAMLReportIndicatorDetails: "/GOAMLReportIndicatorDetails/GetData",
     GOAMLReportIndicatorSummary: "/GOAMLReportIndicatorSummary/GetData",
     GOAMLReportsSuspect: "/GOAMLReportsSuspect/GetData",
+    //Aduit
     ListOfUsersRole: "/ListOfUsersRoles/GetData",
     ListOfUsersGroup: "/ListOfUsersGroup/GetData",
     ListOfUsersAndGroupsRole:"/ListOfUsersAndGroupsRole/GetData",
     ListOfUser: "/ListOfUser/GetData",
-    ListOfRole:"/ListOfRole/GetData",
+    ListOfRole: "/ListOfRole/GetData",
+    AuditUsers: "/AuditUsers/GetData",
+    AuditRoles: "AuditRoles/GetData",
+    AuditGroups:"AuditGroups/GetData",
+
 }
 

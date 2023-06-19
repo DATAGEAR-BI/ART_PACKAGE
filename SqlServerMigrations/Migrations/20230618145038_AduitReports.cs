@@ -19,61 +19,66 @@ namespace SqlServerMigrations.Migrations
                             GO
                             CREATE OR ALTER view [ART_DB].[ART_GROUPS_AUDIT_VIEW] as 
                             with ST1 AS
-                           (SELECT g.*,g2.name sub_group_name ,r.name role_name ,u.name member_user
-                                   FROM [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_dg_aud] g
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[user_group_dg_aud] ug
-                                   on g.id = ug.group_id and g.rev = ug.rev
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[user_dg_aud] u 
-                                   on u.id = ug.user_id and ug.rev = u.rev
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[sub_group_aud] sg
-                                   on g.id = sg.group_id and g.rev = sg.rev
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_dg_aud] g2
-                                   on g2.id = sg.sub_group_id and g2.rev = sg.rev
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_role_dg_aud] gr
-                                   on g.id = gr.group_id and g.rev = gr.rev
-                                   left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[role_dg_aud] r
-                                   on r.id = gr.role_id and r.rev = gr.rev
-                               )
+(SELECT g.*,g2.name sub_group_name ,r.name role_name ,u.name member_user
+  FROM [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_dg_aud] g
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[user_group_dg_aud] ug
+  on g.id = ug.group_id and g.rev = ug.rev
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[user_dg_aud] u 
+  on u.id = ug.user_id and ug.rev = u.rev
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[sub_group_aud] sg
+  on g.id = sg.group_id and g.rev = sg.rev
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_dg_aud] g2
+  on g2.id = sg.sub_group_id and g2.rev = sg.rev
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_role_dg_aud] gr
+  on g.id = gr.group_id and g.rev = gr.rev
+  left join [DGUSERMANAGMENT].[DGMGMT_AUDIT].[role_dg_aud] r
+  on r.id = gr.role_id and r.rev = gr.rev
+  --where g.id = 1093
+  --order by g.last_updated_date desc
+  )
 
-                            select 
-                            ST4.name group_name, 
-                            (CASE WHEN ST4.revtype = 0 THEN 'Add' when ST4.revtype = 1 then 'Update' when ST4.revtype = 2 then 'Delete' end) action,
-                             ST4.description, ST4.display_name, ST4.created_by, ST4.created_date,
-                             ST4.last_updated_by, ST4.last_updated_date, ST4.sub_group_names, ST4.role_names, ST4.member_users
-                             from
-                             (select distinct ST2.id, ST2.rev, ST2.revtype, ST2.name, ST2.description, ST2.display_name, ST2.created_by, ST2.created_date,
-                              ST2.last_updated_by, ST2.last_updated_date,
-                              SUBSTRING(
-                              (
-                                 SELECT ','+ST3.sub_group_name  AS [text()]
-                                 FROM 
-			                       (SELECT DISTINCT ST1.sub_group_name
-			                        FROM ST1 
-                                    WHERE ST1.rev = ST2.rev) ST3
-                                   FOR XML PATH (''), TYPE
-                             ).value('text()[1]','nvarchar(max)'), 2, 1000) [sub_group_names],
-		                     SUBSTRING(
-                               (
-                                 SELECT ','+ST3.role_name  AS [text()]
-                                 FROM  
-                                 (SELECT DISTINCT ST1.role_name
-			                           FROM ST1 
-                                   WHERE ST1.REV = ST2.REV) ST3
-                                   FOR XML PATH (''), TYPE
-                                 ).value('text()[1]','nvarchar(max)'), 2, 1000) [role_names],
-	                    	SUBSTRING(
-                              (
-                                 SELECT ','+ST3.member_user  AS [text()]
-                                    FROM  
-                                  (SELECT DISTINCT ST1.member_user
-		                            	FROM ST1 
-                                   WHERE ST1.REV = ST2.REV) ST3
-                                  FOR XML PATH (''), TYPE
-                                ).value('text()[1]','nvarchar(max)'), 2, 1000) [member_users]
-                              from ST1 as ST2) ST4
-                              order by ST4.id, ST4.last_updated_date desc
-                              offset 0 rows;
-                              GO");
+  select 
+  ST4.name group_name, 
+  (CASE WHEN ST4.revtype = 0 THEN 'Add' when ST4.revtype = 1 then 'Update' when ST4.revtype = 2 then 'Delete' end) action,
+  ST4.description, ST4.display_name, ST4.created_by, cast(ST4.created_date as datetime) created_date,
+  ST4.last_updated_by, cast(ST4.last_updated_date as datetime) last_updated_date, ST4.sub_group_names, ST4.role_names, ST4.member_users
+  from
+  (select distinct ST2.id, ST2.rev, ST2.revtype, ST2.name, ST2.description, ST2.display_name, ST2.created_by, ST2.created_date,
+  ST2.last_updated_by, ST2.last_updated_date,
+  SUBSTRING(
+        (
+            SELECT ','+ST3.sub_group_name  AS [text()]
+            FROM 
+			(SELECT DISTINCT ST1.sub_group_name
+			FROM ST1 
+            WHERE ST1.rev = ST2.rev) ST3
+            FOR XML PATH (''), TYPE
+         ).value('text()[1]','nvarchar(max)'), 2, 1000) [sub_group_names],
+		 SUBSTRING(
+        (
+            SELECT ','+ST3.role_name  AS [text()]
+            FROM  
+            (SELECT DISTINCT ST1.role_name
+			FROM ST1 
+            WHERE ST1.REV = ST2.REV) ST3
+            FOR XML PATH (''), TYPE
+        ).value('text()[1]','nvarchar(max)'), 2, 1000) [role_names],
+		SUBSTRING(
+        (
+            SELECT ','+ST3.member_user  AS [text()]
+            FROM  
+            (SELECT DISTINCT ST1.member_user
+			FROM ST1 
+            WHERE ST1.REV = ST2.REV) ST3
+            FOR XML PATH (''), TYPE
+        ).value('text()[1]','nvarchar(max)'), 2, 1000) [member_users]
+  from ST1 as ST2) ST4
+  order by ST4.id, ST4.last_updated_date desc
+  offset 0 rows;
+ 
+
+
+GO");
             /*                VIEW ART_ROLES_AUDIT_VIEW   */
             migrationBuilder.Sql($@"
 USE [ART_DB]
@@ -105,8 +110,8 @@ with ST1 AS
   select 
   ST4.name role_name, 
   (CASE WHEN ST4.revtype = 0 THEN 'Add' when ST4.revtype = 1 then 'Update' when ST4.revtype = 2 then 'Delete' end) action,
-  ST4.description, ST4.display_name, ST4.created_by, ST4.created_date,
-  ST4.last_updated_by, ST4.last_updated_date, ST4.group_names, ST4.member_users
+  ST4.description, ST4.display_name, ST4.created_by, cast(ST4.created_date as datetime) created_date,
+  ST4.last_updated_by, cast(ST4.last_updated_date as datetime) last_updated_date, ST4.group_names, ST4.member_users
   from
   (select distinct ST2.id, ST2.rev, ST2.revtype, ST2.name, ST2.description, ST2.display_name, ST2.created_by, ST2.created_date,
   ST2.last_updated_by, ST2.last_updated_date,
@@ -168,7 +173,8 @@ g.name group_name, r.name role_name, ad.authentication_domain domain_account
   ST4.name user_name, 
   (CASE WHEN ST4.revtype = 0 THEN 'Add' when ST4.revtype = 1 then 'Update' when ST4.revtype = 2 then 'Delete' end) action,
   ST4.address, ST4.description, ST4.display_name, ST4.email, ST4.phone, ST4.status,
-   ST4.created_by, ST4.created_date, ST4.last_updated_by,  ST4.last_updated_date, ST4.last_login_date, ST4.last_failed_login, ST4.enable,
+   ST4.created_by, cast(ST4.created_date as datetime) created_date, ST4.last_updated_by,  cast(ST4.last_updated_date as datetime) last_updated_date, 
+   cast(ST4.last_login_date as datetime) last_login_date, cast(ST4.last_failed_login as datetime) last_failed_login, ST4.enable,
    ST4.group_names, ST4.role_names, ST4.domain_accounts
   from
   (select distinct
@@ -290,7 +296,7 @@ select ua.name USER_NAME
       ,[phone]
       ,[user_type]
       ,[created_by]
-      ,[created_date]
+      ,cast([created_date] as datetime) created_date
       ,[last_login_date]
       ,[last_failed_login]
 	  from [DGUSERMANAGMENT].[DGMGMT_AUDIT].[user_dg_aud] ua where revtype = 0
@@ -308,8 +314,8 @@ GO
 
 
 CREATE OR ALTER view [ART_DB].[LIST_OF_GROUPS] as
-select g.name group_name, g.description, g.group_type, g.display_name, g.created_by, g.created_date,
-  g.last_updated_by, g.last_updated_date
+select g.name group_name, g.description, g.group_type, g.display_name, g.created_by, cast(g.created_date as datetime) created_date,
+  g.last_updated_by, cast(g.last_updated_date as datetime) last_updated_date
   FROM [DGUSERMANAGMENT].[DGMGMT].[group_dg] g;
 GO");
             /*                 VIEW LIST_OF_ROLES            */
@@ -325,7 +331,9 @@ CREATE OR ALTER view [ART_DB].[LIST_OF_ROLES] as
 select 
 name role_name, 
 description, display_name,
-role_type, created_date, created_by, last_updated_by, last_updated_date
+role_type,
+cast(created_date as datetime) created_date, 
+created_by , last_updated_by, cast(last_updated_date as datetime) last_updated_date
 FROM [DGUSERMANAGMENT].[DGMGMT].[role_dg];
 GO");
             /*                 VIEW LIST_OF_USERS            */
@@ -338,9 +346,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE OR ALTER view [ART_DB].[LIST_OF_USERS] as 
 select u.name user_name, u.address, u.description, u.display_name, u.email, u.phone, u.user_type,
-   u.created_by, u.created_date, u.last_updated_by,  u.last_updated_date, u.last_login_date, u.last_failed_login,
+   u.created_by, cast(u.created_date as datetime) created_date, u.last_updated_by, cast(u.last_updated_date as datetime) last_updated_date, 
+   cast(u.last_login_date as datetime) last_login_date, cast(u.last_failed_login as datetime) last_failed_login,
    u.counter_lock, u.active, u.enable
-   FROM [DGUSERMANAGMENT].[DGMGMT].[user_dg] u ;
+   FROM [DGUSERMANAGMENT].[DGMGMT].[user_dg] u ;
 GO");
             /*                 VIEW LIST_OF_USERS_AND_GROUPS_ROLES */
             migrationBuilder.Sql($@"

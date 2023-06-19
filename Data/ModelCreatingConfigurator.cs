@@ -1176,8 +1176,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1201,8 +1200,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
                 entity.Property(e => e.MemberUsers).HasColumnName("member_users");
@@ -1228,8 +1226,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1250,8 +1247,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
                 entity.Property(e => e.MemberUsers).HasColumnName("member_users");
@@ -1283,8 +1279,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1309,13 +1304,11 @@ namespace Data
                 entity.Property(e => e.GroupNames).HasColumnName("group_names");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_failed_login");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_login_date");
 
                 entity.Property(e => e.LastUpdatedBy)
@@ -1324,8 +1317,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
                 entity.Property(e => e.Phone)
@@ -1376,7 +1368,9 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("LOCATION");
 
-                entity.Property(e => e.Logindatetime).HasColumnName("LOGINDATETIME");
+                entity.Property(e => e.Logindatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("LOGINDATETIME");
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(255)
@@ -1432,8 +1426,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1452,13 +1445,11 @@ namespace Data
                     .HasColumnName("email");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_failed_login");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_login_date");
 
                 entity.Property(e => e.Phone)
@@ -1488,8 +1479,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1518,8 +1508,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
             });
             modelBuilder.Entity<ListOfRole>(entity =>
@@ -1534,8 +1523,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1554,8 +1542,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
                 entity.Property(e => e.RoleName)
@@ -1589,8 +1576,7 @@ namespace Data
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -1611,13 +1597,11 @@ namespace Data
                 entity.Property(e => e.Enable).HasColumnName("enable");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_failed_login");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_login_date");
 
                 entity.Property(e => e.LastUpdatedBy)
@@ -1626,8 +1610,7 @@ namespace Data
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
                 entity.Property(e => e.Phone)
