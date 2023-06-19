@@ -183,7 +183,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
-                                                {
+            {
                 nameof(AuditRolesController).ToLower(),new ReportConfig
                 {
                     SkipList = new List<string>(),
@@ -200,6 +200,35 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
                                 {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names"}},
                                 {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+
+                    }
+                }
+            },
+            {
+                nameof(AuditUsersController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>(),
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+
+                                {"UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                                {"Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                                {"Address", new DisplayNameAndFormat { DisplayName = "Address"}},
+                                {"Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                                {"DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                                {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                                {"Phone", new DisplayNameAndFormat { DisplayName = "Phone"}},
+                                {"Status", new DisplayNameAndFormat { DisplayName = "Status"}},
+                                {"CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                                {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                                {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
+                                {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
+                                {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                                {"LastFailedLogin", new DisplayNameAndFormat { DisplayName = "Last Failed Login"}},
+                                {"Enable", new DisplayNameAndFormat { DisplayName = "Enable"}},
+                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names"}},
+                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+                                {"DomainAccounts", new DisplayNameAndFormat { DisplayName = "Domain Accounts"}}
 
                     }
                 }
