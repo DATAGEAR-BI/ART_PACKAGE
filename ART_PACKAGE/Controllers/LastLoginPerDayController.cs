@@ -83,8 +83,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].SkipList;
             var data = context.LastLoginPerDayViews.CallData<LastLoginPerDayView>(req).Data.ToList();
-            ViewData["title"] = "";
-            ViewData["desc"] = "";
+            ViewData["title"] = "User Last Login Per Day Report";
+            ViewData["desc"] = "This Report presents each user with last login dateime for each day";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

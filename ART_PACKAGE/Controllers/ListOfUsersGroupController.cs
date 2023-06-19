@@ -76,8 +76,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUsersGroupController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUsersGroupController).ToLower()].SkipList;
             var data = context.ListOfUsersGroups.CallData<ListOfUsersGroup>(req).Data.ToList();
-            ViewData["title"] = "Groups Of Users Report";
-            ViewData["desc"] = "";
+            ViewData["title"] = "List Of Users Groups";
+            ViewData["desc"] = "This Report presents all users with their groups";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

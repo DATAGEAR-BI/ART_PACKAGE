@@ -83,8 +83,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].SkipList;
             var data = context.ListOfDeletedUsers.CallData<ListOfDeletedUser>(req).Data.ToList();
-            ViewData["title"] = "";
-            ViewData["desc"] = "";
+            ViewData["title"] = "List Of Deleted Users";
+            ViewData["desc"] = "This Report presents all deleted users with the related informaton as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

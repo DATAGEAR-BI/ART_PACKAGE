@@ -83,8 +83,8 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
             var data = context.ListOfGroups.CallData<ListOfGroup>(req).Data.ToList();
-            ViewData["title"] = "";
-            ViewData["desc"] = "";
+            ViewData["title"] = "List Of Groups Report";
+            ViewData["desc"] = "This Report presents all groups with the related information as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

@@ -86,7 +86,7 @@ namespace ART_PACKAGE.Controllers
             var DisplayNames = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].DisplayNames;
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].SkipList;
             var data = context.ArtUsersAuditViews.CallData<ArtUsersAuditView>(req).Data.ToList();
-            ViewData["title"] = "Audit Users Report";
+            ViewData["title"] = "ART User Audit Report";
             ViewData["desc"] = "This report Presents all events of users with the related information as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
