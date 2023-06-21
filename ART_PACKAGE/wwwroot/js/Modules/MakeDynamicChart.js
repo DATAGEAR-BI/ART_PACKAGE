@@ -13,7 +13,7 @@ var types = {
     line: 10
 }
 
-export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle) {
+export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
     /**
   * ---------------------------------------
   * This demo was created using amCharts 4.
@@ -156,7 +156,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
             columnChart.data = ev.target.dataItem.dataContext[subListKey];
             columnSeries.fill = ev.target.fill;
             columnSeries.reinit();
-
+            onDateChange(ev.target.dataItem.dataContext);
             // Update labels
             //label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
             //label1.fill = ev.target.fill;
@@ -401,12 +401,18 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
 
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+
     categoryAxis.renderer.labels.template.fontSize = 20;
     categoryAxis.dataFields.category = chartCategory;
-    if (!dontRototate)
-        categoryAxis.renderer.labels.template.rotation = 90;
+
 
     categoryAxis.renderer.labels.template.dy = -5;
+    categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
+        if (target.dataItem && target.dataItem.index & 2 == 2) {
+            return dy + 25;
+        }
+        return dy;
+    });
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.renderer.labels.template.fontSize = 20;
     var series = chart.series.push(new am4charts.ColumnSeries());

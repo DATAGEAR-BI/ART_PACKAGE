@@ -16,10 +16,13 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
     {
         private static Dictionary<string, string> viewsSql = new Dictionary<string, string>
         {
-            {"sqlserver",@"SELECT
-	                            SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME
-                           FROM 
-	                            sys.views as v;"},
+            {"sqlserver",@" SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME
+                            FROM 
+	                            sys.views as v
+						    union 
+                            SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME
+                            FROM 
+	                            sys.tables as v;"},
             {"oracle",@"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name) as VIEW_NAME FROM user_views 
                         union  all
                         SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME FROM user_tables "}
@@ -27,12 +30,9 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         private static Dictionary<string, string> viewsColumnsSql = new Dictionary<string, string>
         {
-            {"sqlserver",@"select
-                                tab.name as VIEW_NAME, 
-                                col.name as COLUMN_NAME
-                            from sys.views as tab
-                                inner join sys.columns as col
-                                    on tab.object_id = col.object_id and tab.name  = '{0}';"},
+            {"sqlserver",@"SELECT TABLE_NAME as VIEW_NAME , COLUMN_NAME as COLUMN_NAME 
+                            FROM INFORMATION_SCHEMA.COLUMNS
+                            WHERE TABLE_NAME = N'{0}';"},
             {"oracle",@"select
                                col.table_name as VIEW_NAME, 
                                col.column_name as COLUMN_NAME

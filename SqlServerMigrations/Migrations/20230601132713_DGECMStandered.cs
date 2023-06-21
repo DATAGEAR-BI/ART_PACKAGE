@@ -31,7 +31,12 @@ namespace SqlServerMigrations.Migrations
                                         a.UPDATE_USER_ID,
                                         (CASE WHEN a.transaction_type IS NULL OR a.transaction_type = 'null' THEN 'Unknown' else a.transaction_type end )transaction_type,
                                         a.transaction_amount,
-                                        CASE a.transaction_direction WHEN 'I' THEN 'Input' WHEN 'O' THEN 'Output' WHEN NULL THEN 'Unknown' WHEN 'null' THEN 'Unknown' ELSE a.transaction_direction END AS transaction_direction, 
+                                          (CASE 
+										when a.transaction_direction is null then 'Unknown' 
+										when a.transaction_direction ='null' then 'Unknown' 
+										when a.transaction_direction = 'I' THEN 'InComing'
+										when a.transaction_direction = 'O' THEN 'OutGoing'
+										else a.transaction_direction end )transaction_direction, 
                                         a.transaction_currency ,
                                         a.swift_reference,
                                         (case when a.Col1 is null then a.Cust_Full_Name else a.Col1 end)CLIENT_NAME,
@@ -60,6 +65,7 @@ namespace SqlServerMigrations.Migrations
                                         m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
                                         GROUP BY BUSINESS_OBJECT_RK) M 
                                         ON a.CASE_RK = M.BUSINESS_OBJECT_RK
+                                        where a.Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
                                         ;
                                         GO
 
@@ -125,7 +131,8 @@ namespace SqlServerMigrations.Migrations
                                             ) bb
                                             ON a.CASE_RK=bb.BUSINESS_OBJECT_RK and I.CREATE_USER_ID=bb.CREATE_USER_ID
                                             WHERE 
-                                            a.case_stat_cd in ('SC','ST') 
+											a.Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
+                                            and a.case_stat_cd in ('SC','ST') 
                                             --and trunc(a.create_date) >='01-OCT-21'
                                             --and
                                             --CASE_TYPE_CD not in ('FATCA_INDV','FATCA_ENTITY')
@@ -133,6 +140,26 @@ namespace SqlServerMigrations.Migrations
                                             and (case when I.EVENT_DESC='Case workflow terminated and restarted' then
                                                     SUBSTRING(I.EVENT_DESC, CHARINDEX(':', I.EVENT_DESC) + 6, LEN(I.EVENT_DESC)) else
                                                     SUBSTRING(I.EVENT_DESC, CHARINDEX(':', I.EVENT_DESC) + 2, LEN(I.EVENT_DESC))  end) is not null
+                                            and I.Event_Desc not in
+
+                                            (
+                                            'Case workflow started and status is Accept',
+                                            'Case workflow started and status is REJECT',
+                                            'Case Workflow Finished with status Accept',
+                                            'Case Workflow Finished with status Reject',
+                                            'Case workflow terminated and restarted',
+                                            'Case Workflow Finished with status : SC',
+                                            'Case Workflow Finished with status : ST',
+                                            'Case workflow started and status is : MSC',
+                                            'Case workflow started and status is : MST',
+                                            'Case workflow started and status is : SM',
+                                            'Case workflow updated with status : CSC',
+                                            'Case workflow updated with status : CSR',
+                                            'Case workflow updated with status : CST',
+                                            'Case workflow updated with status : MSC',
+                                            'Case workflow updated with status : MST',
+                                            'Case workflow updated with status : SM'
+                                            )
                                             ;
                                         GO
 
@@ -152,8 +179,8 @@ namespace SqlServerMigrations.Migrations
                                         SET NOCOUNT ON;
                                         select  
                                         (CASE UPPER(A.TRANSACTION_DIRECTION) 
-                                        WHEN 'I' THEN 'Input' 
-                                        WHEN 'O' THEN 'Output' 
+                                        WHEN 'I' THEN 'InComing' 
+                                        WHEN 'O' THEN 'OutGoing' 
                                         WHEN Null THEN 'Unknown' 
                                         WHEN 'NULL' THEN 'Unknown' 
                                         ELSE A.TRANSACTION_DIRECTION END) AS TRANSACTION_DIRECTION
@@ -168,8 +195,8 @@ namespace SqlServerMigrations.Migrations
                                         CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
                                         GROUP BY
                                         (CASE UPPER(A.TRANSACTION_DIRECTION) 
-                                        WHEN 'I' THEN 'Input' 
-                                        WHEN 'O' THEN 'Output' 
+                                        WHEN 'I' THEN 'InComing' 
+                                        WHEN 'O' THEN 'OutGoing' 
                                         WHEN Null THEN 'Unknown' 
                                         WHEN 'NULL' THEN 'Unknown' 
                                         ELSE A.TRANSACTION_DIRECTION END)
@@ -197,6 +224,8 @@ namespace SqlServerMigrations.Migrations
                                         LEFT JOIN
                                         [DGECM].dgcmgmt.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                         where 
+                                        Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
+                                        and
                                         CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
                                         GROUP BY
                                         b.val_desc
@@ -225,7 +254,9 @@ namespace SqlServerMigrations.Migrations
                                         LEFT JOIN
                                         [DGECM].dgcmgmt.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
                                         where
-                                        CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
+                                         Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
+										and
+CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
                                         GROUP BY
                                         b.VAL_DESC
                                         ;
@@ -258,8 +289,9 @@ namespace SqlServerMigrations.Migrations
                                             floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
                                             sum(a.durations_in_days) durations_in_days,
                                             floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
-                                            from [DGECM].dgcmgmt.art_user_performance a 
+                                            from [ART_DB].art_user_performance a 
                                             WHERE
+                                            
                                             CAST(a.CREATE_DATE AS date) >= @V_START_DATE AND CAST(a.CREATE_DATE AS date) <= @V_END_DATE
                                             group by  action
                                             ;
@@ -294,7 +326,7 @@ namespace SqlServerMigrations.Migrations
                                         floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
                                         sum(a.durations_in_days) durations_in_days,
                                         floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
-                                        from [DGECM].dgcmgmt.art_user_performance a 
+                                        from [ART_DB].art_user_performance a 
                                         WHERE
                                         CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
 
@@ -328,7 +360,7 @@ namespace SqlServerMigrations.Migrations
                                             floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
                                             sum(a.durations_in_days) durations_in_days,
                                             floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
-                                            from [DGECM].dgcmgmt.art_user_performance a 
+                                            from [ART_DB].art_user_performance a 
                                             WHERE
                                             CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
                                             group by  a.action_user,

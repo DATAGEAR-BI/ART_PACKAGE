@@ -99,7 +99,7 @@ namespace ART_PACKAGE.Controllers
                     ChartId = "StCasesPerSubCategory",
                     Data = chart3Data.ToList(),
                     Title = "Cases Per Sub Category",
-                    Cat = "CASE_SUB_CATEGORY",
+                    Cat = "CASE_SUBCATEGORY",
                     Val = "NUMBER_OF_CASES"
                 },
                 new ChartData<ArtStCasesPerPriority>

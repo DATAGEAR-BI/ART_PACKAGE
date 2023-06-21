@@ -22,8 +22,6 @@ namespace ART_PACKAGE.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AuthContext _db;
         private readonly IDbService _dbSrv;
-        /*private readonly DGCMGMTContext dgcmgmt;
-        private readonly FCF71Context fcf71;*/
         public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
         {
             _logger = logger;
@@ -79,8 +77,8 @@ this.fcf71 = fcf71;*/
                     value = m.Sum(x => x.NumberOfCases)
                 })
             });
-            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases });
-            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases }); ;
+            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR });
+            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR }); ;
 
 
 
