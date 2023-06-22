@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+
+  },
+  "dependencies": {
+    "module-alias": "^2.2.3",
+    "@amcharts/amcharts4": "^4.10.36",
+    "@types/core-js": "^2.5.5",
+    "core-js": "^3.31.0",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

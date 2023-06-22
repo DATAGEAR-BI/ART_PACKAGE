@@ -1,0 +1,29 @@
+{
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": [ "tsconfig-paths/register" ]
+  },
+
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": "./node_modules",
+    "paths": {
+      "@amcharts/*": [ "@amcharts/*" ]
+
+    },
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "wwwroot/js/dist"
+  },
+
+  "include": [
+
+  ],
+  "exclude": [
+    "node_modules",
+    "wwwroot/js/dist"
+  ]
+}

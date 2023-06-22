@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/ART_PACKAGE/node_modules/@amcharts/amcharts4/examples/angular/simple-line-chart/e2e/src/app.e2e-spec.ts
+/ART_PACKAGE/node_modules/@amcharts/amcharts4/examples/angular/simple-line-chart/e2e/src/app.po.ts
