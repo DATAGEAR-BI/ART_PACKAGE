@@ -23,7 +23,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
                 select  (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end) ALERT_STATUS,
                 count(FSK_ALERT.alert_id) Alerts_Count
                 FROM fcf71.fcfkc.FSK_ALERT FSK_ALERT 
@@ -49,7 +49,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
                 select Year_ Year,Month__ Month,Day_ Day,Number_Of_ALerts from
                 (select 
                 YEAR(a.create_date) Year_,
@@ -81,7 +81,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
                 select  count(*) Number_Of_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y';
@@ -100,7 +100,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
                 select  count(*) Number_Of_PEP_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -120,7 +120,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
                 select  count(*) Number_Of_High_Risk_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -140,7 +140,7 @@ namespace SqlServerMigrations.Migrations
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                create view [ART_DB].[ART_HOME_Number_Of_Accounts] AS
+                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_Number_Of_Accounts] AS
                 select  count(*) Number_Of_Accounts
                 FROM fcf71.fcfcore.FSC_ACCOUNT_DIM a
                 where a.change_current_ind = 'Y';

@@ -20,15 +20,15 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                         CREATE VIEW [ART_DB].[ART_HOME_CASES_DATE] (""YEAR"", ""MONTH"", ""DAY"", ""NUMBER_OF_CASES"") AS 
-                                          select Year_ Year,Month__ Month,Day_ Day,Number_Of_Cases from
+                                         CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_DATE] (""YEAR"", ""MONTH"", ""DAY"", ""NUMBER_OF_CASES"") AS 
+                                          select Year_ Year,Month__ Month,Day_ Day,NUMBER_OF_CASES from
                                         (
                                         select
                                         YEAR(a.create_date) Year_,
                                         Month(a.create_date) Month_,
                                         FORMAT(a.create_date,'MMM') Month__,
                                         Day(a.create_date) Day_,
-                                        count(a.case_rk) Number_Of_Cases
+                                        CAST(count(a.case_rk)  AS DECIMAL(10, 0)) NUMBER_OF_CASES
                                         from
                                         dgecm.dgcmgmt.case_live A
                                         group by 
@@ -55,19 +55,21 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                         CREATE VIEW [ART_DB].[ART_HOME_CASES_STATUS] (""CASE_STATUS"", ""NUMBER_OF_CASES"") AS
-                                         select 
-                                         b.val_desc CASE_STATUS,
-                                           count(a.case_rk) Number_Of_Cases
-                                        from
-                                        dgecm.dgcmgmt.case_live A 
-                                        LEFT JOIN
-                                        dgecm.DGCMGMT.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_STAT_CD) AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
-                                        group by
-                                        b.val_desc;
-                                        GO
+                                        CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_STATUS] (""Year"",""CASE_STATUS"", ""NUMBER_OF_CASES"") AS
+                                    select Year_ Year,CASE_status,NUMBER_OF_CASES from
+                                    (
+                                    select
+                                    YEAR(a.create_date) Year_,
+                                    b.Val_Desc CASE_status,
+                                    count(a.case_rk) NUMBER_OF_CASES
+                                    from
+                                    dgecm.dgcmgmt.case_live A  LEFT JOIN 
 
-
+									dgecm.DGCMGMT.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_STAT_CD) AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                                    group by 
+                                    YEAR(a.create_date),b.Val_Desc
+                                    order by YEAR(a.create_date) desc offset 0 rows) aaa;
+                                    GO
                                         ---------------------------------------------------------------------------------------------------
 
 
@@ -81,18 +83,20 @@ namespace SqlServerMigrations.Migrations
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                           CREATE VIEW [ART_DB].[ART_HOME_CASES_TYPES] (""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
-                                         select 
-                                        CASE_TYPE.VAL_DESC CASE_TYPE,
-                                           count(a.case_rk) Number_Of_Cases
-  
-                                          from
-                                        dgecm.dgcmgmt.case_live A 
-                                        LEFT JOIN dgecm.dgcmgmt.REF_TABLE_VAL CASE_TYPE 
+                                           CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_TYPES] (""Year"",""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
+                                         select Year_ Year,CASE_TYPE,NUMBER_OF_CASES from
+                                        (
+                                        select
+                                        YEAR(a.create_date) Year_,
+                                        CASE_TYPE.Val_Desc CASE_TYPE,
+                                        count(a.case_rk) NUMBER_OF_CASES
+                                        from
+                                        dgecm.dgcmgmt.case_live A  LEFT JOIN dgecm.dgcmgmt.REF_TABLE_VAL CASE_TYPE 
                                         ON CASE_TYPE.VAL_CD = a.CASE_TYPE_CD
                                         AND CASE_TYPE.REF_TABLE_NAME='RT_CASE_TYPE'
-                                        group by
-                                          CASE_TYPE.VAL_DESC;
+                                        group by 
+                                        YEAR(a.create_date),CASE_TYPE.Val_Desc
+                                        order by YEAR(a.create_date) desc offset 0 rows) aaa;
                                         GO");
         }
 

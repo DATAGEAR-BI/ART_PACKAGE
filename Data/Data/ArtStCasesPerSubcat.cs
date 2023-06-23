@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtStCasesPerSubcat
     {
         public string? CASE_SUBCATEGORY { get; set; }
-        public int NUMBER_OF_CASES { get; set; }
+        public decimal? NUMBER_OF_CASES { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Data.DGECM;
 using Data.FCF71;
 using Data.FCFKC;
+using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace ART_PACKAGE.Helpers.DropDown
     {
         private readonly IDbService _dbSrv;
 
+        private static readonly List<string> SANCTION_TYPES_FILTER = new List<string> { "WEB", "BULK", "DELTA", "WHITELIST", "ACH", "SWIFT" };
+        private static readonly List<string> SANCTION_STATUS_FILTER = new List<string> { "CSR", "MST", "CSC", "SC", "CST", "SM", "ST", "MSC", "SN" };
         public DropDownService(IDbService dbSrv)
         {
             _dbSrv = dbSrv;
@@ -177,6 +180,8 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetSystemCaseStatusDropDown()
         {
+
+
             var distinct_value = _dbSrv.ECM.RefTableVals
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
@@ -189,14 +194,14 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetTransDirectionDropDown()
         {
             var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "UNKNOWN" : x.TransactionDirection).Distinct()
-                .Select(x => x.ToUpper() == "I" ? "Input" : x.ToUpper() == "O" ? "Output" : x)
+                .Select(x => x.ToUpper() == "I" ? "InComing" : x.ToUpper() == "O" ? "OutGoing" : x)
            .ToList();
             return distinct_value;
 
         }
         public List<string> GetTransTypeDropDown()
         {
-            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) ? "UNKNOWN" : x.TransactionType).Distinct().ToList();
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "UNKNOWN" : x.TransactionType).Distinct().ToList();
             return distinct_value;
 
         }

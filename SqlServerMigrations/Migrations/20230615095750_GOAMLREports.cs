@@ -354,7 +354,7 @@ SET NOCOUNT ON;
 
 select 
 reportcreatedby CREATED_BY,
-count(id) NUMBER_OF_REPORTS 
+ CAST(count(id) AS DECIMAL(10, 0)) NUMBER_OF_REPORTS 
 FROM
 [DGGOAML_NEW].target.report
 Where CAST(reportcreateddate AS date) >= @V_START_DATE AND CAST(reportcreateddate AS date) <= @V_END_DATE
@@ -369,7 +369,7 @@ END;");
 
                                         select 
                                         [DGGOAML_NEW].target.REPORTINDICATORTYPE.INDICATOR,
-                                        count(REPORT_ID) NUMBER_OF_REPORTS 
+                                         CAST(count(REPORT_ID) AS DECIMAL(10, 0)) NUMBER_OF_REPORTS 
                                         FROM
                                         [DGGOAML_NEW].target.REPORTINDICATORTYPE
                                         Where (@V_REPORT_ID IS NULL OR REPORT_ID  = @V_REPORT_ID )
@@ -385,7 +385,7 @@ SET NOCOUNT ON;
 
 select 
 REPORTSTATUSCODE REPORT_STATUS,
-count(id) NUMBER_OF_REPORTS 
+ CAST(count(id) AS DECIMAL(10, 0)) NUMBER_OF_REPORTS 
 FROM
 [DGGOAML_NEW].target.report
 Where CAST(reportcreateddate AS date) >= @V_START_DATE AND CAST(reportcreateddate AS date) <= @V_END_DATE
@@ -400,7 +400,7 @@ SET NOCOUNT ON;
 
 select 
 REPORTCODE REPORT_TYPE,
-count(id) NUMBER_OF_REPORTS 
+ CAST(count(id) AS DECIMAL(10, 0)) NUMBER_OF_REPORTS 
 FROM
 [DGGOAML_NEW].target.report
 Where CAST(reportcreateddate AS date) >= @V_START_DATE AND CAST(reportcreateddate AS date) <= @V_END_DATE

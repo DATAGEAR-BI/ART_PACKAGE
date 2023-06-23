@@ -33,7 +33,7 @@ namespace Data
                     .HasColumnName("MONTH");
 
                 entity.Property(e => e.NumberOfCases)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal")
                     .HasColumnName("NUMBER_OF_CASES");
 
                 entity.Property(e => e.Year)

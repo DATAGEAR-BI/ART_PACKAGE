@@ -480,7 +480,7 @@ namespace SqlServerMigrations.Migrations
                             SET NOCOUNT ON;
 
                             select (case when a.OWNER_USERID is null then 'UNKNOWN' else a.OWNER_USERID end) AS OWNER_USERID,
-                            count(distinct alert_id) AS ALERTS_CNT_SUM 
+                             CAST(count(distinct alert_id) AS DECIMAL(10, 0)) ALERTS_CNT_SUM 
                             from (
                             select  FSK_ENTITY_QUEUE.OWNER_USERID OWNER_USERID, alert_id
                             from FCF71.FCFKC.FSK_ALERT
@@ -522,7 +522,7 @@ namespace SqlServerMigrations.Migrations
                             SET NOCOUNT ON;
 
                             select ALERT_STATUS.LOV_TYPE_DESC ALERT_STATUS,
-                            count(FSK_ALERT.alert_id) ALERTS_COUNT
+                             CAST(count(FSK_ALERT.alert_id) AS DECIMAL(10, 0)) ALERTS_COUNT
                              FROM
                                     FCF71.FCFKC.FSK_ALERT FSK_ALERT 
 		                            LEFT JOIN 
@@ -557,7 +557,7 @@ namespace SqlServerMigrations.Migrations
                             SET NOCOUNT ON;
 
                             select 
-                            CASE_CATEGORY.lov_type_desc CASE_CATEGORY ,count(1)NUMBER_OF_CASES
+                            CASE_CATEGORY.lov_type_desc CASE_CATEGORY , CAST(count(1) AS DECIMAL(10, 0)) NUMBER_OF_CASES
                             FROM FCF71.FCFKC.FSK_CASE FSK_CASE 
                             LEFT JOIN FCF71.FCFKC.FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = FSK_CASE.CASE_CATEGORY_CODE
                             AND CASE_CATEGORY.LOV_TYPE_NAME ='RT_CASE_CATEGORY' AND CASE_CATEGORY.LOV_LANGUAGE_DESC ='en'
@@ -591,7 +591,7 @@ namespace SqlServerMigrations.Migrations
                             SET NOCOUNT ON;
 
                             select 
-                            CASE_PRIORITY.lov_type_desc CASE_PRIORITY ,count(1)NUMBER_OF_CASES
+                            CASE_PRIORITY.lov_type_desc CASE_PRIORITY , CAST(count(1) AS DECIMAL(10, 0)) NUMBER_OF_CASES
                             FROM FCF71.FCFKC.FSK_CASE  
                             LEFT JOIN FCF71.FCFKC.FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = FSK_CASE.CASE_PRIORITY_CODE
                             AND CASE_PRIORITY.LOV_TYPE_NAME ='X_RT_PRIORITY' AND CASE_PRIORITY.LOV_LANGUAGE_DESC ='en'
@@ -625,7 +625,7 @@ namespace SqlServerMigrations.Migrations
 
                             select  
                             case_status.lov_type_desc CASE_STATUS ,
-                            COUNT(*)NUMBER_OF_CASES
+                             CAST(COUNT(*) AS DECIMAL(10, 0)) NUMBER_OF_CASES
                             FROM FCF71.FCFKC.FSK_CASE FSK_CASE 
                             LEFT JOIN FCF71.FCFKC.FSK_LOV CASE_STATUS 
                             ON CASE_STATUS.LOV_TYPE_CODE = FSK_CASE.CASE_STATUS_CODE 
@@ -662,7 +662,7 @@ namespace SqlServerMigrations.Migrations
                             BEGIN
                             SET NOCOUNT ON;
 
-                            select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY ,count(1)NUMBER_OF_CASES
+                            select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY , CAST(count(1) AS DECIMAL(10, 0)) NUMBER_OF_CASES
                             FROM FCF71.FCFKC.FSK_CASE  
                             LEFT JOIN FCF71.FCFKC.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = FSK_CASE.CASE_SUB_CATEGORY_CODE
                             AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
@@ -697,7 +697,7 @@ namespace SqlServerMigrations.Migrations
                             SET NOCOUNT ON;
 
                             SELECT        
-                            Party_Branch.branch_name BRANCH_NAME,count(FCF71.FCFCORE.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
+                            Party_Branch.branch_name BRANCH_NAME, CAST(count(FCF71.FCFCORE.fsc_party_dim.party_key)AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                             FROM            
                             FCF71.FCFCORE.FSC_PARTY_DIM 
                             LEFT JOIN
@@ -735,7 +735,7 @@ namespace SqlServerMigrations.Migrations
 
                             SELECT        
                             (case when Risk.lov_type_desc is null then 'UNKNOWN' else Risk.lov_type_desc end) RISK_CLASSIFICATION,
-                            count(FCF71.FCFCORE.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
+                            CAST(count(FCF71.FCFCORE.fsc_party_dim.party_key)AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                             FROM            
                             FCF71.FCFCORE.FSC_PARTY_DIM 
                             LEFT OUTER JOIN
@@ -775,7 +775,7 @@ namespace SqlServerMigrations.Migrations
                             else FCF71.FCFCORE.FSC_PARTY_DIM.party_type_desc
                             end
                             ) CUSTOMER_TYPE,
-                            count(FCF71.FCFCORE.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
+                            CAST(count(FCF71.FCFCORE.fsc_party_dim.party_key) AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                             FROM            
                             FCF71.FCFCORE.FSC_PARTY_DIM 
                             WHERE (FCF71.FCFCORE.FSC_PARTY_DIM.party_key > - 1 and FCF71.FCFCORE.fsc_party_dim.change_current_ind='Y')
@@ -814,7 +814,7 @@ namespace SqlServerMigrations.Migrations
  
                              select 
                              (case when PROPOSED_RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else PROPOSED_RISK_CLASS.lov_type_desc end) AS PROPOSED_RISK_CLASS,
-                             count(PARTY.party_key) NUMBER_OF_CUSTOMERS
+                             CAST(count(PARTY.party_key) AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                              FROM
                                     FCF71.FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT 
                                 LEFT JOIN 
@@ -852,7 +852,7 @@ namespace SqlServerMigrations.Migrations
 
                              select 
                              (case when RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else RISK_CLASS.lov_type_desc end) AS RISK_CLASSIFICATION, 
-                             count(PARTY.party_key) NUMBER_OF_CUSTOMERS
+                             CAST(count(PARTY.party_key) AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                              FROM
                                     FCF71.FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT 
                                 LEFT JOIN 

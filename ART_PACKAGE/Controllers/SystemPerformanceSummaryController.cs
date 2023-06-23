@@ -113,7 +113,7 @@ namespace ART_PACKAGE.Controllers
                     Data = chart2data.ToList(),
                     Title = "Cases Per Type",
                     Cat = "CASE_TYPE",
-                    Val = "Total_Number_of_Cases"
+                    Val = "TOTAL_NUMBER_OF_CASES"
                 },
 
 
@@ -142,7 +142,7 @@ namespace ART_PACKAGE.Controllers
                     }).ToList(),
                     Title = "Cases Per Trans Direction",
                     Cat = "TRANSACTION_DIRECTION",
-                    Val = "Total_Number_of_Cases"
+                    Val = "TOTAL_NUMBER_OF_CASES"
                 });
             }
             return new ContentResult

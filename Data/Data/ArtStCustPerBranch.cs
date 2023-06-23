@@ -8,7 +8,7 @@ namespace Data.Data
 {
     public class ArtStCustPerBranch
     {
-        public string? BRANCH_NAME { get;set; }
-        public int NUMBER_OF_CUSTOMERS { get;set; }
+        public string? BRANCH_NAME { get; set; }
+        public decimal? NUMBER_OF_CUSTOMERS { get; set; }
     }
 }

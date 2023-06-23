@@ -27,9 +27,16 @@ getData().then(x => {
         }
     }
 
-    makeDatesChart(dateData, "date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month");
-    makedynamicChart(0, typeData, "Cases Per Type", "type", "numberOfCases", "caseType");
-    makedynamicChart(0, statusData, "Cases Per Status", "status", "numberOfCases", "caseStatus");
+    makeDatesChart(dateData, "date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month", (di) => {
+        console.log(di.year);
+        console.log(typeData);
+        var year = di.year;
+        var yearedTypeData = typeData.filter(x => x.year == year);
+        var yearedStatuseData = statusData.filter(x => x.year == year);
+        makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", true);
+        makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
+    });
+   
 
 
 })

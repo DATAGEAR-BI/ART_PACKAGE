@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtStAmlRiskClass
     {
         public string? RISK_CLASSIFICATION { get; set; }
-        public int NUMBER_OF_CUSTOMERS { get; set; }
+        public decimal? NUMBER_OF_CUSTOMERS { get; set; }
     }
 }

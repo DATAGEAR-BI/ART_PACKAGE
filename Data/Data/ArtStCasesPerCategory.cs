@@ -8,7 +8,7 @@ namespace Data.Data
 {
     public class ArtStCasesPerCategory
     {
-        public string? CASE_CATEGORY { get; set;}
-        public int NUMBER_OF_CASES { get; set; }
+        public string? CASE_CATEGORY { get; set; }
+        public decimal? NUMBER_OF_CASES { get; set; }
     }
 }

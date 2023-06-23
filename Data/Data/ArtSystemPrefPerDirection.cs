@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtSystemPrefPerDirection
     {
         public string? TRANSACTION_DIRECTION { get; set; }
-        public int Total_Number_of_Cases { get; set; }
+        public decimal? TOTAL_NUMBER_OF_CASES { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Data.Data
     public class ArtStAlertPerOwner
     {
         public string? OWNER_USERID { get; set; }
-        public int ALERTS_CNT_SUM { get; set; }
+        public decimal? ALERTS_CNT_SUM { get; set; }
     }
 }

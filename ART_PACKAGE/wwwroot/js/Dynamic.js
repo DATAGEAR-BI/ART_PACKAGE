@@ -844,6 +844,7 @@ function createMultiSelect(element, data, field) {
     element[0].dataset.field = field;
     element.kendoMultiSelect({
         dataSource: data,
+        filter: "contains"
         //change: function (e) {
         //    var opSelect = document.querySelector(`select[title = "Operator"]`);
         //    var dateops = ["gt", "lt", "lte", "gte"];
