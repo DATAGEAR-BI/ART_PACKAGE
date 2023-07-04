@@ -387,8 +387,8 @@ namespace OracleMigrations.Migrations
 
                             select (case when FSK_ENTITY_QUEUE.OWNER_USERID is null then 'UNKNOWN' else FSK_ENTITY_QUEUE.OWNER_USERID end)  AS OWNER_USERID,
                                     count(distinct alert_id) AS ALERTS_CNT_SUM 
-                            from fcfkc.FSK_ALERT
-                            left join fcfkc.FSK_ENTITY_QUEUE on FSK_ALERT.ALERTED_ENTITY_NUMBER = FSK_ENTITY_QUEUE.ALERTED_ENTITY_NUMBER 
+                            from fcfkc.FSK_ALERT@FCFKCLINK
+                            left join fcfkc.FSK_ENTITY_QUEUE@FCFKCLINK on FSK_ALERT.ALERTED_ENTITY_NUMBER = FSK_ENTITY_QUEUE.ALERTED_ENTITY_NUMBER 
                             and FSK_ALERT.ALERT_STATUS_CODE='ACT'
                             and to_char(FSK_ALERT.CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSK_ALERT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -416,9 +416,9 @@ namespace OracleMigrations.Migrations
                             select ALERT_STATUS.LOV_TYPE_DESC ALERT_STATUS,
                             count(FSK_ALERT.alert_id) ALERTS_COUNT
                              FROM
-                                    fcfkc.FSK_ALERT FSK_ALERT 
+                                    fcfkc.FSK_ALERT@FCFKCLINK FSK_ALERT 
 		                            LEFT JOIN 
-                                    FCFKC.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
+                                    FCFKC.FSK_LOV@FCFKCLINK ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
                                     and ALERT_STATUS.LOV_TYPE_NAME='RT_ALERT_STATUS' AND ALERT_STATUS.Lov_Language_Desc='en'
                             where   to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -444,8 +444,8 @@ namespace OracleMigrations.Migrations
                             OPEN DATA_CUR FOR 
 
                             select CASE_CATEGORY.lov_type_desc CASE_CATEGORY ,count(1)NUMBER_OF_CASES
-                            FROM FCFKC.FSK_CASE CASE 
-                            LEFT JOIN FCFKC.FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
+                            FROM FCFKC.FSK_CASE@FCFKCLINK CASE 
+                            LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
                             AND CASE_CATEGORY.LOV_TYPE_NAME ='RT_CASE_CATEGORY' AND CASE_CATEGORY.LOV_LANGUAGE_DESC ='en'
                             Where
                             to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -472,8 +472,8 @@ namespace OracleMigrations.Migrations
                             OPEN DATA_CUR FOR 
 
                             select CASE_PRIORITY.lov_type_desc CASE_PRIORITY ,count(1)NUMBER_OF_CASES
-                            FROM FCFKC.FSK_CASE CASE 
-                            LEFT JOIN FCFKC.FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
+                            FROM FCFKC.FSK_CASE@FCFKCLINK CASE 
+                            LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
                             AND CASE_PRIORITY.LOV_TYPE_NAME ='X_RT_PRIORITY' AND CASE_PRIORITY.LOV_LANGUAGE_DESC ='en'
                             Where
                             to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -502,8 +502,8 @@ namespace OracleMigrations.Migrations
                             SELECT 
                             case_status.lov_type_desc CASE_STATUS ,
                             COUNT(1)NUMBER_OF_CASES
-                            FROM FCFKC.FSK_CASE CASE 
-                            LEFT JOIN FCFKC.FSK_LOV CASE_STATUS 
+                            FROM FCFKC.FSK_CASE@FCFKCLINK CASE 
+                            LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_STATUS 
                             ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE 
                             AND CASE_STATUS.LOV_TYPE_NAME ='FCF_CASE_STATUS' 
                             AND CASE_STATUS.LOV_LANGUAGE_DESC ='en' 
@@ -533,8 +533,8 @@ namespace OracleMigrations.Migrations
                                 OPEN DATA_CUR FOR 
 
                                 select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY ,count(1)NUMBER_OF_CASES
-                                FROM FCFKC.FSK_CASE CASE 
-                                LEFT JOIN FCFKC.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
+                                FROM FCFKC.FSK_CASE CASE@FCFKCLINK 
+                                LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
                                 AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
                                 Where
                                 to_char(CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -563,9 +563,9 @@ namespace OracleMigrations.Migrations
                             SELECT        
                             Party_Branch.branch_name BRANCH_NAME,count(fcfcore.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
                             FROM            
-                            FCFCORE.FSC_PARTY_DIM 
+                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK 
                             LEFT JOIN
-                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON FSC_PARTY_DIM.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER 
+                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK Party_Branch ON FSC_PARTY_DIM.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER 
                             AND party_branch.change_current_ind = 'Y'
                             WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and fcfcore.fsc_party_dim.change_current_ind='Y')
                             and to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
@@ -591,10 +591,10 @@ namespace OracleMigrations.Migrations
                             (case when Risk.lov_type_desc is null then 'UNKNOWN' else Risk.lov_type_desc end) RISK_CLASSIFICATION,
                             count(fcfcore.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
                             FROM            
-                            FCFCORE.FSC_PARTY_DIM 
+                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK
                             LEFT OUTER JOIN
-                            FCFKC.FSK_LOV Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
-                            AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION' 
+                            FCFKC.FSK_LOV@FCFKCLINK Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
+                            AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION'
                             WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and fcfcore.fsc_party_dim.change_current_ind='Y')
                             and to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -625,7 +625,7 @@ namespace OracleMigrations.Migrations
                             ) CUSTOMER_TYPE,
                             count(fcfcore.fsc_party_dim.party_key)NUMBER_OF_CUSTOMERS
                             FROM            
-                            FCFCORE.FSC_PARTY_DIM 
+                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK 
                             WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and fcfcore.fsc_party_dim.change_current_ind='Y')
                             and to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -656,14 +656,14 @@ namespace OracleMigrations.Migrations
                             OPEN DATA_CUR FOR 
 
                             SELECT
-                                    PROPOSED_RISK_CLASS.LOV_TYPE_DESC PROPOSED_RISK_CLASS,        
+                                    PROPOSED_RISK_CLASS.LOV_TYPE_DESC PROPOSED_RISK_CLASS,
                                    count(PARTY.party_key) NUMBER_OF_CUSTOMERS
                                 FROM
-                                    FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT 
+                                    FCFKC.FSK_RISK_ASSESSMENT@FCFKCLINK FSK_RISK_ASSESSMENT 
                                 LEFT JOIN 
-                                    FCFKC.FSK_LOV PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
+                                    FCFKC.FSK_LOV@FCFKCLINK PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                 LEFT JOIN
-                                    FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
+                                    FCFCORE.FSC_PARTY_DIM@FCFCORELINK PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
                                     WHERE PARTY.CHANGE_CURRENT_IND='Y'
                             and to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -690,12 +690,12 @@ namespace OracleMigrations.Migrations
                             (case when Risk.lov_type_desc is null then 'UNKNOWN' else Risk.lov_type_desc end) AS RISK_CLASSIFICATION,
                             count(FCFCORE.FSC_PARTY_DIM.PARTY_KEY) NUMBER_OF_CUSTOMERS
                             FROM            
-                            FCFCORE.FSC_PARTY_DIM 
+                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK  
                             LEFT OUTER JOIN
-                            FCFKC.FSK_LOV Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
+                            FCFKC.FSK_LOV@FCFKCLINK Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
                             AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION' 
                             LEFT JOIN
-                                    FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = FCFCORE.FSC_PARTY_DIM.PARTY_NUMBER
+                                    FCFKC.FSK_RISK_ASSESSMENT@FCFKCLINK FSK_RISK_ASSESSMENT ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = FCFCORE.FSC_PARTY_DIM.PARTY_NUMBER
                             WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and fcfcore.fsc_party_dim.change_current_ind='Y')
                             and to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                             AND to_char(FSK_RISK_ASSESSMENT.CREATE_DATE,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
