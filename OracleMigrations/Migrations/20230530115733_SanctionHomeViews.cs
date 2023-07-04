@@ -23,7 +23,7 @@ namespace OracleMigrations.Migrations
                     EXTRACT(Day FROM a.create_date) Day_,
                     count(a.case_rk) Number_Of_Cases
                     from
-                    dgcmgmt.case_live A 
+                    dgcmgmt.case_live@DGCMGMTLINK A 
 
                     --where
                     --A.CASE_STAT_CD IN ('MSC','SMT','ST','HIT','SC','NOHIT','SP','POSTPOND','SO','SN')
@@ -43,9 +43,9 @@ namespace OracleMigrations.Migrations
                       CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_STATUS"" (""CASE_STATUS"", ""NUMBER_OF_CASES"") AS 
                      select 
                     (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) case_status,count(a.case_rk)Total_Number_of_Cases
-                    from dgcmgmt.case_live a 
+                    from dgcmgmt.case_live@DGCMGMTLINK a 
                     LEFT JOIN
-                    dgcmgmt.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                    dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                     GROUP BY
                     (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
                     ;");
@@ -58,9 +58,9 @@ namespace OracleMigrations.Migrations
                       CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_TYPES"" (""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
                       select 
                     (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
-                    from dgcmgmt.case_live a 
+                    from dgcmgmt.case_live@DGCMGMTLINK a 
                     LEFT JOIN
-                    dgcmgmt.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                    dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
                     GROUP BY
                     (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
                     ;

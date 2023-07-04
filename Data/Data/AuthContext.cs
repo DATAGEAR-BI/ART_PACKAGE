@@ -141,7 +141,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStGoAmlReportsPerIndicator>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
 
-        var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStategyFactory(this).CreateModelCreatingInstance());
+        var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
     }
     public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class

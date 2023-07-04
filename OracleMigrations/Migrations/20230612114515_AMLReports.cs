@@ -23,18 +23,18 @@ namespace OracleMigrations.Migrations
                                             FSK_ALERTED_ENTITY.AGE_OLDEST_ALERT age_oldest_alert,
                                             FSK_ALERTED_ENTITY.ALERTS_CNT
                                         FROM
-                                            fcfkc.FSK_ALERTED_ENTITY FSK_ALERTED_ENTITY 
-                                            left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
+                                            fcfkc.FSK_ALERTED_ENTITY@FCFKCLINK FSK_ALERTED_ENTITY 
+                                            left join FCFCORE.FSC_PARTY_DIM@FCFCORELINK PARTDM on FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y' 
+                                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y' 
                                             LEFT JOIN
-                                            FCFKC.FSK_LOV ALERTED_ENTITY_LEVEL 
+                                            FCFKC.FSK_LOV@FCFKCLINK ALERTED_ENTITY_LEVEL 
                                             ON ALERTED_ENTITY_LEVEL.LOV_TYPE_CODE = FSK_ALERTED_ENTITY.ALERTED_ENTITY_LEVEL_CODE 
                                             AND ALERTED_ENTITY_LEVEL.LOV_TYPE_NAME='RT_ENTITY_LEVEL' AND ALERTED_ENTITY_LEVEL.LOV_LANGUAGE_DESC = 'en'
                                             LEFT JOIN
-                                            FCFKC.FSK_LOV RISK_SCORE
+                                            FCFKC.FSK_LOV@FCFKCLINK RISK_SCORE
                                             ON RISK_SCORE.LOV_TYPE_CODE = FSK_ALERTED_ENTITY.RISK_SCORE_CODE  AND RISK_SCORE.LOV_TYPE_NAME = 'RT_RISK_CLASSIFICATION' AND RISK_SCORE.LOV_LANGUAGE_DESC = 'en' 
-                                            LEFT JOIN fcfkc.FSK_ENTITY_QUEUE EQ ON FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
+                                            LEFT JOIN fcfkc.FSK_ENTITY_QUEUE@FCFKCLINK EQ ON FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
                                         WHERE
                                             FSK_ALERTED_ENTITY.ALERTS_CNT > 0");
 
@@ -92,18 +92,18 @@ namespace OracleMigrations.Migrations
                                          PARTDM.EMPLOYEE_IND,
                                          trunc((sysdate - FSK_ALERT.CREATE_DATE)) Investigation_Days
                                         FROM
-                                            FCFKC.FSK_ALERT FSK_ALERT 
-                                            left join FCFKC.FSK_ALERTED_ENTITY AE on FSK_ALERT.ALERTED_ENTITY_NUMBER = AE.ALERTED_ENTITY_NUMBER
-                                            left join FCFKC.FSK_ENTITY_QUEUE EQ on AE.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
+                                            FCFKC.FSK_ALERT@FCFKCLINK FSK_ALERT 
+                                            left join FCFKC.FSK_ALERTED_ENTITY@FCFKCLINK AE on FSK_ALERT.ALERTED_ENTITY_NUMBER = AE.ALERTED_ENTITY_NUMBER
+                                            left join FCFKC.FSK_ENTITY_QUEUE@FCFKCLINK EQ on AE.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
                                          LEFT JOIN 
-                                            FCFKC.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
                                             and ALERT_STATUS.LOV_TYPE_NAME='RT_ALERT_STATUS' AND ALERT_STATUS.Lov_Language_Desc='en'
                                          left join 
-                                            FCFKC.FSK_LOV ALERT_SUB_CAT ON FSK_ALERT.ALERT_SUBCATEGORY_CD = ALERT_SUB_CAT.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK ALERT_SUB_CAT ON FSK_ALERT.ALERT_SUBCATEGORY_CD = ALERT_SUB_CAT.Lov_Type_Code
                                             and ALERT_SUB_CAT.LOV_TYPE_NAME='RT_CASE_SUBCATEGORY' AND ALERT_SUB_CAT.Lov_Language_Desc='en'
-                                            left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
+                                            left join FCFCORE.FSC_PARTY_DIM@FCFCORELINK PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
   
                                             where FSK_ALERT.ALERT_STATUS_CODE='ACT'
         
@@ -133,32 +133,32 @@ namespace OracleMigrations.Migrations
                                             PARTDM.EMPLOYEE_IND,
                                          trunc((ALERT_EVE.CREATE_DATE - FSK_ALERT.Run_Date)) Investigation_Days
                                         FROM
-                                            FCFKC.FSK_ALERT FSK_ALERT 
+                                            FCFKC.FSK_ALERT@FCFKCLINK FSK_ALERT 
                                             left join 
                                             (select distinct a.ALERT_ID,a.CREATE_USER_ID,a.EVENT_DESCRIPTION,Event_Desc.LOV_TYPE_DESC,row_number() over (PARTITION by A.alert_id order by A.CREATE_DATE desc) Rank
-                                            from FCFKC.FSK_ALERT_EVENT a 
+                                            from FCFKC.FSK_ALERT_EVENT@FCFKCLINK a 
                                             LEFT JOIN 
-                                            FCFKC.FSK_LOV Event_Desc ON a.EVENT_DESCRIPTION  = Event_Desc.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK Event_Desc ON a.EVENT_DESCRIPTION  = Event_Desc.Lov_Type_Code
                                             and Event_Desc.LOV_TYPE_NAME='RT_CLOSE_REASON' AND Event_Desc.Lov_Language_Desc='en'
                                             where
                                             a.EVENT_TYPE_CODE in ('ADD','CLS','CBC','CLC','CLR','CLS','SUE','SUP','CLP','CLA')
                                             ) AEV on FSK_ALERT.ALERT_ID = AEV.ALERT_ID and AEV.Rank=1
                                         LEFT JOIN 
-                                            FCFKC.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
                                             and ALERT_STATUS.LOV_TYPE_NAME='RT_ALERT_STATUS' AND ALERT_STATUS.Lov_Language_Desc='en'
                                          left join 
-                                            FCFKC.FSK_LOV ALERT_SUB_CAT ON FSK_ALERT.ALERT_SUBCATEGORY_CD = ALERT_SUB_CAT.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK ALERT_SUB_CAT ON FSK_ALERT.ALERT_SUBCATEGORY_CD = ALERT_SUB_CAT.Lov_Type_Code
                                             and ALERT_SUB_CAT.LOV_TYPE_NAME='RT_CASE_SUBCATEGORY' AND ALERT_SUB_CAT.Lov_Language_Desc='en'
-                                            left join FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
+                                            left join FCFCORE.FSC_PARTY_DIM@FCFCORELINK PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                             LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(PARTDM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                             LEFT JOIN 
-                                            (SELECT A.ALERT_ID,EVENT_DESCRIPTION,A.CREATE_DATE,row_number() over (PARTITION by A.alert_id order by A.CREATE_DATE desc) Rank FROM FCFKC.FSK_ALERT_EVENT A 
+                                            (SELECT A.ALERT_ID,EVENT_DESCRIPTION,A.CREATE_DATE,row_number() over (PARTITION by A.alert_id order by A.CREATE_DATE desc) Rank FROM FCFKC.FSK_ALERT_EVENT@FCFKCLINK A 
                                             WHERE A.EVENT_TYPE_CODE in ('CLS','CLP','CLPA')
                                             ) ALERT_EVE
                                             ON FSK_ALERT.ALERT_ID = ALERT_EVE.ALERT_ID and ALERT_EVE.Rank=1
                                             LEFT JOIN
-                                            FCFKC.FSK_LOV CLOS_RN ON ALERT_EVE.EVENT_DESCRIPTION = CLOS_RN.Lov_Type_Code
+                                            FCFKC.FSK_LOV@FCFKCLINK CLOS_RN ON ALERT_EVE.EVENT_DESCRIPTION = CLOS_RN.Lov_Type_Code
                                             and CLOS_RN.LOV_TYPE_NAME='RT_CLOSE_REASON' AND CLOS_RN.Lov_Language_Desc='en'
                                             where  
                                              FSK_ALERT.ALERT_STATUS_CODE <> 'ACT' 
@@ -213,11 +213,11 @@ namespace OracleMigrations.Migrations
                                     (Case when BRANCH.BRANCH_NAME is null then 'Unknown' else BRANCH.BRANCH_NAME end) BRANCH_NAME,
                                     BRANCH.BRANCH_NUMBER  BRANCH_NUMBER
                                     FROM            
-                                    FCFCORE.FSC_PARTY_DIM LEFT OUTER JOIN
-                                    FCFKC.FSK_LOV Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
+                                    FCFCORE.FSC_PARTY_DIM@FCFCORELINK LEFT OUTER JOIN
+                                    FCFKC.FSK_LOV@FCFKCLINK Risk ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.risk_classification) = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
                                     AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION' 
                                     LEFT JOIN
-                                    FCFCORE.FSC_BRANCH_DIM BRANCH on trim(FSC_PARTY_DIM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    FCFCORE.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(FSC_PARTY_DIM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                     WHERE (FCFCORE.FSC_PARTY_DIM.party_key > - 1 and FCFCORE.FSC_PARTY_DIM.CHANGE_CURRENT_IND='Y')
 ");
             migrationBuilder.Sql(@"--------------------------------------------------------
@@ -241,21 +241,21 @@ namespace OracleMigrations.Migrations
                                     case.CREATE_DATE,
                                     to_date('') Closed_Date
 
-                                    FROM FCFKC.FSK_CASE CASE LEFT JOIN
-                                    FCFKC.FSK_LOV CASE_STATUS ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE
+                                    FROM FCFKC.FSK_CASE@FCFKCLINK CASE LEFT JOIN
+                                    FCFKC.FSK_LOV@FCFKCLINK CASE_STATUS ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE
                                     AND CASE_STATUS.LOV_TYPE_NAME ='FCF_CASE_STATUS' AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN FCFKC.FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
+                                    LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
                                     AND CASE_CATEGORY.LOV_TYPE_NAME ='RT_CASE_CATEGORY' AND CASE_CATEGORY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN FCFKC.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
+                                    LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
                                     AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN FCFKC.FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
+                                    LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
                                     AND CASE_PRIORITY.LOV_TYPE_NAME ='X_RT_PRIORITY' AND CASE_PRIORITY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN FCFKC.FSK_CASE_ENTITY ON FSK_CASE_ENTITY.CASE_ID = CASE.CASE_ID
-                                    LEFT JOIN FCFKC.FSK_LOV ENTITY_LEVEL ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ENTITY_LEVEL.LOV_TYPE_CODE
+                                    LEFT JOIN FCFKC.FSK_CASE_ENTITY@FCFKCLINK ON FSK_CASE_ENTITY.CASE_ID = CASE.CASE_ID
+                                    LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK ENTITY_LEVEL ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ENTITY_LEVEL.LOV_TYPE_CODE
                                     AND ENTITY_LEVEL.LOV_TYPE_NAME ='RT_ENTITY_LEVEL' AND ENTITY_LEVEL.LOV_LANGUAGE_DESC ='en'
-                                    left JOIN fcfcore.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
+                                    left JOIN fcfcore.FSC_PARTY_DIM@FCFCORELINK PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
                                     LEFT JOIN 
-                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    fcfcore.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
 
                                     WHERE
                                     CASE_STATUS.LOV_TYPE_DESC ='Open'
@@ -279,21 +279,21 @@ namespace OracleMigrations.Migrations
                                     case.CREATE_DATE,
                                     case.LSTUPDATE_DATE Close_Date
 
-                                    FROM fcfkc.FSK_CASE CASE LEFT JOIN
-                                    fcfkc.FSK_LOV CASE_STATUS ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE
+                                    FROM fcfkc.FSK_CASE@FCFKCLINK CASE LEFT JOIN
+                                    fcfkc.FSK_LOV@FCFKCLINK CASE_STATUS ON CASE_STATUS.LOV_TYPE_CODE = CASE.CASE_STATUS_CODE
                                     AND CASE_STATUS.LOV_TYPE_NAME ='FCF_CASE_STATUS' AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN fcfkc.FSK_LOV CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
+                                    LEFT JOIN fcfkc.FSK_LOV@FCFKCLINK CASE_CATEGORY ON CASE_CATEGORY.LOV_TYPE_CODE = CASE.CASE_CATEGORY_CODE
                                     AND CASE_CATEGORY.LOV_TYPE_NAME ='RT_CASE_CATEGORY' AND CASE_CATEGORY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN fcfkc.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
+                                    LEFT JOIN fcfkc.FSK_LOV@FCFKCLINK CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
                                     AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN fcfkc.FSK_LOV CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
+                                    LEFT JOIN fcfkc.FSK_LOV@FCFKCLINK CASE_PRIORITY ON CASE_PRIORITY.LOV_TYPE_CODE = CASE.CASE_PRIORITY_CODE
                                     AND CASE_PRIORITY.LOV_TYPE_NAME ='X_RT_PRIORITY' AND CASE_PRIORITY.LOV_LANGUAGE_DESC ='en'
-                                    LEFT JOIN fcfkc.FSK_CASE_ENTITY ON FSK_CASE_ENTITY.CASE_ID = CASE.CASE_ID
-                                    LEFT JOIN fcfkc.FSK_LOV ENTITY_LEVEL ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ENTITY_LEVEL.LOV_TYPE_CODE
+                                    LEFT JOIN fcfkc.FSK_CASE_ENTITY@FCFKCLINK ON FSK_CASE_ENTITY.CASE_ID = CASE.CASE_ID
+                                    LEFT JOIN fcfkc.FSK_LOV@FCFKCLINK ENTITY_LEVEL ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ENTITY_LEVEL.LOV_TYPE_CODE
                                     AND ENTITY_LEVEL.LOV_TYPE_NAME ='RT_ENTITY_LEVEL' AND ENTITY_LEVEL.LOV_LANGUAGE_DESC ='en'
-                                    left JOIN fcfcore.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
+                                    left JOIN fcfcore.FSC_PARTY_DIM@FCFCORELINK PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y' 
                                     LEFT JOIN 
-                                    fcfcore.FSC_BRANCH_DIM BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                    fcfcore.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(PARTY.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                     WHERE
                                     CASE_STATUS.LOV_TYPE_DESC <>'Open'
                                     and entity_level_code ='PTY'");
@@ -323,11 +323,11 @@ namespace OracleMigrations.Migrations
                                             BRANCH.BRANCH_NAME,
                                             BRANCH.BRANCH_NUMBER
                                         FROM
-                                            FCFCORE.FSC_PARTY_DIM FSC_PARTY_DIM 
+                                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK FSC_PARTY_DIM 
                                         LEFT JOIN 
-                                            FCFCORE.FSC_BRANCH_DIM BRANCH on trim(FSC_PARTY_DIM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
+                                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK BRANCH on trim(FSC_PARTY_DIM.STREET_STATE_CODE) = BRANCH.BRANCH_NUMBER and BRANCH.CHANGE_CURRENT_IND='Y'
                                             LEFT OUTER JOIN
-                                            FCFKC.FSK_LOV RISK ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.RISK_CLASSIFICATION) = RISK.LOV_TYPE_CODE AND RISK.LOV_LANGUAGE_DESC = 'en'
+                                            FCFKC.FSK_LOV@FCFKCLINK RISK ON TO_CHAR(FCFCORE.FSC_PARTY_DIM.RISK_CLASSIFICATION) = RISK.LOV_TYPE_CODE AND RISK.LOV_LANGUAGE_DESC = 'en'
                                             AND RISK.LOV_TYPE_NAME = 'RT_RISK_CLASSIFICATION' 
                                             WHERE
                                             FSC_PARTY_DIM.RISK_CLASSIFICATION > 1 and FSC_PARTY_DIM.change_current_ind ='Y'
@@ -355,17 +355,17 @@ namespace OracleMigrations.Migrations
                                             FSK_RISK_ASSESSMENT.ASSESSMENT_SUBCATEGORY_CD AS ASSESSMENT_SUBCATEGORY_CD,
                                             FSK_RISK_ASSESSMENT.OWNER_USER_LONG_ID AS OWNER_USER_LONG_ID
                                         FROM
-                                            FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT 
+                                            FCFKC.FSK_RISK_ASSESSMENT@FCFKCLINK FSK_RISK_ASSESSMENT 
                                         LEFT JOIN 
-                                            FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
+                                            FCFKC.FSK_LOV@FCFKCLINK RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
                                         LEFT JOIN 
-                                            FCFKC.FSK_LOV RISK_CLASS on FSK_RISK_ASSESSMENT.RISK_CLASSIFICATION = RISK_CLASS.LOV_TYPE_CODE and RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and RISK_CLASS.LOV_LANGUAGE_DESC='en'
+                                            FCFKC.FSK_LOV@FCFKCLINK RISK_CLASS on FSK_RISK_ASSESSMENT.RISK_CLASSIFICATION = RISK_CLASS.LOV_TYPE_CODE and RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                         LEFT JOIN 
-                                            FCFKC.FSK_LOV PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
+                                            FCFKC.FSK_LOV@FCFKCLINK PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                         LEFT JOIN
-                                            FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
+                                            FCFCORE.FSC_PARTY_DIM@FCFCORELINK PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
                                              LEFT JOIN
-                                            FCFCORE.FSC_BRANCH_DIM Party_Branch ON PARTY.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER AND party_branch.change_current_ind = 'Y'
+                                            FCFCORE.FSC_BRANCH_DIM@FCFCORELINK Party_Branch ON PARTY.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER AND party_branch.change_current_ind = 'Y'
                                             WHERE PARTY.CHANGE_CURRENT_IND='Y'
                                         ");
             //procs
@@ -716,7 +716,7 @@ namespace OracleMigrations.Migrations
             migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CUST_PER_RISK""");
             migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_CUST_PER_TYPE""");
             migrationBuilder.Sql($@"DROP PROCEDURE ""ART"".""ART_ST_AML_RISK_CLASS""");
-            
+
         }
     }
 }
