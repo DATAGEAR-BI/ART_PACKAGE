@@ -4,6 +4,7 @@ using Data;
 using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
+using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
@@ -140,11 +141,8 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStGoAmlReportsPerIndicator>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
 
-        if (this.Database.IsSqlServer())
-            ModelCreatingConfigurator.SqlServerOnModelCreating(modelBuilder);
-
-        if (this.Database.IsOracle())
-            ModelCreatingConfigurator.OracleOnModelCreating(modelBuilder);
+        var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStategyFactory(this).CreateModelCreatingInstance());
+        modelCreatingStrategy.OnModelCreating(modelBuilder);
     }
     public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
     {
