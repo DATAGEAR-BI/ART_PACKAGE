@@ -21,12 +21,10 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AuthContext _db;
-        private readonly IDbService _dbSrv;
-        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
+        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/)
         {
             _logger = logger;
             this._db = db;
-            _dbSrv = dbSrv;
         }
 
         public IActionResult Index()
@@ -46,21 +44,21 @@ namespace ART_PACKAGE.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult CardsData()
-        {
-            var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+        //public IActionResult CardsData()
+        //{
+        //    var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+        //    var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+        //    var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+        //    var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
-            return Ok(new
-            {
-                NumberOfCustomers = numberOfCustomers,
-                NumberOfPepCustomers = numberOfPepCustomers,
-                NumberOfAccounts = numberOfAccounts,
-                NumberOfHighRiskCustomers = numberOfHighRiskCustomers
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        NumberOfCustomers = numberOfCustomers,
+        //        NumberOfPepCustomers = numberOfPepCustomers,
+        //        NumberOfAccounts = numberOfAccounts,
+        //        NumberOfHighRiskCustomers = numberOfHighRiskCustomers
+        //    });
+        //}
 
         public IActionResult getChartsData()
         {
@@ -89,44 +87,27 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-        public IActionResult Test()
-        {
-            //var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2020-01-01")
-            //};
-            //var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2023-01-01")
-            //};
 
-            //var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
-            //return Ok(data);
+        //public IActionResult GetAmlChartsData()
+        //{
+        //    var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+        //    {
+        //        year = x.Key.ToString(),
+        //        value = x.Sum(x => x.NumberOfAlerts),
+        //        monthData = x.GroupBy(m => m.Month).Select(m => new
+        //        {
+        //            Month = m.Key.ToString(),
+        //            value = m.Sum(x => x.NumberOfAlerts)
+        //        })
+        //    });
 
-            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
-            return Ok(distinct_value);
-        }
+        //    var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
 
-        public IActionResult GetAmlChartsData()
-        {
-            var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
-            {
-                year = x.Key.ToString(),
-                value = x.Sum(x => x.NumberOfAlerts),
-                monthData = x.GroupBy(m => m.Month).Select(m => new
-                {
-                    Month = m.Key.ToString(),
-                    value = m.Sum(x => x.NumberOfAlerts)
-                })
-            });
-
-            var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
-
-            return Ok(new
-            {
-                dates = dateData,
-                statuses = alertsPerStatus
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        dates = dateData,
+        //        statuses = alertsPerStatus
+        //    });
+        //}
     }
 }

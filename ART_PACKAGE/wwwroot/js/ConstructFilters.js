@@ -220,8 +220,8 @@ function callDefinedCharts(url) {
         body: JSON.stringify({ req: null, procFilters: exRules }),
     }).then(x => x.json()).then(data => {
         [...data].forEach(x => {
+            console.log(x.ChartId);
             var charttype = document.getElementById(x.ChartId).dataset.type;
-
             makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)
 
         });

@@ -36,34 +36,43 @@ namespace OracleMigrations.Migrations
                     )
                     ;");
             migrationBuilder.Sql($@"
-                    --------------------------------------------------------
-                    --  DDL for View ART_HOME_CASES_STATUS
-                    --------------------------------------------------------
+                   --------------------------------------------------------
+                   --  DDL for View ART_HOME_CASES_STATUS
+                   --------------------------------------------------------
 
-                      CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_STATUS"" (""CASE_STATUS"", ""NUMBER_OF_CASES"") AS 
-                     select 
-                    (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) case_status,count(a.case_rk)Total_Number_of_Cases
-                    from dgcmgmt.case_live@DGCMGMTLINK a 
-                    LEFT JOIN
-                    dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
-                    GROUP BY
-                    (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
-                    ;");
+                      CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_STATUS"" (""YEAR"", ""CASE_STATUS"", ""NUMBER_OF_CASES"") AS 
+                    select 
+                        EXTRACT(YEAR FROM a.create_date) Year,
+                        (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) case_status,count(a.case_rk)Total_Number_of_Cases
+                        from dgcmgmt.case_live a 
+                        LEFT JOIN
+                        dgcmgmt.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                        --where a.Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
+                        GROUP BY
+                        EXTRACT(YEAR FROM a.create_date),
+                        (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
+                        order by  EXTRACT(YEAR FROM a.create_date) desc
+                        ;
+");
             migrationBuilder.Sql($@"
 
                     --------------------------------------------------------
                     --  DDL for View ART_HOME_CASES_TYPES
                     --------------------------------------------------------
 
-                      CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_TYPES"" (""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
-                      select 
-                    (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
-                    from dgcmgmt.case_live@DGCMGMTLINK a 
-                    LEFT JOIN
-                    dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
-                    GROUP BY
-                    (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
-                    ;
+                      CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_HOME_CASES_TYPES"" (""YEAR"", ""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
+                    select 
+                        EXTRACT(YEAR FROM a.create_date) Year,
+                        (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
+                        from dgcmgmt.case_live a 
+                        LEFT JOIN
+                        dgcmgmt.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                        --where a.Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
+                        GROUP BY
+                        EXTRACT(YEAR FROM a.create_date),
+                        (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
+                        order by  EXTRACT(YEAR FROM a.create_date) desc
+                        ;
 
 
 

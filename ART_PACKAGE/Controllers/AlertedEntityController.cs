@@ -22,12 +22,12 @@ using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class SystemPerformanceController : Controller
+    public class AlertedEntityController : Controller
     {
         private readonly AuthContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public SystemPerformanceController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public AlertedEntityController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
 
@@ -37,25 +37,25 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtSystemPerformance> data = dbfcfkc.ArtSystemPerformances.AsQueryable();
+            IQueryable<ArtAlertedEntity> data = dbfcfkc.ArtAlertedEntities.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntityController).ToLower()].DisplayNames;
                 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                 };
 
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntityController).ToLower()].SkipList;
             }
 
 
 
-            var Data = data.CallData<ArtSystemPerformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var Data = data.CallData<ArtAlertedEntity>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -73,16 +73,16 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.ArtSystemPerformances.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtSystemPerformance, GenericCsvClassMapper<ArtSystemPerformance, SystemPerformanceController>>(req.Req);
+            var data = dbfcfkc.ArtAlertedEntities.AsQueryable();
+            var bytes = await data.ExportToCSV<ArtAlertedEntity, GenericCsvClassMapper<ArtAlertedEntity, AlertedEntityController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            var data = dbfcfkc.ArtSystemPerformances.CallData<ArtSystemPerformance>(req).Data.ToList();
-            ViewData["title"] = "System Performance Details";
+            var DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntityController).ToLower()].DisplayNames;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntityController).ToLower()].SkipList;
+            var data = dbfcfkc.ArtAlertedEntities.CallData<ArtAlertedEntity>(req).Data.ToList();
+            ViewData["title"] = "Alerted Entity Details";
             ViewData["desc"] = "";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
