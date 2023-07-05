@@ -48,6 +48,13 @@ namespace ART_PACKAGE.Controllers
                 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
+                     {"CaseType".ToLower(),_dropDown.GetCaseTypeDropDown().ToDynamicList() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetSystemCaseStatusDropDown().ToDynamicList() },
+                    //{"TransactionDirection".ToLower(),_dropDown.GetTransDirectionDropDown().ToDynamicList() },
+                    //{"TransactionType".ToLower(),_dropDown.GetTransTypeDropDown().ToDynamicList() },
+                    //{"InvestrUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
+                    //{"UpdateUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
+                    //{"Priority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
@@ -83,7 +90,7 @@ namespace ART_PACKAGE.Controllers
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
             var data = dbfcfkc.ArtSystemPerformances.CallData<ArtSystemPerformance>(req).Data.ToList();
             ViewData["title"] = "System Performance Details";
-            ViewData["desc"] = "";
+            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
