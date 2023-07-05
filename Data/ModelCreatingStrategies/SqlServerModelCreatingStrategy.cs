@@ -1711,6 +1711,314 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
 
+
+
+            //DGAML
+            modelBuilder.Entity<ArtAlertDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ALERT_DETAIL_VIEW", "ART_DB");
+
+                entity.Property(e => e.ActualValuesText)
+                    .HasMaxLength(255)
+                    .HasColumnName("ACTUAL_VALUES_TEXT");
+
+                entity.Property(e => e.AlarmId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("alarm_id");
+
+                entity.Property(e => e.AlertCategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("alert_category");
+
+                entity.Property(e => e.AlertDescription)
+                    .HasMaxLength(100)
+                    .HasColumnName("ALERT_DESCRIPTION");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("alert_status");
+
+                entity.Property(e => e.AlertSubcategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("alert_subcategory");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(100)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("close_date");
+
+                entity.Property(e => e.CloseReason)
+                    .HasMaxLength(255)
+                    .HasColumnName("close_reason");
+
+                entity.Property(e => e.CloseUserName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("close_user_Name");
+
+                entity.Property(e => e.ClosedUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Closed_USER_ID");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.EmpInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Emp_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.InvestigationDays).HasColumnName("Investigation_Days");
+
+                entity.Property(e => e.MoneyLaunderingRiskScore).HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("POLITICALLY_EXPOSED_PERSON_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RunDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Run_Date");
+
+                entity.Property(e => e.ScenarioId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("SCENARIO_ID");
+
+                entity.Property(e => e.ScenarioName)
+                    .HasMaxLength(35)
+                    .HasColumnName("SCENARIO_NAME");
+            });
+
+            modelBuilder.Entity<ArtCustomerDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CUSTOMER_DETAIL_VIEW", "ART_DB");
+
+                entity.Property(e => e.AnnualIncomeAmount)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("ANNUAL_INCOME_AMOUNT");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CitizenshipCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CITIZENSHIP_COUNTRY_NAME");
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(35)
+                    .HasColumnName("City_name");
+
+                entity.Property(e => e.CustomerDateOfBirth)
+                    .HasColumnType("datetime")
+                    .HasColumnName("customer_date_of_birth");
+
+                entity.Property(e => e.CustomerIdentificationId)
+                    .HasMaxLength(35)
+                    .HasColumnName("customer_identification_id");
+
+                entity.Property(e => e.CustomerIdentificationType)
+                    .HasMaxLength(20)
+                    .HasColumnName("customer_identification_type");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(200)
+                    .HasColumnName("customer_name");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("customer_number");
+
+                entity.Property(e => e.CustomerSinceDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CUSTOMER_SINCE_DATE");
+
+                entity.Property(e => e.CustomerStatus)
+                    .HasMaxLength(20)
+                    .HasColumnName("Customer_status");
+
+                entity.Property(e => e.CustomerTaxId)
+                    .HasMaxLength(35)
+                    .HasColumnName("Customer_Tax_ID");
+
+                entity.Property(e => e.CustomerType)
+                    .HasMaxLength(20)
+                    .HasColumnName("customer_type");
+
+                entity.Property(e => e.DoingBusinessAsName)
+                    .HasMaxLength(35)
+                    .HasColumnName("DOING_BUSINESS_AS_NAME");
+
+                entity.Property(e => e.EmailAddress)
+                    .HasMaxLength(35)
+                    .HasColumnName("EMAIL_ADDRESS");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(20)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EmployerName)
+                    .HasMaxLength(35)
+                    .HasColumnName("EMPLOYER_NAME");
+
+                entity.Property(e => e.EmployerPhoneNumber)
+                    .HasMaxLength(25)
+                    .HasColumnName("EMPLOYER_PHONE_NUMBER");
+
+                entity.Property(e => e.GovernorateName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Governorate_name");
+
+                entity.Property(e => e.IndustryDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("industry_desc");
+
+                entity.Property(e => e.IsEmployee)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Is_EMPLOYEE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastRiskAssessmentDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LAST_RISK_ASSESSMENT_DATE");
+
+                entity.Property(e => e.MailingAddress1)
+                    .HasMaxLength(35)
+                    .HasColumnName("MAILING_ADDRESS_1");
+
+                entity.Property(e => e.MailingCityName)
+                    .HasMaxLength(35)
+                    .HasColumnName("MAILING_CITY_NAME");
+
+                entity.Property(e => e.MailingCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("MAILING_COUNTRY_NAME");
+
+                entity.Property(e => e.MailingPostalCode)
+                    .HasMaxLength(10)
+                    .HasColumnName("MAILING_POSTAL_CODE");
+
+                entity.Property(e => e.MaritalStatusDesc)
+                    .HasMaxLength(20)
+                    .HasColumnName("MARITAL_STATUS_DESC");
+
+                entity.Property(e => e.NetWorthAmount)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("NET_WORTH_AMOUNT");
+
+                entity.Property(e => e.NonProfitOrgInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("non_profit_org_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(35)
+                    .HasColumnName("occupation_desc");
+
+                entity.Property(e => e.PhoneNumber1)
+                    .HasMaxLength(25)
+                    .HasColumnName("PHONE_NUMBER_1");
+
+                entity.Property(e => e.PhoneNumber2)
+                    .HasMaxLength(25)
+                    .HasColumnName("PHONE_NUMBER_2");
+
+                entity.Property(e => e.PhoneNumber3)
+                    .HasMaxLength(25)
+                    .HasColumnName("PHONE_NUMBER_3");
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("politically_exposed_person_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ResidenceCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("RESIDENCE_COUNTRY_NAME");
+
+                entity.Property(e => e.RiskClassification).HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.StreetAddress1)
+                    .HasMaxLength(35)
+                    .HasColumnName("street_address_1");
+
+                entity.Property(e => e.StreetCountryCode)
+                    .HasMaxLength(3)
+                    .HasColumnName("STREET_COUNTRY_CODE");
+
+                entity.Property(e => e.StreetCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("STREET_COUNTRY_NAME");
+
+                entity.Property(e => e.StreetPostalCode)
+                    .HasMaxLength(10)
+                    .HasColumnName("STREET_POSTAL_CODE");
+            });
+
+            modelBuilder.Entity<ArtTriageView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TRIAGE_VIEW", "ART_DB");
+
+                entity.Property(e => e.AgeOldestAlert).HasColumnName("AGE_OLDEST_ALERT");
+
+                entity.Property(e => e.AggregateAmt)
+                    .HasColumnType("numeric(15, 3)")
+                    .HasColumnName("AGGREGATE_AMT");
+
+                entity.Property(e => e.AlertedEntityLevel)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALERTED_ENTITY_LEVEL");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(100)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AlertsCntSum).HasColumnName("ALERTS_CNT_SUM");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(50)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.OwnerUserid)
+                    .HasMaxLength(240)
+                    .HasColumnName("OWNER_USERID");
+
+                entity.Property(e => e.QueueCode)
+                    .HasMaxLength(50)
+                    .HasColumnName("QUEUE_CODE");
+
+                entity.Property(e => e.RiskScore)
+                    .HasMaxLength(32)
+                    .HasColumnName("RISK_SCORE");
+            });
             //for sake for build => toChange when convert to oracle
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {

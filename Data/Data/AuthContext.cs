@@ -66,8 +66,10 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
     public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
     public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
-
-
+    //DGAML
+    public virtual DbSet<ArtAlertDetailView> ArtAlertDetailViews { get; set; } = null!;
+    public virtual DbSet<ArtCustomerDetailView> ArtCustomerDetailViews { get; set; } = null!;
+    public virtual DbSet<ArtTriageView> ArtTriageViews { get; set; } = null!;
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
     {

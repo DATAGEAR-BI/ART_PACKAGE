@@ -44,18 +44,18 @@ namespace OracleMigrations.Migrations
                                             trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date)),1) AS DURATIONS_In_days
 
                                             from
-                                            dgcmgmt.CASE_LIVE a  LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
-                                            dgcmgmt.ECM_ENTITY_LOCK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
+                                            dgcmgmt.CASE_LIVE@DGCMGMTLINK a  LEFT JOIN
+                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
+                                            dgcmgmt.ECM_ENTITY_LOCK@DGCMGMTLINK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
+                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
                                             LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL T ON lower(T.VAL_CD) = lower(a.Case_Type_Cd) AND T.REF_TABLE_NAME = 'RT_CASE_TYPE' 
+                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK T ON lower(T.VAL_CD) = lower(a.Case_Type_Cd) AND T.REF_TABLE_NAME = 'RT_CASE_TYPE' 
                                             LEFT JOIN
                                             (
                                             SELECT        
                                             m.BUSINESS_OBJECT_RK,max(m.create_date)CREATE_DTTM
                                             FROM
-                                            dgcmgmt.ECM_EVENT M
+                                            dgcmgmt.ECM_EVENT@DGCMGMTLINK M
                                             WHERE       
                                             m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
                                             GROUP BY BUSINESS_OBJECT_RK) M 
@@ -96,24 +96,24 @@ namespace OracleMigrations.Migrations
                                                 trunc((cast(I.CREATE_DATE as date) - cast(bb.CREATE_DTTM as date)),1) AS DURATIONS_In_days
         
                                         from 
-                                        case_live a 
-                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL c
+                                        case_live@DGCMGMTLINK a 
+                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK c
                                         ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS'
 
-                                        LEFT JOIN dgcmgmt.ECM_ENTITY_LOCK g
+                                        LEFT JOIN dgcmgmt.ECM_ENTITY_LOCK@DGCMGMTLINK g
                                         ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME ='CASE'
 
-                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL H
+                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK H
                                         ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY'
 
-                                        left JOIN dgcmgmt.ECM_EVENT I
+                                        left JOIN dgcmgmt.ECM_EVENT@DGCMGMTLINK I
                                         on I.BUSINESS_OBJECT_RK=a.CASE_RK   AND I.EVENT_TYPE_CD in('ACTVCWF','UPDCWF')
 
                                         left join (
                                         SELECT CREATE_USER_ID, CREATE_DATE CREATE_DTTM, BUSINESS_OBJECT_RK
                                         from (
                                         select ECM_EVENT.*, rank() OVER (PARTITION BY CREATE_USER_ID,BUSINESS_OBJECT_RK ORDER BY CREATE_DATE ASC) As RK
-                                        from dgcmgmt.ECM_EVENT
+                                        from dgcmgmt.ECM_EVENT@DGCMGMTLINK
                                         where BUSINESS_OBJECT_NAME='CASE'
                                         )a
                                         where RK=1
@@ -135,7 +135,7 @@ namespace OracleMigrations.Migrations
             #region Procs
 
             //ART_ST_SYSTEM_PERF_PER_DIRECTION
-            migrationBuilder.Sql($@"set define off;
+            migrationBuilder.Sql($@"
 
                                       CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_DIRECTION"" 
                                     (
@@ -153,7 +153,7 @@ namespace OracleMigrations.Migrations
                                     WHEN Null THEN 'Unknown' 
                                     ELSE A.TRANSACTION_DIRECTION END) AS TRANSACTION_DIRECTION
                                     ,count(a.case_rk)Total_Number_of_Cases 
-                                    from DGCMGMT.case_live a 
+                                    from DGCMGMT.case_live@DGCMGMTLINK a 
                                     --LEFT JOIN
                                     --DGCMGMT.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                     WHERE 
@@ -171,8 +171,7 @@ namespace OracleMigrations.Migrations
                                     ;
                                     END ART_ST_SYSTEM_PERF_PER_DIRECTION;");
             //ART_ST_SYSTEM_PERF_PER_STATUS
-            migrationBuilder.Sql($@"set define off;
-
+            migrationBuilder.Sql($@"
                                       CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_STATUS"" 
                                     (
                                       DATA_CUR OUT SYS_REFCURSOR 
@@ -187,9 +186,9 @@ namespace OracleMigrations.Migrations
 
                                     select 
                                     b.val_desc case_status,count(a.case_rk)Total_Number_of_Cases
-                                    from case_live a 
+                                    from case_live@DGCMGMTLINK a 
                                     LEFT JOIN
-                                    REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                                    REF_TABLE_VAL@DGCMGMTLINK b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                     where 
                                     --CASE_TYPE_CD not in ('FATCA_INDV','FATCA_ENTITY')
                                     --and
@@ -207,7 +206,7 @@ namespace OracleMigrations.Migrations
                                     ;
                                     END ART_ST_SYSTEM_PERF_PER_STATUS;");
             //ART_ST_SYSTEM_PERF_PER_TYPE
-            migrationBuilder.Sql($@"set define off;
+            migrationBuilder.Sql($@"
 
                                           CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_TYPE"" 
                                         (
@@ -220,9 +219,9 @@ namespace OracleMigrations.Migrations
 
                                         select 
                                         b.VAL_DESC CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
-                                        from case_live a 
+                                        from case_live@DGCMGMTLINK a 
                                         LEFT JOIN
-                                        REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                                        REF_TABLE_VAL@DGCMGMTLINK b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
                                         where
                                         --CASE_TYPE_CD not in ('FATCA_INDV','FATCA_ENTITY')
                                         --and
@@ -233,7 +232,7 @@ namespace OracleMigrations.Migrations
                                         ;
                                         END ART_ST_SYSTEM_PERF_PER_TYPE;");
             //ART_ST_USER_PERFORMANCE_PER_ACTION
-            migrationBuilder.Sql(@$"set define off;
+            migrationBuilder.Sql(@$"
 
                                           CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_ACTION"" 
                                         (
@@ -286,7 +285,7 @@ namespace OracleMigrations.Migrations
                                         ;
                                         END ART_ST_USER_PERFORMANCE_PER_ACTION;");
             //ART_ST_USER_PERFORMANCE_PER_ACTION_USER
-            migrationBuilder.Sql($@"set define off;
+            migrationBuilder.Sql($@"
 
                                       CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_ACTION_USER"" 
                                     (
@@ -339,7 +338,7 @@ namespace OracleMigrations.Migrations
                                     ;
                                     END ART_ST_USER_PERFORMANCE_PER_ACTION_USER;");
             //ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION
-            migrationBuilder.Sql($@"set define off;
+            migrationBuilder.Sql($@"
 
                                       CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION"" 
                                     (

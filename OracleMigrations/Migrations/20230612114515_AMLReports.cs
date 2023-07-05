@@ -533,7 +533,7 @@ namespace OracleMigrations.Migrations
                                 OPEN DATA_CUR FOR 
 
                                 select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY ,count(1)NUMBER_OF_CASES
-                                FROM FCFKC.FSK_CASE CASE@FCFKCLINK 
+                                FROM FCFKC.FSK_CASE@FCFKCLINK  CASE
                                 LEFT JOIN FCFKC.FSK_LOV@FCFKCLINK CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = CASE.CASE_SUB_CATEGORY_CODE
                                 AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
                                 Where
