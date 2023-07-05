@@ -1021,7 +1021,7 @@ export function makedynamicChart(
             callClusterd(data, title, divId);
             break;
         case types.line:
-            chart.style.height = "800px";
+            chart.style.height = "600px";
             callLineChart(data, title, divId, chartValue, chartCategory);
             break;
         default:

@@ -56,9 +56,9 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetCasePriorityDropDown()
         {
-            var distinct_value = _dbSrv.KC.FskLovs
-                .Where(a => a.LovTypeName.StartsWith("X_RT_PRIORITY"))
-                .Where(b => b.LovLanguageDesc.Contains("en")).Select(x => x.LovTypeDesc)
+            var distinct_value = _dbSrv.ECM.RefTableVals
+                .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY"))
+                .Select(x=>x.ValDesc)
                 .ToList();
             return distinct_value;
 
@@ -144,7 +144,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetCaseTypeDropDown()
         {
             var distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE") && SANCTION_TYPES_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
                 .Select(x => x.ValDesc)
                 .ToList();
             return distinct_value;
@@ -180,10 +180,8 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetSystemCaseStatusDropDown()
         {
-
-
             var distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS") && SANCTION_STATUS_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
                 .Select(x => x.ValDesc)
                 .ToList();

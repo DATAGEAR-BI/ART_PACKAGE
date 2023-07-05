@@ -49,12 +49,11 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                      {"CaseType".ToLower(),_dropDown.GetCaseTypeDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetSystemCaseStatusDropDown().ToDynamicList() },
-                    //{"TransactionDirection".ToLower(),_dropDown.GetTransDirectionDropDown().ToDynamicList() },
+                     {"CaseStatus".ToLower(),_dropDown.GetSystemCaseStatusDropDown().ToDynamicList() },
+                    {"TransactionDirection".ToLower(),_dropDown.GetTransDirectionDropDown().ToDynamicList() },
                     //{"TransactionType".ToLower(),_dropDown.GetTransTypeDropDown().ToDynamicList() },
-                    //{"InvestrUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     //{"UpdateUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"Priority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
+                    {"Priority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;

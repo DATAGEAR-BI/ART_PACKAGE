@@ -13,44 +13,46 @@ namespace OracleMigrations.Migrations
             //ART_SYSTEM_PERFORMANCE
             migrationBuilder.Sql($@"
                  CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_SYSTEM_PERFORMANCE"" as
-                            select 
-                            a.CASE_ID, 
-                            a.case_type_cd Case_Type,
-                            c.VAL_DESC CASE_STATUS, 
-                            a.CASE_DESC, 
-                            H.VAL_DESC AS PRIORITY, 
-                            a.CREATE_DATE, 
-                            a.UPDATE_USER_ID,
-                            (CASE WHEN a.transaction_type IS NULL OR a.transaction_type = 'null' THEN 'Unknown' else a.transaction_type end )transaction_type,
-                            a.transaction_amount,
-                            CASE a.transaction_direction WHEN 'I' THEN 'Input' WHEN 'O' THEN 'Output' WHEN NULL THEN 'Unknown' WHEN 'null' THEN 'Unknown' ELSE a.transaction_direction END AS transaction_direction, 
-                            a.transaction_currency ,
-                            a.swift_reference,
-                            (case when a.Col1 is null then a.Cust_Full_Name else a.Col1 end)CLIENT_NAME,
-                            a.Col2 IDENTITY_NUM,
-                            g.LOCK_USER_ID AS Locked_By, 
-                            M.CREATE_DTTM ECM_LAST_STATUS_DATE,
-                            a.hits_count,
-                            trunc(((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24*60*60),1) AS DURATIONS_In_Seconds,
-                            trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24*60,1) AS DURATIONS_In_minutes,
-                            trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24 ,1) as DURATIONS_In_hours,
-                            trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date)),1) AS DURATIONS_In_days
-                            from
-                            dgcmgmt.CASE_LIVE a  
-                            LEFT JOIN
-                            dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
-                            dgcmgmt.ECM_ENTITY_LOCK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
-                            dgcmgmt.REF_TABLE_VAL H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
-                            LEFT JOIN
-                            (
-                            SELECT        
-                            m.BUSINESS_OBJECT_RK,m.EVENT_DESC,max(m.create_date)CREATE_DTTM
-                            FROM
-                            dgcmgmt.ECM_EVENT M
-                            WHERE       
-                            m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
-                            GROUP BY BUSINESS_OBJECT_RK,EVENT_DESC) M 
-                            ON a.CASE_RK = M.BUSINESS_OBJECT_RK AND a.CASE_STAT_CD = M.EVENT_DESC
+                                        select 
+                                        a.CASE_ID, 
+                                        t.VAL_DESC Case_Type,
+                                        c.VAL_DESC CASE_STATUS, 
+                                        a.CASE_DESC, 
+                                        H.VAL_DESC AS PRIORITY, 
+                                        a.CREATE_DATE, 
+                                        a.UPDATE_USER_ID,
+                                        (CASE WHEN a.transaction_type IS NULL OR a.transaction_type = 'null' THEN 'Unknown' else a.transaction_type end )transaction_type,
+                                        a.transaction_amount,
+                                        CASE a.transaction_direction WHEN 'I' THEN 'Input' WHEN 'O' THEN 'Output' WHEN NULL THEN 'Unknown' WHEN 'null' THEN 'Unknown' ELSE a.transaction_direction END AS transaction_direction, 
+                                        a.transaction_currency ,
+                                        a.swift_reference,
+                                        (case when a.Col1 is null then a.Cust_Full_Name else a.Col1 end)CLIENT_NAME,
+                                        a.Col2 IDENTITY_NUM,
+                                        g.LOCK_USER_ID AS Locked_By, 
+                                        M.CREATE_DTTM ECM_LAST_STATUS_DATE,
+                                        a.hits_count,
+                                        trunc(((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24*60*60),1) AS DURATIONS_In_Seconds,
+                                        trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24*60,1) AS DURATIONS_In_minutes,
+                                        trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24 ,1) as DURATIONS_In_hours,
+                                        trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date)),1) AS DURATIONS_In_days
+                                        from
+                                        dgcmgmt.CASE_LIVE a  
+                                        LEFT JOIN
+                                        dgcmgmt.REF_TABLE_VAL t ON lower(t.VAL_CD) = lower(a.CASE_TYPE_CD) AND t.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                                        LEFT JOIN
+                                        dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
+                                        dgcmgmt.ECM_ENTITY_LOCK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
+                                        dgcmgmt.REF_TABLE_VAL H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
+                                        LEFT JOIN
+                                        (
+                                        SELECT        
+                                        m.BUSINESS_OBJECT_RK,m.EVENT_DESC,max(m.create_date)CREATE_DTTM
+                                        FROM
+                                        dgcmgmt.ECM_EVENT M
+                                        WHERE       
+                                        m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
+                                        GROUP BY BUSINESS_OBJECT_RK,EVENT_DESC) M 
+                                        ON a.CASE_RK = M.BUSINESS_OBJECT_RK AND a.CASE_STAT_CD = M.EVENT_DESC;
                             ");
             //ART_ALERTED_ENTITY
             migrationBuilder.Sql($@"

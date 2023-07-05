@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.DGECM;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
@@ -522,73 +523,73 @@ namespace Data
         {
             //modelBuilder.HasDefaultSchema("DGCMGMT");
 
-            //modelBuilder.Entity<RefTableVal>(entity =>
-            //{
-            //    entity.HasKey(e => new { e.RefTableName, e.ValCd })
-            //        .HasName("REF_TABLE_VAL_PK");
+            modelBuilder.Entity<RefTableVal>(entity =>
+            {
+                entity.HasKey(e => new { e.RefTableName, e.ValCd })
+                    .HasName("REF_TABLE_VAL_PK");
 
-            //    entity.ToTable("REF_TABLE_VAL");
+                entity.ToTable("REF_TABLE_VAL");
 
-            //    entity.HasIndex(e => new { e.ParentRefTableName, e.ParentValCd }, "REF_TABLE_VAL_FK1");
+                entity.HasIndex(e => new { e.ParentRefTableName, e.ParentValCd }, "REF_TABLE_VAL_FK1");
 
-            //    entity.Property(e => e.RefTableName)
-            //        .HasMaxLength(30)
-            //        .IsUnicode(false)
-            //        .HasColumnName("REF_TABLE_NAME");
+                entity.Property(e => e.RefTableName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("REF_TABLE_NAME");
 
-            //    entity.Property(e => e.ValCd)
-            //        .HasMaxLength(4000)
-            //        .IsUnicode(false)
-            //        .HasColumnName("VAL_CD");
+                entity.Property(e => e.ValCd)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("VAL_CD");
 
-            //    entity.Property(e => e.ActiveFlg)
-            //        .HasMaxLength(1)
-            //        .IsUnicode(false)
-            //        .HasColumnName("ACTIVE_FLG")
-            //        .IsFixedLength();
+                entity.Property(e => e.ActiveFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVE_FLG")
+                    .IsFixedLength();
 
-            //    entity.Property(e => e.Deleted)
-            //        .HasMaxLength(1)
-            //        .IsUnicode(false)
-            //        .HasColumnName("DELETED")
-            //        .HasDefaultValueSql("0")
-            //        .IsFixedLength();
+                entity.Property(e => e.Deleted)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("DELETED")
+                    .HasDefaultValueSql("0")
+                    .IsFixedLength();
 
-            //    entity.Property(e => e.DisplayOrdrNo)
-            //        .HasPrecision(6)
-            //        .HasColumnName("DISPLAY_ORDR_NO");
+                entity.Property(e => e.DisplayOrdrNo)
+                    .HasPrecision(6)
+                    .HasColumnName("DISPLAY_ORDR_NO");
 
 
 
-            //    entity.Property(e => e.ParentRefTableName)
-            //        .HasMaxLength(30)
-            //        .IsUnicode(false)
-            //        .HasColumnName("PARENT_REF_TABLE_NAME");
+                entity.Property(e => e.ParentRefTableName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_REF_TABLE_NAME");
 
-            //    entity.Property(e => e.ParentValCd)
-            //        .HasMaxLength(32)
-            //        .IsUnicode(false)
-            //        .HasColumnName("PARENT_VAL_CD");
+                entity.Property(e => e.ParentValCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_VAL_CD");
 
-            //    entity.Property(e => e.ValDesc)
-            //        .IsUnicode(false)
-            //        .HasColumnName("VAL_DESC");
+                entity.Property(e => e.ValDesc)
+                    .IsUnicode(false)
+                    .HasColumnName("VAL_DESC");
 
-            //    entity.HasOne(d => d.Parent)
-            //        .WithMany(p => p.InverseParent)
-            //        .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
-            //        .HasConstraintName("REF_TABLE_VAL_FK1");
-            //});
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
+                    .HasConstraintName("REF_TABLE_VAL_FK1");
+            });
 
-            //modelBuilder.HasSequence("CASE_RK_SEQ");
+            modelBuilder.HasSequence("CASE_RK_SEQ");
 
-            //modelBuilder.HasSequence("CUST_RK_SEQ");
+            modelBuilder.HasSequence("CUST_RK_SEQ");
 
-            //modelBuilder.HasSequence("EVENT_RK_SEQ");
+            modelBuilder.HasSequence("EVENT_RK_SEQ");
 
-            //modelBuilder.HasSequence("OCCS_RK_SEQ");
+            modelBuilder.HasSequence("OCCS_RK_SEQ");
 
-            //modelBuilder.HasSequence("USER_AUTH_DOMAIN_SEQUENCE");
+            modelBuilder.HasSequence("USER_AUTH_DOMAIN_SEQUENCE");
         }
         public static void OracleOnModelCreating(ModelBuilder modelBuilder)
         {
