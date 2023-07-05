@@ -65,7 +65,7 @@ namespace ART_PACKAGE.Controllers
                 new ChartData<dynamic>
                 {
                     ChartId = "StAlertsPerDate",
-                    Data = chart1data.ToList().Select(x=> new { Month = DateTime.Parse($"15-{x.MONTH}") ,NUMBER_OF_CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
+                    Data = chart1data.ToList().Select(x=> new { MONTH = DateTime.ParseExact($"15-{x.MONTH}","dd-M-yyyy",System.Globalization.CultureInfo.InvariantCulture) ,NUMBER_OF_CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
                     Title = "Alerts Per Date",
                     Cat = "MONTH",
                     Val = "NUMBER_OF_CASES"
