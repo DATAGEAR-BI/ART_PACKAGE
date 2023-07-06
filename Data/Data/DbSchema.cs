@@ -11,11 +11,9 @@ public enum DbSchema
 {
     [Option(DisplayName = "FCF71")]
     CORE,
-    [Option(DisplayName = "KC", IsHidden = true)]
+    [Option(DisplayName = "KC")]
     KC,
-    [Option(DisplayName = "DGCMGMT", IsHidden = true)]
-    DGCMGMT,
-    [Option(DisplayName = "DGWLLOGS", IsHidden = true)]
-    DGWLLOGS
+    [Option(DisplayName = "DGCMGMT")]
+    DGCMGMT
 }
 
