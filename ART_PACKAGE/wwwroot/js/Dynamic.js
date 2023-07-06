@@ -99,7 +99,6 @@ if (isStoredProc == "true") {
     var intializeParaInterval = setInterval(() => {
         if (isextractRulesFinished) {
             para = { req: para, procFilters: exRules }
-            console.log(para);
             intializeGrid();
             isextractRulesFinished = false;
 
@@ -454,7 +453,7 @@ function generateGrid() {
         sortable: {
             mode: "multiple",
         },
-        height: 650,
+        height: 550,
         groupable: true,
         dataBound: function (e) {
             for (var i = 0; i < this.columns.length; i++) {

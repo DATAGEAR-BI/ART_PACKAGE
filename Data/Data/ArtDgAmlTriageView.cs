@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Data
 {
-    public partial class ArtTriageView
+    public partial class ArtDgAmlTriageView
     {
         public string? AlertedEntityName { get; set; }
         public string? AlertedEntityNumber { get; set; }

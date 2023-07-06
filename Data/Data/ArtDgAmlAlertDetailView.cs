@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Data
 {
-    public partial class ArtAlertDetailView
+    public partial class ArtDgAmlAlertDetailView
     {
         public decimal AlarmId { get; set; }
         public string AlertedEntityNumber { get; set; } = null!;

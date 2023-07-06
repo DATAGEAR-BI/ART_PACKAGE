@@ -1714,11 +1714,11 @@ namespace Data.ModelCreatingStrategies
 
 
             //DGAML
-            modelBuilder.Entity<ArtAlertDetailView>(entity =>
+            modelBuilder.Entity<ArtDgAmlAlertDetailView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_ALERT_DETAIL_VIEW", "ART_DB");
+                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW", "ART_DB");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
@@ -1806,11 +1806,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("SCENARIO_NAME");
             });
 
-            modelBuilder.Entity<ArtCustomerDetailView>(entity =>
+            modelBuilder.Entity<ArtDgAmlCustomerDetailView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_CUSTOMER_DETAIL_VIEW", "ART_DB");
+                entity.ToView("ART_DGAML_CUSTOMER_DETAIL_VIEW", "ART_DB");
 
                 entity.Property(e => e.AnnualIncomeAmount)
                     .HasColumnType("numeric(10, 0)")
@@ -1977,11 +1977,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("STREET_POSTAL_CODE");
             });
 
-            modelBuilder.Entity<ArtTriageView>(entity =>
+            modelBuilder.Entity<ArtDgAmlTriageView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_TRIAGE_VIEW", "ART_DB");
+                entity.ToView("ART_DGAML_TRIAGE_VIEW", "ART_DB");
 
                 entity.Property(e => e.AgeOldestAlert).HasColumnName("AGE_OLDEST_ALERT");
 
@@ -2018,6 +2018,76 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskScore)
                     .HasMaxLength(32)
                     .HasColumnName("RISK_SCORE");
+            });
+
+            modelBuilder.Entity<ArtDgAmlCaseDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_CASE_DETAIL_VIEW", "ART_DB");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CaseCategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_CATEGORY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseCategoryCode)
+                    .HasMaxLength(32)
+                    .HasColumnName("CASE_CATEGORY_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("CASE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CasePriority)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_PRIORITY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatusCode)
+                    .HasMaxLength(100)
+                    .HasColumnName("CASE_STATUS_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseSubCategoryCode)
+                    .HasMaxLength(32)
+                    .HasColumnName("CASE_SUB_CATEGORY_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATED_BY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityLevel)
+                    .HasMaxLength(1000)
+                    .HasColumnName("ENTITY_LEVEL")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(200)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(1000)
+                    .HasColumnName("ENTITY_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
             });
             //for sake for build => toChange when convert to oracle
             modelBuilder.Entity<ArtSystemPerformance>(entity =>

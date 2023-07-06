@@ -130,7 +130,7 @@ export const Filters = {
 
         ]
     },
-
+    //AML
     AlertSummary: {
         filters: [],
         get filters() {
@@ -214,6 +214,55 @@ export const Filters = {
         ]
     },
 
+    //DGAML
+    DGAMLAlertSummary: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLCustomersSummary: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLCasesSummary: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
 }
 
 

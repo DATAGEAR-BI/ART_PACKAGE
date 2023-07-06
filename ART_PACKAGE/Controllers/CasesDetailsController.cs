@@ -14,14 +14,11 @@ namespace ART_PACKAGE.Controllers
     public class CasesDetailsController : Controller
     {
         private readonly AuthContext dbfcfkc;
-
-        private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public CasesDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public CasesDetailsController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
-            _cache = cache;
             this._dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }

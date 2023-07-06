@@ -11,7 +11,7 @@ namespace SqlServerMigrations.Migrations
             #region Views
             migrationBuilder.Sql($@"
             
-                            CREATE OR ALTER view [ART_DB].[ART_TRIAGE_VIEW] AS
+                            CREATE OR ALTER view [ART_DB].[ART_DGAML_TRIAGE_VIEW] AS
                             select ASO.Alarmed_Obj_Name ALERTED_ENTITY_NAME
                             , ASO.Alarmed_Obj_No ALERTED_ENTITY_NUMBER ,
                             ASO.Branch BRANCH_NAME, 
@@ -35,7 +35,7 @@ namespace SqlServerMigrations.Migrations
             migrationBuilder.Sql($@"
 
 
-                                    CREATE OR ALTER view [ART_DB].[ART_ALERT_DETAIL_VIEW] AS
+                                    CREATE OR ALTER view [ART_DB].[ART_DGAML_ALERT_DETAIL_VIEW] AS
                                     select 
                                     aa.alarm_id, 
                                     aa.Alarmed_Obj_No ALERTED_ENTITY_NUMBER, 
@@ -138,55 +138,54 @@ namespace SqlServerMigrations.Migrations
 
 ");
 
-            //migrationBuilder.Sql($@"  CREATE OR ALTER view [ART_DB].[ART_CASE_DETAIL_VIEW] AS
-            //                              SELECT 
-            //                            [CASE].CASE_ID,
-            //                            [CASE].Cust_Full_Name ENTITY_NAME,
-            //                            entity_number.Udf_Val ENTITY_NUMBER,
-            //                            ba.Acct_Prim_Branch_Name BRANCH_NAME,
-            //                            [CASE_PRIORITY].Val_Desc CASE_PRIORITY,
-            //                            [CASE].Case_Stat_Cd CASE_STATUS_CODE,
-            //                            CASE_STATUS.Val_Desc CASE_STATUS,
-            //                            [CASE].Case_Ctgry_Cd CASE_CATEGORY_CODE,
-            //                            CASE_CATEGORY.Val_Desc CASE_CATEGORY,
-            //                            [CASE].Case_Sub_Ctgry_Cd CASE_SUB_CATEGORY_CODE,
-            //                            --""CASE_SUBCATEGORY"".LOV_TYPE_DESC ""CASE_SUB_CATEGORY"",
-            //                            entity_level.Udf_Val ENTITY_LEVEL,
-            //                            [CASE].CREATE_USER_ID CREATED_BY, 
-            //                            --[CASE].OWNER_USER_LONG_ID ""OWNER"",
-            //                            [CASE].CREATE_DATE
-            //                            --'' Closed_Date
+            migrationBuilder.Sql($@"  CREATE OR ALTER view [ART_DB].[ART_DGAML_CASE_DETAIL_VIEW] AS
+                                          SELECT 
+                                        [CASE].CASE_ID,
+                                        [CASE].Cust_Full_Name ENTITY_NAME,
+                                        entity_number.Udf_Val ENTITY_NUMBER,
+                                        ba.Acct_Prim_Branch_Name BRANCH_NAME,
+                                        [CASE_PRIORITY].Val_Desc CASE_PRIORITY,
+                                        [CASE].Case_Stat_Cd CASE_STATUS_CODE,
+                                        CASE_STATUS.Val_Desc CASE_STATUS,
+                                        [CASE].Case_Ctgry_Cd CASE_CATEGORY_CODE,
+                                        CASE_CATEGORY.Val_Desc CASE_CATEGORY,
+                                        [CASE].Case_Sub_Ctgry_Cd CASE_SUB_CATEGORY_CODE,
+                                        --""CASE_SUBCATEGORY"".LOV_TYPE_DESC ""CASE_SUB_CATEGORY"",
+                                        entity_level.Udf_Val ENTITY_LEVEL,
+                                        [CASE].CREATE_USER_ID CREATED_BY, 
+                                        --[CASE].OWNER_USER_LONG_ID ""OWNER"",
+                                        [CASE].CREATE_DATE
+                                        --'' Closed_Date
 
-            //                            FROM DGECM.DGCmgmt.Case_Live [CASE] LEFT JOIN
-            //                            DGECM.DGCmgmt.Ref_Table_Val CASE_STATUS ON CASE_STATUS.Val_Cd = [CASE].Case_Stat_Cd
-            //                            AND CASE_STATUS.Ref_Table_Name ='FCF_CASE_STATUS' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
-            //                            left join
-            //                            DGECM.DGCmgmt.Ref_Table_Val CASE_CATEGORY ON CASE_CATEGORY.Val_Cd = [CASE].Case_Ctgry_Cd
-            //                            AND CASE_CATEGORY.Ref_Table_Name ='RT_CASE_CATEGORY' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
-            //                            left join
-            //                            DGECM.DGCmgmt.Ref_Table_Val CASE_PRIORITY ON CASE_PRIORITY.Val_Cd = [CASE].Priority_Cd
-            //                            AND CASE_PRIORITY.Ref_Table_Name ='X_RT_PRIORITY' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
-            //                            LEFT JOIN DGECM.DGCmgmt.Case_Udf_Char_Val entity_level on [CASE].Case_Rk = entity_level.Case_Rk
-            //                            and entity_level.Udf_Name='AML_ALARMED_OBJ_LEVEL_CD' and entity_level.Udf_Table_Name = 'DGAML_OBJECT_CASE' 
-            //                            LEFT JOIN DGECM.DGCmgmt.Case_Udf_Char_Val entity_number on [CASE].Case_Rk = entity_number.Case_Rk
-            //                            and entity_number.Udf_Name='AML_ALARMED_OBJ_NO' and entity_number.Udf_Table_Name = 'DGAML_OBJECT_CASE' 
-            //                            left join DGAML.DGAMLCORE.Customer c on c.Cust_No = entity_number.Udf_Val COLLATE Arabic_100_CI_AI
-            //                            left join 
-            //                            (select 
-            //                            a.*,b.Acct_Open_Date,b.Acct_Prim_Branch_Name,row_number() over (PARTITION by a.cust_no order by b.Acct_Open_Date asc) Rank
-            //                            from DGAML.DGAMLCORE.Customer_X_Account a left join DGAML.DGAMLCORE.Account b on a.Acct_No= b.Acct_No
-            //                            where a.Role_Key=1 and a.Chg_Current_Ind='Y') ba on c.cust_no = ba.Cust_No and ba.RANK = 1
-            //                            WHERE
-            //                            [CASE].Case_Type_Cd='DGAML'
-            //                            --AND CASE_STATUS.Val_Desc ='Open'
-            //                            --AND ENTITY_LEVEL.LOV_TYPE_DESC <> 'Account'
-            //                            ;
-            //                            GO");
-
+                                        FROM DGECM.DGCmgmt.Case_Live [CASE] LEFT JOIN
+                                        DGECM.DGCmgmt.Ref_Table_Val CASE_STATUS ON CASE_STATUS.Val_Cd = [CASE].Case_Stat_Cd
+                                        AND CASE_STATUS.Ref_Table_Name ='FCF_CASE_STATUS' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
+                                        left join
+                                        DGECM.DGCmgmt.Ref_Table_Val CASE_CATEGORY ON CASE_CATEGORY.Val_Cd = [CASE].Case_Ctgry_Cd
+                                        AND CASE_CATEGORY.Ref_Table_Name ='RT_CASE_CATEGORY' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
+                                        left join
+                                        DGECM.DGCmgmt.Ref_Table_Val CASE_PRIORITY ON CASE_PRIORITY.Val_Cd = [CASE].Priority_Cd
+                                        AND CASE_PRIORITY.Ref_Table_Name ='X_RT_PRIORITY' --AND CASE_STATUS.LOV_LANGUAGE_DESC ='en'
+                                        LEFT JOIN DGECM.DGCmgmt.Case_Udf_Char_Val entity_level on [CASE].Case_Rk = entity_level.Case_Rk
+                                        and entity_level.Udf_Name='AML_ALARMED_OBJ_LEVEL_CD' and entity_level.Udf_Table_Name = 'DGAML_OBJECT_CASE' 
+                                        LEFT JOIN DGECM.DGCmgmt.Case_Udf_Char_Val entity_number on [CASE].Case_Rk = entity_number.Case_Rk
+                                        and entity_number.Udf_Name='AML_ALARMED_OBJ_NO' and entity_number.Udf_Table_Name = 'DGAML_OBJECT_CASE' 
+                                        left join DGAML.DGAMLCORE.Customer c on c.Cust_No = entity_number.Udf_Val COLLATE Arabic_100_CI_AI
+                                        left join 
+                                        (select 
+                                        a.*,b.Acct_Open_Date,b.Acct_Prim_Branch_Name,row_number() over (PARTITION by a.cust_no order by b.Acct_Open_Date asc) Rank
+                                        from DGAML.DGAMLCORE.Customer_X_Account a left join DGAML.DGAMLCORE.Account b on a.Acct_No= b.Acct_No
+                                        where a.Role_Key=1 and a.Chg_Current_Ind='Y') ba on c.cust_no = ba.Cust_No and ba.RANK = 1
+                                        WHERE
+                                        [CASE].Case_Type_Cd='DGAML'
+                                        --AND CASE_STATUS.Val_Desc ='Open'
+                                        --AND ENTITY_LEVEL.LOV_TYPE_DESC <> 'Account'
+                                        ;
+                                        GO");
 
             migrationBuilder.Sql($@"
 
-                    CREATE OR ALTER VIEW [ART_DB].[ART_CUSTOMER_DETAIL_VIEW]  AS
+                    CREATE OR ALTER VIEW [ART_DB].[ART_DGAML_CUSTOMER_DETAIL_VIEW]  AS
                      SELECT        
                     c.Cust_Name customer_name,
                     c.Cust_No customer_number,
@@ -273,7 +272,7 @@ where CAST(create_date AS date) >= @V_START_DATE AND CAST(create_date AS date) <
 END ;
 GO");
 
-            migrationBuilder.Sql($@"CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_ALERTS_PER_STATUS]
+            migrationBuilder.Sql($@"CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_DGAML_ALERTS_PER_STATUS]
 (
 @V_START_DATE date , @V_END_DATE date
 ) AS 
@@ -292,14 +291,14 @@ group by alarm_status.LKP_Val_Desc;
 END ;
 GO");
 
-            migrationBuilder.Sql($@"CREATE PROCEDURE [ART_DB].[ART_ST_CUSTOMER_PER_BRANCH]
+            migrationBuilder.Sql($@"CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_DGAML_CUSTOMER_PER_BRANCH]
 (
 @V_START_DATE date , @V_END_DATE date
 ) AS 
 BEGIN
 SET NOCOUNT ON;
 
-SELECT   ba.Acct_Prim_Branch_Name Branch_Name,  
+SELECT   ba.Acct_Prim_Branch_Name BRANCH_NAME,  
 CAST(count(c.Cust_Key) AS DECIMAL(10, 0))NUMBER_OF_CUSTOMERS
 FROM            
 DGAML.DGAMLCORE.Customer c 
@@ -314,7 +313,7 @@ group by ba.Acct_Prim_Branch_Name;
 END ;
 GO");
 
-            migrationBuilder.Sql($@"CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUSTOMER_PER_TYPE]
+            migrationBuilder.Sql($@"CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_DGAML_CUSTOMER_PER_TYPE]
 (
 @V_START_DATE date , @V_END_DATE date
 ) AS 
@@ -326,7 +325,7 @@ SELECT
 when Cust_Type_Desc =' 'then 'UNKNOWN'
 else Cust_Type_Desc
 end
-)customer_type,
+)CUSTOMER_TYPE,
 CAST(count(*) AS DECIMAL(10, 0))NUMBER_OF_CUSTOMERS
 FROM            
 DGAML.DGAMLCORE.Customer c 
@@ -357,7 +356,7 @@ GROUP BY --CASE_CATEGORY
 END;
 GO");
 
-            migrationBuilder.Sql($@"  CREATE PROCEDURE [ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]
+            migrationBuilder.Sql($@"  CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]
 (
 @V_START_DATE date , @V_END_DATE date
 ) AS 

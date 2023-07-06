@@ -67,9 +67,10 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
     public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
     //DGAML
-    public virtual DbSet<ArtAlertDetailView> ArtAlertDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtCustomerDetailView> ArtCustomerDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtTriageView> ArtTriageViews { get; set; } = null!;
+    public virtual DbSet<ArtDgAmlCaseDetailView> ArtDgAmlCaseDetailViews { get; set; } = null!;
+    public virtual DbSet<ArtDgAmlAlertDetailView> ArtDGAMLAlertDetailViews { get; set; } = null!;
+    public virtual DbSet<ArtDgAmlCustomerDetailView> ArtDGAMLCustomerDetailViews { get; set; } = null!;
+    public virtual DbSet<ArtDgAmlTriageView> ArtDGAMLTriageViews { get; set; } = null!;
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
     {
@@ -144,13 +145,13 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
 
         //DGAML
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlAlertPerOwner>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlAlertsPerStatus>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlCustomerPerBranch>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlCustomerPerType>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlCasesPerCategory>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlCasesPerPriority>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlCasesPerStatus>().HasNoKey().ToView(null);
 
 
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());

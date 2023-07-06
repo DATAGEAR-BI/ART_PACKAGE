@@ -15,8 +15,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             var name = typeof(T1).Name.ToLower();
             var props = typeof(T).GetProperties();
-            List<string> skip = ReportsConfig.CONFIG[name]?.SkipList;
-            Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG[name]?.DisplayNames;
+            List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
+            Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
 
             if (skip is null)
             {

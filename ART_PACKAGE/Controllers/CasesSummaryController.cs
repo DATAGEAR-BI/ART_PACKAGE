@@ -1,30 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-//using MimeKit;
-using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
-using System.Text;
 using Microsoft.Extensions.Caching.Memory;
-using Oracle.ManagedDataAccess.Client;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using System.Collections;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using OracleInternal.SqlAndPlsqlParser.LocalParsing;
+
 
 namespace ART_PACKAGE.Controllers
 {

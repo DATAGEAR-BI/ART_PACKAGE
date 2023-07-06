@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Data
 {
-    public partial class ArtCustomerDetailView
+    public partial class ArtDgAmlCustomerDetailView
     {
         public string? CustomerName { get; set; }
         public string CustomerNumber { get; set; } = null!;

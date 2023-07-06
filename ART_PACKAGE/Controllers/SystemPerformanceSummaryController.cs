@@ -7,12 +7,10 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Collections;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
-using Microsoft.Data.SqlClient;
 using Data.Constants.StoredProcs;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Constants.db;
-using OracleInternal.SqlAndPlsqlParser.LocalParsing;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
 

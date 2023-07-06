@@ -1,22 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-
-using Microsoft.AspNetCore.Authorization;
 using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-//using MimeKit;
-using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
-using System.Text;
 using Microsoft.Extensions.Caching.Memory;
-using Oracle.ManagedDataAccess.Client;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using System.Collections;
 using System.Linq.Dynamic.Core;
@@ -113,24 +99,6 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-
-        //public ContentResult Aml_Cust_Summ_Per_Branches()
-        //{
-        //    var result = db.AmlCustSummPerBranches.ToList();
-        //    return Content(JsonConvert.SerializeObject(result), "application/json");
-        //}
-
-        //public ContentResult Aml_Cust_Summ_Per_Cities()
-        //{
-        //    var result = db.AmlCustSummPerCities.ToList();
-        //    return Content(JsonConvert.SerializeObject(result), "application/json");
-        //}
-
-        //public ContentResult Aml_Cust_Summ_Per_Types()
-        //{
-        //    var result = db.AmlCustSummPerTypes.ToList();
-        //    return Content(JsonConvert.SerializeObject(result), "application/json");
-        //}
         public IActionResult Index()
         {
             return View();

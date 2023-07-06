@@ -36,6 +36,7 @@
     CasesSummary: "/CasesSummary/GetData",
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
+
     //GoAml
     GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
     GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",
@@ -57,6 +58,15 @@
     AuditUsers: "/AuditUsers/GetData",
     AuditRoles: "/AuditRoles/GetData",
     AuditGroups: "/AuditGroups/GetData",
+
+    //DGAML
+    DGAMLCasesDetails: "/DGAMLCasesDetails/GetData",
+    DGAMLTriage: "/DGAMLTriage/GetData",
+    DGAMLAlertDetails: "/DGAMLAlertDetails/GetData",
+    DGAMLCustomers: "/DGAMLCustomersDetails/GetData",
+    DGAMLAlertSummary: "/DGAMLAlertSummary/GetData",
+    DGAMLCustomersSummary: "/DGAMLCustomerSummary/GetData",
+    DGAMLCasesSummary: "/DGAMLCasesSummary/GetData"
 
 }
 
