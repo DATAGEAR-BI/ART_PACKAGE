@@ -301,7 +301,6 @@ namespace ART_PACKAGE.Controllers
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
             var filter = req.Filter.GetFiltersString(dbtype);
-            var chartsdata = dbInstance.GetChartData(charts, filter);
             var columns = Report.Columns.Select(x => new ColumnsDto
             {
                 name = x.Column

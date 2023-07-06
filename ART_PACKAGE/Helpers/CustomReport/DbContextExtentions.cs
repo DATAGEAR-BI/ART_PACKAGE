@@ -179,7 +179,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 });
                 _sb.AppendLine("END;");
                 query = _sb.ToString();
-                result = conn.QueryMultiple(query, param: dynParams);
+                if (charts is not null && charts.Any())
+                    result = conn.QueryMultiple(query, param: dynParams);
             }
             else if (isSqlServer)
             {
@@ -190,7 +191,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     _sb.AppendLine(string.Format(Sql, rec.x.Column, rec.x.Report.Table, restriction));
                 });
                 query = _sb.ToString();
-                result = conn.QueryMultiple(query);
+                if (charts is not null && charts.Any())
+                    result = conn.QueryMultiple(query);
             }
 
 
