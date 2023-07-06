@@ -54,6 +54,20 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                         }
                                 }
             },
+            {
+                nameof(ReportController).ToLower(),new ReportConfig
+                {
+                   SkipList =  new List<string>()
+            {
+                  nameof(ArtSavedCustomReport.User),
+                  nameof(ArtSavedCustomReport.UserId),
+                nameof(ArtSavedCustomReport.Schema),
+                nameof(ArtSavedCustomReport.Columns),
+                nameof(ArtSavedCustomReport.Charts),
+
+            }
+    }
+            },
         };
 
     }
