@@ -32,7 +32,6 @@
 	  <Compile Remove="Controllers\ListOfUsersAndGroupsRoleController.cs" />
 	  <Compile Remove="Controllers\ListOfUsersGroupController.cs" />
 	  <Compile Remove="Controllers\ListOfUsersRolesController.cs" />
-	  <Compile Remove="Controllers\ReportController.cs" />
 	  <Compile Remove="Controllers\RiskAssessmentController.cs" />
 	  <Compile Remove="Controllers\RiskSummaryController.cs" />
 	  <Compile Remove="Controllers\TriageController.cs" />

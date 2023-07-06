@@ -191,7 +191,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetTransDirectionDropDown()
         {
-            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "UNKNOWN" : x.TransactionDirection).Distinct()
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "Unknown" : x.TransactionDirection).Distinct()
                 .Select(x => x.ToUpper() == "I" ? "InComing" : x.ToUpper() == "O" ? "OutGoing" : x)
            .ToList();
             return distinct_value;
@@ -199,7 +199,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<string> GetTransTypeDropDown()
         {
-            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "UNKNOWN" : x.TransactionType).Distinct().ToList();
+            var distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "Unknown" : x.TransactionType).Distinct().ToList();
             return distinct_value;
 
         }

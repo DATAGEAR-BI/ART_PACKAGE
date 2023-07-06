@@ -196,11 +196,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CREATE_DATE");
 
                 entity.Property(e => e.Name)
-                    .HasColumnType("CLOB")
-                    .HasColumnName("NAME");
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("NAME");
 
                 entity.Property(e => e.PepInd)
-                    .HasColumnType("CLOB")
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
                     .HasColumnName("PEP_IND");
             });
 

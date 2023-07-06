@@ -23,7 +23,7 @@ namespace OracleMigrations.Migrations
                                         a.UPDATE_USER_ID,
                                         (CASE WHEN a.transaction_type IS NULL OR a.transaction_type = 'null' THEN 'Unknown' else a.transaction_type end )transaction_type,
                                         a.transaction_amount,
-                                        CASE a.transaction_direction WHEN 'I' THEN 'Input' WHEN 'O' THEN 'Output' WHEN NULL THEN 'Unknown' WHEN 'null' THEN 'Unknown' ELSE a.transaction_direction END AS transaction_direction, 
+                                        CASE a.transaction_direction WHEN 'I' THEN 'InComing' WHEN 'O' THEN 'OutGoing' WHEN NULL THEN 'Unknown' WHEN 'null' THEN 'Unknown' ELSE a.transaction_direction END AS transaction_direction, 
                                         a.transaction_currency ,
                                         a.swift_reference,
                                         (case when a.Col1 is null then a.Cust_Full_Name else a.Col1 end)CLIENT_NAME,
@@ -56,17 +56,16 @@ namespace OracleMigrations.Migrations
                             ");
             //ART_ALERTED_ENTITY
             migrationBuilder.Sql($@"
-            create view ""ART"".""ART_ALERTED_ENTITY"" as
+            CREATE OR REPLACE FORCE EDITIONABLE VIEW  ""ART"".""ART_ALERTED_ENTITY"" as
                             select 
                             Base.case_id,base.create_date,
-                            replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'FIRST NAME:',1)+15,INSTR(udf_val,'LAST NAME:',1)-INSTR(udf_val,'FIRST NAME:',1)-15),' ','')
+                            CAST(replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'FIRST NAME:',1)+15,INSTR(udf_val,'LAST NAME:',1)-INSTR(udf_val,'FIRST NAME:',1)-15),' ','')
                             || ' ' ||
-                            replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'LAST NAME:',1)+15,INSTR(udf_val,'MIDDLE NAME:',1)-INSTR(udf_val,'LAST NAME:',1)-15),' ','')
-                            Name,
-                            replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'PEP IND:',1)+15,INSTR(udf_val,'CREATE DATE:',1)-INSTR(udf_val,'PEP IND:',1)-15),' ','') PEP_IND
+                            replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'LAST NAME:',1)+15,INSTR(udf_val,'MIDDLE NAME:',1)-INSTR(udf_val,'LAST NAME:',1)-15),' ','') AS VARCHAR2(100)) Name,
+                            CAST(replace(SUBSTR(d.udf_val,INSTR(d.udf_val,'PEP IND:',1)+15,INSTR(udf_val,'CREATE DATE:',1)-INSTR(udf_val,'PEP IND:',1)-15),' ','') AS VARCHAR2(100)) PEP_IND
                             from
                             dgcmgmt.case_live Base left join dgcmgmt.case_udf_lgchr_val d
-                            on Base.case_rk=d.case_rk and base.valid_from_date = d.valid_from_date and d.udf_name='X_REMARKS'
+                            on Base.case_rk=d.case_rk and base.valid_from_date = d.valid_from_date and d.udf_name='X_REMARKS';
                             ");
             #endregion
             #region Procdure

@@ -19,9 +19,9 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 public class AuthContext : IdentityDbContext<AppUser>
 {
 
-    //public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
-    //public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
-    //public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; }
+    public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
+    public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
+    public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; }
     ////ACM 
     public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; }
     public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; }

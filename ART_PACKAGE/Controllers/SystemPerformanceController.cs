@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers
                      {"CaseType".ToLower(),_dropDown.GetCaseTypeDropDown().ToDynamicList() },
                      {"CaseStatus".ToLower(),_dropDown.GetSystemCaseStatusDropDown().ToDynamicList() },
                     {"TransactionDirection".ToLower(),_dropDown.GetTransDirectionDropDown().ToDynamicList() },
-                    //{"TransactionType".ToLower(),_dropDown.GetTransTypeDropDown().ToDynamicList() },
+                    {"TransactionType".ToLower(),_dropDown.GetTransTypeDropDown().ToDynamicList() },
                     //{"UpdateUserId".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"Priority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
                 };
@@ -89,7 +89,7 @@ namespace ART_PACKAGE.Controllers
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
             var data = dbfcfkc.ArtSystemPerformances.CallData<ArtSystemPerformance>(req).Data.ToList();
             ViewData["title"] = "System Performance Details";
-            ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
+            ViewData["desc"] = "presents all cases detail information";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

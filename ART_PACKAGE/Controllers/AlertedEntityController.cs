@@ -83,7 +83,7 @@ namespace ART_PACKAGE.Controllers
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntityController).ToLower()].SkipList;
             var data = dbfcfkc.ArtAlertedEntities.CallData<ArtAlertedEntity>(req).Data.ToList();
             ViewData["title"] = "Alerted Entity Details";
-            ViewData["desc"] = "";
+            ViewData["desc"] = "This report contains details about the alerted entities with type PEP";
             var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
