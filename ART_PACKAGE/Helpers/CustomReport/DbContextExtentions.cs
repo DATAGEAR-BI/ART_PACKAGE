@@ -190,7 +190,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     _sb.AppendLine(string.Format(Sql, rec.x.Column, rec.x.Report.Table, restriction));
                 });
                 query = _sb.ToString();
-                result = conn.QueryMultiple(query);
+                if(!string.IsNullOrEmpty(query))
+                    result = conn.QueryMultiple(query);
             }
 
 
