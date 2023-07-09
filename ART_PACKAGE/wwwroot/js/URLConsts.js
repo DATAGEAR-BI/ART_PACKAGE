@@ -71,5 +71,6 @@
     DGAMLArtScenarioAdmin:"/DGAMLArtScenarioAdmin/GetData",
     DGAMLArtScenarioHistory:"/DGAMLArtScenarioHistory/GetData",
     DGAMLArtSuspectDetails:"/DGAMLArtSuspectDetails/GetData",
+    DGAMLExternalCustomerSummary:"/DGAMLExternalCustomerSummary/GetData",
 }
 

@@ -157,6 +157,8 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStDgAmlCasesPerPriority>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStDgAmlCasesPerStatus>().HasNoKey().ToView(null);
 
+        modelBuilder.Entity<ArtStDgAmlExternalCustomerPerBranch>().HasNoKey().ToView(null);
+        modelBuilder.Entity<ArtStDgAmlExternalCustomerPerType>().HasNoKey().ToView(null);
 
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
