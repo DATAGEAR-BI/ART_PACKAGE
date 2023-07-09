@@ -602,6 +602,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(DGAMLArtScenarioHistoryController).ToLower(),new ReportConfig{
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "RoutineName",new DisplayNameAndFormat { DisplayName ="Routine Name"}},
+                        {  "RoutineShortDesc",new DisplayNameAndFormat { DisplayName ="Routine Short Description"}},
+                        {  "EventDesc",new DisplayNameAndFormat { DisplayName ="Event Description"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {  "CreateUserId",new DisplayNameAndFormat { DisplayName ="Create User Id"}},
+                    }
+                }
+            },
         };
 
     }
