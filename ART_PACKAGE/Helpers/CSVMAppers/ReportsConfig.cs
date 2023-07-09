@@ -613,6 +613,31 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(DGAMLArtSuspectDetailsController).ToLower(),new ReportConfig{
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "SuspectNumber",new DisplayNameAndFormat { DisplayName ="Suspect Number"}},
+                        {  "SuspectName",new DisplayNameAndFormat { DisplayName ="Suspect Name"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "ProfileRisk",new DisplayNameAndFormat { DisplayName ="Profile Risk"}},
+                        {  "NumberOfAlarms",new DisplayNameAndFormat { DisplayName ="Number Of Alarms"}},
+                        {  "AgeOfOldestAlert",new DisplayNameAndFormat { DisplayName ="Age Of Oldest Alert"}},
+                        {  "OwnerUserId",new DisplayNameAndFormat { DisplayName ="Owner User Id"}},
+                        {  "CustBirthDate",new DisplayNameAndFormat { DisplayName ="Birth Of Date"}},
+                        {  "PoliticalExpPrsnInd",new DisplayNameAndFormat { DisplayName ="Political Exp Perosn Ind"}},
+                        {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+                        {  "CitizenCntryName",new DisplayNameAndFormat { DisplayName ="Citizen Country Name"}},
+                        {  "CustIdentId",new DisplayNameAndFormat { DisplayName ="Cust Ident Id"}},
+                        {  "CustIdentTypeDesc",new DisplayNameAndFormat { DisplayName ="Cust Ident Type Description"}},
+                        {  "CustIdentExpDate",new DisplayNameAndFormat { DisplayName ="Cust Ident Exp Date"}},
+                        {  "CustIdentIssDate",new DisplayNameAndFormat { DisplayName ="Cust Ident Iss Date"}},
+                        {  "EmprName",new DisplayNameAndFormat { DisplayName ="Empr Name"}},
+                        {  "OccupDesc",new DisplayNameAndFormat { DisplayName ="Occup Description"}},
+                        {  "TelNo1",new DisplayNameAndFormat { DisplayName ="Tel No"}},
+                        {  "CustSinceDate",new DisplayNameAndFormat { DisplayName ="Cust Since Date"}},
+                    }
+                }
+            },
         };
 
     }
