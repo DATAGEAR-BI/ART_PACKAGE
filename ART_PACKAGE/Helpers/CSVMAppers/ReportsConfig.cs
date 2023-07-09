@@ -548,6 +548,60 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(DGAMLArtExternalCustomerDetailsController).ToLower(),new ReportConfig{
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                        {  "CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
+                        {  "CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification Id"}},
+                        {  "CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
+                        {  "CustomerDateOfBirth",new DisplayNameAndFormat { DisplayName ="Date Of Birth"}},
+                        {  "CustomerTaxId",new DisplayNameAndFormat { DisplayName ="Customer Tax Id"}},
+                        {  "GovernorateName",new DisplayNameAndFormat { DisplayName ="Governorate Name"}},
+                        {  "StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
+                        {  "CityName",new DisplayNameAndFormat { DisplayName ="City Name"}},
+                        {  "StreetPostalCode",new DisplayNameAndFormat { DisplayName = "Postal Code"}},
+                        {  "StreetCountryCode",new DisplayNameAndFormat { DisplayName ="Country Code"}},
+                        {  "StreetCountryName",new DisplayNameAndFormat { DisplayName ="Country Name"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+
+                    }
+                }
+            },
+            {
+                nameof(DGAMLArtScenarioAdminController).ToLower(),new ReportConfig{
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ScenarioName",new DisplayNameAndFormat { DisplayName ="Name"}},
+                        {  "ScenarioShortDesc",new DisplayNameAndFormat { DisplayName ="Short Description"}},
+                        {  "ScenarioDesc",new DisplayNameAndFormat { DisplayName ="Description"}},
+                        {  "ScenarioStatus",new DisplayNameAndFormat { DisplayName ="Status"}},
+                        {  "ScenarioCategory",new DisplayNameAndFormat { DisplayName ="Category"}},
+                        {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                        {  "RiskFact",new DisplayNameAndFormat { DisplayName ="Risk Fact"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {  "EndDate",new DisplayNameAndFormat { DisplayName ="End Date"}},
+                        {  "CreateUserId",new DisplayNameAndFormat { DisplayName ="Create User Id"}},
+                        {  "ScenarioType",new DisplayNameAndFormat { DisplayName = "Type"}},
+                        {  "ScenarioFrequency",new DisplayNameAndFormat { DisplayName ="Frequency"}},
+                        {  "ScenarioMessage",new DisplayNameAndFormat { DisplayName ="Message"}},
+                        {  "ObjectLevel",new DisplayNameAndFormat { DisplayName ="Object Level"}},
+                        {  "AlarmType",new DisplayNameAndFormat { DisplayName ="Alarm Type"}},
+                        {  "AlarmCategory",new DisplayNameAndFormat { DisplayName ="Alarm Category"}},
+                        {  "AlarmSubcategory",new DisplayNameAndFormat { DisplayName ="Alarm Subcategory"}},
+                        {  "DependedData",new DisplayNameAndFormat { DisplayName ="Depended Data"}},
+                        {  "ParmName",new DisplayNameAndFormat { DisplayName ="Parm Name"}},
+                        {  "ParmValue",new DisplayNameAndFormat { DisplayName ="Parm Value"}},
+                        {  "ParmDesc",new DisplayNameAndFormat { DisplayName ="Parm Desc"}},
+                        {  "ParmTypeDesc",new DisplayNameAndFormat { DisplayName ="Parm Type Desc"}},
+                        {  "ParamCondition",new DisplayNameAndFormat { DisplayName ="Param Condition"}},
+                        {  "ScorParmName",new DisplayNameAndFormat { DisplayName ="Score Parm Name"}},
+                        {  "ScorDependAttribute",new DisplayNameAndFormat { DisplayName ="Score Depend Attribute"}},
+
+                    }
+                }
+            },
         };
 
     }

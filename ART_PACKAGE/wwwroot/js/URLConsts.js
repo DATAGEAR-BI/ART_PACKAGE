@@ -66,7 +66,8 @@
     DGAMLCustomers: "/DGAMLCustomersDetails/GetData",
     DGAMLAlertSummary: "/DGAMLAlertSummary/GetData",
     DGAMLCustomersSummary: "/DGAMLCustomerSummary/GetData",
-    DGAMLCasesSummary: "/DGAMLCasesSummary/GetData"
-
+    DGAMLCasesSummary: "/DGAMLCasesSummary/GetData",
+    DGAMLArtExternalCustomerDetails:"/DGAMLArtExternalCustomerDetails/GetData",
+    DGAMLArtScenarioAdmin:"/DGAMLArtScenarioAdmin/GetData",
 }
 
