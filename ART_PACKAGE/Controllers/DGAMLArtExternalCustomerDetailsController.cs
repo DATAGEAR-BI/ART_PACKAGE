@@ -36,13 +36,13 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    //{"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    ////{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    //{"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown().ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown.GetDGCitizenshipCountryNameDropDown().ToDynamicList() },
+                    {"ResidCntryName".ToLower(),_dropDown.GetDGresidenceCountryNameDropDown().ToDynamicList() },
+                    {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown().ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown.GetDGCityNameDropDown().ToDynamicList() },
+                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown().ToDynamicList() },
+                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : new();

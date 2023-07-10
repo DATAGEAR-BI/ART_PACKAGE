@@ -93,7 +93,15 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetDGOccupDescDropDown();
         public List<string> GetDGCitizenCountryNameDropDown();
         public List<string> GetDGRoutineCreateUserIdDropDown();
-        //public List<string> GetDGCustomerTypeDropDown();
+        public List<string> GetDGCustomerTypeDropDown();
+        public List<string> GetDGCustomerIdentificationTypeDropDown();
+        public List<string> GetDGCityNameDropDown();
+        public List<string> GetDGStreetCountryNameDropDown();
+        public List<string> GetDGresidenceCountryNameDropDown();
+        public List<string> GetDGCitizenshipCountryNameDropDown();
+        public List<string> GetDGExternalCustomerBranchNameDropDown();
+        public List<string> GetDGParmValueDropDown();
+        public List<string> GetDGParmTypeDescDropDown();
 
     }
 }

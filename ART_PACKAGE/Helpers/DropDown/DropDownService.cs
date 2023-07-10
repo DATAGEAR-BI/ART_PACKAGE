@@ -645,5 +645,56 @@ namespace ART_PACKAGE.Helpers.DropDown
             var distinct_value = _dbSrv.DGAML.AcRoutines.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Distinct().ToList();
             return distinct_value;
         }
+        public List<string> GetDGCustomerTypeDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGCustomerIdentificationTypeDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.IdentTypeDesc)).Select(x => x.IdentTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGCityNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CityName)).Select(x => x.CityName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGStreetCountryNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGresidenceCountryNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ResidCntryName)).Select(x => x.ResidCntryName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGCitizenshipCountryNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGExternalCustomerBranchNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.BranchName)).Select(x => x.BranchName).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGParmValueDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmValue)).Select(x => x.ParmValue).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGParmTypeDescDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
     }
 }

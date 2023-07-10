@@ -21,7 +21,10 @@ namespace Data.DGAML
         public virtual DbSet<AcScenarioEvent> AcScenarioEvents { get; set; } = null!;
         public virtual DbSet<AcSuspectedObject> AcSuspectedObjects { get; set; } = null!;
         public virtual DbSet<Account> Accounts { get; set; } = null!;
+        public virtual DbSet<ExternalCustomer> ExternalCustomers { get; set; } = null!;
+
         public virtual DbSet<Customer> Customers { get; set; } = null!;
+        public virtual DbSet<AcRoutineParameter> AcRoutineParameters { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1012,6 +1015,215 @@ namespace Data.DGAML
                     .IsUnicode(false)
                     .HasColumnName("Trust_Acct_Ind")
                     .IsFixedLength();
+            });
+            modelBuilder.Entity<ExternalCustomer>(entity =>
+            {
+                entity.HasKey(e => e.ExtCustAcctKey);
+
+                entity.ToTable("External_Customer", "DGAMLCORE");
+
+                entity.Property(e => e.ExtCustAcctKey).HasColumnName("Ext_Cust_Acct_Key");
+
+                entity.Property(e => e.AcctNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("Acct_No");
+
+                entity.Property(e => e.Addr1)
+                    .HasMaxLength(35)
+                    .HasColumnName("Addr_1");
+
+                entity.Property(e => e.Addr2)
+                    .HasMaxLength(35)
+                    .HasColumnName("Addr_2");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Branch_Name");
+
+                entity.Property(e => e.BranchNo)
+                    .HasMaxLength(25)
+                    .HasColumnName("Branch_No");
+
+                entity.Property(e => e.CitizenCntryCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Citizen_Cntry_Cd");
+
+                entity.Property(e => e.CitizenCntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Citizen_Cntry_Name");
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(35)
+                    .HasColumnName("City_Name");
+
+                entity.Property(e => e.CntryCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Cntry_Cd");
+
+                entity.Property(e => e.CntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Cntry_Name");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CustTaxId)
+                    .HasMaxLength(35)
+                    .HasColumnName("Cust_Tax_Id");
+
+                entity.Property(e => e.CustTaxIdTypeCd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Cust_Tax_Id_Type_Cd")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ExtBirthDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ext_Birth_Date");
+
+                entity.Property(e => e.ExtCustNo)
+                    .HasMaxLength(100)
+                    .HasColumnName("Ext_Cust_No");
+
+                entity.Property(e => e.ExtCustTypeDesc)
+                    .HasMaxLength(50)
+                    .HasColumnName("Ext_Cust_Type_Desc");
+
+                entity.Property(e => e.ExtFname)
+                    .HasMaxLength(50)
+                    .HasColumnName("Ext_FName");
+
+                entity.Property(e => e.ExtFullName)
+                    .HasMaxLength(200)
+                    .HasColumnName("Ext_Full_Name");
+
+                entity.Property(e => e.ExtLname)
+                    .HasMaxLength(100)
+                    .HasColumnName("Ext_LName");
+
+                entity.Property(e => e.ExtMname)
+                    .HasMaxLength(50)
+                    .HasColumnName("Ext_MName");
+
+                entity.Property(e => e.FiNo)
+                    .HasMaxLength(25)
+                    .HasColumnName("FI_No");
+
+                entity.Property(e => e.IdentCntryCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Ident_Cntry_Cd");
+
+                entity.Property(e => e.IdentCntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Ident_Cntry_Name");
+
+                entity.Property(e => e.IdentId)
+                    .HasMaxLength(35)
+                    .HasColumnName("Ident_Id");
+
+                entity.Property(e => e.IdentStateCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Ident_State_Cd");
+
+                entity.Property(e => e.IdentTypeDesc)
+                    .HasMaxLength(4)
+                    .HasColumnName("Ident_Type_Desc");
+
+                entity.Property(e => e.MatchCdAddr)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_Addr");
+
+                entity.Property(e => e.MatchCdAddrLine)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_Addr_Line");
+
+                entity.Property(e => e.MatchCdCity)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_City");
+
+                entity.Property(e => e.MatchCdCntry)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_Cntry");
+
+                entity.Property(e => e.MatchCdIndv)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_Indv");
+
+                entity.Property(e => e.MatchCdOrg)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_Org");
+
+                entity.Property(e => e.MatchCdState)
+                    .HasMaxLength(200)
+                    .HasColumnName("Match_Cd_State");
+
+                entity.Property(e => e.PostCd)
+                    .HasMaxLength(10)
+                    .HasColumnName("Post_Cd");
+
+                entity.Property(e => e.ResidCntryCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Resid_Cntry_Cd");
+
+                entity.Property(e => e.ResidCntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Resid_Cntry_Name");
+
+                entity.Property(e => e.StateCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("State_Cd");
+
+                entity.Property(e => e.StateName)
+                    .HasMaxLength(35)
+                    .HasColumnName("State_Name");
+
+                entity.Property(e => e.TelNo1)
+                    .HasMaxLength(25)
+                    .HasColumnName("Tel_No_1");
+
+                entity.Property(e => e.TelNo2)
+                    .HasMaxLength(25)
+                    .HasColumnName("Tel_No_2");
+            });
+            modelBuilder.Entity<AcRoutineParameter>(entity =>
+            {
+                entity.HasKey(e => new { e.RoutineId, e.ParmName });
+
+                entity.ToTable("AC_Routine_Parameter", "AC");
+
+                entity.Property(e => e.RoutineId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Routine_Id");
+
+                entity.Property(e => e.ParmName)
+                    .HasMaxLength(32)
+                    .HasColumnName("Parm_Name");
+
+                entity.Property(e => e.DayType)
+                    .HasMaxLength(10)
+                    .HasColumnName("Day_Type");
+
+                entity.Property(e => e.ParamCondition)
+                    .HasMaxLength(1000)
+                    .HasColumnName("param_condition");
+
+                entity.Property(e => e.ParmDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Parm_Desc");
+
+                entity.Property(e => e.ParmTypeDesc)
+                    .HasMaxLength(32)
+                    .HasColumnName("Parm_Type_Desc");
+
+                entity.Property(e => e.ParmValue)
+                    .HasMaxLength(1024)
+                    .HasColumnName("Parm_Value");
+
+                entity.Property(e => e.ValueCate)
+                    .HasMaxLength(32)
+                    .HasColumnName("value_cate");
             });
 
             modelBuilder.HasSequence("hibernate_sequence");

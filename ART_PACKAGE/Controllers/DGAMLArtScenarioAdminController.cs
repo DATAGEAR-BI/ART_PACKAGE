@@ -48,6 +48,8 @@ namespace ART_PACKAGE.Controllers
                     {"AlarmSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown().ToDynamicList() },
                     {"RiskFact".ToLower(),_dropDown.GetDGRiskFactDropDown().ToDynamicList() },
                     {"CreateUserId".ToLower(),_dropDown.GetDGRoutineCreateUserIdDropDown().ToDynamicList() },
+                    {"ParmValue".ToLower(),_dropDown.GetDGParmValueDropDown().ToDynamicList() },
+                    {"ParmTypeDesc".ToLower(),_dropDown.GetDGParmTypeDescDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].SkipList : new();
