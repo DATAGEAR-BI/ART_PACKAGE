@@ -30,15 +30,21 @@ namespace ART_PACKAGE.Controllers
 
             IEnumerable<ArtStDgAmlAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStDgAmlAlertsPerStatus>().AsQueryable();
             IEnumerable<ArtStDgAmlAlertPerOwner> chart2data = Enumerable.Empty<ArtStDgAmlAlertPerOwner>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerBranch> chart3data = Enumerable.Empty<ArtStDgAmlAlertsPerBranch>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerScenario> chart4data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
 
 
             var chart1Params = para.procFilters.MapToParameters(dbType);
             var chart2Params = para.procFilters.MapToParameters(dbType);
+            var chart3Params = para.procFilters.MapToParameters(dbType);
+            var chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 
@@ -67,7 +73,23 @@ namespace ART_PACKAGE.Controllers
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
                     Val = "ALERTS_CNT_SUM"
-                }
+                },
+                new ChartData<ArtStDgAmlAlertsPerBranch>
+                {
+                    ChartId = "StAlertPerBranch",
+                    Data = chart3data.ToList(),
+                    Title = "Alerts Per Branch",
+                    Cat = "BRANCH_NAME",
+                    Val = "ALERTS_COUNT"
+                },
+                new ChartData<ArtStDgAmlAlertsPerScenario>
+                {
+                    ChartId = "StAlertPerScenario",
+                    Data = chart4data.ToList(),
+                    Title = "Alerts Per Scenario",
+                    Cat = "SCENARIO_NAME",
+                    Val = "ALERTS_COUNT"
+                },
             };
 
 
