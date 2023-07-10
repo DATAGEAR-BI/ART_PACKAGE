@@ -36,13 +36,15 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    //{"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    ////{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    //{"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                    {"ScenarioCategory".ToLower(),_dropDown.GetDGScenarioCategoryDropDown().ToDynamicList() },
+                    {"ScenarioStatus".ToLower(),_dropDown.GetDGScenarioStatusDropDown().ToDynamicList() },
+                    {"ProductType".ToLower(),_dropDown.GetDGProductTypeDropDown().ToDynamicList() },
+                    {"ScenarioType".ToLower(),_dropDown.GetDGScenarioTypeDropDown().ToDynamicList() },
+                    {"ScenarioFrequency".ToLower(),_dropDown.GetDGScenarioFrequencyDropDown().ToDynamicList() },
+                    {"ObjectLevel".ToLower(),_dropDown.GetDGObjectLevelDropDown().ToDynamicList() },
+                    {"AlarmType".ToLower(),_dropDown.GetDGAlarmTypeDropDown().ToDynamicList() },
+                    {"AlarmCategory".ToLower(),_dropDown.GetDGAlarmCategoryDropDown().ToDynamicList() },
+                    {"AlarmSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown().ToDynamicList() }
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].SkipList : new();

@@ -527,5 +527,59 @@ namespace ART_PACKAGE.Helpers.DropDown
             var distinct_value = _dbSrv.AUDIT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.RoleType)).Select(x => x.RoleType).Distinct().ToList();
             return distinct_value;
         }
+
+        public List<string> GetDGScenarioCategoryDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGScenarioStatusDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGProductTypeDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("PRODUCT_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGScenarioTypeDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGScenarioFrequencyDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_FREQUENCY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGObjectLevelDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("OBJECT_LEVEL") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGAlarmTypeDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGAlarmCategoryDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGAlarmSubcategoryDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_SUBCATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
     }
 }

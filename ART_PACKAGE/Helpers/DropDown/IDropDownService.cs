@@ -72,6 +72,15 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetAppNameDropDown();
         public List<string> GetDeviceNameDropDown();
         public List<string> GetDeviceTypeDropDown();
+        public List<string> GetDGScenarioCategoryDropDown();
+        public List<string> GetDGScenarioStatusDropDown();
+        public List<string> GetDGProductTypeDropDown();
+        public List<string> GetDGScenarioTypeDropDown();
+        public List<string> GetDGScenarioFrequencyDropDown();
+        public List<string> GetDGObjectLevelDropDown();
+        public List<string> GetDGAlarmTypeDropDown();
+        public List<string> GetDGAlarmCategoryDropDown();
+        public List<string> GetDGAlarmSubcategoryDropDown();
 
     }
 }
