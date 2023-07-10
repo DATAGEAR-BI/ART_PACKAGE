@@ -72,6 +72,36 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetAppNameDropDown();
         public List<string> GetDeviceNameDropDown();
         public List<string> GetDeviceTypeDropDown();
+        public List<string> GetDGScenarioCategoryDropDown();
+        public List<string> GetDGScenarioStatusDropDown();
+        public List<string> GetDGProductTypeDropDown();
+        public List<string> GetDGScenarioTypeDropDown();
+        public List<string> GetDGScenarioFrequencyDropDown();
+        public List<string> GetDGObjectLevelDropDown();
+        public List<string> GetDGAlarmTypeDropDown();
+        public List<string> GetDGAlarmCategoryDropDown();
+        public List<string> GetDGAlarmSubcategoryDropDown();
+        public List<string> GetDGCreateUserIdDropDown();
+        public List<string> GetDGScenarioNameDropDown();
+        public List<string> GetDGRiskFactDropDown();
+        public List<string> GetDGBranchNameDropDown();
+        public List<string> GetDGProfileRiskDropDown();
+        public List<string> GetDGOwnerDropDown();
+        public List<string> GetDGPoliticalExpPrsnIndDropDown();
+        public List<string> GetDGRiskClassificationDropDown();
+        public List<string> GetDGCustIdentTypeDescDropDown();
+        public List<string> GetDGOccupDescDropDown();
+        public List<string> GetDGCitizenCountryNameDropDown();
+        public List<string> GetDGRoutineCreateUserIdDropDown();
+        public List<string> GetDGCustomerTypeDropDown();
+        public List<string> GetDGCustomerIdentificationTypeDropDown();
+        public List<string> GetDGCityNameDropDown();
+        public List<string> GetDGStreetCountryNameDropDown();
+        public List<string> GetDGresidenceCountryNameDropDown();
+        public List<string> GetDGCitizenshipCountryNameDropDown();
+        public List<string> GetDGExternalCustomerBranchNameDropDown();
+        public List<string> GetDGParmValueDropDown();
+        public List<string> GetDGParmTypeDescDropDown();
 
     }
 }

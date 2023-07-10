@@ -1,4 +1,5 @@
 ﻿using Data.Audit;
+using Data.DGAML;
 using Data.DGECM;
 using Data.GOAML;
 using System;
@@ -16,5 +17,6 @@ namespace Data.FCF71
         public DGECMContext ECM { get; }
         public GoAmlContext GOAML { get; }
         public AuditContext AUDIT { get; }
+        public DGAMLContext DGAML { get; }
     }
 }

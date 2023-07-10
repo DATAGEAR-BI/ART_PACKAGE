@@ -2089,6 +2089,304 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ENTITY_NUMBER")
                     .UseCollation("Arabic_100_CI_AI");
             });
+
+            modelBuilder.Entity<ArtExternalCustomerDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_EXTERNAL_CUSTOMER_DETAIL_VIEW", "ART_DB");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CitizenshipCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("CITIZENSHIP_COUNTRY_NAME");
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(35)
+                    .HasColumnName("City_name");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CustomerDateOfBirth)
+                    .HasColumnType("datetime")
+                    .HasColumnName("customer_date_of_birth");
+
+                entity.Property(e => e.CustomerIdentificationId)
+                    .HasMaxLength(35)
+                    .HasColumnName("customer_identification_id");
+
+                entity.Property(e => e.CustomerIdentificationType)
+                    .HasMaxLength(4)
+                    .HasColumnName("customer_identification_type");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(200)
+                    .HasColumnName("customer_name");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(100)
+                    .HasColumnName("customer_number");
+
+                entity.Property(e => e.CustomerTaxId)
+                    .HasMaxLength(35)
+                    .HasColumnName("Customer_Tax_ID");
+
+                entity.Property(e => e.CustomerType)
+                    .HasMaxLength(50)
+                    .HasColumnName("customer_type");
+
+                entity.Property(e => e.GovernorateName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Governorate_name");
+
+                entity.Property(e => e.PhoneNumber1)
+                    .HasMaxLength(25)
+                    .HasColumnName("PHONE_NUMBER_1");
+
+                entity.Property(e => e.PhoneNumber2)
+                    .HasMaxLength(25)
+                    .HasColumnName("PHONE_NUMBER_2");
+
+                entity.Property(e => e.ResidenceCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("RESIDENCE_COUNTRY_NAME");
+
+                entity.Property(e => e.StreetAddress1)
+                    .HasMaxLength(35)
+                    .HasColumnName("street_address_1");
+
+                entity.Property(e => e.StreetCountryCode)
+                    .HasMaxLength(3)
+                    .HasColumnName("STREET_COUNTRY_CODE");
+
+                entity.Property(e => e.StreetCountryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("STREET_COUNTRY_NAME");
+
+                entity.Property(e => e.StreetPostalCode)
+                    .HasMaxLength(10)
+                    .HasColumnName("STREET_POSTAL_CODE");
+            });
+
+            modelBuilder.Entity<ArtScenarioAdminView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_SCENARIO_ADMIN_VIEW", "ART_DB");
+
+                entity.Property(e => e.AlarmCategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALARM_CATEGORY");
+
+                entity.Property(e => e.AlarmSubcategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALARM_SUBCATEGORY");
+
+                entity.Property(e => e.AlarmType)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALARM_TYPE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.DependedData)
+                    .HasMaxLength(1024)
+                    .HasColumnName("DEPENDED_DATA");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("END_DATE");
+
+                entity.Property(e => e.ObjectLevel)
+                    .HasMaxLength(4000)
+                    .HasColumnName("OBJECT_LEVEL");
+
+                entity.Property(e => e.ParamCondition)
+                    .HasMaxLength(1000)
+                    .HasColumnName("PARAM_CONDITION");
+
+                entity.Property(e => e.ParmDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("PARM_DESC");
+
+                entity.Property(e => e.ParmName)
+                    .HasMaxLength(32)
+                    .HasColumnName("PARM_NAME");
+
+                entity.Property(e => e.ParmTypeDesc)
+                    .HasMaxLength(32)
+                    .HasColumnName("PARM_TYPE_DESC");
+
+                entity.Property(e => e.ParmValue)
+                    .HasMaxLength(1024)
+                    .HasColumnName("PARM_VALUE");
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(4000)
+                    .HasColumnName("PRODUCT_TYPE");
+
+                entity.Property(e => e.RiskFact)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_FACT")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ScenarioCategory)
+                    .HasMaxLength(4000)
+                    .HasColumnName("SCENARIO_CATEGORY");
+
+                entity.Property(e => e.ScenarioDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("SCENARIO_DESC");
+
+                entity.Property(e => e.ScenarioFrequency)
+                    .HasMaxLength(4000)
+                    .HasColumnName("SCENARIO_FREQUENCY");
+
+                entity.Property(e => e.ScenarioMessage)
+                    .HasMaxLength(255)
+                    .HasColumnName("SCENARIO_MESSAGE");
+
+                entity.Property(e => e.ScenarioName)
+                    .HasMaxLength(32)
+                    .HasColumnName("SCENARIO_NAME");
+
+                entity.Property(e => e.ScenarioShortDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("SCENARIO_SHORT_DESC");
+
+                entity.Property(e => e.ScenarioStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("SCENARIO_STATUS");
+
+                entity.Property(e => e.ScenarioType)
+                    .HasMaxLength(4000)
+                    .HasColumnName("SCENARIO_TYPE");
+
+                entity.Property(e => e.ScorDependAttribute)
+                    .HasMaxLength(300)
+                    .HasColumnName("SCOR_DEPEND_ATTRIBUTE");
+
+                entity.Property(e => e.ScorParmName)
+                    .HasMaxLength(32)
+                    .HasColumnName("SCOR_PARM_NAME");
+            });
+
+            modelBuilder.Entity<ArtScenarioHistoryView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_SCENARIO_HISTORY_VIEW", "ART_DB");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Create_User_Id");
+
+                entity.Property(e => e.EventDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Event_Desc");
+
+                entity.Property(e => e.RoutineName)
+                    .HasMaxLength(32)
+                    .HasColumnName("Routine_Name");
+
+                entity.Property(e => e.RoutineShortDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("Routine_Short_Desc");
+            });
+
+            modelBuilder.Entity<ArtSuspectDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_SUSPECT_DETAIL_VIEW", "ART_DB");
+
+                entity.Property(e => e.AgeOfOldestAlert).HasColumnName("AGE_OF_OLDEST_ALERT");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CitizenCntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Citizen_Cntry_Name");
+
+                entity.Property(e => e.CustBirthDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Cust_Birth_Date");
+
+                entity.Property(e => e.CustIdentExpDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Cust_Ident_Exp_Date");
+
+                entity.Property(e => e.CustIdentId)
+                    .HasMaxLength(35)
+                    .HasColumnName("Cust_Ident_Id");
+
+                entity.Property(e => e.CustIdentIssDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Cust_Ident_Iss_Date");
+
+                entity.Property(e => e.CustIdentTypeDesc)
+                    .HasMaxLength(20)
+                    .HasColumnName("Cust_Ident_Type_Desc");
+
+                entity.Property(e => e.CustSinceDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Cust_Since_Date");
+
+                entity.Property(e => e.EmprName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Empr_Name");
+
+                entity.Property(e => e.NumberOfAlarms).HasColumnName("NUMBER_OF_ALARMS");
+
+                entity.Property(e => e.OccupDesc)
+                    .HasMaxLength(35)
+                    .HasColumnName("Occup_Desc");
+
+                entity.Property(e => e.OwnerUserId)
+                    .HasMaxLength(240)
+                    .HasColumnName("OWNER_USER_ID");
+
+                entity.Property(e => e.PoliticalExpPrsnInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Political_Exp_Prsn_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ProfileRisk)
+                    .HasMaxLength(32)
+                    .HasColumnName("PROFILE_RISK");
+
+                entity.Property(e => e.RiskClassification).HasColumnName("risk_classification");
+
+                entity.Property(e => e.SuspectName)
+                    .HasMaxLength(100)
+                    .HasColumnName("SUSPECT_NAME");
+
+                entity.Property(e => e.SuspectNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("SUSPECT_NUMBER");
+
+                entity.Property(e => e.TelNo1)
+                    .HasMaxLength(25)
+                    .HasColumnName("Tel_No_1");
+            });
             //for sake for build => toChange when convert to oracle
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {
