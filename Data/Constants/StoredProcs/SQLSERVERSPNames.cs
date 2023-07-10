@@ -38,6 +38,8 @@ namespace Data.Constants.StoredProcs
         //DGAML
         public static readonly string ART_ST_DGAML_ALERT_PER_OWNER = "[ART_DB].[ART_ST_DGAML_ALERT_PER_OWNER]";
         public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_DGAML_ALERTS_PER_STATUS]";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_ALERTS_PER_BRANCH]";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";
         public static readonly string ART_ST_DGAML_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_BRANCH]";
         public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH]";
         public static readonly string ART_ST_DGAML_CUSTOMER_PER_TYPE = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_TYPE]";
