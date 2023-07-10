@@ -36,13 +36,8 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    //{"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    ////{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    //{"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                    {"CreateUserId".ToLower(),_dropDown.GetDGCreateUserIdDropDown().ToDynamicList() },
+                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].SkipList : new();

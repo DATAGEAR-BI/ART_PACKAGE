@@ -81,6 +81,18 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetDGAlarmTypeDropDown();
         public List<string> GetDGAlarmCategoryDropDown();
         public List<string> GetDGAlarmSubcategoryDropDown();
+        public List<string> GetDGCreateUserIdDropDown();
+        public List<string> GetDGScenarioNameDropDown();
+        public List<string> GetDGRiskFactDropDown();
+        public List<string> GetDGBranchNameDropDown();
+        public List<string> GetDGProfileRiskDropDown();
+        public List<string> GetDGOwnerDropDown();
+        public List<string> GetDGPoliticalExpPrsnIndDropDown();
+        public List<string> GetDGRiskClassificationDropDown();
+        public List<string> GetDGCustIdentTypeDescDropDown();
+        public List<string> GetDGOccupDescDropDown();
+        public List<string> GetDGCitizenCountryNameDropDown();
+        public List<string> GetDGRoutineCreateUserIdDropDown();
 
     }
 }

@@ -36,6 +36,7 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
+                    {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown().ToDynamicList() },
                     {"ScenarioCategory".ToLower(),_dropDown.GetDGScenarioCategoryDropDown().ToDynamicList() },
                     {"ScenarioStatus".ToLower(),_dropDown.GetDGScenarioStatusDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),_dropDown.GetDGProductTypeDropDown().ToDynamicList() },
@@ -44,7 +45,9 @@ namespace ART_PACKAGE.Controllers
                     {"ObjectLevel".ToLower(),_dropDown.GetDGObjectLevelDropDown().ToDynamicList() },
                     {"AlarmType".ToLower(),_dropDown.GetDGAlarmTypeDropDown().ToDynamicList() },
                     {"AlarmCategory".ToLower(),_dropDown.GetDGAlarmCategoryDropDown().ToDynamicList() },
-                    {"AlarmSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown().ToDynamicList() }
+                    {"AlarmSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown().ToDynamicList() },
+                    {"RiskFact".ToLower(),_dropDown.GetDGRiskFactDropDown().ToDynamicList() },
+                    {"CreateUserId".ToLower(),_dropDown.GetDGRoutineCreateUserIdDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].SkipList : new();

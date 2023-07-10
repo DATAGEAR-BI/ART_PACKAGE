@@ -36,13 +36,14 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    //{"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    ////{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    //{"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown().ToDynamicList() },
+                    {"ProfileRisk".ToLower(),_dropDown.GetDGProfileRiskDropDown().ToDynamicList() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetDGOwnerDropDown().ToDynamicList() },
+                    {"PoliticalExpPrsnInd".ToLower(),_dropDown.GetDGPoliticalExpPrsnIndDropDown().ToDynamicList() },
+                    {"RiskClassification".ToLower(),_dropDown.GetDGRiskClassificationDropDown().ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown.GetDGCitizenCountryNameDropDown().ToDynamicList() },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown.GetDGCustIdentTypeDescDropDown().ToDynamicList() },
+                    {"OccupDesc".ToLower(),_dropDown.GetDGOccupDescDropDown().ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].SkipList : new();

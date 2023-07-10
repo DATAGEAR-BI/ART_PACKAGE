@@ -530,55 +530,119 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetDGScenarioCategoryDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGScenarioStatusDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGProductTypeDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("PRODUCT_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("PRODUCT_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGScenarioTypeDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGScenarioFrequencyDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("SCENARIO_FREQUENCY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_FREQUENCY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGObjectLevelDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("OBJECT_LEVEL") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("OBJECT_LEVEL") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGAlarmTypeDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGAlarmCategoryDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDGAlarmSubcategoryDropDown()
         {
-            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.Contains("ALARM_SUBCATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            var distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_SUBCATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGCreateUserIdDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcScenarioEvents.Select(x => x.CreateUserId).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGScenarioNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcRoutines.Select(x => x.RoutineName).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGRiskFactDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcRoutines.Where(x=> !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Distinct().ToList();
+            return distinct_value;
+        }
+
+        public List<string> GetDGBranchNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Accounts.Where(x=> !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGProfileRiskDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.RiskScoreCd)).Select(x => x.RiskScoreCd).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGOwnerDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.OwnerUid)).Select(x => x.OwnerUid).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGPoliticalExpPrsnIndDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.PoliticalExpPrsnInd)).Select(x => x.PoliticalExpPrsnInd).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGRiskClassificationDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Customers.Where(x => x.RiskClass != null).Select(x => x.RiskClass.ToString()).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCitizenCountryNameDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCustIdentTypeDescDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustIdentTypeDesc)).Select(x => x.CustIdentTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGOccupDescDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.OccupDesc)).Select(x => x.OccupDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGRoutineCreateUserIdDropDown()
+        {
+            var distinct_value = _dbSrv.DGAML.AcRoutines.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Distinct().ToList();
             return distinct_value;
         }
     }
