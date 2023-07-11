@@ -638,6 +638,124 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(DGAMLTriageController).ToLower(),new ReportConfig{
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
+                        {  "AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "RiskScore",new DisplayNameAndFormat { DisplayName ="Risk Score"}},
+                        {  "QueueCode",new DisplayNameAndFormat { DisplayName ="Queue Code"}},
+                        {  "OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner User ID"}},
+                        {  "AlertedEntityLevel",new DisplayNameAndFormat { DisplayName ="Alerted Entity Level"}},
+                        {  "AggregateAmt",new DisplayNameAndFormat { DisplayName ="Aggregate Amount"}},
+                        {  "AgeOldestAlert",new DisplayNameAndFormat { DisplayName ="Age Oldest Alert"}},
+                        {  "AlertsCntSum",new DisplayNameAndFormat { DisplayName ="Alerts Count Sum"}},
+                    }
+                }
+            },
+            {
+                nameof(DGAMLAlertDetailsController).ToLower(),new ReportConfig{
+                    SkipList=new List<string>()
+                    {
+                        "ActualValuesText"
+                    },
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "AlarmId",new DisplayNameAndFormat { DisplayName ="Alert ID"}},
+                        {  "AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
+                        {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
+                        {  "AlertDescription",new DisplayNameAndFormat { DisplayName ="Alert Description"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "ScenarioId",new DisplayNameAndFormat { DisplayName ="Scenario ID"}},
+                        {  "ScenarioName",new DisplayNameAndFormat { DisplayName ="Scenario Name"}},
+                        {  "MoneyLaunderingRiskScore",new DisplayNameAndFormat { DisplayName ="Money Laundering Risk Score"}},
+                        {  "AlertCategory",new DisplayNameAndFormat { DisplayName ="Alert Category"}},
+                        {  "AlertSubcategory",new DisplayNameAndFormat { DisplayName ="Alert Sub Category"}},
+                        {  "AlertStatus",new DisplayNameAndFormat { DisplayName ="Alert Status"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {  "RunDate",new DisplayNameAndFormat { DisplayName ="Run Date"}},
+                        {  "PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
+                        {  "EmpInd",new DisplayNameAndFormat { DisplayName ="Emp Indication"}},
+                        {  "ClosedUserId",new DisplayNameAndFormat { DisplayName ="Closed User ID"}},
+                        {  "CloseUserName",new DisplayNameAndFormat { DisplayName ="Close User Name"}},
+                        {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
+                        {  "CloseReason",new DisplayNameAndFormat { DisplayName ="Close Reason"}},
+                        {  "InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}},
+                    }
+                }
+            },
+            {
+                nameof(DGAMLCasesDetailsController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>()
+                    {
+                        "CaseStatusCode",
+                        "CaseCategoryCode"
+                    },
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "EntityNumber",new DisplayNameAndFormat { DisplayName ="Entity Number"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                        {  "CasePriority",new DisplayNameAndFormat { DisplayName ="Case Priority"}},
+                        {  "CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                        {  "CaseCategory",new DisplayNameAndFormat { DisplayName ="Case Category"}},
+                        {  "CaseSubCategoryCode",new DisplayNameAndFormat { DisplayName ="Case Sub Category Code"}},
+                        {  "EntityLevel",new DisplayNameAndFormat { DisplayName ="Entity Level"}},
+                        {  "CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    }
+                }
+            },
+            {
+                nameof(DGAMLCustomersDetailsController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>()
+                    {
+                        "CustomerTaxId",
+                        "GovernorateName",
+                        "DoingBusinessAsName",
+                        "CustomerStatus",
+                        "StreetPostalCode",
+                        "StreetCountryCode",
+                        "StreetCountryName",
+                        "MailingAddress1",
+                        "MailingCityName",
+                        "MailingPostalCode",
+                        "MailingCountryName",
+                        "IsEmployee",
+                        "EmployeeNumber",
+                        "EmployerName",
+                        "EmployerPhoneNumber",
+                        "EmailAddress",
+                        "PhoneNumber1",
+                        "PhoneNumber2",
+                        "PhoneNumber3",
+                        "AnnualIncomeAmount",
+                        "NetWorthAmount",
+                        "LastRiskAssessmentDate"
+                    },
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                        {  "CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
+                        {  "CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
+                        {  "CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
+                        {  "CustomerDateOfBirth",new DisplayNameAndFormat { DisplayName ="Customer Date Of Birth"}},
+                        {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+                        {  "StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
+                        {  "CityName",new DisplayNameAndFormat { DisplayName ="City Name"}},
+                        {  "ResidenceCountryName",new DisplayNameAndFormat { DisplayName = "Residence Country"}},
+                        {  "CitizenshipCountryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
+                        {  "OccupationDesc",new DisplayNameAndFormat { DisplayName ="Occupation Description"}},
+                        {  "IndustryDesc",new DisplayNameAndFormat { DisplayName ="Industry Description"}},
+                        {  "MaritalStatusDesc",new DisplayNameAndFormat { DisplayName ="Marital Status"}},
+                        {  "CustomerSinceDate",new DisplayNameAndFormat { DisplayName ="Customer Since Date"}},
+                        {  "NonProfitOrgInd",new DisplayNameAndFormat { DisplayName ="Non Profit Org IND"}},
+                        {  "PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
+                        {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+
+                    }
+                }
+            },
         };
 
     }
