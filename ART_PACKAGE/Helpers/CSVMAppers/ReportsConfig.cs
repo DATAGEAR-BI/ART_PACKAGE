@@ -699,7 +699,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     SkipList = new List<string>()
                     {
                         "CaseStatusCode",
-                        "CaseCategoryCode"
+                        "CaseCategoryCode",
+                        "CaseSubCategoryCode"
                     },
                     DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
                         {  "CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
@@ -709,7 +710,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CasePriority",new DisplayNameAndFormat { DisplayName ="Case Priority"}},
                         {  "CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
                         {  "CaseCategory",new DisplayNameAndFormat { DisplayName ="Case Category"}},
-                        {  "CaseSubCategoryCode",new DisplayNameAndFormat { DisplayName ="Case Sub Category Code"}},
                         {  "EntityLevel",new DisplayNameAndFormat { DisplayName ="Entity Level"}},
                         {  "CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
                         {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
