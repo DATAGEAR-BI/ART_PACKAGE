@@ -3040,6 +3040,32 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.TotalNumberOfOutliers).HasColumnName("Total_Number_of_Outliers");
             });
+            modelBuilder.Entity<ArtCustsPerTypeTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTS_PER_TYPE_TB", "ART_DB");
+
+                entity.Property(e => e.MonthKey)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_KEY")
+                    .UseCollation("Arabic_CI_AI");
+
+                entity.Property(e => e.NumberOfCustomers).HasColumnName("Number_Of_Customers");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_TYPE_DESC")
+                    .UseCollation("Arabic_CI_AI");
+
+                entity.Property(e => e.SegmentSorted)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("SEGMENT_SORTED")
+                    .UseCollation("Arabic_CI_AI");
+            });
             //for sake for build => toChange when convert to oracle
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {

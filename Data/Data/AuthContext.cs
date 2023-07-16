@@ -87,6 +87,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtMebSegmentsV3Tb> ArtMebSegmentsV3Tbs { get; set; } = null!;
     public virtual DbSet<ArtSegoutvsallcustTb> ArtSegoutvsallcustTbs { get; set; } = null!;
     public virtual DbSet<ArtSegoutvsalloutTb> ArtSegoutvsalloutTbs { get; set; } = null!;
+    public virtual DbSet<ArtCustsPerTypeTb> ArtCustsPerTypeTbs { get; set; } = null!;
 
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)

@@ -862,6 +862,19 @@ namespace SqlServerMigrations.Migrations
                 drop table [ART_DB].[ART_CHANGED_SEGMENT_TB];
             SELECT * INTO   [ART_DB].[ART_CHANGED_SEGMENT_TB] FROM   [ART_DB].[ART_CHANGED_SEGMENT];");
             //--------------------------------------------------------//
+            //ART_CUSTS_PER_TYPE
+            migrationBuilder.Sql($@"
+            CREATE VIEW [ART_DB].[ART_CUSTS_PER_TYPE]  AS 
+                      select 
+                    MONTH_KEY,PARTY_TYPE_DESC,SEGMENT_SORTED,count(PARTY_NUMBER)Number_Of_Customers
+                    from [ART_DB].art_meb_segments_v3_tb
+                    group by
+                    MONTH_KEY,PARTY_TYPE_DESC,SEGMENT_SORTED;
+            ");
+            migrationBuilder.Sql($@"
+            IF OBJECT_ID('[ART_DB].[ART_CUSTS_PER_TYPE_TB]', 'U') IS NOT NULL
+                        drop table FCFKC.ART_CUSTS_PER_TYPE_TB;
+            SELECT * INTO   [ART_DB].[ART_CUSTS_PER_TYPE_TB] FROM   [ART_DB].[ART_CUSTS_PER_TYPE];");
             #endregion
         }
 
