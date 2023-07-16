@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.SEGMODEL
+namespace Data.Data
 {
     public partial class ArtSegoutvsallcustTb
     {
