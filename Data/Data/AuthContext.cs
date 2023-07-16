@@ -5,6 +5,7 @@ using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Data.ModelCreatingStrategies;
+using Data.SEGMODEL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
@@ -75,6 +76,18 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
     public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
     public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
+    // SEGMENT 
+    public virtual DbSet<ArtAlertsPerSegmentTb> ArtAlertsPerSegmentTbs { get; set; } = null!;
+    public virtual DbSet<ArtAllSegmentCustCountTb> ArtAllSegmentCustCountTbs { get; set; } = null!;
+    public virtual DbSet<ArtAllSegmentsOutliersTb> ArtAllSegmentsOutliersTbs { get; set; } = null!;
+    public virtual DbSet<ArtAllSegsFeatrsStatcsTb> ArtAllSegsFeatrsStatcsTbs { get; set; } = null!;
+    public virtual DbSet<ArtAllSegsOutliersLimitTb> ArtAllSegsOutliersLimitTbs { get; set; } = null!;
+    public virtual DbSet<ArtChangedSegmentTb> ArtChangedSegmentTbs { get; set; } = null!;
+    public virtual DbSet<ArtIndustrySegmentTb> ArtIndustrySegmentTbs { get; set; } = null!;
+    public virtual DbSet<ArtMebSegmentsV3Tb> ArtMebSegmentsV3Tbs { get; set; } = null!;
+    public virtual DbSet<ArtSegoutvsallcustTb> ArtSegoutvsallcustTbs { get; set; } = null!;
+    public virtual DbSet<ArtSegoutvsalloutTb> ArtSegoutvsalloutTbs { get; set; } = null!;
+
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
     {
