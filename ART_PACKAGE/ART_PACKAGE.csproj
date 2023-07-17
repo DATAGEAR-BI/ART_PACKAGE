@@ -1716,4 +1716,8 @@
 		<TypeScriptCompile Include="wwwroot\lib\spin.js\SpinnerOptions.d.ts" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\js\SegmentationScripts\" />
+	</ItemGroup>
+
 </Project>
