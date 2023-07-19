@@ -261,66 +261,68 @@
                     </li>
 
                         @*/////*@
-                    <li class="treeview  ">
-                        <a href="#">
-                            <i class="glyphicon glyphicon-book"></i> <span>DG User Management Reports</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfUser")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Report</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfGroups")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Report</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Roles Report</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfUsersAndGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups Roles</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfUsersGroup")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfUsersRoles")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Roles</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListGroupsRolesSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Roles Summary</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListGroupsSubGroupsSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Sub Groups Summary</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "ListOfDeletedUsers")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Deleted Users</span></a>
-                            </li>
-                            <li class="active ">
-                                <a href="@Url.Action("Index", "LastLoginPerDay")"><i class="glyphicon glyphicon-globe"></i> <span>User Last Login Per Day Report</span></a>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> <span>DG Audit Reports</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "AuditUsers")"><i class="glyphicon glyphicon-globe"></i> <span>User Audit Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "AuditGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Group Audit Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "AuditRoles")"><i class="glyphicon glyphicon-globe"></i> <span>Role Audit Report</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
+                    @if (AMLType == AMLReportsTypes.DG)
+                    {
+                        <li class="treeview  ">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-book"></i> <span>DG User Management Reports</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUser")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Report</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfGroups")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Report</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Roles Report</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersAndGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups Roles</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersGroup")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersRoles")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Roles</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListGroupsRolesSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Roles Summary</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListGroupsSubGroupsSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Sub Groups Summary</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfDeletedUsers")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Deleted Users</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "LastLoginPerDay")"><i class="glyphicon glyphicon-globe"></i> <span>User Last Login Per Day Report</span></a>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>DG Audit Reports</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditUsers")"><i class="glyphicon glyphicon-globe"></i> <span>User Audit Report</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Group Audit Report</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditRoles")"><i class="glyphicon glyphicon-globe"></i> <span>Role Audit Report</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                     <li class="treeview ">
                         <a href="#">
                             <i class="glyphicon glyphicon-book"></i> <span>GoAml Reports</span>
