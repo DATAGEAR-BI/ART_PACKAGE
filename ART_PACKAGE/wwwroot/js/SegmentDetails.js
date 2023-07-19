@@ -42,6 +42,9 @@ async function onChangeSegment(e) {
     var selectedSegmentType = document.getElementById('PartyTypeDesc').value;
     var selectedSegment = e.target.value;
     var baseUrl = URLS.AllSegmentsOutliersNew.split("?")[0];
+    console.log(URLS.AllSegmentsOutliersNew);
     URLS.AllSegmentsOutliersNew = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
+    console.log(URLS.AllSegmentsOutliersNew);
+
     $("#grid").data("kendoGrid").dataSource.read();
 }
