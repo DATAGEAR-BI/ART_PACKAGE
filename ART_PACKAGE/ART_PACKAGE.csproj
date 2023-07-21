@@ -7,6 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\js\segmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="wwwroot\bower_components\bootstrap\.bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\CHANGELOG.md" />
@@ -1675,6 +1683,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\segmentReport.js" />
 	</ItemGroup>
 
 

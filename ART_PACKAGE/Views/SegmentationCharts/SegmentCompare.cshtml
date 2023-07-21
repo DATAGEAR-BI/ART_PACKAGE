@@ -1,0 +1,843 @@
+﻿
+@{
+    ViewData["Title"] = "Comparison Segments";
+}
+
+<section class="content ">
+    <div style="text-align:center">
+        <h2>Comparison Customers's Segments</h2>
+    </div>
+    <div class="text-center">
+        <div class="row top-buffer">
+
+            <div class="col-md-6">
+                <!-- <label style="display: block; text-align: center;">Hi</label> -->
+                <label>Run Month</label>
+                <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
+                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                    <option value="monthKey">-- Not Selected --</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <!-- <label style="display: block; text-align: center;">Hi</label> -->
+                <label>Segment Type</label>
+                <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
+                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                    <option value="segmentType">-- Not Selected --</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+    <hr style="border:3px ;border-top: 3px solid #013459 ">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="CustCountPerTypeCharth3">Number of Customers Per Type</h3>
+                <h4 class="text-center">You can double click any type slice to display other charts</h4>
+            </div>
+            <link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+
+            <div id="CustCountPerTypeChart" style="height:700px;padding-bottom:50px;"></div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="segChartCounth3">Number of Customers Per Segment</h3>
+            </div>
+            <link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+            <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+
+
+            <div id="SegmentsCustCountChart" style="height:700px;padding-bottom:50px;"></div>
+        </div>
+        <div class="col-md-12">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="segChartAlertCounth3">Number of Alerts Per Segment</h3>
+            </div>
+            <div id="SegmentsAlertCountChart" style="height:700px;padding-bottom:50px;"></div>
+        </div>
+    </div>
+
+    <hr style="border:3px ;border-top: 3px solid #013459 ">
+
+    <h3 class="text-center" style="display:none" id="segCharth3">  Segments Comparison Chart</h3>
+    <div class="row">
+        <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/stacked-3D-column-chart/index.css" />
+        <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+        <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+        <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+
+        <div id="SegmentsComparisonChart" class="col-md-12" style="height:1000px;padding-bottom:50px;"></div>
+
+    </div>
+</section>
+
+<script>
+    var selectedMonthKey = "";
+    var selectedSegmentType = "";
+    makeSpinner("/SegmentationCharts/MonthKeys", "month-key-spinner", "monthKey");
+    function onChangeMonthKey(e) {
+        selectedMonthKey = e.value;
+        makeSpinner("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, "segment-type", "segmentType");
+        DrawOnMonthCharts();
+    }
+    function onChangeSegmentType(e) {
+        selectedSegmentType = e.value;
+        makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + selectedSegmentType);
+        PrepDataDrawChart(selectedSegmentType);
+        DrawCharts(selectedSegmentType);
+    }
+
+
+
+    function makeSpinner(url, divId, spinnerDefaultValue) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {
+            },
+            success: function (data) {
+                queueList = data;
+
+                var select = document.getElementById(divId);
+                select.innerHTML = "";
+                var fopt = document.createElement('option');
+                fopt.value = spinnerDefaultValue;
+                fopt.innerHTML = spinnerDefaultValue;
+                select.appendChild(fopt);
+                queueList.forEach(q => {
+                    var opt = document.createElement('option');
+                    opt.value = q;
+                    opt.innerHTML = q;
+                    select.appendChild(opt);
+                })
+            },
+
+        });
+    }
+    function PrepDataDrawChart(SegmentType) {
+
+        //start get the current selected monthKey & current Type
+        var monthkey = document.getElementById('month-key-spinner').value;
+        var Type = SegmentType;
+        //End
+
+        //display elments
+        document.getElementById('segCharth3').style.display = "block";
+
+
+        //start getting all segments data from api according to the current selected
+        $.ajax({
+            type: "GET",
+            url: "/SegmentationCharts/GetAllSegmentData?monthKey=" + monthkey + "&Type=" + Type,
+            data: {
+            },
+            success: function (data) {
+                console.log("Hello World");
+                console.log(data);
+                am4core.useTheme(am4themes_animated);
+                am4core.addLicense("ch-custom-attribution");
+                var chart = am4core.create("SegmentsComparisonChart", am4charts.XYChart3D);
+                chart.data = data;
+                chart.exporting.menu = new am4core.ExportMenu();
+                      chart.exporting.menu.items = [{
+                      "label": "...",
+                      "menu": [
+                         { "type": "svg", "label": "Save" },
+                       ]
+                }];
+                chart.padding(30, 30, 10, 30);
+                chart.legend = new am4charts.Legend();
+                chart.colors.step = 2;
+                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "SegmentSorted";
+                categoryAxis.renderer.minGridDistance = 10;
+                categoryAxis.renderer.grid.template.location = 1;
+                categoryAxis.interactionsEnabled = false;
+
+                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.tooltip.disabled = true;
+                valueAxis.renderer.grid.template.strokeOpacity = 0.05;
+                valueAxis.renderer.minGridDistance = 15;
+                valueAxis.interactionsEnabled = true;
+                valueAxis.min = 5;
+                valueAxis.renderer.minWidth = 35;
+                valueAxis.renderer.labels.template.fontSize = 17;
+
+                /*For Cash */
+
+                var series1 = chart.series.push(new am4charts.ColumnSeries3D());
+                series1.columns.template.width = am4core.percent(80);
+                series1.columns.template.tooltipText = "{name}: {valueY.value}";
+                series1.name = "Total Cash Credit Amount";
+                series1.dataFields.categoryX = "SegmentSorted";
+                series1.dataFields.valueY = "TotalCashCAmt";
+                series1.stacked = true;
+                series1.tooltip.fontSize = 17;
+
+                var series2 = chart.series.push(new am4charts.ColumnSeries3D());
+                series2.columns.template.width = am4core.percent(80);
+                series2.columns.template.tooltipText = "{name}: {valueY.value}";
+                series2.name = "Total Cash Debit Amount";
+                series2.dataFields.categoryX = "SegmentSorted";
+                series2.dataFields.valueY = "TotalCashDAmt";
+                series2.stacked = true;
+                series2.tooltip.fontSize = 17;
+
+                var series3 = chart.series.push(new am4charts.ColumnSeries3D());
+                series3.columns.template.width = am4core.percent(80);
+                series3.columns.template.tooltipText = "{name}: {valueY.value}";
+                series3.name = "Average Cash Credit Amount";
+                series3.dataFields.categoryX = "SegmentSorted";
+                series3.dataFields.valueY = "AvgCashCAmt";
+                series3.stacked = true;
+                series3.hidden = true;
+                series3.tooltip.fontSize = 17;
+
+                var series4 = chart.series.push(new am4charts.ColumnSeries3D());
+                series4.columns.template.width = am4core.percent(80);
+                series4.columns.template.tooltipText = "{name}: {valueY.value}";
+                series4.name = "Average Cash Debit Amount";
+                series4.dataFields.categoryX = "SegmentSorted";
+                series4.dataFields.valueY = "AvgCashDAmt";
+                series4.stacked = true;
+                series4.hidden = true;
+                series4.tooltip.fontSize = 17;
+
+                var series5 = chart.series.push(new am4charts.ColumnSeries3D());
+                series5.columns.template.width = am4core.percent(80);
+                series5.columns.template.tooltipText = "{name}: {valueY.value}";
+                series5.name = "Max Cash Credit Amount";
+                series5.dataFields.categoryX = "SegmentSorted";
+                series5.dataFields.valueY = "MaxCashCAmt";
+                series5.stacked = true;
+                series5.hidden = true;
+                series5.tooltip.fontSize = 17;
+
+                var series6 = chart.series.push(new am4charts.ColumnSeries3D());
+                series6.columns.template.width = am4core.percent(80);
+                series6.columns.template.tooltipText = "{name}: {valueY.value}";
+                series6.name = "Max Cash Debit Amount";
+                series6.dataFields.categoryX = "SegmentSorted";
+                series6.dataFields.valueY = "MaxCashDAmt";
+                series6.stacked = true;
+                series6.hidden = true;
+                series6.tooltip.fontSize = 17;
+
+                var series7 = chart.series.push(new am4charts.ColumnSeries3D());
+                series7.columns.template.width = am4core.percent(80);
+                series7.columns.template.tooltipText = "{name}: {valueY.value}";
+                series7.name = "Min Cash Credit Amount";
+                series7.dataFields.categoryX = "SegmentSorted";
+                series7.dataFields.valueY = "MinCashCAmt";
+                series7.stacked = true;
+                series7.hidden = true;
+                series7.tooltip.fontSize = 17;
+
+                var series8 = chart.series.push(new am4charts.ColumnSeries3D());
+                series8.columns.template.width = am4core.percent(80);
+                series8.columns.template.tooltipText = "{name}: {valueY.value}";
+                series8.name = "Min Cash Debit Amount";
+                series8.dataFields.categoryX = "SegmentSorted";
+                series8.dataFields.valueY = "MinCashDAmt";
+                series8.stacked = true;
+                series8.hidden = true;
+                series8.tooltip.fontSize = 17;
+
+                ///*For Wires */
+
+                var series9 = chart.series.push(new am4charts.ColumnSeries3D());
+                series9.columns.template.width = am4core.percent(80);
+                series9.columns.template.tooltipText = "{name}: {valueY.value}";
+                series9.name = "Total Wire Credit Amount";
+                series9.dataFields.categoryX = "SegmentSorted";
+                series9.dataFields.valueY = "TotalWireCAmt";
+                series9.stacked = true;
+                series9.hidden = true;
+                series9.tooltip.fontSize = 17;
+
+
+                var series10 = chart.series.push(new am4charts.ColumnSeries3D());
+                series10.columns.template.width = am4core.percent(80);
+                series10.columns.template.tooltipText = "{name}: {valueY.value}";
+                series10.name = "Total Wire Debit Amount";
+                series10.dataFields.categoryX = "SegmentSorted";
+                series10.dataFields.valueY = "TotalWireDAmt";
+                series10.stacked = true;
+                series10.hidden = true;
+                series10.tooltip.fontSize = 17;
+
+                var series11 = chart.series.push(new am4charts.ColumnSeries3D());
+                series11.columns.template.width = am4core.percent(80);
+                series11.columns.template.tooltipText = "{name}: {valueY.value}";
+                series11.name = "Average Wire Credit Amount";
+                series11.dataFields.categoryX = "SegmentSorted";
+                series11.dataFields.valueY = "AvgWireCAmt";
+                series11.stacked = true;
+                series11.hidden = true;
+                series11.tooltip.fontSize = 17;
+
+                var series12 = chart.series.push(new am4charts.ColumnSeries3D());
+                series12.columns.template.width = am4core.percent(80);
+                series12.columns.template.tooltipText = "{name}: {valueY.value}";
+                series12.name = "Average Wire Debit Amount";
+                series12.dataFields.categoryX = "SegmentSorted";
+                series12.dataFields.valueY = "AvgWireDAmt";
+                series12.stacked = true;
+                series12.hidden = true;
+                series12.tooltip.fontSize = 17;
+
+                var series13 = chart.series.push(new am4charts.ColumnSeries3D());
+                series13.columns.template.width = am4core.percent(80);
+                series13.columns.template.tooltipText = "{name}: {valueY.value}";
+                series13.name = "Max Wire Credit Amount";
+                series13.dataFields.categoryX = "SegmentSorted";
+                series13.dataFields.valueY = "MaxWireCAmt";
+                series13.stacked = true;
+                series13.hidden = true;
+                series13.tooltip.fontSize = 17;
+
+                var series14 = chart.series.push(new am4charts.ColumnSeries3D());
+                series14.columns.template.width = am4core.percent(80);
+                series14.columns.template.tooltipText = "{name}: {valueY.value}";
+                series14.name = "Max Wire Debit Amount";
+                series14.dataFields.categoryX = "SegmentSorted";
+                series14.dataFields.valueY = "MaxWireDAmt";
+                series14.stacked = true;
+                series14.hidden = true;
+                series14.tooltip.fontSize = 17;
+
+                var series15 = chart.series.push(new am4charts.ColumnSeries3D());
+                series15.columns.template.width = am4core.percent(80);
+                series15.columns.template.tooltipText = "{name}: {valueY.value}";
+                series15.name = "Min Wire Credit Amount";
+                series15.dataFields.categoryX = "SegmentSorted";
+                series15.dataFields.valueY = "MinWireCAmt";
+                series15.stacked = true;
+                series15.hidden = true;
+                series15.tooltip.fontSize = 17;
+
+                var series16 = chart.series.push(new am4charts.ColumnSeries3D());
+                series16.columns.template.width = am4core.percent(80);
+                series16.columns.template.tooltipText = "{name}: {valueY.value}";
+                series16.name = "Min Wire Debit Amount";
+                series16.dataFields.categoryX = "SegmentSorted";
+                series16.dataFields.valueY = "MinWireDAmt";
+                series16.stacked = true;
+                series16.hidden = true;
+                series16.tooltip.fontSize = 17;
+
+                ///*For Cheque */
+
+                //var series17 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series17.columns.template.width = am4core.percent(80);
+                //series17.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series17.name = "Total Cheque Credit Amount";
+                //series17.dataFields.categoryX = "SegmentSorted";
+                //series17.dataFields.valueY = "TotalCheckCAmt";
+                //series17.stacked = true;
+                //series17.hidden = true;
+                //series17.tooltip.fontSize = 17;
+
+                var series18 = chart.series.push(new am4charts.ColumnSeries3D());
+                series18.columns.template.width = am4core.percent(80);
+                series18.columns.template.tooltipText = "{name}: {valueY.value}";
+                series18.name = "Total Cheque Debit Amount";
+                series18.dataFields.categoryX = "SegmentSorted";
+                series18.dataFields.valueY = "TotalCheckDAmt";
+                series18.stacked = true;
+                series18.hidden = true;
+                series18.tooltip.fontSize = 17;
+
+                //var series19 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series19.columns.template.width = am4core.percent(80);
+                //series19.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series19.name = "Average Cheque Credit Amount";
+                //series19.dataFields.categoryX = "SegmentSorted";
+                //series19.dataFields.valueY = "AvgCheckCAmt";
+                //series19.stacked = true;
+                //series19.hidden = true;
+                //series19.tooltip.fontSize = 17;
+
+                var series20 = chart.series.push(new am4charts.ColumnSeries3D());
+                series20.columns.template.width = am4core.percent(80);
+                series20.columns.template.tooltipText = "{name}: {valueY.value}";
+                series20.name = "Average Cheque Debit Amount";
+                series20.dataFields.categoryX = "SegmentSorted";
+                series20.dataFields.valueY = "AvgCheckDAmt";
+                series20.stacked = true;
+                series20.hidden = true;
+                series20.tooltip.fontSize = 17;
+
+                //var series21 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series21.columns.template.width = am4core.percent(80);
+                //series21.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series21.name = "Max Cheque Credit Amount";
+                //series21.dataFields.categoryX = "SegmentSorted";
+                //series21.dataFields.valueY = "MaxCheckCAmt";
+                //series21.stacked = true;
+                //series21.hidden = true;
+                //series21.tooltip.fontSize = 17;
+
+                var series22 = chart.series.push(new am4charts.ColumnSeries3D());
+                series22.columns.template.width = am4core.percent(80);
+                series22.columns.template.tooltipText = "{name}: {valueY.value}";
+                series22.name = "Max Cheque Debit Amount";
+                series22.dataFields.categoryX = "SegmentSorted";
+                series22.dataFields.valueY = "MaxCheckDAmt";
+                series22.stacked = true;
+                series22.hidden = true;
+                series22.tooltip.fontSize = 17;
+
+                //var series23 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series23.columns.template.width = am4core.percent(80);
+                //series23.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series23.name = "Min Cheque Credit Amount";
+                //series23.dataFields.categoryX = "SegmentSorted";
+                //series23.dataFields.valueY = "MinCheckCAmt";
+                //series23.stacked = true;
+                //series23.hidden = true;
+                //series23.tooltip.fontSize = 17;
+
+                var series24 = chart.series.push(new am4charts.ColumnSeries3D());
+                series24.columns.template.width = am4core.percent(80);
+                series24.columns.template.tooltipText = "{name}: {valueY.value}";
+                series24.name = "Min Cheque Debit Amount";
+                series24.dataFields.categoryX = "SegmentSorted";
+                series24.dataFields.valueY = "MinCheckDAmt";
+                series24.stacked = true;
+                series24.hidden = true;
+                series24.tooltip.fontSize = 17;
+
+                ///*For Misc */
+
+                var series25 = chart.series.push(new am4charts.ColumnSeries3D());
+                series25.columns.template.width = am4core.percent(80);
+                series25.columns.template.tooltipText = "{name}: {valueY.value}";
+                series25.name = "Total Misc Credit Amount";
+                series25.dataFields.categoryX = "SegmentSorted";
+                series25.dataFields.valueY = "TotalMiscCAmt";
+                series25.stacked = true;
+                series25.hidden = true;
+                series25.tooltip.fontSize = 17;
+
+                //var series26 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series26.columns.template.width = am4core.percent(80);
+                //series26.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series26.name = "Total Misc Debit Amount";
+                //series26.dataFields.categoryX = "SegmentSorted";
+                //series26.dataFields.valueY = "TotalMiscDAmt";
+                //series26.stacked = true;
+                //series26.hidden = true;
+                //series26.tooltip.fontSize = 17;
+
+                var series27 = chart.series.push(new am4charts.ColumnSeries3D());
+                series27.columns.template.width = am4core.percent(80);
+                series27.columns.template.tooltipText = "{name}: {valueY.value}";
+                series27.name = "Average Misc Credit Amount";
+                series27.dataFields.categoryX = "SegmentSorted";
+                series27.dataFields.valueY = "AvgMiscCAmt";
+                series27.stacked = true;
+                series27.hidden = true;
+                series27.tooltip.fontSize = 17;
+
+                //var series28 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series28.columns.template.width = am4core.percent(80);
+                //series28.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series28.name = "Average Misc Debit Amount";
+                //series28.dataFields.categoryX = "SegmentSorted";
+                //series28.dataFields.valueY = "AvgMiscDAmt";
+                //series28.stacked = true;
+                //series28.hidden = true;
+                //series28.tooltip.fontSize = 17;
+
+                var series29 = chart.series.push(new am4charts.ColumnSeries3D());
+                series29.columns.template.width = am4core.percent(80);
+                series29.columns.template.tooltipText = "{name}: {valueY.value}";
+                series29.name = "Max Misc Credit Amount";
+                series29.dataFields.categoryX = "SegmentSorted";
+                series29.dataFields.valueY = "MaxMiscCAmt";
+                series29.stacked = true;
+                series29.hidden = true;
+                series29.tooltip.fontSize = 17;
+
+                //var series30 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series30.columns.template.width = am4core.percent(80);
+                //series30.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series30.name = "Max Misc Debit Amount";
+                //series30.dataFields.categoryX = "SegmentSorted";
+                //series30.dataFields.valueY = "MaxMiscDAmt";
+                //series30.stacked = true;
+                //series30.hidden = true;
+                //series30.tooltip.fontSize = 17;
+
+                var series31 = chart.series.push(new am4charts.ColumnSeries3D());
+                series31.columns.template.width = am4core.percent(80);
+                series31.columns.template.tooltipText = "{name}: {valueY.value}";
+                series31.name = "Min Misc Credit Amount";
+                series31.dataFields.categoryX = "SegmentSorted";
+                series31.dataFields.valueY = "MinMiscCAmt";
+                series31.stacked = true;
+                series31.hidden = true;
+                series31.tooltip.fontSize = 17;
+
+                //var series32 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series32.columns.template.width = am4core.percent(80);
+                //series32.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series32.name = "Min Misc Debit Amount";
+                //series32.dataFields.categoryX = "SegmentSorted";
+                //series32.dataFields.valueY = "MinMiscDAmt";
+                //series32.stacked = true;
+                //series32.hidden = true;
+                //series32.tooltip.fontSize = 17;
+
+                ///*For Internal transfer */
+
+                var series33 = chart.series.push(new am4charts.ColumnSeries3D());
+                series33.columns.template.width = am4core.percent(80);
+                series33.columns.template.tooltipText = "{name}: {valueY.value}";
+                series33.name = "Total Internal Transfer Credit Amount";
+                series33.dataFields.categoryX = "SegmentSorted";
+                series33.dataFields.valueY = "TotalInternaltransferCAmt";
+                series33.stacked = true;
+                series33.hidden = true;
+                series33.tooltip.fontSize = 17;
+
+                var series34 = chart.series.push(new am4charts.ColumnSeries3D());
+                series34.columns.template.width = am4core.percent(80);
+                series34.columns.template.tooltipText = "{name}: {valueY.value}";
+                series34.name = "Total Internal Transfer Debit Amount";
+                series34.dataFields.categoryX = "SegmentSorted";
+                series34.dataFields.valueY = "TotalInternaltransferDAmt";
+                series34.stacked = true;
+                series34.hidden = true;
+                series34.tooltip.fontSize = 17;
+
+                var series35 = chart.series.push(new am4charts.ColumnSeries3D());
+                series35.columns.template.width = am4core.percent(80);
+                series35.columns.template.tooltipText = "{name}: {valueY.value}";
+                series35.name = "Average Internal Transfer Credit Amount";
+                series35.dataFields.categoryX = "SegmentSorted";
+                series35.dataFields.valueY = "AvgInternaltransferCAmt";
+                series35.stacked = true;
+                series35.hidden = true;
+                series35.tooltip.fontSize = 17;
+
+
+                var series36 = chart.series.push(new am4charts.ColumnSeries3D());
+                series36.columns.template.width = am4core.percent(80);
+                series36.columns.template.tooltipText = "{name}: {valueY.value}";
+                series36.name = "Average Internal Transfer Debit Amount";
+                series36.dataFields.categoryX = "SegmentSorted";
+                series36.dataFields.valueY = "AvgInternaltransferDAmt";
+                series36.stacked = true;
+                series36.hidden = true;
+                series36.tooltip.fontSize = 17;
+                
+                var series37 = chart.series.push(new am4charts.ColumnSeries3D());
+                series37.columns.template.width = am4core.percent(80);
+                series37.columns.template.tooltipText = "{name}: {valueY.value}";
+                series37.name = "Max Internal Transfer Credit Amount";
+                series37.dataFields.categoryX = "SegmentSorted";
+                series37.dataFields.valueY = "MaxInternaltransferCAmt";
+                series37.stacked = true;
+                series37.hidden = true;
+                series37.tooltip.fontSize = 17;
+
+                var series38 = chart.series.push(new am4charts.ColumnSeries3D());
+                series38.columns.template.width = am4core.percent(80);
+                series38.columns.template.tooltipText = "{name}: {valueY.value}";
+                series38.name = "Max Internal Transfer Debit Amount";
+                series38.dataFields.categoryX = "SegmentSorted";
+                series38.dataFields.valueY = "MaxInternaltransferDAmt";
+                series38.stacked = true;
+                series38.hidden = true;
+                series38.tooltip.fontSize = 17;
+
+                var series39 = chart.series.push(new am4charts.ColumnSeries3D());
+                series39.columns.template.width = am4core.percent(80);
+                series39.columns.template.tooltipText = "{name}: {valueY.value}";
+                series39.name = "Min Internal Transfer Credit Amount";
+                series39.dataFields.categoryX = "SegmentSorted";
+                series39.dataFields.valueY = "MinInternaltransferCAmt";
+                series39.stacked = true;
+                series39.hidden = true;
+                series39.tooltip.fontSize = 17;
+
+                var series40 = chart.series.push(new am4charts.ColumnSeries3D());
+                series40.columns.template.width = am4core.percent(80);
+                series40.columns.template.tooltipText = "{name}: {valueY.value}";
+                series40.name = "Min Internal Transfer Debit Amount";
+                series40.dataFields.categoryX = "SegmentSorted";
+                series40.dataFields.valueY = "MinInternaltransferDAmt";
+                series40.stacked = true;
+                series40.hidden = true;
+                series40.tooltip.fontSize = 17;
+
+                ///*For  LcBlClcn*/
+
+                //var series41 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series41.columns.template.width = am4core.percent(80);
+                //series41.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series41.name = "Total LC BL Clcn Credit Amount";
+                //series41.dataFields.categoryX = "SegmentSorted";
+                //series41.dataFields.valueY = "TotalLcBlClcnCtAmt";
+                //series41.stacked = true;
+                //series41.hidden = true;
+                //series41.tooltip.fontSize = 17;
+
+                //var series42 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series42.columns.template.width = am4core.percent(80);
+                //series42.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series42.name = "Total LC BL Clcn Debit Amount";
+                //series42.dataFields.categoryX = "SegmentSorted";
+                //series42.dataFields.valueY = "TotalLcBlClcnDtAmt";
+                //series42.stacked = true;
+                //series42.hidden = true;
+                //series42.tooltip.fontSize = 17;
+
+                //var series43 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series43.columns.template.width = am4core.percent(80);
+                //series43.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series43.name = "Average LC BL Clcn Credit Amount";
+                //series43.dataFields.categoryX = "SegmentSorted";
+                //series43.dataFields.valueY = "AverageLcBlClcnCtAmt";
+                //series43.stacked = true;
+                //series43.hidden = true;
+                //series43.tooltip.fontSize = 17;
+
+                //var series44 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series44.columns.template.width = am4core.percent(80);
+                //series44.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series44.name = "Average LC BL Clcn Debit Amount";
+                //series44.dataFields.categoryX = "SegmentSorted";
+                //series44.dataFields.valueY = "AverageLcBlClcnDtAmt";
+                //series44.stacked = true;
+                //series44.hidden = true;
+                //series44.tooltip.fontSize = 17;
+
+                //var series45 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series45.columns.template.width = am4core.percent(80);
+                //series45.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series45.name = "Max LC BL Clcn Credit Amount";
+                //series45.dataFields.categoryX = "SegmentSorted";
+                //series45.dataFields.valueY = "MaxLcBlClcnCtAmt";
+                //series45.stacked = true;
+                //series45.hidden = true;
+                //series45.tooltip.fontSize = 17;
+
+                //var series46 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series46.columns.template.width = am4core.percent(80);
+                //series46.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series46.name = "Max LC BL Clcn Debit Amount";
+                //series46.dataFields.categoryX = "SegmentSorted";
+                //series46.dataFields.valueY = "MaxLcBlClcnDtAmt";
+                //series46.stacked = true;
+                //series46.hidden = true;
+                //series46.tooltip.fontSize = 17;
+
+                //var series47 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series47.columns.template.width = am4core.percent(80);
+                //series47.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series47.name = "Min LC BL Clcn Credit Amount";
+                //series47.dataFields.categoryX = "SegmentSorted";
+                //series47.dataFields.valueY = "MinLcBlClcnCtAmt";
+                //series47.stacked = true;
+                //series47.hidden = true;
+                //series47.tooltip.fontSize = 17;
+
+                //var series48 = chart.series.push(new am4charts.ColumnSeries3D());
+                //series48.columns.template.width = am4core.percent(80);
+                //series48.columns.template.tooltipText = "{name}: {valueY.value}";
+                //series48.name = "Min LC BL Clcn Debit Amount";
+                //series48.dataFields.categoryX = "SegmentSorted";
+                //series48.dataFields.valueY = "MinLcBlClcnDtAmt";
+                //series48.stacked = true;
+                //series48.hidden = true;
+                //series48.tooltip.fontSize = 17;
+
+                chart.scrollbarX = new am4core.Scrollbar();
+                chart.legend.fontSize = 17;
+
+                // chart.legend.itemContainers.template.togglable = false;
+            },
+
+        });
+        //end
+
+
+
+    }
+    function DrawCharts(SegmentType) {
+        //start get the current selected monthKey & current Type
+        var monthkey = document.getElementById('month-key-spinner').value;
+        var Type = SegmentType;
+        //End
+
+        $.ajax({
+            type: "GET",
+            url: "/SegmentationCharts/GetAllSegmentCustCount?monthKey=" + monthkey + "&Type=" + Type,
+            data: {
+            },
+            success: function (data) {
+                //display elments
+                document.getElementById('segChartCounth3').style.display = "block";
+
+                am4core.useTheme(am4themes_animated);
+                am4core.addLicense("ch-custom-attribution");
+                var chart = am4core.create("SegmentsCustCountChart", am4charts.PieChart3D);
+                chart.exporting.menu = new am4core.ExportMenu();
+                      chart.exporting.menu.items = [{
+                      "label": "...",
+                      "menu": [
+                         { "type": "svg", "label": "Save" },
+                       ]
+                }];
+                chart.legend = new am4charts.Legend();
+                chart.legend.maxHeight = 600;
+                chart.legend.maxWidth = 300;
+                chart.legend.scrollable = true;
+                chart.legend.position = "bottom"; 
+                chart.legend.labels.template.text = "( {name} , {SegmentDescription} ) : ({value})";
+                
+                chart.data = data;
+                chart.innerRadius = am4core.percent(40);
+                var series = chart.series.push(new am4charts.PieSeries3D());
+                series.dataFields.value = "NumberOfCustomers";
+                series.dataFields.category = "SegmentSorted";
+                // Disable ticks and labels
+                series.labels.template.disabled = true;
+                series.ticks.template.disabled = true;
+                series.labels.template.fontSize = 17;
+                chart.legend.fontSize = 17;
+                series.tooltip.fontSize = 17;
+                //series.stroke = am4core.color("#000000");//red
+                //series.slices.template.stroke = am4core.color("#000000"); // red outline
+                //series.slices.template.fill = am4core.color("#00ff00"); // green fill
+              
+                series.slices.template.events.on("doublehit", function (ev) {
+                    console.log(monthkey, ev.target.dataItem.category); 
+                    window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
+                });
+
+            },
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/SegmentationCharts/GetAllSegmentAlertsCount?monthKey=" + monthkey + "&Type=" + Type,
+            data: {
+            },
+            success: function (data) {
+                //display elments
+                document.getElementById('segChartAlertCounth3').style.display = "block";
+
+                am4core.useTheme(am4themes_animated);
+                am4core.addLicense("ch-custom-attribution");
+                var chart = am4core.create("SegmentsAlertCountChart", am4charts.PieChart3D);
+                chart.exporting.menu = new am4core.ExportMenu();
+                chart.exporting.menu.items = [{
+                 "label": "...",
+                 "menu": [
+                    { "type": "svg", "label": "Save" },
+                   ]
+                 }];
+                chart.legend = new am4charts.Legend();
+                chart.legend.maxHeight = 600;
+                chart.legend.maxWidth = 300;
+                chart.legend.scrollable = true;
+                chart.legend.position = "bottom";
+                chart.legend.labels.template.text = "({name} , {SegmentDescription} ): ({value})";
+
+                chart.data = data;
+                chart.innerRadius = am4core.percent(40);
+                var series = chart.series.push(new am4charts.PieSeries3D());
+                series.dataFields.value = "NumberOfAlerts";
+                series.dataFields.category = "SegmentSorted";
+                series.labels.template.fontSize = 17;
+                chart.legend.fontSize = 17;
+                  // Disable ticks and labels
+                series.labels.template.disabled = true;
+                series.ticks.template.disabled = true;
+                series.slices.template.events.on("doublehit", function (ev) {
+                    console.log(monthkey, ev.target.dataItem.category); 
+                    window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
+                });
+            },
+
+        });
+
+        
+    }
+    function DrawOnMonthCharts()
+    {
+        var monthkey = document.getElementById('month-key-spinner').value;
+        $.ajax({
+            type: "GET",
+            url: "/SegmentationCharts/GetCustCountPerType?monthKey=" + monthkey,
+            data: {
+            },
+            success: function (data) {
+                //display elments
+                document.getElementById('CustCountPerTypeCharth3').style.display = "block";
+
+                am4core.useTheme(am4themes_animated);
+                am4core.addLicense("ch-custom-attribution");
+                var chart = am4core.create("CustCountPerTypeChart", am4charts.PieChart3D);
+                chart.exporting.menu = new am4core.ExportMenu();
+                chart.exporting.menu.items = [{
+                  "label": "...",
+                  "menu": [
+                   { "type": "svg", "label": "Save" },
+                 ]
+                }];
+                chart.legend = new am4charts.Legend();
+                chart.legend.maxHeight = 600;
+                chart.legend.maxWidth = 300;
+                chart.legend.scrollable = true;
+                chart.legend.position = "bottom";
+                chart.legend.labels.template.text = "{name} : ({value})";
+                chart.data = data;
+                chart.innerRadius = am4core.percent(40);
+                var series = chart.series.push(new am4charts.PieSeries3D());
+                series.dataFields.value = "NumberOfCustomers";
+                series.dataFields.category = "PartyTypeDesc";
+                series.labels.template.fontSize = 17;
+                chart.legend.fontSize = 17;
+                series.tooltip.fontSize = 17;
+                // Disable ticks and labels
+                series.labels.template.disabled = true;
+                series.ticks.template.disabled = true;
+                 
+                //chart.legend.itemContainers.template.events.on("hit", function (ev) {
+                //    console.log("clicked on ");
+                //});
+
+
+                series.slices.template.events.on("doublehit", function (ev) {
+                   console.log(monthkey, ev.target.dataItem.category);
+
+                   makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + ev.target.dataItem.category);
+                   PrepDataDrawChart(ev.target.dataItem.category);
+                   DrawCharts(ev.target.dataItem.category);
+                  
+                   // window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + ev.target.dataItem.category )
+                });
+
+
+            },
+
+        });
+    }
+</script>
