@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "SegmentationCharts", Policy = "Licensed")]
+    //[Authorize(Roles = "SegmentationCharts", Policy = "Licensed")]
     public class SegmentationChartsController : Controller
     {
 
@@ -82,10 +83,39 @@ namespace ART_PACKAGE.Controllers
         {
             var result = db.ArtAllSegsFeatrsStatcsTbs
                 .Where(s => s.MonthKey == monthkey.ToString() && s.SegmentSorted == segment.ToString()).ToList();
+            var props =result[0].GetType().GetProperties().Where(s=>(s.Name.EndsWith("CCnt")||s.Name.EndsWith("CAmt")|| s.Name.EndsWith("DCnt") || s.Name.EndsWith("DAmt")) 
+            && (s.Name.StartsWith("Total") || s.Name.StartsWith("Avg")|| s.Name.StartsWith("Min") || s.Name.StartsWith("Max"))).Select(s=>s.Name);
+            
+            /*dynamic obj = new
+            {
+                Monthkey = result[0].MonthKey,
+                SegmentSorted = result[0].SegmentSorted,
+                PartyTypeDesc = result[0].PartyTypeDesc,
 
-            return Content(JsonConvert.SerializeObject(result), "application/json");
+                waired =new {
+                    Credit=new
+                    {
+                        avg = result[0].AvgWireCAmt,
+                        
+                    },
+                    Depit = new
+                    {
+                        avg = result[0].AvgWireDtAmt,
+                    }
+                }
+               
+
+            }*/
+            return Content(JsonConvert.SerializeObject(props), "application/json");
         }
-
+        private dynamic GetValueOfProp<T>(string propertyName)
+        {
+            Type myClassType = typeof(T);
+            PropertyInfo propertyInfo = myClassType.GetProperty(propertyName);
+            T instance = Activator.CreateInstance<T>(); 
+            string propertyValue = (string)propertyInfo.GetValue(instance);
+            return propertyValue;
+        }
         public ContentResult ArtIndustrySegments(int? monthkey, int segment, string type)
         {
             var result = db.ArtIndustrySegmentTbs.Where(s => s.MonthKey == monthkey.ToString() && s.SegmentSorted == segment.ToString() && s.PartyTypeDesc == type).OrderByDescending(k => k.TotalAmount).Take(10);

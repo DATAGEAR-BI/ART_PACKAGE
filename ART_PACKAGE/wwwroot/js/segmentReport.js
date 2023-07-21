@@ -105,7 +105,7 @@ function renderTabsCounter() {
         success: function (data) {
 
             //replace null with 0 
-
+            console.log("seg data",data);
             data.forEach(function (myObj) {
                 for (let prop in myObj) {
                     myObj[prop] = myObj[prop] === null ? 0 : myObj[prop];
