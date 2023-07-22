@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.SEGMODEL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -83,30 +84,71 @@ namespace ART_PACKAGE.Controllers
         {
             var result = db.ArtAllSegsFeatrsStatcsTbs
                 .Where(s => s.MonthKey == monthkey.ToString() && s.SegmentSorted == segment.ToString()).ToList();
-            var props =result[0].GetType().GetProperties().Where(s=>(s.Name.EndsWith("CCnt")||s.Name.EndsWith("CAmt")|| s.Name.EndsWith("DCnt") || s.Name.EndsWith("DAmt")) 
-            && (s.Name.StartsWith("Total") || s.Name.StartsWith("Avg")|| s.Name.StartsWith("Min") || s.Name.StartsWith("Max"))).Select(s=>s.Name);
-            
-            /*dynamic obj = new
-            {
-                Monthkey = result[0].MonthKey,
-                SegmentSorted = result[0].SegmentSorted,
-                PartyTypeDesc = result[0].PartyTypeDesc,
+            var props = result[0].GetType().GetProperties().Where(s => (s.Name.EndsWith("CCnt") || s.Name.EndsWith("CAmt") || s.Name.EndsWith("DCnt") || s.Name.EndsWith("DAmt"))
+            && (s.Name.StartsWith("Total") || s.Name.StartsWith("Avg") || s.Name.StartsWith("Min") || s.Name.StartsWith("Max"))).Select(s => s.Name);
+            var distinctTypes = props.Select(s => s.Replace("Total", "").Replace("Avg", "").Replace("Min", "").Replace("Max", "")
+                    .Replace("CCnt", "").Replace("CAmt", "").Replace("DCnt", "").Replace("DAmt", "")).Distinct();
 
-                waired =new {
-                    Credit=new
+
+            JObject SegObj = new JObject();
+            var skipProps = result[0].GetType().GetProperties().Where(s => !props.Contains(s.Name)).Select(s => s.Name) ;
+            foreach (var item in skipProps)
+            {
+                SegObj[item] = (string)result[0].GetType().GetProperty(item).GetValue(result[0]);
+            }
+            SegObj["typs"] =new JArray();
+            var counter = 0;
+            foreach (var t in distinctTypes)
+            {   
+                string maxOrMinOrAvg = t.Substring(0,3);
+                string type = t.Replace("Total", "").Replace("Avg", "").Replace("Min", "").Replace("Max", "")
+                    .Replace("CCnt", "").Replace("CAmt", "").Replace("DCnt", "").Replace("DAmt", "");
+                string credOrDebit= t.Substring(t.Length-4, 1);
+                var credit = props.Where(s => s.Contains(t) && (s.EndsWith("CCnt") || s.EndsWith("CAmt")));
+                var debit = props.Where(s => s.Contains(t) && (s.EndsWith("DCnt") || s.EndsWith("DAmt")));
+
+                var typeObj = new JObject();
+                var creditObj = new JObject();
+                var debitObj = new JObject();
+                var AmtObj = new JObject();
+                var CntObj = new JObject();
+                foreach (var item in credit)
+                {
+                    if (item.EndsWith("Amt"))
                     {
-                        avg = result[0].AvgWireCAmt,
-                        
-                    },
-                    Depit = new
+                        AmtObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                    }
+                    else if (item.EndsWith("Cnt"))
                     {
-                        avg = result[0].AvgWireDtAmt,
+                        CntObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
                     }
                 }
-               
+                creditObj["Amt"] = AmtObj;
+                creditObj["Cnt"] = CntObj;
+                AmtObj = new JObject();
+                CntObj = new JObject();
+                foreach (var item in debit)
+                {
+                    if (item.EndsWith("Amt"))
+                    {
+                        AmtObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                    }
+                    else if (item.EndsWith("Cnt"))
+                    {
+                        CntObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                    }
+                }
+                debitObj["Amt"] = AmtObj;
+                debitObj["Cnt"] = CntObj;
+                typeObj["name"] = t;
+                typeObj["credit"] = creditObj;
+                typeObj["debit"] = debitObj;
+                SegObj["types"][counter++] = typeObj;
+            }
 
-            }*/
-            return Content(JsonConvert.SerializeObject(props), "application/json");
+
+            
+            return Content(JsonConvert.SerializeObject(SegObj), "application/json");
         }
         private dynamic GetValueOfProp<T>(string propertyName)
         {
