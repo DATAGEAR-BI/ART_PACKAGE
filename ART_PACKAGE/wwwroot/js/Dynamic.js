@@ -265,7 +265,6 @@ function generateGrid() {
 
                     function readdata() {
                         url = URLS[urlKey].toString();
-                        console.log(url);
                         fetch(url, {
                             method: "POST",
                             headers: {
