@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.SEGMODEL;
+using iTextSharp.text.xml.xmp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -94,9 +95,20 @@ namespace ART_PACKAGE.Controllers
             var skipProps = result[0].GetType().GetProperties().Where(s => !props.Contains(s.Name)).Select(s => s.Name) ;
             foreach (var item in skipProps)
             {
-                SegObj[item] = (string)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                var propType = result[0].GetType().GetProperty(item).PropertyType.Name.ToLower();
+                if (propType == "string")
+                {
+                    SegObj.Add(item, (string)result[0].GetType().GetProperty(item).GetValue(result[0]));
+
+                }
+                else if (propType == "nullable`1")
+                {
+                    SegObj.Add(item, (double)result[0].GetType().GetProperty(item).GetValue(result[0]));
+
+
+                }
             }
-            SegObj["typs"] =new JArray();
+            var typsArrayObj =new JArray();
             var counter = 0;
             foreach (var t in distinctTypes)
             {   
@@ -114,13 +126,14 @@ namespace ART_PACKAGE.Controllers
                 var CntObj = new JObject();
                 foreach (var item in credit)
                 {
+                    double itemVal = (double)(result[0].GetType().GetProperty(item).GetValue(result[0]) == null ? 0.0 : result[0].GetType().GetProperty(item).GetValue(result[0]));
                     if (item.EndsWith("Amt"))
                     {
-                        AmtObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                        AmtObj[item.Substring(0, 3)] = itemVal;
                     }
                     else if (item.EndsWith("Cnt"))
                     {
-                        CntObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                        CntObj[item.Substring(0, 3)] = itemVal;
                     }
                 }
                 creditObj["Amt"] = AmtObj;
@@ -129,13 +142,14 @@ namespace ART_PACKAGE.Controllers
                 CntObj = new JObject();
                 foreach (var item in debit)
                 {
+                    double itemVal = (double)(result[0].GetType().GetProperty(item).GetValue(result[0])==null ? 0.0 : result[0].GetType().GetProperty(item).GetValue(result[0]));
                     if (item.EndsWith("Amt"))
                     {
-                        AmtObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                        AmtObj[item.Substring(0, 3)] = itemVal;
                     }
                     else if (item.EndsWith("Cnt"))
                     {
-                        CntObj[item.Substring(0, 3)] = (double)result[0].GetType().GetProperty(item).GetValue(result[0]);
+                        CntObj[item.Substring(0, 3)] = itemVal;
                     }
                 }
                 debitObj["Amt"] = AmtObj;
@@ -143,11 +157,12 @@ namespace ART_PACKAGE.Controllers
                 typeObj["name"] = t;
                 typeObj["credit"] = creditObj;
                 typeObj["debit"] = debitObj;
-                SegObj["types"][counter++] = typeObj;
+                typsArrayObj.Add( typeObj);
+                
             }
+            SegObj.Add("Types", typsArrayObj);
 
 
-            
             return Content(JsonConvert.SerializeObject(SegObj), "application/json");
         }
         private dynamic GetValueOfProp<T>(string propertyName)

@@ -1,6 +1,10 @@
+//commented by ehab azab 23-07-2023
+//const { Tab } = require("../../../../../../../node_modules/@mui/material/index");
+
 var ChartData = [];
 var ChartDataCount = [];
-
+var allTypesNames = [];
+var typesLength = 0;
 function callCounters() {
     // DOM Element's
     const counters = document.querySelectorAll('.counter');
@@ -23,31 +27,18 @@ function callCounters() {
 };
 
 function openTab(evt, TabName) {
-    callCounters();
+    //commented by Ehab Azab 23-07-2023
+    //callCounters();
 
-    if (TabName == "Cash") {
-        document.getElementById("FirstTab").style.display = "block";
-    }
-    if (TabName == "Wire") {
-        document.getElementById("SecondTab").style.display = "block";
-    }
-    if (TabName == "Cheque") {
-        document.getElementById("ThirdTab").style.display = "block";
-    }
-    if (TabName == "Misc") {
-        document.getElementById("ForthTab").style.display = "block";
-    }
-    if (TabName == "InternalTransfer") {
-        document.getElementById("FifthTab").style.display = "block";
-    }
-    if (TabName == "Withdrawal") {
-        document.getElementById("SexTab").style.display = "block";
-    }
-    //if (TabName == "Fees") {
-    //    document.getElementById("SevinTab").style.display = "block";
-    //}
+    allTypesNames.forEach((i) => {
+        document.getElementById(`${i}TabParent`).style.display = "none";
+        document.getElementById(`${i}`).className = document.getElementById(`${i}`).className.replace(" active", "");
+    });
+    document.getElementById(`${TabName}TabParent`).style.display = "block";
+    evt.currentTarget.className += " active";
 
-
+    //commented by Ehab Azab 23--7-2023
+/*
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -59,8 +50,8 @@ function openTab(evt, TabName) {
     }
     document.getElementById(TabName).style.display = "block";
     evt.currentTarget.className += " active";
-
-    renderTabsCounter();
+*/
+    //renderTabsCounter();
 
 
 };
@@ -106,339 +97,122 @@ function renderTabsCounter() {
 
             //replace null with 0 
             console.log("seg data",data);
-            data.forEach(function (myObj) {
+            /*data[.forEach(function (myObj) {
                 for (let prop in myObj) {
                     myObj[prop] = myObj[prop] === null ? 0 : myObj[prop];
                 }
+            });*/
+            document.getElementById("TabsButtonsContainer").innerHTML="";
+            document.getElementById("tabContentContainer").innerHTML = "";
+            typesLength = data["Types"].length;
+            data["Types"].forEach((obj) => {
+                allTypesNames.push(obj["name"]);
+                createTap(obj);
             });
-
-
-            /* For Cash Credit*/
-
-            let TotalCashCreditAmountVar = 0;
-            let LowestCashCreditAmountVar = 0;
-            let MaxCashCreditAmountVar = 0;
-            let AverageCashCreditAmountVar = 0;
-            let TotalCashCreditCountVar = 0;
-
-            TotalCashCreditAmountVar = data[0]['TotalCashCAmt'];
-            LowestCashCreditAmountVar = data[0]['MinCashCAmt'];
-            MaxCashCreditAmountVar = data[0]['MaxCashCAmt'];
-            AverageCashCreditAmountVar = data[0]['AvgCashCAmt'];
-            TotalCashCreditCountVar = data[0]['TotalCashCCnt'];
-
-            Tot_TotalCashCreditAmount.innerHTML = TotalCashCreditAmountVar;
-            Min_LowestCashCreditAmount.innerHTML = LowestCashCreditAmountVar;
-            Max_MaxCashCreditAmount.innerHTML = MaxCashCreditAmountVar;
-            Avg_AverageCashCreditAmount.innerHTML = AverageCashCreditAmountVar;
-            Cnt_TotalCashCreditCount.innerHTML = TotalCashCreditCountVar;
-
-            /* For Cash Debit*/
-
-            let TotalCashDebitAmountVar = 0;
-            let LowestCashDebitAmountVar = 0;
-            let MaxCashDebitAmountVar = 0;
-            let AverageCashDebitAmountVar = 0;
-            let TotalCashDebitCountVar = 0;
-
-            TotalCashDebitAmountVar = data[0]['TotalCashDAmt'];
-            LowestCashDebitAmountVar = data[0]['MinCashDAmt'];
-            MaxCashDebitAmountVar = data[0]['MaxCashDAmt'];
-            AverageCashDebitAmountVar = data[0]['AvgCashDAmt'];
-            TotalCashDebitCountVar = data[0]['TotalCashDCnt'];
-
-            Tot_TotalCashDebitAmount.innerHTML = TotalCashDebitAmountVar;
-            Min_LowestCashDebitAmount.innerHTML = LowestCashDebitAmountVar;
-            Max_MaxCashDebitAmount.innerHTML = MaxCashDebitAmountVar;
-            Avg_AverageCashDebitAmount.innerHTML = AverageCashDebitAmountVar;
-            Cnt_TotalCashDebitCount.innerHTML = TotalCashDebitCountVar;
-
-            var Cash_Data = {
-                "category": "Cash",
-                "T_A_C": TotalCashCreditAmountVar,
-                "L_A_C": LowestCashCreditAmountVar,
-                "M_A_C": MaxCashCreditAmountVar,
-                "A_A_C": AverageCashCreditAmountVar,
-                "T_A_D": TotalCashDebitAmountVar,
-                "L_A_D": LowestCashDebitAmountVar,
-                "M_A_D": MaxCashDebitAmountVar,
-                "A_A_D": AverageCashDebitAmountVar
-            };
-
-            var Cash_Data_Count = {
-                "category": "Cash",
-                "T_C_C": TotalCashCreditCountVar,
-                "T_D_C": TotalCashDebitCountVar
-            };
-            /*For Wire Credit*/
-
-            let TotalWireCreditAmountVar = 0;
-            let LowestWireCreditAmountVar = 0;
-            let MaxWireCreditAmountVar = 0;
-            let AverageWireCreditAmountVar = 0;
-            let TotalWireCreditCountVar = 0;
-
-            TotalWireCreditAmountVar = data[0]['TotalWireCAmt'];
-            LowestWireCreditAmountVar = data[0]['MinWireCAmt'];
-            MaxWireCreditAmountVar = data[0]['MaxWireCAmt'];
-            AverageWireCreditAmountVar = data[0]['AvgWireCAmt'];
-            TotalWireCreditCountVar = data[0]['TotalWireCCnt'];
-
-            Tot_TotalWireCreditAmount.innerHTML = TotalWireCreditAmountVar;
-            Min_LowestWireCreditAmount.innerHTML = LowestWireCreditAmountVar;
-            Max_MaxWireCreditAmount.innerHTML = MaxWireCreditAmountVar;
-            Avg_AverageWireCreditAmount.innerHTML = AverageWireCreditAmountVar;
-            Cnt_TotalWireCreditCount.innerHTML = TotalWireCreditCountVar;
-
-            /*For Wire Debit*/
-
-            let TotalWireDebitAmountVar = 0;
-            let LowestWireDebitAmountVar = 0;
-            let MaxWireDebitAmountVar = 0;
-            let AverageWireDebitAmountVar = 0;
-            let TotalWireDebitCountVar = 0;
-
-            TotalWireDebitAmountVar = data[0]['TotalWireDAmt'];
-            LowestWireDebitAmountVar = data[0]['MinWireDAmt'];
-            MaxWireDebitAmountVar = data[0]['MaxWireDAmt'];
-            AverageWireDebitAmountVar = data[0]['AvgWireDAmt'];
-            TotalWireDebitCountVar = data[0]['TotalWireDCnt'];
-
-            Tot_TotalWireDebitAmount.innerHTML = TotalWireDebitAmountVar;
-            Min_LowestWireDebitAmount.innerHTML = LowestWireDebitAmountVar;
-            Max_MaxWireDebitAmount.innerHTML = MaxWireDebitAmountVar;
-            Avg_AverageWireDebitAmount.innerHTML = AverageWireDebitAmountVar;
-            Cnt_TotalWireDebitCount.innerHTML = TotalWireDebitCountVar;
-
-            var Wire_Data = {
-                "category": "Wires",
-                "T_A_C": TotalWireCreditAmountVar,
-                "L_A_C": LowestWireCreditAmountVar,
-                "M_A_C": MaxWireCreditAmountVar,
-                "A_A_C": AverageWireCreditAmountVar,
-                "T_A_D": TotalWireDebitAmountVar,
-                "L_A_D": LowestWireDebitAmountVar,
-                "M_A_D": MaxWireDebitAmountVar,
-                "A_A_D": AverageWireDebitAmountVar
-            };
-
-            var Wire_Data_Count = {
-                "category": "Wire",
-                "T_C_C": TotalWireCreditCountVar,
-                "T_D_C": TotalWireDebitCountVar
-            };
-
-            /*For Check Debit*/
-            let TotalCheckDebitAmountVar = 0;
-            let LowestCheckDebitAmountVar = 0;
-            let MaxCheckDebitAmountVar = 0;
-            let AverageCheckDebitAmountVar = 0;
-            let TotalCheckDebitCountVar = 0;
-
-            TotalCheckDebitAmountVar = data[0]['TotalCheckDAmt'];
-            LowestCheckDebitAmountVar = data[0]['MinCheckDAmt'];
-            MaxCheckDebitAmountVar = data[0]['MaxCheckDAmt'];
-            AverageCheckDebitAmountVar = data[0]['AvgCheckDAmt'];
-            TotalCheckDebitCountVar = data[0]['TotalCheckDCnt'];
-
-            Tot_TotalCheckDebitAmount.innerHTML = TotalCheckDebitAmountVar;
-            Min_LowestCheckDebitAmount.innerHTML = LowestCheckDebitAmountVar;
-            Max_MaxCheckDebitAmount.innerHTML = MaxCheckDebitAmountVar;
-            Avg_AverageCheckDebitAmount.innerHTML = AverageCheckDebitAmountVar;
-            Cnt_TotalCheckDebitCount.innerHTML = TotalCheckDebitCountVar;
-
-            var Check_Data = {
-                "category": "Cheque",
-                "T_A_D": TotalCheckDebitAmountVar,
-                "L_A_D": LowestCheckDebitAmountVar,
-                "M_A_D": MaxCheckDebitAmountVar,
-                "A_A_D": AverageCheckDebitAmountVar
-            };
-
-            var Check_Data_Count = {
-                "category": "Cheque",
-                "T_D_C": TotalCheckDebitCountVar
-            };
-
-            /*For Misc Credit*/
-            let TotalMiscCreditAmountVar = 0;
-            let LowestMiscCreditAmountVar = 0;
-            let MaxMiscCreditAmountVar = 0;
-            let AverageMiscCreditAmountVar = 0;
-            let TotalMiscCreditCountVar = 0;
-
-            TotalMiscCreditAmountVar = data[0]['TotalMiscCAmt'];
-            LowestMiscCreditAmountVar = data[0]['MinMiscCAmt'];
-            MaxMiscCreditAmountVar = data[0]['MaxMiscCAmt'];
-            AverageMiscCreditAmountVar = data[0]['AvgMiscCAmt'];
-            TotalMiscCreditCountVar = data[0]['TotalMiscCCnt'];
-
-            Tot_TotalMiscCreditAmount.innerHTML = TotalMiscCreditAmountVar;
-            Min_LowestMiscCreditAmount.innerHTML = LowestMiscCreditAmountVar;
-            Max_MaxMiscCreditAmount.innerHTML = MaxMiscCreditAmountVar;
-            Avg_AverageMiscCreditAmount.innerHTML = AverageMiscCreditAmountVar;
-            Cnt_TotalMiscCreditCount.innerHTML = TotalMiscCreditCountVar;
-
-            var Misc_Data = {
-                "category": "MISC",
-                "T_A_C": TotalMiscCreditAmountVar,
-                "L_A_C": LowestMiscCreditAmountVar,
-                "M_A_C": MaxMiscCreditAmountVar,
-                "A_A_C": AverageMiscCreditAmountVar
-            };
-
-            var Misc_Data_Count = {
-                "category": "Misc",
-                "T_C_C": TotalMiscCreditCountVar
-            };
-
-
-            /*For Internaltransfer Credit*/
-
-            let TotalInternaltransferCreditAmountVar = 0;
-            let LowestInternaltransferCreditAmountVar = 0;
-            let MaxInternaltransferCreditAmountVar = 0;
-            let AverageInternaltransferCreditAmountVar = 0;
-            let TotalInternaltransferCreditCountVar = 0;
-
-            TotalInternaltransferCreditAmountVar = data[0]['TotalInternaltransferCAmt'];
-            LowestInternaltransferCreditAmountVar = data[0]['MinInternaltransferCAmt'];
-            MaxInternaltransferCreditAmountVar = data[0]['MaxInternaltransferCAmt'];
-            AverageInternaltransferCreditAmountVar = data[0]['AvgInternaltransferCAmt'];
-            TotalInternaltransferCreditCountVar = data[0]['TotalInternaltransferCCnt'];
-
-            Tot_TotalInternaltransferCreditAmount.innerHTML = TotalInternaltransferCreditAmountVar;
-            Min_LowestInternaltransferCreditAmount.innerHTML = LowestInternaltransferCreditAmountVar;
-            Max_MaxInternaltransferCreditAmount.innerHTML = MaxInternaltransferCreditAmountVar;
-            Avg_AverageInternaltransferCreditAmount.innerHTML = AverageInternaltransferCreditAmountVar;
-            Cnt_TotalInternaltransferCreditCount.innerHTML = TotalInternaltransferCreditCountVar;
-
-
-            /*For Internaltransfer Debit*/
-
-            let TotalInternaltransferDebitAmountVar = 0;
-            let LowestInternaltransferDebitAmountVar = 0;
-            let MaxInternaltransferDebitAmountVar = 0;
-            let AverageInternaltransferDebitAmountVar = 0;
-            let TotalInternaltransferDebitCountVar = 0;
-
-            TotalInternaltransferDebitAmountVar = data[0]['TotalInternaltransferDAmt'];
-            LowestInternaltransferDebitAmountVar = data[0]['MinInternaltransferDAmt'];
-            MaxInternaltransferDebitAmountVar = data[0]['MaxInternaltransferDAmt'];
-            AverageInternaltransferDebitAmountVar = data[0]['AvgInternaltransferDAmt'];
-            TotalInternaltransferDebitCountVar = data[0]['TotalInternaltransferDCnt'];
-
-            Tot_TotalInternaltransferDebitAmount.innerHTML = TotalInternaltransferDebitAmountVar;
-            Min_LowestInternaltransferDebitAmount.innerHTML = LowestInternaltransferDebitAmountVar;
-            Max_MaxInternaltransferDebitAmount.innerHTML = MaxInternaltransferDebitAmountVar;
-            Avg_AverageInternaltransferDebitAmount.innerHTML = AverageInternaltransferDebitAmountVar;
-            Cnt_TotalInternaltransferDebitCount.innerHTML = TotalInternaltransferDebitCountVar;
-
-            var Internaltransfer_Data = {
-                "category": "Internal Transfer",
-                "T_A_C": TotalInternaltransferCreditAmountVar,
-                "L_A_C": LowestInternaltransferCreditAmountVar,
-                "M_A_C": MaxInternaltransferCreditAmountVar,
-                "A_A_C": AverageInternaltransferCreditAmountVar,
-                "T_A_D": TotalInternaltransferDebitAmountVar,
-                "L_A_D": LowestInternaltransferDebitAmountVar,
-                "M_A_D": MaxInternaltransferDebitAmountVar,
-                "A_A_D": AverageInternaltransferDebitAmountVar
-            };
-
-            var Internaltransfer_Data_Count = {
-                "category": "Internal Transfer",
-                "T_C_C": TotalInternaltransferCreditCountVar,
-                "T_D_C": TotalInternaltransferDebitCountVar
-            };
-
-            /*For Withdrawal DEBIT */
-
-            let TotalWithdrawalDebitAmountVar = 0;
-            let LowestWithdrawalDebitAmountVar = 0;
-            let MaxWithdrawalDebitAmountVar = 0;
-            let AverageWithdrawalDebitAmountVar = 0;
-            let TotalWithdrawalDebitCountVar = 0;
-
-            TotalWithdrawalDebitAmountVar = data[0]['TotalWithdrawalDAmt'];
-            LowestWithdrawalDebitAmountVar = data[0]['MinWithdrawalDAmt'];
-            MaxWithdrawalDebitAmountVar = data[0]['MaxWithdrawalDAmt'];
-            AverageWithdrawalDebitAmountVar = data[0]['AvgWithdrawalDAmt'];
-            TotalWithdrawalDebitCountVar = data[0]['TotalWithdrawalDCnt'];
-
-            Tot_TotalWithdrawalDebitAmount.innerHTML = TotalWithdrawalDebitAmountVar;
-            Min_LowestWithdrawalDebitAmount.innerHTML = LowestWithdrawalDebitAmountVar;
-            Max_MaxWithdrawalDebitAmount.innerHTML = MaxWithdrawalDebitAmountVar;
-            Avg_AverageWithdrawalDebitAmount.innerHTML = AverageWithdrawalDebitAmountVar;
-            Cnt_TotalWithdrawalDebitCount.innerHTML = TotalWithdrawalDebitCountVar;
-
-            var Withdrawal_Data = {
-                "category": "Withdrawal",
-                "T_A_D": TotalWithdrawalDebitAmountVar,
-                "L_A_D": LowestWithdrawalDebitAmountVar,
-                "M_A_D": MaxWithdrawalDebitAmountVar,
-                "A_A_D": AverageWithdrawalDebitAmountVar
-            };
-
-            var Withdrawal_Data_Count = {
-                "category": "Withdrawal",
-                "T_D_C": TotalWithdrawalDebitCountVar
-            };
-
-
-
-            ///*For Fees DEBIT */
-
-            //let TotalFeesDebitAmountVar = 0;
-            //let LowestFeesDebitAmountVar = 0;
-            //let MaxFeesDebitAmountVar = 0;
-            //let AverageFeesDebitAmountVar = 0;
-            //let TotalFeesDebitCountVar = 0;
-
-            //TotalFeesDebitAmountVar = data[0]['TotalFeesDAmt'];
-            //LowestFeesDebitAmountVar = data[0]['MinFeesDAmt'];
-            //MaxFeesDebitAmountVar = data[0]['MaxFeesDAmt'];
-            //AverageFeesDebitAmountVar = data[0]['AvgFeesDAmt'];
-            //TotalFeesDebitCountVar = data[0]['TotalFeesDCnt'];
-
-            //Tot_TotalFeesDebitAmount.innerHTML = TotalFeesDebitAmountVar;
-            //Min_LowestFeesDebitAmount.innerHTML = LowestFeesDebitAmountVar;
-            //Max_MaxFeesDebitAmount.innerHTML = MaxFeesDebitAmountVar;
-            //Avg_AverageFeesDebitAmount.innerHTML = AverageFeesDebitAmountVar;
-            //Cnt_TotalFeesDebitCount.innerHTML = TotalFeesDebitCountVar;
-
-            //var Fees_Data = {
-            //    "category": "Fees",
-            //    "T_A_D": TotalFeesDebitAmountVar,
-            //    "L_A_D": LowestFeesDebitAmountVar,
-            //    "M_A_D": MaxFeesDebitAmountVar,
-            //    "A_A_D": AverageFeesDebitAmountVar
-            //};
-
-            //var Fees_Data_Count = {
-            //    "category": "Fees",
-            //    "T_D_C": TotalFeesDebitCountVar
-            //};
-
-            ChartData.push(Cash_Data);
-            ChartData.push(Wire_Data);
-            ChartData.push(Check_Data);
-            ChartData.push(Misc_Data);
-            ChartData.push(Internaltransfer_Data);
-            ChartData.push(Withdrawal_Data);
-            //ChartData.push(Fees_Data);
-
-            ChartDataCount.push(Cash_Data_Count);
-            ChartDataCount.push(Wire_Data_Count);
-            ChartDataCount.push(Check_Data_Count);
-            ChartDataCount.push(Misc_Data_Count);
-            ChartDataCount.push(Internaltransfer_Data_Count);
-            ChartDataCount.push(Withdrawal_Data_Count);
-            //ChartDataCount.push(Fees_Data_Count);
+            
 
         }
     });
 
+}
+
+function createTap(typeObj) {
+
+    var buttonOfTabString = `<button class="tablinks col-sm-1 container-fluid" style="color:#013459; text-align: center; font-weight: 600; width: ${100 / typesLength}%;" id="${typeObj["name"]}" onclick="openTab(event, '${typeObj["name"]}')">${typeObj["name"]}</button>`;
+    const TabsButtonsContainerDiv = document.getElementById("TabsButtonsContainer");
+    TabsButtonsContainerDiv.innerHTML += buttonOfTabString;
+
+    var tabsDivString = `
+        <div id="${typeObj["name"]}TabParent" class="tabcontent"style=";display:none;">
+            <section class="counters text-center" style="font-size:16px;" id="${typeObj["name"]}TabContainer">
+                
+            <div class="" id="${typeObj["name"]}Tab"></div>
+            </section>
+        </div>
+    `;
+    const tabsDiv = document.getElementById("tabContentContainer");
+    tabsDiv.innerHTML += tabsDivString;
+    var debitFlag = false;
+    var Type_Data = {
+        "category": `${typeObj["name"]}`
+    }
+    var Type_Data_Count = {
+        "category": `${typeObj["name"]}`
+    }
+    const tabDiv = document.getElementById(`${typeObj["name"]}Tab`);
+    if (Object.entries(typeObj["debit"]["Cnt"]).length !== 0) {
+        Type_Data["T_A_D"] = typeObj["debit"]["Amt"]["Tot"];
+        Type_Data["L_A_D"] = typeObj["debit"]["Amt"]["Min"];
+        Type_Data["M_A_D"] = typeObj["debit"]["Amt"]["Max"];
+        Type_Data["A_A_D"] = typeObj["debit"]["Amt"]["Avg"];
+        Type_Data_Count["T_D_C"] = typeObj["debit"]["Cnt"]["Tot"];
+        
+        debitFlag = true;
+        var debitDivString = `
+            <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Debit: </h4>
+            <div class="row">
+                <div class='col-md-1'>
+                    <h4>Total</h4>
+                    <div class='counter' id="Tot_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Tot"]}</div>
+                </div>
+                <div class='col-md-3'>
+                    <h4>Lowest Amount</h4>
+                    <div class='counter' id="Min_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Min"]}</div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Average Amount</h4>
+                    <div class="counter" id="Avg_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Avg"]}</div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Highest Amount</h4>
+                    <div class="counter" id="Max_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Max"]}</div>
+                </div>
+                <div class="col-md-1">
+                    <h4>Count</h4>
+                    <div class="counter" id="Tot_${typeObj["name"]}_D_Cnt">${typeObj["debit"]["Cnt"]["Tot"]}</div>
+                </div>
+            </div>
+         `;
+        tabDiv.innerHTML += debitDivString;
+    }
+    if (Object.entries(typeObj["credit"]["Cnt"]).length !== 0) {
+        Type_Data["T_A_C"] = typeObj["credit"]["Amt"]["Tot"];
+        Type_Data["L_A_C"] = typeObj["credit"]["Amt"]["Min"];
+        Type_Data["M_A_C"] = typeObj["credit"]["Amt"]["Max"];
+        Type_Data["A_A_C"] = typeObj["credit"]["Amt"]["Avg"];
+        Type_Data_Count["T_C_C"] = typeObj["credit"]["Cnt"]["Tot"];
+        if (debitFlag) {
+            var hrElementString = `<hr style="border:3px ;border-top: 3px solid #013459 ">`;
+            tabDiv.innerHTML += hrElementString;
+        }
+        var creditDivString = `
+            <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Credit: </h4>
+            <div class="row">
+               <div class='col-md-1'>
+                    <h4>Total</h4>
+                    <div class='counter' id="Tot_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Tot"]}</div>
+                </div>
+                <div class='col-md-3'>
+                    <h4>Lowest Amount</h4>
+                    <div class='counter' id="Min_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Min"]}</div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Average Amount</h4>
+                    <div class="counter" id="Avg_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Avg"]}</div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Highest Amount</h4>
+                    <div class="counter" id="Max_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Max"]}</div>
+                </div>
+                <div class="col-md-1">
+                    <h4>Count</h4>
+                    <div class="counter" id="Tot_${typeObj["name"]}_C_Cnt">${typeObj["credit"]["Cnt"]["Tot"]}</div>
+                </div>
+            </div>`;
+        tabDiv.innerHTML += creditDivString;
+    }
+    ChartData.push(Type_Data);
+    ChartDataCount.push(Type_Data_Count);
 }
 function RenderDataForCharts() {
     var monthkey = document.getElementById('month-key-spinner').value;
@@ -566,78 +340,41 @@ function draw_Stacked_Col_Chart() {
     valueAxis.min = 0;
     valueAxis.renderer.minWidth = 30;
     valueAxis.renderer.labels.template.fontSize = 17;
+    function create3dSeries(v) {
+        var firstChar = v.split("_")[0];
+        var secondChar = v.split("_")[1];
+        var thirdChar = v.split("_")[2];
+        var seriesName = "";
+        if (firstChar==="T") {
+            seriesName += "Total ";
+        } else if (firstChar === "L") {
+            seriesName += "Lowest ";
+        } else if (firstChar === "M") {
+            seriesName += "Highest ";
+        } else if (firstChar === "A") {
+            seriesName += "Average ";
+        }
 
-    var series1 = chart.series.push(new am4charts.ColumnSeries3D());
-    series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText = "{name}: {valueY.value}";
-    series1.name = "Total Credit Amount";
-    series1.dataFields.categoryX = "category";
-    series1.dataFields.valueY = "T_A_C";
-    series1.tooltip.fontSize = 17;
-    //series1.stacked = true;
+        if (thirdChar === "C") {
+            seriesName += "Credit ";
+        } else if (thirdChar === "D") {
+            seriesName += "Debit ";
+        } 
+        seriesName += "Amount";
 
-    var series5 = chart.series.push(new am4charts.ColumnSeries3D());
-    series5.columns.template.width = am4core.percent(80);
-    series5.columns.template.tooltipText = "{name}: {valueY.value}";
-    series5.name = "Total Debit Amount";
-    series5.dataFields.categoryX = "category";
-    series5.dataFields.valueY = "T_A_D";
-    series5.tooltip.fontSize = 17;
-    //series5.stacked = true;
-
-    var series2 = chart.series.push(new am4charts.ColumnSeries3D());
-    series2.columns.template.width = am4core.percent(80);
-    series2.columns.template.tooltipText = "{name}: {valueY.value}";
-    series2.name = "Lowest Credit Amount";
-    series2.dataFields.categoryX = "category";
-    series2.dataFields.valueY = "L_A_C";
-    series2.tooltip.fontSize = 17;
-    // series2.stacked = true;
-
-    var series6 = chart.series.push(new am4charts.ColumnSeries3D());
-    series6.columns.template.width = am4core.percent(80);
-    series6.columns.template.tooltipText = "{name}: {valueY.value}";
-    series6.name = "Lowest Debit Amount";
-    series6.dataFields.categoryX = "category";
-    series6.dataFields.valueY = "L_A_D";
-    series6.tooltip.fontSize = 17;
-    // series6.stacked = true;
-
-    var series3 = chart.series.push(new am4charts.ColumnSeries3D());
-    series3.columns.template.width = am4core.percent(80);
-    series3.columns.template.tooltipText = "{name}: {valueY.value}";
-    series3.name = "Highest Credit Amount";
-    series3.dataFields.categoryX = "category";
-    series3.dataFields.valueY = "M_A_C";
-    series3.tooltip.fontSize = 17;
-    //series3.stacked = true;
-
-    var series7 = chart.series.push(new am4charts.ColumnSeries3D());
-    series7.columns.template.width = am4core.percent(80);
-    series7.columns.template.tooltipText = "{name}: {valueY.value}";
-    series7.name = "Highest Debit Amount";
-    series7.dataFields.categoryX = "category";
-    series7.dataFields.valueY = "M_A_D";
-    series7.tooltip.fontSize = 17;
-    //series7.stacked = true;
-
-    var series4 = chart.series.push(new am4charts.ColumnSeries3D());
-    series4.columns.template.width = am4core.percent(80);
-    series4.columns.template.tooltipText = "{name}: {valueY.value}";
-    series4.name = "Average Credit Amount";
-    series4.dataFields.categoryX = "category";
-    series4.dataFields.valueY = "A_A_C";
-    series4.tooltip.fontSize = 17;
-    //series4.stacked = true;
-
-    var series8 = chart.series.push(new am4charts.ColumnSeries3D());
-    series8.columns.template.width = am4core.percent(80);
-    series8.columns.template.tooltipText = "{name}: {valueY.value}";
-    series8.name = "Average Debit Amount";
-    series8.dataFields.categoryX = "category";
-    series8.dataFields.valueY = "A_A_D";
-    series8.tooltip.fontSize = 17;
-    // series8.stacked = true;
+        var series = chart.series.push(new am4charts.ColumnSeries3D());
+        series.columns.template.width = am4core.percent(80);
+        series.columns.template.tooltipText = "{name}: {valueY.value}";
+        series.name = seriesName;
+        series.dataFields.categoryX = "category";
+        series.dataFields.valueY = v;
+        series.tooltip.fontSize = 17;
+    }
+    Object.entries(ChartData[0]).forEach((x) => {
+        if (x[0] !=="category") {
+            create3dSeries(x[0]);
+        }
+    });
 
     chart.scrollbarX = new am4core.Scrollbar();
     chart.legend.fontSize = 17;
