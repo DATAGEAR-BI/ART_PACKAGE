@@ -285,6 +285,7 @@ function renderTabsCounter() {
                 allTypesNames.push(obj["name"]);
                 createTap(obj);
             });
+            document.getElementById("TabsID").style.display = "block";
 
 
         }
