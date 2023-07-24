@@ -1,3 +1,6 @@
+var allTypesNames = [];
+var typesLength = 0;
+
 function draw_Stacked_Col_Chart() {
 
     am4core.useTheme(am4themes_animated);
