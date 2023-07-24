@@ -85,37 +85,42 @@ namespace ART_PACKAGE.Controllers
         {
             var result = db.ArtAllSegsFeatrsStatcsTbs
                 .Where(s => s.MonthKey == monthkey.ToString() && s.SegmentSorted == segment.ToString()).ToList();
-            var props = result[0].GetType().GetProperties().Where(s => (s.Name.EndsWith("CCnt") || s.Name.EndsWith("CAmt") || s.Name.EndsWith("DCnt") || s.Name.EndsWith("DAmt"))
+            var SegObj = handerSegmentFeatureResponseStructure(result[0]);
+            return Content(JsonConvert.SerializeObject(SegObj), "application/json");
+        }
+        private JObject handerSegmentFeatureResponseStructure(ArtAllSegsFeatrsStatcsTb segmentFeatures)
+        {
+            var props = segmentFeatures.GetType().GetProperties().Where(s => (s.Name.EndsWith("CCnt") || s.Name.EndsWith("CAmt") || s.Name.EndsWith("DCnt") || s.Name.EndsWith("DAmt"))
             && (s.Name.StartsWith("Total") || s.Name.StartsWith("Avg") || s.Name.StartsWith("Min") || s.Name.StartsWith("Max"))).Select(s => s.Name);
             var distinctTypes = props.Select(s => s.Replace("Total", "").Replace("Avg", "").Replace("Min", "").Replace("Max", "")
                     .Replace("CCnt", "").Replace("CAmt", "").Replace("DCnt", "").Replace("DAmt", "")).Distinct();
 
 
             JObject SegObj = new JObject();
-            var skipProps = result[0].GetType().GetProperties().Where(s => !props.Contains(s.Name)).Select(s => s.Name) ;
+            var skipProps = segmentFeatures.GetType().GetProperties().Where(s => !props.Contains(s.Name)).Select(s => s.Name);
             foreach (var item in skipProps)
             {
-                var propType = result[0].GetType().GetProperty(item).PropertyType.Name.ToLower();
+                var propType = segmentFeatures.GetType().GetProperty(item).PropertyType.Name.ToLower();
                 if (propType == "string")
                 {
-                    SegObj.Add(item, (string)result[0].GetType().GetProperty(item).GetValue(result[0]));
+                    SegObj.Add(item, (string)segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
 
                 }
                 else if (propType == "nullable`1")
                 {
-                    SegObj.Add(item, (double)result[0].GetType().GetProperty(item).GetValue(result[0]));
+                    SegObj.Add(item, (double)segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
 
 
                 }
             }
-            var typsArrayObj =new JArray();
+            var typsArrayObj = new JArray();
             var counter = 0;
             foreach (var t in distinctTypes)
-            {   
-                string maxOrMinOrAvg = t.Substring(0,3);
+            {
+                string maxOrMinOrAvg = t.Substring(0, 3);
                 string type = t.Replace("Total", "").Replace("Avg", "").Replace("Min", "").Replace("Max", "")
                     .Replace("CCnt", "").Replace("CAmt", "").Replace("DCnt", "").Replace("DAmt", "");
-                string credOrDebit= t.Substring(t.Length-4, 1);
+                string credOrDebit = t.Substring(t.Length - 4, 1);
                 var credit = props.Where(s => s.Contains(t) && (s.EndsWith("CCnt") || s.EndsWith("CAmt")));
                 var debit = props.Where(s => s.Contains(t) && (s.EndsWith("DCnt") || s.EndsWith("DAmt")));
 
@@ -126,7 +131,7 @@ namespace ART_PACKAGE.Controllers
                 var CntObj = new JObject();
                 foreach (var item in credit)
                 {
-                    double itemVal = (double)(result[0].GetType().GetProperty(item).GetValue(result[0]) == null ? 0.0 : result[0].GetType().GetProperty(item).GetValue(result[0]));
+                    double itemVal = (double)(segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures) == null ? 0.0 : segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
                     if (item.EndsWith("Amt"))
                     {
                         AmtObj[item.Substring(0, 3)] = itemVal;
@@ -142,7 +147,7 @@ namespace ART_PACKAGE.Controllers
                 CntObj = new JObject();
                 foreach (var item in debit)
                 {
-                    double itemVal = (double)(result[0].GetType().GetProperty(item).GetValue(result[0])==null ? 0.0 : result[0].GetType().GetProperty(item).GetValue(result[0]));
+                    double itemVal = (double)(segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures) == null ? 0.0 : segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
                     if (item.EndsWith("Amt"))
                     {
                         AmtObj[item.Substring(0, 3)] = itemVal;
@@ -157,21 +162,11 @@ namespace ART_PACKAGE.Controllers
                 typeObj["name"] = t;
                 typeObj["credit"] = creditObj;
                 typeObj["debit"] = debitObj;
-                typsArrayObj.Add( typeObj);
-                
+                typsArrayObj.Add(typeObj);
+
             }
             SegObj.Add("Types", typsArrayObj);
-
-
-            return Content(JsonConvert.SerializeObject(SegObj), "application/json");
-        }
-        private dynamic GetValueOfProp<T>(string propertyName)
-        {
-            Type myClassType = typeof(T);
-            PropertyInfo propertyInfo = myClassType.GetProperty(propertyName);
-            T instance = Activator.CreateInstance<T>(); 
-            string propertyValue = (string)propertyInfo.GetValue(instance);
-            return propertyValue;
+            return SegObj;
         }
         public ContentResult ArtIndustrySegments(int? monthkey, int segment, string type)
         {
@@ -188,6 +183,11 @@ namespace ART_PACKAGE.Controllers
         public ContentResult GetAllSegmentData(int? monthkey, string Type)
         {
             var result = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t=>t.SegmentSorted).ToList();
+            var AllSegmentDataArray = new JArray();
+            foreach (var item in result)
+            {
+                AllSegmentDataArray.Add(handerSegmentFeatureResponseStructure(item));
+            }
             return Content(JsonConvert.SerializeObject(result), "application/json");
         }
 

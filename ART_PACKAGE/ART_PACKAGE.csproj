@@ -8,10 +8,12 @@
 
 	<ItemGroup>
 	  <Content Remove="wwwroot\js\segmentReport.js" />
+	  <Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -1684,6 +1686,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
 		<None Include="wwwroot\js\segmentReport.js" />
+		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 
