@@ -574,6 +574,9 @@ function makeSpinnerSegmentId(url, divId, spinnerDefaultValue) {
             queueList.forEach(q => {
                 var opt = document.createElement('option');
                 opt.value = q.SegmentSorted;
+                if (q.SegmentDescription == null) {
+                    q.SegmentDescription = "-";
+                }
                 opt.innerHTML = q.SegmentSorted + " , " + q.SegmentDescription;
                 select.appendChild(opt);
             })

@@ -1,5 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.SEGMODEL;
+using Data.Data;
 using iTextSharp.text.xml.xmp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers
 
         public ContentResult Segs(int? monthkey, string Type)
         {
-            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s =>  new { SegmentSorted= s.SegmentSorted}).Distinct();
+            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s =>  new { SegmentSorted= s.SegmentSorted, SegmentDescription = s.SegmentDescription}).Distinct();
             return Content(JsonConvert.SerializeObject(segs), "application/json");
         }
 
