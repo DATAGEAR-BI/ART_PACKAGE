@@ -16,7 +16,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

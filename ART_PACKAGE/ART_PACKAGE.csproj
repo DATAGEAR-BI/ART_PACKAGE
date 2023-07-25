@@ -5,7 +5,14 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
-
+	<ItemGroup>
+		<Reference Include="bcprov-jdk15on-1.68">
+			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
+		</Reference>
+		<Reference Include="commons-codec-1.11">
+			<HintPath>commons-codec-1.11.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 	<ItemGroup>
 		<Content Include="wwwroot\bower_components\bootstrap\.bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\bower.json" />
@@ -1684,6 +1691,7 @@
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="IKVM" Version="8.6.2" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -1717,7 +1725,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\js\SegmentationScripts\" />
+		<Folder Include="Licenses\" />
+		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 
 </Project>
