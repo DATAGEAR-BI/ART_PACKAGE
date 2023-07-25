@@ -108,7 +108,9 @@ namespace ART_PACKAGE.Controllers
                 }
                 else if (propType == "nullable`1")
                 {
-                    SegObj.Add(item, (double)segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
+                    double itemVal = (double)(segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures) == null ? 0.0 : segmentFeatures.GetType().GetProperty(item).GetValue(segmentFeatures));
+
+                    SegObj.Add(item, itemVal);
 
 
                 }

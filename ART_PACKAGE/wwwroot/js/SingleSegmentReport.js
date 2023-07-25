@@ -1,3 +1,6 @@
+var allTypesNames = [];
+var typesLength = 0;
+
 function draw_Stacked_Col_Chart() {
 
     am4core.useTheme(am4themes_animated);
@@ -285,6 +288,7 @@ function renderTabsCounter() {
                 allTypesNames.push(obj["name"]);
                 createTap(obj);
             });
+            document.getElementById("TabsID").style.display = "block";
 
 
         }
