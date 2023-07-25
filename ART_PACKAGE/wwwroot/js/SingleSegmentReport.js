@@ -178,7 +178,7 @@ function draw_Stacked_Col_Chart_Count() {
 
 var ChartData = [];
 var ChartDataCount = [];
-
+var allTypesNames = [];
 function callCounters() {
     // DOM Element's
     const counters = document.querySelectorAll('.counter');
@@ -321,7 +321,6 @@ function createTap(typeObj) {
         Type_Data["M_A_D"] = typeObj["debit"]["Amt"]["Max"];
         Type_Data["A_A_D"] = typeObj["debit"]["Amt"]["Avg"];
         Type_Data_Count["T_D_C"] = typeObj["debit"]["Cnt"]["Tot"];
-
         debitFlag = true;
         var debitDivString = `
             <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Debit: </h4>
@@ -386,13 +385,14 @@ function createTap(typeObj) {
             </div>`;
         tabDiv.innerHTML += creditDivString;
     }
+    console.log(ChartData);
     ChartData.push(Type_Data);
     ChartDataCount.push(Type_Data_Count);
 }
 function RenderDataForCharts() {
-    var monthkey = '@ViewBag.monthkey';
-    var segment_id = '@ViewBag.SegID';
-    var segType = '@ViewBag.SegType';
+    //var monthkey = '@ViewBag.monthkey';
+    //var segment_id = '@ViewBag.SegID';
+    //var segType = '@ViewBag.SegType';
     console.log(segType);
     $.ajax({
         type: "GET",
