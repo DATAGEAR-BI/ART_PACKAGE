@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.Audit;
 using Data.Constants.db;
-using Data.DGAML;
 using Data.DGECM;
 using Data.FCF71;
 using Data.FCFCORE;
@@ -21,7 +20,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
             var FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
             var GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
             var DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
-            var DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
+            //var DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
             var migrationsToApply = config.GetSection("migrations").Get<List<string>>();
             var dbType = config.GetValue<string>("dbType").ToUpper();
             var migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
@@ -100,18 +99,6 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 DbTypes.Oracle => options.UseOracle(
                     DGUSERMANAGMENTContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-            services.AddDbContext<DGAMLContext>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    DGAMLContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    DGAMLContextConnection,
                     x => x.MigrationsAssembly("OracleMigrations")
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")

@@ -1,5 +1,4 @@
 ﻿using Data.Audit;
-using Data.DGAML;
 using Data.DGECM;
 using Data.GOAML;
 using System;
@@ -17,16 +16,14 @@ namespace Data.FCF71
         private readonly DGECMContext _ecm;
         private readonly GoAmlContext _goAml;
         private readonly AuditContext _audit;
-        private readonly DGAMLContext _dgAml;
 
-        public DBService(FCFKC.FCFKC kc, FCFCORE.fcf71Context core, DGECMContext ecm, GoAmlContext goAml, AuditContext audit, DGAMLContext dgAml)
+        public DBService(FCFKC.FCFKC kc, FCFCORE.fcf71Context core, DGECMContext ecm, GoAmlContext goAml, AuditContext audit)
         {
             _kc = kc;
             _core = core;
             _ecm = ecm;
             _goAml = goAml;
             _audit = audit;
-            _dgAml = dgAml;
         }
 
         public FCFKC.FCFKC KC => _kc;
@@ -36,6 +33,5 @@ namespace Data.FCF71
         public GoAmlContext GOAML => _goAml;
 
         public AuditContext AUDIT => _audit;
-        public DGAMLContext DGAML => _dgAml;
     }
 }
