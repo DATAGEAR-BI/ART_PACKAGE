@@ -182,9 +182,10 @@ namespace OracleMigrations.Migrations
                 ;");
             //ART_AUDIT_INDIVIDUALS_VIEW
             migrationBuilder.Sql($@"
-            --------------------------------------------------------
-            --  DDL for View ART_AUDIT_INDIVIDUALS_VIEW
-            --------------------------------------------------------
+                    --------------------------------------------------------
+                    --  DDL for View ART_AUDIT_INDIVIDUALS_VIEW
+                    --------------------------------------------------------
+
 
                       CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_AUDIT_INDIVIDUALS_VIEW"" (""CASE_RK"", ""A_K_A"", ""OPENING_REASON_ID"", ""AML_RISK_CD"", ""CITIZEN_OR_RESIDENT"", ""CLIENT_NUMBER"", ""CLOSE_DATE"", ""CLOSING_REASON_ID"", ""CREATE_DATE"", ""CREATED_BY"", ""RISK_CLASS_VALUE"", ""CUSTOMER_TYPE"", ""DEFAULT_BRANCH"", ""NUMBER_OF_DEPENDENTS"", ""FIRST_NAME"", ""FULL_NAME_AR"", ""FULL_NAME_EN"", ""GENDER_CD"", ""EDUCATION_ID"", ""CB_RISK_ID"", ""KYC_STATUS"", ""RACE_ID"", ""LAST_NAME"", ""MARITAL_STATUS_CD"", ""MIDDLE_NAME"", ""MOTHER_NAME"", ""NATIONALITY_CODE1"", ""NATIONALITY_CODE2"", ""NATIONALITY_CODE3"", ""NEXT_UPDATE_DATE"", ""CB_RISK_RATE"", ""RELIGION"", ""RESIDENCE_COUNTRY"", ""RISK_REASON"", ""RISK_CODE"", ""SICTOR_CODE"", ""TITLE"", ""UPDATE_DATE"", ""UPDATED_BY"", ""VISA_TYPE"", ""FIRST_NAME_ENG"", ""LAST_NAME_ENG"", ""MIDDLE_NAME_ENG"", ""NAME_LANGUAGE"", ""EMPLOYEE_INDICATOR"", ""EDUCATION_ID_OTHER"", ""SPOUSE_BUSINESS"", ""SPOUSE_NAME"", ""VISA_EXPIRATION_DATE"", ""CB_RISK_RATE_OTHER"", ""CLOSING_REASON_ID_OTHER"", ""OPENING_REASON_ID_OTHER"", ""RISK_CODE_OTHER"", ""EMPLOYMENT_TYPE"", ""EMPLOYED_OR_BUSINESS"", ""EMPLOYER_BUSINESS_NAME"", ""EMPLOYER_BUSINESS_ADRS"", ""EMPLOYER_BUSINESS_CITY"", ""EMPLOYER_BUSINESS_CTRY"", ""EMPLOYER_BUSINESS_STATE"", ""EMPLOYER_BUSINESS_TOWN"", ""EMPLOYER_PHONE"", ""EMPLOYER_COUNTRY_PHONE_CODE"", ""OCCUPATION"", ""OCCUPATION_DTL"", ""BUSINESS_SECTOR"", ""BUSINESS_SECTOR_OTHERS"", ""PEP_INDICATOR"", ""PEP_INDICATOR_DTLS"", ""PEP_INDICATOR_OTH"", ""SOURCE_OF_INCOME_CD"", ""SOURCE_OF_INCOME_OTHER"", ""ANNUAL_INCOME_CD"", ""MONTH_INCOME"", ""INCOME_ISO_CURRENCY"", ""MONTH_EXPENSE"", ""EXPENSE_ISO_CURRENCY"", ""HOME_CD"", ""TAX_REGULATION_CTRY_CD1"", ""TAX_REGULATION_CTRY_CD2"", ""TAX_REGULATION_CTRY_CD3"", ""TAX_REGULATION_TIN1"", ""TAX_REGULATION_TIN2"", ""TAX_REGULATION_TIN3"", ""RELATION_TO_BANK_CODE"", ""OTHER_BANK_ACCOUNTS"", ""DEALT_BANK_DETAILS"", ""DEAL_ABRD_BANK_DETAILS"", ""BUSINESS_CODE"", ""CALCULATE_ZAKAH_FLAG"", ""CHARITY_FLAG"", ""COMPANY_SALES_AMOUNT_PER_YEAR"", ""CUSTOMER_STATUS"", ""ECONOMIC_MAIN_CODE"", ""ECONOMIC_SUB_CODE"", ""GEO_CODE"", ""LAST_QUERY_DATE"", ""LEGAL_MAIN_CODE"", ""LEGAL_STEP_DATE"", ""LEGAL_STEP_MAIN_CODE"", ""LEGAL_STEP_SUB_CODE"", ""LEGAL_SUB_CODE"", ""REFERRED_PERSON_ADDRESS"", ""REFERRED_PERSON_PHONE"", ""SECTOR_ANALYSES_CODE"", ""WORTH_LAST_CALC_DATE"") AS 
                       select 
@@ -223,7 +224,7 @@ namespace OracleMigrations.Migrations
                     ,r_country.val_desc RESIDENCE_COUNTRY
                     ,a.RISK_REASON
                     ,r_RISK_CODE.val_desc RISK_CODE
-                    ,r_occupation.val_desc SICTOR_CODE
+                    ,r_sector.val_desc SICTOR_CODE
                     ,r_title.val_desc TITLE
                     ,a.UPDATE_DATE
                     ,a.UPDATED_BY
@@ -328,7 +329,7 @@ namespace OracleMigrations.Migrations
                     LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK RT_CAR_TYPE on a.NUMBER_OF_DEPENDENTS = RT_CAR_TYPE.val_cd and RT_CAR_TYPE.REF_TABLE_NAME='X_RT_CAR_TYPE'
                     LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK RT_RACE_TYPE on a.RACE_ID = RT_RACE_TYPE.val_cd and RT_RACE_TYPE.REF_TABLE_NAME='X_RT_AD_RM_RACE'
                     LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK RT_CLOSING_REASON on a.CLOSING_REASON_ID = RT_CLOSING_REASON.val_cd and RT_CLOSING_REASON.REF_TABLE_NAME='X_RT_CLOSING_REASON'
-                    LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK r_occupation on a.SICTOR_CODE = r_occupation.val_cd and r_occupation.REF_TABLE_NAME='X_RT_OCCU_ETNTY_CD'
+                    LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK r_sector on a.SICTOR_CODE = r_sector.val_cd and r_sector.REF_TABLE_NAME='X_RT_OCCU_ETNTY_CD'
                     LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK r_RELIGION on a.RELIGION = r_RELIGION.val_cd and r_RELIGION.REF_TABLE_NAME='X_RT_RELIGION'
                     LEFT JOIN DGKYC.ref_table_trans@DGKYC_LINK r_EMP_IND on a.EMPLOYEE_INDICATOR = r_EMP_IND.val_cd and r_EMP_IND.REF_TABLE_NAME='X_RT_YES_NO'
 
@@ -353,8 +354,7 @@ namespace OracleMigrations.Migrations
 
                     LEFT JOIN
                     DGKYC.ADDITIONAL_INFO_AUD@DGKYC_LINK b ON a.case_rk=b.case_rk and a.update_date =b.update_date
-                    order by a.case_rk,a.update_date desc
-                    ;");
+                    order by a.case_rk,a.update_date desc;");
             //ART_KYC_EXPIRED_ID
             migrationBuilder.Sql($@"
             --------------------------------------------------------

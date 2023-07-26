@@ -548,224 +548,119 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
-            //{
-            //    nameof(DGAMLArtExternalCustomerDetailsController).ToLower(),new ReportConfig{
-            //        SkipList = new List<string>()
-            //        {
-            //            "CustomerTaxId",
-            //            "GovernorateName",
-            //            "StreetPostalCode",
-            //            "StreetCountryCode",
-            //            "StreetCountryName",
-            //            "PhoneNumber1",
-            //            "PhoneNumber2"
-            //        },
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
-            //            {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
-            //            {  "CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
-            //            {  "CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
-            //            {  "CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
-            //            {  "CustomerDateOfBirth",new DisplayNameAndFormat { DisplayName ="Customer Date Of Birth"}},
-            //            {  "StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
-            //            {  "CityName",new DisplayNameAndFormat { DisplayName ="City Name"}},
-            //            {  "ResidenceCountryName",new DisplayNameAndFormat { DisplayName = "Residence Country"}},
-            //            {  "CitizenshipCountryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-            //            {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+            {
+                nameof(ArtAuditCorporateController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"}},
+                        {  "BankingOrCorporate",new DisplayNameAndFormat { DisplayName ="Banking Or Corporate"}},
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "NameLanguage",new DisplayNameAndFormat { DisplayName ="Name Language"}},
+                        {  "CorporateName",new DisplayNameAndFormat { DisplayName ="Corporate Name"}},
+                        {  "CommercialName",new DisplayNameAndFormat { DisplayName ="Commercial Name"}},
+                        {  "CorporateNameEn",new DisplayNameAndFormat { DisplayName ="Corporate Name En"}},
+                        {  "CommercialNameEn",new DisplayNameAndFormat { DisplayName ="Commercial Name En"}},
+                        {  "Title",new DisplayNameAndFormat { DisplayName ="Title"}},
+                        {  "DefaultBranch",new DisplayNameAndFormat { DisplayName ="Default Branch"}},
+                        {  "Industry",new DisplayNameAndFormat { DisplayName ="Industry"}},
+                        {  "AmlRiskCd",new DisplayNameAndFormat { DisplayName ="Aml Risk CD"}},
+                        {  "KycStatus",new DisplayNameAndFormat { DisplayName ="Kyc Status"}},
+                        {  "TypeOfBusiness",new DisplayNameAndFormat { DisplayName ="Type Of Business"}},
+                        {  "TypeOfBusinessOther",new DisplayNameAndFormat { DisplayName ="Type Of Business Other"}},
+                        {  "IdentType",new DisplayNameAndFormat { DisplayName ="Identity Type"}},
+                        {  "IdentNumber",new DisplayNameAndFormat { DisplayName ="Identity Number"}},
+                        {  "IdIssueCountry",new DisplayNameAndFormat { DisplayName ="ID Issue Country"}},
+                        {  "IdentIssueDate",new DisplayNameAndFormat { DisplayName ="Identity Issue Date"}},
+                        {  "IdentExpiryDate",new DisplayNameAndFormat { DisplayName ="Identity Expiry Date"}},
+                        {  "RegNumberCity",new DisplayNameAndFormat { DisplayName ="Reg Number City"}},
+                        {  "RegNumberOffice",new DisplayNameAndFormat { DisplayName ="Reg Number Office"}},
+                        {  "RegistrationNumber",new DisplayNameAndFormat { DisplayName ="Registration Number"}},
+                        {  "RegExpiryDate",new DisplayNameAndFormat { DisplayName ="Reg Expiry Date"}},
+                        {  "RegNumberLastDate",new DisplayNameAndFormat { DisplayName ="Reg Number Last Date"}},
+                        {  "HeadQuarterCountry",new DisplayNameAndFormat { DisplayName ="Head Quarter Country"}},
+                        {  "TaxIdNum",new DisplayNameAndFormat { DisplayName ="Tax ID Number"}},
+                        {  "NationalityCountry",new DisplayNameAndFormat { DisplayName ="Nationality Country"}},
+                        {  "IncorporationCountryCode",new DisplayNameAndFormat { DisplayName ="Incorporation Country Code"}},
+                        {  "IncorporationDate",new DisplayNameAndFormat { DisplayName ="Incorporation Date"}},
+                        {  "IncorporationLegalForm",new DisplayNameAndFormat { DisplayName ="Incorporation Legal Form"}},
+                        {  "IncorporationState",new DisplayNameAndFormat { DisplayName ="Incorporation State"}},
+                        {  "LegalFormOthers",new DisplayNameAndFormat { DisplayName ="Legal Form Others"}},
+                        {  "LegalFormSub",new DisplayNameAndFormat { DisplayName ="Legal Form Sub"}},
+                        {  "RiskReason",new DisplayNameAndFormat { DisplayName ="Risk Reason"}},
+                        {  "RiskCode",new DisplayNameAndFormat { DisplayName ="Risk Code"}},
+                        {  "CbRiskRate",new DisplayNameAndFormat { DisplayName ="Cb Risk Rate"}},
+                        {  "ClosingReasonId",new DisplayNameAndFormat { DisplayName ="Closing Reason ID"}},
+                        {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {  "CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+                        {  "UpdateDate",new DisplayNameAndFormat { DisplayName ="Update Date"}},
+                        {  "UpdatedBy",new DisplayNameAndFormat { DisplayName ="Updated By"}},
+                        {  "ActivityTypeSub",new DisplayNameAndFormat { DisplayName ="Activity Type Sub"}},
+                        {  "BudgetDate1",new DisplayNameAndFormat { DisplayName ="Budget Date1"}},
+                        {  "BudgetDate2",new DisplayNameAndFormat { DisplayName ="Budget Date2"}},
+                        {  "BudgetDate3",new DisplayNameAndFormat { DisplayName ="Budget Date3"}},
+                        {  "FfiType",new DisplayNameAndFormat { DisplayName ="Ffi Type"}},
+                        {  "Giin",new DisplayNameAndFormat { DisplayName ="Giin"}},
+                        {  "SalesVolume1",new DisplayNameAndFormat { DisplayName ="Sales Volume1"}},
+                        {  "SalesVolume2",new DisplayNameAndFormat { DisplayName ="Sales Volume2"}},
+                        {  "SalesVolume3",new DisplayNameAndFormat { DisplayName ="Sales Volume3"}},
+                        {  "ActivityAmount",new DisplayNameAndFormat { DisplayName ="Activity Amount"}},
+                        {  "ActivityAmountCurrency",new DisplayNameAndFormat { DisplayName ="Activity Amount Currency"}},
+                        {  "ActivityEndDate",new DisplayNameAndFormat { DisplayName ="Activity End Date"}},
+                        {  "ActivityStartDate",new DisplayNameAndFormat { DisplayName ="Activity Start Date"}},
+                        {  "ActivityType",new DisplayNameAndFormat { DisplayName ="Activity Type"}},
+                        {  "ActivityTypeDtls",new DisplayNameAndFormat { DisplayName ="Activity Type Dtls"}},
+                        {  "CharityDonationsInd",new DisplayNameAndFormat { DisplayName ="Charity Donations Ind"}},
+                        {  "FinancialStartDate",new DisplayNameAndFormat { DisplayName ="Financial Start Date"}},
+                        {  "ForeignConsulateEmbassyInd",new DisplayNameAndFormat { DisplayName ="Foreign Consulate Embassy Ind"}},
+                        {  "GovOrgInd",new DisplayNameAndFormat { DisplayName ="Gov Org Ind"}},
+                        {  "WomenShare",new DisplayNameAndFormat { DisplayName ="Women Share"}},
+                        {  "DateOfBudget",new DisplayNameAndFormat { DisplayName ="Date Of Budget"}},
+                        {  "NoOfEmployees",new DisplayNameAndFormat { DisplayName ="No Of Employees"}},
+                        {  "SizeOfSales",new DisplayNameAndFormat { DisplayName ="Size Of Sales"}},
+                        {  "SizeOfTransaction",new DisplayNameAndFormat { DisplayName ="Size Of Transaction"}},
+                        {  "ReferenceEmployeeId",new DisplayNameAndFormat { DisplayName ="Reference Employee ID"}},
+                        {  "CustomerReference",new DisplayNameAndFormat { DisplayName ="Customer Reference"}},
+                        {  "BankingOrOtherRef",new DisplayNameAndFormat { DisplayName ="Banking Or Other Ref"}},
+                        {  "LimitsAmount",new DisplayNameAndFormat { DisplayName ="Limits Amount"}},
+                        {  "LimitsAmountCurrency",new DisplayNameAndFormat { DisplayName ="Limits Amount Currency"}},
+                        {  "GeoCode",new DisplayNameAndFormat { DisplayName ="Geo Code"}},
+                        {  "BusinessCode",new DisplayNameAndFormat { DisplayName ="Business Code"}},
+                        {  "CalculateZakahFlag",new DisplayNameAndFormat { DisplayName ="Calculate Zakah Flag"}},
+                        {  "CustomerStatus",new DisplayNameAndFormat { DisplayName ="Customer Status"}},
+                        {  "InvestmentBalance",new DisplayNameAndFormat { DisplayName ="Investment Balance"}},
+                        {  "SalesBasis",new DisplayNameAndFormat { DisplayName ="Sales Basis"}},
+                        {  "LegalStepMainCode",new DisplayNameAndFormat { DisplayName ="Legal Step Main Code"}},
+                        {  "LegalStepSubCode",new DisplayNameAndFormat { DisplayName ="Legal Step Sub Code"}},
+                        {  "MainLegalForm",new DisplayNameAndFormat { DisplayName ="Main Legal Form"}},
+                        {  "UnderEstablishment",new DisplayNameAndFormat { DisplayName ="Under Establishment"}},
+                        {  "TotalNoOfUnits",new DisplayNameAndFormat { DisplayName ="Total No Of Units"}},
+                        {  "RiskWeight",new DisplayNameAndFormat { DisplayName ="Risk Weight"}},
+                        {  "WorthCode",new DisplayNameAndFormat { DisplayName ="Worth Code"}},
+                        {  "LastQueryDate",new DisplayNameAndFormat { DisplayName ="Last Query Date"}},
+                        {  "TradeAddDate",new DisplayNameAndFormat { DisplayName ="Trade Add Date"}},
+                        {  "WorthLastCalcDate",new DisplayNameAndFormat { DisplayName ="Worth Last Calc Date"}},
+                        {  "EconomicActivityCode5",new DisplayNameAndFormat { DisplayName ="Economic Activity Code5"}},
+                        {  "PaidUpCapitalAmount",new DisplayNameAndFormat { DisplayName ="Paid Up Capital Amount"}},
+                        {  "PaidUpCapitalCurrency",new DisplayNameAndFormat { DisplayName ="Paid Up Capital Currency"}},
+                        {  "DealtBankDetails",new DisplayNameAndFormat { DisplayName ="Dealt Bank Details"}},
+                        {  "DealAbrdBankDetails",new DisplayNameAndFormat { DisplayName ="Deal Abrd Bank Details"}},
+                        {  "OtherBankAccounts",new DisplayNameAndFormat { DisplayName ="Other Bank Accounts"}},
+                        {  "Capital1",new DisplayNameAndFormat { DisplayName ="Capital1"}},
+                        {  "Capital2",new DisplayNameAndFormat { DisplayName ="Capital2"}},
+                        {  "Capital3",new DisplayNameAndFormat { DisplayName ="Capital3"}},
+                        {  "AnnualNetIncomeCd",new DisplayNameAndFormat { DisplayName ="Annual Net Income CD"}},
+                        {  "NonProfitOrganization",new DisplayNameAndFormat { DisplayName ="Non Profit Organization"}},
+                        {  "CompanyStock",new DisplayNameAndFormat { DisplayName ="Company Stock"}},
+                        {  "CompanyStockName",new DisplayNameAndFormat { DisplayName ="Company Stock Name"}},
+                        {  "HoldingCorporation",new DisplayNameAndFormat { DisplayName ="Holding Corporation"}},
+                        {  "HoldingCorporationCd",new DisplayNameAndFormat { DisplayName ="Holding Corporation CD"}},
+                    }
+                }
+            },
 
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLArtScenarioAdminController).ToLower(),new ReportConfig{
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "ScenarioName",new DisplayNameAndFormat { DisplayName ="Name"}},
-            //            {  "ScenarioShortDesc",new DisplayNameAndFormat { DisplayName ="Short Description"}},
-            //            {  "ScenarioDesc",new DisplayNameAndFormat { DisplayName ="Scenario Description"}},
-            //            {  "ScenarioStatus",new DisplayNameAndFormat { DisplayName ="Scenario Status"}},
-            //            {  "ScenarioCategory",new DisplayNameAndFormat { DisplayName ="Scenario Category"}},
-            //            {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
-            //            {  "RiskFact",new DisplayNameAndFormat { DisplayName ="Risk Fact"}},
-            //            {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
-            //            {  "EndDate",new DisplayNameAndFormat { DisplayName ="End Date"}},
-            //            {  "CreateUserId",new DisplayNameAndFormat { DisplayName ="Create User ID"}},
-            //            {  "ScenarioType",new DisplayNameAndFormat { DisplayName = "Scenario Type"}},
-            //            {  "ScenarioFrequency",new DisplayNameAndFormat { DisplayName ="Scenario Frequency"}},
-            //            {  "ScenarioMessage",new DisplayNameAndFormat { DisplayName ="Scenario Message"}},
-            //            {  "ObjectLevel",new DisplayNameAndFormat { DisplayName ="Object Level"}},
-            //            {  "AlarmType",new DisplayNameAndFormat { DisplayName ="Alarm Type"}},
-            //            {  "AlarmCategory",new DisplayNameAndFormat { DisplayName ="Alarm Category"}},
-            //            {  "AlarmSubcategory",new DisplayNameAndFormat { DisplayName ="Alarm Subcategory"}},
-            //            {  "DependedData",new DisplayNameAndFormat { DisplayName ="Depended Data"}},
-            //            {  "ParmName",new DisplayNameAndFormat { DisplayName ="Parameter Name"}},
-            //            {  "ParmValue",new DisplayNameAndFormat { DisplayName ="Parameter Value"}},
-            //            {  "ParmDesc",new DisplayNameAndFormat { DisplayName ="Parameter Desc"}},
-            //            {  "ParmTypeDesc",new DisplayNameAndFormat { DisplayName ="Parameter Type Desc"}},
-            //            {  "ParamCondition",new DisplayNameAndFormat { DisplayName ="Parameter Condition"}},
-            //            {  "ScorParmName",new DisplayNameAndFormat { DisplayName ="Score Parameter Name"}},
-            //            {  "ScorDependAttribute",new DisplayNameAndFormat { DisplayName ="Score Depend Attribute"}},
-
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLArtScenarioHistoryController).ToLower(),new ReportConfig{
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "RoutineName",new DisplayNameAndFormat { DisplayName ="Scenario Name"}},
-            //            {  "RoutineShortDesc",new DisplayNameAndFormat { DisplayName ="Scenario Short Description"}},
-            //            {  "EventDesc",new DisplayNameAndFormat { DisplayName ="Event Description"}},
-            //            {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
-            //            {  "CreateUserId",new DisplayNameAndFormat { DisplayName ="Create User Id"}},
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLArtSuspectDetailsController).ToLower(),new ReportConfig{
-            //        SkipList = new List<string>()
-            //        {
-            //            "CustIdentExpDate",
-            //            "CustIdentIssDate",
-            //            "EmprName",
-            //            "TelNo1"
-            //        },
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "SuspectNumber",new DisplayNameAndFormat { DisplayName ="Suspect Number"}},
-            //            {  "SuspectName",new DisplayNameAndFormat { DisplayName ="Suspect Name"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-            //            {  "ProfileRisk",new DisplayNameAndFormat { DisplayName ="Profile Risk"}},
-            //            {  "NumberOfAlarms",new DisplayNameAndFormat { DisplayName ="Number Of Alerts"}},
-            //            {  "AgeOfOldestAlert",new DisplayNameAndFormat { DisplayName ="Age Of Oldest Alert"}},
-            //            {  "OwnerUserId",new DisplayNameAndFormat { DisplayName ="Owner User Id"}},
-            //            {  "CustBirthDate",new DisplayNameAndFormat { DisplayName ="Customer Birth Of Date"}},
-            //            {  "PoliticalExpPrsnInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
-            //            {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
-            //            {  "CitizenCntryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
-            //            {  "CustIdentId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
-            //            {  "CustIdentTypeDesc",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
-            //            {  "OccupDesc",new DisplayNameAndFormat { DisplayName ="Occupation Description"}},
-            //            {  "CustSinceDate",new DisplayNameAndFormat { DisplayName ="Customer Since Date"}},
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLTriageController).ToLower(),new ReportConfig{
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
-            //            {  "AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-            //            {  "RiskScore",new DisplayNameAndFormat { DisplayName ="Risk Score"}},
-            //            {  "QueueCode",new DisplayNameAndFormat { DisplayName ="Queue Code"}},
-            //            {  "OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner User ID"}},
-            //            {  "AlertedEntityLevel",new DisplayNameAndFormat { DisplayName ="Alerted Entity Level"}},
-            //            {  "AggregateAmt",new DisplayNameAndFormat { DisplayName ="Aggregate Amount"}},
-            //            {  "AgeOldestAlert",new DisplayNameAndFormat { DisplayName ="Age Oldest Alert"}},
-            //            {  "AlertsCntSum",new DisplayNameAndFormat { DisplayName ="Alerts Count Sum"}},
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLAlertDetailsController).ToLower(),new ReportConfig{
-            //        SkipList=new List<string>()
-            //        {
-            //            "ActualValuesText"
-            //        },
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "AlarmId",new DisplayNameAndFormat { DisplayName ="Alert ID"}},
-            //            {  "AlertedEntityNumber",new DisplayNameAndFormat { DisplayName ="Alerted Entity Number"}},
-            //            {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
-            //            {  "AlertDescription",new DisplayNameAndFormat { DisplayName ="Alert Description"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-            //            {  "ScenarioId",new DisplayNameAndFormat { DisplayName ="Scenario ID"}},
-            //            {  "ScenarioName",new DisplayNameAndFormat { DisplayName ="Scenario Name"}},
-            //            {  "MoneyLaunderingRiskScore",new DisplayNameAndFormat { DisplayName ="Money Laundering Risk Score"}},
-            //            {  "AlertCategory",new DisplayNameAndFormat { DisplayName ="Alert Category"}},
-            //            {  "AlertSubcategory",new DisplayNameAndFormat { DisplayName ="Alert Sub Category"}},
-            //            {  "AlertStatus",new DisplayNameAndFormat { DisplayName ="Alert Status"}},
-            //            {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
-            //            {  "RunDate",new DisplayNameAndFormat { DisplayName ="Run Date"}},
-            //            {  "PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
-            //            {  "EmpInd",new DisplayNameAndFormat { DisplayName ="Emp Indication"}},
-            //            {  "ClosedUserId",new DisplayNameAndFormat { DisplayName ="Closed User ID"}},
-            //            {  "CloseUserName",new DisplayNameAndFormat { DisplayName ="Close User Name"}},
-            //            {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
-            //            {  "CloseReason",new DisplayNameAndFormat { DisplayName ="Close Reason"}},
-            //            {  "InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}},
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLCasesDetailsController).ToLower(),new ReportConfig{
-            //        SkipList = new List<string>()
-            //        {
-            //            "CaseStatusCode",
-            //            "CaseCategoryCode",
-            //            "CaseSubCategoryCode"
-            //        },
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
-            //            {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
-            //            {  "EntityNumber",new DisplayNameAndFormat { DisplayName ="Entity Number"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-            //            {  "CasePriority",new DisplayNameAndFormat { DisplayName ="Case Priority"}},
-            //            {  "CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
-            //            {  "CaseCategory",new DisplayNameAndFormat { DisplayName ="Case Category"}},
-            //            {  "EntityLevel",new DisplayNameAndFormat { DisplayName ="Entity Level"}},
-            //            {  "CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
-            //            {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
-            //        }
-            //    }
-            //},
-            //{
-            //    nameof(DGAMLCustomersDetailsController).ToLower(),new ReportConfig{
-            //        SkipList = new List<string>()
-            //        {
-            //            "CustomerTaxId",
-            //            "GovernorateName",
-            //            "DoingBusinessAsName",
-            //            "CustomerStatus",
-            //            "StreetPostalCode",
-            //            "StreetCountryCode",
-            //            "StreetCountryName",
-            //            "MailingAddress1",
-            //            "MailingCityName",
-            //            "MailingPostalCode",
-            //            "MailingCountryName",
-            //            "IsEmployee",
-            //            "EmployeeNumber",
-            //            "EmployerName",
-            //            "EmployerPhoneNumber",
-            //            "EmailAddress",
-            //            "PhoneNumber1",
-            //            "PhoneNumber2",
-            //            "PhoneNumber3",
-            //            "AnnualIncomeAmount",
-            //            "NetWorthAmount",
-            //            "LastRiskAssessmentDate"
-            //        },
-            //        DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
-            //            {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
-            //            {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
-            //            {  "CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
-            //            {  "CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
-            //            {  "CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
-            //            {  "CustomerDateOfBirth",new DisplayNameAndFormat { DisplayName ="Customer Date Of Birth"}},
-            //            {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
-            //            {  "StreetAddress1",new DisplayNameAndFormat { DisplayName ="Street Address"}},
-            //            {  "CityName",new DisplayNameAndFormat { DisplayName ="City Name"}},
-            //            {  "ResidenceCountryName",new DisplayNameAndFormat { DisplayName = "Residence Country"}},
-            //            {  "CitizenshipCountryName",new DisplayNameAndFormat { DisplayName ="Citizenship Country"}},
-            //            {  "OccupationDesc",new DisplayNameAndFormat { DisplayName ="Occupation Description"}},
-            //            {  "IndustryDesc",new DisplayNameAndFormat { DisplayName ="Industry Description"}},
-            //            {  "MaritalStatusDesc",new DisplayNameAndFormat { DisplayName ="Marital Status"}},
-            //            {  "CustomerSinceDate",new DisplayNameAndFormat { DisplayName ="Customer Since Date"}},
-            //            {  "NonProfitOrgInd",new DisplayNameAndFormat { DisplayName ="Non Profit Org IND"}},
-            //            {  "PoliticallyExposedPersonInd",new DisplayNameAndFormat { DisplayName ="PEP"}},
-            //            {  "BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-
-            //        }
-            //    }
-            //},
         };
 
     }
