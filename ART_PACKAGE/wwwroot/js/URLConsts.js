@@ -65,5 +65,11 @@
     ArtKycExpiredId: "/ArtKycExpiredId/GetData",
     ArtKycHighExpired: "/ArtKycHighExpired/GetData",
     ArtKycHighOneMonth: "/ArtKycHighOneMonth/GetData",
+    ArtKycHighThreeMonth: "/ArtKycHighThreeMonth/GetData",
+    ArtKycHighTwoMonth: "/ArtKycHighTwoMonth/GetData",
+    ArtKycLowExpired: "/ArtKycLowExpired/GetData",
+    ArtKycLowThreeMonth: "/ArtKycLowThreeMonth/GetData",
+    ArtKycLowTwoMonth: "/ArtKycLowTwoMonth/GetData",
+    ArtKycMediumExpired: "/ArtKycMediumExpired/GetData",
 }
 
