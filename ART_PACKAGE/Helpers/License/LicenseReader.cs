@@ -79,5 +79,14 @@ namespace ART_PACKAGE.Helpers.License
                 return null;
             }
         }
+
+        public IEnumerable<Security.License> ReadAllAppLicenses()
+        {
+            var licensesFiles = Directory
+              .GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses"));
+            var licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
+            var licenses = licenseFilesNames.Select(x => this.ReadFromPath(x));
+            return licenses;
+        }
     }
 }

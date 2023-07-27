@@ -9,6 +9,8 @@ using Rotativa.AspNetCore;
 using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Hubs;
+using ART_PACKAGE.BackGroundServices;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -16,6 +18,8 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 builder.Services.AddDbs(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
@@ -70,6 +74,7 @@ app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
 app.UseLicense();
 app.MapRazorPages();
+app.MapHub<LicenseHub>("/LicHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

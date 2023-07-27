@@ -2,16 +2,13 @@
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Models;
 using ART_PACKAGE.Security;
-using CsvHelper.Configuration.Attributes;
-using Data.Data;
-using jdk.nashorn.@internal.ir;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Mono.Unix;
 using Newtonsoft.Json;
-using System.IO;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize]
     public class LicenseController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -38,18 +35,18 @@ namespace ART_PACKAGE.Controllers
             var licText = reader.ReadToEnd();
             var license = _licReader.ReadFromText(licText);
 
-            if (lic.Module == "base" && client != license.Client)
+            if (lic.Module == "base" && client != license.Client.ToLower())
                 return BadRequest(new Error("LiceError", "the license is not compatible with the module you selected"));
 
-            if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client)
+            if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client.ToLower())
                 return BadRequest(new Error("LiceError", "the license is not compatible with the module you selected"));
 
-            if (lic.Module != "base" && !LicenseModules.Contains(lic.Module))
+            if (lic.Module != "base" && !LicenseModules.Contains(lic.Module.ToLower()))
                 return BadRequest(new Error("LiceError", "this module is not supported in the app configration"));
             if (!license.IsValid())
                 return BadRequest(new Error("LiceError", "the license you tring to upload is expired"));
 
-            var licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.Name));
+            var licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
             var isLicExist = System.IO.File
                 .Exists(licPath);
 
@@ -58,7 +55,7 @@ namespace ART_PACKAGE.Controllers
                 System.IO.File.Delete(licPath);
             try
             {
-                using FileStream fileStream = new FileStream(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses"), FileMode.Create);
+                using FileStream fileStream = new FileStream(licPath, FileMode.Create, FileAccess.ReadWrite);
                 await lic.License.CopyToAsync(fileStream);
                 return Ok(license);
 
@@ -80,10 +77,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            var licensesFiles = Directory
-               .GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses"));
-            var licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
-            var licenses = licenseFilesNames.Select(x => _licReader.ReadFromPath(x)).AsQueryable();
+            var licenses = _licReader.ReadAllAppLicenses().AsQueryable();
             var Data = licenses.CallData<License>(request);
             var result = new
             {

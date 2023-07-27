@@ -785,8 +785,19 @@ export const Handlers = {
                     body: data
                 }).catch(err => console.log(err));
 
-                if (res.ok)
+                if (res.ok) {
                     $("#addreplicModal").modal("hide");
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    toastObj.text = "license has been uploaded";
+                    toastObj.heading = "License Status";
+                    toastObj.icon = 'success';
+
+                    $.toast(toastObj);
+                    //this line is important to clear all notifications on all clients
+                    //connection is intialized in _loginPartial.cshtml
+                    connection.invoke("ClearLiceMsg");
+
+                }
 
                 else {
                     var error = await res.json();

@@ -13,7 +13,8 @@
         }
 
         public int RemainingDays
-        { get
+        {
+            get
             {
                 return (int)this.DaysRemaining();
             }
