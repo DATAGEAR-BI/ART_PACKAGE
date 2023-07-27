@@ -61,5 +61,9 @@
 
     //KYC
     ArtAuditCorporate: "/ArtAuditCorporate/GetData",
+    ArtAuditIndividuals: "/ArtAuditIndividuals/GetData",
+    ArtKycExpiredId: "/ArtKycExpiredId/GetData",
+    ArtKycHighExpired: "/ArtKycHighExpired/GetData",
+    ArtKycHighOneMonth: "/ArtKycHighOneMonth/GetData",
 }
 

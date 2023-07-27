@@ -548,6 +548,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            //KYC
             {
                 nameof(ArtAuditCorporateController).ToLower(),new ReportConfig{
                     SkipList = new List<string> {
@@ -660,7 +661,165 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ArtAuditIndividualsController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"}},
+                        {  "AKA",new DisplayNameAndFormat { DisplayName ="AKA"}},
+                        {  "OpeningReasonId",new DisplayNameAndFormat { DisplayName ="Opening Reason ID"}},
+                        {  "AmlRiskCd",new DisplayNameAndFormat { DisplayName ="Aml Risk CD"}},
+                        {  "CitizenOrResident",new DisplayNameAndFormat { DisplayName ="Citizen Or Resident"}},
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
+                        {  "ClosingReasonId",new DisplayNameAndFormat { DisplayName ="Closing Reason ID"}},
+                        {  "CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                        {  "CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
+                        {  "RiskClassValue",new DisplayNameAndFormat { DisplayName ="Risk Class Value"}},
+                        {  "CustomerType",new DisplayNameAndFormat { DisplayName ="Customer Type"}},
+                        {  "DefaultBranch",new DisplayNameAndFormat { DisplayName ="Default Branch"}},
+                        {  "NumberOfDependents",new DisplayNameAndFormat { DisplayName ="Number Of Dependents"}},
+                        {  "FirstName",new DisplayNameAndFormat { DisplayName ="First Name"}},
+                        {  "FullNameAr",new DisplayNameAndFormat { DisplayName ="Full Name AR"}},
+                        {  "FullNameEn",new DisplayNameAndFormat { DisplayName ="Full Name EN"}},
+                        {  "GenderCd",new DisplayNameAndFormat { DisplayName ="Gender CD"}},
+                        {  "EducationId",new DisplayNameAndFormat { DisplayName ="Education ID"}},
+                        {  "CbRiskId",new DisplayNameAndFormat { DisplayName ="Cb Risk ID"}},
+                        {  "KycStatus",new DisplayNameAndFormat { DisplayName ="Kyc Status"}},
+                        {  "RaceId",new DisplayNameAndFormat { DisplayName ="Race ID"}},
+                        {  "LastName",new DisplayNameAndFormat { DisplayName ="Last Name"}},
+                        {  "MaritalStatusCd",new DisplayNameAndFormat { DisplayName ="Marital Status CD"}},
+                        {  "MiddleName",new DisplayNameAndFormat { DisplayName ="Middle Name"}},
+                        {  "MotherName",new DisplayNameAndFormat { DisplayName ="Mother Name"}},
+                        {  "NationalityCode1",new DisplayNameAndFormat { DisplayName ="Nationality Code1"}},
+                        {  "NationalityCode2",new DisplayNameAndFormat { DisplayName ="Nationality Code2"}},
+                        {  "NationalityCode3",new DisplayNameAndFormat { DisplayName ="Nationality Code3"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+                        {  "CbRiskRate",new DisplayNameAndFormat { DisplayName ="Cb Risk Rate"}},
+                        {  "Religion",new DisplayNameAndFormat { DisplayName ="Religion"}},
+                        {  "ResidenceCountry",new DisplayNameAndFormat { DisplayName ="Residence Country"}},
+                        {  "RiskReason",new DisplayNameAndFormat { DisplayName ="Risk Reason"}},
+                        {  "RiskCode",new DisplayNameAndFormat { DisplayName ="Risk Code"}},
+                        {  "SictorCode",new DisplayNameAndFormat { DisplayName ="Sictor Code"}},
+                        {  "Title",new DisplayNameAndFormat { DisplayName ="Title"}},
+                        {  "UpdateDate",new DisplayNameAndFormat { DisplayName ="Update Date"}},
+                        {  "UpdatedBy",new DisplayNameAndFormat { DisplayName ="Updated By"}},
+                        {  "VisaType",new DisplayNameAndFormat { DisplayName ="Visa Type"}},
+                        {  "FirstNameEng",new DisplayNameAndFormat { DisplayName ="First Name EN"}},
+                        {  "LastNameEng",new DisplayNameAndFormat { DisplayName ="Last Name EN"}},
+                        {  "MiddleNameEng",new DisplayNameAndFormat { DisplayName ="Middle Name EN"}},
+                        {  "NameLanguage",new DisplayNameAndFormat { DisplayName ="Name Language"}},
+                        {  "EmployeeIndicator",new DisplayNameAndFormat { DisplayName ="Employee Indicator"}},
+                        {  "EducationIdOther",new DisplayNameAndFormat { DisplayName ="Education ID Other"}},
+                        {  "SpouseBusiness",new DisplayNameAndFormat { DisplayName ="Spouse Business"}},
+                        {  "SpouseName",new DisplayNameAndFormat { DisplayName ="Spouse Name"}},
+                        {  "VisaExpirationDate",new DisplayNameAndFormat { DisplayName ="Visa Expiration Date"}},
+                        {  "CbRiskRateOther",new DisplayNameAndFormat { DisplayName ="Cb Risk Rate Other"}},
+                        {  "ClosingReasonIdOther",new DisplayNameAndFormat { DisplayName ="Closing Reason ID Other"}},
+                        {  "OpeningReasonIdOther",new DisplayNameAndFormat { DisplayName ="Opening Reason ID Other"}},
+                        {  "RiskCodeOther",new DisplayNameAndFormat { DisplayName ="Risk Code Other"}},
+                        {  "EmploymentType",new DisplayNameAndFormat { DisplayName ="Employment Type"}},
+                        {  "EmployedOrBusiness",new DisplayNameAndFormat { DisplayName ="Employed Or Business"}},
+                        {  "EmployerBusinessName",new DisplayNameAndFormat { DisplayName ="Employer Business Name"}},
+                        {  "EmployerBusinessAdrs",new DisplayNameAndFormat { DisplayName ="Employer Business Address"}},
+                        {  "EmployerBusinessCity",new DisplayNameAndFormat { DisplayName ="Employer Business City"}},
+                        {  "EmployerBusinessCtry",new DisplayNameAndFormat { DisplayName ="Employer Business Country"}},
+                        {  "EmployerBusinessState",new DisplayNameAndFormat { DisplayName ="Employer Business State"}},
+                        {  "EmployerBusinessTown",new DisplayNameAndFormat { DisplayName ="Employer Business Town"}},
+                        {  "EmployerPhone",new DisplayNameAndFormat { DisplayName ="Employer Phone"}},
+                        {  "EmployerCountryPhoneCode",new DisplayNameAndFormat { DisplayName ="Employer Country Phone Code"}},
+                        {  "Occupation",new DisplayNameAndFormat { DisplayName ="Occupation"}},
+                        {  "OccupationDtl",new DisplayNameAndFormat { DisplayName ="Occupation Dtl"}},
+                        {  "BusinessSector",new DisplayNameAndFormat { DisplayName ="Business Sector"}},
+                        {  "BusinessSectorOthers",new DisplayNameAndFormat { DisplayName ="Business Sector Others"}},
+                        {  "PepIndicator",new DisplayNameAndFormat { DisplayName ="PEP Indicator"}},
+                        {  "PepIndicatorDtls",new DisplayNameAndFormat { DisplayName ="PEP Indicator Dtls"}},
+                        {  "PepIndicatorOth",new DisplayNameAndFormat { DisplayName ="PEP Indicator Other"}},
+                        {  "SourceOfIncomeCd",new DisplayNameAndFormat { DisplayName ="Source Of Income CD"}},
+                        {  "SourceOfIncomeOther",new DisplayNameAndFormat { DisplayName ="Source Of Income Other"}},
+                        {  "AnnualIncomeCd",new DisplayNameAndFormat { DisplayName ="Annual Income CD"}},
+                        {  "MonthIncome",new DisplayNameAndFormat { DisplayName ="Month Income"}},
+                        {  "IncomeIsoCurrency",new DisplayNameAndFormat { DisplayName ="Income ISO Currency"}},
+                        {  "MonthExpense",new DisplayNameAndFormat { DisplayName ="Month Expense"}},
+                        {  "ExpenseIsoCurrency",new DisplayNameAndFormat { DisplayName ="Expense ISO Currency"}},
+                        {  "HomeCd",new DisplayNameAndFormat { DisplayName ="Home CD"}},
+                        {  "TaxRegulationCtryCd1",new DisplayNameAndFormat { DisplayName ="Tax Regulation Country CD1"}},
+                        {  "TaxRegulationCtryCd2",new DisplayNameAndFormat { DisplayName ="Tax Regulation Country CD2"}},
+                        {  "TaxRegulationCtryCd3",new DisplayNameAndFormat { DisplayName ="Tax Regulation Country CD3"}},
+                        {  "TaxRegulationTin1",new DisplayNameAndFormat { DisplayName ="Tax Regulation Tin1"}},
+                        {  "TaxRegulationTin2",new DisplayNameAndFormat { DisplayName ="Tax Regulation Tin2"}},
+                        {  "TaxRegulationTin3",new DisplayNameAndFormat { DisplayName ="Tax Regulation Tin3"}},
+                        {  "RelationToBankCode",new DisplayNameAndFormat { DisplayName ="Relation To Bank Code"}},
+                        {  "OtherBankAccounts",new DisplayNameAndFormat { DisplayName ="Other Bank Accounts"}},
+                        {  "DealtBankDetails",new DisplayNameAndFormat { DisplayName ="Dealt Bank Details"}},
+                        {  "DealAbrdBankDetails",new DisplayNameAndFormat { DisplayName ="Deal Abrd Bank Details"}},
+                        {  "BusinessCode",new DisplayNameAndFormat { DisplayName ="Business Code"}},
+                        {  "CalculateZakahFlag",new DisplayNameAndFormat { DisplayName ="Calculate Zakah Flag"}},
+                        {  "CharityFlag",new DisplayNameAndFormat { DisplayName ="Charity Flag"}},
+                        {  "CompanySalesAmountPerYear",new DisplayNameAndFormat { DisplayName ="Company Sales Amount Per Year"}},
+                        {  "CustomerStatus",new DisplayNameAndFormat { DisplayName ="Customer Status"}},
+                        {  "EconomicMainCode",new DisplayNameAndFormat { DisplayName ="Economic Main Code"}},
+                        {  "EconomicSubCode",new DisplayNameAndFormat { DisplayName ="Economic Sub Code"}},
+                        {  "GeoCode",new DisplayNameAndFormat { DisplayName ="Geo Code"}},
+                        {  "LastQueryDate",new DisplayNameAndFormat { DisplayName ="Last Query Date"}},
+                        {  "LegalMainCode",new DisplayNameAndFormat { DisplayName ="Legal Main Code"}},
+                        {  "LegalStepDate",new DisplayNameAndFormat { DisplayName ="Legal Step Date"}},
+                        {  "LegalStepMainCode",new DisplayNameAndFormat { DisplayName ="Legal Step Main Code"}},
+                        {  "LegalStepSubCode",new DisplayNameAndFormat { DisplayName ="Legal Step Sub Code"}},
+                        {  "LegalSubCode",new DisplayNameAndFormat { DisplayName ="Legal Sub Code"}},
+                        {  "ReferredPersonAddress",new DisplayNameAndFormat { DisplayName ="Referred Person Address"}},
+                        {  "ReferredPersonPhone",new DisplayNameAndFormat { DisplayName ="Referred Person Phone"}},
+                        {  "SectorAnalysesCode",new DisplayNameAndFormat { DisplayName ="Sector Analyses Code"}},
+                        {  "WorthLastCalcDate",new DisplayNameAndFormat { DisplayName ="Worth Last Calcualte Date"}},
 
+                    }
+                }
+            },
+             {
+                nameof(ArtKycExpiredIdController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "IdNumber",new DisplayNameAndFormat { DisplayName ="ID Number"}},
+                        {  "IdExpireDate",new DisplayNameAndFormat { DisplayName ="ID Expire Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycHighExpiredController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycHighOneMonthController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+                        {  "Month",new DisplayNameAndFormat { DisplayName ="Month"}},
+
+                    }
+                }
+            },
         };
 
     }
