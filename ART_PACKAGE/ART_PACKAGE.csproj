@@ -14,6 +14,16 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Remove="wwwroot\js\segmentReport.js" />
+	  <Content Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="wwwroot\bower_components\bootstrap\.bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\bower.json" />
 		<Content Include="wwwroot\bower_components\bootstrap\CHANGELOG.md" />
@@ -1682,6 +1692,8 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\segmentReport.js" />
+		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 

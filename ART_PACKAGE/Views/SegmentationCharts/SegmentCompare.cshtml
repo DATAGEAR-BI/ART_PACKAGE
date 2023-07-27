@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Comparison Segments";
+}
+@section scripts{
+    <link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/stacked-3D-column-chart/index.css" />
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+    <script src="~/js/segmentcompare.js" asp-append-version="true"></script>
+}
+
+<section class="content ">
+    <div id="report-header" style="text-align:center">
+        <h2>Comparison Customers's Segments</h2>
+    </div>
+    <div id="report-spinners" class="text-center">
+        <div class="row top-buffer">
+
+            <div class="col-md-6">
+                <!-- <label style="display: block; text-align: center;">Hi</label> -->
+                <label>Run Month</label>
+                <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
+                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                    <option value="monthKey">-- Not Selected --</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <!-- <label style="display: block; text-align: center;">Hi</label> -->
+                <label>Segment Type</label>
+                <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
+                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                    <option value="segmentType">-- Not Selected --</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+    <hr style="border:3px ;border-top: 3px solid #013459 ">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="CustCountPerTypeCharth3">Number of Customers Per Type</h3>
+                <h4 class="text-center">You can double click any type slice to display other charts</h4>
+            </div>
+            
+            <div id="CustCountPerTypeChart" style="height:700px;padding-bottom:50px;"></div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="segChartCounth3">Number of Customers Per Segment</h3>
+            </div>
+            
+
+
+            <div id="SegmentsCustCountChart" style="height:700px;padding-bottom:50px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div style="text-align:center">
+                <h3 class="text-center" style="display:none" id="segChartAlertCounth3">Number of Alerts Per Segment</h3>
+            </div>
+            <div id="SegmentsAlertCountChart" style="height:700px;padding-bottom:50px;"></div>
+        </div>
+    </div>
+
+    <hr style="border:3px ;border-top: 3px solid #013459 ">
+
+    <h3 class="text-center" style="display:none" id="segCharth3">  Segments Comparison Chart</h3>
+    <div class="row">
+        <div id="SegmentsComparisonChart" class="col-md-12" style="height:1000px;padding-bottom:50px;"></div>
+    </div>
+</section>

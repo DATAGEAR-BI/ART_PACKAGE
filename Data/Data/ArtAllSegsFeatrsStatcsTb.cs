@@ -7,6 +7,7 @@ namespace Data.Data
     {
         public string? MonthKey { get; set; }
         public string? SegmentSorted { get; set; }
+        public string? SegmentDescription { get; set; }
         public string? PartyTypeDesc { get; set; }
         public double? AvgTotalAmt { get; set; }
         public double? TotalAmount { get; set; }

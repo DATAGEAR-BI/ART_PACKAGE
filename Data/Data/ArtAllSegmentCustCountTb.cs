@@ -9,5 +9,6 @@ namespace Data.Data
         public string? SegmentSorted { get; set; }
         public string? PartyTypeDesc { get; set; }
         public int? NumberOfCustomers { get; set; }
+        public string? SegmentDescription { get; set; }
     }
 }

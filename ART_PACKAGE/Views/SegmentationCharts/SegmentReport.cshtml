@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "SegmentReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+    <script src="~/lib/Plugins/CustomPlugin/CustomKendoChartsScript.js"></script>
+    <script src="~/js/purecounter.js"></script>
+    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/candlestick-chart/index.css" />
+    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/stacked-3D-column-chart/index.css" />
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+    <script src="~/js/segmentreport.js" asp-append-version="true"></script>
+    <link href="~/css/segmentreport.css" rel="stylesheet" />
+}
+
+<div id="report-header" style="text-align:center">
+    <h2>Monthly Segment Report</h2>
+</div>
+<div id="spinners-container" class="text-center">
+    <div id="spinners" class="row top-buffer">
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Run Month</label>
+            <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                <option value="monthKey">-- Not Selected --</option>
+
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Segment Type</label>
+            <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentType">-- Not Selected --</option>
+
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Segment ID</label>
+            <select name="segmentId" id="segment-id" onchange="onChangeSegmentId(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentId">-- Not Selected --</option>
+
+            </select>
+        </div>
+    </div>
+</div>
+<br>
+<section id="segment-tags" class="content ">
+    <div id="TabsID">
+        <p>Click on the buttons inside the tabbed menu to get each feature's statistics</p>
+        <div id="TabsButtonsContainer" class="tab row" style="margin-left: 3px;margin-right: 0px;"></div>
+        <div id="tabContentContainer"></div>
+    </div>
+</section>
+<div id="charts-container" class="text-center">
+    <div class="row top-buffer">
+        <div>
+            <div id="chartdiv" style="height:600px" hidden></div>
+            <hr>
+            <div id="chartCountdiv" style="height:500px" hidden></div>
+            <hr>
+            <div id="IndustrySegmentChart" style="height:700px" hidden></div>
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+
+
+

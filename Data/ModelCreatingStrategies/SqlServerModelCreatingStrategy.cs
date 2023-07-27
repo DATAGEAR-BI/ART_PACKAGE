@@ -2415,6 +2415,10 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("segment_sorted")
                     .UseCollation("Arabic_CI_AI");
+                entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("segment_description");
             });
 
             modelBuilder.Entity<ArtAllSegmentCustCountTb>(entity =>
@@ -2442,6 +2446,10 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("segment_sorted")
                     .UseCollation("Arabic_CI_AI");
+                entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("segment_description");
             });
 
             modelBuilder.Entity<ArtAllSegmentsOutliersTb>(entity =>
@@ -2602,7 +2610,10 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("segment_sorted")
                     .UseCollation("Arabic_CI_AI");
-
+                entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("segment_description");
                 entity.Property(e => e.TotalAmount).HasColumnName("TOTAL_AMOUNT");
 
                 entity.Property(e => e.TotalCashCAmt).HasColumnName("TOTAL_CASH_C_AMT");

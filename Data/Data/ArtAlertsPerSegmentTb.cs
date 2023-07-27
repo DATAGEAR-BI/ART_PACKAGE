@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.SEGMODEL
+namespace Data.Data
 {
     public partial class ArtAlertsPerSegmentTb
     {
@@ -9,5 +9,6 @@ namespace Data.SEGMODEL
         public string? PartyTypeDesc { get; set; }
         public string? SegmentSorted { get; set; }
         public double? NumberOfAlerts { get; set; }
+        public string? SegmentDescription { get; set; }
     }
 }
