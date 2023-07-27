@@ -76,7 +76,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
     public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
     public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
-    // SEGMENT 
+    // SEGMENTATION
     public virtual DbSet<ArtAlertsPerSegmentTb> ArtAlertsPerSegmentTbs { get; set; } = null!;
     public virtual DbSet<ArtAllSegmentCustCountTb> ArtAllSegmentCustCountTbs { get; set; } = null!;
     public virtual DbSet<ArtAllSegmentsOutliersTb> ArtAllSegmentsOutliersTbs { get; set; } = null!;

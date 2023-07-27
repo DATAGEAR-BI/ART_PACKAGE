@@ -1,0 +1,156 @@
+﻿<div style="text-align:center">
+    <h2>Monthly Segment Report</h2>
+</div>
+
+
+<div class="text-center">
+    <div class="row top-buffer">
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Run Month</label>
+            <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                <option value="monthKey">-- Not Selected --</option>
+
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Segment Type</label>
+            <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentType">-- Not Selected --</option>
+
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Segment ID</label>
+            <select name="segmentId" id="segment-id" onchange="onChangeSegmentId(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentId">-- Not Selected --</option>
+
+            </select>
+        </div>
+    </div>
+    @*<div style="margin: 3%;display: block; text-align: end;">
+    <input type="button" name="btn" value="mybtn" />
+    </div>*@
+</div>
+<br>
+<section class="content ">
+    @*<div style="align-content:center" id="detils-container"></div>*@
+
+    <div id="TabsID">
+        <p>Click on the buttons inside the tabbed menu to get each feature's statistics</p>
+
+        <div class="tab row" style="margin-left: 3px;margin-right: 0px;">
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="CashAmt" onclick="openTab(this)">Cash</button>
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="WireAmt" onclick="openTab(this)">Wires</button>
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="ChequeAmt" onclick="openTab(this)">Cheque</button>
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="MiscAmt" onclick="openTab(this)">Misc</button>
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="InternaltransferAmt" onclick="openTab(this)">Internal Transfer</button>
+            <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="WithdrawalAmt" onclick="openTab(this)">Withdrawal</button>
+            @* <button class="tablinks col-sm-2" style="color:#013459; text-align: center; font-weight: 600;" id="FeesAmt" onclick="openTab(event, 'Fees')">Fees</button>*@
+        </div>
+
+
+
+        <div id="aggregates" style="display:none" class="tabcontent">
+            <section class="counters text-center" style="font-size:16px;" id="FirstTab">
+                <div class="" >
+                    <h4 style="color:#013459; text-align: left; font-weight: 600; font-style: italic "> Credit: </h4>
+
+                    <div class="row">
+                        <div class='col-md-1'>
+                            <h4>Total</h4>
+                            <div class='counter' id="Tot_TotalCashCreditAmount"></div>
+                        </div>
+                        <div class='col-md-3'>
+                            <h4>Lowest Amount</h4>
+                            <div class='counter' id="Min_LowestCashCreditAmount"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Average Amount</h4>
+                            <div class="counter" id="Avg_AverageCashCreditAmount"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Highest Amount</h4>
+                            <div class="counter" id="Max_MaxCashCreditAmount"></div>
+                        </div>
+                        <div class="col-md-1">
+                            <h4>Count</h4>
+                            <div class="counter" id="Cnt_TotalCashCreditCount"></div>
+                        </div>
+                    </div>
+                    <hr style="border:3px ;border-top: 3px solid #013459 ">
+
+
+                    <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Debit: </h4>
+                    <div class="row">
+                        <div class='col-md-1'>
+                            <h4>Total</h4>
+                            <div class='counter' id="Tot_TotalCashDebitAmount"></div>
+                        </div>
+                        <div class='col-md-3'>
+                            <h4>Lowest Amount</h4>
+                            <div class='counter' id="Min_LowestCashDebitAmount"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Average Amount</h4>
+                            <div class="counter" id="Avg_AverageCashDebitAmount"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Highest Amount</h4>
+                            <div class="counter" id="Max_MaxCashDebitAmount"></div>
+                        </div>
+                        <div class="col-md-1">
+                            <h4>Count</h4>
+                            <div class="counter" id="Cnt_TotalCashDebitCount"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        
+
+
+    </div>
+
+    
+
+</section>
+<div class="text-center">
+    <div class="row top-buffer">
+
+        <div>
+
+            
+            @*<h3>  Transaction Type Amounts Comparion </h3>*@
+            <div id="chartdiv" style="height:600px" hidden></div>
+
+            <hr>
+            @*<h3>  Transaction Type Counts Comparion </h3>*@
+
+            <div id="chartCountdiv" style="height:500px" hidden></div>
+
+            <hr>
+            @*<h3>  Industry Statistics </h3>*@
+
+            <div id="IndustrySegmentChart" style="height:700px" hidden></div>
+
+            
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/segmentationscripts/segmentsummary.js"></script>
+}

@@ -1,30 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ART_PACKAGE.Areas.Identity.Data;
 using Serilog;
-using Microsoft.AspNetCore.Http;
 using ART_PACKAGE.Helpers.Logging;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Data.DGCMGMT;
 using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.LDap;
-using Data.FCF71;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System.Reflection;
 using Rotativa.AspNetCore;
-using Data.DGECM;
 using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Hubs;
+using ART_PACKAGE.BackGroundServices;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = "Development",
 });
 
-
 builder.Services.AddDbs(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
@@ -41,7 +36,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddLicense(builder.Configuration);
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
 
@@ -71,15 +66,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-app.UseAuthentication(); ;
+app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
+app.UseLicense();
 app.MapRazorPages();
+app.MapHub<LicenseHub>("/LicHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
