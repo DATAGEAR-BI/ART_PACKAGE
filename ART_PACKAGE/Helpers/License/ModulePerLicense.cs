@@ -41,8 +41,6 @@ namespace ART_PACKAGE.Helpers.License
             nameof(GOAMLReportsSummaryController).ToLower() ,
             nameof(GOAMLReportsSuspectController).ToLower() ,
         };
-
-
         private static readonly List<string> ECMControllers = new List<string>()
         {
             nameof(SystemPerformanceController).ToLower() ,
