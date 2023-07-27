@@ -43,7 +43,15 @@ namespace ART_PACKAGE.Helpers.License
         };
 
 
-
+        private static readonly List<string> ECMControllers = new List<string>()
+        {
+            nameof(SystemPerformanceController).ToLower() ,
+            nameof(SystemPerformanceSummaryController).ToLower() ,
+            nameof(UserPerformanceController).ToLower() ,
+            nameof(UserPerformancePerActionUserController).ToLower() ,
+            nameof(UserPerformancePerUserAndActionController).ToLower() ,
+            nameof(UserPerformPerActionController).ToLower() ,
+        };
 
 
 
@@ -64,6 +72,10 @@ namespace ART_PACKAGE.Helpers.License
                 return "SASAML";
             if (DGAMLControllers.Contains(controller))
                 return "DGAML";
+            if (GOAMLControllers.Contains(controller))
+                return "GOAML";
+            if (ECMControllers.Contains(controller))
+                return "ECM";
 
             return string.Empty;
         }
