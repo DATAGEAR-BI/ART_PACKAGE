@@ -1,5 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.License;
+using ART_PACKAGE.Security;
 using Data.Audit;
+using Data.Constants;
 using Data.Constants.db;
 using Data.DGAML;
 using Data.DGECM;
@@ -7,6 +10,7 @@ using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC;
 using Data.GOAML;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.IServiceCollectionExtentions
@@ -118,6 +122,26 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
             });
 
             services.AddScoped<IDbService, DBService>();
+            return services;
+        }
+
+        public static IServiceCollection AddLicense(this IServiceCollection services, ConfigurationManager config)
+        {
+            var LicenseModules = config.GetSection("LicenseModules").Get<List<string>>();
+            services.AddTransient<ILicenseReader, LicenseReader>();
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy(LicenseConstants.LICENSE_POLICY, p =>
+                {
+                    var req = new LicenseRequirment();
+                    if (LicenseModules is not null && LicenseModules.Count != 0)
+                        req.Modules = LicenseModules;
+                    p.AddRequirements(req);
+
+                }
+                );
+            });
+            services.AddScoped<IAuthorizationHandler, LicenseHandler>();
             return services;
         }
     }

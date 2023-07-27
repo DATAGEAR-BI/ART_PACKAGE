@@ -19,9 +19,11 @@ using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
+
     public class AlertDetailsController : Controller
     {
         private readonly AuthContext dbfcfkc;
