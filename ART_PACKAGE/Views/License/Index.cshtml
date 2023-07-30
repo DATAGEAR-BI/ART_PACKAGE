@@ -1,7 +1,7 @@
 ﻿@inject IConfiguration _config;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var modules = _config.GetSection("LicenseModules")
+    var modules = _config.GetSection("Modules")
                 .Get<List<string>>();
 }
 <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />

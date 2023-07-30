@@ -1,16 +1,9 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
-using iTextSharp.text.xml.xmp;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -21,6 +14,7 @@ namespace ART_PACKAGE.Controllers
         private readonly AuthContext db;
         public SegmentationChartsController(AuthContext db)
         {
+            var x = 3;
             this.db = db;
         }
         public IActionResult Index()
@@ -77,7 +71,7 @@ namespace ART_PACKAGE.Controllers
 
         public ContentResult Segs(int? monthkey, string Type)
         {
-            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s =>  new { SegmentSorted= s.SegmentSorted, SegmentDescription = s.SegmentDescription}).Distinct();
+            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => new { SegmentSorted = s.SegmentSorted, SegmentDescription = s.SegmentDescription }).Distinct();
             return Content(JsonConvert.SerializeObject(segs), "application/json");
         }
 
@@ -184,7 +178,7 @@ namespace ART_PACKAGE.Controllers
         /*for segment compare*/
         public ContentResult GetAllSegmentData(int? monthkey, string Type)
         {
-            var result = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t=>t.SegmentSorted).ToList();
+            var result = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t => t.SegmentSorted).ToList();
             var AllSegmentDataArray = new JArray();
             foreach (var item in result)
             {
@@ -195,12 +189,12 @@ namespace ART_PACKAGE.Controllers
 
         public ContentResult GetAllSegmentCustCount(int? monthkey, string Type)
         {
-            var result = db.ArtAllSegmentCustCountTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t=>t.SegmentSorted).ToList();
+            var result = db.ArtAllSegmentCustCountTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t => t.SegmentSorted).ToList();
             return Content(JsonConvert.SerializeObject(result), "application/json");
         }
         public ContentResult GetAllSegmentAlertsCount(int? monthkey, string Type)
         {
-            var result = db.ArtAlertsPerSegmentTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t=>t.SegmentSorted).ToList();
+            var result = db.ArtAlertsPerSegmentTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).OrderBy(t => t.SegmentSorted).ToList();
             return Content(JsonConvert.SerializeObject(result), "application/json");
         }
 
@@ -211,7 +205,7 @@ namespace ART_PACKAGE.Controllers
                 MonthKey = s.Key.MonthKey,
                 PartyTypeDesc = s.Key.PartyTypeDesc,
                 NumberOfCustomers = s.Sum(x => x.NumberOfCustomers)
-            }).OrderBy(t=>t.NumberOfCustomers).ToList();
+            }).OrderBy(t => t.NumberOfCustomers).ToList();
             return Content(JsonConvert.SerializeObject(result), "application/json");
         }
     }

@@ -127,7 +127,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
 
         public static IServiceCollection AddLicense(this IServiceCollection services, ConfigurationManager config)
         {
-            var LicenseModules = config.GetSection("LicenseModules").Get<List<string>>();
+            var LicenseModules = config.GetSection("Modules").Get<List<string>>();
             services.AddTransient<ILicenseReader, LicenseReader>();
             services.AddAuthorization(opt =>
             {

@@ -29,7 +29,7 @@ namespace ART_PACKAGE.Controllers
 
             var client = _configuration.GetSection("Client")
                 .Get<string>()?.ToLower();
-            var LicenseModules = _configuration.GetSection("LicenseModules")
+            var LicenseModules = _configuration.GetSection("Modules")
                 .Get<List<string>>()?.Select(x => x.ToLower());
             using var reader = new StreamReader(lic.License.OpenReadStream());
             var licText = reader.ReadToEnd();

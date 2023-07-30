@@ -5,15 +5,10 @@ using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Data.ModelCreatingStrategies;
-using Data.SEGMODEL;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Data.Common;
-using System.Reflection.Emit;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 

@@ -1,13 +1,8 @@
 ﻿using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
-using Data.SEGMODEL;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Data.ModelCreatingStrategies
 {

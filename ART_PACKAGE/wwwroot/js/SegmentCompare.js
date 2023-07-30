@@ -48,8 +48,7 @@ function PrepDataDrawChart(SegmentType) {
     //End
 
     //display elments
-    document.getElementById('segCharth3').style.display = "block";
-
+  
 
     //start getting all segments data from api according to the current selected
     $.ajax({
@@ -58,8 +57,6 @@ function PrepDataDrawChart(SegmentType) {
         data: {
         },
         success: function (data) {
-            console.log("Hello World");
-            console.log(data);
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
             var chart = am4core.create("SegmentsComparisonChart", am4charts.XYChart3D);
@@ -88,8 +85,11 @@ function PrepDataDrawChart(SegmentType) {
             valueAxis.min = 5;
             valueAxis.renderer.minWidth = 35;
             valueAxis.renderer.labels.template.fontSize = 17;
+            var title = chart.titles.create();
+            title.text = "Segments Comparison Chart";
+            title.fontSize = 25;
+            title.marginBottom = 30;
 
-            
             createSeries();
             function createSeries() {
 
@@ -110,14 +110,14 @@ function PrepDataDrawChart(SegmentType) {
                 function checkForType(prop) {
                     return (prop[0].startsWith("Tot") || prop[0].startsWith("Min") || prop[0].startsWith("Max") || prop[0].startsWith("Avg")) && (prop[0].endsWith('CAmt') || prop[0].endsWith('DAmt'));
                 }
-                
 
-                
+
+
             }
 
-            
 
-            
+
+
 
             chart.scrollbarX = new am4core.Scrollbar();
             chart.legend.fontSize = 17;
@@ -144,7 +144,7 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-            document.getElementById('segChartCounth3').style.display = "block";
+           
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
@@ -179,10 +179,12 @@ function DrawCharts(SegmentType) {
             //series.slices.template.fill = am4core.color("#00ff00"); // green fill
 
             series.slices.template.events.on("doublehit", function (ev) {
-                console.log(monthkey, ev.target.dataItem.category);
                 window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
             });
-
+            var title = chart.titles.create();
+            title.text = "Number of Customers Per Segment";
+            title.fontSize = 25;
+            title.marginBottom = 30;
         },
 
     });
@@ -194,7 +196,7 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-            document.getElementById('segChartAlertCounth3').style.display = "block";
+            
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
@@ -224,9 +226,13 @@ function DrawCharts(SegmentType) {
             series.labels.template.disabled = true;
             series.ticks.template.disabled = true;
             series.slices.template.events.on("doublehit", function (ev) {
-                console.log(monthkey, ev.target.dataItem.category);
                 window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
             });
+
+            var title = chart.titles.create();
+            title.text = "Number of Alerts Per Segment";
+            title.fontSize = 25;
+            title.marginBottom = 30;
         },
 
     });
@@ -242,7 +248,7 @@ function DrawOnMonthCharts() {
         },
         success: function (data) {
             //display elments
-            document.getElementById('CustCountPerTypeCharth3').style.display = "block";
+           
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
@@ -271,14 +277,23 @@ function DrawOnMonthCharts() {
             // Disable ticks and labels
             series.labels.template.disabled = true;
             series.ticks.template.disabled = true;
+            var title = chart.titles.create();
+            title.text = "Number of Customers Per Type";
+            title.fontSize = 25;
+            title.marginBottom = 30;
 
+
+
+            var label = chart.chartContainer.createChild(am4core.Label);
+            label.text = "You can double click any type slice to display other charts";
+            label.align = "center";
             //chart.legend.itemContainers.template.events.on("hit", function (ev) {
             //    console.log("clicked on ");
             //});
 
 
             series.slices.template.events.on("doublehit", function (ev) {
-                console.log(monthkey, ev.target.dataItem.category);
+                
 
                 makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + ev.target.dataItem.category);
                 PrepDataDrawChart(ev.target.dataItem.category);

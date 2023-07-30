@@ -4,6 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
@@ -14,13 +15,13 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Remove="wwwroot\js\segmentReport.js" />
-	  <Content Remove="wwwroot\js\SingleSegmentReport.js" />
+		<Content Remove="wwwroot\js\segmentReport.js" />
+		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
-	  <_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
