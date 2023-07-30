@@ -26,59 +26,132 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
 }
 export const Handlers = {
     csvExport: async (e, controller, url) => {
-        kendo.ui.progress($('#grid'), true);
-        var id = document.getElementById("script").dataset.id;
-        var ds = $("#grid").data("kendoGrid");
-        var selectedrecords = [];
 
+        kendo.ui.progress($('#grid'), true);
+        var ds = $("#grid").data("kendoGrid");
+        var total = ds.dataSource.total();
+        var take = 1000;
+        var skip = 0;
+        var id = document.getElementById("script").dataset.id;
+        var selectedrecords = [];
         var all = true;
         if (selectedrecords && [...selectedrecords].length != 0)
             all = false
         var filters = ds.dataSource.filter();
-        var total = ds.dataSource.total();
         var para = {}
         if (id) {
             para.Id = id;
         }
-        para.Take = total;
-        para.Skip = 0;
+        
         para.Filter = filters;
-        var isMyreports = window.location.href.toLowerCase().includes('myreports');
-        var res;
-        if (isMyreports) {
-            res = await fetch(`/${controller}/ExportMyReports`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
-        } else {
-            res = await fetch(`/${controller}/Export`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
-        }
-        var blob = await res.blob();
-        var a = document.createElement("a");
-        var dateNow = new Date().toLocaleString();
-        var userId;
-        //userId = (await (await fetch('https://clonesasweb.hqdomain.com/SASComplianceSolutionsMid/rest/users/current?applicationNames=aml&relationships=applicationCapabilities,queues')).json()).userId;
-        var fileName = "";
-        if (userId)
-            fileName = `${controller}_${userId}_${dateNow}.csv`;
-        else
-            fileName = `${controller}_${dateNow}.csv`;
+        var promses = [];
+        while (total > 0) {
+            para.Take = take;
+            para.Skip = skip;
+            var promise = new Promise(async (resolve, reject) => {
 
-        a.setAttribute("download", fileName);
-        a.href = window.URL.createObjectURL(blob);
-        a.click();
+
+                var isMyreports = window.location.href.toLowerCase().includes('myreports');
+                var res;
+                if (isMyreports) {
+                    res = await fetch(`/${controller}/ExportMyReports`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+                    });
+                } else {
+                    res = await fetch(`/${controller}/Export`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+                    });
+                }
+
+                //const contentDispositionHeader = res.headers.get('Content-Disposition');
+
+                //const filename = contentDispositionHeader.split(";")[1].trim().split("=")[1].split(".")[0];
+
+                var r = await res.blob();
+                resolve({
+                    blob: r
+
+                });
+            });
+            promses.push(promise);
+            skip += take;
+            total -= take;
+        }
+
+        var results = await Promise.all(promses);
+        results.forEach((x, i) => {
+            var a = document.createElement("a");
+            var dateNow = new Date();
+
+            a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".csv");
+            a.href = window.URL.createObjectURL(x.blob);
+            a.click();
+        });
         kendo.ui.progress($('#grid'), false);
+
+        //kendo.ui.progress($('#grid'), true);
+        //var id = document.getElementById("script").dataset.id;
+        //var ds = $("#grid").data("kendoGrid");
+        //var selectedrecords = [];
+
+        //var all = true;
+        //if (selectedrecords && [...selectedrecords].length != 0)
+        //    all = false
+        //var filters = ds.dataSource.filter();
+        //var total = ds.dataSource.total();
+        //var para = {}
+        //if (id) {
+        //    para.Id = id;
+        //}
+        //para.Take = total;
+        //para.Skip = 0;
+        //para.Filter = filters;
+        //var isMyreports = window.location.href.toLowerCase().includes('myreports');
+        //var res;
+        //if (isMyreports) {
+        //    res = await fetch(`/${controller}/ExportMyReports`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+        //} else {
+        //    res = await fetch(`/${controller}/Export`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+        //}
+        //var blob = await res.blob();
+        //var a = document.createElement("a");
+        //var dateNow = new Date().toLocaleString();
+        //var userId;
+        ////userId = (await (await fetch('https://clonesasweb.hqdomain.com/SASComplianceSolutionsMid/rest/users/current?applicationNames=aml&relationships=applicationCapabilities,queues')).json()).userId;
+        //var fileName = "";
+        //if (userId)
+        //    fileName = `${controller}_${userId}_${dateNow}.csv`;
+        //else
+        //    fileName = `${controller}_${dateNow}.csv`;
+
+        //a.setAttribute("download", fileName);
+        //a.href = window.URL.createObjectURL(blob);
+        //a.click();
+        //kendo.ui.progress($('#grid'), false);
     },
     csvExportForStored: async (e, controller) => {
         kendo.ui.progress($('#grid'), true);

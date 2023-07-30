@@ -1,17 +1,14 @@
 ﻿
 
+using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Linq.Dynamic.Core;
-
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
@@ -566,6 +563,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             var sortString = obj.Sort.GetSortString();
             if (sortString is not null)
                 data = data.OrderBy(sortString).AsQueryable();
+            else
+                data = data.OrderBy(typeof(T).GetProperties().First().Name + " asc");
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
                 columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
