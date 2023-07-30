@@ -1,5 +1,5 @@
 ﻿export const URLS = {
-
+    License: "/License/GetData",
     CustomReport: "/report/GetGridData/",
     MyReports: "/report/GetMyReportsData/",
     FSKALERT: "/report/FSKALERTDATA",
@@ -36,7 +36,7 @@
     CasesSummary: "/CasesSummary/GetData",
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
-
+    AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",
     //GoAml
     GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
     GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",
@@ -67,10 +67,10 @@
     DGAMLAlertSummary: "/DGAMLAlertSummary/GetData",
     DGAMLCustomersSummary: "/DGAMLCustomerSummary/GetData",
     DGAMLCasesSummary: "/DGAMLCasesSummary/GetData",
-    DGAMLArtExternalCustomerDetails:"/DGAMLArtExternalCustomerDetails/GetData",
-    DGAMLArtScenarioAdmin:"/DGAMLArtScenarioAdmin/GetData",
-    DGAMLArtScenarioHistory:"/DGAMLArtScenarioHistory/GetData",
-    DGAMLArtSuspectDetails:"/DGAMLArtSuspectDetails/GetData",
-    DGAMLExternalCustomerSummary:"/DGAMLExternalCustomerSummary/GetData",
+    DGAMLArtExternalCustomerDetails: "/DGAMLArtExternalCustomerDetails/GetData",
+    DGAMLArtScenarioAdmin: "/DGAMLArtScenarioAdmin/GetData",
+    DGAMLArtScenarioHistory: "/DGAMLArtScenarioHistory/GetData",
+    DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
+    DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
 }
 

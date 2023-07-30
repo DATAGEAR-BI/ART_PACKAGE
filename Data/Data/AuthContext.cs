@@ -5,15 +5,10 @@ using Data.Data;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Data.ModelCreatingStrategies;
-using Data.SEGMODEL;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Data.Common;
-using System.Reflection.Emit;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
@@ -76,7 +71,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
     public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
     public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
-    // SEGMENT 
+    // SEGMENTATION
     public virtual DbSet<ArtAlertsPerSegmentTb> ArtAlertsPerSegmentTbs { get; set; } = null!;
     public virtual DbSet<ArtAllSegmentCustCountTb> ArtAllSegmentCustCountTbs { get; set; } = null!;
     public virtual DbSet<ArtAllSegmentsOutliersTb> ArtAllSegmentsOutliersTbs { get; set; } = null!;

@@ -128,7 +128,7 @@ namespace SqlServerMigrations.Migrations
                                 MONTH_KEY
                                 ,segment_sorted
                                 ,PARTY_TYPE_DESC      
-
+								,s.segment_description
                                 ,FLOOR(SUM(TOTAL_AMOUNT)/NULLIF(SUM(TOTAL_CNT),0)) AVG_TOTAL_AMT
                                 ,FLOOR(SUM(TOTAL_AMOUNT))  TOTAL_AMOUNT
                                 --,FLOOR(MIN_TOTAL_AMT) MIN_TOTAL_AMT
@@ -250,11 +250,13 @@ namespace SqlServerMigrations.Migrations
     
       
                                   FROM [ART_DB].[ART_MEB_SEGMENTS_V3_TB] A
+								  left join [fcf71].[FCFKC].[FSK_SEGMENT] s on  A.segment_sorted = s.entity_segment_id
   
                                 GROUP BY
                                        MONTH_KEY
                                       ,segment_sorted
-                                      ,PARTY_TYPE_DESC;");
+                                      ,PARTY_TYPE_DESC
+									  ,s.segment_description;");
             //ART_ALL_SEGS_FEATRS_STATCS_TB
             migrationBuilder.Sql($@"
             IF OBJECT_ID('[ART_DB].[ART_ALL_SEGS_FEATRS_STATCS_TB]', 'U') IS NOT NULL
@@ -815,14 +817,18 @@ namespace SqlServerMigrations.Migrations
             //ART_ALL_SEGMENT_CUST_COUNT
             migrationBuilder.Sql($@"
             CREATE OR ALTER  VIEW [ART_DB].[ART_ALL_SEGMENT_CUST_COUNT] AS 
-                          select 
+                           select 
                         Month_Key,
                         segment_sorted,
                         PARTY_TYPE_DESC,
+						ISNULL(s.segment_description,'-') segment_description,
                         count(party_number) Number_Of_Customers
-                        from [ART_DB].ART_MEB_SEGMENTS_V3_TB group by Month_Key,
+                        from [ART_DB].ART_MEB_SEGMENTS_V3_TB A
+						left join [fcf71].[FCFKC].[FSK_SEGMENT] S on A.segment_sorted = s.entity_segment_id
+						group by Month_Key,
                         segment_sorted,
-                        PARTY_TYPE_DESC;");
+                        PARTY_TYPE_DESC,
+						s.segment_description;");
             //ART_ALL_SEGMENT_CUST_COUNT_TB
             migrationBuilder.Sql($@"
             IF OBJECT_ID('[ART_DB].[ART_ALL_SEGMENT_CUST_COUNT_TB]', 'U') IS NOT NULL
@@ -836,13 +842,16 @@ namespace SqlServerMigrations.Migrations
                             month_key,
                             party_type_desc,
                             segment_sorted,
+							ISNULL(s.segment_description,'-') segment_description,
                             floor(sum(alerts_cnt))Number_Of_Alerts
                             from 
-                            [ART_DB].art_meb_segments_v3_tb
+                            [ART_DB].art_meb_segments_v3_tb A
+							left join [fcf71].[FCFKC].[FSK_SEGMENT] S on A.segment_sorted = S.entity_segment_id
                             group by
                             month_key,
                             party_type_desc,
-                            segment_sorted;");
+                            segment_sorted,
+							s.segment_description;");
             //ART_ALERTS_PER_SEGMENT_TB
             migrationBuilder.Sql($@"
             IF OBJECT_ID('[ART_DB].[ART_ALERTS_PER_SEGMENT_TB]', 'U') IS NOT NULL

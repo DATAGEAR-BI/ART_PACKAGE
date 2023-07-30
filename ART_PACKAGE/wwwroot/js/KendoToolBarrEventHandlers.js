@@ -190,7 +190,7 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 }
-            
+
                 //const contentDispositionHeader = res.headers.get('Content-Disposition');
 
                 //const filename = contentDispositionHeader.split(";")[1].trim().split("=")[1].split(".")[0];
@@ -763,6 +763,53 @@ export const Handlers = {
             $('#collapseDiv').collapse("toggle")
         }
 
+    },
+
+    License: {
+        addreplic: async () => {
+            $("#addreplicModal").modal("show");
+            var form = document.getElementById("licForm");
+            form.onsubmit = async (e) => {
+                e.preventDefault();
+                var licFile = document.getElementById("fileinp").files[0];
+                var licModule = document.getElementById("licModule").value;
+                var data = new FormData()
+                data.append('License', licFile)
+                data.append('Module', licModule)
+                var reqBody = {
+                    Module: licModule,
+                    License: licFile
+                };
+                var res = await fetch("/License/UploadLic", {
+                    method: "POST",
+                    body: data
+                }).catch(err => console.log(err));
+
+                if (res.ok) {
+                    $("#addreplicModal").modal("hide");
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    toastObj.text = "license has been uploaded";
+                    toastObj.heading = "License Status";
+                    toastObj.icon = 'success';
+
+                    $.toast(toastObj);
+                    //this line is important to clear all notifications on all clients
+                    //connection is intialized in _loginPartial.cshtml
+                    connection.invoke("ClearLiceMsg");
+
+                }
+
+                else {
+                    var error = await res.json();
+                    toastObj.text = error.description;
+                    toastObj.heading = "License Status";
+                    toastObj.icon = 'error';
+                    $.toast(toastObj);
+
+                }
+
+            }
+        }
     }
 }
 export const dbClickHandlers = {
