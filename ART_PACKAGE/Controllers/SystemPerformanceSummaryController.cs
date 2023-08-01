@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers
 
         public SystemPerformanceSummaryController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
         {
-            this._env = env;
+            _env = env;
             _cache = cache;
             context = _context;
             _config = config;
@@ -73,9 +73,9 @@ namespace ART_PACKAGE.Controllers
             //{
             //    Value = endDate
             //};
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -95,7 +95,8 @@ namespace ART_PACKAGE.Controllers
 
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtSystemPrefPerStatus>
                 {
                     ChartId = "StSystemPerfPerStatus",
@@ -118,7 +119,7 @@ namespace ART_PACKAGE.Controllers
             };
             if (dbType == DbTypes.Oracle)
             {
-                chartData.Add(new ChartData<dynamic>
+                _ = chartData.Add(new ChartData<dynamic>
                 {
                     ChartId = "StSystemPerfPerDate",
                     //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
@@ -130,7 +131,7 @@ namespace ART_PACKAGE.Controllers
             }
             if (dbType == DbTypes.SqlServer)
             {
-                chartData.Add(new ChartData<ArtSystemPrefPerDirection>
+                _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
                     ChartId = "StSystemPerfPerTransDir",
                     Data = chart3Data.Select(x =>

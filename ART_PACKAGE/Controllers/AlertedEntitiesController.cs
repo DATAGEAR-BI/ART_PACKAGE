@@ -50,7 +50,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
 
-            var Data = data.CallData<ArtAlertedEntity>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAlertedEntity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
 
             var result = new
             {
@@ -69,20 +69,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtAlertedEntities;
-            var bytes = await data.ExportToCSV<ArtAlertedEntity, GenericCsvClassMapper<ArtAlertedEntity, AlertedEntitiesController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtAlertedEntity> data = context.ArtAlertedEntities;
+            byte[] bytes = await data.ExportToCSV<ArtAlertedEntity, GenericCsvClassMapper<ArtAlertedEntity, AlertedEntitiesController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
-            var data = context.ArtAlertedEntities.CallData<ArtAlertedEntity>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
+            List<ArtAlertedEntity> data = context.ArtAlertedEntities.CallData(req).Data.ToList();
             ViewData["title"] = "Alerted Entities Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

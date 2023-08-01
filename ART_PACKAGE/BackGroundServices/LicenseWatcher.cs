@@ -21,24 +21,28 @@ namespace ART_PACKAGE.BackGroundServices
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            using PeriodicTimer timer = new(TimeSpan.FromSeconds(20));
+            using PeriodicTimer timer = new(TimeSpan.FromDays(1));
 
             try
             {
                 while (await timer.WaitForNextTickAsync(stoppingToken))
                 {
                     _logger.LogInformation("Timed Hosted Service running.");
-                    var messages = new List<string>();
-                    var licenses = _licReader.ReadAllAppLicenses();
+                    List<string> messages = new();
+                    IEnumerable<Security.License> licenses = _licReader.ReadAllAppLicenses();
 
-                    foreach (var lic in licenses)
+                    foreach (Security.License lic in licenses)
                     {
                         if (lic.RemainingDays <= 7)
+                        {
                             messages.Add($"License For Module {lic.Client} is about to end Please Contact with Data Gear support");
+                        }
                     }
 
                     if (messages.Count > 0)
+                    {
                         await _textContext.Clients.All.SendAsync("ReceiveAlert", messages, stoppingToken);
+                    }
                 }
             }
             catch (OperationCanceledException)

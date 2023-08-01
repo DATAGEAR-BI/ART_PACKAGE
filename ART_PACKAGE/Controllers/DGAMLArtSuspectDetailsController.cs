@@ -20,7 +20,7 @@ namespace ART_PACKAGE.Controllers
         {
             this._context = _context;
 
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-            var Data = data.CallData<ArtSuspectDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtSuspectDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -69,18 +69,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = _context.ArtSuspectDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtSuspectDetailView, GenericCsvClassMapper<ArtSuspectDetailView, DGAMLArtSuspectDetailsController>>(req.Req);
+            IQueryable<ArtSuspectDetailView> data = _context.ArtSuspectDetailViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtSuspectDetailView, GenericCsvClassMapper<ArtSuspectDetailView, DGAMLArtSuspectDetailsController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].SkipList : null;
-            var data = _context.ArtSuspectDetailViews.CallData<ArtSuspectDetailView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].SkipList : null;
+            List<ArtSuspectDetailView> data = _context.ArtSuspectDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear Aml Art Suspect Details";
             ViewData["desc"] = "Presents the art suspect details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

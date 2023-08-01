@@ -1,28 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using Microsoft.Extensions.Caching.Memory;
-using Oracle.ManagedDataAccess.Client;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using System.Collections;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using System.Globalization;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -48,8 +32,8 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStAlertPerOwner> chart2data = Enumerable.Empty<ArtStAlertPerOwner>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -66,7 +50,8 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStAlertsPerStatus>
                 {
                     ChartId = "StAlertsPerStatus",

@@ -19,19 +19,19 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
         {
-            var connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-            var DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
-            var FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
-            var FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
-            var GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
-            var DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
-            var DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-            var migrationsToApply = config.GetSection("migrations").Get<List<string>>();
-            var dbType = config.GetValue<string>("dbType").ToUpper();
-            var migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
+            string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
+            string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+            string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
+            string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+            string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
+            string DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
+            string DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
+            List<string>? migrationsToApply = config.GetSection("migrations").Get<List<string>>();
+            string dbType = config.GetValue<string>("dbType").ToUpper();
+            string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
 
-            services.AddDbContext<AuthContext>(options => _ = dbType switch
+            _ = services.AddDbContext<AuthContext>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     connectionString,
@@ -45,7 +45,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
             });
 
 
-            services.AddDbContext<DGECMContext>(options => _ = dbType switch
+            _ = services.AddDbContext<DGECMContext>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     DGECMContextConnection,
@@ -60,7 +60,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
 
 
 
-            services.AddDbContext<fcf71Context>(options => _ = dbType switch
+            _ = services.AddDbContext<fcf71Context>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     FCFCOREContextConnection,
@@ -72,7 +72,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             });
-            services.AddDbContext<FCFKC>(options => _ = dbType switch
+            _ = services.AddDbContext<FCFKC>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     FCFKCContextConnection,
@@ -84,7 +84,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             });
-            services.AddDbContext<GoAmlContext>(options => _ = dbType switch
+            _ = services.AddDbContext<GoAmlContext>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     GOAMLContextConnection,
@@ -96,7 +96,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             });
-            services.AddDbContext<AuditContext>(options => _ = dbType switch
+            _ = services.AddDbContext<AuditContext>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     DGUSERMANAGMENTContextConnection,
@@ -108,7 +108,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             });
-            services.AddDbContext<DGAMLContext>(options => _ = dbType switch
+            _ = services.AddDbContext<DGAMLContext>(options => _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
                     DGAMLContextConnection,
@@ -121,27 +121,30 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             });
 
-            services.AddScoped<IDbService, DBService>();
+            _ = services.AddScoped<IDbService, DBService>();
             return services;
         }
 
         public static IServiceCollection AddLicense(this IServiceCollection services, ConfigurationManager config)
         {
-            var LicenseModules = config.GetSection("Modules").Get<List<string>>();
-            services.AddTransient<ILicenseReader, LicenseReader>();
-            services.AddAuthorization(opt =>
+            List<string>? LicenseModules = config.GetSection("Modules").Get<List<string>>();
+            _ = services.AddTransient<ILicenseReader, LicenseReader>();
+            _ = services.AddAuthorization(opt =>
             {
                 opt.AddPolicy(LicenseConstants.LICENSE_POLICY, p =>
                 {
-                    var req = new LicenseRequirment();
+                    LicenseRequirment req = new();
                     if (LicenseModules is not null && LicenseModules.Count != 0)
+                    {
                         req.Modules = LicenseModules;
-                    p.AddRequirements(req);
+                    }
+
+                    _ = p.AddRequirements(req);
 
                 }
                 );
             });
-            services.AddScoped<IAuthorizationHandler, LicenseHandler>();
+            _ = services.AddScoped<IAuthorizationHandler, LicenseHandler>();
             return services;
         }
     }

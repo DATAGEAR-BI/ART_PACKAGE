@@ -36,10 +36,10 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStCasesPerPriority> chart4Data = Enumerable.Empty<ArtStCasesPerPriority>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
-            var chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -60,7 +60,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStCasesPerStatus>
                 {
                     ChartId = "StCasesPerStatus",

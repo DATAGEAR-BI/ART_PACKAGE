@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
@@ -26,7 +25,7 @@ namespace ART_PACKAGE.Controllers
 
         public ListOfUsersAndGroupsRoleController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropDownService)
         {
-            this._env = env; _pdfSrv = pdfSrv; context = _context;
+            _env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
             this.dropDownService = dropDownService;
         }
@@ -54,7 +53,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ListOfUsersAndGroupsRole>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ListOfUsersAndGroupsRole> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -71,19 +70,19 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ListOfUsersAndGroupsRoles;
-            var bytes = await data.ExportToCSV<ListOfUsersAndGroupsRole, GenericCsvClassMapper<ListOfUsersAndGroupsRole, ListOfUsersAndGroupsRoleController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles;
+            byte[] bytes = await data.ExportToCSV<ListOfUsersAndGroupsRole, GenericCsvClassMapper<ListOfUsersAndGroupsRole, ListOfUsersAndGroupsRoleController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].SkipList;
-            var data = context.ListOfUsersAndGroupsRoles.CallData<ListOfUsersAndGroupsRole>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].SkipList;
+            List<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Users Groups Roles";
             ViewData["desc"] = "This Report presents all users with their groups and roles of their groups";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

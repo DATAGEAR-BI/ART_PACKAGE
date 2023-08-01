@@ -33,8 +33,8 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStDgAmlCustomerPerType> chart1Data = Enumerable.Empty<ArtStDgAmlCustomerPerType>().AsQueryable();
             IEnumerable<ArtStDgAmlCustomerPerBranch> chart3Data = Enumerable.Empty<ArtStDgAmlCustomerPerBranch>().AsQueryable();
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -52,7 +52,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStDgAmlCustomerPerType>
                 {
                     ChartId = "StCustomerPerType",

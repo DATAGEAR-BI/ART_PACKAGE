@@ -1,11 +1,9 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Linq.Dynamic.Core;
@@ -20,7 +18,7 @@ namespace ART_PACKAGE.Controllers
         public AllSegmentsOutliersNewController(AuthContext _context, IPdfService pdfService)
         {
             this._context = _context;
-            this._pdfService = pdfService;
+            _pdfService = pdfService;
         }
 
 
@@ -51,15 +49,15 @@ namespace ART_PACKAGE.Controllers
                 //ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
 
             }
-            var returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
-            var chartsData = new ArrayList();
+            bool returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
+            ArrayList chartsData = new();
             if (returnData)
             {
                 data = data.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString());
-                chartsData.Add(Chart1Data(MonthKey, PartyTypeDesc, Segment));
-                chartsData.Add(Chart2Data(MonthKey, PartyTypeDesc, Segment));
+                _ = chartsData.Add(Chart1Data(MonthKey, PartyTypeDesc, Segment));
+                _ = chartsData.Add(Chart2Data(MonthKey, PartyTypeDesc, Segment));
             }
-            var Data = data.CallData<ArtAllSegmentsOutliersTb>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAllSegmentsOutliersTb> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = returnData ? Data.Data : Enumerable.Empty<ArtAllSegmentsOutliersTb>(),
@@ -84,8 +82,8 @@ namespace ART_PACKAGE.Controllers
 
         private ChartData<Dictionary<string, object>> Chart1Data(int? MonthKey, string PartyTypeDesc, int? Segment)
         {
-            var segData = _context.ArtSegoutvsalloutTbs.FirstOrDefault(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString());
-            var data = new List<Dictionary<string, object>>();
+            ArtSegoutvsalloutTb? segData = _context.ArtSegoutvsalloutTbs.FirstOrDefault(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString());
+            List<Dictionary<string, object>> data = new();
             if (segData != null)
             {
                 if (segData.NumberOfOutliers != null)
@@ -106,7 +104,7 @@ namespace ART_PACKAGE.Controllers
                      );
                 }
             }
-            var chrtdata = new ChartData<Dictionary<string, object>>
+            ChartData<Dictionary<string, object>> chrtdata = new()
             {
                 ChartId = "ch1",
                 Data = data,
@@ -118,8 +116,8 @@ namespace ART_PACKAGE.Controllers
         }
         private ChartData<Dictionary<string, object>> Chart2Data(int? MonthKey, string PartyTypeDesc, int? Segment)
         {
-            var segData = _context.ArtSegoutvsallcustTbs.FirstOrDefault(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString());
-            var data = new List<Dictionary<string, object>>();
+            ArtSegoutvsallcustTb? segData = _context.ArtSegoutvsallcustTbs.FirstOrDefault(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString());
+            List<Dictionary<string, object>> data = new();
             if (segData != null)
             {
                 if (segData.NumberOfOutliers != null)
@@ -140,7 +138,7 @@ namespace ART_PACKAGE.Controllers
                      );
                 }
             }
-            var chrtdata = new ChartData<Dictionary<string, object>>
+            ChartData<Dictionary<string, object>> chrtdata = new()
             {
                 ChartId = "ch2",
                 Data = data,
@@ -154,19 +152,19 @@ namespace ART_PACKAGE.Controllers
         [HttpGet]
         public ContentResult GetMonthKies()
         {
-            var keys = _context.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).Distinct();
+            IQueryable<string?> keys = _context.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).Distinct();
             return Content(JsonConvert.SerializeObject(keys), "application/json");
         }
         [HttpGet("[controller]/[action]/{monthkey}")]
         public ContentResult SegTypesPerKey(int? monthkey)
         {
-            var types = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).Distinct();
+            IQueryable<string?> types = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).Distinct();
             return Content(JsonConvert.SerializeObject(types), "application/json");
         }
         [HttpGet("[controller]/[action]/{monthkey}/{Type}")]
         public ContentResult Segment(int? monthkey, string Type)
         {
-            var segs = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => s.SegmentSorted).Distinct();
+            IQueryable<string?> segs = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => s.SegmentSorted).Distinct();
 
             return Content(JsonConvert.SerializeObject(segs), "application/json");
         }
@@ -176,20 +174,23 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment, [FromBody] ExportDto<string> exportDto)
         {
-            var returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
+            bool returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
             if (!returnData)
+            {
                 return File(new byte[] { }, "text/csv");
-            var data = _context.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString()); ;
+            }
+
+            IQueryable<ArtAllSegmentsOutliersTb> data = _context.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString()); ;
             if (exportDto.All)
             {
 
-                var bytes = await data.ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(exportDto.Req);
+                byte[] bytes = await data.ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(exportDto.Req);
                 return File(bytes, "text/csv");
 
             }
             else
             {
-                var bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.PartyNumber)).ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(all: false);
+                byte[] bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.PartyNumber)).ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(all: false);
                 return File(bytes, "text/csv");
             }
 
@@ -199,14 +200,17 @@ namespace ART_PACKAGE.Controllers
             //var DisplayNames = ReportsConfig.CONFIG[nameof(AllSegmentsOutliersNewController).ToLower()].DisplayNames;
             //var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AllSegmentsOutliersNewController).ToLower()].SkipList;
 
-            var returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
+            bool returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
             if (!returnData)
+            {
                 return File(new byte[] { }, "application/pdf");
-            var data = _context.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString()); ;
-            data = data.CallData<ArtAllSegmentsOutliersTb>(req).Data;
+            }
+
+            IQueryable<ArtAllSegmentsOutliersTb> data = _context.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString()); ;
+            data = data.CallData(req).Data;
             ViewData["title"] = $"Segment Number {Segment} Of Type {PartyTypeDesc} For Month Key {MonthKey}";
             ViewData["desc"] = " ";
-            var pdfBytes = await _pdfService.ExportToPdf(data.ToList(), ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfService.ExportToPdf(data.ToList(), ViewData, ControllerContext, 5
                                                     , User.Identity.Name/*, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames*/);
             return File(pdfBytes, "application/pdf");
         }

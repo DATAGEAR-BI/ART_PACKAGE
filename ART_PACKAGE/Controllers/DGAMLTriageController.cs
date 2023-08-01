@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Controllers
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : new();
             }
-            var Data = data.CallData<ArtDgAmlTriageView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtDgAmlTriageView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -69,27 +69,27 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<string> exportDto)
         {
 
-            var data = _context.ArtDGAMLTriageViews;
+            Microsoft.EntityFrameworkCore.DbSet<ArtDgAmlTriageView> data = _context.ArtDGAMLTriageViews;
             if (exportDto.All)
             {
-                var bytes = await data.ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtDgAmlTriageView, DGAMLTriageController>>(exportDto.Req);
+                byte[] bytes = await data.ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtDgAmlTriageView, DGAMLTriageController>>(exportDto.Req);
                 return File(bytes, "text/csv");
             }
             else
             {
-                var bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, DGAMLTriageController>>(all: false);
+                byte[] bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, DGAMLTriageController>>(all: false);
                 return File(bytes, "text/csv");
             }
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : null;
-            var data = _context.ArtDGAMLTriageViews.CallData<ArtDgAmlTriageView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : null;
+            List<ArtDgAmlTriageView> data = _context.ArtDGAMLTriageViews.CallData(req).Data.ToList();
             ViewData["title"] = "Triage";
             ViewData["desc"] = "Presents each entity with the related active alerts count";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

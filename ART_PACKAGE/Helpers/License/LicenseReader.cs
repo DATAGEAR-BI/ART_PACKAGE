@@ -23,12 +23,12 @@ namespace ART_PACKAGE.Helpers.License
         }
         public Security.License ReadFromPath(string path)
         {
-            var appPath = _webHostEnvironment.ContentRootPath;
-            var licPath = Path.Combine(appPath, Path.Combine("Licenses", path));
+            string appPath = _webHostEnvironment.ContentRootPath;
+            string licPath = Path.Combine(appPath, Path.Combine("Licenses", path));
             try
             {
-                var licEncodedString = File.ReadAllText(licPath);
-                return this.ReadFromText(licEncodedString);
+                string licEncodedString = File.ReadAllText(licPath);
+                return ReadFromText(licEncodedString);
             }
             catch (Exception ex)
             {
@@ -51,16 +51,16 @@ namespace ART_PACKAGE.Helpers.License
         }
         private Security.License Parse(byte[] data)
         {
-            Security.License license = new Security.License();
+            Security.License license = new();
 
-            var timeBytes = data[..8];
+            byte[] timeBytes = data[..8];
             long timeValue = 0L;
-            foreach (var @byte in timeBytes)
+            foreach (byte @byte in timeBytes)
             {
                 timeValue = (timeValue << 8) + (@byte & 255);
             }
             license.ValidUnti = timeValue;
-            var client = data[12..];
+            byte[] client = data[12..];
             license.Client = Encoding.UTF8.GetString(client);
             return license;
         }
@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Helpers.License
         {
             try
             {
-                X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(Convert.FromBase64String(encoded));
+                X509EncodedKeySpec x509EncodedKeySpec = new(Convert.FromBase64String(encoded));
                 PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(x509EncodedKeySpec);
                 return publicKey;
             }
@@ -82,10 +82,10 @@ namespace ART_PACKAGE.Helpers.License
 
         public IEnumerable<Security.License> ReadAllAppLicenses()
         {
-            var licensesFiles = Directory
+            string[] licensesFiles = Directory
               .GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses"));
-            var licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
-            var licenses = licenseFilesNames.Select(x => this.ReadFromPath(x));
+            IEnumerable<string> licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
+            IEnumerable<Security.License> licenses = licenseFilesNames.Select(x => ReadFromPath(x));
             return licenses;
         }
     }

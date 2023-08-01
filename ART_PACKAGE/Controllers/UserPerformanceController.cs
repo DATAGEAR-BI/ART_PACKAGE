@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
@@ -26,7 +25,7 @@ namespace ART_PACKAGE.Controllers
 
         public UserPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
-            this._env = env; _pdfSrv = pdfSrv;
+            _env = env; _pdfSrv = pdfSrv;
             context = _context;
             this.db = db;
             _dropSrv = dropSrv;
@@ -56,7 +55,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtUserPerformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtUserPerformance> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -73,19 +72,19 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtUserPerformances;
-            var bytes = await data.ExportToCSV<ArtUserPerformance, GenericCsvClassMapper<ArtUserPerformance, UserPerformanceController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtUserPerformance> data = context.ArtUserPerformances;
+            byte[] bytes = await data.ExportToCSV<ArtUserPerformance, GenericCsvClassMapper<ArtUserPerformance, UserPerformanceController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;
-            var data = context.ArtUserPerformances.CallData<ArtUserPerformance>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;
+            List<ArtUserPerformance> data = context.ArtUserPerformances.CallData(req).Data.ToList();
             ViewData["title"] = "User Performance Report";
             ViewData["desc"] = "This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

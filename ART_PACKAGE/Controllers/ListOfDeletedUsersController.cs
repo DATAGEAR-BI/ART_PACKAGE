@@ -44,7 +44,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].SkipList;
 
-            var Data = data.CallData<ListOfDeletedUser>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ListOfDeletedUser> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -62,20 +62,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ListOfDeletedUsers;
-            var bytes = await data.ExportToCSV<ListOfDeletedUser, GenericCsvClassMapper<ListOfDeletedUser, ListOfDeletedUsersController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ListOfDeletedUser> data = context.ListOfDeletedUsers;
+            byte[] bytes = await data.ExportToCSV<ListOfDeletedUser, GenericCsvClassMapper<ListOfDeletedUser, ListOfDeletedUsersController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].SkipList;
-            var data = context.ListOfDeletedUsers.CallData<ListOfDeletedUser>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].SkipList;
+            List<ListOfDeletedUser> data = context.ListOfDeletedUsers.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Deleted Users";
             ViewData["desc"] = "This Report presents all deleted users with the related informaton as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

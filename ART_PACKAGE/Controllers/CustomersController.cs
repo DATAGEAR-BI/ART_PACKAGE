@@ -1,11 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
 using Microsoft.Extensions.Caching.Memory;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using System.Linq.Dynamic.Core;
@@ -29,7 +24,7 @@ namespace ART_PACKAGE.Controllers
         public CustomersController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfcore = dbfcfcore;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -44,7 +39,7 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
-                var Indlist = new List<dynamic>()
+                List<dynamic> Indlist = new()
                     {
                         "Y","N"
                     };
@@ -66,7 +61,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtAmlCustomersDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAmlCustomersDetailsView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,20 +80,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfcore.ArtAmlCustomersDetailsViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtAmlCustomersDetailsView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, CustomersController>>(para.Req);
+            IQueryable<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtAmlCustomersDetailsView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, CustomersController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
-            var data = dbfcfcore.ArtAmlCustomersDetailsViews.CallData<ArtAmlCustomersDetailsView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
+            List<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.CallData(req).Data.ToList();
             ViewData["title"] = "Customers Details";
             ViewData["desc"] = "Presents all customers details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

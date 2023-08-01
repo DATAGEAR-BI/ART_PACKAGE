@@ -4,21 +4,9 @@
     {
         public string Client { get; set; } = null!;
         public long ValidUnti { get; set; }
-        public DateTime ExpireDate
-        {
-            get
-            {
-                return DateTimeOffset.FromUnixTimeMilliseconds(ValidUnti).DateTime;
-            }
-        }
+        public DateTime ExpireDate => DateTimeOffset.FromUnixTimeMilliseconds(ValidUnti).DateTime;
 
-        public int RemainingDays
-        {
-            get
-            {
-                return (int)this.DaysRemaining();
-            }
-        }
+        public int RemainingDays => (int)DaysRemaining();
 
 
         public bool IsValid()
@@ -34,7 +22,7 @@
 
         public override string ToString()
         {
-            return $"Client : {Client}  , ValidTo : {ValidUnti} , isValid : {this.IsValid()} , DaysRemaining : {this.DaysRemaining()}";
+            return $"Client : {Client}  , ValidTo : {ValidUnti} , isValid : {IsValid()} , DaysRemaining : {DaysRemaining()}";
         }
     }
 }

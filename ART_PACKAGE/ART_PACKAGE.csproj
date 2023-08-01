@@ -5,7 +5,11 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		 <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
+	 <Target Name="CleanCodeTask" BeforeTargets="Build">
+      <Exec Command="dotnet format style -v detailed" />
+    </Target>
 	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>

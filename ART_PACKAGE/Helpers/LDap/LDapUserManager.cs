@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Novell.Directory.Ldap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ART_PACKAGE.Helpers.LDap
 {
@@ -24,27 +19,30 @@ namespace ART_PACKAGE.Helpers.LDap
         public LDapUserManager(IConfiguration config, ILogger<LDapUserManager> logger)
         {
 
-            this.LDAPHost = config.GetSection("LdapAuth:host").Value;
-            this.LDAPPort = int.Parse(config.GetSection("LdapAuth:port").Value);
-            this.LogedInOn = config.GetSection("LdapAuth:binduser").Value;
-            this.LogedInPassword = config.GetSection("LdapAuth:binduserpassword").Value;
-            this.SearchPase = config.GetSection("LdapAuth:searchBase").Value;
-            this.SearchFilter = config.GetSection("LdapAuth:filter").Value;
+            LDAPHost = config.GetSection("LdapAuth:host").Value;
+            LDAPPort = int.Parse(config.GetSection("LdapAuth:port").Value);
+            LogedInOn = config.GetSection("LdapAuth:binduser").Value;
+            LogedInPassword = config.GetSection("LdapAuth:binduserpassword").Value;
+            SearchPase = config.GetSection("LdapAuth:searchBase").Value;
+            SearchFilter = config.GetSection("LdapAuth:filter").Value;
             _logger = logger;
         }
 
         public UserLoginInfo? Authnticate(string uid, string password)
         {
-            LdapConnection conn = new LdapConnection();
+            LdapConnection conn = new();
             try
             {
-                var searchFilter = string.Format(SearchFilter, uid);
+                string searchFilter = string.Format(SearchFilter, uid);
                 string[] requiredAttr = { "sAMAccountName" };
 
                 conn.Connect(LDAPHost, LDAPPort);
                 if (!conn.Connected)
+                {
                     return null;
-                LdapSearchResults lsr = (LdapSearchResults)conn.Search(SearchPase,
+                }
+
+                LdapSearchResults lsr = conn.Search(SearchPase,
                                                     LdapConnection.SCOPE_BASE,
                                                     searchFilter,
                                                     requiredAttr,
@@ -60,14 +58,17 @@ namespace ART_PACKAGE.Helpers.LDap
 
                 try
                 {
-                    var user = lsr.next();
-                    if (user == null) return null;
-                    var userToconnect = user.DN;
+                    LdapEntry user = lsr.next();
+                    if (user == null)
+                    {
+                        return null;
+                    }
+
+                    string userToconnect = user.DN;
                     try
                     {
                         conn.Bind(userToconnect, password);
-                        if (conn.Bound) return new UserLoginInfo("LDap", uid, "LDap");
-                        else return null;
+                        return conn.Bound ? new UserLoginInfo("LDap", uid, "LDap") : null;
                     }
                     catch (Exception ex)
                     {
