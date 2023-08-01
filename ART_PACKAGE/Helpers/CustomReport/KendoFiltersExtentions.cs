@@ -567,20 +567,6 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 case TypeCode.Double:
                 case TypeCode.Single:
                     return true;
-                case TypeCode.Empty:
-                    break;
-                case TypeCode.Object:
-                    break;
-                case TypeCode.DBNull:
-                    break;
-                case TypeCode.Boolean:
-                    break;
-                case TypeCode.Char:
-                    break;
-                case TypeCode.DateTime:
-                    break;
-                case TypeCode.String:
-                    break;
                 default:
                     return false;
             }
