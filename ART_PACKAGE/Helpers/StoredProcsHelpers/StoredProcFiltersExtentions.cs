@@ -14,12 +14,9 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
             {
                 DbTypes.SqlServer => filters.Select(x =>
                                     {
-                                        if (x.id.ToLower() == "startdate")
-                                        {
-                                            return new SqlParameter("@V_START_DATE", SqlDbType.Date) { Value = x.value };
-                                        }
-
-                                        return x.id.ToLower() == "enddate"
+                                        return x.id.ToLower() == "startdate"
+                                            ? new SqlParameter("@V_START_DATE", SqlDbType.Date) { Value = x.value }
+                                            : x.id.ToLower() == "enddate"
                                             ? new SqlParameter("@V_END_DATE", SqlDbType.Date) { Value = x.value }
                                             : new SqlParameter(x.id, SqlDbType.Date) { Value = x.value };
                                     }),

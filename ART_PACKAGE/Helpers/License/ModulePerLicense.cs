@@ -70,17 +70,9 @@ namespace ART_PACKAGE.Helpers.License
                 return "SASAML";
             }
 
-            if (DGAMLControllers.Contains(controller))
-            {
-                return "DGAML";
-            }
-
-            if (GOAMLControllers.Contains(controller))
-            {
-                return "GOAML";
-            }
-
-            return ECMControllers.Contains(controller) ? "ECM" : string.Empty;
+            return DGAMLControllers.Contains(controller)
+                ? "DGAML"
+                : GOAMLControllers.Contains(controller) ? "GOAML" : ECMControllers.Contains(controller) ? "ECM" : string.Empty;
         }
     }
 }

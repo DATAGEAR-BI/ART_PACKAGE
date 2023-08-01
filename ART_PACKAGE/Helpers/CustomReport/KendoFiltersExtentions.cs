@@ -167,15 +167,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     }
                     finally
                     {
-                        if (dbtype == "oracle")
-                        {
-                            _ = _sb.Append(@$"""{i.field}"" {v}");
-                        }
-                        else
-                        {
-                            _ = _sb.Append($"{i.field} {v}");
-
-                        }
+                        _ = dbtype == "oracle" ? _sb.Append(@$"""{i.field}"" {v}") : _sb.Append($"{i.field} {v}");
                     }
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
@@ -553,23 +545,18 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         }
         public static bool IsNumericType(this Type o)
         {
-            switch (Type.GetTypeCode(o))
+            return Type.GetTypeCode(o) switch
             {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
-                default:
-                    return false;
-            }
+                TypeCode.Byte or TypeCode.SByte or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.Decimal or TypeCode.Double or TypeCode.Single => true,
+                TypeCode.Empty => throw new NotImplementedException(),
+                TypeCode.Object => throw new NotImplementedException(),
+                TypeCode.DBNull => throw new NotImplementedException(),
+                TypeCode.Boolean => throw new NotImplementedException(),
+                TypeCode.Char => throw new NotImplementedException(),
+                TypeCode.DateTime => throw new NotImplementedException(),
+                TypeCode.String => throw new NotImplementedException(),
+                _ => false,
+            };
         }
         public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
         {

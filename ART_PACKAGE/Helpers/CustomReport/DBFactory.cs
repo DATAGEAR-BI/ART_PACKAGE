@@ -17,17 +17,9 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         public DbContext GetDbInstance(string schemaName)
         {
 
-            if (schemaName == DbSchema.DGCMGMT.ToString())
-            {
-                return _db.ECM;
-            }
-
-            if (schemaName == DbSchema.KC.ToString())
-            {
-                return _db.KC;
-            }
-
-            return schemaName == DbSchema.CORE.ToString() ? _db.CORE : (DbContext?)null;
+            return schemaName == DbSchema.DGCMGMT.ToString()
+                ? _db.ECM
+                : schemaName == DbSchema.KC.ToString() ? _db.KC : schemaName == DbSchema.CORE.ToString() ? _db.CORE : (DbContext?)null;
         }
     }
 }
