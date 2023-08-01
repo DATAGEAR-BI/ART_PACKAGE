@@ -84,6 +84,14 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSegoutvsalloutTb> ArtSegoutvsalloutTbs { get; set; } = null!;
     public virtual DbSet<ArtCustsPerTypeTb> ArtCustsPerTypeTbs { get; set; } = null!;
 
+    //DGAML HOME
+    public virtual DbSet<ArtHomeDgamlAlertsPerDate> ArtHomeDgamlAlertsPerDates { get; set; } = null!;
+    public virtual DbSet<ArtHomeDgamlAlertsPerStatus> ArtHomeDgamlAlertsPerStatuses { get; set; } = null!;
+    public virtual DbSet<ArtHomeDgamlNumberOfAccount> ArtHomeDgamlNumberOfAccounts { get; set; } = null!;
+    public virtual DbSet<ArtHomeDgamlNumberOfCustomer> ArtHomeDgamlNumberOfCustomers { get; set; } = null!;
+    public virtual DbSet<ArtHomeDgamlNumberOfHighRiskCustomer> ArtHomeDgamlNumberOfHighRiskCustomers { get; set; } = null!;
+    public virtual DbSet<ArtHomeDgamlNumberOfPepCustomer> ArtHomeDgamlNumberOfPepCustomers { get; set; } = null!;
+
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
     {

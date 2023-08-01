@@ -3072,6 +3072,67 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("SEGMENT_SORTED")
                     .UseCollation("Arabic_CI_AI");
             });
+
+            //DGAML HOME
+            modelBuilder.Entity<ArtHomeDgamlAlertsPerDate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_ALERTS_PER_DATE", "ART_DB");
+
+                entity.Property(e => e.Month).HasMaxLength(4000);
+
+                entity.Property(e => e.NumberOfAlerts).HasColumnName("Number_Of_ALerts");
+            });
+
+            modelBuilder.Entity<ArtHomeDgamlAlertsPerStatus>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_ALERTS_PER_STATUS", "ART_DB");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALERT_STATUS");
+                entity.Property(e => e.Year).HasColumnName("Year");
+                entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count");
+            });
+
+            modelBuilder.Entity<ArtHomeDgamlNumberOfAccount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_NUMBER_OF_ACCOUNTS", "ART_DB");
+
+                entity.Property(e => e.NumberOfAccounts).HasColumnName("NUMBER_OF_ACCOUNTS");
+            });
+
+            modelBuilder.Entity<ArtHomeDgamlNumberOfCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_NUMBER_OF_CUSTOMERS", "ART_DB");
+
+                entity.Property(e => e.NumberOfCustomers).HasColumnName("NUMBER_OF_CUSTOMERS");
+            });
+
+            modelBuilder.Entity<ArtHomeDgamlNumberOfHighRiskCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_NUMBER_OF_HIGH_RISK_CUSTOMERS", "ART_DB");
+
+                entity.Property(e => e.NumberOfHighRiskCustomers).HasColumnName("NUMBER_OF_HIGH_RISK_CUSTOMERS");
+            });
+
+            modelBuilder.Entity<ArtHomeDgamlNumberOfPepCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_DGAML_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
+
+                entity.Property(e => e.NumberOfPepCustomers).HasColumnName("NUMBER_OF_PEP_CUSTOMERS");
+            });
             //for sake for build => toChange when convert to oracle
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {

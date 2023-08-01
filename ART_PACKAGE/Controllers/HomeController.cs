@@ -48,10 +48,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult CardsData()
         {
-            var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+            var numberOfCustomers = _db.ArtHomeDgamlNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+            var numberOfPepCustomers = _db.ArtHomeDgamlNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+            var numberOfAccounts = _db.ArtHomeDgamlNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+            var numberOfHighRiskCustomers = _db.ArtHomeDgamlNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
             return Ok(new
             {
@@ -109,7 +109,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetAmlChartsData()
         {
-            var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            var dateData = _db.ArtHomeDgamlAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
             {
                 year = x.Key.ToString(),
                 value = x.Sum(x => x.NumberOfAlerts),
@@ -120,7 +120,7 @@ namespace ART_PACKAGE.Controllers
                 })
             });
 
-            var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
+            var alertsPerStatus = _db.ArtHomeDgamlAlertsPerStatuses;
 
             return Ok(new
             {

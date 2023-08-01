@@ -156,6 +156,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
             columnChart.data = ev.target.dataItem.dataContext[subListKey];
             columnSeries.fill = ev.target.fill;
             columnSeries.reinit();
+            console.log(onDateChange);
             onDateChange(ev.target.dataItem.dataContext);
             // Update labels
             //label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
