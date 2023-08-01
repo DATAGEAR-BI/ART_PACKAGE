@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
 
     public class ColumnsDto

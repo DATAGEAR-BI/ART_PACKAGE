@@ -2,12 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Services;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Areas.Identity.Data;
@@ -55,8 +51,8 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
-            var Data = data.CallData<ArtRiskAssessmentView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
+            KendoDataDesc<ArtRiskAssessmentView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -74,20 +70,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfcore.ArtRiskAssessmentViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtRiskAssessmentView, GenericCsvClassMapper<ArtRiskAssessmentView, RiskAssessmentController>>(req.Req);
+            IQueryable<ArtRiskAssessmentView> data = dbfcfcore.ArtRiskAssessmentViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtRiskAssessmentView, GenericCsvClassMapper<ArtRiskAssessmentView, RiskAssessmentController>>(req.Req);
             return File(bytes, "test/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
-            var data = dbfcfcore.ArtRiskAssessmentViews.CallData<ArtRiskAssessmentView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(RiskAssessmentController).ToLower()].SkipList;
+            List<ArtRiskAssessmentView> data = dbfcfcore.ArtRiskAssessmentViews.CallData(req).Data.ToList();
             ViewData["title"] = "Risk Assessment Details";
             ViewData["desc"] = "Presents the Risk details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

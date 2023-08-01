@@ -1,18 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ART_PACKAGE.Areas.Identity.Data;
-using Serilog;
-using ART_PACKAGE.Helpers.Logging;
-using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Helpers.LDap;
-using Rotativa.AspNetCore;
-using ART_PACKAGE.IServiceCollectionExtentions;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Middlewares;
-using ART_PACKAGE.Hubs;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.LDap;
+using ART_PACKAGE.Helpers.Logging;
+using ART_PACKAGE.Hubs;
+using ART_PACKAGE.IServiceCollectionExtentions;
+using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Services.Pdf;
+using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = "Development",
 });
@@ -43,28 +43,30 @@ IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider
 
 // Get the IHttpContextAccessor instance
 
-var logger = new LoggerConfiguration()
+Serilog.Core.Logger logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .CreateLogger();
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
-var app = builder.Build();
+WebApplication app = builder.Build();
 
-using var scope = app.Services.CreateScope();
-var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+using IServiceScope scope = app.Services.CreateScope();
+AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 if (authContext.Database.GetPendingMigrations().Any())
+{
     authContext.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    _ = app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    _ = app.UseHsts();
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -75,6 +77,7 @@ app.UseAuthorization();
 app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
+app.MapHub<ExportHub>("/ExportHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

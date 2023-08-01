@@ -1,11 +1,7 @@
 ﻿using CsvHelper.Configuration;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Linq;
 using System.Reflection;
-using ART_PACKAGE.Helpers.CSVMAppers;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -13,8 +9,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public GenericCsvClassMapper()
         {
-            var name = typeof(T1).Name.ToLower();
-            var props = typeof(T).GetProperties();
+            string name = typeof(T1).Name.ToLower();
+            PropertyInfo[] props = typeof(T).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
             Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
 
@@ -24,9 +20,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {
 
 
-                    var exp = GenerateExpression(x);
+                    Expression<Func<T, object>> exp = GenerateExpression(x);
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
-                    Map(exp).Name(displayName);
+                    _ = Map(exp).Name(displayName);
 
 
 
@@ -34,17 +30,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
             else
             {
-                foreach (var prop in props)
+                foreach (PropertyInfo prop in props)
                 {
-                    var exp = GenerateExpression(prop);
+                    Expression<Func<T, object>> exp = GenerateExpression(prop);
                     if (!skip.Contains(prop.Name))
                     {
                         string displayName = displaynames is not null && displaynames.Keys.Contains(prop.Name) ? displaynames[prop.Name]?.DisplayName : prop.Name;
-                        Map(exp).Name(displayName);
+                        _ = Map(exp).Name(displayName);
                     }
                     else
                     {
-                        Map(exp).Ignore();
+                        _ = Map(exp).Ignore();
                     }
                 }
             }
@@ -52,11 +48,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         }
         private Expression<Func<T, object>> GenerateExpression(PropertyInfo prop)
         {
-            var arg = Expression.Parameter(typeof(T), "x");
-            var property = Expression.Property(arg, prop.Name);
+            ParameterExpression arg = Expression.Parameter(typeof(T), "x");
+            MemberExpression property = Expression.Property(arg, prop.Name);
             //return the property as object
-            var conv = Expression.Convert(property, typeof(object));
-            var exp = Expression.Lambda<Func<T, object>>(conv, new ParameterExpression[] { arg });
+            UnaryExpression conv = Expression.Convert(property, typeof(object));
+            Expression<Func<T, object>> exp = Expression.Lambda<Func<T, object>>(conv, new ParameterExpression[] { arg });
 
             return exp;
         }

@@ -51,11 +51,11 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var ColumnsToSkip = new List<string>
+            List<string> ColumnsToSkip = new()
             {
 
             };
-            var Data = data.CallData<ArtAmlHighRiskCustView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAmlHighRiskCustView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -74,19 +74,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtAmlHighRiskCustView, GenericCsvClassMapper<ArtAmlHighRiskCustView, HighRiskController>>(para.Req);
+            IQueryable<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtAmlHighRiskCustView, GenericCsvClassMapper<ArtAmlHighRiskCustView, HighRiskController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
-            var data = dbfcfcore.ArtAmlHighRiskCustViews.CallData<ArtAmlHighRiskCustView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
+            List<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.CallData(req).Data.ToList();
             ViewData["title"] = "High Risk Customers Details";
             ViewData["desc"] = "Presents the High Risk Customers Details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

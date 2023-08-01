@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
@@ -25,7 +24,7 @@ namespace ART_PACKAGE.Controllers
         private readonly IDropDownService dropDownService;
         public ListOfUserController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropDownService)
         {
-            this._env = env; _pdfSrv = pdfSrv; context = _context;
+            _env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
             this.dropDownService = dropDownService;
         }
@@ -54,7 +53,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ListOfUser>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ListOfUser> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -71,19 +70,19 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ListOfUsers;
-            var bytes = await data.ExportToCSV<ListOfUser, GenericCsvClassMapper<ListOfUser, ListOfUserController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ListOfUser> data = context.ListOfUsers;
+            byte[] bytes = await data.ExportToCSV<ListOfUser, GenericCsvClassMapper<ListOfUser, ListOfUserController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].SkipList;
-            var data = context.ListOfUsers.CallData<ListOfUser>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUserController).ToLower()].SkipList;
+            List<ListOfUser> data = context.ListOfUsers.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Users Report";
             ViewData["desc"] = "This Report presents all users with the related information as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

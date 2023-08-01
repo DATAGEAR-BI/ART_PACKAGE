@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.CSVMAppers;
@@ -19,7 +18,7 @@ namespace ART_PACKAGE.Controllers
         public CasesDetailsController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -51,7 +50,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtAmlCaseDetailsView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAmlCaseDetailsView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,19 +84,19 @@ namespace ART_PACKAGE.Controllers
         }*/
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtAmlCaseDetailsView, GenericCsvClassMapper<ArtAmlCaseDetailsView, CasesDetailsController>>(para.Req);
+            IQueryable<ArtAmlCaseDetailsView> data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtAmlCaseDetailsView, GenericCsvClassMapper<ArtAmlCaseDetailsView, CasesDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
-            var data = dbfcfkc.ArtAmlCaseDetailsViews.CallData<ArtAmlCaseDetailsView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
+            List<ArtAmlCaseDetailsView> data = dbfcfkc.ArtAmlCaseDetailsViews.CallData(req).Data.ToList();
             ViewData["title"] = "Cases Details";
             ViewData["desc"] = "Presents the cases details in the table below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

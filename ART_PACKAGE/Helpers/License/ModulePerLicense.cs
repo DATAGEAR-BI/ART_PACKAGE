@@ -1,11 +1,10 @@
-﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
-using ART_PACKAGE.Controllers;
+﻿using ART_PACKAGE.Controllers;
 
 namespace ART_PACKAGE.Helpers.License
 {
     public static class ModulePerLicense
     {
-        private static readonly List<string> SASAMLControllers = new List<string>()
+        private static readonly List<string> SASAMLControllers = new()
         {
             nameof(AlertDetailsController).ToLower() ,
             nameof(AlertSummaryController).ToLower() ,
@@ -19,7 +18,7 @@ namespace ART_PACKAGE.Helpers.License
             nameof(CasesDetailsController).ToLower() ,
             nameof(CasesSummaryController).ToLower() ,
         };
-        private static readonly List<string> DGAMLControllers = new List<string>()
+        private static readonly List<string> DGAMLControllers = new()
         {
             nameof(DGAMLAlertDetailsController).ToLower() ,
             nameof(DGAMLAlertSummaryController).ToLower() ,
@@ -34,14 +33,14 @@ namespace ART_PACKAGE.Helpers.License
             nameof(DGAMLExternalCustomerSummaryController).ToLower() ,
             nameof(DGAMLTriageController).ToLower() ,
         };
-        private static readonly List<string> GOAMLControllers = new List<string>()
+        private static readonly List<string> GOAMLControllers = new()
         {
             nameof(GOAMLReportIndicatorDetailsController).ToLower() ,
             nameof(GOAMLReportsDetailsController).ToLower() ,
             nameof(GOAMLReportsSummaryController).ToLower() ,
             nameof(GOAMLReportsSuspectController).ToLower() ,
         };
-        private static readonly List<string> ECMControllers = new List<string>()
+        private static readonly List<string> ECMControllers = new()
         {
             nameof(SystemPerformanceController).ToLower() ,
             nameof(SystemPerformanceSummaryController).ToLower() ,
@@ -55,27 +54,33 @@ namespace ART_PACKAGE.Helpers.License
 
 
 
-        private static readonly List<string> BaseControllers = new List<string>() { nameof(HomeController).ToLower(),
+        private static readonly List<string> BaseControllers = new() { nameof(HomeController).ToLower(),
                                                                                     nameof(ReportController).ToLower(),
                                                                                     };
         public static bool isBaseModule(string controllerName)
         {
-            var controller = (controllerName + "Controller").ToLower();
+            string controller = (controllerName + "Controller").ToLower();
             return BaseControllers.Contains(controller);
         }
         public static string GetModule(string controllerName)
         {
-            var controller = (controllerName + "Controller").ToLower();
+            string controller = (controllerName + "Controller").ToLower();
             if (SASAMLControllers.Contains(controller))
+            {
                 return "SASAML";
-            if (DGAMLControllers.Contains(controller))
-                return "DGAML";
-            if (GOAMLControllers.Contains(controller))
-                return "GOAML";
-            if (ECMControllers.Contains(controller))
-                return "ECM";
+            }
 
-            return string.Empty;
+            if (DGAMLControllers.Contains(controller))
+            {
+                return "DGAML";
+            }
+
+            if (GOAMLControllers.Contains(controller))
+            {
+                return "GOAML";
+            }
+
+            return ECMControllers.Contains(controller) ? "ECM" : string.Empty;
         }
     }
 }

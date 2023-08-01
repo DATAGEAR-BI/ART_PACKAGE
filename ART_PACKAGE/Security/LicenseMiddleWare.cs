@@ -1,6 +1,5 @@
 ﻿using Data.Constants;
 using Microsoft.AspNetCore.Authorization;
-using Serilog.Context;
 
 namespace ART_PACKAGE.Security
 {
@@ -21,12 +20,9 @@ namespace ART_PACKAGE.Security
                 context?.Response.Redirect("/Identity/Account/AccessDenied");
                 return;
             }
-            AuthorizationResult authorizationResult = null;
-            if (context.Request.Path.HasValue && (context.Request.Path.Value.Contains("/license/ExpiredLicense") || context.Request.Path.Value.ToLower().Contains("account")))
-                authorizationResult = AuthorizationResult.Success();
-            else
-                authorizationResult = await authorizationService.AuthorizeAsync(context.User, null, LicenseConstants.LICENSE_POLICY);
-
+            AuthorizationResult authorizationResult = context.Request.Path.HasValue && (context.Request.Path.Value.Contains("/license/ExpiredLicense") || context.Request.Path.Value.ToLower().Contains("account"))
+                ? AuthorizationResult.Success()
+                : await authorizationService.AuthorizeAsync(context.User, null, LicenseConstants.LICENSE_POLICY);
             if (authorizationResult.Succeeded)
             {
                 await next(context);

@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using System.Collections.Generic;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {

@@ -7,7 +7,6 @@ using Data.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -21,7 +20,7 @@ namespace ART_PACKAGE.Controllers
         public DGAMLCustomersDetailsController(AuthContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -36,7 +35,7 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCustomersDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].DisplayNames : new();
-                var Indlist = new List<dynamic>()
+                List<dynamic> Indlist = new()
                     {
                         "Y","N"
                     };
@@ -58,7 +57,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtDgAmlCustomerDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtDgAmlCustomerDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -77,20 +76,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = _context.ArtDGAMLCustomerDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtDgAmlCustomerDetailView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, DGAMLCustomersDetailsController>>(para.Req);
+            IQueryable<ArtDgAmlCustomerDetailView> data = _context.ArtDGAMLCustomerDetailViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtDgAmlCustomerDetailView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, DGAMLCustomersDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].SkipList : null;
-            var data = _context.ArtDGAMLCustomerDetailViews.CallData<ArtDgAmlCustomerDetailView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].SkipList : null;
+            List<ArtDgAmlCustomerDetailView> data = _context.ArtDGAMLCustomerDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Customers Details";
             ViewData["desc"] = "Presents all customers details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

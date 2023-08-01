@@ -20,7 +20,7 @@ namespace ART_PACKAGE.Controllers
         {
             this._context = _context;
 
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -50,7 +50,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-            var Data = data.CallData<ArtExternalCustomerDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtExternalCustomerDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -68,18 +68,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = _context.ArtExternalCustomerDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtExternalCustomerDetailView, GenericCsvClassMapper<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>>(req.Req);
+            IQueryable<ArtExternalCustomerDetailView> data = _context.ArtExternalCustomerDetailViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtExternalCustomerDetailView, GenericCsvClassMapper<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : null;
-            var data = _context.ArtExternalCustomerDetailViews.CallData<ArtExternalCustomerDetailView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : null;
+            List<ArtExternalCustomerDetailView> data = _context.ArtExternalCustomerDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear AML External Customer Details";
             ViewData["desc"] = "Presents the external customer details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
