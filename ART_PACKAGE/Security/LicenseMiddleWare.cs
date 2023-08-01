@@ -30,7 +30,6 @@ namespace ART_PACKAGE.Security
             else
             {
                 context.Response.Redirect("/license/ExpiredLicense");
-
             }
         }
     }
