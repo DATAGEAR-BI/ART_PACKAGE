@@ -65,12 +65,9 @@ namespace ART_PACKAGE.Helpers.License
         public static string GetModule(string controllerName)
         {
             string controller = (controllerName + "Controller").ToLower();
-            if (SASAMLControllers.Contains(controller))
-            {
-                return "SASAML";
-            }
-
-            return DGAMLControllers.Contains(controller)
+            return SASAMLControllers.Contains(controller)
+                ? "SASAML"
+                : DGAMLControllers.Contains(controller)
                 ? "DGAML"
                 : GOAMLControllers.Contains(controller) ? "GOAML" : ECMControllers.Contains(controller) ? "ECM" : string.Empty;
         }
