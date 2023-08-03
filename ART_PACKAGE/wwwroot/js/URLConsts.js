@@ -71,5 +71,9 @@
     ArtKycLowThreeMonth: "/ArtKycLowThreeMonth/GetData",
     ArtKycLowTwoMonth: "/ArtKycLowTwoMonth/GetData",
     ArtKycMediumExpired: "/ArtKycMediumExpired/GetData",
+    ArtKycMediumOneMonth: "/ArtKycMediumOneMonth/GetData",
+    ArtKycMediumThreeMonth: "/ArtKycMediumThreeMonth/GetData",
+    ArtKycMediumTwoMonth: "/ArtKycMediumTwoMonth/GetData",
+    ArtKycSummaryByRisk: "/ArtKycSummaryByRisk/GetData",
 }
 

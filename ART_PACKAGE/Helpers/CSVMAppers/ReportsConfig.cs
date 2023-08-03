@@ -929,6 +929,68 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
              },
+             {
+                nameof(ArtKycMediumOneMonthController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycMediumThreeMonthController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycMediumTwoMonthController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycSummaryByRiskController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "NumberOfUpdatedKyc",new DisplayNameAndFormat { DisplayName ="Number Of Updated KYC"}},
+                        {  "NumberOfNotUpdatedKyc",new DisplayNameAndFormat { DisplayName ="Number Of Not Updated KYC"}},
+                        {  "Total",new DisplayNameAndFormat { DisplayName ="Total"}},
+
+                    }
+                }
+             },
         };
 
     }
