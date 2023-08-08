@@ -70,6 +70,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     pageHandler: null,
                     values: new { area = "Identity", userId, code, returnUrl },
                     protocol: Request.Scheme);
+
             }
 
             return Page();
