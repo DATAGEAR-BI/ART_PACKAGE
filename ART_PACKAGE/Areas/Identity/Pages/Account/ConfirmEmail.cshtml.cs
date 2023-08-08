@@ -14,10 +14,12 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly ILogger<ConfirmEmailModel> _logger;
 
-        public ConfirmEmailModel(UserManager<AppUser> userManager)
+        public ConfirmEmailModel(UserManager<AppUser> userManager, ILogger<ConfirmEmailModel> logger)
         {
             _userManager = userManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -30,18 +32,21 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             if (userId == null || code == null)
             {
+                _logger.LogError("User is not exist.");
                 return RedirectToPage("/Index");
             }
 
             AppUser user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-               return NotFound($"Unable to load user with ID '{userId}'.");
+                _logger.LogError($"Unable to find user {userId}");
+                return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            _logger.LogInformation("Email Confirmation");
             return Page();
         }
     }
