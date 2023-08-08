@@ -124,22 +124,26 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId, code, returnUrl },
                         protocol: Request.Scheme);
-
+                    _logger.LogInformation("sent your email confirmation.");
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        _logger.LogInformation("Redirect to register confirmation page.");
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation($"user {Input.Email} logged in...");
                         return LocalRedirect(returnUrl);
                     }
                 }
+                _logger.LogError("Something some error :- ");
                 foreach (IdentityError error in result.Errors)
                 {
+                    _logger.LogError(error.Description);
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

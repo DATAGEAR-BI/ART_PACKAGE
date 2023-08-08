@@ -113,6 +113,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 }
                 if (result.RequiresTwoFactor)
                 {
+                    _logger.Log(LogLevel.Information, "login with two authentication factor.");
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
@@ -122,6 +123,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    _logger.LogError("Invalid login attempt.");
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

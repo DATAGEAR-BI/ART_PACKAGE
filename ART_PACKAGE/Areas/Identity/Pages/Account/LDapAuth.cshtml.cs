@@ -63,6 +63,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);
                 if (info is null)
                 {
+                    _logger.LogError("something wrong happened while checking your account on the server");
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
                     return Page();
                 }
@@ -83,6 +84,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (result.Succeeded)
                     {
+                        _logger.LogInformation($"user {Input.Email} logged in...");
                         return LocalRedirect(ReturnUrl);
                     }
                     else
@@ -101,13 +103,15 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 IdentityResult createresult = await _userManager.CreateAsync(user);
                                 if (!createresult.Succeeded)
                                 {
+                                    _logger.LogError("There is an error while creating an email for you");
                                     ModelState.AddModelError("", $"There is an error while creating an email for you");
                                     return Page();
                                 }
                             }
+
                             _ = await _userManager.AddLoginAsync(user, info);
                             await _signInManager.SignInAsync(user, true);
-
+                            _logger.LogInformation($"user {Input.Email} logged in...");
                         }
                         return LocalRedirect(returnUrl);
                     }
