@@ -45,7 +45,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
 
-            var Data = data.CallData<ListOfGroup>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ListOfGroup> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -63,20 +63,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ListOfGroups;
-            var bytes = await data.ExportToCSV<ListOfGroup, GenericCsvClassMapper<ListOfGroup, ListOfGroupsController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ListOfGroup> data = context.ListOfGroups;
+            byte[] bytes = await data.ExportToCSV<ListOfGroup, GenericCsvClassMapper<ListOfGroup, ListOfGroupsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
-            var data = context.ListOfGroups.CallData<ListOfGroup>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
+            List<ListOfGroup> data = context.ListOfGroups.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Groups Report";
             ViewData["desc"] = "This Report presents all groups with the related information as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

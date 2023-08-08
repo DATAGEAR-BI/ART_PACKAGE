@@ -27,35 +27,47 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> UploadLic([FromForm] LicenseUpload lic)
         {
 
-            var client = _configuration.GetSection("Client")
+            string? client = _configuration.GetSection("Client")
                 .Get<string>()?.ToLower();
-            var LicenseModules = _configuration.GetSection("Modules")
+            IEnumerable<string>? LicenseModules = _configuration.GetSection("Modules")
                 .Get<List<string>>()?.Select(x => x.ToLower());
-            using var reader = new StreamReader(lic.License.OpenReadStream());
-            var licText = reader.ReadToEnd();
-            var license = _licReader.ReadFromText(licText);
+            using StreamReader reader = new(lic.License.OpenReadStream());
+            string licText = reader.ReadToEnd();
+            License license = _licReader.ReadFromText(licText);
 
             if (lic.Module == "base" && client != license.Client.ToLower())
+            {
                 return BadRequest(new Error("LiceError", "the license is not compatible with the module you selected"));
+            }
 
             if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client.ToLower())
+            {
                 return BadRequest(new Error("LiceError", "the license is not compatible with the module you selected"));
+            }
 
             if (lic.Module != "base" && !LicenseModules.Contains(lic.Module.ToLower()))
+            {
                 return BadRequest(new Error("LiceError", "this module is not supported in the app configration"));
-            if (!license.IsValid())
-                return BadRequest(new Error("LiceError", "the license you tring to upload is expired"));
+            }
 
-            var licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
-            var isLicExist = System.IO.File
+            if (!license.IsValid())
+            {
+                return BadRequest(new Error("LiceError", "the license you tring to upload is expired"));
+            }
+
+            string licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
+            bool isLicExist = System.IO.File
                 .Exists(licPath);
 
 
             if (isLicExist)
+            {
                 System.IO.File.Delete(licPath);
+            }
+
             try
             {
-                using FileStream fileStream = new FileStream(licPath, FileMode.Create, FileAccess.ReadWrite);
+                using FileStream fileStream = new(licPath, FileMode.Create, FileAccess.ReadWrite);
                 await lic.License.CopyToAsync(fileStream);
                 return Ok(license);
 
@@ -77,8 +89,8 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            var licenses = _licReader.ReadAllAppLicenses().AsQueryable();
-            var Data = licenses.CallData<License>(request);
+            IQueryable<License> licenses = _licReader.ReadAllAppLicenses().AsQueryable();
+            KendoDataDesc<License> Data = licenses.CallData(request);
             var result = new
             {
                 data = Data.Data,

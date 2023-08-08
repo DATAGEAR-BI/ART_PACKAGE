@@ -18,7 +18,7 @@ namespace ART_PACKAGE.Helpers.Logging
             {
                 user = context.User.Identity.Name;
             }
-            LogContext.PushProperty("User", user);
+            _ = LogContext.PushProperty("User", user);
 
             return next(context);
         }

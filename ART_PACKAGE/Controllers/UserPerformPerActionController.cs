@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System.Data;
 
 using Microsoft.Extensions.Caching.Memory;
-using Oracle.ManagedDataAccess.Client;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
@@ -22,9 +21,9 @@ namespace ART_PACKAGE.Controllers
         private readonly IPdfService _pdfSrv;
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache,IPdfService pdfSrv,AuthContext context)
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, AuthContext context)
         {
-            this._env = env;
+            _env = env;
             _cache = cache;
             _pdfSrv = pdfSrv;
             this.context = context;
@@ -35,19 +34,19 @@ namespace ART_PACKAGE.Controllers
 
             IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
 
-            var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
+            string startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
+            string endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
+            SqlParameter sd = new("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
+            SqlParameter ed = new("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
             data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed);
 
-            var Data = data.AsQueryable().CallData<ArtUserPerformPerAction>(para.req);
+            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
 
 
             var result = new
@@ -78,13 +77,13 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
             IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
-            var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
+            string startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
+            string endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
+            SqlParameter sd = new("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
+            SqlParameter ed = new("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
@@ -92,20 +91,20 @@ namespace ART_PACKAGE.Controllers
 
             data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
 
-            var bytes = await data.AsQueryable().ExportToCSV<ArtUserPerformPerAction>(para.req);
+            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
             IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
-            var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-            var sd = new SqlParameter("@V_START_DATE", SqlDbType.VarChar)
+            string startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
+            string endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
+            SqlParameter sd = new("@V_START_DATE", SqlDbType.VarChar)
             {
                 Value = startDate
             };
-            var ed = new SqlParameter("@V_END_DATE", SqlDbType.VarChar)
+            SqlParameter ed = new("@V_END_DATE", SqlDbType.VarChar)
             {
                 Value = endDate
             };
@@ -114,7 +113,7 @@ namespace ART_PACKAGE.Controllers
 
             ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";
-            var bytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
         }

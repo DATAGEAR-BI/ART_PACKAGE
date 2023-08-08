@@ -20,7 +20,7 @@ namespace ART_PACKAGE.Controllers
         {
             this._context = _context;
 
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -57,7 +57,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-            var Data = data.CallData<ArtScenarioAdminView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtScenarioAdminView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -75,18 +75,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = _context.ArtScenarioAdminViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtScenarioAdminView, GenericCsvClassMapper<ArtScenarioAdminView, DGAMLArtScenarioAdminController>>(req.Req);
+            IQueryable<ArtScenarioAdminView> data = _context.ArtScenarioAdminViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtScenarioAdminView, GenericCsvClassMapper<ArtScenarioAdminView, DGAMLArtScenarioAdminController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].SkipList : null;
-            var data = _context.ArtScenarioAdminViews.CallData<ArtScenarioAdminView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioAdminController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioAdminController).ToLower()].SkipList : null;
+            List<ArtScenarioAdminView> data = _context.ArtScenarioAdminViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear Aml Art Scenario Admin";
             ViewData["desc"] = "Presents the art scenario admin details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

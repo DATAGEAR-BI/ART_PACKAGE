@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Controllers
         private readonly string dbType;
         public GOAMLReportsSummaryController(AuthContext context, IConfiguration _config)
         {
-            this._context = context;
+            _context = context;
             dbType = _config.GetValue<string>("dbType").ToUpper();
         }
 
@@ -27,9 +27,9 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStGoAmlReportsPerType> chart1Data = Enumerable.Empty<ArtStGoAmlReportsPerType>();
             IEnumerable<ArtStGoAmlReportsPerStatus> chart2data = Enumerable.Empty<ArtStGoAmlReportsPerStatus>();
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -46,7 +46,8 @@ namespace ART_PACKAGE.Controllers
 
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStGoAmlReportsPerType>
                 {
                     ChartId = "StGoamlReportsPerType",

@@ -1,18 +1,11 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Models;
-using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using Microsoft.EntityFrameworkCore;
-using Data.Constants.StoredProcs;
-using Microsoft.Data.SqlClient;
 using System.Data;
-using Data.Data;
-using Oracle.ManagedDataAccess.Client;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -25,7 +18,7 @@ namespace ART_PACKAGE.Controllers
         public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
         {
             _logger = logger;
-            this._db = db;
+            _db = db;
             _dbSrv = dbSrv;
         }
 
@@ -48,10 +41,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult CardsData()
         {
-            var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+            int numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+            int numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+            int numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+            int numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
             return Ok(new
             {
@@ -75,8 +68,8 @@ namespace ART_PACKAGE.Controllers
                     value = m.Sum(x => x.NumberOfCases)
                 })
             });
-            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR });
-            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR }); ;
+            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", x.NumberOfCases, year = x.YEAR });
+            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR }); ;
 
 
 
@@ -103,7 +96,7 @@ namespace ART_PACKAGE.Controllers
             //var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
             //return Ok(data);
 
-            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
             return Ok(distinct_value);
         }
 
@@ -120,7 +113,7 @@ namespace ART_PACKAGE.Controllers
                 })
             });
 
-            var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
+            Microsoft.EntityFrameworkCore.DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
 
             return Ok(new
             {

@@ -1,15 +1,13 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Data;
-using System.Collections.Generic;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
     public class ReportsConfig
     {
-        public static readonly Dictionary<string, ReportConfig> CONFIG = new Dictionary<string, ReportConfig>
+        public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
              { nameof(AlertDetailsController).ToLower(), new ReportConfig {
                SkipList =  new List<string>

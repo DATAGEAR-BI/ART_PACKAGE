@@ -1,6 +1,4 @@
-﻿using ART_PACKAGE.Security;
-
-namespace ART_PACKAGE.Helpers.License
+﻿namespace ART_PACKAGE.Helpers.License
 {
     public interface ILicenseReader
     {
