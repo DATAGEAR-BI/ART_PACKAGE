@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.FCFKC
 {
@@ -17,6 +12,14 @@ namespace Data.FCFKC
         public virtual DbSet<FskRiskAssessment> FskRiskAssessments { get; set; } = null!;
         public virtual DbSet<FskScenario> FskScenarios { get; set; } = null!;
         public virtual DbSet<FskCase> FskCases { get; set; } = null!;
+
+        //aml_analysis
+        public virtual DbSet<FskAlert> FskAlerts { get; set; } = null!;
+        public virtual DbSet<FskAlertEvent> FskAlertEvents { get; set; } = null!;
+        public virtual DbSet<FskAlertedEntity> FskAlertedEntities { get; set; } = null!;
+        public virtual DbSet<FskComment> FskComments { get; set; } = null!;
+        public virtual DbSet<FskEntityEvent> FskEntityEvents { get; set; } = null!;
+        public virtual DbSet<FskEntityQueue> FskEntityQueues { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -529,6 +532,428 @@ namespace Data.FCFKC
                 entity.Property(e => e.VersionNumber)
                     .HasColumnType("decimal(10, 0)")
                     .HasColumnName("version_number");
+            });
+
+
+
+            //aml_analysis
+            modelBuilder.Entity<FskAlert>(entity =>
+            {
+                entity.HasKey(e => e.AlertId)
+                    .HasName("PK_ALERT");
+
+                entity.ToTable("FSK_ALERT", "FCFKC");
+
+                entity.HasIndex(e => e.ScenarioId, "IDX_ALERT_SCENARIO");
+
+                entity.HasIndex(e => e.QueueCode, "XEIQFSK_ALERT");
+
+                entity.HasIndex(e => e.PrimaryEntityKey, "XIE5FSK_ALERT");
+
+                entity.HasIndex(e => e.PrimaryEntityName, "XIE6FSK_ALERT");
+
+                entity.HasIndex(e => e.PrimaryEntityNumber, "XIE9FSK_ALERT");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("alert_id");
+
+                entity.Property(e => e.ActualValuesText)
+                    .HasMaxLength(255)
+                    .HasColumnName("actual_values_text");
+
+                entity.Property(e => e.AlertCategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("alert_category_cd");
+
+                entity.Property(e => e.AlertDescription)
+                    .HasMaxLength(100)
+                    .HasColumnName("alert_description");
+
+                entity.Property(e => e.AlertStatusCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("alert_status_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertSubcategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("alert_subcategory_cd");
+
+                entity.Property(e => e.AlertTypeCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("alert_type_cd");
+
+                entity.Property(e => e.AlertedEntityKey)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("alerted_entity_key");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(200)
+                    .HasColumnName("alerted_entity_name");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_number");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("create_date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("create_user_id");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("employee_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EntitySegmentId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("entity_segment_id");
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("logical_delete_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.MoneyLaunderingRiskScore)
+                    .HasColumnType("decimal(3, 0)")
+                    .HasColumnName("money_laundering_risk_score");
+
+                entity.Property(e => e.PrimaryEntityKey)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("primary_entity_key");
+
+                entity.Property(e => e.PrimaryEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("primary_entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PrimaryEntityName)
+                    .HasMaxLength(200)
+                    .HasColumnName("primary_entity_name");
+
+                entity.Property(e => e.PrimaryEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("primary_entity_number");
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("product_type")
+                    .IsFixedLength();
+
+                entity.Property(e => e.QueueCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("queue_code");
+
+                entity.Property(e => e.RunDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("run_date");
+
+                entity.Property(e => e.ScenarioId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("scenario_id");
+
+                entity.Property(e => e.ScenarioName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("scenario_name");
+
+                entity.Property(e => e.SuppressionEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("suppression_end_date");
+
+                entity.Property(e => e.TerrorFinancingRiskScore)
+                    .HasColumnType("decimal(3, 0)")
+                    .HasColumnName("terror_financing_risk_score");
+
+                entity.Property(e => e.VersionNumber)
+                    .HasColumnType("decimal(10, 0)")
+                    .HasColumnName("version_number");
+            });
+            modelBuilder.Entity<FskAlertEvent>(entity =>
+            {
+                entity.HasKey(e => e.EventId)
+                    .HasName("PK_ALERT_EVENT");
+
+                entity.ToTable("FSK_ALERT_EVENT", "FCFKC");
+
+                entity.HasIndex(e => e.AlertId, "IDX_ALERT_EVENT_ALERT");
+
+                entity.HasIndex(e => new { e.CreateDate, e.EventTypeCode, e.AlertId }, "XIE1FSK_ALERT_EVENT");
+
+                entity.Property(e => e.EventId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("event_id");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("alert_id");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("create_date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("create_user_id");
+
+                entity.Property(e => e.EventDescription)
+                    .HasMaxLength(255)
+                    .HasColumnName("event_description");
+
+                entity.Property(e => e.EventTypeCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("event_type_code")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Alert)
+                    .WithMany(p => p.FskAlertEvent1s)
+                    .HasForeignKey(d => d.AlertId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ALERT_EVENT_ALERT");
+            });
+            modelBuilder.Entity<FskAlertedEntity>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("FSK_ALERTED_ENTITY", "FCFKC");
+
+                entity.HasIndex(e => new { e.AlertedEntityNumber, e.AlertedEntityLevelCode }, "XAK1FSK_ALERTED_ENTITY")
+                    .IsUnique();
+
+                entity.Property(e => e.AgeOldestAlert)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("age_oldest_alert");
+
+                entity.Property(e => e.AggregateAmt)
+                    .HasColumnType("decimal(15, 3)")
+                    .HasColumnName("aggregate_amt");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(200)
+                    .HasColumnName("alerted_entity_name");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_number");
+
+                entity.Property(e => e.AlertedEntitySegmentId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("alerted_entity_segment_id");
+
+                entity.Property(e => e.AlertsCnt)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("alerts_cnt");
+
+                entity.Property(e => e.CreatedTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_timestamp");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("employee_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LockTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lock_timestamp");
+
+                entity.Property(e => e.LockUserid)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("lock_userid");
+
+                entity.Property(e => e.LstupdateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lstupdate_date");
+
+                entity.Property(e => e.LstupdateUserId)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("lstupdate_user_id");
+
+                entity.Property(e => e.MoneyLaunderingScore)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("money_laundering_score");
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("politically_exposed_person_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RiskScoreCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("risk_Score_code");
+
+                entity.Property(e => e.TransactionsCnt)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("transactions_cnt");
+            });
+            modelBuilder.Entity<FskComment>(entity =>
+            {
+                entity.HasKey(e => e.CommentId)
+                    .HasName("XPKFSK_COMMENT");
+
+                entity.ToTable("FSK_COMMENT", "FCFKC");
+
+                entity.HasIndex(e => new { e.ObjectTypeCd, e.ObjectId }, "XIE1FSK_COMMENT");
+
+                entity.Property(e => e.CommentId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("comment_id");
+
+                entity.Property(e => e.CommentCategoryCd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("comment_category_cd")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CommentText)
+                    .HasMaxLength(4000)
+                    .HasColumnName("comment_text");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("create_date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("create_user_id");
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("logical_delete_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LstupdateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lstupdate_date");
+
+                entity.Property(e => e.LstupdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("lstupdate_user_id");
+
+                entity.Property(e => e.ObjectId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("object_id");
+
+                entity.Property(e => e.ObjectTypeCd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("object_type_cd")
+                    .IsFixedLength();
+            });
+            modelBuilder.Entity<FskEntityEvent>(entity =>
+            {
+                entity.HasKey(e => e.EventId)
+                    .HasName("XPKFSK_ENTITY_EVENT");
+
+                entity.ToTable("FSK_ENTITY_EVENT", "FCFKC");
+
+                entity.HasIndex(e => e.CaseId, "XIE1FSK_ENTITY_EVENT");
+
+                entity.Property(e => e.EventId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("event_id");
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnType("decimal(12, 0)")
+                    .HasColumnName("case_id");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("create_date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("create_user_id");
+
+                entity.Property(e => e.EntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("entity_number");
+
+                entity.Property(e => e.EventDescription)
+                    .HasMaxLength(255)
+                    .HasColumnName("event_description");
+
+                entity.Property(e => e.EventTypeCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("event_type_code")
+                    .IsFixedLength();
+            });
+            modelBuilder.Entity<FskEntityQueue>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("FSK_ENTITY_QUEUE", "FCFKC");
+
+                entity.HasIndex(e => new { e.AlertedEntityLevelCode, e.AlertedEntityNumber, e.QueueCode, e.OwnerUserid }, "XEI1FSK_ENTITY_QUEUE");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_number");
+
+                entity.Property(e => e.OwnerUserid)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("owner_userid");
+
+                entity.Property(e => e.QueueCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("queue_code");
             });
             modelBuilder.HasSequence("party_key").StartsAt(3);
 

@@ -1,31 +1,15 @@
-﻿//using DataGear_RV_Ver_1._7.db;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using AspNetCoreHero.ToastNotification.Extensions;
-using DataGear_RV_Ver_1._7.Areas.Identity.Data;
-using DataGear_RV_Ver_1._7.AUTH;
-using DataGear_RV_Ver_1._7.Data;
-using DataGear_RV_Ver_1._7.Helpers;
-using DataGear_RV_Ver_1._7.Helpers.CustomReportHelpers;
-using DataGear_RV_Ver_1._7.Scenario_Analysis.CORE;
-using DataGear_RV_Ver_1._7.Scenario_Analysis.KC;
-using DataGear_RV_Ver_1._7.ViewModels;
+﻿using ART_PACKAGE.Extentions.IEnumerableExtentions;
+using ART_PACKAGE.Helpers.Aml_Analysis;
+using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OpenXmlPowerTools;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Linq.Dynamic;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
-using System.Text;
 
 namespace DataGear_RV_Ver_1._7.Controllers
 {
@@ -33,27 +17,18 @@ namespace DataGear_RV_Ver_1._7.Controllers
     [Authorize(Roles = "AmlAnalysis", Policy = "Licensed")]
     public class AML_ANALYSISController : Controller
     {
-        public MEB_COREContext fcfcore = new MEB_COREContext();
-        public MEB_KCContext fcfkc = new MEB_KCContext();
-        private readonly DataGear_RV_Ver_1_7_authContext art;
-        public BMU_FCFBU1.ModelContext fcfbu1 = new BMU_FCFBU1.ModelContext();
         private readonly IConfiguration _config;
-        private readonly List<string> Descs = new List<string>
-        {
-            "FPO",
-            "MLI",
-            "MLS",
-            "OTH"
-        };
-        private readonly IAmlAnalysisService _iaml;
+        private readonly List<string> Descs = new() { "FPO", "MLI", "MLS", "OTH" };
         private readonly ILogger<AML_ANALYSISController> logger;
-        public AML_ANALYSISController(IAmlAnalysisService iaml, ILogger<AML_ANALYSISController> logger, IConfiguration config, DataGear_RV_Ver_1_7_authContext art)
+        private readonly IAmlAnalysis _amlSrv;
+        private readonly IHubContext<AmlAnalysisHub> _amlHub;
+        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub)
         {
 
-            _iaml = iaml;
             this.logger = logger;
             _config = config;
-            this.art = art;
+            _amlSrv = amlSrv;
+            _amlHub = amlHub;
         }
 
 
@@ -94,268 +69,259 @@ namespace DataGear_RV_Ver_1._7.Controllers
             return View();
         }
 
-        public ContentResult GetData([FromBody] KendoRequest obj)
+        //public ContentResult GetData([FromBody] KendoRequest obj)
+        //{
+        //    //var entitis = fcfcore.ArtAmlAnalysisViews.Select(x => x.PartyNumber);
+        //    //var alertscount = fcfkc.FskAlertedEntities.Where(x => entitis.Contains(x.AlertedEntityNumber)).Select(a => a.AlertsCnt);
+        //    IQueryable<ArtAmlAnalysisView> _data = fcfcore.ArtAmlAnalysisViews;
+
+        //    string controllerName = nameof(ReportController).Replace("Controller", "");
+        //    List<string> temp = new List<string>
+        //    {
+        //        "PartyNumber",
+        //        "SegmentSorted",
+        //        "AlertsCount",
+        //        "AlertsCnt",
+        //        "ClosedAlertsCount",
+        //        "TotalWireCAmt"         ,
+        //        "MaxMls",
+        //        "PartyName",
+        //        "PartyTypeDesc",
+        //        "OccupationDesc",
+        //        "TotalWireDAmt"           ,
+        //        "EmployeeInd"          ,
+        //        "OwnerUserId"          ,
+        //        "BranchName"          ,
+        //        "IndustryDesc"          ,
+        //        "TotalCreditAmount"          ,
+        //        "TotalDebitAmount"          ,
+        //        "TotalCreditCnt"         ,
+        //        "TotalDebitCnt"           ,
+        //        "TotalAmount"          ,
+        //        "TotalCnt"          ,
+        //        "AvgWireCAmt"          ,
+        //        "MaxWireCAmt"          ,
+        //        "TotalWireDCnt"           ,
+        //        "MinWireDAmt"          ,
+        //        "AvgWireDAmt"          ,
+        //        "TotalCashCAmt"           ,
+        //        "TotalCashCCnt"           ,
+        //        "MinCashCAmt"          ,
+        //        "AvgCashCAmt"          ,
+        //        "MaxCashCAmt"          ,
+        //        "AvgCashDAmt"          ,
+        //        "TotalCashDAmt"           ,
+        //        "TotalCashDCnt"           ,
+        //        "MinCashDAmt"          ,
+        //        "MaxCashDAmt"          ,
+        //        "TotalCheckDCnt"          ,
+        //        "AvgCheckDAmt"          ,
+        //        "MaxCheckDAmt"          ,
+        //        "TotalCheckDAmt"          ,
+        //        "MinCheckDAmt"          ,
+        //        "MaxClearingcheckCAmt"    ,
+        //        "MinClearingcheckCAmt"    ,
+        //        "AvgClearingcheckCAmt"    ,
+        //        "TotalClearingcheckCAmt"   ,
+        //        "TotalClearingcheckCCnt"   ,
+        //        "MaxClearingcheckDAmt"    ,
+        //        "AvgClearingcheckDAmt"    ,
+        //        "TotalClearingcheckDAmt"   ,
+        //        "TotalClearingcheckDCnt"   ,
+        //        "MinClearingcheckDAmt",
+        //        "IndustryCode"
+        //    };
+
+
+
+        //    List<string> skipList = null;//_config.GetSection($"{controllerName}:skipList").Get<List<string>>();
+        //    Dictionary<string, DisplayNameAndFormat> displayNameAndFormat = null;
+        //    Dictionary<string, List<dynamic>> dropdown = null;
+        //    if (obj.IsInsliaze)
+        //    {
+        //        skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
+        //        displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+        //        dropdown = new Dictionary<string, List<dynamic>>{
+        //        { "IndustryCode".ToLower(), fcfcore.ArtAmlAnalysisViews.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
+        //        };
+        //    }
+
+
+        //    //    new Dictionary<string, DisplayNameAndFormat>
+        //    //{
+        //    //    {"MoneyLaunderingRiskScore", new DisplayNameAndFormat{ DisplayName = "Money Laundering Risk Score" , Format="{0:n2}" } }
+        //    //};
+
+
+
+
+        //    var Data = _data.CallData<ArtAmlAnalysisView>(obj, columnsToDropDownd: dropdown, propertiesToSkip: skipList, DisplayNames: displayNameAndFormat);
+
+        //    var data = new
+        //    {
+        //        data = Data.Data.ToArray(),
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //        selectable = true,
+        //        toolbar = new List<dynamic>
+        //        {
+        //              new
+        //            {
+        //                text = "close Alerts"
+        //                , id = "closeAlerts"
+        //            },
+        //            new
+        //            {
+        //                text = "route Alerts"
+        //                , id = "routeAlerts"
+        //            },
+        //            new
+        //            {
+        //                text = "Close All Customers"
+        //                , id = "CloseAll"
+        //            },
+
+        //        }
+        //    };
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(data, new JsonSerializerSettings
+        //        {
+        //            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+
+        //        }),
+
+        //    };
+        //}
+
+        public async Task<IActionResult> Close([FromBody] CloseRequest closeRequest)
         {
-            //var entitis = fcfcore.ArtAmlAnalysisViews.Select(x => x.PartyNumber);
-            //var alertscount = fcfkc.FskAlertedEntities.Where(x => entitis.Contains(x.AlertedEntityNumber)).Select(a => a.AlertsCnt);
-            IQueryable<ArtAmlAnalysisView> _data = fcfcore.ArtAmlAnalysisViews;
-
-            string controllerName = nameof(ReportController).Replace("Controller", "");
-            List<string> temp = new List<string>
-            {
-                "PartyNumber",
-                "SegmentSorted",
-                "AlertsCount",
-                "AlertsCnt",
-                "ClosedAlertsCount",
-                "TotalWireCAmt"         ,
-                "MaxMls",
-                "PartyName",
-                "PartyTypeDesc",
-                "OccupationDesc",
-                "TotalWireDAmt"           ,
-                "EmployeeInd"          ,
-                "OwnerUserId"          ,
-                "BranchName"          ,
-                "IndustryDesc"          ,
-                "TotalCreditAmount"          ,
-                "TotalDebitAmount"          ,
-                "TotalCreditCnt"         ,
-                "TotalDebitCnt"           ,
-                "TotalAmount"          ,
-                "TotalCnt"          ,
-                "AvgWireCAmt"          ,
-                "MaxWireCAmt"          ,
-                "TotalWireDCnt"           ,
-                "MinWireDAmt"          ,
-                "AvgWireDAmt"          ,
-                "TotalCashCAmt"           ,
-                "TotalCashCCnt"           ,
-                "MinCashCAmt"          ,
-                "AvgCashCAmt"          ,
-                "MaxCashCAmt"          ,
-                "AvgCashDAmt"          ,
-                "TotalCashDAmt"           ,
-                "TotalCashDCnt"           ,
-                "MinCashDAmt"          ,
-                "MaxCashDAmt"          ,
-                "TotalCheckDCnt"          ,
-                "AvgCheckDAmt"          ,
-                "MaxCheckDAmt"          ,
-                "TotalCheckDAmt"          ,
-                "MinCheckDAmt"          ,
-                "MaxClearingcheckCAmt"    ,
-                "MinClearingcheckCAmt"    ,
-                "AvgClearingcheckCAmt"    ,
-                "TotalClearingcheckCAmt"   ,
-                "TotalClearingcheckCCnt"   ,
-                "MaxClearingcheckDAmt"    ,
-                "AvgClearingcheckDAmt"    ,
-                "TotalClearingcheckDAmt"   ,
-                "TotalClearingcheckDCnt"   ,
-                "MinClearingcheckDAmt",
-                "IndustryCode"
-            };
-
-
-
-            List<string> skipList = null;//_config.GetSection($"{controllerName}:skipList").Get<List<string>>();
-            Dictionary<string, DisplayNameAndFormat> displayNameAndFormat = null;
-            Dictionary<string, List<dynamic>> dropdown = null;
-            if (obj.IsInsliaze)
-            {
-                skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
-                dropdown = new Dictionary<string, List<dynamic>>{
-                { "IndustryCode".ToLower(), fcfcore.ArtAmlAnalysisViews.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
-                };
-            }
-
-
-            //    new Dictionary<string, DisplayNameAndFormat>
-            //{
-            //    {"MoneyLaunderingRiskScore", new DisplayNameAndFormat{ DisplayName = "Money Laundering Risk Score" , Format="{0:n2}" } }
-            //};
-
-
-
-
-            var Data = _data.CallData<ArtAmlAnalysisView>(obj, columnsToDropDownd: dropdown, propertiesToSkip: skipList, DisplayNames: displayNameAndFormat);
-
-            var data = new
-            {
-                data = Data.Data.ToArray(),
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-                selectable = true,
-                toolbar = new List<dynamic>
-                {
-                      new
-                    {
-                        text = "close Alerts"
-                        , id = "closeAlerts"
-                    },
-                    new
-                    {
-                        text = "route Alerts"
-                        , id = "routeAlerts"
-                    },
-                    new
-                    {
-                        text = "Close All Customers"
-                        , id = "CloseAll"
-                    },
-
-                }
-            };
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(data, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-
-                }),
-
-            };
+            if (closeRequest == null)
+                return BadRequest("You Should Send a Close request Body");
+            //this action might take time so we used signalr
+            (bool isSucceed, IEnumerable<string>? ColseFailedEntities) res = await _amlSrv.CloseAllAlertsAsync(closeRequest, User.Identity.Name, "CLP");
+            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("CloseResult", res);
+            return Ok();
         }
+        //[HttpPost]
+        //public IActionResult ApplyRules(List<ApplyRulesModel> rules)
+        //{
+        //    try
+        //    {
+        //        foreach (var rule in rules)
+        //        {
+        //            if (String.IsNullOrEmpty(rule.AENs))
+        //                continue;
 
-        public IActionResult Close([FromBody] CloseRequest closeRequest)
-        {
+        //            var AlertedEntityNumber = rule.AENs.Split(",");
+        //            var PartitionedAENs = AlertedEntityNumber.Partition<string>(900);
+        //            List<ArtAmlAnalysisView> EntitiesInTheTable = new();
+        //            foreach (var part in PartitionedAENs)
+        //            {
+        //                var temp = fcfcore.ArtAmlAnalysisViews.Where(x => part.Contains(x.PartyNumber)).ToList();
+        //                EntitiesInTheTable.AddRange(temp);
+        //            }
 
-            if (Descs.Contains(closeRequest.Desc) && !String.IsNullOrEmpty(closeRequest.Comment))
-            {
+        //            var AlertedENs = EntitiesInTheTable.Select(x => x.PartyNumber).ToArray();
+        //            if (rule.Action == "Route")
+        //            {
+        //                var str = rule.RouteUser.Split("--");
+        //                var queue = str[0];
+        //                var user = str[1];
+        //                _iaml.Route(null, AlertedENs, queue,
+        //                    $"{rule.RuleId}--RTQ--FAAR-Apply",
+        //                    user, $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", User.Identity.Name);
+        //            }
+        //            else if (rule.Action == "Close")
+        //            {
+        //                _iaml.Close(AlertedENs
+        //                    , $"{rule.RuleId}--CLA", User.Identity.Name, "CLA"
+        //                    , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}");
 
+        //            }
 
+        //        }
 
-                if (_iaml.Close(closeRequest.Entities.ToArray(), closeRequest.Desc, User.Identity.Name, "CLP", closeRequest.Comment))
-                    return Ok($"You Closed {closeRequest.Entities.Count()} Entities");
-                else
-                    return BadRequest("Something went Wrong Please try again or call support");
-
-            }
-            return BadRequest("Either The Description is wrong or the Comment is empty");
-
-
-        }
-        [HttpPost]
-        public IActionResult ApplyRules(List<ApplyRulesModel> rules)
-        {
-            try
-            {
-                foreach (var rule in rules)
-                {
-                    if (String.IsNullOrEmpty(rule.AENs))
-                        continue;
-
-                    var AlertedEntityNumber = rule.AENs.Split(",");
-                    var PartitionedAENs = AlertedEntityNumber.Partition<string>(900);
-                    List<ArtAmlAnalysisView> EntitiesInTheTable = new();
-                    foreach (var part in PartitionedAENs)
-                    {
-                        var temp = fcfcore.ArtAmlAnalysisViews.Where(x => part.Contains(x.PartyNumber)).ToList();
-                        EntitiesInTheTable.AddRange(temp);
-                    }
-
-                    var AlertedENs = EntitiesInTheTable.Select(x => x.PartyNumber).ToArray();
-                    if (rule.Action == "Route")
-                    {
-                        var str = rule.RouteUser.Split("--");
-                        var queue = str[0];
-                        var user = str[1];
-                        _iaml.Route(null, AlertedENs, queue,
-                            $"{rule.RuleId}--RTQ--FAAR-Apply",
-                            user, $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", User.Identity.Name);
-                    }
-                    else if (rule.Action == "Close")
-                    {
-                        _iaml.Close(AlertedENs
-                            , $"{rule.RuleId}--CLA", User.Identity.Name, "CLA"
-                            , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}");
-
-                    }
-
-                }
-
-                return RedirectToAction("Rules");
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500);
-                throw;
-            }
+        //        return RedirectToAction("Rules");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(500);
+        //        throw;
+        //    }
 
 
-        }
+        //}
 
 
-        public IActionResult GetAllEntities()
-        {
-            var Alertedentitiesnumber = fcfkc.FskAlertedEntities.Where(x => x.AlertsCnt > 0).Select(x => x.AlertedEntityNumber);
-            var TotalEntities = fcfkc.FskAlertedEntities.Count();
+        //public IActionResult GetAllEntities()
+        //{
+        //    var Alertedentitiesnumber = fcfkc.FskAlertedEntities.Where(x => x.AlertsCnt > 0).Select(x => x.AlertedEntityNumber);
+        //    var TotalEntities = fcfkc.FskAlertedEntities.Count();
 
-            var alerts = fcfkc.FskAlerts.Count(x => Alertedentitiesnumber.Contains(x.AlertedEntityNumber) && x.AlertStatusCode == "ACT");
+        //    var alerts = fcfkc.FskAlerts.Count(x => Alertedentitiesnumber.Contains(x.AlertedEntityNumber) && x.AlertStatusCode == "ACT");
 
-            return Ok(new
-            {
-                AlertedentitiesNumbers = Alertedentitiesnumber,
-                TotalEntities = TotalEntities,
-                AlertedEntities = Alertedentitiesnumber.Count(),
-                Alerts = alerts
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        AlertedentitiesNumbers = Alertedentitiesnumber,
+        //        TotalEntities = TotalEntities,
+        //        AlertedEntities = Alertedentitiesnumber.Count(),
+        //        Alerts = alerts
+        //    });
+        //}
 
 
-        [AllowAnonymous]
-        public IActionResult ExecuteBatchRules()
-        {
-            try
-            {
+        //[AllowAnonymous]
+        //public IActionResult ExecuteBatchRules()
+        //{
+        //    try
+        //    {
 
-                var rules = fcfcore.FscRuleBaseds.Where(r => r.Deleted == 0 && !string.IsNullOrEmpty(r.OutputReadable)).ToList().OrderByDescending(r => r.CreatedDate);
-                StringBuilder sb = new StringBuilder("");
-                foreach (var rule in rules)
-                {
-                    string query = ExtractQuery(rule);
-                    var Entities = fcfcore.ArtAmlAnalysisViews.FromSqlRaw(query);
-                    var count = Entities.Count();
-                    if (rule.Action == "Route")
-                    {
-                        Entities.Select(x => x.PartyNumber).ToList()
-                            .Partition<string>(900).ToList()
-                            .ForEach(x =>
-                                    _iaml.Route(null, x.ToArray(), "",
-                                    $"{rule.RuleId}--RTQ--FAAR-Apply",
-                                    "", $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", "ART-SRV"));
-                        sb.AppendLine($"Rule number : {rule.RuleId} Routed {count} Entities");
-                    }
-                    else if (rule.Action == "Close")
-                    {
-                        Entities.Select(x => x.PartyNumber).ToList()
-                            .Partition<string>(900).ToList()
-                            .ForEach(x =>
-                                         _iaml.Close(x.ToArray()
-                                        , $"{rule.RuleId}--CLA", "ART-SRV", "CLA"
-                                        , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}"));
+        //        var rules = fcfcore.FscRuleBaseds.Where(r => r.Deleted == 0 && !string.IsNullOrEmpty(r.OutputReadable)).ToList().OrderByDescending(r => r.CreatedDate);
+        //        StringBuilder sb = new StringBuilder("");
+        //        foreach (var rule in rules)
+        //        {
+        //            string query = ExtractQuery(rule);
+        //            var Entities = fcfcore.ArtAmlAnalysisViews.FromSqlRaw(query);
+        //            var count = Entities.Count();
+        //            if (rule.Action == "Route")
+        //            {
+        //                Entities.Select(x => x.PartyNumber).ToList()
+        //                    .Partition<string>(900).ToList()
+        //                    .ForEach(x =>
+        //                            _iaml.Route(null, x.ToArray(), "",
+        //                            $"{rule.RuleId}--RTQ--FAAR-Apply",
+        //                            "", $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", "ART-SRV"));
+        //                sb.AppendLine($"Rule number : {rule.RuleId} Routed {count} Entities");
+        //            }
+        //            else if (rule.Action == "Close")
+        //            {
+        //                Entities.Select(x => x.PartyNumber).ToList()
+        //                    .Partition<string>(900).ToList()
+        //                    .ForEach(x =>
+        //                                 _iaml.Close(x.ToArray()
+        //                                , $"{rule.RuleId}--CLA", "ART-SRV", "CLA"
+        //                                , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}"));
 
-                        sb.AppendLine($"Rule number : {rule.RuleId} Closed {count} Entities");
-                        fcfcore.RemoveRange(Entities);
-                        fcfcore.SaveChanges();
-                    }
-                }
-                return Ok($"Jobs Done for {DateTime.UtcNow} => [{sb.ToString()}]");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("ERROR:" + ex.Message + "---\n" + ex.InnerException);
+        //                sb.AppendLine($"Rule number : {rule.RuleId} Closed {count} Entities");
+        //                fcfcore.RemoveRange(Entities);
+        //                fcfcore.SaveChanges();
+        //            }
+        //        }
+        //        return Ok($"Jobs Done for {DateTime.UtcNow} => [{sb.ToString()}]");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.LogError("ERROR:" + ex.Message + "---\n" + ex.InnerException);
 
-                return BadRequest(ex.Message);
+        //        return BadRequest(ex.Message);
 
-                throw;
-            }
+        //        throw;
+        //    }
 
-        }
+        //}
         public class ApplyRulesModel
         {
             public int RuleId { get; set; }
@@ -368,52 +334,16 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
 
 
-        public IActionResult Route([FromBody] RouteRequest routeRequest)
+        public async Task<IActionResult> Route([FromBody] RouteRequest routeRequest)
         {
             if (routeRequest == null)
                 return BadRequest("You Should Send a Route request Body");
 
 
-            var IsRouted = _iaml.Route(null, routeRequest.Entities.ToArray(), routeRequest.QueueCode, "RTQ", routeRequest.OwnerId, routeRequest.Comment, User.Identity.Name);
-            if (IsRouted)
-                return Ok($"You Routed {routeRequest.Entities.Count()} Entities");
-            else
-                return BadRequest("Something went Wrong Please try again or call support");
+            (bool isSucceed, IEnumerable<string>? RouteFailedEntities) res = await _amlSrv.RouteAllAlertsAsync(routeRequest, User.Identity.Name);
+            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("RouteResult", res);
+            return Ok();
         }
-        public IActionResult test()
-        {
-            /*var connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["FCFBU1_TEST"];
-            OracleConnection conn = new OracleConnection(connectionString);
-            string TableQuery = @"select * from FSK_ENTITY_QUEUE where ALERTED_ENTITY_NUMBER = '000002732'";
-            string update = @"update FSK_ENTITY_QUEUE set QUEUE_CODE = 'Branch_2' where ALERTED_ENTITY_NUMBER = '000003410'";
-            OracleCommand cmd = new OracleCommand(TableQuery, conn);
-            //conn.Open();
-            //cmd.ExecuteNonQuery();
-            
-            //cmd.CommandText = TableQuery;
-            //cmd.CommandType = CommandType.Text;
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);*/
-            var entityType = fcfcore.Model.FindEntityType(typeof(ArtAmlAnalysisView));
-
-            // Table info 
-            var tableName = entityType.GetViewName();
-            var tableSchema = entityType;
-            Dictionary<string, string> data = new();
-            // Column info 
-            data.Add("table", tableName);
-            foreach (var property in entityType.GetProperties())
-            {
-                var columnName = property.GetColumnName();
-                var columnType = property.GetColumnType();
-                data.Add(columnName, columnType);
-            };
-
-            return Content(JsonConvert.SerializeObject(data), "application/json");
-
-        }
-
 
         public ContentResult GetQueues()
         {

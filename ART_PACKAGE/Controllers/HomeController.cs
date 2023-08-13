@@ -1,11 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Models;
 using Data.FCF71;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
-using System.Data;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -15,11 +16,15 @@ namespace ART_PACKAGE.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AuthContext _db;
         private readonly IDbService _dbSrv;
-        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
+        private readonly IAmlAnalysis _amlanalysisSrv;
+
+        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv, IAmlAnalysis amlanalysisSrv, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _db = db;
             _dbSrv = dbSrv;
+            _amlanalysisSrv = amlanalysisSrv;
+
         }
 
         public IActionResult Index()
@@ -38,6 +43,8 @@ namespace ART_PACKAGE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
 
         public IActionResult CardsData()
         {

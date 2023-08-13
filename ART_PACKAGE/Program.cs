@@ -1,11 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
+using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
-using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +26,13 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 
+builder.Services.AddScoped<IAmlAnalysis, AmlAnalysis>();
+
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AuthContext>();
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
 

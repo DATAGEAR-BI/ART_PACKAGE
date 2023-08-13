@@ -13,7 +13,7 @@ using Data.GOAML;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace ART_PACKAGE.IServiceCollectionExtentions
+namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
     public static class ServiceCollectionExtentions
     {
