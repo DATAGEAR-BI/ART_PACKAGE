@@ -1,10 +1,7 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Data.Data;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
-using System.Globalization;
 
 namespace ART_PACKAGE.Hubs
 {
@@ -37,43 +34,6 @@ namespace ART_PACKAGE.Hubs
             }
         }
 
-        public async Task ExportAlertDetails()
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews;
-            int totalRecords = data.Count();
-            CsvConfiguration csvConfig = new(CultureInfo.InvariantCulture)
-            {
-                Delimiter = ",",
-                HasHeaderRecord = true, // Set this to false if you don't want a header row
-            };
-            try
-            {
-
-                while (totalRecords > 0)
-                {
-                    MemoryStream stream = new();
-                    using StreamWriter writer = new(stream);
-                    using (CsvWriter csv = new(writer, csvConfig))
-                    {
-                        csv.WriteRecords(GetLargeDataSetInBatches(1000));
-                        byte[] bytes = stream.ToArray();
-                        await Clients.Client(Connections[Context.User.Identity.Name])
-                            .SendAsync("csvRecevied", bytes);
-                        writer.AutoFlush = true;
-                        stream.Position = 0;
-
-                    }
-                    totalRecords -= 1000;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-
-        }
 
         public override Task OnConnectedAsync()
         {
