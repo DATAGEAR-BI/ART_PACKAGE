@@ -72,5 +72,9 @@
     DGAMLArtScenarioHistory: "/DGAMLArtScenarioHistory/GetData",
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
+
+    //ABK 
+    ArtCasesInitiatedFromBranch:"/ArtCasesInitiatedFromBranch/GetData",
+    ArtDgecmActivity:"/ArtDgecmActivity/GetData",
 }
 

@@ -764,6 +764,50 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+            {
+                nameof(ArtCasesInitiatedFromBranchController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>()
+                    {
+                    },
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
+                        {  "BranchId",new DisplayNameAndFormat { DisplayName ="Branch ID"}},
+                        {  "CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "Amount",new DisplayNameAndFormat { DisplayName ="Transaction Amount"}},
+                        {  "Currency",new DisplayNameAndFormat { DisplayName ="Transaction Currency"}},
+                        {  "PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                        {  "CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                        {  "LastActionTokenBy",new DisplayNameAndFormat { DisplayName ="Last Action Token By"}},
+                        {  "Product",new DisplayNameAndFormat { DisplayName = "Product"}},
+                        {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                        {  "EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+
+                    }
+                }
+            },
+            {
+                nameof(ArtDgecmActivityController).ToLower(),new ReportConfig{
+                    SkipList = new List<string>()
+                    {
+                    },
+                    DisplayNames =new Dictionary<string, DisplayNameAndFormat>{
+                        {  "EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
+                        {  "BranchId",new DisplayNameAndFormat { DisplayName ="Branch ID"}},
+                        {  "CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "Amount",new DisplayNameAndFormat { DisplayName ="Transaction Amount"}},
+                        {  "Currency",new DisplayNameAndFormat { DisplayName ="Transaction Currency"}},
+                        {  "PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                        {  "Product",new DisplayNameAndFormat { DisplayName = "Product"}},
+                        {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                        {  "EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                        {  "CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
+                        {  "CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+
+                    }
+                }
+            },
         };
 
     }

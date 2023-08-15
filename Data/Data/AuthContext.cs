@@ -83,7 +83,12 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSegoutvsallcustTb> ArtSegoutvsallcustTbs { get; set; } = null!;
     public virtual DbSet<ArtSegoutvsalloutTb> ArtSegoutvsalloutTbs { get; set; } = null!;
     public virtual DbSet<ArtCustsPerTypeTb> ArtCustsPerTypeTbs { get; set; } = null!;
-
+    // ABK
+    public virtual DbSet<ArtCasesInitiatedFromBranch> ArtCasesInitiatedFromBranches { get; set; } = null!;
+    public virtual DbSet<ArtDgecmActivity> ArtDgecmActivities { get; set; } = null!;
+    public virtual DbSet<ArtEcmFtiFullCycle> ArtEcmFtiFullCycles { get; set; } = null!;
+    public virtual DbSet<ArtFtiActivity> ArtFtiActivities { get; set; } = null!;
+    public virtual DbSet<ArtFtiEcmTransaction> ArtFtiEcmTransactions { get; set; } = null!;
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
     {
