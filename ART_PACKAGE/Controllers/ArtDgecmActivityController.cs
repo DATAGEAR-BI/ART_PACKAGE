@@ -7,9 +7,11 @@ using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ArtDgecmActivity")]
     public class ArtDgecmActivityController : Controller
     {
         private readonly AuthContext dbfcfkc;
@@ -39,11 +41,11 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"BranchId".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
-                    {"CustomerName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
+                    //{"CustomerName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
                     {"Currency".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
                     {"PrimaryOwner".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
                     {"CaseStatus".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },
-                    {"CaseComments".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseComments!=null).Select(x => x.CaseComments).Distinct().ToDynamicList() },
+                    //{"CaseComments".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseComments!=null).Select(x => x.CaseComments).Distinct().ToDynamicList() },
                     {"Product".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Product!=null).Select(x => x.Product).Distinct().ToDynamicList() },
                     {"ProductType".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.ProductType!=null).Select(x => x.ProductType).Distinct().ToDynamicList() },
                     {"EventName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },

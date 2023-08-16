@@ -7,9 +7,11 @@ using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ArtCasesInitiatedFromBranch")]
     public class ArtCasesInitiatedFromBranchController : Controller
     {
         private readonly AuthContext dbfcfkc;
@@ -39,7 +41,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"BranchId".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
-                    {"CustomerName".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
+                    //{"CustomerName".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
                     {"Currency".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
                     {"PrimaryOwner".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
                     {"CaseStatus".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },

@@ -7,9 +7,11 @@ using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ArtFtiEcmTransaction")]
     public class ArtFtiEcmTransactionController : Controller
     {
         private readonly AuthContext dbfcfkc;

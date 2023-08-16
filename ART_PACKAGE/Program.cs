@@ -8,6 +8,7 @@ using ART_PACKAGE.Hubs;
 using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -26,12 +27,12 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 builder.Services.ConfigureApplicationCookie(opt =>
  {
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

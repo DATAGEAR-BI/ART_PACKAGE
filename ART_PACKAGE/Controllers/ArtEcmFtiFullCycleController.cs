@@ -7,9 +7,11 @@ using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ArtEcmFtiFullCycle")]
     public class ArtEcmFtiFullCycleController : Controller
     {
         private readonly AuthContext dbfcfkc;
@@ -39,7 +41,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"BranchId".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
-                    {"CustomerName".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
+                    //{"CustomerName".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
                     {"Currency".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
                     {"PrimaryOwner".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
                     {"CaseStatus".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },
@@ -52,7 +54,7 @@ namespace ART_PACKAGE.Controllers
                     {"EventSteps".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.EventSteps!=null).Select(x => x.EventSteps).Distinct().ToDynamicList() },
                     {"EventStatus".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.EventStatus!=null).Select(x => x.EventStatus).Distinct().ToDynamicList() },
                     {"LastActionTokenBy".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.LastActionTokenBy!=null).Select(x => x.LastActionTokenBy).Distinct().ToDynamicList() },
-                    {"Name".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.Name!=null).Select(x => x.Name).Distinct().ToDynamicList() },
+                    //{"Name".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.Name!=null).Select(x => x.Name).Distinct().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
             }
