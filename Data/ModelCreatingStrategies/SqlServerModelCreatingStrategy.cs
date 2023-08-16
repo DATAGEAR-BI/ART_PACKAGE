@@ -3156,6 +3156,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CaseComments)
                     .HasColumnName("CASE_COMMENTS")
+                    .IsUnicode(false)
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.CaseCreationDate)
@@ -3164,6 +3165,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CaseStatus)
                     .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("CASE_STATUS")
                     .UseCollation("Arabic_100_CI_AI");
 
@@ -3186,6 +3188,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.EventName)
                     .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("EVENT_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
@@ -3227,7 +3230,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EVENT_CREATION_DATE");
 
                 entity.Property(e => e.EcmReference)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(64)
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
@@ -3238,17 +3241,20 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Product)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("Product")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.ProductType)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("PRODUCT_TYPE")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("Name")
                     .UseCollation("Arabic_100_CI_AI");
 
@@ -3259,53 +3265,55 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.PrimaryOwner)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(250)
                     .IsUnicode(false)
                     .HasColumnName("PRIMARY_OWNER")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("CASE_STATUS")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.LastActionTokenBy)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("LAST_ACTION_TOKEN_BY")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.FtiReference)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(20)
                    .IsUnicode(false)
                    .HasColumnName("FTI_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventName)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(60)
                    .IsUnicode(false)
                    .HasColumnName("Event_Name")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventStatus)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(11)
                    .HasColumnName("Event_Status")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.MasterAssignedTo)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(20)
                    .IsUnicode(false)
                    .HasColumnName("Master_Assigned_To")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventSteps)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(21)
+                   .IsUnicode(false)
                    .HasColumnName("Event_Steps")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.StepStatus)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(9)
+                   .IsUnicode(false)
                    .HasColumnName("STEP_STATUS")
                    .UseCollation("Arabic_100_CI_AI");
             });
@@ -3315,7 +3323,8 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_FTI_ACTIVITIES", "ART_DB");
                 entity.Property(e => e.EcmReference)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(64)
+                   .IsUnicode(false)
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
@@ -3324,35 +3333,38 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EVENT_CREATION_DATE");
 
                 entity.Property(e => e.FtiReference)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(20)
                    .IsUnicode(false)
                    .HasColumnName("FTI_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventName)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(60)
                    .IsUnicode(false)
                    .HasColumnName("Event_Name")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventStatus)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(11)
+                   .IsUnicode(false)
                    .HasColumnName("Event_Status")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.MasterAssignedTo)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(20)
                    .IsUnicode(false)
                    .HasColumnName("Master_Assigned_To")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventSteps)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(21)
+                   .IsUnicode(false)
                    .HasColumnName("Event_Steps")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.StepStatus)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(9)
+                   .IsUnicode(false)
                    .HasColumnName("STEP_STATUS")
                    .UseCollation("Arabic_100_CI_AI");
             });
@@ -3368,32 +3380,35 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EVENT_CREATION_DATE");
 
                 entity.Property(e => e.EcmReference)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(64)
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
                 entity.Property(e => e.Product)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
                    .HasColumnName("Product")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.ProductType)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
                     .HasColumnName("PRODUCTTYPE")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventName)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(60)
                    .IsUnicode(false)
                    .HasColumnName("Event_Name")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventStatus)
-                   .HasMaxLength(1000)
+                   .HasMaxLength(11)
+                   .IsUnicode(false)
                    .HasColumnName("Event_Status")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.FtiReference)
-                  .HasMaxLength(1000)
+                  .HasMaxLength(20)
                   .IsUnicode(false)
                   .HasColumnName("FTI_REFERENCE")
                   .UseCollation("Arabic_100_CI_AI");
@@ -3405,7 +3420,7 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.FirstLineParty)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("FIRST_LINE_PARTY")
                     .UseCollation("Arabic_100_CI_AI");

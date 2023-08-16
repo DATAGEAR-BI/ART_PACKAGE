@@ -38,14 +38,15 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
-                    //{"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
-                    //{"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown().ToDynamicList() },
-                    //{"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    //{"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"Owner".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }
+                    {"BranchId".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
+                    {"CustomerName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
+                    {"Currency".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
+                    {"PrimaryOwner".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
+                    {"CaseStatus".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },
+                    {"CaseComments".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseComments!=null).Select(x => x.CaseComments).Distinct().ToDynamicList() },
+                    {"Product".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Product!=null).Select(x => x.Product).Distinct().ToDynamicList() },
+                    {"ProductType".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.ProductType!=null).Select(x => x.ProductType).Distinct().ToDynamicList() },
+                    {"EventName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
             }
@@ -94,8 +95,8 @@ namespace ART_PACKAGE.Controllers
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
             List<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.CallData(req).Data.ToList();
-            ViewData["title"] = "";
-            ViewData["desc"] = "";
+            ViewData["title"] = "DGECM-Activities";
+            ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

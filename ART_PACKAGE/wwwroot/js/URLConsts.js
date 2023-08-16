@@ -76,5 +76,8 @@
     //ABK 
     ArtCasesInitiatedFromBranch:"/ArtCasesInitiatedFromBranch/GetData",
     ArtDgecmActivity:"/ArtDgecmActivity/GetData",
+    ArtEcmFtiFullCycle:"/ArtEcmFtiFullCycle/GetData",
+    ArtFtiActivity:"/ArtFtiActivity/GetData",
+    ArtFtiEcmTransaction:"/ArtFtiEcmTransaction/GetData",
 }
 

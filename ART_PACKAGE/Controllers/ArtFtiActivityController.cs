@@ -10,12 +10,12 @@ using ART_PACKAGE.Services.Pdf;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class ArtCasesInitiatedFromBranchController : Controller
+    public class ArtFtiActivityController : Controller
     {
         private readonly AuthContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public ArtCasesInitiatedFromBranchController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtFtiActivityController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _dropDown = dropDown;
@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
+            IQueryable<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -34,7 +34,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
@@ -48,10 +48,10 @@ namespace ART_PACKAGE.Controllers
                     {"EventName".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },
                     {"LastActionTokenBy".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.LastActionTokenBy!=null).Select(x => x.LastActionTokenBy).Distinct().ToDynamicList() },
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtCasesInitiatedFromBranch> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtFtiActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,18 +85,18 @@ namespace ART_PACKAGE.Controllers
         }*/
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtCasesInitiatedFromBranch, GenericCsvClassMapper<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController>>(para.Req);
+            IQueryable<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtFtiActivity, GenericCsvClassMapper<ArtFtiActivity, ArtFtiActivityController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].SkipList;
-            List<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.CallData(req).Data.ToList();
-            ViewData["title"] = "Cases Initiated from Branch";
-            ViewData["desc"] = "Transaction initiated from branch, Include DGECM cases main details, created and processed to FTI";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
+            List<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.CallData(req).Data.ToList();
+            ViewData["title"] = "FTI-Activities";
+            ViewData["desc"] = "DGECM Activity Report showing what cases have been created and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
