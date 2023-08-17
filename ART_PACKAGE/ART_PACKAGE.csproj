@@ -10,6 +10,57 @@
 	 <Target Name="CleanCodeTask" BeforeTargets="Build">
       <Exec Command="dotnet format style -v detailed" />
     </Target>
+	 <ItemGroup>
+	   <Compile Remove="Controllers\AlertDetailsController.cs" />
+	   <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	   <Compile Remove="Controllers\AlertSummaryController.cs" />
+	   <Compile Remove="Controllers\AllSegmentsOutliersNewController.cs" />
+	   <Compile Remove="Controllers\AuditGroupsController.cs" />
+	   <Compile Remove="Controllers\AuditRolesController.cs" />
+	   <Compile Remove="Controllers\AuditUsersController.cs" />
+	   <Compile Remove="Controllers\CasesDetailsController.cs" />
+	   <Compile Remove="Controllers\CasesSummaryController.cs" />
+	   <Compile Remove="Controllers\CustomersController.cs" />
+	   <Compile Remove="Controllers\CustomersSummaryController.cs" />
+	   <Compile Remove="Controllers\DGAMLAlertDetailsController.cs" />
+	   <Compile Remove="Controllers\DGAMLAlertSummaryController.cs" />
+	   <Compile Remove="Controllers\DGAMLArtExternalCustomerDetailsController.cs" />
+	   <Compile Remove="Controllers\DGAMLArtScenarioAdminController.cs" />
+	   <Compile Remove="Controllers\DGAMLArtScenarioHistoryController.cs" />
+	   <Compile Remove="Controllers\DGAMLArtSuspectDetailsController.cs" />
+	   <Compile Remove="Controllers\DGAMLCasesDetailsController.cs" />
+	   <Compile Remove="Controllers\DGAMLCasesSummaryController.cs" />
+	   <Compile Remove="Controllers\DGAMLCustomersDetailsController.cs" />
+	   <Compile Remove="Controllers\DGAMLCustomerSummaryController.cs" />
+	   <Compile Remove="Controllers\DGAMLExternalCustomerSummaryController.cs" />
+	   <Compile Remove="Controllers\DGAMLTriageController.cs" />
+	   <Compile Remove="Controllers\GOAMLReportIndicatorDetailsController.cs" />
+	   <Compile Remove="Controllers\GOAMLReportsDetailsController.cs" />
+	   <Compile Remove="Controllers\GOAMLReportsSummaryController.cs" />
+	   <Compile Remove="Controllers\GOAMLReportsSuspectController.cs" />
+	   <Compile Remove="Controllers\HighRiskController.cs" />
+	   <Compile Remove="Controllers\LastLoginPerDayController.cs" />
+	   <Compile Remove="Controllers\ListGroupsRolesSummaryController.cs" />
+	   <Compile Remove="Controllers\ListGroupsSubGroupsSummaryController.cs" />
+	   <Compile Remove="Controllers\ListOfDeletedUsersController.cs" />
+	   <Compile Remove="Controllers\ListOfGroupsController.cs" />
+	   <Compile Remove="Controllers\ListOfRoleController.cs" />
+	   <Compile Remove="Controllers\ListOfUserController.cs" />
+	   <Compile Remove="Controllers\ListOfUsersAndGroupsRoleController.cs" />
+	   <Compile Remove="Controllers\ListOfUsersGroupController.cs" />
+	   <Compile Remove="Controllers\ListOfUsersRolesController.cs" />
+	   <Compile Remove="Controllers\RiskAssessmentController.cs" />
+	   <Compile Remove="Controllers\RiskSummaryController.cs" />
+	   <Compile Remove="Controllers\SegmentationChartsController.cs" />
+	   <Compile Remove="Controllers\SegmentSummaryController.cs" />
+	   <Compile Remove="Controllers\SystemPerformanceController.cs" />
+	   <Compile Remove="Controllers\SystemPerformanceSummaryController.cs" />
+	   <Compile Remove="Controllers\TriageController.cs" />
+	   <Compile Remove="Controllers\UserPerformanceController.cs" />
+	   <Compile Remove="Controllers\UserPerformancePerActionUserController.cs" />
+	   <Compile Remove="Controllers\UserPerformancePerUserAndActionController.cs" />
+	   <Compile Remove="Controllers\UserPerformPerActionController.cs" />
+	 </ItemGroup>
 	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
