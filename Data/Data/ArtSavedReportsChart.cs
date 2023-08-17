@@ -18,6 +18,7 @@ public class ArtSavedReportsChart
     public string Column { get; set; } = null!;
     public string Title { get; set; } = null!;
     public int ReportId { get; set; }
+
     [JsonIgnore]
     public ArtSavedCustomReport Report { get; set; } = null!;
 

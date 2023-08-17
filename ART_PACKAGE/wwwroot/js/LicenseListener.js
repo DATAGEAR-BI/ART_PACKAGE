@@ -1,4 +1,4 @@
-const toastObj = {
+var toastObj = {
     text: "Some Licenses are about to expire please check notifications", // Text that is to be shown in the toast
     heading: 'License Status', // Optional heading to be shown on the toast
     icon: 'warning', // Type of toast icon

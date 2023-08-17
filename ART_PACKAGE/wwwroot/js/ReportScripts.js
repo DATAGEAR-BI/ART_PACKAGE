@@ -23,10 +23,10 @@ ShcemaSelect.onchange = (e) => {
             opt.selected = true;
             TableSelect.appendChild(opt);
             d.forEach(elm => {
-
                 var opt = document.createElement("option");
-                opt.innerText = elm.toString().split(".")[1];
-                opt.value = elm;
+                opt.innerText = elm.vieW_NAME.toString().split(".")[1];
+                opt.dataset.type = elm.type;
+                opt.value = elm.vieW_NAME;
                 TableSelect.appendChild(opt);
             })
 
@@ -40,9 +40,11 @@ ShcemaSelect.onchange = (e) => {
 
 
 TableSelect.onchange = async (e) => {
-    var view = e.target.value.split(".")[1];
+    var selected = e.target.options[e.target.selectedIndex];
+    var type = selected.dataset.type;
+    var view = selected.value;
     var schemaVal = parseInt(ShcemaSelect.value);
-    var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}`, null, "GET");
+    var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}/${type}`, null, "GET");
 
     ColumnsSelect.innerHTML = "";
     ChartColumnSelect.innerHTML = "";
@@ -55,10 +57,11 @@ TableSelect.onchange = async (e) => {
     ColumnsSelect.appendChild(opt);
     ChartColumnSelect.appendChild(opt2);
     columns.forEach(elm => {
-
         var opt = document.createElement("option");
-        opt.innerText = elm;
-        opt.value = elm;
+        opt.innerText = elm.name;
+        opt.value = elm.name;
+        opt.dataset.isnullable = elm.isNullable;
+        opt.dataset.type = elm.sqlDataType;
         var opt2 = opt.cloneNode(true);
         ColumnsSelect.appendChild(opt);
         ChartColumnSelect.appendChild(opt2);
@@ -176,7 +179,12 @@ form.onsubmit = async (e) => {
 
     var errors = [];
     var table = TableSelect.options[TableSelect.selectedIndex].value;
-    var columns = [...ColumnsSelect.options].filter(x => x.selected && x.value != "").map(x => x.value);
+    var tableType = TableSelect.options[TableSelect.selectedIndex].dataset.type;
+    var columns = [...ColumnsSelect.options].filter(x => x.selected && x.value != "").map(x => ({
+        Name: x.value,
+        SqlDataType: x.dataset.type ,
+        IsNullable: x.dataset.isnullable,
+    }));
     var reportTitle = document.getElementById("title").value;
     var reportDesc = document.getElementById("desc").value;
 
@@ -223,6 +231,7 @@ form.onsubmit = async (e) => {
 
     var model = {
         Table: table,
+        ObjectType: tableType,
         Columns: columns,
         Charts: charts,
         Description: reportDesc,
