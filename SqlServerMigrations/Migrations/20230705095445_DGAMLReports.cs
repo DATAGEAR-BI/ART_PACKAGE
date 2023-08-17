@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -6,6 +7,18 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class DGAMLReports : Migration
     {
+
+        private bool isApplable;
+
+        public DGAMLReports()
+        {
+            var basePath = Path.GetFullPath("../../ART_PACKAGE");
+            var builder = new ConfigurationBuilder()
+                            .SetBasePath(basePath)
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var modules = builder.Build().GetSection("Client");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             #region Views
