@@ -15,22 +15,5 @@ namespace Data.DGECM
             : base(options)
         {
         }
-
-        public virtual DbSet<RefTableVal> RefTableVals { get; set; } = null!;
-        public virtual DbSet<CaseLive> CaseLives { get; set; } = null!;
-
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            if (this.Database.IsSqlServer())
-                ModelCreatingConfigurator.DGECMSqlServerOnModelCreating(modelBuilder);
-
-            if (this.Database.IsOracle())
-                ModelCreatingConfigurator.DGECMOracleOnModelCreating(modelBuilder);
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

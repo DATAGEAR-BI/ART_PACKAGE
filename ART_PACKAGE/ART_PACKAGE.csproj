@@ -60,6 +60,8 @@
 	   <Compile Remove="Controllers\UserPerformancePerActionUserController.cs" />
 	   <Compile Remove="Controllers\UserPerformancePerUserAndActionController.cs" />
 	   <Compile Remove="Controllers\UserPerformPerActionController.cs" />
+	   <Compile Remove="Helpers\DropDown\DropDownService.cs" />
+	   <Compile Remove="Helpers\DropDown\IDropDownService.cs" />
 	 </ItemGroup>
 	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">

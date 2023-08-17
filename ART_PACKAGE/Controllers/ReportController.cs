@@ -12,10 +12,11 @@ using ART_PACKAGE.Helpers.CSVMAppers;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "CustomReport")]
     public partial class ReportController : Controller
     {
         private readonly AuthContext db;

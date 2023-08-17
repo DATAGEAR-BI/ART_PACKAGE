@@ -3,7 +3,6 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.DropDown;
 using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
@@ -15,12 +14,10 @@ namespace ART_PACKAGE.Controllers
     public class ArtFtiActivityController : Controller
     {
         private readonly AuthContext dbfcfkc;
-        private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public ArtFtiActivityController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtFtiActivityController(AuthContext dbfcfkc, IPdfService pdfSrv)
         {
-            this.dbfcfkc = dbfcfkc;
-            _dropDown = dropDown;
+            this.dbfcfkc = dbfcfkc; ;
             _pdfSrv = pdfSrv;
         }
 

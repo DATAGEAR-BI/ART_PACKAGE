@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
@@ -21,7 +20,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<LicenseWatcher>();
-builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();

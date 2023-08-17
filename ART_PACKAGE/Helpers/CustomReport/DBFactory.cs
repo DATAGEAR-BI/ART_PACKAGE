@@ -2,7 +2,7 @@
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class DBFactory
     {
@@ -16,10 +16,40 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         public DbContext GetDbInstance(string schemaName)
         {
-
-            return schemaName == DbSchema.DGCMGMT.ToString()
-                ? _db.ECM
-                : schemaName == DbSchema.KC.ToString() ? _db.KC : schemaName == DbSchema.CORE.ToString() ? _db.CORE : (DbContext?)null;
+            if (schemaName == DbSchema.ACTIVITIDB.ToString())
+            {
+                return _db.ACTIVITIDB;
+            }
+            else if (schemaName == DbSchema.DGADMIN.ToString())
+            {
+                return _db.DGADMIN;
+            }
+            else if (schemaName == DbSchema.DGCALENDAR.ToString())
+            {
+                return _db.DGCALENDAR;
+            }
+            else if (schemaName == DbSchema.DGNOTIFICATION.ToString())
+            {
+                return _db.DGNOTIFICATION;
+            }
+            else if (schemaName == DbSchema.DGECMMETADATA.ToString())
+            {
+                return _db.DGECMMETADATA;
+            }
+            else if (schemaName == DbSchema.DGUSERMANAGMENT.ToString())
+            {
+                return _db.DGUSERMANAGEMENT;
+            }
+            else if (schemaName == DbSchema.TI.ToString())
+            {
+                return _db.TI;
+            }
+            else if (schemaName == DbSchema.DGECM.ToString())
+            {
+                return _db.DGECM;
+            }
+            return null;
         }
+
     }
 }

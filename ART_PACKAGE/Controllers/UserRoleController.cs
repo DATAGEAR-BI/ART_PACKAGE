@@ -225,7 +225,8 @@ namespace ART_PACKAGE.Controllers
                     //_notify.Error($"{role} already Exists");
                     return RedirectToAction("Roles");
                 }
-                string old = isExist.Name;
+
+                _ = isExist.Name;
                 isExist.Name = role;
                 IdentityResult result = await _rm.UpdateAsync(isExist);
                 if (result.Succeeded)
