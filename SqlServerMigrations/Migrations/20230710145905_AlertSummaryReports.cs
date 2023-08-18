@@ -6,8 +6,18 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class AlertSummaryReports : Migration
     {
+        private bool isApplable;
+
+        public AlertSummaryReports()
+        {
+            var m = MigrationsModules.GetModules();
+            isApplable = m.Contains("DGAML");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!isApplable)
+                return;
             #region Procs
             //ART_ST_ALERTS_PER_BRANCH
             migrationBuilder.Sql($@"

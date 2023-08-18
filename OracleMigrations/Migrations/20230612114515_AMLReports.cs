@@ -6,8 +6,16 @@ namespace OracleMigrations.Migrations
 {
     public partial class AMLReports : Migration
     {
+        private readonly bool IsAppliable;
+        public AMLReports()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("SASAML");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //views
             migrationBuilder.Sql(@"
                                          CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_AML_TRIAGE_VIEW"" AS 

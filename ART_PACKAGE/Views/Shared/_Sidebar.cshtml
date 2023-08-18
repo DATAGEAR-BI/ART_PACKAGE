@@ -20,6 +20,7 @@
             <li class=" ">
                 <a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-dashboard"></i> <span>DashBoard</span></a>
             </li>
+              @if(Modules is not null){
             <li class="treeview" id="reportsTree">
                 <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Reports</span>
@@ -27,7 +28,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-               
+             
                     <ul class="treeview-menu">
                     @if (Modules.Contains("ECM"))
                     {
@@ -394,10 +395,12 @@
                         </li>
                     }
 
+                
                 </ul>
                 
                 
             </li>
+            }
             <li class="treeview ">
                 <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Custom Report</span>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -12,15 +11,14 @@ namespace SqlServerMigrations.Migrations
 
         public DGAMLReports()
         {
-            var basePath = Path.GetFullPath("../../ART_PACKAGE");
-            var builder = new ConfigurationBuilder()
-                            .SetBasePath(basePath)
-                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            var modules = builder.Build().GetSection("Client");
+            var m = MigrationsModules.GetModules();
+            isApplable = m.Contains("DGAML");
         }
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!isApplable)
+                return;
             #region Views
             migrationBuilder.Sql($@"
             
@@ -416,7 +414,8 @@ GO");
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            if (!isApplable)
+                return;
         }
     }
 }

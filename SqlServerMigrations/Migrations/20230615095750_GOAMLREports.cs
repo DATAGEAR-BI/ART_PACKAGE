@@ -6,8 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class GOAMLREports : Migration
     {
+        private readonly bool IsAppliable;
+        public GOAMLREports()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("GOAML");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //function that used in upcoming Views or Procs
             migrationBuilder.Sql($@"CREATE OR ALTER FUNCTION ART_DB.SplitString_XML
                                         (

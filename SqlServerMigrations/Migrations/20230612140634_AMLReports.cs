@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,8 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class AMLReports : Migration
     {
+        private readonly bool IsAppliable;
+        public AMLReports()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("SASAML");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //views
             migrationBuilder.Sql($@"
                            USE [ART_DB]

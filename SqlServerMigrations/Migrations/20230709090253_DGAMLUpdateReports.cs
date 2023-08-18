@@ -6,8 +6,18 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class DGAMLUpdateReports : Migration
     {
+        private bool isApplable;
+
+        public DGAMLUpdateReports()
+        {
+            var m = MigrationsModules.GetModules();
+            isApplable = m.Contains("DGAML");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!isApplable)
+                return;
             #region Views
             //ART_SCENARIO_ADMIN_VIEW
             migrationBuilder.Sql($@"
@@ -155,7 +165,7 @@ namespace SqlServerMigrations.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+
         }
     }
 }
