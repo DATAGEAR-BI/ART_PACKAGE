@@ -19,5 +19,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnSegmentionModelCreating(modelBuilder);
         }
+
+        public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnARTGOAMLModelCreating(modelBuilder);
+        }
     }
 }

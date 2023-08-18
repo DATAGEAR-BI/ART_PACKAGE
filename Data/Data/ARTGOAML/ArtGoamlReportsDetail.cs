@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.ARTGOAML
 {
     public partial class ArtGoamlReportsDetail
     {

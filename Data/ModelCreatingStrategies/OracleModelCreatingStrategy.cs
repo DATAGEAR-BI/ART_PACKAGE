@@ -1,4 +1,5 @@
 ﻿using Data.Data;
+using Data.Data.ARTGOAML;
 using Data.Data.Segmentation;
 using Data.DGCMGMT;
 using Data.FCF71;
@@ -8,6 +9,8 @@ namespace Data.ModelCreatingStrategies
 {
     public class OracleModelCreatingStrategy : IModelCreatingStrategy
     {
+        
+
         public void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ART");
@@ -983,214 +986,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("VERSION_NUMBER");
             });
 
-            //GOAML
-            modelBuilder.Entity<ArtGoamlReportsDetail>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ART_GOAML_REPORTS_DETAILS", "ART_DB");
-
-                entity.Property(e => e.Action)
-                    .HasColumnName("ACTION")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Currencycodelocal)
-                    .HasMaxLength(255)
-                    .HasColumnName("CURRENCYCODELOCAL")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Entityreference)
-                    .HasMaxLength(255)
-                    .HasColumnName("ENTITYREFERENCE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Fiurefnumber)
-                    .HasMaxLength(255)
-                    .HasColumnName("FIUREFNUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Isvalid).HasColumnName("ISVALID");
-
-                entity.Property(e => e.LastUpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("LAST_UPDATED_DATE");
-
-                entity.Property(e => e.Location)
-                    .HasMaxLength(255)
-                    .HasColumnName("LOCATION")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Priority)
-                    .HasMaxLength(255)
-                    .HasColumnName("PRIORITY")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reason)
-                    .HasMaxLength(4000)
-                    .HasColumnName("REASON")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Rentitybranch)
-                    .HasMaxLength(255)
-                    .HasColumnName("RENTITYBRANCH")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Rentityid).HasColumnName("RENTITYID");
-
-                entity.Property(e => e.Reportcloseddate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("REPORTCLOSEDDATE");
-
-                entity.Property(e => e.Reportcode)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTCODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportcreatedby)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTCREATEDBY")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportcreateddate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("REPORTCREATEDDATE");
-
-                entity.Property(e => e.Reportingpersontype)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTINGPERSONTYPE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportrisksignificance)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTRISKSIGNIFICANCE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportstatuscode)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTSTATUSCODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportuserlockid)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTUSERLOCKID")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportxml)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTXML")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Submissioncode)
-                    .HasMaxLength(255)
-                    .HasColumnName("SUBMISSIONCODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Submissiondate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SUBMISSIONDATE");
-
-                entity.Property(e => e.Version)
-                    .HasMaxLength(255)
-                    .HasColumnName("VERSION")
-                    .UseCollation("Arabic_100_CI_AI");
-            });
-
-            modelBuilder.Entity<ArtGoamlReportsIndicator>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ART_GOAML_REPORTS_INDICATORS", "ART_DB");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("DESCRIPTION")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Indicator)
-                    .HasMaxLength(255)
-                    .HasColumnName("INDICATOR")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.ReportId).HasColumnName("REPORT_ID");
-            });
-
-            modelBuilder.Entity<ArtGoamlReportsSusbectParty>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ART_GOAML_REPORTS_SUSBECT_PARTIES", "ART_DB");
-
-                entity.Property(e => e.Account)
-                    .HasMaxLength(255)
-                    .HasColumnName("ACCOUNT")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Activity)
-                    .HasMaxLength(12)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTIVITY");
-
-                entity.Property(e => e.Branch)
-                    .HasMaxLength(255)
-                    .HasColumnName("BRANCH")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Entityreference)
-                    .HasMaxLength(255)
-                    .HasColumnName("ENTITYREFERENCE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Fiurefnumber)
-                    .HasMaxLength(255)
-                    .HasColumnName("FIUREFNUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.PartyId)
-                    .HasMaxLength(255)
-                    .HasColumnName("PARTY_ID")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.PartyName)
-                    .HasMaxLength(765)
-                    .HasColumnName("PARTY_NAME")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Partynumber)
-                    .HasMaxLength(255)
-                    .HasColumnName("PARTYNUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportcloseddate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("REPORTCLOSEDDATE");
-
-                entity.Property(e => e.Reportcode)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTCODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Reportcreateddate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("REPORTCREATEDDATE");
-
-                entity.Property(e => e.Reportstatuscode)
-                    .HasMaxLength(255)
-                    .HasColumnName("REPORTSTATUSCODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Submissiondate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SUBMISSIONDATE");
-
-                entity.Property(e => e.Transactionnumber)
-                    .HasMaxLength(255)
-                    .HasColumnName("TRANSACTIONNUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
-            });
+            
 
             //Aduit
             modelBuilder.Entity<ArtGroupsAuditView>(entity =>
@@ -2445,6 +2241,217 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_CI_AI");
             });
 
+        }
+        public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder)
+        {
+            //GOAML
+            modelBuilder.Entity<ArtGoamlReportsDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_GOAML_REPORTS_DETAILS", "ART_DB");
+
+                entity.Property(e => e.Action)
+                    .HasColumnName("ACTION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Currencycodelocal)
+                    .HasMaxLength(255)
+                    .HasColumnName("CURRENCYCODELOCAL")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Entityreference)
+                    .HasMaxLength(255)
+                    .HasColumnName("ENTITYREFERENCE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Fiurefnumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("FIUREFNUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Isvalid).HasColumnName("ISVALID");
+
+                entity.Property(e => e.LastUpdatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LAST_UPDATED_DATE");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOCATION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Priority)
+                    .HasMaxLength(255)
+                    .HasColumnName("PRIORITY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reason)
+                    .HasMaxLength(4000)
+                    .HasColumnName("REASON")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Rentitybranch)
+                    .HasMaxLength(255)
+                    .HasColumnName("RENTITYBRANCH")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Rentityid).HasColumnName("RENTITYID");
+
+                entity.Property(e => e.Reportcloseddate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("REPORTCLOSEDDATE");
+
+                entity.Property(e => e.Reportcode)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTCODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportcreatedby)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTCREATEDBY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportcreateddate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("REPORTCREATEDDATE");
+
+                entity.Property(e => e.Reportingpersontype)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTINGPERSONTYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportrisksignificance)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTRISKSIGNIFICANCE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportstatuscode)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTSTATUSCODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportuserlockid)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTUSERLOCKID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportxml)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTXML")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Submissioncode)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUBMISSIONCODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Submissiondate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SUBMISSIONDATE");
+
+                entity.Property(e => e.Version)
+                    .HasMaxLength(255)
+                    .HasColumnName("VERSION")
+                    .UseCollation("Arabic_100_CI_AI");
+            });
+
+            modelBuilder.Entity<ArtGoamlReportsIndicator>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_GOAML_REPORTS_INDICATORS", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .HasColumnName("DESCRIPTION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Indicator)
+                    .HasMaxLength(255)
+                    .HasColumnName("INDICATOR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ReportId).HasColumnName("REPORT_ID");
+            });
+
+            modelBuilder.Entity<ArtGoamlReportsSusbectParty>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_GOAML_REPORTS_SUSBECT_PARTIES", "ART_DB");
+
+                entity.Property(e => e.Account)
+                    .HasMaxLength(255)
+                    .HasColumnName("ACCOUNT")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Activity)
+                    .HasMaxLength(12)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY");
+
+                entity.Property(e => e.Branch)
+                    .HasMaxLength(255)
+                    .HasColumnName("BRANCH")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Entityreference)
+                    .HasMaxLength(255)
+                    .HasColumnName("ENTITYREFERENCE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Fiurefnumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("FIUREFNUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.PartyId)
+                    .HasMaxLength(255)
+                    .HasColumnName("PARTY_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(765)
+                    .HasColumnName("PARTY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Partynumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("PARTYNUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportcloseddate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("REPORTCLOSEDDATE");
+
+                entity.Property(e => e.Reportcode)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTCODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Reportcreateddate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("REPORTCREATEDDATE");
+
+                entity.Property(e => e.Reportstatuscode)
+                    .HasMaxLength(255)
+                    .HasColumnName("REPORTSTATUSCODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Submissiondate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SUBMISSIONDATE");
+
+                entity.Property(e => e.Transactionnumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("TRANSACTIONNUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+            });
         }
     }
 }
