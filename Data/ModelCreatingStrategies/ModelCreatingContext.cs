@@ -24,5 +24,12 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnARTGOAMLModelCreating(modelBuilder);
         }
+
+        public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnARTDGAMLModelCreating(modelBuilder);
+        }
+
+        
     }
 }

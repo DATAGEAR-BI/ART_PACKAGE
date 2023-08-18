@@ -1,4 +1,4 @@
-﻿namespace Data.Data
+﻿namespace Data.Data.ARTDGAML
 {
     public class ArtStDgAmlExternalCustomerPerBranch
     {

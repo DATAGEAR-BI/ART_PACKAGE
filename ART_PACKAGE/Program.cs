@@ -8,6 +8,7 @@ using ART_PACKAGE.Hubs;
 using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Segmentation;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,7 @@ using IServiceScope scope = app.Services.CreateScope();
 AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
 ArtGoAmlContext GoAmlContext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
 if (authContext.Database.GetPendingMigrations().Any())
 {
     authContext.Database.Migrate();
@@ -77,6 +79,15 @@ if (modules.Contains("GOAML"))
     if (GoAmlContext.Database.GetPendingMigrations().Any())
     {
         GoAmlContext.Database.Migrate();
+    }
+}
+
+if (modules.Contains("DGAML"))
+{
+
+    if (DgAmlContext.Database.GetPendingMigrations().Any())
+    {
+        DgAmlContext.Database.Migrate();
     }
 }
 

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Data
+namespace Data.Data.ARTDGAML
 {
-    public class ArtStDgAmlAlertsPerBranch
+    public class ArtStDgAmlAlertsPerScenario
     {
-        public string? BRANCH_NAME { get; set; }
+        public string? SCENARIO_NAME { get; set; }
         public decimal? ALERTS_COUNT { get; set; }
     }
 }

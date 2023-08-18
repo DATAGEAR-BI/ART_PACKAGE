@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Data
+namespace Data.Data.ARTDGAML
 {
-    public class ArtStDgAmlExternalCustomerPerType
+    public class ArtStDgAmlCustomerPerType
     {
-        public string? CUSTOMER_TYPE   { get; set; }
         public decimal? NUMBER_OF_CUSTOMERS { get; set; }
-
-
+        public string? CUSTOMER_TYPE { get; set; }
     }
 }

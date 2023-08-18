@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
 using Data.Data;
+using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.DGCMGMT;
 using Data.FCF71;
@@ -61,15 +62,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
     public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
     public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
-    //DGAML
-    public virtual DbSet<ArtDgAmlCaseDetailView> ArtDgAmlCaseDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlAlertDetailView> ArtDGAMLAlertDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlCustomerDetailView> ArtDGAMLCustomerDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlTriageView> ArtDGAMLTriageViews { get; set; } = null!;
-    public virtual DbSet<ArtExternalCustomerDetailView> ArtExternalCustomerDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
-    public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
-    public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
+    
 
 
     public AuthContext(DbContextOptions<AuthContext> options)

@@ -2453,5 +2453,10 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
             });
         }
+
+        public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
+        {
+            
+        }
     }
 }
