@@ -1,4 +1,5 @@
 ﻿using Data.Data;
+using Data.Data.Segmentation;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
@@ -1745,6 +1746,16 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
 
+
+            //for sake for build => toChange when convert to SqlServer
+            modelBuilder.Entity<ArtSystemPreformance>(entity =>
+            {
+                entity.HasNoKey();
+            });
+        }
+
+        public void OnSegmentionModelCreating(ModelBuilder modelBuilder)
+        {
             // SEGMENT
             modelBuilder.Entity<ArtAlertsPerSegmentTb>(entity =>
             {
@@ -2433,16 +2444,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("SEGMENT_SORTED")
                     .UseCollation("Arabic_CI_AI");
             });
-
-            //for sake for build => toChange when convert to SqlServer
-            modelBuilder.Entity<ArtSystemPreformance>(entity =>
-            {
-                entity.HasNoKey();
-            });
-        }
-
-        public void OnSegmentionModelCreating(ModelBuilder modelBuilder)
-        {
 
         }
     }
