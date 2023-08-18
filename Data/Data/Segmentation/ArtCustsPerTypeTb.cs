@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.Segmentation
 {
-    public partial class ArtAlertsPerSegmentTb
+    public partial class ArtCustsPerTypeTb
     {
         public string? MonthKey { get; set; }
         public string? PartyTypeDesc { get; set; }
         public string? SegmentSorted { get; set; }
-        public double? NumberOfAlerts { get; set; }
-        public string? SegmentDescription { get; set; }
+        public int? NumberOfCustomers { get; set; }
     }
 }

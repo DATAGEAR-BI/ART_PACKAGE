@@ -4,6 +4,7 @@ using ART_PACKAGE.Security;
 using Data.Audit;
 using Data.Constants;
 using Data.Constants.db;
+using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCF71;
@@ -33,6 +34,19 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
 
             _ = services.AddDbContext<AuthContext>(options => _ = dbType switch
             {
+                DbTypes.SqlServer => options.UseSqlServer(
+                    connectionString,
+                    x => x.MigrationsAssembly("SqlServerMigrations")
+                    ),
+                DbTypes.Oracle => options.UseOracle(
+                    connectionString,
+                    x => x.MigrationsAssembly("OracleMigrations")
+                    ),
+                _ => throw new Exception($"Unsupported provider: {dbType}")
+            }).AddDbContext<SegmentationContext>(options => _ = dbType switch
+            {
+
+
                 DbTypes.SqlServer => options.UseSqlServer(
                     connectionString,
                     x => x.MigrationsAssembly("SqlServerMigrations")

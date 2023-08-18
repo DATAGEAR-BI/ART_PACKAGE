@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -19,6 +14,10 @@ namespace Data.ModelCreatingStrategies
         public void OnModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnModelCreating(modelBuilder);
+        }
+        public void OnSegmentionModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnSegmentionModelCreating(modelBuilder);
         }
     }
 }

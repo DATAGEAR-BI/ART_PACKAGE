@@ -2,20 +2,12 @@
 
 #nullable disable
 
-namespace SqlServerMigrations.Migrations
+namespace SqlServerMigrations.Migrations.Segmentation
 {
-    public partial class SegmentReports : Migration
+    public partial class SegmentationReports : Migration
     {
-        private readonly bool IsAppliable;
-        public SegmentReports()
-        {
-            var m = MigrationsModules.GetModules();
-            IsAppliable = m.Contains("SEG");
-        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            if (!IsAppliable)
-                return;
             #region Views && Tables 
             //ART_MEB_SEGMENTS_V3
             migrationBuilder.Sql($@"

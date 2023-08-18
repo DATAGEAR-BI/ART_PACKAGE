@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.Segmentation
 {
-    public partial class ArtAllSegsFeatrsStatcsTb
+    public partial class ArtMebSegmentsV3Tb
     {
         public string? MonthKey { get; set; }
-        public string? SegmentSorted { get; set; }
-        public string? SegmentDescription { get; set; }
+        public string? PartyNumber { get; set; }
+        public string? RiskClassification { get; set; }
         public string? PartyTypeDesc { get; set; }
+        public string? IndustryCode { get; set; }
+        public string? IndustryDesc { get; set; }
+        public string? OccupationDesc { get; set; }
+        public string? SegmentSorted { get; set; }
         public double? AvgTotalAmt { get; set; }
         public double? TotalAmount { get; set; }
         public double? MinTotalAmt { get; set; }
@@ -74,5 +78,7 @@ namespace Data.Data
         public double? TotalFeesDAmt { get; set; }
         public double? MinFeesDAmt { get; set; }
         public double? MaxFeesDAmt { get; set; }
+        public double? MaxMls { get; set; }
+        public double? AlertsCnt { get; set; }
     }
 }

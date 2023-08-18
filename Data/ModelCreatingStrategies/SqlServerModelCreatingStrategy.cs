@@ -1,4 +1,5 @@
 ﻿using Data.Data;
+using Data.Data.Segmentation;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
@@ -2384,6 +2385,16 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Tel_No_1");
             });
 
+
+            //for sake for build => toChange when convert to oracle
+            modelBuilder.Entity<ArtSystemPerformance>(entity =>
+            {
+                entity.HasNoKey();
+            });
+        }
+
+        public void OnSegmentionModelCreating(ModelBuilder modelBuilder)
+        {
             // SEGMENT
             modelBuilder.Entity<ArtAlertsPerSegmentTb>(entity =>
             {
@@ -3046,6 +3057,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.TotalNumberOfOutliers).HasColumnName("Total_Number_of_Outliers");
             });
+
             modelBuilder.Entity<ArtCustsPerTypeTb>(entity =>
             {
                 entity.HasNoKey();
@@ -3071,11 +3083,6 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED")
                     .UseCollation("Arabic_CI_AI");
-            });
-            //for sake for build => toChange when convert to oracle
-            modelBuilder.Entity<ArtSystemPerformance>(entity =>
-            {
-                entity.HasNoKey();
             });
         }
     }

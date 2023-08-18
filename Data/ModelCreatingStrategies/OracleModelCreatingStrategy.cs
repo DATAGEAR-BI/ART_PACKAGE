@@ -2,11 +2,6 @@
 using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -206,7 +201,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("CLOB")
                     .HasColumnName("PEP_IND");
             });
-
 
             modelBuilder.Entity<ArtUserPerformance>(entity =>
             {
@@ -1756,6 +1750,11 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
             });
+        }
+
+        public void OnSegmentionModelCreating(ModelBuilder modelBuilder)
+        {
+
         }
     }
 }

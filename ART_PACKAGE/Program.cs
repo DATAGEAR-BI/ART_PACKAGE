@@ -8,6 +8,7 @@ using ART_PACKAGE.Hubs;
 using ART_PACKAGE.IServiceCollectionExtentions;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.Segmentation;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -51,14 +52,26 @@ builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
 WebApplication app = builder.Build();
-
+List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
 using IServiceScope scope = app.Services.CreateScope();
 AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-
+SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
 if (authContext.Database.GetPendingMigrations().Any())
 {
     authContext.Database.Migrate();
 }
+
+if (modules.Contains("SEG"))
+{
+
+    if (SegContext.Database.GetPendingMigrations().Any())
+    {
+        SegContext.Database.Migrate();
+    }
+}
+
+
+
 
 
 // Configure the HTTP request pipeline.
