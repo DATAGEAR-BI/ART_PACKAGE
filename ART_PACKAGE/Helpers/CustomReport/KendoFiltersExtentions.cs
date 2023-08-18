@@ -504,7 +504,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
-                    filterBuilder.AppendLine(GetFilterTextForCsv(filter));
+                    _ = filterBuilder.AppendLine(GetFilterTextForCsv(filter));
 
                 }
                 else
@@ -512,7 +512,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     string v = "";
 
                     v = $"{i.field},{i.@operator},{i.value ?? ""}";
-                    filterBuilder.AppendLine(v);
+                    _ = filterBuilder.AppendLine(v);
 
 
                 }
