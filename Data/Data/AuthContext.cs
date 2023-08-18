@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
 using Data.Data;
+using Data.Data.ARTGOAML;
 using Data.DGCMGMT;
 using Data.FCF71;
 using Data.ModelCreatingStrategies;

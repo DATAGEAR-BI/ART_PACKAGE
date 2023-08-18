@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Data
+namespace Data.Data.ARTGOAML
 {
-    public class ArtStGoAmlReportsPerStatus
+    public class ArtStGoAmlReportsPerCreator
     {
-        public string? REPORT_STATUS { get; set; }
+        public string? CREATED_BY { get; set; }
         public decimal? NUMBER_OF_REPORTS { get; set; }
     }
 }
