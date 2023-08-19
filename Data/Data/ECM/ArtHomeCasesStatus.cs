@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Data.DGCMGMT
+namespace Data.Data.ECM
 {
-    public partial class ArtHomeCasesType
+    public partial class ArtHomeCasesStatus
     {
         public int YEAR { get; set; }
-        public string CaseType { get; set; }
+        public string CaseStatus { get; set; }
         public decimal? NumberOfCases { get; set; }
     }
 }

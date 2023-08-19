@@ -6,6 +6,7 @@ using Data.Constants;
 using Data.Constants.db;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
+using Data.Data.ECM;
 using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
@@ -16,7 +17,7 @@ using Data.GOAML;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace ART_PACKAGE.IServiceCollectionExtentions
+namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
     public static class ServiceCollectionExtentions
     {
@@ -72,6 +73,19 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
             }).AddDbContext<ArtDgAmlContext>(options => _ = dbType switch
+            {
+
+
+                DbTypes.SqlServer => options.UseSqlServer(
+                    connectionString,
+                    x => x.MigrationsAssembly("SqlServerMigrations")
+                    ),
+                DbTypes.Oracle => options.UseOracle(
+                    connectionString,
+                    x => x.MigrationsAssembly("OracleMigrations")
+                    ),
+                _ => throw new Exception($"Unsupported provider: {dbType}")
+            }).AddDbContext<EcmContext>(options => _ = dbType switch
             {
 
 

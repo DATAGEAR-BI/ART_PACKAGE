@@ -13,6 +13,7 @@ using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Constants.db;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
+using Data.Data.ECM;
 
 namespace ART_PACKAGE.Controllers
 {

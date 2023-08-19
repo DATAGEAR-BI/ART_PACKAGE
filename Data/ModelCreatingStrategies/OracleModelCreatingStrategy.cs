@@ -1,7 +1,7 @@
 ﻿using Data.Data;
 using Data.Data.ARTGOAML;
+using Data.Data.ECM;
 using Data.Data.Segmentation;
-using Data.DGCMGMT;
 using Data.FCF71;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +9,7 @@ namespace Data.ModelCreatingStrategies
 {
     public class OracleModelCreatingStrategy : IModelCreatingStrategy
     {
-        
+
 
         public void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -986,7 +986,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("VERSION_NUMBER");
             });
 
-            
+
 
             //Aduit
             modelBuilder.Entity<ArtGroupsAuditView>(entity =>
@@ -2456,7 +2456,12 @@ namespace Data.ModelCreatingStrategies
 
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
         {
-            
+
+        }
+
+        public void OnEcmModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Models;
+using Data.Data.ECM;
 using Data.FCF71;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
-using System.Data;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -13,13 +14,15 @@ namespace ART_PACKAGE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AuthContext _db;
+        private readonly EcmContext _db;
+        private readonly AuthContext _dbAuth;
         private readonly IDbService _dbSrv;
-        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
+        public HomeController(ILogger<HomeController> logger, EcmContext db/*, FCF71Context fcf71*/, IDbService dbSrv, AuthContext dbAuth)
         {
             _logger = logger;
             _db = db;
             _dbSrv = dbSrv;
+            _dbAuth = dbAuth;
         }
 
         public IActionResult Index()
@@ -41,10 +44,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult CardsData()
         {
-            int numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            int numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            int numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            int numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+            int numberOfCustomers = _dbAuth.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+            int numberOfPepCustomers = _dbAuth.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+            int numberOfAccounts = _dbAuth.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+            int numberOfHighRiskCustomers = _dbAuth.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
             return Ok(new
             {
@@ -102,7 +105,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetAmlChartsData()
         {
-            var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            var dateData = _dbAuth.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
             {
                 year = x.Key.ToString(),
                 value = x.Sum(x => x.NumberOfAlerts),
@@ -113,7 +116,7 @@ namespace ART_PACKAGE.Controllers
                 })
             });
 
-            Microsoft.EntityFrameworkCore.DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
+            Microsoft.EntityFrameworkCore.DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _dbAuth.ArtHomeAlertsPerStatuses;
 
             return Ok(new
             {

@@ -8,5 +8,6 @@ namespace Data.ModelCreatingStrategies
         public void OnSegmentionModelCreating(ModelBuilder modelBuilder);
         public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder);
         void OnARTDGAMLModelCreating(ModelBuilder modelBuilder);
+        void OnEcmModelCreating(ModelBuilder modelBuilder);
     }
 }

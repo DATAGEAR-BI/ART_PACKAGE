@@ -1,28 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Linq.Dynamic.Core;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using Data.Data.ECM;
 using Data.DGECM;
-using ART_PACKAGE.Helpers.DropDown;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class SystemPerformanceController : Controller
     {
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly DGECMContext db;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
 
-        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
+        public SystemPerformanceController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
             _env = env;
             _pdfSrv = pdfSrv;
@@ -31,11 +30,7 @@ namespace ART_PACKAGE.Controllers
             _dropSrv = dropSrv;
         }
 
-        public IActionResult Test()
-        {
-            IQueryable<ArtSystemPerformance> data = context.ArtSystemPerformances.Where(x => x.CreateDate.Date.CompareTo(new DateTime(2022, 04, 12).Date) == 0).Take(10);
-            return Ok(data);
-        }
+
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtSystemPreformance> data = context.ArtSystemPreformances.AsQueryable();

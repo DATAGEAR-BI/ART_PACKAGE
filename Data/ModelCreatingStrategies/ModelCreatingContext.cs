@@ -30,6 +30,9 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnARTDGAMLModelCreating(modelBuilder);
         }
 
-        
+        public void OnEcmModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnEcmModelCreating(modelBuilder);
+        }
     }
 }
