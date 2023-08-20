@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtEcmFtiFullCycle")]
+    [Authorize(Roles = "ArtEcmFtiFullCycle", Policy = "License")]
     public class ArtEcmFtiFullCycleController : Controller
     {
         private readonly AuthContext dbfcfkc;

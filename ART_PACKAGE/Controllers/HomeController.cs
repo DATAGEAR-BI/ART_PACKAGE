@@ -9,7 +9,7 @@ using System.Data;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "Home")]
+    [Authorize(Roles = "Home", Policy = "License")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

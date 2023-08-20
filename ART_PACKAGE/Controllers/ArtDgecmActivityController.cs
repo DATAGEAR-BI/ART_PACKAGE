@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtDgecmActivity")]
+    [Authorize(Roles = "ArtDgecmActivity", Policy = "License")]
     public class ArtDgecmActivityController : Controller
     {
         private readonly AuthContext dbfcfkc;

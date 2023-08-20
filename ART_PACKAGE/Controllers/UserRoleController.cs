@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Controllers
 {
 
-    //[Authorize(Roles = "Preferences", Policy = "Licensed")]
+    [Authorize(Roles = "Preferences", Policy = "License")]
     public class UserRoleController : Controller
     {
         // private FCF71_AuthContext db = new FCF71_AuthContext();

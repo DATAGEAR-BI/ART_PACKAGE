@@ -16,7 +16,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "CustomReport")]
+    [Authorize(Roles = "CustomReport", Policy = "License")]
     public partial class ReportController : Controller
     {
         private readonly AuthContext db;
