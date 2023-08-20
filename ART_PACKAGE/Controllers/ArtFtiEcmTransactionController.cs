@@ -7,6 +7,7 @@ using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -15,10 +16,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
-        public ArtFtiEcmTransactionController(AuthContext dbfcfkc, IPdfService pdfSrv)
+        private readonly IDropDownService _drpSrv;
+        public ArtFtiEcmTransactionController(AuthContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
+            _drpSrv = drpSrv;
         }
 
 
@@ -37,13 +40,11 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    {"Product".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.Product!=null).Select(x => x.Product).Distinct().ToDynamicList() },
-                    {"ProductType".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.ProductType!=null).Select(x => x.ProductType).Distinct().ToDynamicList() },
-                    {"Currency".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
+                    {"Product".ToLower(),_drpSrv.GetProductDropDown().ToDynamicList() },
                     {"FtiReference".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    {"EventName".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },
-                    {"EventStatus".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.EventStatus!=null).Select(x => x.EventStatus).Distinct().ToDynamicList() },
                     {"FirstLineParty".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
+                    {"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
+
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransactionController).ToLower()].SkipList;
             }

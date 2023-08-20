@@ -7,6 +7,7 @@ using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -15,10 +16,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
-        public ArtFtiActivityController(AuthContext dbfcfkc, IPdfService pdfSrv)
+        private readonly IDropDownService dropDownService;
+        public ArtFtiActivityController(AuthContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService)
         {
             this.dbfcfkc = dbfcfkc; ;
             _pdfSrv = pdfSrv;
+            this.dropDownService = dropDownService;
         }
 
 
@@ -34,18 +37,46 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
+                List<string> evensteps = new()
+                {
+                   "Abort",
+                   "Review",
+                   "Final review",
+                   "Create",
+                   "Input",
+                   "Log",
+                   "Release",
+                   "Complete",
+                   "Limit check",
+                   "Final limit check",
+                   "Gateway",
+                   "SWIFT In",
+                   "Rate fixing",
+                   "*Review/Final review*",
+                   "Fix auth",
+                   "Limit approval",
+                   "Print",
+                   "Watch list check",
+                   "Release pending",
+                   "Post release",
+                   "Exchange",
+                   "External review",
+                   "Internal",
+                   "Synchronisation",
+                   "Batch",
+                   "Gwy auto input",
+                   "EoD auto input",
+                   "Int auto input",
+                   "Swft auto input",
+                   "Auto reject"
+                };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    {"BranchId".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
-                    //{"CustomerName".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
-                    {"Currency".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
-                    {"PrimaryOwner".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
-                    {"CaseStatus".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },
-                    {"Product".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.Product!=null).Select(x => x.Product).Distinct().ToDynamicList() },
-                    {"ProductType".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.ProductType!=null).Select(x => x.ProductType).Distinct().ToDynamicList() },
-                    {"EventName".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },
-                    {"LastActionTokenBy".ToLower(),dbfcfkc.ArtCasesInitiatedFromBranches.Where(x=>x.LastActionTokenBy!=null).Select(x => x.LastActionTokenBy).Distinct().ToDynamicList() },
+                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
+                    {"FtiReference".ToLower(),dbfcfkc.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    {"EventSteps".ToLower(),evensteps.ToDynamicList() },
+
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
             }

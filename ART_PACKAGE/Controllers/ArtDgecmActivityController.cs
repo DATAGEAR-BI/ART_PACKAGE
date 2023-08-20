@@ -7,6 +7,7 @@ using Data.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -15,10 +16,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly AuthContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
-        public ArtDgecmActivityController(AuthContext dbfcfkc, IPdfService pdfSrv)
+        private readonly IDropDownService dropDownService;
+        public ArtDgecmActivityController(AuthContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
+            this.dropDownService = dropDownService;
         }
 
 
@@ -37,15 +40,12 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    {"BranchId".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.BranchId!=null).Select(x => x.BranchId).Distinct().ToDynamicList() },
-                    //{"CustomerName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CustomerName!=null).Select(x => x.CustomerName).Distinct().ToDynamicList() },
-                    {"Currency".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Currency!=null).Select(x => x.Currency).Distinct().ToDynamicList()  },
-                    {"PrimaryOwner".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.PrimaryOwner!=null).Select(x => x.PrimaryOwner).Distinct().ToDynamicList() },
-                    {"CaseStatus".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseStatus!=null).Select(x => x.CaseStatus).Distinct().ToDynamicList() },
-                    //{"CaseComments".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.CaseComments!=null).Select(x => x.CaseComments).Distinct().ToDynamicList() },
-                    {"Product".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.Product!=null).Select(x => x.Product).Distinct().ToDynamicList() },
-                    {"ProductType".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.ProductType!=null).Select(x => x.ProductType).Distinct().ToDynamicList() },
-                    {"EventName".ToLower(),dbfcfkc.ArtDgecmActivities.Where(x=>x.EventName!=null).Select(x => x.EventName).Distinct().ToDynamicList() },
+                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
+                    {"BranchId".ToLower(),dropDownService.GetBranchIDDropDown().ToDynamicList() },
+                    {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
+                    {"CaseStatus".ToLower(),dropDownService.GetCaseStatusDropDown().ToDynamicList() },
+                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
+                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
             }
