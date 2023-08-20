@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<string> GetBranchIDDropDown()
         {
-            var distinct_value = _dbSrv.DGECM.CaseLives.Where(x => x.Behalfofbranch != null).Select(x => x.Behalfofbranch).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGECM.CaseLives.Where(x => x.Behalfofbranch != null).Select(x => x.Behalfofbranch).Distinct().ToList();
             return distinct_value;
         }
 

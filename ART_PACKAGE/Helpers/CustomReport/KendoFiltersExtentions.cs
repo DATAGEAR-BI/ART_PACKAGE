@@ -548,6 +548,13 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return Type.GetTypeCode(o) switch
             {
                 TypeCode.Byte or TypeCode.SByte or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.Decimal or TypeCode.Double or TypeCode.Single => true,
+                TypeCode.Empty => throw new NotImplementedException(),
+                TypeCode.Object => throw new NotImplementedException(),
+                TypeCode.DBNull => throw new NotImplementedException(),
+                TypeCode.Boolean => throw new NotImplementedException(),
+                TypeCode.Char => throw new NotImplementedException(),
+                TypeCode.DateTime => throw new NotImplementedException(),
+                TypeCode.String => throw new NotImplementedException(),
                 _ => false,
             };
         }
