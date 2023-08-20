@@ -2,7 +2,6 @@
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
-using Data.FCF71;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,21 +14,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
     public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; }
-    //AML
-    public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
 
-    public virtual DbSet<ArtHomeAlertsPerStatus> ArtHomeAlertsPerStatuses { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfAccount> ArtHomeNumberOfAccounts { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfCustomer> ArtHomeNumberOfCustomers { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfHighRiskCustomer> ArtHomeNumberOfHighRiskCustomers { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfPepCustomer> ArtHomeNumberOfPepCustomers { get; set; } = null!;
-    public virtual DbSet<ArtAmlTriageView> ArtAmlTriageViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlAlertDetailView> ArtAmlAlertDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlCustomersDetailsView> ArtAmlCustomersDetailsViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
-    public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
-    public virtual DbSet<ArtAlertedEntity> ArtAlertedEntities { get; set; } = null!;
 
 
     //Aduit

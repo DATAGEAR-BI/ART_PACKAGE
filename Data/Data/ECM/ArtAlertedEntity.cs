@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.Data
+﻿namespace Data.Data.ECM
 {
     public partial class ArtAlertedEntity
     {

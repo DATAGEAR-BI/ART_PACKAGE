@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.FCF71
+namespace Data.Data.SASAml
 {
     public partial class ArtHomeNumberOfPepCustomer
     {

@@ -1,4 +1,4 @@
-﻿namespace Data.Data
+﻿namespace Data.Data.SASAml
 {
     public class ArtRiskAssessmentView
     {

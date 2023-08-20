@@ -34,5 +34,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnEcmModelCreating(modelBuilder);
         }
+
+        public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnSasAmlModelCreating(modelBuilder);
+        }
     }
 }

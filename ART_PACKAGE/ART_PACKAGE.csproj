@@ -11,6 +11,9 @@
 		<Exec Command="dotnet format style -v detailed" />
 	</Target>
 	<ItemGroup>
+	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
 		</Reference>

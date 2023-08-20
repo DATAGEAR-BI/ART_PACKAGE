@@ -7,6 +7,7 @@ using Data.Constants.db;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.ECM;
+using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
@@ -30,76 +31,51 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
             string DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
             string DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-            List<string>? migrationsToApply = config.GetSection("migrations").Get<List<string>>();
+            List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
             string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
-
-            _ = services.AddDbContext<AuthContext>(options => _ = dbType switch
+            void contextBuilder(DbContextOptionsBuilder options)
             {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            }).AddDbContext<SegmentationContext>(options => _ = dbType switch
+                _ = dbType switch
+                {
+                    DbTypes.SqlServer => options.UseSqlServer(
+                        connectionString,
+                        x => x.MigrationsAssembly("SqlServerMigrations")
+                        ),
+                    DbTypes.Oracle => options.UseOracle(
+                        connectionString,
+                        x => x.MigrationsAssembly("OracleMigrations")
+                        ),
+                    _ => throw new Exception($"Unsupported provider: {dbType}")
+                };
+            }
+
+            _ = services.AddDbContext<AuthContext>(contextBuilder);
+            if (modulesToApply.Contains("SEG"))
             {
+                _ = services.AddDbContext<SegmentationContext>(contextBuilder);
+            }
 
-
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            }).AddDbContext<ArtGoAmlContext>(options => _ = dbType switch
+            if (modulesToApply.Contains("GOAML"))
             {
+                _ = services.AddDbContext<ArtGoAmlContext>(contextBuilder);
+            }
 
-
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            }).AddDbContext<ArtDgAmlContext>(options => _ = dbType switch
+            if (modulesToApply.Contains("DGAML"))
             {
+                _ = services.AddDbContext<ArtDgAmlContext>(contextBuilder);
+            }
 
-
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            }).AddDbContext<EcmContext>(options => _ = dbType switch
+            if (modulesToApply.Contains("ECM"))
             {
+                _ = services.AddDbContext<EcmContext>(contextBuilder);
+            }
 
-
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-
+            if (modulesToApply.Contains("SASAML"))
+            {
+                _ = services.AddDbContext<SasAmlContext>(contextBuilder);
+            }
 
             _ = services.AddDbContext<DGECMContext>(options => _ = dbType switch
             {

@@ -8,9 +8,6 @@ using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
-using Data.Data.ARTDGAML;
-using Data.Data.ARTGOAML;
-using Data.Data.ECM;
 using Data.Data.Segmentation;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
@@ -60,21 +57,21 @@ List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>
 using IServiceScope scope = app.Services.CreateScope();
 AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
-ArtGoAmlContext GoAmlContext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
-ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
-EcmContext EcmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
 if (authContext.Database.GetPendingMigrations().Any())
 {
     authContext.Database.Migrate();
 }
 
-if (modules.Contains("ECM"))
-{
-    if (EcmContext.Database.GetPendingMigrations().Any())
-    {
-        EcmContext.Database.Migrate();
-    }
-}
+//if (modules.Contains("ECM"))
+//{
+
+//EcmContext EcmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
+
+//    if (EcmContext.Database.GetPendingMigrations().Any())
+//    {
+//        EcmContext.Database.Migrate();
+//    }
+//}
 
 if (modules.Contains("SEG"))
 {
@@ -83,22 +80,26 @@ if (modules.Contains("SEG"))
         SegContext.Database.Migrate();
     }
 }
-if (modules.Contains("GOAML"))
-{
-    if (GoAmlContext.Database.GetPendingMigrations().Any())
-    {
-        GoAmlContext.Database.Migrate();
-    }
-}
+//if (modules.Contains("GOAML"))
+//{
+//ArtGoAmlContext GoAmlContext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+
+//    if (GoAmlContext.Database.GetPendingMigrations().Any())
+//    {
+//        GoAmlContext.Database.Migrate();
+//    }
+//}
 
 
-if (modules.Contains("DGAML"))
-{
-    if (DgAmlContext.Database.GetPendingMigrations().Any())
-    {
-        DgAmlContext.Database.Migrate();
-    }
-}
+//if (modules.Contains("DGAML"))
+//{
+//ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+
+//    if (DgAmlContext.Database.GetPendingMigrations().Any())
+//    {
+//        DgAmlContext.Database.Migrate();
+//    }
+//}
 
 
 

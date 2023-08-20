@@ -9,5 +9,6 @@ namespace Data.ModelCreatingStrategies
         public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder);
         void OnARTDGAMLModelCreating(ModelBuilder modelBuilder);
         void OnEcmModelCreating(ModelBuilder modelBuilder);
+        void OnSasAmlModelCreating(ModelBuilder modelBuilder);
     }
 }
