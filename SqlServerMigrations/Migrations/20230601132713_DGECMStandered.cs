@@ -6,8 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class DGECMStandered : Migration
     {
+        private readonly bool IsAppliable;
+        public DGECMStandered()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("ECM");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //ART_SYSTEM_PERFORMANCE => View
             migrationBuilder.Sql($@"
                                         SET ANSI_NULLS ON

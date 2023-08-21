@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using Data.Data.ARTGOAML;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GOAMLReportsSummaryController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtGoAmlContext _context;
         private readonly string dbType;
-        public GOAMLReportsSummaryController(AuthContext context, IConfiguration _config)
+        public GOAMLReportsSummaryController(ArtGoAmlContext context, IConfiguration _config)
         {
             _context = context;
             dbType = _config.GetValue<string>("dbType").ToUpper();

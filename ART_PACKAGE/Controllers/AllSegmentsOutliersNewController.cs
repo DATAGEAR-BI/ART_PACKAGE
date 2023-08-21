@@ -1,8 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using Data.Data.Segmentation;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
@@ -12,10 +11,10 @@ namespace ART_PACKAGE.Controllers
 {
     public class AllSegmentsOutliersNewController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly SegmentationContext _context;
         private readonly IPdfService _pdfService;
 
-        public AllSegmentsOutliersNewController(AuthContext _context, IPdfService pdfService)
+        public AllSegmentsOutliersNewController(SegmentationContext _context, IPdfService pdfService)
         {
             this._context = _context;
             _pdfService = pdfService;

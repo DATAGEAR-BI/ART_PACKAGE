@@ -6,8 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class AduitReports : Migration
     {
+        private readonly bool IsAppliable;
+        public AduitReports()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("DGAUDIT");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             // VIEWS
             /*                VIEW ART_GROUPS_AUDIT_VIEW  */
             migrationBuilder.Sql($@"

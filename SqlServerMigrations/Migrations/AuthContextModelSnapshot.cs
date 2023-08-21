@@ -91,15 +91,15 @@ namespace SqlServerMigrations.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c37d4304-55e5-4a03-90ed-f40665aef03e",
+                            ConcurrencyStamp = "29dabe4a-14de-4aae-a423-2b99a902b262",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGsUanGT8jnxFeUasBN2iUXhf2zsj+zZgbx373WpDCSSDrCaizoF2DHlHTcc52D/Hw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIhjZ+aHDxGwQ/5+1AUrTM7iBU0Zjl5PmggsEWPe/LiPJDoupC1riHOSnRj4r1ZAFQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9c6ef15d-f6cc-4025-bcd4-cb9fe039e6c8",
+                            SecurityStamp = "29f62a02-4bea-4ebe-a09c-8999335f6c52",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -4535,21 +4535,21 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "5c28da29-511e-459c-9e82-13e97fc5bf44",
+                            ConcurrencyStamp = "b4568175-7ff1-47ae-ac8f-514057ae6467",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "ab7a057e-759c-4315-a4be-81da667978d1",
+                            ConcurrencyStamp = "8c4cd4cb-a1d8-4bae-886a-ebf9b8fed66c",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "b79345ee-be60-4378-a5dd-53dd9c981bae",
+                            ConcurrencyStamp = "2f158ebc-9571-4415-b9d6-ea313ef2cbcb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

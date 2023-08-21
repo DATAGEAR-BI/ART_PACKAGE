@@ -1,7 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Data.Data;
+using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
 using System.Globalization;
@@ -11,9 +10,9 @@ namespace ART_PACKAGE.Hubs
     public class ExportHub : Hub
     {
         public static ConcurrentDictionary<string, string> Connections = new();
-        private readonly AuthContext dbfcfkc;
+        private readonly SasAmlContext dbfcfkc;
 
-        public ExportHub(AuthContext dbfcfkc)
+        public ExportHub(SasAmlContext dbfcfkc)
         {
             this.dbfcfkc = dbfcfkc;
         }

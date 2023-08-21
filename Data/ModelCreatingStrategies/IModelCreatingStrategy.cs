@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.ModelCreatingStrategies
 {
     public interface IModelCreatingStrategy
     {
         public void OnModelCreating(ModelBuilder modelBuilder);
+        public void OnSegmentionModelCreating(ModelBuilder modelBuilder);
+        public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder);
+        void OnARTDGAMLModelCreating(ModelBuilder modelBuilder);
+        void OnEcmModelCreating(ModelBuilder modelBuilder);
+        void OnSasAmlModelCreating(ModelBuilder modelBuilder);
     }
 }

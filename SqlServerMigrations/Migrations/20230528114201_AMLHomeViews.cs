@@ -6,9 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class AMLHomeViews : Migration
     {
+        private readonly bool IsAppliable;
+        public AMLHomeViews()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("SASAML");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            if (!IsAppliable)
+                return;
             //create AML Views
             migrationBuilder.Sql($@"
 

@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.DropDown;
+using Data.Data.ARTGOAML;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GOAMLReportsDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtGoAmlContext _context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropDown;
-        public GOAMLReportsDetailsController(AuthContext context, IPdfService pdfSrv, IDropDownService dropDown)
+        public GOAMLReportsDetailsController(ArtGoAmlContext context, IPdfService pdfSrv, IDropDownService dropDown)
         {
             _context = context;
             _pdfSrv = pdfSrv;

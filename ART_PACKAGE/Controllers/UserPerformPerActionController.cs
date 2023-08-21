@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.StoredProcsHelpers;
+using ART_PACKAGE.Services.Pdf;
+using Data.Constants.StoredProcs;
+using Data.Data.ECM;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Data;
-
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using Data.Data;
-using Microsoft.Data.SqlClient;
-using Data.Constants.StoredProcs;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 
 namespace ART_PACKAGE.Controllers
 {
     public class UserPerformPerActionController : Controller
     {
         private readonly IMemoryCache _cache;
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, AuthContext context)
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context)
         {
             _env = env;
             _cache = cache;
