@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Data.SegmentationTables
+namespace ART_PACKAGE.SegmentationTables
 {
     public partial class ModelContext : DbContext
     {
@@ -61,6 +61,11 @@ namespace Data.SegmentationTables
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
+                entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("SEGMENT_DESCRIPTION");
+
                 entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
@@ -86,6 +91,11 @@ namespace Data.SegmentationTables
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("SEGMENT_DESCRIPTION");
 
                 entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
@@ -129,7 +139,8 @@ namespace Data.SegmentationTables
                     .HasColumnName("PARTY_NAME");
 
                 entity.Property(e => e.PartyNumber)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.PartyTypeDesc)
@@ -182,7 +193,8 @@ namespace Data.SegmentationTables
                     .HasColumnName("AVG_MISC_C_AMT");
 
                 entity.Property(e => e.AvgTotalAmt)
-                    .HasColumnType("NUMBER")
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
                     .HasColumnName("AVG_TOTAL_AMT");
 
                 entity.Property(e => e.AvgTotalCtAmt)
@@ -318,6 +330,10 @@ namespace Data.SegmentationTables
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.SegmentDescription)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("SEGMENT_DESCRIPTION");
 
                 entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)

@@ -496,7 +496,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             {
                 return string.Empty;
             }
-            List<string> FiltersStrings = new();
+
+            _ = new List<string>();
             foreach (object? item in Filters.filters)
             {
                 JsonElement t = (JsonElement)item;

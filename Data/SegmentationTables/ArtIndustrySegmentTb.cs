@@ -5,10 +5,10 @@ namespace Data.SegmentationTables
 {
     public partial class ArtIndustrySegmentTb
     {
-        public decimal? MonthKey { get; set; }
+        public string? MonthKey { get; set; }
         public string? PartyTypeDesc { get; set; }
         public string? IndustryDesc { get; set; }
-        public decimal? SegmentSorted { get; set; }
+        public string? SegmentSorted { get; set; }
         public decimal? NumberOfCustomers { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? TotalCreditAmount { get; set; }

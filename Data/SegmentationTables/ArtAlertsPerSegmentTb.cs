@@ -5,9 +5,9 @@ namespace Data.SegmentationTables
 {
     public partial class ArtAlertsPerSegmentTb
     {
-        public decimal? MonthKey { get; set; }
+        public string? MonthKey { get; set; }
         public string? PartyTypeDesc { get; set; }
-        public decimal? SegmentSorted { get; set; }
+        public string? SegmentSorted { get; set; }
         public decimal? NumberOfAlerts { get; set; }
     }
 }

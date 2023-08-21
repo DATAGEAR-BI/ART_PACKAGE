@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.Data.Segmentation
+﻿namespace Data.Data.Segmentation
 {
     public partial class ArtChangedSegmentTb
     {
@@ -14,6 +11,6 @@ namespace Data.Data.Segmentation
         public string? OccupationDesc { get; set; }
         public string? SegmentSorted { get; set; }
         public string? LastSegmentId { get; set; }
-        public string? CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }

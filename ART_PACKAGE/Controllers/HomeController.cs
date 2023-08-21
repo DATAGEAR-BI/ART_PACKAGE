@@ -17,12 +17,28 @@ namespace ART_PACKAGE.Controllers
         private readonly EcmContext _db;
         private readonly SasAmlContext _dbAml;
         private readonly IDbService _dbSrv;
-        public HomeController(ILogger<HomeController> logger, EcmContext db/*, FCF71Context fcf71*/, IDbService dbSrv, SasAmlContext dbAml)
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
+
             _logger = logger;
-            _db = db;
             _dbSrv = dbSrv;
-            _dbAml = dbAml;
+            _configuration = configuration;
+            _serviceScopeFactory = serviceScopeFactory;
+            List<string>? modules = _configuration.GetSection("Modules").Get<List<string>>();
+            if (modules.Contains("SASAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                _dbAml = amlService;
+            }
+            if (modules.Contains("SASAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                _db = ecmService;
+            }
         }
 
         public IActionResult Index()
@@ -85,23 +101,7 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-        public IActionResult Test()
-        {
-            //var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2020-01-01")
-            //};
-            //var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2023-01-01")
-            //};
 
-            //var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
-            //return Ok(data);
-
-            List<string> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
-            return Ok(distinct_value);
-        }
 
         public IActionResult GetAmlChartsData()
         {

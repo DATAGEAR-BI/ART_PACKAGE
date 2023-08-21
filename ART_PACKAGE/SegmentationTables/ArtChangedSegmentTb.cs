@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.SegmentationTables
+namespace ART_PACKAGE.SegmentationTables
 {
-    public partial class ArtChangedSegment
+    public partial class ArtChangedSegmentTb
     {
         public decimal? MonthKey { get; set; }
         public decimal? PartyNumber { get; set; }

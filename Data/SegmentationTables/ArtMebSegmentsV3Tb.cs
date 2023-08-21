@@ -5,14 +5,14 @@ namespace Data.SegmentationTables
 {
     public partial class ArtMebSegmentsV3Tb
     {
-        public decimal? MonthKey { get; set; }
+        public string? MonthKey { get; set; }
         public decimal? PartyNumber { get; set; }
         public decimal? RiskClassification { get; set; }
         public string? PartyTypeDesc { get; set; }
         public string? IndustryCode { get; set; }
         public string? IndustryDesc { get; set; }
         public string? OccupationDesc { get; set; }
-        public decimal? SegmentSorted { get; set; }
+        public string? SegmentSorted { get; set; }
         public decimal? AvgTotalAmt { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? MinTotalAmt { get; set; }
