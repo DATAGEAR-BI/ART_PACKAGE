@@ -3,13 +3,21 @@ exportConnection.start().then(x => {
     console.log("connection started");
 });
 
+exportConnection.on("csvErrorRecevied", async (batch) => {
 
-exportConnection.on("csvRecevied", async (file) => {
+    toastObj.icon = 'error';
+    toastObj.text = "something wrong happend in batch number " + batch;
+    toastObj.heading = "Export Status";
+    $.toast(toastObj);
+
+});
+
+
+exportConnection.on("csvRecevied", async (file, fileName) => {
     // Assuming you have a byte array called 'byteArray' containing the bytes
     // You can also get the 'byteArray' from a server response, FileReader, or other sources.
 
     // Convert bytes to a Uint8Array (assuming the byteArray is Uint8Array)
-
     const uint8Array = atob(file);
 
     // Create a Blob from the Uint8Array data
@@ -22,11 +30,11 @@ exportConnection.on("csvRecevied", async (file) => {
     // For example, creating a download link:
     const downloadLink = document.createElement('a');
     downloadLink.href = objectURL;
-    downloadLink.download = 'data.csv'; // Set the desired file name
-    document.body.appendChild(downloadLink); // Append to the DOM (necessary for some browsers)
+    downloadLink.download = fileName;
     downloadLink.click(); // Simulate a click on the link to trigger the download
 
     // Don't forget to revoke the object URL to free up memory after the download is initiated.
     URL.revokeObjectURL(objectURL);
+
 
 })

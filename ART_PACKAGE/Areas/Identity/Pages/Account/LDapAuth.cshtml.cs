@@ -69,7 +69,6 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 else
                 {
                     string? email = info.ProviderKey;
-                    AppUser user = null;
                     //if (email is not null )
                     //{
                     //    user = await uM.FindByEmailAsync(email);
@@ -90,7 +89,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                         if (email is not null)
                         {
-                            user = await _userManager.FindByEmailAsync(email);
+                            AppUser user = await _userManager.FindByEmailAsync(email);
                             if (user is null)
                             {
                                 user = new AppUser()

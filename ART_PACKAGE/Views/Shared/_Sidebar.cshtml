@@ -4,6 +4,11 @@
     var Modules = Configuration.GetSection("Modules")
                         .Get<List<string>>();
 }
+<style>
+    .treeview-menu{
+        overflow-x : auto;
+    }
+</style>
 <aside class="main-sidebar" id="menu" style="background: linear-gradient(#515b69,#013459),#000000; box-shadow:5px 5px 5px #013459;transition:all 0.3s ease;">
     <section class="sidebar">
 
@@ -15,7 +20,7 @@
             <li class=" ">
                 <a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-dashboard"></i> <span>DashBoard</span></a>
             </li>
-            <li class="treeview">
+            <li class="treeview" id="reportsTree">
                 <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Reports</span>
                     <span class="pull-right-container">
@@ -36,7 +41,7 @@
                             <ul class="treeview-menu">
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>System Performance Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>Sys Performance</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -52,7 +57,7 @@
                                 </li>
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>User Performance Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>User Performance</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -96,7 +101,7 @@
                                 <ul class="treeview-menu">
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Alerts Report</span>
+                                            <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -116,7 +121,7 @@
 
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Cases Report</span>
+                                            <i class="glyphicon glyphicon-user"></i> <span>Cases</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -133,7 +138,7 @@
 
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Customers Report</span>
+                                            <i class="glyphicon glyphicon-user"></i> <span>Customers</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -150,7 +155,7 @@
 
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Risk Report</span>
+                                            <i class="glyphicon glyphicon-user"></i> <span>Risk</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -177,7 +182,7 @@
                     {
                         <li class="treeview">
                             <a href="#">
-                                <i class="glyphicon glyphicon-user"></i> <span>AML REPORTS</span>
+                                <i class="glyphicon glyphicon-user"></i> <span>DG AML REPORTS</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -185,7 +190,7 @@
                             <ul class="treeview-menu">
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>Alerts Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -205,7 +210,7 @@
 
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>Cases Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>Cases</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -222,7 +227,7 @@
 
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>Customers Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>Customers</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -238,7 +243,7 @@
                                 </li>
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="glyphicon glyphicon-user"></i> <span>External Customers Report</span>
+                                        <i class="glyphicon glyphicon-user"></i> <span>External Customers</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -280,20 +285,20 @@
                     {
                         <li class="treeview  ">
                             <a href="#">
-                                <i class="glyphicon glyphicon-book"></i> <span>DG User Management Reports</span>
+                                <i class="glyphicon glyphicon-book"></i> <span>DG USER MANG REPORTS</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
                                 <li class="active ">
-                                    <a href="@Url.Action("Index", "ListOfUser")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Report</span></a>
+                                    <a href="@Url.Action("Index", "ListOfUser")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users</span></a>
                                 </li>
                                 <li class="active ">
-                                    <a href="@Url.Action("Index", "ListOfGroups")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Report</span></a>
+                                    <a href="@Url.Action("Index", "ListOfGroups")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups</span></a>
                                 </li>
                                 <li class="active ">
-                                    <a href="@Url.Action("Index", "ListOfRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Roles Report</span></a>
+                                    <a href="@Url.Action("Index", "ListOfRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Roles</span></a>
                                 </li>
                                 <li class="active ">
                                     <a href="@Url.Action("Index", "ListOfUsersAndGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups Roles</span></a>
@@ -314,7 +319,7 @@
                                     <a href="@Url.Action("Index", "ListOfDeletedUsers")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Deleted Users</span></a>
                                 </li>
                                 <li class="active ">
-                                    <a href="@Url.Action("Index", "LastLoginPerDay")"><i class="glyphicon glyphicon-globe"></i> <span>User Last Login Per Day Report</span></a>
+                                    <a href="@Url.Action("Index", "LastLoginPerDay")"><i class="glyphicon glyphicon-globe"></i> <span>User Last Login Per Day</span></a>
                                 </li>
                                 <li class="treeview">
                                     <a href="#">
@@ -325,13 +330,13 @@
                                     </a>
                                     <ul class="treeview-menu">
                                         <li class="active ">
-                                            <a href="@Url.Action("Index", "AuditUsers")"><i class="glyphicon glyphicon-globe"></i> <span>User Audit Report</span></a>
+                                            <a href="@Url.Action("Index", "AuditUsers")"><i class="glyphicon glyphicon-globe"></i> <span>User Audit</span></a>
                                         </li>
                                         <li class="active ">
-                                            <a href="@Url.Action("Index", "AuditGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Group Audit Report</span></a>
+                                            <a href="@Url.Action("Index", "AuditGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Group Audit</span></a>
                                         </li>
                                         <li class="active ">
-                                            <a href="@Url.Action("Index", "AuditRoles")"><i class="glyphicon glyphicon-globe"></i> <span>Role Audit Report</span></a>
+                                            <a href="@Url.Action("Index", "AuditRoles")"><i class="glyphicon glyphicon-globe"></i> <span>Role Audit</span></a>
                                         </li>
                                     </ul>
                                 </li>
@@ -343,7 +348,7 @@
                     {
                         <li class="treeview ">
                             <a href="#">
-                                <i class="glyphicon glyphicon-book"></i> <span>GoAml Reports</span>
+                                <i class="glyphicon glyphicon-book"></i> <span>GOAML REPORTS</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -369,7 +374,7 @@
                     {
                         <li class="treeview ">
                             <a href="#">
-                                <i class="glyphicon glyphicon-book"></i> <span>Segmentation Reports</span>
+                                <i class="glyphicon glyphicon-book"></i> <span>SEGMENTATION REPORTS</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -410,7 +415,7 @@
                 </ul>
             </li>
 
-         
+         @*
             <li class="treeview ">
                 <a href="#">
                     <i class="glyphicon glyphicon-cog"></i> <span>Admin Panel</span>
@@ -419,27 +424,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    @*<li class="treeview">
-            <a href="#">
-                <i class="glyphicon glyphicon-cog"></i> <span>Prefrencese</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li class="active ">
-                    <a href="@Url.Action("Index","PieReports")"><i class="glyphicon glyphicon-tasks"></i> <span>Pie Chart View </span></a>
-                    <a href="@Url.Action("SASQueueUsersIndex","Preferences")"><i class="glyphicon glyphicon-tasks"></i> <span>Update SAS User</span></a>
-                    <a href="@Url.Action("Prefs","Preferences")"><i class="glyphicon glyphicon-tasks"></i> <span>Prefs</span></a>
+                
 
-                </li>
-
-            </ul>
-        </li>*@
-
-                    @*<li class=" ">
-            <a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-export"></i> <span>Exporting</span></a>
-        </li>*@
+       
                     <li class=" ">
                         <a href="@Url.Action("Users", "UserRole")"><i class="glyphicon glyphicon-user"></i> <span>Users</span></a>
                     </li>
@@ -457,7 +444,7 @@
 
                 </ul>
             </li> 
-            
+            *@
         </ul>
 
     </section>

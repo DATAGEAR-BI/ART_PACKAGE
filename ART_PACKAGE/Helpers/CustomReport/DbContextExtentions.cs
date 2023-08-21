@@ -11,35 +11,41 @@ using static Dapper.SqlMapper;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
-    public static class DbContextExtentions
+    public static partial class DbContextExtentions
     {
         private static readonly Dictionary<string, string> viewsSql = new()
         {
-            {"sqlserver",@" SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME
+            {"sqlserver",@"SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME , type As [TYPE]
                             FROM 
 	                            sys.views as v
 						    union 
-                            SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME
+                            SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME  , type As [TYPE]
                             FROM 
 	                            sys.tables as v;"},
-            {"oracle",@"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name) as VIEW_NAME FROM user_views 
+            {"oracle",@"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
                         union  all
-                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME FROM user_tables "}
+                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME , 'U' as TYPE  FROM user_tables  "}
         };
 
         private static readonly Dictionary<string, string> viewsColumnsSql = new()
         {
-            {"sqlserver",@"SELECT TABLE_NAME as VIEW_NAME , COLUMN_NAME as COLUMN_NAME 
-                            FROM INFORMATION_SCHEMA.COLUMNS
-                            WHERE TABLE_NAME = N'{0}';"},
+            {"sqlserver",@"SELECT COLUMN_NAME as [Name] ,
+                                   DATA_TYPE [SqlDataType], 
+                                   IS_NULLABLE [IsNullable]
+                            FROM INFORMATION_SCHEMA.COLUMNS c
+                            INNER JOIN sys.objects o
+                                ON c.TABLE_NAME = o.name
+                            WHERE c.TABLE_SCHEMA = N'{0}'
+                                AND c.TABLE_NAME = N'{1}'
+                                AND o.type = '{2}';"},
             {"oracle",@"select
                                col.table_name as VIEW_NAME, 
                                col.column_name as COLUMN_NAME
                         from sys.all_tab_columns col
-                        inner join (    SELECT view_name as VIEW_NAME FROM user_views 
+                        inner join (    SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
                                         union  all
-                                        SELECT table_name as VIEW_NAME FROM user_tables ) v
-                        on col.table_name = v.VIEW_NAME and v.view_name = '{0}'"}
+                                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME , 'U' as TYPE  FROM user_tables  ) v
+                        on col.table_name = v.VIEW_NAME and v.view_name = '{0}' and v.TYPE = '{1}'"}
         };
         private static readonly Dictionary<string, string> DataSql = new()
         {
@@ -65,7 +71,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             from {0}
                             {1}"}
         };
-        public static List<string> GetViewsNames(this DbContext db)
+        public static IEnumerable<View> GetViewsNames(this DbContext db)
 
         {
             bool isSqlServer = db.Database.IsSqlServer();
@@ -84,34 +90,35 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                                              : new OracleConnection(db.Database.GetConnectionString());
 
 
-            List<string> views = conn.Query<View>(sql).Select(x => x.VIEW_NAME).ToList();
+            IEnumerable<View> views = conn.Query<View>(sql);
             return views;
 
 
 
 
         }
-        public static List<string> GetViewColumns(this DbContext db, string view)
+        public static IEnumerable<ViewColumn> GetViewColumns(this DbContext db, string view, string type)
 
         {
-
+            string schema = view.Split('.')[0];
+            string viewName = view.Split('.')[1];
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
             string sql = "";
             if (isSqlServer)
             {
-                sql = string.Format(viewsColumnsSql["sqlserver"], view);
+                sql = string.Format(viewsColumnsSql["sqlserver"], schema, viewName, type);
             }
             else if (isOracle)
             {
-                sql = string.Format(viewsColumnsSql["oracle"], view);
+                sql = string.Format(viewsColumnsSql["oracle"], viewName, type);
             }
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
                                              : new OracleConnection(db.Database.GetConnectionString());
 
 
-            List<string> columns = conn.Query<ViewColumn>(sql).Select(x => x.COLUMN_NAME).ToList();
+            IEnumerable<ViewColumn> columns = conn.Query<ViewColumn>(sql);
             return columns;
         }
         public static DataResult GetData(this DbContext db, string view, string[]? columns = null, string filters = null, long take = 0, int skip = 0, string orderBy = null)
@@ -242,24 +249,10 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return data;
         }
 
-
-
-
         public class DataResult
         {
             public long DataCount { get; set; }
             public List<dynamic> Data { get; set; }
-        }
-
-        public class View
-        {
-            public string VIEW_NAME { get; set; }
-        }
-
-        public class ViewColumn
-        {
-            public string VIEW_NAME { get; set; }
-            public string COLUMN_NAME { get; set; }
         }
 
     }

@@ -14,7 +14,6 @@ namespace ART_PACKAGE.Controllers
         private readonly AuthContext db;
         public SegmentationChartsController(AuthContext db)
         {
-            int x = 3;
             this.db = db;
         }
         public IActionResult Index()
