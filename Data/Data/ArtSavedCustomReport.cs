@@ -9,6 +9,7 @@ public class ArtSavedCustomReport
     public DateTime CreateDate { get; set; }
     public string Table { get; set; } = null!;
     public string UserId { get; set; } = null!;
+    public string Type { get; set; } = null!;
     public AppUser User { get; set; }
     public ICollection<ArtSavedReportsColumns> Columns { get; set; }
     public ICollection<ArtSavedReportsChart> Charts { get; set; }

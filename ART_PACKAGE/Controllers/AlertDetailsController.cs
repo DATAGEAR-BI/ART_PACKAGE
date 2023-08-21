@@ -88,11 +88,23 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
+            int i = 1;
             foreach (Task<byte[]> item in data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req))
             {
-                byte[] bytes = await item;
-                await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                            .SendAsync("csvRecevied", bytes);
+                try
+                {
+                    byte[] bytes = await item;
+                    string FileName = GetType().Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvRecevied", bytes, FileName);
+                    i++;
+                }
+                catch (Exception)
+                {
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvErrorRecevied", i);
+                }
+
             }
             return new EmptyResult();
         }

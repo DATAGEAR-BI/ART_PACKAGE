@@ -1,18 +1,18 @@
 ﻿
 
-using Newtonsoft.Json;
-
-
+using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Helpers.CustomReport;
+
+using static ART_PACKAGE.Helpers.CustomReportHelpers.DbContextExtentions;
+
 
 namespace ART_PACKAGE.Controllers
 {
@@ -64,9 +64,12 @@ namespace ART_PACKAGE.Controllers
 
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
-                name = x.Column
+                name = x.Column,
+                isNullable = x.IsNullable,
+                type = x.JsType
+
             }).ToArray();
-            DbContextExtentions.DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, obj.Take, obj.Skip, orderBy);
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, obj.Take, obj.Skip, orderBy);
             return Content(JsonConvert.SerializeObject(new
             {
                 data = data.Data,
@@ -113,14 +116,14 @@ namespace ART_PACKAGE.Controllers
 
 
         [HttpGet("[controller]/[action]/{schema}")]
-        public async Task<IActionResult> GetViews(int schema)
+        public async Task<IActionResult> GetViews(int schema, string type)
         {
             dbInstance = dBFactory.GetDbInstance(((DbSchema)schema).ToString());
-            List<string> Views = dbInstance.GetViewsNames();
+            IEnumerable<View> Views = dbInstance.GetViewsNames();
             return Ok(Views);
         }
-        [HttpGet("[controller]/[action]/{schema}/{View}")]
-        public async Task<IActionResult> GetViewColumn(int schema, string View)
+        [HttpGet("[controller]/[action]/{schema}/{View}/{type}")]
+        public async Task<IActionResult> GetViewColumn(int schema, string View, string type)
         {
             dbInstance = dBFactory.GetDbInstance(((DbSchema)schema).ToString());
             if (string.IsNullOrEmpty(View))
@@ -128,7 +131,7 @@ namespace ART_PACKAGE.Controllers
                 return null;
             }
 
-            List<string> Columns = dbInstance.GetViewColumns(View);
+            IEnumerable<ViewColumn> Columns = dbInstance.GetViewColumns(View, type);
 
             return Ok(Columns.ToArray());
         }
@@ -226,6 +229,7 @@ namespace ART_PACKAGE.Controllers
             ArtSavedCustomReport report = new()
             {
                 Table = model.Table,
+                Type = model.ObjectType,
                 Name = model.Title,
                 Description = model.Description,
                 CreateDate = DateTime.Now,
@@ -236,7 +240,9 @@ namespace ART_PACKAGE.Controllers
 
             List<ArtSavedReportsColumns> columns = model.Columns.Select(e => new ArtSavedReportsColumns
             {
-                Column = e,
+                Column = e.Name,
+                IsNullable = e.IsNullable == "YES",
+                JsType = e.JsDataType,
                 ReportId = report.Id
             }).ToList();
 
@@ -272,7 +278,7 @@ namespace ART_PACKAGE.Controllers
             {
                 name = x.Column
             }).ToArray();
-            DbContextExtentions.DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
             byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata.Select(x => x.Data).ToList());
             return File(bytes, "text/csv");
         }
@@ -307,7 +313,7 @@ namespace ART_PACKAGE.Controllers
             {
                 name = x.Column
             }).ToArray();
-            DbContextExtentions.DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
             ViewData["title"] = Report.Name;
             ViewData["desc"] = Report.Description;
             byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data.Data, ViewData, ControllerContext, 5

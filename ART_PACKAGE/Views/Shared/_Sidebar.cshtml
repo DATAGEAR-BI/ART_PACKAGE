@@ -4,6 +4,11 @@
     var Modules = Configuration.GetSection("Modules")
                         .Get<List<string>>();
 }
+<style>
+    .treeview-menu{
+        overflow-x : auto;
+    }
+</style>
 <aside class="main-sidebar" id="menu" style="background: linear-gradient(#515b69,#013459),#000000; box-shadow:5px 5px 5px #013459;transition:all 0.3s ease;">
     <section class="sidebar">
 
@@ -15,7 +20,7 @@
             <li class=" ">
                 <a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-dashboard"></i> <span>DashBoard</span></a>
             </li>
-            <li class="treeview">
+            <li class="treeview" id="reportsTree">
                 <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Reports</span>
                     <span class="pull-right-container">
@@ -24,9 +29,327 @@
                 </a>
                
                     <ul class="treeview-menu">
+
+                    @if (Modules.Contains("ECM"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> <span>SANCTION REPORTS</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>Sys Performance</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "SystemPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "SystemPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>User Performance</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        @*<li class="active ">
+                                    <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                    </li>*@
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "UserPerformPerAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "UserPerformancePerActionUser")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action User</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "UserPerformancePerUserAndAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per User And Action</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+                    }
+                    @*/////*@
+                    @if (Modules.Contains("SASAML"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> <span>AML REPORTS</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+
+                          
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "AlertSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "AlertDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "Triage")"><i class="glyphicon glyphicon-tasks"></i> <span>Triage</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Cases</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "CasesSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "CasesDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Customers</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "CustomersSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "Customers")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Risk</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "RiskSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Risk Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "RiskAssessment")"><i class="glyphicon glyphicon-tasks"></i> <span>Risk Assessment</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "HighRisk")"><i class="glyphicon glyphicon-tasks"></i> <span>High Risk</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+
+                                </ul>
+
+                                </li>
+                        }
+                    @if (Modules.Contains("DGAML"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> <span>DG AML REPORTS</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLAlertSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLAlertDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLTriage")"><i class="glyphicon glyphicon-tasks"></i> <span>Triage</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>Cases</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLCasesSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLCasesDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>Customers</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLCustomerSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLCustomersDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>External Customers</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLExternalCustomerSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "DGAMLArtExternalCustomerDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active">
+                                    <a href="@Url.Action("Index", "DGAMLArtScenarioAdmin")">
+                                        <i class="glyphicon glyphicon-tasks"></i>
+                                        <span>Scenario Admin</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="@Url.Action("Index", "DGAMLArtScenarioHistory")">
+                                        <i class="glyphicon glyphicon-tasks"></i>
+                                        <span>Scenario Aduit</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="@Url.Action("Index", "DGAMLArtSuspectDetails")">
+                                        <i class="glyphicon glyphicon-tasks"></i>
+                                        <span>Suspect Detail Aduit</span>
+                                    </a>
+                                </li>
+                                </ul>
+                            
+                        </li>
+                       
+                    }
+
+                    @if (Modules.Contains("DGAUDIT"))
+                    {
+                        <li class="treeview  ">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-book"></i> <span>DG USER MANG REPORTS</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUser")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfGroups")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Roles</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersAndGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups Roles</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersGroup")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Groups</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfUsersRoles")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Users Roles</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListGroupsRolesSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Roles Summary</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListGroupsSubGroupsSummary")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Groups Sub Groups Summary</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "ListOfDeletedUsers")"><i class="glyphicon glyphicon-globe"></i> <span>List Of Deleted Users</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "LastLoginPerDay")"><i class="glyphicon glyphicon-globe"></i> <span>User Last Login Per Day</span></a>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i> <span>DG Audit Reports</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditUsers")"><i class="glyphicon glyphicon-globe"></i> <span>User Audit</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Group Audit</span></a>
+                                        </li>
+                                        <li class="active ">
+                                            <a href="@Url.Action("Index", "AuditRoles")"><i class="glyphicon glyphicon-globe"></i> <span>Role Audit</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Modules.Contains("GOAML"))
+                    {
                         <li class="treeview ">
                             <a href="#">
-                                <i class="glyphicon glyphicon-book"></i> <span>TI Reports</span>
+                                <i class="glyphicon glyphicon-book"></i> <span>GOAML REPORTS</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -36,8 +359,26 @@
                                   <a href="@Url.Action("Index", "ArtCasesInitiatedFromBranch")"><i class="glyphicon glyphicon-tasks"></i> <span>Cases Initiated from Branch</span></a>
                                 </li>
                                 <li class="active ">
-                                  <a href="@Url.Action("Index", "ArtDgecmActivity")"><i class="glyphicon glyphicon-tasks"></i> <span>DGECM-Activities</span></a>
-                                </li> 
+
+                                    <a href="@Url.Action("Index", "GOAMLReportsSuspect")"><i class="glyphicon glyphicon-tasks"></i> <span>Reports Suspect</span></a>
+                                </li>
+                                <li class="active ">
+                                    <a href="@Url.Action("Index", "GOAMLReportsSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Reports Summary</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Modules.Contains("SEG"))
+                    {
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-book"></i> <span>SEGMENTATION REPORTS</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
                                 <li class="active ">
                                   <a href="@Url.Action("Index", "ArtEcmFtiFullCycle")"><i class="glyphicon glyphicon-tasks"></i> <span>ECM-FTI Full cycle</span></a>
                                 </li>
@@ -71,7 +412,7 @@
                 </ul>
             </li>
 
-         
+         @*
             <li class="treeview ">
                 <a href="#">
                     <i class="glyphicon glyphicon-cog"></i> <span>Admin Panel</span>
@@ -80,27 +421,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    @*<li class="treeview">
-            <a href="#">
-                <i class="glyphicon glyphicon-cog"></i> <span>Prefrencese</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li class="active ">
-                    <a href="@Url.Action("Index","PieReports")"><i class="glyphicon glyphicon-tasks"></i> <span>Pie Chart View </span></a>
-                    <a href="@Url.Action("SASQueueUsersIndex","Preferences")"><i class="glyphicon glyphicon-tasks"></i> <span>Update SAS User</span></a>
-                    <a href="@Url.Action("Prefs","Preferences")"><i class="glyphicon glyphicon-tasks"></i> <span>Prefs</span></a>
+                
 
-                </li>
-
-            </ul>
-        </li>*@
-
-                    @*<li class=" ">
-            <a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-export"></i> <span>Exporting</span></a>
-        </li>*@
+       
                     <li class=" ">
                         <a href="@Url.Action("Users", "UserRole")"><i class="glyphicon glyphicon-user"></i> <span>Users</span></a>
                     </li>
@@ -118,7 +441,7 @@
 
                 </ul>
             </li> 
-            
+            *@
         </ul>
 
     </section>
