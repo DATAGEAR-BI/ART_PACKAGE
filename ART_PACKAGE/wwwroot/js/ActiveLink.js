@@ -1,6 +1,6 @@
 var links = document.querySelectorAll(".treeview-menu > li > a");
 
-
+var body = document.body;
 function getAllParentElementsUpToBody(element) {
     const parents = [];
     var firsttree = document.getElementById("reportsTree");

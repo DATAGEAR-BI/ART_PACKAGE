@@ -54,16 +54,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            {
-                nameof(AlertedEntitiesController).ToLower(),new ReportConfig
-                {
-                   SkipList =  new List<string>()
-            {
+    //        {
+    //            nameof(AlertedEntitiesController).ToLower(),new ReportConfig
+    //            {
+    //               SkipList =  new List<string>()
+    //        {
 
 
-            }
-    }
-            },
+    //        }
+    //}
+    //        },
             { nameof(SystemPerformanceController).ToLower() , new ReportConfig
             {
                 DisplayNames =  new Dictionary<string, DisplayNameAndFormat>

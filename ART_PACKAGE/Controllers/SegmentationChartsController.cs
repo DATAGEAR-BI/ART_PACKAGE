@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
+﻿using Data.Data.Segmentation;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,8 +10,8 @@ namespace ART_PACKAGE.Controllers
     public class SegmentationChartsController : Controller
     {
 
-        private readonly AuthContext db;
-        public SegmentationChartsController(AuthContext db)
+        private readonly SegmentationContext db;
+        public SegmentationChartsController(SegmentationContext db)
         {
             this.db = db;
         }

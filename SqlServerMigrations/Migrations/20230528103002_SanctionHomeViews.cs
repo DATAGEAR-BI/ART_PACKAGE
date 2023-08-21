@@ -6,8 +6,16 @@ namespace SqlServerMigrations.Migrations
 {
     public partial class SanctionHomeViews : Migration
     {
+        private readonly bool IsAppliable;
+        public SanctionHomeViews()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("ECM");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //create ECM Views
             migrationBuilder.Sql($@"
                                         
@@ -102,6 +110,8 @@ namespace SqlServerMigrations.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            if (!IsAppliable)
+                return;
             //remove ECM Views
             migrationBuilder.Sql($@"
                                         DROP VIEW [ART_DB].[ART_HOME_CASES_DATE]

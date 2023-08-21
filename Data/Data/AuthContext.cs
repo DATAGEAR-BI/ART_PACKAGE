@@ -1,14 +1,10 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Areas.Identity.Data.Configrations;
-using Data;
+﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
 using Data.Data;
-using Data.DGCMGMT;
-using Data.FCF71;
+using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Data.Common;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
@@ -18,36 +14,9 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
     public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; }
-    //ACM 
-    public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; }
-    public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; }
-    public virtual DbSet<ArtHomeCasesType> ArtHomeCasesTypes { get; set; }
-    public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; } = null!;
-    public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; } = null!;
-    public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
-    public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
-    public virtual DbSet<ArtSystemPreformance> ArtSystemPreformances { get; set; } = null!;
-    public virtual DbSet<ArtAlertedEntity> ArtAlertedEntities { get; set; } = null!;
-    public virtual DbSet<ArtUserPerformancePerActionUser> ArtUserPerformancePerActionUsers { get; set; } = null!;
-    public virtual DbSet<ArtUserPerformPerAction> ArtUserPerformPerActions { get; set; } = null!;
-    public virtual DbSet<ArtUserPerformPerUserAndAction> ArtUserPerformPerUserAndActions { get; set; } = null!;
-    //AML
-    public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
-    public virtual DbSet<ArtSystemPrefPerStatus> ArtSystemPrefPerStatuses { get; set; } = null!;
-    public virtual DbSet<ArtHomeAlertsPerStatus> ArtHomeAlertsPerStatuses { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfAccount> ArtHomeNumberOfAccounts { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfCustomer> ArtHomeNumberOfCustomers { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfHighRiskCustomer> ArtHomeNumberOfHighRiskCustomers { get; set; } = null!;
-    public virtual DbSet<ArtHomeNumberOfPepCustomer> ArtHomeNumberOfPepCustomers { get; set; } = null!;
-    public virtual DbSet<ArtAmlTriageView> ArtAmlTriageViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlAlertDetailView> ArtAmlAlertDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlCustomersDetailsView> ArtAmlCustomersDetailsViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
-    public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
-    public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
-    public virtual DbSet<ArtGoamlReportsIndicator> ArtGoamlReportsIndicators { get; set; } = null!;
-    public virtual DbSet<ArtGoamlReportsDetail> ArtGoamlReportsDetails { get; set; } = null!;
-    public virtual DbSet<ArtGoamlReportsSusbectParty> ArtGoamlReportsSusbectParties { get; set; } = null!;
+
+
+
     //Aduit
     public virtual DbSet<ArtGroupsAuditView> ArtGroupsAuditViews { get; set; } = null!;
     public virtual DbSet<ArtRolesAuditView> ArtRolesAuditViews { get; set; } = null!;
@@ -62,27 +31,8 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
     public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
     public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
-    //DGAML
-    public virtual DbSet<ArtDgAmlCaseDetailView> ArtDgAmlCaseDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlAlertDetailView> ArtDGAMLAlertDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlCustomerDetailView> ArtDGAMLCustomerDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtDgAmlTriageView> ArtDGAMLTriageViews { get; set; } = null!;
-    public virtual DbSet<ArtExternalCustomerDetailView> ArtExternalCustomerDetailViews { get; set; } = null!;
-    public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
-    public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
-    public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
-    // SEGMENTATION
-    public virtual DbSet<ArtAlertsPerSegmentTb> ArtAlertsPerSegmentTbs { get; set; } = null!;
-    public virtual DbSet<ArtAllSegmentCustCountTb> ArtAllSegmentCustCountTbs { get; set; } = null!;
-    public virtual DbSet<ArtAllSegmentsOutliersTb> ArtAllSegmentsOutliersTbs { get; set; } = null!;
-    public virtual DbSet<ArtAllSegsFeatrsStatcsTb> ArtAllSegsFeatrsStatcsTbs { get; set; } = null!;
-    public virtual DbSet<ArtAllSegsOutliersLimitTb> ArtAllSegsOutliersLimitTbs { get; set; } = null!;
-    public virtual DbSet<ArtChangedSegmentTb> ArtChangedSegmentTbs { get; set; } = null!;
-    public virtual DbSet<ArtIndustrySegmentTb> ArtIndustrySegmentTbs { get; set; } = null!;
-    public virtual DbSet<ArtMebSegmentsV3Tb> ArtMebSegmentsV3Tbs { get; set; } = null!;
-    public virtual DbSet<ArtSegoutvsallcustTb> ArtSegoutvsallcustTbs { get; set; } = null!;
-    public virtual DbSet<ArtSegoutvsalloutTb> ArtSegoutvsalloutTbs { get; set; } = null!;
-    public virtual DbSet<ArtCustsPerTypeTb> ArtCustsPerTypeTbs { get; set; } = null!;
+
+
 
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
@@ -142,14 +92,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
 
-        //Sanction
-        modelBuilder.Entity<ArtSystemPrefPerDirection>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtSystemPrefPerStatus>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtSystemPerfPerType>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtSystemPerfPerDate>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+
 
         //GOAML
         modelBuilder.Entity<ArtStGoAmlReportsPerType>().HasNoKey().ToView(null);
@@ -174,61 +117,6 @@ public class AuthContext : IdentityDbContext<AppUser>
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
     }
-    public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
-    {
-        if (this.Database.IsSqlServer())
-            return this.SqlServerExecuteProc<T>(SPName, parameters);
-        if (this.Database.IsOracle())
-            return this.OracleExecuteProc<T>(SPName, parameters);
-        return Enumerable.Empty<T>();
-    }
 
-    private IEnumerable<T> SqlServerExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
-    {
-        var sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
-        return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
-    }
-
-    private IEnumerable<T> OracleExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
-    {
-        var output = parameters.FirstOrDefault(x => x.Direction == ParameterDirection.Output);
-        if (output is null)
-            throw new NullReferenceException("there is no output parameter");
-
-        var command = this.Database.GetDbConnection().CreateCommand();
-        command.CommandText = SPName;
-        command.CommandType = CommandType.StoredProcedure;
-
-        command.Parameters.Add(output);
-        foreach (var param in parameters)
-        {
-            if (param.ParameterName == output.ParameterName)
-                continue;
-
-            command.Parameters.Add(param);
-        }
-        this.Database.OpenConnection();
-
-
-        using var reader = command.ExecuteReader();
-        var result = new List<T>();
-        var properties = typeof(T).GetProperties();
-        while (reader.Read())
-        {
-            var item = Activator.CreateInstance<T>();
-            foreach (var property in properties)
-            {
-                if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
-                {
-                    var value = reader[property.Name];
-                    property.SetValue(item, value);
-                }
-            }
-            result.Add(item);
-        }
-        this.Database.CloseConnection();
-        return result;
-
-    }
 
 }

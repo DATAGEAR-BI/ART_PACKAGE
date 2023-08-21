@@ -1,0 +1,26 @@
+﻿using Data.ModelCreatingStrategies;
+using Microsoft.EntityFrameworkCore;
+
+namespace Data.Data.ARTGOAML
+{
+    public class ArtGoAmlContext : DbContext
+    {
+
+
+
+        public ArtGoAmlContext(DbContextOptions<ArtGoAmlContext> options)
+      : base(options)
+        {
+        }
+
+        //GOAML
+        public virtual DbSet<ArtGoamlReportsIndicator> ArtGoamlReportsIndicators { get; set; } = null!;
+        public virtual DbSet<ArtGoamlReportsDetail> ArtGoamlReportsDetails { get; set; } = null!;
+        public virtual DbSet<ArtGoamlReportsSusbectParty> ArtGoamlReportsSusbectParties { get; set; } = null!;
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
+            modelCreatingStrategy.OnARTGOAMLModelCreating(modelBuilder);
+        }
+    }
+}

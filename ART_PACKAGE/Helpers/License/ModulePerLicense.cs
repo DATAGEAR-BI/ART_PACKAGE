@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Helpers.License
         {
             nameof(AlertDetailsController).ToLower() ,
             nameof(AlertSummaryController).ToLower() ,
-            nameof(AlertedEntitiesController).ToLower() ,
+            //nameof(AlertedEntitiesController).ToLower() ,
             nameof(TriageController).ToLower() ,
             nameof(HighRiskController).ToLower() ,
             nameof(CustomersController).ToLower() ,
