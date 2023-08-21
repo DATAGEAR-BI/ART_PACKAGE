@@ -496,6 +496,7 @@ GO");
                         DGAML.DGAMLCORE.External_Customer e
                         WHERE (e.Ext_Cust_Acct_Key > - 1);");
             #endregion
+
             #region Procs
             //ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH
             migrationBuilder.Sql($@"
