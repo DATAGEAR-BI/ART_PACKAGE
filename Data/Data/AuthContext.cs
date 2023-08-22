@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
-using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.ModelCreatingStrategies;
@@ -17,20 +16,7 @@ public class AuthContext : IdentityDbContext<AppUser>
 
 
 
-    //Aduit
-    public virtual DbSet<ArtGroupsAuditView> ArtGroupsAuditViews { get; set; } = null!;
-    public virtual DbSet<ArtRolesAuditView> ArtRolesAuditViews { get; set; } = null!;
-    public virtual DbSet<ArtUsersAuditView> ArtUsersAuditViews { get; set; } = null!;
-    public virtual DbSet<LastLoginPerDayView> LastLoginPerDayViews { get; set; } = null!;
-    public virtual DbSet<ListGroupsRolesSummary> ListGroupsRolesSummaries { get; set; } = null!;
-    public virtual DbSet<ListGroupsSubGroupsSummary> ListGroupsSubGroupsSummaries { get; set; } = null!;
-    public virtual DbSet<ListOfDeletedUser> ListOfDeletedUsers { get; set; } = null!;
-    public virtual DbSet<ListOfGroup> ListOfGroups { get; set; } = null!;
-    public virtual DbSet<ListOfRole> ListOfRoles { get; set; } = null!;
-    public virtual DbSet<ListOfUser> ListOfUsers { get; set; } = null!;
-    public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
-    public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
-    public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
+
 
 
 
@@ -79,18 +65,7 @@ public class AuthContext : IdentityDbContext<AppUser>
 
         });
 
-        //AML
-        modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCasesPerSubcat>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+
 
 
 
@@ -116,6 +91,7 @@ public class AuthContext : IdentityDbContext<AppUser>
 
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
+
     }
 
 

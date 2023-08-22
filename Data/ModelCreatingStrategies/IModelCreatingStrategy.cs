@@ -10,5 +10,6 @@ namespace Data.ModelCreatingStrategies
         void OnARTDGAMLModelCreating(ModelBuilder modelBuilder);
         void OnEcmModelCreating(ModelBuilder modelBuilder);
         void OnSasAmlModelCreating(ModelBuilder modelBuilder);
+        void OnAuditModelCreating(ModelBuilder modelBuilder);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.FCF71;
+using ART_PACKAGE.Helpers.DBService;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
@@ -14,7 +14,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             _db = db;
         }
 
-        public DbContext GetDbInstance(string schemaName)
+        public DbContext? GetDbInstance(string schemaName)
         {
 
             return schemaName == DbSchema.DGCMGMT.ToString()

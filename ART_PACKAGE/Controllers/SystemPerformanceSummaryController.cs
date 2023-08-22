@@ -1,32 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-
-using System.Data;
-using Microsoft.Extensions.Caching.Memory;
-using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using Data.Constants.StoredProcs;
-using ART_PACKAGE.Helpers.StoredProcsHelpers;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
+using Data.Constants.StoredProcs;
+using Data.Data.ECM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Data;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
-using Data.Data.ECM;
 
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class SystemPerformanceSummaryController : Controller
     {
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public SystemPerformanceSummaryController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
+        public SystemPerformanceSummaryController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
         {
             _env = env;
             _cache = cache;

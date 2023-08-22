@@ -22,6 +22,21 @@ namespace Data.Data.ARTDGAML
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //DGAML
+            modelBuilder.Entity<ArtStDgAmlAlertPerOwner>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlCustomerPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlCustomerPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlCasesPerCategory>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlCasesPerPriority>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlCasesPerStatus>().HasNoKey().ToView(null);
+
+            modelBuilder.Entity<ArtStDgAmlExternalCustomerPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlExternalCustomerPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerScenario>().HasNoKey().ToView(null);
+
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTDGAMLModelCreating(modelBuilder);
         }

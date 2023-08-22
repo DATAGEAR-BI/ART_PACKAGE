@@ -19,6 +19,11 @@ namespace Data.Data.ARTGOAML
         public virtual DbSet<ArtGoamlReportsSusbectParty> ArtGoamlReportsSusbectParties { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //GOAML
+            modelBuilder.Entity<ArtStGoAmlReportsPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStGoAmlReportsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStGoAmlReportsPerIndicator>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTGOAMLModelCreating(modelBuilder);
         }

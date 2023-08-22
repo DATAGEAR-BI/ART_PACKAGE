@@ -1,26 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Data;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Microsoft.Extensions.Caching.Memory;
+﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using System.Collections;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Data;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     public class CustomersSummaryController : Controller
     {
 
-        private readonly AuthContext dbfcfcore;
+        private readonly SasAmlContext dbfcfcore;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public CustomersSummaryController(AuthContext dbfcfcore, IMemoryCache cache, IConfiguration config)
+        public CustomersSummaryController(SasAmlContext dbfcfcore, IMemoryCache cache, IConfiguration config)
         {
             this.dbfcfcore = dbfcfcore;
             _config = config;

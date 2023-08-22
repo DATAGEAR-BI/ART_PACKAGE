@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewData["Title"] = "Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<div id="Notify">
+
+</div>
+<section class="content-header">
+    <h1>
+        Roles Mangment
+    </h1>
+</section>
+<div class="centering">
+    <button type="button" id="ModelBTN" class="btn btn-primary" style="display:none" data-toggle="modal" data-target="#exampleModal">
+        Edit Role
+    </button>
+    <button type="button" id="AddBTN" class="btn btn-primary" data-toggle="modal" data-target="#AddModal">
+        Add Role
+    </button>
+</div>
+<div id="example">
+    <div id="grid"></div>
+    <script>
+
+        var currentSelected = [];
+        var roleData = [];
+        function onChange(e) {
+            var idz = [];
+            var rows = e.sender.select();
+
+            //to get the selected alerted  entity numbers of selected rows
+            rows.each(function (e) {
+                var grid = $("#grid").data("kendoGrid");
+                var dataItem = grid.dataItem(this);
+                var id = dataItem.Id;
+                idz.push(id);
+            })
+            currentSelected = idz;
+
+            getRoleByID(currentSelected);
+        };
+
+        function getRoleByID(currentSelected) {
+            if (currentSelected) {
+                var ModelBTN = document.getElementById("ModelBTN");
+                var ModelBody = document.getElementById("ModelBodyHTML");
+                ModelBTN.style.display = "block";
+
+
+
+                // Call BackEnd Function to get all the details about this currentSelected --> Party_key
+
+                $.ajax('/UserRole/GetDataByID',
+                    {
+                        dataType: 'json', // type of response data
+                        data: {
+                            "id": currentSelected[0],
+                        },
+                        timeout: 500,     // timeout milliseconds
+                        success: function (data, status, xhr) {
+                            console.log(currentSelected)// success callback function
+                            roleData = data;
+                            console.log(roleData);
+                            var roleName = roleData[0]['Name'];
+                            $("#RoleName").val(roleName);
+                            $("#RoleId").val(currentSelected[0]);
+
+                        },
+                        error: function (jqXhr, textStatus, errorMessage) { // error callback
+                            $('p').append('Error: ' + errorMessage);
+                        }
+                    });
+
+            }
+        };
+
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    type: "api",
+                    transport: {
+                        read: "/UserRole/GetRolesData"
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                Id: { type: "string" },
+                                Name: { type: "string" }
+
+                            }
+                        }
+                    },
+                    pageSize: 100,
+                    serverPaging: false,
+                    serverFiltering: false,
+                    serverSorting: false
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                reorderable: true,
+                pageable: true,
+                resizable: true,
+                change: onChange,
+                selectable: "single",
+
+                columns: [
+                    //{ field: "Id", title: "Id", stickable: true },
+                    { field: "Name", title: "Name", stickable: true }
+
+
+                ]
+
+            });
+        });
+
+    </script>
+
+</div>
+
+
+<!-- Modal -->
+<form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Role Informations</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="ModelBodyHTML">
+                    <div class="row">
+
+                        <div id="" class="col-12 panel panel-primary customer-details medium-capped-width">
+                            <div class="panel-body">
+                                <div id="clusterSummary" class="text-primary aml-panel-title text-bold">
+                                    Edit Role
+                                </div>
+                                <div class="labelValueRows">
+                                    <div class="labelValueRow">
+                                        <div class="text-label text-bold">Role Name:</div>
+                                        <input type="text" id="RoleId" name="id" value="" hidden />
+                                        <input type="text" id="RoleName" class="form-control" name="role" value="" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" asp-action="EditRole">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- End Modal -->
+<form method="get">
+    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Role Informations</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="ModelBodyHTML">
+                    <div class="row">
+
+                        <div id="customerDetails" class="col-12 panel panel-primary customer-details medium-capped-width">
+                            <div class="panel-body">
+                                <div id="clusterSummary" class="text-primary aml-panel-title text-bold">
+                                    Edit Role
+                                </div>
+                                <div class="labelValueRows">
+                                    <div class="labelValueRow">
+                                        <input type="text" class="form-control" name="role" id="RoleName" value="" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" asp-action="AddRole">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- End Modal -->
+
+
+<style>
+    html, body {
+        overflow: auto;
+    }
+
+    .centering {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+</style>
