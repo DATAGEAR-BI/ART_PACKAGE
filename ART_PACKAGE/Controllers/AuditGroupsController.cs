@@ -1,28 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-using Microsoft.AspNetCore.Authorization;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using Data.DGECM;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Services.Pdf;
+using Data.Data.Audit;
+using Data.DGECM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class AuditGroupsController : Controller
     {
-        private readonly AuthContext context;
+        private readonly ArtAuditContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly DGECMContext db;
         private readonly IDropDownService _dropSrv;
 
-        public AuditGroupsController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
+        public AuditGroupsController(ArtAuditContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
             _env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;

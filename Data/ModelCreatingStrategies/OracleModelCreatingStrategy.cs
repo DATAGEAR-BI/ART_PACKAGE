@@ -1,5 +1,5 @@
-﻿using Data.Data;
-using Data.Data.ARTGOAML;
+﻿using Data.Data.ARTGOAML;
+using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
@@ -2708,6 +2708,11 @@ namespace Data.ModelCreatingStrategies
             });
 
 
+        }
+
+        public void OnAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

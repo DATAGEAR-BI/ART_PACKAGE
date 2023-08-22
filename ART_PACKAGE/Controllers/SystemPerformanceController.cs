@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
-using Data.Data;
 using Data.Data.ECM;
 using Data.DGECM;
 using Microsoft.AspNetCore.Authorization;

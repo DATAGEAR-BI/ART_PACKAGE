@@ -11,9 +11,6 @@
 		<Exec Command="dotnet format style -v detailed" />
 	</Target>
 	<ItemGroup>
-	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
-	</ItemGroup>
-	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
 		</Reference>
@@ -923,6 +920,9 @@
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
+		<None Include="Views\UserRole\Roles.cshtml" />
+		<None Include="Views\UserRole\Users.cshtml" />
+		<None Include="Views\UserRole\UsersRolesMatrix.cshtml" />
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />

@@ -1,1 +1,1 @@
-﻿global using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿

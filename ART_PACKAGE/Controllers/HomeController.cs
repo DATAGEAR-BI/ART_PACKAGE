@@ -1,7 +1,7 @@
-﻿using ART_PACKAGE.Models;
+﻿using ART_PACKAGE.Helpers.DBService;
+using ART_PACKAGE.Models;
 using Data.Data.ECM;
 using Data.Data.SASAml;
-using Data.FCF71;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -33,7 +33,7 @@ namespace ART_PACKAGE.Controllers
                 SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
                 _dbAml = amlService;
             }
-            if (modules.Contains("SASAML"))
+            if (modules.Contains("ECM"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();

@@ -8,7 +8,12 @@ using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
+using Data.Data.Audit;
+using Data.Data.ECM;
 using Data.Data.Segmentation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -27,7 +32,9 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
+
 builder.Services.ConfigureApplicationCookie(opt =>
  {
      opt.LoginPath = new PathString("/Ldapauth/login");
@@ -46,6 +53,7 @@ IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
+
     .CreateLogger();
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
@@ -62,16 +70,16 @@ if (authContext.Database.GetPendingMigrations().Any())
     authContext.Database.Migrate();
 }
 
-//if (modules.Contains("ECM"))
-//{
+if (modules.Contains("ECM"))
+{
 
-//EcmContext EcmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
+    EcmContext ecmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
 
-//    if (EcmContext.Database.GetPendingMigrations().Any())
-//    {
-//        EcmContext.Database.Migrate();
-//    }
-//}
+    if (ecmContext.Database.GetPendingMigrations().Any())
+    {
+        ecmContext.Database.Migrate();
+    }
+}
 
 if (modules.Contains("SEG"))
 {
@@ -80,26 +88,35 @@ if (modules.Contains("SEG"))
         SegContext.Database.Migrate();
     }
 }
-//if (modules.Contains("GOAML"))
-//{
-//ArtGoAmlContext GoAmlContext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+if (modules.Contains("GOAML"))
+{
+    ArtGoAmlContext GoAmlContext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
 
-//    if (GoAmlContext.Database.GetPendingMigrations().Any())
-//    {
-//        GoAmlContext.Database.Migrate();
-//    }
-//}
+    if (GoAmlContext.Database.GetPendingMigrations().Any())
+    {
+        GoAmlContext.Database.Migrate();
+    }
+}
 
 
-//if (modules.Contains("DGAML"))
-//{
-//ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+if (modules.Contains("DGAML"))
+{
+    ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
 
-//    if (DgAmlContext.Database.GetPendingMigrations().Any())
-//    {
-//        DgAmlContext.Database.Migrate();
-//    }
-//}
+    if (DgAmlContext.Database.GetPendingMigrations().Any())
+    {
+        DgAmlContext.Database.Migrate();
+    }
+}
+if (modules.Contains("DGAUDIT"))
+{
+    ArtAuditContext DgAuditContext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
+
+    if (DgAuditContext.Database.GetPendingMigrations().Any())
+    {
+        DgAuditContext.Database.Migrate();
+    }
+}
 
 
 
