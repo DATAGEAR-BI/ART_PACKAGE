@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.LDap;
+using ART_PACKAGE.Helpers.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,17 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LDapAuthModel> _logger;
+        private readonly LoggedUser _loggedUser;
 
         public LDapAuthModel(SignInManager<AppUser> signInManager,
             ILogger<LDapAuthModel> logger,
-            UserManager<AppUser> userManager, LDapUserManager ldapUM)
+            UserManager<AppUser> userManager, LDapUserManager ldapUM, LoggedUser loggedUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             this.ldapUM = ldapUM;
+            _loggedUser = loggedUser;
         }
 
         [BindProperty]
@@ -63,6 +66,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);
                 if (info is null)
                 {
+                    //_loggedUser.UpdateLoggedUser(Input.Email, false);
+                    //_loggedUser.AddLoggedUserAudit(Input.Email, false);
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
                     return Page();
                 }
@@ -82,6 +87,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (result.Succeeded)
                     {
+                        //_loggedUser.UpdateLoggedUser(Input.Email, true);
+                        //_loggedUser.AddLoggedUserAudit(Input.Email, true);
                         return LocalRedirect(ReturnUrl);
                     }
                     else
@@ -100,6 +107,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 IdentityResult createresult = await _userManager.CreateAsync(user);
                                 if (!createresult.Succeeded)
                                 {
+                                    // _loggedUser.UpdateLoggedUser(Input.Email, false);
+                                    //_loggedUser.AddLoggedUserAudit(Input.Email, false);
                                     ModelState.AddModelError("", $"There is an error while creating an email for you");
                                     return Page();
                                 }
@@ -108,6 +117,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                             await _signInManager.SignInAsync(user, true);
 
                         }
+                        //_loggedUser.UpdateLoggedUser(Input.Email, true);
+                        //_loggedUser.AddLoggedUserAudit(Input.Email, true);
                         return LocalRedirect(returnUrl);
                     }
 

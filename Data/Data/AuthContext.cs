@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
+using ART_PACKAGE.Helpers.Logging;
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
@@ -10,6 +11,9 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 
 public class AuthContext : IdentityDbContext<AppUser>
 {
+    public virtual DbSet<ArtLoggedUser> ArtLoggedUsers { get; set; }
+    public virtual DbSet<ArtLoggedUserAudit> ArtLoggedUserAudits { get; set; }
+
 
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; }
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; }
@@ -78,7 +82,7 @@ public class AuthContext : IdentityDbContext<AppUser>
                 .HasForeignKey(x => x.UserId);
 
         });
-
+        
         //AML
         modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
         modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);

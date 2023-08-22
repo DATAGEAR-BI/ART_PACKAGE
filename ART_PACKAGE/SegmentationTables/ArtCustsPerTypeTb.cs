@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ART_PACKAGE.SegmentationTables
+﻿namespace ART_PACKAGE.SegmentationTables
 {
     public partial class ArtCustsPerTypeTb
     {

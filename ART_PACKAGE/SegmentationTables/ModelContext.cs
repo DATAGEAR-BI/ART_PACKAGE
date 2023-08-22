@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.SegmentationTables
 {
@@ -33,938 +30,938 @@ namespace ART_PACKAGE.SegmentationTables
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseOracle("User Id=ART;Password=ART1;Data Source=192.168.1.96:1521/aml71;");
+                _ = optionsBuilder.UseOracle("User Id=ART;Password=ART1;Data Source=192.168.1.96:1521/aml71;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("ART");
+            _ = modelBuilder.HasDefaultSchema("ART");
 
-            modelBuilder.Entity<ArtAlertsPerSegmentTb>(entity =>
+            _ = modelBuilder.Entity<ArtAlertsPerSegmentTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_ALERTS_PER_SEGMENT_TB");
+                _ = entity.ToTable("ART_ALERTS_PER_SEGMENT_TB");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfAlerts)
+                _ = entity.Property(e => e.NumberOfAlerts)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_ALERTS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentDescription)
+                _ = entity.Property(e => e.SegmentDescription)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
 
-            modelBuilder.Entity<ArtAllSegmentCustCountTb>(entity =>
+            _ = modelBuilder.Entity<ArtAllSegmentCustCountTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_ALL_SEGMENT_CUST_COUNT_TB");
+                _ = entity.ToTable("ART_ALL_SEGMENT_CUST_COUNT_TB");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfCustomers)
+                _ = entity.Property(e => e.NumberOfCustomers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentDescription)
+                _ = entity.Property(e => e.SegmentDescription)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
 
-            modelBuilder.Entity<ArtAllSegmentsOutliersTb>(entity =>
+            _ = modelBuilder.Entity<ArtAllSegmentsOutliersTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_ALL_SEGMENTS_OUTLIERS_TB");
+                _ = entity.ToTable("ART_ALL_SEGMENTS_OUTLIERS_TB");
 
-                entity.Property(e => e.Amount)
+                _ = entity.Property(e => e.Amount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AMOUNT");
 
-                entity.Property(e => e.BranchName)
+                _ = entity.Property(e => e.BranchName)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("BRANCH_NAME");
 
-                entity.Property(e => e.BranchNumber)
+                _ = entity.Property(e => e.BranchNumber)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("BRANCH_NUMBER");
 
-                entity.Property(e => e.Feature)
+                _ = entity.Property(e => e.Feature)
                     .HasMaxLength(28)
                     .IsUnicode(false)
                     .HasColumnName("FEATURE");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.PartyName)
+                _ = entity.Property(e => e.PartyName)
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_NAME");
 
-                entity.Property(e => e.PartyNumber)
+                _ = entity.Property(e => e.PartyNumber)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.UpperOutlierLimit)
+                _ = entity.Property(e => e.UpperOutlierLimit)
                     .HasColumnType("NUMBER")
                     .HasColumnName("UPPER_OUTLIER_LIMIT");
             });
 
-            modelBuilder.Entity<ArtAllSegsFeatrsStatcsTb>(entity =>
+            _ = modelBuilder.Entity<ArtAllSegsFeatrsStatcsTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_ALL_SEGS_FEATRS_STATCS_TB");
+                _ = entity.ToTable("ART_ALL_SEGS_FEATRS_STATCS_TB");
 
-                entity.Property(e => e.AvgCashCAmt)
+                _ = entity.Property(e => e.AvgCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_C_AMT");
 
-                entity.Property(e => e.AvgCashDAmt)
+                _ = entity.Property(e => e.AvgCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_D_AMT");
 
-                entity.Property(e => e.AvgCheckDAmt)
+                _ = entity.Property(e => e.AvgCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CHECK_D_AMT");
 
-                entity.Property(e => e.AvgFeesDAmt)
+                _ = entity.Property(e => e.AvgFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_FEES_D_AMT");
 
-                entity.Property(e => e.AvgInternaltransferCAmt)
+                _ = entity.Property(e => e.AvgInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.AvgInternaltransferDAmt)
+                _ = entity.Property(e => e.AvgInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.AvgMiscCAmt)
+                _ = entity.Property(e => e.AvgMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_MISC_C_AMT");
 
-                entity.Property(e => e.AvgTotalAmt)
+                _ = entity.Property(e => e.AvgTotalAmt)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("AVG_TOTAL_AMT");
 
-                entity.Property(e => e.AvgTotalCtAmt)
+                _ = entity.Property(e => e.AvgTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_CT_AMT");
 
-                entity.Property(e => e.AvgTotalDtAmt)
+                _ = entity.Property(e => e.AvgTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_DT_AMT");
 
-                entity.Property(e => e.AvgWireCAmt)
+                _ = entity.Property(e => e.AvgWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_C_AMT");
 
-                entity.Property(e => e.AvgWireDAmt)
+                _ = entity.Property(e => e.AvgWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_D_AMT");
 
-                entity.Property(e => e.AvgWithdrawalDAmt)
+                _ = entity.Property(e => e.AvgWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.MaxCashCAmt)
+                _ = entity.Property(e => e.MaxCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_C_AMT");
 
-                entity.Property(e => e.MaxCashDAmt)
+                _ = entity.Property(e => e.MaxCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_D_AMT");
 
-                entity.Property(e => e.MaxCheckDAmt)
+                _ = entity.Property(e => e.MaxCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CHECK_D_AMT");
 
-                entity.Property(e => e.MaxFeesDAmt)
+                _ = entity.Property(e => e.MaxFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_FEES_D_AMT");
 
-                entity.Property(e => e.MaxInternaltransferCAmt)
+                _ = entity.Property(e => e.MaxInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.MaxInternaltransferDAmt)
+                _ = entity.Property(e => e.MaxInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.MaxMiscCAmt)
+                _ = entity.Property(e => e.MaxMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_MISC_C_AMT");
 
-                entity.Property(e => e.MaxTotalAmt)
+                _ = entity.Property(e => e.MaxTotalAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_AMT");
 
-                entity.Property(e => e.MaxTotalCtAmt)
+                _ = entity.Property(e => e.MaxTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_CT_AMT");
 
-                entity.Property(e => e.MaxTotalDtAmt)
+                _ = entity.Property(e => e.MaxTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_DT_AMT");
 
-                entity.Property(e => e.MaxWireCAmt)
+                _ = entity.Property(e => e.MaxWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_C_AMT");
 
-                entity.Property(e => e.MaxWireDAmt)
+                _ = entity.Property(e => e.MaxWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_D_AMT");
 
-                entity.Property(e => e.MaxWithdrawalDAmt)
+                _ = entity.Property(e => e.MaxWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.MinCashCAmt)
+                _ = entity.Property(e => e.MinCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_C_AMT");
 
-                entity.Property(e => e.MinCashDAmt)
+                _ = entity.Property(e => e.MinCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_D_AMT");
 
-                entity.Property(e => e.MinCheckDAmt)
+                _ = entity.Property(e => e.MinCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CHECK_D_AMT");
 
-                entity.Property(e => e.MinFeesDAmt)
+                _ = entity.Property(e => e.MinFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_FEES_D_AMT");
 
-                entity.Property(e => e.MinInternaltransferCAmt)
+                _ = entity.Property(e => e.MinInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.MinInternaltransferDAmt)
+                _ = entity.Property(e => e.MinInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.MinMiscCAmt)
+                _ = entity.Property(e => e.MinMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_MISC_C_AMT");
 
-                entity.Property(e => e.MinTotalAmt)
+                _ = entity.Property(e => e.MinTotalAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_AMT");
 
-                entity.Property(e => e.MinTotalCtAmt)
+                _ = entity.Property(e => e.MinTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_CT_AMT");
 
-                entity.Property(e => e.MinTotalDtAmt)
+                _ = entity.Property(e => e.MinTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_DT_AMT");
 
-                entity.Property(e => e.MinWireCAmt)
+                _ = entity.Property(e => e.MinWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_C_AMT");
 
-                entity.Property(e => e.MinWireDAmt)
+                _ = entity.Property(e => e.MinWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_D_AMT");
 
-                entity.Property(e => e.MinWithdrawalDAmt)
+                _ = entity.Property(e => e.MinWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentDescription)
+                _ = entity.Property(e => e.SegmentDescription)
                     .HasColumnType("NUMBER")
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.TotalAmount)
+                _ = entity.Property(e => e.TotalAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_AMOUNT");
 
-                entity.Property(e => e.TotalCashCAmt)
+                _ = entity.Property(e => e.TotalCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_C_AMT");
 
-                entity.Property(e => e.TotalCashCCnt)
+                _ = entity.Property(e => e.TotalCashCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_C_CNT");
 
-                entity.Property(e => e.TotalCashDAmt)
+                _ = entity.Property(e => e.TotalCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_AMT");
 
-                entity.Property(e => e.TotalCashDCnt)
+                _ = entity.Property(e => e.TotalCashDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_CNT");
 
-                entity.Property(e => e.TotalCheckDAmt)
+                _ = entity.Property(e => e.TotalCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CHECK_D_AMT");
 
-                entity.Property(e => e.TotalCheckDCnt)
+                _ = entity.Property(e => e.TotalCheckDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CHECK_D_CNT");
 
-                entity.Property(e => e.TotalCnt)
+                _ = entity.Property(e => e.TotalCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CNT");
 
-                entity.Property(e => e.TotalCreditAmount)
+                _ = entity.Property(e => e.TotalCreditAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CREDIT_AMOUNT");
 
-                entity.Property(e => e.TotalCtCnt)
+                _ = entity.Property(e => e.TotalCtCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CT_CNT");
 
-                entity.Property(e => e.TotalDebitAmount)
+                _ = entity.Property(e => e.TotalDebitAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_AMOUNT");
 
-                entity.Property(e => e.TotalDebitCnt)
+                _ = entity.Property(e => e.TotalDebitCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_CNT");
 
-                entity.Property(e => e.TotalFeesDAmt)
+                _ = entity.Property(e => e.TotalFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_FEES_D_AMT");
 
-                entity.Property(e => e.TotalFeesDCnt)
+                _ = entity.Property(e => e.TotalFeesDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_FEES_D_CNT");
 
-                entity.Property(e => e.TotalInternaltransferCAmt)
+                _ = entity.Property(e => e.TotalInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.TotalInternaltransferCCnt)
+                _ = entity.Property(e => e.TotalInternaltransferCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
 
-                entity.Property(e => e.TotalInternaltransferDAmt)
+                _ = entity.Property(e => e.TotalInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.TotalInternaltransferDCnt)
+                _ = entity.Property(e => e.TotalInternaltransferDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
 
-                entity.Property(e => e.TotalMiscCAmt)
+                _ = entity.Property(e => e.TotalMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_AMT");
 
-                entity.Property(e => e.TotalMiscCCnt)
+                _ = entity.Property(e => e.TotalMiscCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_CNT");
 
-                entity.Property(e => e.TotalWireCAmt)
+                _ = entity.Property(e => e.TotalWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_C_AMT");
 
-                entity.Property(e => e.TotalWireCCnt)
+                _ = entity.Property(e => e.TotalWireCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_C_CNT");
 
-                entity.Property(e => e.TotalWireDAmt)
+                _ = entity.Property(e => e.TotalWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_AMT");
 
-                entity.Property(e => e.TotalWireDCnt)
+                _ = entity.Property(e => e.TotalWireDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_CNT");
 
-                entity.Property(e => e.TotalWithdrawalDAmt)
+                _ = entity.Property(e => e.TotalWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.TotalWithdrawalDCnt)
+                _ = entity.Property(e => e.TotalWithdrawalDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WITHDRAWAL_D_CNT");
             });
 
-            modelBuilder.Entity<ArtAllSegsOutliersLimitTb>(entity =>
+            _ = modelBuilder.Entity<ArtAllSegsOutliersLimitTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_ALL_SEGS_OUTLIERS_LIMIT_TB");
+                _ = entity.ToTable("ART_ALL_SEGS_OUTLIERS_LIMIT_TB");
 
-                entity.Property(e => e.Feature)
+                _ = entity.Property(e => e.Feature)
                     .HasMaxLength(28)
                     .IsUnicode(false)
                     .HasColumnName("FEATURE");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.UpperOutlierLimit)
+                _ = entity.Property(e => e.UpperOutlierLimit)
                     .HasColumnType("NUMBER")
                     .HasColumnName("UPPER_OUTLIER_LIMIT");
             });
 
-            modelBuilder.Entity<ArtChangedSegmentTb>(entity =>
+            _ = modelBuilder.Entity<ArtChangedSegmentTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_CHANGED_SEGMENT_TB");
+                _ = entity.ToTable("ART_CHANGED_SEGMENT_TB");
 
-                entity.Property(e => e.CreationDate)
+                _ = entity.Property(e => e.CreationDate)
                     .HasColumnType("DATE")
                     .HasColumnName("CREATION_DATE");
 
-                entity.Property(e => e.IndustryCode)
+                _ = entity.Property(e => e.IndustryCode)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_CODE");
 
-                entity.Property(e => e.IndustryDesc)
+                _ = entity.Property(e => e.IndustryDesc)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_DESC");
 
-                entity.Property(e => e.LastSegmentId)
+                _ = entity.Property(e => e.LastSegmentId)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("LAST_SEGMENT_ID");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.OccupationDesc)
+                _ = entity.Property(e => e.OccupationDesc)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("OCCUPATION_DESC");
 
-                entity.Property(e => e.PartyNumber)
+                _ = entity.Property(e => e.PartyNumber)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("PARTY_NUMBER");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.RiskClassification)
+                _ = entity.Property(e => e.RiskClassification)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("RISK_CLASSIFICATION");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("SEGMENT_SORTED");
             });
 
-            modelBuilder.Entity<ArtCustsPerTypeTb>(entity =>
+            _ = modelBuilder.Entity<ArtCustsPerTypeTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_CUSTS_PER_TYPE_TB");
+                _ = entity.ToTable("ART_CUSTS_PER_TYPE_TB");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfCustomers)
+                _ = entity.Property(e => e.NumberOfCustomers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
 
-            modelBuilder.Entity<ArtIndustrySegmentTb>(entity =>
+            _ = modelBuilder.Entity<ArtIndustrySegmentTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_INDUSTRY_SEGMENT_TB");
+                _ = entity.ToTable("ART_INDUSTRY_SEGMENT_TB");
 
-                entity.Property(e => e.IndustryDesc)
+                _ = entity.Property(e => e.IndustryDesc)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_DESC");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfCustomers)
+                _ = entity.Property(e => e.NumberOfCustomers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.TotalAmount)
+                _ = entity.Property(e => e.TotalAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_AMOUNT");
 
-                entity.Property(e => e.TotalCreditAmount)
+                _ = entity.Property(e => e.TotalCreditAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CREDIT_AMOUNT");
 
-                entity.Property(e => e.TotalDebitAmount)
+                _ = entity.Property(e => e.TotalDebitAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_AMOUNT");
             });
 
-            modelBuilder.Entity<ArtMebSegmentsV3Tb>(entity =>
+            _ = modelBuilder.Entity<ArtMebSegmentsV3Tb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_MEB_SEGMENTS_V3_TB");
+                _ = entity.ToTable("ART_MEB_SEGMENTS_V3_TB");
 
-                entity.Property(e => e.AlertsCnt)
+                _ = entity.Property(e => e.AlertsCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("ALERTS_CNT");
 
-                entity.Property(e => e.AvgCashCAmt)
+                _ = entity.Property(e => e.AvgCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_C_AMT");
 
-                entity.Property(e => e.AvgCashDAmt)
+                _ = entity.Property(e => e.AvgCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_D_AMT");
 
-                entity.Property(e => e.AvgCheckDAmt)
+                _ = entity.Property(e => e.AvgCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CHECK_D_AMT");
 
-                entity.Property(e => e.AvgFeesDAmt)
+                _ = entity.Property(e => e.AvgFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_FEES_D_AMT");
 
-                entity.Property(e => e.AvgInternaltransferCAmt)
+                _ = entity.Property(e => e.AvgInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.AvgInternaltransferDAmt)
+                _ = entity.Property(e => e.AvgInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.AvgMiscCAmt)
+                _ = entity.Property(e => e.AvgMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_MISC_C_AMT");
 
-                entity.Property(e => e.AvgTotalAmt)
+                _ = entity.Property(e => e.AvgTotalAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_AMT");
 
-                entity.Property(e => e.AvgTotalCtAmt)
+                _ = entity.Property(e => e.AvgTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_CT_AMT");
 
-                entity.Property(e => e.AvgTotalDtAmt)
+                _ = entity.Property(e => e.AvgTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_DT_AMT");
 
-                entity.Property(e => e.AvgWireCAmt)
+                _ = entity.Property(e => e.AvgWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_C_AMT");
 
-                entity.Property(e => e.AvgWireDAmt)
+                _ = entity.Property(e => e.AvgWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_D_AMT");
 
-                entity.Property(e => e.AvgWithdrawalDAmt)
+                _ = entity.Property(e => e.AvgWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.IndustryCode)
+                _ = entity.Property(e => e.IndustryCode)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_CODE");
 
-                entity.Property(e => e.IndustryDesc)
+                _ = entity.Property(e => e.IndustryDesc)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_DESC");
 
-                entity.Property(e => e.MaxCashCAmt)
+                _ = entity.Property(e => e.MaxCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_C_AMT");
 
-                entity.Property(e => e.MaxCashDAmt)
+                _ = entity.Property(e => e.MaxCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_D_AMT");
 
-                entity.Property(e => e.MaxCheckDAmt)
+                _ = entity.Property(e => e.MaxCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CHECK_D_AMT");
 
-                entity.Property(e => e.MaxFeesDAmt)
+                _ = entity.Property(e => e.MaxFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_FEES_D_AMT");
 
-                entity.Property(e => e.MaxInternaltransferCAmt)
+                _ = entity.Property(e => e.MaxInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.MaxInternaltransferDAmt)
+                _ = entity.Property(e => e.MaxInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.MaxMiscCAmt)
+                _ = entity.Property(e => e.MaxMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_MISC_C_AMT");
 
-                entity.Property(e => e.MaxMls)
+                _ = entity.Property(e => e.MaxMls)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_MLS");
 
-                entity.Property(e => e.MaxTotalAmt)
+                _ = entity.Property(e => e.MaxTotalAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_AMT");
 
-                entity.Property(e => e.MaxTotalCtAmt)
+                _ = entity.Property(e => e.MaxTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_CT_AMT");
 
-                entity.Property(e => e.MaxTotalDtAmt)
+                _ = entity.Property(e => e.MaxTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_TOTAL_DT_AMT");
 
-                entity.Property(e => e.MaxWireCAmt)
+                _ = entity.Property(e => e.MaxWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_C_AMT");
 
-                entity.Property(e => e.MaxWireDAmt)
+                _ = entity.Property(e => e.MaxWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_D_AMT");
 
-                entity.Property(e => e.MaxWithdrawalDAmt)
+                _ = entity.Property(e => e.MaxWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.MinCashCAmt)
+                _ = entity.Property(e => e.MinCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_C_AMT");
 
-                entity.Property(e => e.MinCashDAmt)
+                _ = entity.Property(e => e.MinCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_D_AMT");
 
-                entity.Property(e => e.MinCheckDAmt)
+                _ = entity.Property(e => e.MinCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CHECK_D_AMT");
 
-                entity.Property(e => e.MinFeesDAmt)
+                _ = entity.Property(e => e.MinFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_FEES_D_AMT");
 
-                entity.Property(e => e.MinInternaltransferCAmt)
+                _ = entity.Property(e => e.MinInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.MinInternaltransferDAmt)
+                _ = entity.Property(e => e.MinInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.MinMiscCAmt)
+                _ = entity.Property(e => e.MinMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_MISC_C_AMT");
 
-                entity.Property(e => e.MinTotalAmt)
+                _ = entity.Property(e => e.MinTotalAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_AMT");
 
-                entity.Property(e => e.MinTotalCtAmt)
+                _ = entity.Property(e => e.MinTotalCtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_CT_AMT");
 
-                entity.Property(e => e.MinTotalDtAmt)
+                _ = entity.Property(e => e.MinTotalDtAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_TOTAL_DT_AMT");
 
-                entity.Property(e => e.MinWireCAmt)
+                _ = entity.Property(e => e.MinWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_C_AMT");
 
-                entity.Property(e => e.MinWireDAmt)
+                _ = entity.Property(e => e.MinWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_D_AMT");
 
-                entity.Property(e => e.MinWithdrawalDAmt)
+                _ = entity.Property(e => e.MinWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.OccupationDesc)
+                _ = entity.Property(e => e.OccupationDesc)
                     .HasMaxLength(128)
                     .IsUnicode(false)
                     .HasColumnName("OCCUPATION_DESC");
 
-                entity.Property(e => e.PartyNumber)
+                _ = entity.Property(e => e.PartyNumber)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("PARTY_NUMBER");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.RiskClassification)
+                _ = entity.Property(e => e.RiskClassification)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("RISK_CLASSIFICATION");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.TotalAmount)
+                _ = entity.Property(e => e.TotalAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_AMOUNT");
 
-                entity.Property(e => e.TotalCashCAmt)
+                _ = entity.Property(e => e.TotalCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_C_AMT");
 
-                entity.Property(e => e.TotalCashCCnt)
+                _ = entity.Property(e => e.TotalCashCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_C_CNT");
 
-                entity.Property(e => e.TotalCashDAmt)
+                _ = entity.Property(e => e.TotalCashDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_AMT");
 
-                entity.Property(e => e.TotalCashDCnt)
+                _ = entity.Property(e => e.TotalCashDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_CNT");
 
-                entity.Property(e => e.TotalCheckDAmt)
+                _ = entity.Property(e => e.TotalCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CHECK_D_AMT");
 
-                entity.Property(e => e.TotalCheckDCnt)
+                _ = entity.Property(e => e.TotalCheckDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CHECK_D_CNT");
 
-                entity.Property(e => e.TotalCnt)
+                _ = entity.Property(e => e.TotalCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CNT");
 
-                entity.Property(e => e.TotalCreditAmount)
+                _ = entity.Property(e => e.TotalCreditAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CREDIT_AMOUNT");
 
-                entity.Property(e => e.TotalCtCnt)
+                _ = entity.Property(e => e.TotalCtCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CT_CNT");
 
-                entity.Property(e => e.TotalDebitAmount)
+                _ = entity.Property(e => e.TotalDebitAmount)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_AMOUNT");
 
-                entity.Property(e => e.TotalDebitCnt)
+                _ = entity.Property(e => e.TotalDebitCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_CNT");
 
-                entity.Property(e => e.TotalFeesDAmt)
+                _ = entity.Property(e => e.TotalFeesDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_FEES_D_AMT");
 
-                entity.Property(e => e.TotalFeesDCnt)
+                _ = entity.Property(e => e.TotalFeesDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_FEES_D_CNT");
 
-                entity.Property(e => e.TotalInternaltransferCAmt)
+                _ = entity.Property(e => e.TotalInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
 
-                entity.Property(e => e.TotalInternaltransferCCnt)
+                _ = entity.Property(e => e.TotalInternaltransferCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
 
-                entity.Property(e => e.TotalInternaltransferDAmt)
+                _ = entity.Property(e => e.TotalInternaltransferDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
 
-                entity.Property(e => e.TotalInternaltransferDCnt)
+                _ = entity.Property(e => e.TotalInternaltransferDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
 
-                entity.Property(e => e.TotalMiscCAmt)
+                _ = entity.Property(e => e.TotalMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_AMT");
 
-                entity.Property(e => e.TotalMiscCCnt)
+                _ = entity.Property(e => e.TotalMiscCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_CNT");
 
-                entity.Property(e => e.TotalWireCAmt)
+                _ = entity.Property(e => e.TotalWireCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_C_AMT");
 
-                entity.Property(e => e.TotalWireCCnt)
+                _ = entity.Property(e => e.TotalWireCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_C_CNT");
 
-                entity.Property(e => e.TotalWireDAmt)
+                _ = entity.Property(e => e.TotalWireDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_AMT");
 
-                entity.Property(e => e.TotalWireDCnt)
+                _ = entity.Property(e => e.TotalWireDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_CNT");
 
-                entity.Property(e => e.TotalWithdrawalDAmt)
+                _ = entity.Property(e => e.TotalWithdrawalDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WITHDRAWAL_D_AMT");
 
-                entity.Property(e => e.TotalWithdrawalDCnt)
+                _ = entity.Property(e => e.TotalWithdrawalDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WITHDRAWAL_D_CNT");
             });
 
-            modelBuilder.Entity<ArtSegoutvsallcustTb>(entity =>
+            _ = modelBuilder.Entity<ArtSegoutvsallcustTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_SEGOUTVSALLCUST_TB");
+                _ = entity.ToTable("ART_SEGOUTVSALLCUST_TB");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfCustomers)
+                _ = entity.Property(e => e.NumberOfCustomers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
-                entity.Property(e => e.NumberOfOutliers)
+                _ = entity.Property(e => e.NumberOfOutliers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_OUTLIERS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
 
-            modelBuilder.Entity<ArtSegoutvsalloutTb>(entity =>
+            _ = modelBuilder.Entity<ArtSegoutvsalloutTb>(entity =>
             {
-                entity.HasNoKey();
+                _ = entity.HasNoKey();
 
-                entity.ToTable("ART_SEGOUTVSALLOUT_TB");
+                _ = entity.ToTable("ART_SEGOUTVSALLOUT_TB");
 
-                entity.Property(e => e.MonthKey)
+                _ = entity.Property(e => e.MonthKey)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
-                entity.Property(e => e.NumberOfOutliers)
+                _ = entity.Property(e => e.NumberOfOutliers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_OUTLIERS");
 
-                entity.Property(e => e.PartyTypeDesc)
+                _ = entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
-                entity.Property(e => e.SegmentSorted)
+                _ = entity.Property(e => e.SegmentSorted)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
-                entity.Property(e => e.TotalNumberOfOutliers)
+                _ = entity.Property(e => e.TotalNumberOfOutliers)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_NUMBER_OF_OUTLIERS");
             });

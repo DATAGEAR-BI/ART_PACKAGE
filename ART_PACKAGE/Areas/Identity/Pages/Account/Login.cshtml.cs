@@ -4,6 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,12 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
+        private readonly LoggedUser _loggedUser;
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, LoggedUser loggedUser)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _loggedUser = loggedUser;
         }
 
         /// <summary>
@@ -108,9 +110,13 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.Log(LogLevel.Information, $"user {Input.Email} logged in...");
+                    //_loggedUser.UpdateLoggedUser(Input.Email, true);
+                    //_loggedUser.AddLoggedUserAudit(Input.Email, true);
+                    _logger.LogInformation($"user {Input.Email} logged in...");
                     return LocalRedirect(returnUrl);
                 }
+                //_loggedUser.UpdateLoggedUser(Input.Email, false);
+                //_loggedUser.AddLoggedUserAudit(Input.Email, false);
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });

@@ -1,4 +1,5 @@
-﻿using Data.Data;
+﻿using ART_PACKAGE.Helpers.Logging;
+using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.ECM;
@@ -12,15 +13,48 @@ namespace Data.ModelCreatingStrategies
 {
     public class SqlServerModelCreatingStrategy : IModelCreatingStrategy
     {
-
-
         public void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Logged User
+            modelBuilder.Entity<ArtLoggedUser>(entity =>
+            {
+                entity.HasKey(x => x.ID)
+                       .HasName("User_ID");
 
+                entity.ToTable("Art_LoggedUsers");
 
+                entity.Property(x => x.UserName)
+                       .HasMaxLength(250)
+                       .IsUnicode(false)
+                       .HasColumnName("User_Name");
+                entity.Property(x => x.LoginDate)
+                       .HasColumnType("datetime")
+                       .HasColumnName("Login_Date");
+                entity.Property(x => x.LoginStatus)
+                       .HasMaxLength(250)
+                       .IsUnicode(false)
+                       .HasColumnName("Login_Status");
+            });
+            // Logged User Aduit 
+            modelBuilder.Entity<ArtLoggedUserAudit>(entity =>
+            {
+                entity.HasKey(x => x.ID)
+                       .HasName("ID");
 
+                entity.ToTable("Art_LoggedUser_AUD");
 
-
+                entity.Property(x => x.UserName)
+                       .HasMaxLength(250)
+                       .IsUnicode(false)
+                       .HasColumnName("User_Name");
+                entity.Property(x => x.LoginDate)
+                       .HasColumnType("datetime")
+                       .HasColumnName("Login_Date");
+                entity.Property(x => x.LoginStatus)
+                       .HasMaxLength(250)
+                       .IsUnicode(false)
+                       .HasColumnName("Login_Status");
+            });
             //Aduit
             modelBuilder.Entity<ArtGroupsAuditView>(entity =>
             {
