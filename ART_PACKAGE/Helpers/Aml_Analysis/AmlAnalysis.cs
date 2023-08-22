@@ -27,25 +27,25 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
             try
             {
-                (bool isSucceed, IEnumerable<decimal>? AlertsIds) = await SetAlertStatus(closeReq.Entities, _fcfkc);
+                (bool isSucceed, IEnumerable<decimal>? AlertsIds) = await SetAlertStatus(closeReq.Entities);
                 if (!isSucceed)
                 {
 
                     return (false, closeReq.Entities);
                 }
-                bool eventRes = await CreateAlertsEvents(AlertsIds, closeReq.Desc, userName, _fcfkc);
+                bool eventRes = await CreateAlertsEvents(AlertsIds, closeReq.Desc, userName);
                 if (!eventRes)
                 {
 
                     return (false, closeReq.Entities);
                 }
-                bool clearAlertsRes = await ClearAlertsCount(closeReq.Entities, _fcfkc);
+                bool clearAlertsRes = await ClearAlertsCount(closeReq.Entities);
                 if (!clearAlertsRes)
                 {
 
                     return (false, closeReq.Entities);
                 }
-                bool commentsRes = await AddComments(closeReq.Entities, closeReq.Comment, userName, _fcfkc);
+                bool commentsRes = await AddComments(closeReq.Entities, closeReq.Comment, userName);
                 if (!commentsRes)
                 {
 
