@@ -1,24 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-//using MimeKit;
+﻿//using MimeKit;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Microsoft.Extensions.Caching.Memory;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
     public class RiskSummaryController : Controller
     {
-        private readonly AuthContext dbfcfcore;
+        private readonly SasAmlContext dbfcfcore;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly string dbType;
-        public RiskSummaryController(AuthContext dbfcfcore, IMemoryCache cache, IConfiguration config)
+        public RiskSummaryController(SasAmlContext dbfcfcore, IMemoryCache cache, IConfiguration config)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;

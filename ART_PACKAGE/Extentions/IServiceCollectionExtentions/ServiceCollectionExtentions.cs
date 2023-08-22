@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Security;
 using Data.Audit;
@@ -7,6 +8,14 @@ using Data.Constants.db;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCF71;
+using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
+using Data.Data.Audit;
+using Data.Data.ECM;
+using Data.Data.SASAml;
+using Data.Data.Segmentation;
+using Data.DGAML;
+using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC;
 using Data.GOAML;
@@ -26,100 +35,64 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
             string DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
             string DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-            List<string>? migrationsToApply = config.GetSection("migrations").Get<List<string>>();
+
+            List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
             string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
+            void contextBuilder(DbContextOptionsBuilder options, string conn)
+            {
+                _ = dbType switch
+                {
+                    DbTypes.SqlServer => options.UseSqlServer(
+                        conn,
+                        x => x.MigrationsAssembly("SqlServerMigrations")
+                        ),
+                    DbTypes.Oracle => options.UseOracle(
+                        conn,
+                        x => x.MigrationsAssembly("OracleMigrations")
+                        ),
+                    _ => throw new Exception($"Unsupported provider: {dbType}")
+                };
+            }
 
-            _ = services.AddDbContext<AuthContext>(options => _ = dbType switch
+            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            if (modulesToApply.Contains("SEG"))
             {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    connectionString,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
+                _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("GOAML"))
+            {
+                _ = services.AddDbContext<GoAmlContext>(opt => contextBuilder(opt, GOAMLContextConnection));
+                _ = services.AddDbContext<ArtGoAmlContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("DGAML"))
+            {
+                _ = services.AddDbContext<DGAMLContext>(opt => contextBuilder(opt, DGAMLContextConnection));
+                _ = services.AddDbContext<ArtDgAmlContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("ECM"))
+            {
+                _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("SASAML"))
+            {
+                _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
+                _ = services.AddDbContext<FCFKC>(opt => contextBuilder(opt, FCFKCContextConnection));
+                _ = services.AddDbContext<SasAmlContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("DGAUDIT"))
+            {
+                _ = services.AddDbContext<AuditContext>(opt => contextBuilder(opt, DGUSERMANAGMENTContextConnection));
+                _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
+            }
 
 
-            _ = services.AddDbContext<DGECMContext>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    DGECMContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    DGECMContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-
-
-
-            _ = services.AddDbContext<fcf71Context>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    FCFCOREContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    FCFCOREContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-            _ = services.AddDbContext<FCFKC>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    FCFKCContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    FCFKCContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-            _ = services.AddDbContext<GoAmlContext>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    GOAMLContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    GOAMLContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-            _ = services.AddDbContext<AuditContext>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    DGUSERMANAGMENTContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    DGUSERMANAGMENTContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
-            _ = services.AddDbContext<DGAMLContext>(options => _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    DGAMLContextConnection,
-                    x => x.MigrationsAssembly("SqlServerMigrations")
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    DGAMLContextConnection,
-                    x => x.MigrationsAssembly("OracleMigrations")
-                    ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            });
 
             _ = services.AddScoped<IDbService, DBService>();
             return services;

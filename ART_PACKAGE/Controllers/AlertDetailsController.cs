@@ -1,13 +1,11 @@
-﻿
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Data.Data;
+using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
@@ -20,11 +18,11 @@ namespace ART_PACKAGE.Controllers
 
     public class AlertDetailsController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly SasAmlContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
         private readonly IHubContext<ExportHub> _exportHub;
-        public AlertDetailsController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
+        public AlertDetailsController(SasAmlContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
         {
             this.dbfcfkc = dbfcfkc;
 
@@ -88,11 +86,23 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
+            int i = 1;
             foreach (Task<byte[]> item in data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req))
             {
-                byte[] bytes = await item;
-                await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                            .SendAsync("csvRecevied", bytes);
+                try
+                {
+                    byte[] bytes = await item;
+                    string FileName = GetType().Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvRecevied", bytes, FileName);
+                    i++;
+                }
+                catch (Exception)
+                {
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvErrorRecevied", i);
+                }
+
             }
             return new EmptyResult();
         }

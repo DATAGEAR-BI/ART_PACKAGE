@@ -3,6 +3,7 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -87,14 +88,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 "sqlServer"
             ,
             new Dictionary<string, string> {
-            { "eq", " = Convert(datetime,'{0}')" },
-            { "neq", " <> Convert(datetime,'{0}')" },
+            { "eq", " = Convert(date,'{0}' ,105)" },
+            { "neq", " <> Convert(date,'{0}' ,105)" },
             { "isnull", "IS NULL" },
             { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= Convert(datetime,'{0}')"},
-            {"gt"," > Convert(datetime,'{0}')"},
-            {"lte"," <= Convert(datetime,'{0}')"},
-            { "lt", " < Convert(datetime,'{0}')" },
+            {"gte"," >= Convert(date,'{0}' ,105)"},
+            {"gt"," > Convert(date,'{0}' ,105)"},
+            {"lte"," <= Convert(date,'{0}',105)"},
+            { "lt", " < Convert(date,'{0}',105)" },
                 }
             }
 
@@ -161,9 +162,20 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     catch (Exception)
                     {
                         string value = ((JsonElement)i.value).ToObject<string>();
-                        v = DateTime.TryParse(value, out DateTime dt)
-                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"))
-                            : string.Format(StringOp[i.@operator], value);
+                        if (DateTime.TryParse(value, out DateTime dt))
+                        {
+                            v = string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"));
+                            if (dbtype == "sqlServer")
+                            {
+                                i.field = $"Convert(date,{i.field},105)";
+                            }
+                        }
+                        else
+                        {
+                            v = string.Format(StringOp[i.@operator], value);
+                        }
+
+
 
                     }
                     finally
@@ -471,8 +483,52 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         }
 
+        private static string GetFilterTextForCsv(this Filter Filters)
+        {
+            StringBuilder filterBuilder = new();
+            if (Filters is null)
+            {
+                return string.Empty;
+            }
+
+            string? logic = Filters.logic;
+
+            if (logic is null)
+            {
+                return string.Empty;
+            }
+
+            _ = new List<string>();
+            foreach (object? item in Filters.filters)
+            {
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
+                if (i.field == null)
+                {
+                    Filter filter = t.ToObject<Filter>();
+                    _ = filterBuilder.AppendLine(GetFilterTextForCsv(filter));
+
+                }
+                else
+                {
+                    string v = "";
+
+                    v = $"{i.field},{i.@operator},{i.value ?? ""}";
+                    _ = filterBuilder.AppendLine(v);
 
 
+                }
+
+
+            }
+
+
+            return filterBuilder.ToString();
+
+
+
+
+        }
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
@@ -549,13 +605,6 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return Type.GetTypeCode(o) switch
             {
                 TypeCode.Byte or TypeCode.SByte or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.Decimal or TypeCode.Double or TypeCode.Single => true,
-                TypeCode.Empty => throw new NotImplementedException(),
-                TypeCode.Object => throw new NotImplementedException(),
-                TypeCode.DBNull => throw new NotImplementedException(),
-                TypeCode.Boolean => throw new NotImplementedException(),
-                TypeCode.Char => throw new NotImplementedException(),
-                TypeCode.DateTime => throw new NotImplementedException(),
-                TypeCode.String => throw new NotImplementedException(),
                 _ => false,
             };
         }
@@ -677,6 +726,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
+            string filterCells = GetFilterTextForCsv(obj.Filter);
             decimal total = 0;
             if (all)
             {
@@ -691,25 +741,30 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
 
 
-            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
             {
-
+                Delimiter = ",",
+                Encoding = Encoding.UTF8,
             };
+            int batch = 10000;
             int skip = 0;
             List<Task<byte[]>> tasks = new() { };
             while (total > 0)
             {
-                string datasql = data.ToQueryString();
-                IQueryable<T> tempDData = data.Skip(skip).Take(1000);
+                IQueryable<T> tempDData = data.Skip(skip).Take(batch);
                 string sql = tempDData.ToQueryString();
                 List<T> tempData = tempDData.ToList();
                 yield return Task.Run(() =>
                 {
                     using MemoryStream stream = new();
-                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (StreamWriter sw = new(stream, Encoding.UTF8))
                     using (CsvWriter cw = new(sw, config))
                     {
                         _ = cw.Context.RegisterClassMap<T1>();
+
+                        cw.WriteComment(filterCells.Replace("Ã¯Â»Â¿#", ""));
+
+                        cw.NextRecord();
                         cw.WriteHeader<T>();
                         cw.NextRecord();
                         foreach (T? elm in tempData)
@@ -722,16 +777,10 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     return b;
                 });
                 //tasks.Add(task);
-                total -= 1000;
-                skip += 1000;
+                total -= batch;
+                skip += batch;
             }
-            //var results = await Task.WhenAll(tasks);
-            //tasks.ForEach(x =>
-            //{
-            //    bytes = bytes.Concat(x.Result).ToArray();
-            //}
-            //);
-            //return bytes;
+
 
         }
 

@@ -19,8 +19,11 @@ csharp_style_expression_bodied_indexers = true:silent
 csharp_style_expression_bodied_accessors = true:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
+
 csharp_space_around_binary_operators = before_and_after
 dotnet_diagnostic.IDE0011.severity = silent
+dotnet_diagnostic.IDE0072.severity = silent
+
 
 
 [*.{cs,vb}]

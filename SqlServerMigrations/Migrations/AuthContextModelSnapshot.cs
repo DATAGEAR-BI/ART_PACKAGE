@@ -30,6 +30,9 @@ namespace SqlServerMigrations.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -91,15 +94,16 @@ namespace SqlServerMigrations.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e8670d3f-da46-4d50-a789-98f56086f946",
+                            Active = true,
+                            ConcurrencyStamp = "dc69a310-baa6-46f8-8a2a-22cc44e22913",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEANGLGqhleoZQtDX0Uop5MkwfZKdME4UGBLYxr4A83Ef9rQpl3rb+YYwtHvq45ZNkQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENZEJDz1x5O3Ov6Wm0YI8sgPrleI2HZ7AGMIzBCkrTnryfnjombgKSggiv3GQnGKPA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b38d9d4e-eb11-4257-8f54-5196d01f5744",
+                            SecurityStamp = "5b4e360b-7d3d-4728-a922-1c1a198bca24",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -127,6 +131,10 @@ namespace SqlServerMigrations.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Table")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -169,891 +177,181 @@ namespace SqlServerMigrations.Migrations
                     b.Property<string>("Column")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IsNullable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JsType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ReportId", "Column");
 
                     b.ToTable("ArtSavedReportsColumns");
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAlertedEntity", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertPerOwner", b =>
                 {
-                    b.Property<string>("CaseId")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(64)")
-                        .HasColumnName("CASE_ID");
+                    b.Property<decimal?>("ALERTS_CNT_SUM")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasPrecision(6)
-                        .HasColumnType("datetime2(6)")
-                        .HasColumnName("CREATE_DATE");
+                    b.Property<string>("OWNER_QUEUE")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("CLOB")
-                        .HasColumnName("NAME");
-
-                    b.Property<string>("PepInd")
-                        .HasColumnType("CLOB")
-                        .HasColumnName("PEP_IND");
-
-                    b.ToView("ART_ALERTED_ENTITY");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAmlAlertDetailView", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerBranch", b =>
                 {
-                    b.Property<string>("ActualValuesText")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ACTUAL_VALUES_TEXT");
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("AlertDescription")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ALERT_DESCRIPTION");
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("AlertId")
-                        .HasColumnType("decimal(12,0)")
-                        .HasColumnName("ALERT_ID");
-
-                    b.Property<string>("AlertStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ALERT_STATUS");
-
-                    b.Property<string>("AlertSubCat")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ALERT_SUB_CAT");
-
-                    b.Property<string>("AlertTypeCd")
-                        .HasMaxLength(32)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(32)")
-                        .HasColumnName("ALERT_TYPE_CD");
-
-                    b.Property<string>("AlertedEntityName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ALERTED_ENTITY_NAME");
-
-                    b.Property<string>("AlertedEntityNumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("ALERTED_ENTITY_NUMBER");
-
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
-
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
-
-                    b.Property<DateTime?>("CloseDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CLOSE_DATE");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CREATE_DATE");
-
-                    b.Property<string>("EmployeeInd")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("EMPLOYEE_IND")
-                        .IsFixedLength();
-
-                    b.Property<int?>("InvestigationDays")
-                        .HasColumnType("int")
-                        .HasColumnName("INVESTIGATION_DAYS");
-
-                    b.Property<decimal?>("MoneyLaunderingRiskScore")
-                        .HasColumnType("decimal(3,0)")
-                        .HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
-
-                    b.Property<string>("OwnerUserid")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("OWNER_USERID");
-
-                    b.Property<string>("PartyTypeDesc")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("PARTY_TYPE_DESC");
-
-                    b.Property<string>("PoliticallyExposedPersonInd")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("POLITICALLY_EXPOSED_PERSON_IND")
-                        .IsFixedLength();
-
-                    b.Property<string>("ReportCloseRsn")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("REPORT_CLOSE_RSN");
-
-                    b.Property<DateTime?>("RunDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("RUN_DATE");
-
-                    b.Property<decimal?>("ScenarioId")
-                        .HasColumnType("decimal(12,0)")
-                        .HasColumnName("SCENARIO_ID");
-
-                    b.Property<string>("ScenarioName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("SCENARIO_NAME");
-
-                    b.ToView("ART_AML_ALERT_DETAIL_VIEW", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAmlCaseDetailsView", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerScenario", b =>
                 {
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
+                    b.Property<string>("SCENARIO_NAME")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CaseCategory")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_CATEGORY");
-
-                    b.Property<decimal?>("CaseId")
-                        .HasColumnType("decimal(12,0)")
-                        .HasColumnName("CASE_ID");
-
-                    b.Property<string>("CasePriority")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_PRIORITY");
-
-                    b.Property<string>("CaseStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_STATUS");
-
-                    b.Property<string>("CaseSubCategory")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_SUB_CATEGORY");
-
-                    b.Property<DateTime?>("ClosedDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Closed_Date");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CREATE_DATE");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("CREATED_BY");
-
-                    b.Property<string>("EntityLevel")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ENTITY_LEVEL");
-
-                    b.Property<string>("EntityName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ENTITY_NAME");
-
-                    b.Property<string>("EntityNumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("ENTITY_NUMBER");
-
-                    b.Property<string>("Owner")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("OWNER");
-
-                    b.ToView("ART_AML_CASE_DETAILS_VIEW", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAmlCustomersDetailsView", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerStatus", b =>
                 {
-                    b.Property<string>("ActiveFlg")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("ACTIVE_FLG")
-                        .IsFixedLength();
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("AnnualIncomeAmount")
-                        .HasColumnType("decimal(10,0)")
-                        .HasColumnName("ANNUAL_INCOME_AMOUNT");
+                    b.Property<string>("ALERT_STATUS")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
-
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
-
-                    b.Property<string>("CitizenshipCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("CITIZENSHIP_COUNTRY_NAME");
-
-                    b.Property<string>("CityName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("City_name");
-
-                    b.Property<DateTime?>("CustomerDateOfBirth")
-                        .HasColumnType("datetime")
-                        .HasColumnName("customer_date_of_birth");
-
-                    b.Property<string>("CustomerIdentificationId")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("customer_identification_id");
-
-                    b.Property<string>("CustomerIdentificationType")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("customer_identification_type");
-
-                    b.Property<string>("CustomerName")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("customer_name");
-
-                    b.Property<string>("CustomerNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("customer_number");
-
-                    b.Property<DateTime?>("CustomerSinceDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CUSTOMER_SINCE_DATE");
-
-                    b.Property<string>("CustomerStatus")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("Customer_status");
-
-                    b.Property<string>("CustomerTaxId")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("Customer_Tax_ID");
-
-                    b.Property<string>("CustomerType")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("customer_type");
-
-                    b.Property<string>("DoingBusinessAsName")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("DOING_BUSINESS_AS_NAME");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)")
-                        .HasColumnName("EMAIL_ADDRESS");
-
-                    b.Property<string>("EmployeeNumber")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("EMPLOYEE_NUMBER");
-
-                    b.Property<string>("EmployerName")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("EMPLOYER_NAME");
-
-                    b.Property<string>("EmployerPhoneNumber")
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)")
-                        .HasColumnName("EMPLOYER_PHONE_NUMBER");
-
-                    b.Property<string>("GovernorateName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("Governorate_name");
-
-                    b.Property<string>("IndustryDesc")
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("industry_desc");
-
-                    b.Property<string>("IsEmployee")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("Is_EMPLOYEE")
-                        .IsFixedLength();
-
-                    b.Property<DateTime?>("LastRiskAssessmentDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("LAST_RISK_ASSESSMENT_DATE");
-
-                    b.Property<string>("MailingAddress1")
-                        .HasMaxLength(350)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(350)")
-                        .HasColumnName("MAILING_ADDRESS_1");
-
-                    b.Property<string>("MailingCityName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("MAILING_CITY_NAME");
-
-                    b.Property<string>("MailingCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("MAILING_COUNTRY_NAME");
-
-                    b.Property<string>("MailingPostalCode")
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("char(10)")
-                        .HasColumnName("MAILING_POSTAL_CODE")
-                        .IsFixedLength();
-
-                    b.Property<string>("MaritalStatusDesc")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("MARITAL_STATUS_DESC");
-
-                    b.Property<decimal?>("NetWorthAmount")
-                        .HasColumnType("decimal(10,0)")
-                        .HasColumnName("NET_WORTH_AMOUNT");
-
-                    b.Property<string>("NonProfitOrgInd")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("non_profit_org_ind")
-                        .IsFixedLength();
-
-                    b.Property<string>("OccupationDesc")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("occupation_desc");
-
-                    b.Property<string>("PhoneNumber1")
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)")
-                        .HasColumnName("PHONE_NUMBER_1");
-
-                    b.Property<string>("PhoneNumber2")
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)")
-                        .HasColumnName("PHONE_NUMBER_2");
-
-                    b.Property<string>("PhoneNumber3")
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)")
-                        .HasColumnName("PHONE_NUMBER_3");
-
-                    b.Property<string>("PoliticallyExposedPersonInd")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("politically_exposed_person_ind")
-                        .IsFixedLength();
-
-                    b.Property<string>("ResidenceCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("RESIDENCE_COUNTRY_NAME");
-
-                    b.Property<string>("RiskClassification")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("RISK_CLASSIFICATION");
-
-                    b.Property<string>("StreetAddress1")
-                        .HasMaxLength(350)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(350)")
-                        .HasColumnName("street_address_1");
-
-                    b.Property<string>("StreetCountryCode")
-                        .HasMaxLength(3)
-                        .IsUnicode(false)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("STREET_COUNTRY_CODE")
-                        .IsFixedLength();
-
-                    b.Property<string>("StreetCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("STREET_COUNTRY_NAME");
-
-                    b.Property<string>("StreetPostalCode")
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("char(10)")
-                        .HasColumnName("STREET_POSTAL_CODE")
-                        .IsFixedLength();
-
-                    b.ToView("ART_AML_CUSTOMERS_DETAILS_VIEW", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAmlHighRiskCustView", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerCategory", b =>
                 {
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
+                    b.Property<string>("CASE_CATEGORY")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("CitizenshipCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("CITIZENSHIP_COUNTRY_NAME");
-
-                    b.Property<string>("MailingAddress1")
-                        .HasMaxLength(350)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(350)")
-                        .HasColumnName("MAILING_ADDRESS_1");
-
-                    b.Property<string>("MailingCityName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("MAILING_CITY_NAME");
-
-                    b.Property<DateTime?>("PartyDateOfBirth")
-                        .HasColumnType("datetime")
-                        .HasColumnName("PARTY_DATE_OF_BIRTH");
-
-                    b.Property<string>("PartyIdentificationId")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("PARTY_IDENTIFICATION_ID");
-
-                    b.Property<string>("PartyIdentificationTypeDesc")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("PARTY_IDENTIFICATION_TYPE_DESC");
-
-                    b.Property<string>("PartyName")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("PARTY_NAME");
-
-                    b.Property<string>("PartyNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("PARTY_NUMBER");
-
-                    b.Property<string>("PartyTaxId")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("PARTY_TAX_ID");
-
-                    b.Property<string>("PartyTypeDesc")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("PARTY_TYPE_DESC");
-
-                    b.Property<string>("PhoneNumber1")
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)")
-                        .HasColumnName("PHONE_NUMBER_1");
-
-                    b.Property<string>("PoliticallyExposedPersonInd")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("char(1)")
-                        .HasColumnName("POLITICALLY_EXPOSED_PERSON_IND")
-                        .IsFixedLength();
-
-                    b.Property<string>("ResidenceCountryName")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("RESIDENCE_COUNTRY_NAME");
-
-                    b.Property<string>("RiskClassification")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("RISK_CLASSIFICATION");
-
-                    b.Property<string>("StreetAddress1")
-                        .HasMaxLength(350)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(350)")
-                        .HasColumnName("STREET_ADDRESS_1");
-
-                    b.Property<string>("StreetCityName")
-                        .HasMaxLength(35)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("STREET_CITY_NAME");
-
-                    b.ToView("ART_AML_HIGH_RISK_CUST_VIEW", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtAmlTriageView", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerPriority", b =>
                 {
-                    b.Property<decimal?>("AgeOldestAlert")
-                        .HasColumnType("decimal(4,0)")
-                        .HasColumnName("AGE_OLDEST_ALERT");
+                    b.Property<string>("CASE_PRIORITY")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("AggregateAmt")
-                        .HasColumnType("decimal(15,3)")
-                        .HasColumnName("AGGREGATE_AMT");
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("AlertedEntityLevel")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ALERTED_ENTITY_LEVEL");
-
-                    b.Property<string>("AlertedEntityName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ALERTED_ENTITY_NAME");
-
-                    b.Property<string>("AlertedEntityNumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("ALERTED_ENTITY_NUMBER");
-
-                    b.Property<decimal?>("AlertsCnt")
-                        .HasColumnType("decimal(4,0)")
-                        .HasColumnName("ALERTS_CNT");
-
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
-
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
-
-                    b.Property<string>("OwnerUserid")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("OWNER_USERID");
-
-                    b.Property<string>("RiskScore")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("RISK_SCORE");
-
-                    b.ToView("ART_AML_TRIAGE_VIEW", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtGoamlReportsDetail", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerStatus", b =>
                 {
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ACTION")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<string>("CASE_STATUS")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Currencycodelocal")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("CURRENCYCODELOCAL")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Entityreference")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ENTITYREFERENCE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Fiurefnumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("FIUREFNUMBER")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
-
-                    b.Property<bool?>("Isvalid")
-                        .HasColumnType("bit")
-                        .HasColumnName("ISVALID");
-
-                    b.Property<DateTime?>("LastUpdatedDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("LAST_UPDATED_DATE");
-
-                    b.Property<string>("Location")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("LOCATION")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Priority")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("PRIORITY")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reason")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("REASON")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Rentitybranch")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("RENTITYBRANCH")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<int>("Rentityid")
-                        .HasColumnType("int")
-                        .HasColumnName("RENTITYID");
-
-                    b.Property<DateTime?>("Reportcloseddate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("REPORTCLOSEDDATE");
-
-                    b.Property<string>("Reportcode")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTCODE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reportcreatedby")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTCREATEDBY")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<DateTime?>("Reportcreateddate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("REPORTCREATEDDATE");
-
-                    b.Property<string>("Reportingpersontype")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTINGPERSONTYPE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reportrisksignificance")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTRISKSIGNIFICANCE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reportstatuscode")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTSTATUSCODE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reportuserlockid")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTUSERLOCKID")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Reportxml")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTXML")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<string>("Submissioncode")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("SUBMISSIONCODE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.Property<DateTime?>("Submissiondate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("SUBMISSIONDATE");
-
-                    b.Property<string>("Version")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("VERSION")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                    b.ToView("ART_GOAML_REPORTS_DETAILS", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtGoamlReportsIndicator", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCustomerPerBranch", b =>
                 {
-                    b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("DESCRIPTION")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Indicator")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("INDICATOR")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int")
-                        .HasColumnName("REPORT_ID");
-
-                    b.ToView("ART_GOAML_REPORTS_INDICATORS", "ART_DB");
+                    b.ToView(null);
                 });
 
-            modelBuilder.Entity("Data.Data.ArtGoamlReportsSusbectParty", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCustomerPerType", b =>
                 {
-                    b.Property<string>("Account")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ACCOUNT")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<string>("CUSTOMER_TYPE")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Activity")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(12)")
-                        .HasColumnName("ACTIVITY");
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Branch")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("BRANCH")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.ToView(null);
+                });
 
-                    b.Property<string>("Entityreference")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("ENTITYREFERENCE")
-                        .UseCollation("Arabic_100_CI_AI");
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlExternalCustomerPerBranch", b =>
+                {
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fiurefnumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("FIUREFNUMBER")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
+                    b.ToView(null);
+                });
 
-                    b.Property<string>("PartyId")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("PARTY_ID")
-                        .UseCollation("Arabic_100_CI_AI");
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlExternalCustomerPerType", b =>
+                {
+                    b.Property<string>("CUSTOMER_TYPE")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PartyName")
-                        .HasMaxLength(765)
-                        .HasColumnType("nvarchar(765)")
-                        .HasColumnName("PARTY_NAME")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Partynumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("PARTYNUMBER")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.ToView(null);
+                });
 
-                    b.Property<DateTime?>("Reportcloseddate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("REPORTCLOSEDDATE");
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerCreator", b =>
+                {
+                    b.Property<string>("CREATED_BY")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Reportcode")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTCODE")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("Reportcreateddate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("REPORTCREATEDDATE");
+                    b.ToView(null);
+                });
 
-                    b.Property<string>("Reportstatuscode")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("REPORTSTATUSCODE")
-                        .UseCollation("Arabic_100_CI_AI");
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerIndicator", b =>
+                {
+                    b.Property<string>("INDICATOR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Submissiondate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("SUBMISSIONDATE");
+                    b.Property<int?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Transactionnumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("TRANSACTIONNUMBER")
-                        .UseCollation("Arabic_100_CI_AI");
+                    b.ToView(null);
+                });
 
-                    b.ToView("ART_GOAML_REPORTS_SUSBECT_PARTIES", "ART_DB");
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerStatus", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("REPORT_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerType", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("REPORT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
                 });
 
             modelBuilder.Entity("Data.Data.ArtGroupsAuditView", b =>
@@ -1115,96 +413,6 @@ namespace SqlServerMigrations.Migrations
                         .HasColumnName("sub_group_names");
 
                     b.ToView("ART_GROUPS_AUDIT_VIEW", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.Data.ArtRiskAssessmentView", b =>
-                {
-                    b.Property<string>("AssessmentCategoryCd")
-                        .HasMaxLength(32)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(32)")
-                        .HasColumnName("ASSESSMENT_CATEGORY_CD");
-
-                    b.Property<string>("AssessmentSubcategoryCd")
-                        .HasMaxLength(32)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(32)")
-                        .HasColumnName("ASSESSMENT_SUBCATEGORY_CD");
-
-                    b.Property<string>("AssessmentTypeCd")
-                        .HasMaxLength(32)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(32)")
-                        .HasColumnName("ASSESSMENT_TYPE_CD");
-
-                    b.Property<string>("BranchName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("BRANCH_NAME");
-
-                    b.Property<string>("BranchNumber")
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)")
-                        .HasColumnName("BRANCH_NUMBER");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CREATE_DATE");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("CREATE_USER_ID");
-
-                    b.Property<string>("OwnerUserLongId")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)")
-                        .HasColumnName("OWNER_USER_LONG_ID");
-
-                    b.Property<string>("PartyName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("PARTY_NAME");
-
-                    b.Property<string>("PartyNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("PARTY_NUMBER");
-
-                    b.Property<string>("ProposedRiskClass")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("PROPOSED_RISK_CLASS");
-
-                    b.Property<decimal>("RiskAssessmentDuration")
-                        .HasColumnType("decimal(3,0)")
-                        .HasColumnName("RISK_ASSESSMENT_DURATION");
-
-                    b.Property<decimal>("RiskAssessmentId")
-                        .HasColumnType("decimal(12,0)")
-                        .HasColumnName("RISK_ASSESSMENT_ID");
-
-                    b.Property<string>("RiskClass")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("RISK_CLASS");
-
-                    b.Property<string>("RiskStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("RISK_STATUS");
-
-                    b.Property<decimal>("VersionNumber")
-                        .HasColumnType("decimal(10,0)")
-                        .HasColumnName("VERSION_NUMBER");
-
-                    b.ToView("ART_AML_RISK_ASSESSMENT_VIEW", "ART_DB");
                 });
 
             modelBuilder.Entity("Data.Data.ArtRolesAuditView", b =>
@@ -1381,509 +589,6 @@ namespace SqlServerMigrations.Migrations
 
                     b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
                         .HasColumnType("decimal(18,2)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtStGoAmlReportsPerCreator", b =>
-                {
-                    b.Property<string>("CREATED_BY")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("NUMBER_OF_REPORTS")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtStGoAmlReportsPerIndicator", b =>
-                {
-                    b.Property<string>("INDICATOR")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NUMBER_OF_REPORTS")
-                        .HasColumnType("int");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtStGoAmlReportsPerStatus", b =>
-                {
-                    b.Property<decimal?>("NUMBER_OF_REPORTS")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("REPORT_STATUS")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtStGoAmlReportsPerType", b =>
-                {
-                    b.Property<decimal?>("NUMBER_OF_REPORTS")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("REPORT_TYPE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPerformance", b =>
-                {
-                    b.Property<string>("CaseDesc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CaseId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CaseStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CaseType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("DurationsInDays")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DurationsInHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DurationsInMinutes")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DurationsInSeconds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("EcmLastStatusDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("HitsCount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdentityNum")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InvestrUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LockedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SwiftMessage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SwiftReference")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("TransactionAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("TransactionCurrency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionDirection")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdateUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("ArtSystemPerformances");
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPerfPerDate", b =>
-                {
-                    b.Property<int?>("DAY")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MONTH")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NUMBER_OF_CASES")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("YEAR")
-                        .HasColumnType("int");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPerfPerType", b =>
-                {
-                    b.Property<string>("CASE_TYPE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("TOTAL_NUMBER_OF_CASES")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPreformance", b =>
-                {
-                    b.Property<string>("CaseDesc")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_DESC");
-
-                    b.Property<string>("CaseId")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasColumnName("CASE_ID");
-
-                    b.Property<decimal>("CaseRk")
-                        .HasColumnType("numeric(10,0)")
-                        .HasColumnName("CASE_RK");
-
-                    b.Property<string>("CaseStatus")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("CASE_STATUS");
-
-                    b.Property<string>("CaseType")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("CASE_TYPE");
-
-                    b.Property<string>("ClientName")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("CLIENT_NAME");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CREATE_DATE");
-
-                    b.Property<string>("CreateUserId")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("CREATE_USER_ID");
-
-                    b.Property<int?>("DurationsInDays")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_DAYS");
-
-                    b.Property<int?>("DurationsInHours")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_HOURS");
-
-                    b.Property<int?>("DurationsInMinutes")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_MINUTES");
-
-                    b.Property<int?>("DurationsInSeconds")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_SECONDS");
-
-                    b.Property<DateTime?>("EcmLastStatusDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ECM_LAST_STATUS_DATE");
-
-                    b.Property<string>("HitsCount")
-                        .HasMaxLength(250)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(250)")
-                        .HasColumnName("HITS_COUNT");
-
-                    b.Property<string>("IdentityNum")
-                        .HasMaxLength(4000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(4000)")
-                        .HasColumnName("IDENTITY_NUM");
-
-                    b.Property<string>("InvestrUserId")
-                        .HasMaxLength(250)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(250)")
-                        .HasColumnName("INVESTR_USER_ID");
-
-                    b.Property<string>("LockedBy")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("LOCKED_BY");
-
-                    b.Property<string>("Priority")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("PRIORITY");
-
-                    b.Property<string>("SwiftReference")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(1000)")
-                        .HasColumnName("SWIFT_REFERENCE");
-
-                    b.Property<double?>("TransactionAmount")
-                        .HasColumnType("float")
-                        .HasColumnName("TRANSACTION_AMOUNT");
-
-                    b.Property<string>("TransactionCurrency")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(1000)")
-                        .HasColumnName("TRANSACTION_CURRENCY");
-
-                    b.Property<string>("TransactionDirection")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(1000)")
-                        .HasColumnName("TRANSACTION_DIRECTION");
-
-                    b.Property<string>("TransactionType")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(1000)")
-                        .HasColumnName("TRANSACTION_TYPE");
-
-                    b.Property<string>("UpdateUserId")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("UPDATE_USER_ID");
-
-                    b.Property<DateTime?>("ValidFromDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("VALID_FROM_DATE");
-
-                    b.ToView("ART_SYSTEM_PERFORMANCE", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPrefPerDirection", b =>
-                {
-                    b.Property<decimal?>("TOTAL_NUMBER_OF_CASES")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("TRANSACTION_DIRECTION")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtSystemPrefPerStatus", b =>
-                {
-                    b.Property<string>("CASE_STATUS")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("TOTAL_NUMBER_OF_CASES")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtUserPerformance", b =>
-                {
-                    b.Property<string>("Action")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("ACTION");
-
-                    b.Property<string>("ActionUser")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("ACTION_USER");
-
-                    b.Property<DateTime?>("AsssignedTime")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ASSSIGNED_TIME");
-
-                    b.Property<string>("CaseDesc")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("CASE_DESC");
-
-                    b.Property<string>("CaseId")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasColumnName("CASE_ID");
-
-                    b.Property<decimal>("CaseRk")
-                        .HasColumnType("numeric(10,0)")
-                        .HasColumnName("CASE_RK");
-
-                    b.Property<string>("CaseStatus")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("CASE_STATUS");
-
-                    b.Property<string>("CaseTypeCd")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)")
-                        .HasColumnName("CASE_TYPE_CD");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CREATE_DATE");
-
-                    b.Property<string>("CreateUserId")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("CREATE_USER_ID");
-
-                    b.Property<int?>("DurationsInDays")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_DAYS");
-
-                    b.Property<int?>("DurationsInHours")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_HOURS");
-
-                    b.Property<int?>("DurationsInMinutes")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_MINUTES");
-
-                    b.Property<int?>("DurationsInSeconds")
-                        .HasColumnType("int")
-                        .HasColumnName("DURATIONS_IN_SECONDS");
-
-                    b.Property<string>("LockedBy")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("LOCKED_BY");
-
-                    b.Property<string>("Priority")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)")
-                        .HasColumnName("PRIORITY");
-
-                    b.Property<DateTime?>("ReleasedDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("RELEASED_DATE");
-
-                    b.Property<string>("UpdateUserId")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasColumnName("UPDATE_USER_ID");
-
-                    b.Property<DateTime?>("ValidFromDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("VALID_FROM_DATE");
-
-                    b.ToView("ART_USER_PERFORMANCE", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.Data.ArtUserPerformancePerActionUser", b =>
-                {
-                    b.Property<string>("ACTION_USER")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_DAYS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_HOURS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_MINUTES")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_SECONDS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_DAYS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_HOURS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_MINUTES")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_SECONDS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TOTAL_NUMBER_OF_CASES")
-                        .HasColumnType("int");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtUserPerformPerAction", b =>
-                {
-                    b.Property<int?>("AVG_durations_in_days")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_durations_in_hours")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_durations_in_minutes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_durations_in_seconds")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Number_Of_Cases")
-                        .HasColumnType("int");
-
-                    b.Property<string>("action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("durations_in_days")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("durations_in_hours")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("durations_in_minutes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("durations_in_seconds")
-                        .HasColumnType("int");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("Data.Data.ArtUserPerformPerUserAndAction", b =>
-                {
-                    b.Property<string>("ACTION")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ACTION_USER")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_DAYS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_HOURS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_MINUTES")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AVG_DURATIONS_IN_SECONDS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_DAYS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_HOURS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_MINUTES")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DURATIONS_IN_SECONDS")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TOTAL_NUMBER_OF_CASES")
-                        .HasColumnType("int");
 
                     b.ToView(null);
                 });
@@ -2418,135 +1123,6 @@ namespace SqlServerMigrations.Migrations
                     b.ToView("LIST_OF_USERS_ROLES", "ART_DB");
                 });
 
-            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesDate", b =>
-                {
-                    b.Property<int?>("Day")
-                        .HasColumnType("int")
-                        .HasColumnName("DAY");
-
-                    b.Property<string>("Month")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(36)")
-                        .HasColumnName("MONTH");
-
-                    b.Property<decimal?>("NumberOfCases")
-                        .HasColumnType("decimal")
-                        .HasColumnName("NUMBER_OF_CASES");
-
-                    b.Property<int?>("Year")
-                        .HasColumnType("int")
-                        .HasColumnName("YEAR");
-
-                    b.ToView("ART_HOME_CASES_DATE", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesStatus", b =>
-                {
-                    b.Property<string>("CaseStatus")
-                        .HasMaxLength(9)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(9)")
-                        .HasColumnName("CASE_STATUS");
-
-                    b.Property<int?>("NumberOfCases")
-                        .HasColumnType("int")
-                        .HasColumnName("NUMBER_OF_CASES");
-
-                    b.Property<int>("YEAR")
-                        .HasColumnType("int");
-
-                    b.ToView("ART_HOME_CASES_STATUS", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.DGCMGMT.ArtHomeCasesType", b =>
-                {
-                    b.Property<string>("CaseType")
-                        .HasMaxLength(400)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(400)")
-                        .HasColumnName("CASE_TYPE");
-
-                    b.Property<int?>("NumberOfCases")
-                        .HasColumnType("int")
-                        .HasColumnName("NUMBER_OF_CASES");
-
-                    b.Property<int>("YEAR")
-                        .HasColumnType("int");
-
-                    b.ToView("ART_HOME_CASES_TYPES", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerDate", b =>
-                {
-                    b.Property<int?>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Month")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<int?>("NumberOfAlerts")
-                        .HasColumnType("int")
-                        .HasColumnName("Number_Of_ALerts");
-
-                    b.Property<int?>("Year")
-                        .HasColumnType("int");
-
-                    b.ToView("ART_HOME_ALERTS_PER_DATE", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeAlertsPerStatus", b =>
-                {
-                    b.Property<string>("AlertStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ALERT_STATUS");
-
-                    b.Property<int?>("AlertsCount")
-                        .HasColumnType("int")
-                        .HasColumnName("Alerts_Count");
-
-                    b.ToView("ART_HOME_ALERTS_PER_STATUS", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfAccount", b =>
-                {
-                    b.Property<int?>("NumberOfAccounts")
-                        .HasColumnType("int")
-                        .HasColumnName("Number_Of_Accounts");
-
-                    b.ToView("ART_HOME_Number_Of_Accounts", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfCustomer", b =>
-                {
-                    b.Property<int?>("NumberOfCustomers")
-                        .HasColumnType("int")
-                        .HasColumnName("Number_Of_Customers");
-
-                    b.ToView("ART_HOME_NUMBER_OF_CUSTOMERS", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfHighRiskCustomer", b =>
-                {
-                    b.Property<int?>("NumberOfHighRiskCustomers")
-                        .HasColumnType("int")
-                        .HasColumnName("Number_Of_High_Risk_Customers");
-
-                    b.ToView("ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS", "ART_DB");
-                });
-
-            modelBuilder.Entity("Data.FCF71.ArtHomeNumberOfPepCustomer", b =>
-                {
-                    b.Property<int?>("NumberOfPepCustomers")
-                        .HasColumnType("int")
-                        .HasColumnName("Number_Of_PEP_Customers");
-
-                    b.ToView("ART_HOME_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -2577,21 +1153,21 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "db55fb89-d93f-4ef1-8b70-4160fae890eb",
+                            ConcurrencyStamp = "2bbf990a-6659-4b51-8e9a-5d7ff168a41c",
                             Name = "Home",
                             NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "59608c5c-e0cb-476c-b521-1a977b00790a",
+                            ConcurrencyStamp = "ba40e7d4-ddb9-4471-a7bf-399ea5c65d0d",
                             Name = "CutomReport",
                             NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "5834e21f-3ca7-4f27-8a25-1d81b8bac0ad",
+                            ConcurrencyStamp = "6d4bc811-f379-4676-8492-99d6a383b15f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
