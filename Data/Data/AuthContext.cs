@@ -1,6 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
-using Data.Data.ARTDGAML;
-using Data.Data.ARTGOAML;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -69,25 +67,9 @@ public class AuthContext : IdentityDbContext<AppUser>
 
 
 
-        //GOAML
-        modelBuilder.Entity<ArtStGoAmlReportsPerType>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerStatus>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerIndicator>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
 
-        //DGAML
-        modelBuilder.Entity<ArtStDgAmlAlertPerOwner>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlAlertsPerStatus>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlCustomerPerBranch>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlCustomerPerType>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlCasesPerCategory>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlCasesPerPriority>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlCasesPerStatus>().HasNoKey().ToView(null);
 
-        modelBuilder.Entity<ArtStDgAmlExternalCustomerPerBranch>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlExternalCustomerPerType>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlAlertsPerBranch>().HasNoKey().ToView(null);
-        modelBuilder.Entity<ArtStDgAmlAlertsPerScenario>().HasNoKey().ToView(null);
+
 
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);

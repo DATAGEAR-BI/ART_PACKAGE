@@ -53,6 +53,7 @@ IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
+
     .CreateLogger();
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);

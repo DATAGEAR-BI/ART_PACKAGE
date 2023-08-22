@@ -2,16 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Authentication;
 using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {
@@ -110,11 +110,11 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                _logger.LogInformation("User Trying to Create a new account with password.");
                 IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
-
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User created a new account : {Email} with password.", Input.Email);
 
                     string userId = await _userManager.GetUserIdAsync(user);
                     string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -130,6 +130,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        _logger.LogInformation("redirecting User : {Email} to confirm register", Input.Email);
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
