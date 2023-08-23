@@ -110,11 +110,11 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                _logger.LogInformation("User Trying to Create a new account with password.");
+                _logger.LogInformation("user {Email} Trying to Create a new account with password.", Input.Email);
                 IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account : {Email} with password.", Input.Email);
+                    _logger.LogInformation("user created a new account : {Email} with password.", Input.Email);
 
                     string userId = await _userManager.GetUserIdAsync(user);
                     string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -130,17 +130,19 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        _logger.LogInformation("redirecting User : {Email} to confirm register", Input.Email);
+                        _logger.LogInformation("redirect User {Email} to confirm register.", Input.Email);
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
                     {
+                        _logger.LogInformation("user {Email} trying to log in", Input.Email);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
                 foreach (IdentityError error in result.Errors)
                 {
+                    _logger.LogWarning("user {Email} happened this error {error}.", Input.Email, error.Description);
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

@@ -18,11 +18,13 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSender _sender;
+        private readonly ILogger<RegisterConfirmationModel> _logger;
 
-        public RegisterConfirmationModel(UserManager<AppUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<AppUser> userManager, IEmailSender sender, ILogger<RegisterConfirmationModel> logger)
         {
             _userManager = userManager;
             _sender = sender;
+            _logger = logger;
         }
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             if (email == null)
             {
+                _logger.LogWarning("email is empty.");
                 return RedirectToPage("/Index");
             }
             returnUrl ??= Url.Content("~/");
@@ -54,7 +57,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             AppUser user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                _logger.LogInformation("Unable to load user with user {user}.", email);
+                return NotFound($"Unable to load user with user '{email}'.");
             }
 
             Email = email;
@@ -62,6 +66,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             DisplayConfirmAccountLink = true;
             if (DisplayConfirmAccountLink)
             {
+                _logger.LogInformation("send confirmation to this email {email}.", email);
                 string userId = await _userManager.GetUserIdAsync(user);
                 string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

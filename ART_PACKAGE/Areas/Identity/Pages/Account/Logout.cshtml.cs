@@ -22,8 +22,9 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            string userName = User.Identity.Name;
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+            _logger.LogInformation("user {name} logged out.", userName);
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

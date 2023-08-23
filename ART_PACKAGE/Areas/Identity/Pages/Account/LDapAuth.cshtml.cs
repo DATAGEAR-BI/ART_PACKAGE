@@ -63,6 +63,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);
                 if (info is null)
                 {
+                    _logger.LogInformation("something wrong happened while checking this user {name} on the server", Input.Email);
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
                     return Page();
                 }
@@ -79,9 +80,10 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     //    }
                     //}
                     Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, Input.RememberMe, true);
-
+                    _logger.LogInformation("user {name} trying to log in", Input.Email);
                     if (result.Succeeded)
                     {
+                        _logger.LogInformation("user {name} logged in successfully", Input.Email);
                         return LocalRedirect(ReturnUrl);
                     }
                     else
@@ -100,6 +102,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 IdentityResult createresult = await _userManager.CreateAsync(user);
                                 if (!createresult.Succeeded)
                                 {
+                                    _logger.LogWarning("user {name} has made an in valid login attempt", Input.Email);
                                     ModelState.AddModelError("", $"There is an error while creating an email for you");
                                     return Page();
                                 }
@@ -108,6 +111,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                             await _signInManager.SignInAsync(user, true);
 
                         }
+                        _logger.LogInformation("user {name} logged in successfully", Input.Email);
                         return LocalRedirect(returnUrl);
                     }
 
