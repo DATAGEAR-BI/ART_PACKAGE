@@ -37,6 +37,7 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+     opt.ExpireTimeSpan = TimeSpan.FromHours(2);
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
 
