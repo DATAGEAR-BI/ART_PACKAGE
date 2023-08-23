@@ -1,4 +1,5 @@
-﻿using Data.Data.ARTGOAML;
+﻿using Data.Data.AmlAnalysis;
+using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.SASAml;
@@ -2713,6 +2714,1817 @@ namespace Data.ModelCreatingStrategies
         public void OnAuditModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();
+        }
+
+        public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("ART");
+
+            modelBuilder.Entity<ArtAlertsStatusCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ALERTS_STATUS_CUSTOMER");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.ClosedAlertsCount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("CLOSED_ALERTS_COUNT");
+            });
+
+            modelBuilder.Entity<ArtAmlAnalysisView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_AML_ANALYSIS_VIEW");
+
+                entity.Property(e => e.AlertsCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("ALERTS_CNT");
+
+                entity.Property(e => e.AlertsCount)
+                    .HasPrecision(4)
+                    .HasColumnName("ALERTS_COUNT");
+
+                entity.Property(e => e.AvgBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.AvgCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CASH_C_AMT");
+
+                entity.Property(e => e.AvgCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CASH_D_AMT");
+
+                entity.Property(e => e.AvgCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CHECK_D_AMT");
+
+                entity.Property(e => e.AvgClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.AvgClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.AvgDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.AvgDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.AvgInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.AvgInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.AvgInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.AvgInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.AvgLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.AvgLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.AvgLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOAN_C_AMT");
+
+                entity.Property(e => e.AvgLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOAN_D_AMT");
+
+                entity.Property(e => e.AvgLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.AvgLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.AvgMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_C_AMT");
+
+                entity.Property(e => e.AvgMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_D_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.AvgOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.AvgPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.AvgReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.AvgReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.AvgSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.AvgSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.AvgSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SECURITIES_C_AMT");
+
+                entity.Property(e => e.AvgSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SECURITIES_D_AMT");
+
+                entity.Property(e => e.AvgSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.AvgTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.AvgTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.AvgTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.AvgTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.AvgTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.AvgWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_WIRE_C_AMT");
+
+                entity.Property(e => e.AvgWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_WIRE_D_AMT");
+
+                entity.Property(e => e.ClosedAlertsCount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("CLOSED_ALERTS_COUNT");
+
+                entity.Property(e => e.IndustryCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.IndustryDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_DESC");
+
+                entity.Property(e => e.MaxBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MaxCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CASH_C_AMT");
+
+                entity.Property(e => e.MaxCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CASH_D_AMT");
+
+                entity.Property(e => e.MaxCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CHECK_D_AMT");
+
+                entity.Property(e => e.MaxClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MaxClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MaxDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MaxDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MaxInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MaxInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MaxInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MaxInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MaxLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MaxLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MaxLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOAN_C_AMT");
+
+                entity.Property(e => e.MaxLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOAN_D_AMT");
+
+                entity.Property(e => e.MaxLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MaxLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MaxMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_D_AMT");
+
+                entity.Property(e => e.MaxMls)
+                    .HasPrecision(4)
+                    .HasColumnName("MAX_MLS");
+
+                entity.Property(e => e.MaxMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MaxMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MaxOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MaxPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MaxReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MaxReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MaxSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MaxSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MaxSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MaxSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MaxSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MaxTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MaxTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MaxTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MaxTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MaxTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MaxWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_WIRE_C_AMT");
+
+                entity.Property(e => e.MaxWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_WIRE_D_AMT");
+
+                entity.Property(e => e.MinBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MinCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CASH_C_AMT");
+
+                entity.Property(e => e.MinCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CASH_D_AMT");
+
+                entity.Property(e => e.MinCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CHECK_D_AMT");
+
+                entity.Property(e => e.MinClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MinClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MinDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MinDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MinInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MinInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MinInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MinInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MinLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MinLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MinLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MinLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOAN_C_AMT");
+
+                entity.Property(e => e.MinLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOAN_D_AMT");
+
+                entity.Property(e => e.MinLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MinLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MinMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_D_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MinOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MinPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MinReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MinReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MinSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MinSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MinSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MinSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MinSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MinTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MinTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MinTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MinTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MinTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MinWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_WIRE_C_AMT");
+
+                entity.Property(e => e.MinWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_WIRE_D_AMT");
+
+                entity.Property(e => e.MonthKey)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_KEY");
+
+                entity.Property(e => e.NumberOfLocations)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_LOCATIONS");
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_DESC");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.Prediction)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("PREDICTION");
+
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.TotalAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_AMOUNT");
+
+                entity.Property(e => e.TotalBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.TotalBuysecurityCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_BUYSECURITY_C_CNT");
+
+                entity.Property(e => e.TotalCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_C_AMT");
+
+                entity.Property(e => e.TotalCashCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_C_CNT");
+
+                entity.Property(e => e.TotalCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_D_AMT");
+
+                entity.Property(e => e.TotalCashDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_D_AMT");
+
+                entity.Property(e => e.TotalCheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_D_CNT");
+
+                entity.Property(e => e.TotalClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.TotalClearingcheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_C_CNT");
+
+                entity.Property(e => e.TotalClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.TotalClearingcheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_D_CNT");
+
+                entity.Property(e => e.TotalCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CNT");
+
+                entity.Property(e => e.TotalCreditAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CREDIT_AMOUNT");
+
+                entity.Property(e => e.TotalCreditCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CREDIT_CNT");
+
+                entity.Property(e => e.TotalDebitAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DEBIT_AMOUNT");
+
+                entity.Property(e => e.TotalDebitCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DEBIT_CNT");
+
+                entity.Property(e => e.TotalDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.TotalDerivativesCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_C_CNT");
+
+                entity.Property(e => e.TotalDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.TotalDerivativesDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_D_CNT");
+
+                entity.Property(e => e.TotalInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.TotalInhousecheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_C_CNT");
+
+                entity.Property(e => e.TotalInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.TotalInhousecheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_D_CNT");
+
+                entity.Property(e => e.TotalInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.TotalInternaltransferCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
+
+                entity.Property(e => e.TotalInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.TotalInternaltransferDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
+                entity.Property(e => e.TotalLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.TotalLccollectionCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_C_CNT");
+
+                entity.Property(e => e.TotalLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.TotalLccollectionDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_D_CNT");
+
+                entity.Property(e => e.TotalLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_C_AMT");
+
+                entity.Property(e => e.TotalLoanCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_C_CNT");
+
+                entity.Property(e => e.TotalLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_D_AMT");
+
+                entity.Property(e => e.TotalLoanDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_D_CNT");
+
+                entity.Property(e => e.TotalLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.TotalLoandisbursementCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANDISBURSEMENT_C_CNT");
+
+                entity.Property(e => e.TotalLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.TotalLoantopUpCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANTOP_UP_C_CNT");
+
+                entity.Property(e => e.TotalMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_C_AMT");
+
+                entity.Property(e => e.TotalMiscCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_CNT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_OUTWRDCHQRTRN_D_CNT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_CNT");
+
+                entity.Property(e => e.TotalReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.TotalReturnchequeCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNCHEQUE_C_CNT");
+
+                entity.Property(e => e.TotalReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.TotalReturnedwiresDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNEDWIRES_D_CNT");
+
+                entity.Property(e => e.TotalSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.TotalSalarycreditCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYCREDIT_C_CNT");
+
+                entity.Property(e => e.TotalSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.TotalSalarydebitDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYDEBIT_D_CNT");
+
+                entity.Property(e => e.TotalSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_C_AMT");
+
+                entity.Property(e => e.TotalSecuritiesCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_C_CNT");
+
+                entity.Property(e => e.TotalSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_D_AMT");
+
+                entity.Property(e => e.TotalSecuritiesDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_D_CNT");
+
+                entity.Property(e => e.TotalSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.TotalSellsecurityDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SELLSECURITY_D_CNT");
+
+                entity.Property(e => e.TotalTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.TotalTdredemptionCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_C_CNT");
+
+                entity.Property(e => e.TotalTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.TotalTdredemptionDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_D_CNT");
+
+                entity.Property(e => e.TotalTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.TotalTermdepositCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_C_CNT");
+
+                entity.Property(e => e.TotalTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.TotalTermdepositDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_D_CNT");
+
+                entity.Property(e => e.TotalTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.TotalTtissuanceDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TTISSUANCE_D_CNT");
+
+                entity.Property(e => e.TotalWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_C_AMT");
+
+                entity.Property(e => e.TotalWireCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_C_CNT");
+
+                entity.Property(e => e.TotalWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_D_AMT");
+
+                entity.Property(e => e.TotalWireDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_D_CNT");
+            });
+
+            modelBuilder.Entity<ArtAmlAnalysisViewTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_AML_ANALYSIS_VIEW_TB");
+
+                entity.Property(e => e.AlertsCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("ALERTS_CNT");
+
+                entity.Property(e => e.AlertsCount)
+                    .HasPrecision(4)
+                    .HasColumnName("ALERTS_COUNT");
+
+                entity.Property(e => e.AvgBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.AvgCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CASH_C_AMT");
+
+                entity.Property(e => e.AvgCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CASH_D_AMT");
+
+                entity.Property(e => e.AvgCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CHECK_D_AMT");
+
+                entity.Property(e => e.AvgClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.AvgClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.AvgDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.AvgDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.AvgInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.AvgInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.AvgInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.AvgInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.AvgLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.AvgLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.AvgLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOAN_C_AMT");
+
+                entity.Property(e => e.AvgLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOAN_D_AMT");
+
+                entity.Property(e => e.AvgLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.AvgLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.AvgMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_C_AMT");
+
+                entity.Property(e => e.AvgMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_D_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.AvgOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.AvgPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.AvgReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.AvgReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.AvgSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.AvgSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.AvgSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SECURITIES_C_AMT");
+
+                entity.Property(e => e.AvgSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SECURITIES_D_AMT");
+
+                entity.Property(e => e.AvgSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.AvgTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.AvgTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.AvgTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.AvgTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.AvgTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.AvgWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_WIRE_C_AMT");
+
+                entity.Property(e => e.AvgWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_WIRE_D_AMT");
+
+                entity.Property(e => e.ClosedAlertsCount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("CLOSED_ALERTS_COUNT");
+
+                entity.Property(e => e.IndustryCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.IndustryDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_DESC");
+
+                entity.Property(e => e.MaxBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MaxCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CASH_C_AMT");
+
+                entity.Property(e => e.MaxCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CASH_D_AMT");
+
+                entity.Property(e => e.MaxCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CHECK_D_AMT");
+
+                entity.Property(e => e.MaxClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MaxClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MaxDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MaxDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MaxInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MaxInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MaxInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MaxInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MaxLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MaxLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MaxLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOAN_C_AMT");
+
+                entity.Property(e => e.MaxLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOAN_D_AMT");
+
+                entity.Property(e => e.MaxLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MaxLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MaxMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_D_AMT");
+
+                entity.Property(e => e.MaxMls)
+                    .HasPrecision(4)
+                    .HasColumnName("MAX_MLS");
+
+                entity.Property(e => e.MaxMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MaxMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MaxOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MaxPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MaxReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MaxReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MaxSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MaxSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MaxSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MaxSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MaxSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MaxTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MaxTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MaxTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MaxTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MaxTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MaxWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_WIRE_C_AMT");
+
+                entity.Property(e => e.MaxWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_WIRE_D_AMT");
+
+                entity.Property(e => e.MinBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MinCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CASH_C_AMT");
+
+                entity.Property(e => e.MinCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CASH_D_AMT");
+
+                entity.Property(e => e.MinCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CHECK_D_AMT");
+
+                entity.Property(e => e.MinClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MinClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MinDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MinDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MinInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MinInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MinInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MinInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MinLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MinLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MinLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MinLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOAN_C_AMT");
+
+                entity.Property(e => e.MinLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOAN_D_AMT");
+
+                entity.Property(e => e.MinLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MinLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MinMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_D_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MinOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MinPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MinReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MinReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MinSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MinSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MinSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MinSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MinSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MinTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MinTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MinTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MinTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MinTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MinWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_WIRE_C_AMT");
+
+                entity.Property(e => e.MinWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_WIRE_D_AMT");
+
+                entity.Property(e => e.MonthKey)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_KEY");
+
+                entity.Property(e => e.NumberOfLocations)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_LOCATIONS");
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_DESC");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.Prediction)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("PREDICTION");
+
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.TotalAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_AMOUNT");
+
+                entity.Property(e => e.TotalBuysecurityCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.TotalBuysecurityCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_BUYSECURITY_C_CNT");
+
+                entity.Property(e => e.TotalCashCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_C_AMT");
+
+                entity.Property(e => e.TotalCashCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_C_CNT");
+
+                entity.Property(e => e.TotalCashDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_D_AMT");
+
+                entity.Property(e => e.TotalCashDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_D_AMT");
+
+                entity.Property(e => e.TotalCheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_D_CNT");
+
+                entity.Property(e => e.TotalClearingcheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.TotalClearingcheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_C_CNT");
+
+                entity.Property(e => e.TotalClearingcheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.TotalClearingcheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CLEARINGCHECK_D_CNT");
+
+                entity.Property(e => e.TotalCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CNT");
+
+                entity.Property(e => e.TotalCreditAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CREDIT_AMOUNT");
+
+                entity.Property(e => e.TotalCreditCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CREDIT_CNT");
+
+                entity.Property(e => e.TotalDebitAmount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DEBIT_AMOUNT");
+
+                entity.Property(e => e.TotalDebitCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DEBIT_CNT");
+
+                entity.Property(e => e.TotalDerivativesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.TotalDerivativesCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_C_CNT");
+
+                entity.Property(e => e.TotalDerivativesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.TotalDerivativesDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_DERIVATIVES_D_CNT");
+
+                entity.Property(e => e.TotalInhousecheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.TotalInhousecheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_C_CNT");
+
+                entity.Property(e => e.TotalInhousecheckDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.TotalInhousecheckDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INHOUSECHECK_D_CNT");
+
+                entity.Property(e => e.TotalInternaltransferCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.TotalInternaltransferCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
+
+                entity.Property(e => e.TotalInternaltransferDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.TotalInternaltransferDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
+                entity.Property(e => e.TotalLccollectionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.TotalLccollectionCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_C_CNT");
+
+                entity.Property(e => e.TotalLccollectionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.TotalLccollectionDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LCCOLLECTION_D_CNT");
+
+                entity.Property(e => e.TotalLoanCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_C_AMT");
+
+                entity.Property(e => e.TotalLoanCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_C_CNT");
+
+                entity.Property(e => e.TotalLoanDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_D_AMT");
+
+                entity.Property(e => e.TotalLoanDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOAN_D_CNT");
+
+                entity.Property(e => e.TotalLoandisbursementCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.TotalLoandisbursementCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANDISBURSEMENT_C_CNT");
+
+                entity.Property(e => e.TotalLoantopUpCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.TotalLoantopUpCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LOANTOP_UP_C_CNT");
+
+                entity.Property(e => e.TotalMiscCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_C_AMT");
+
+                entity.Property(e => e.TotalMiscCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_CNT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_OUTWRDCHQRTRN_D_CNT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_CNT");
+
+                entity.Property(e => e.TotalReturnchequeCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.TotalReturnchequeCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNCHEQUE_C_CNT");
+
+                entity.Property(e => e.TotalReturnedwiresDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.TotalReturnedwiresDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_RETURNEDWIRES_D_CNT");
+
+                entity.Property(e => e.TotalSalarycreditCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.TotalSalarycreditCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYCREDIT_C_CNT");
+
+                entity.Property(e => e.TotalSalarydebitDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.TotalSalarydebitDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SALARYDEBIT_D_CNT");
+
+                entity.Property(e => e.TotalSecuritiesCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_C_AMT");
+
+                entity.Property(e => e.TotalSecuritiesCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_C_CNT");
+
+                entity.Property(e => e.TotalSecuritiesDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_D_AMT");
+
+                entity.Property(e => e.TotalSecuritiesDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SECURITIES_D_CNT");
+
+                entity.Property(e => e.TotalSellsecurityDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.TotalSellsecurityDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_SELLSECURITY_D_CNT");
+
+                entity.Property(e => e.TotalTdredemptionCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.TotalTdredemptionCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_C_CNT");
+
+                entity.Property(e => e.TotalTdredemptionDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.TotalTdredemptionDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TDREDEMPTION_D_CNT");
+
+                entity.Property(e => e.TotalTermdepositCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.TotalTermdepositCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_C_CNT");
+
+                entity.Property(e => e.TotalTermdepositDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.TotalTermdepositDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TERMDEPOSIT_D_CNT");
+
+                entity.Property(e => e.TotalTtissuanceDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.TotalTtissuanceDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TTISSUANCE_D_CNT");
+
+                entity.Property(e => e.TotalWireCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_C_AMT");
+
+                entity.Property(e => e.TotalWireCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_C_CNT");
+
+                entity.Property(e => e.TotalWireDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_D_AMT");
+
+                entity.Property(e => e.TotalWireDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_WIRE_D_CNT");
+            });
         }
     }
 }

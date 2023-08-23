@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Extentions.IEnumerableExtentions;
+using Data.Data.AmlAnalysis;
 using Data.FCFKC;
 using FakeItEasy;
 using Microsoft.EntityFrameworkCore;
@@ -12,12 +13,14 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
         private readonly IServiceScopeFactory scopeFactory;
         private readonly FCFKC _fcfkc;
         private readonly object _lock = new();
+        private readonly AmlAnalysisContext _context;
 
-        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKC fcfkc)
+        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKC fcfkc, AmlAnalysisContext context)
         {
             _logger = logger;
             this.scopeFactory = scopeFactory;
             _fcfkc = fcfkc;
+            _context = context;
         }
 
         public async Task<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> CloseAlertsAsync(CloseRequest closeReq, string userName, string alertStatusCode)
@@ -318,6 +321,12 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 return (false, res.SelectMany(x => x.RouteFailedEntities));
             }
 
+        }
+
+        public async Task<bool> CreateAmlAnalysisTable()
+        {
+            var res = await _context.Database.ExecuteSqlRawAsync("");
+            return true;
         }
     }
 }

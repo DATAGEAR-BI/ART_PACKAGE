@@ -5,14 +5,15 @@ using ART_PACKAGE.Security;
 using Data.Audit;
 using Data.Constants;
 using Data.Constants.db;
-using Data.DGAML;
-using Data.DGECM;
+using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.DGAML;
+using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC;
 using Data.GOAML;
@@ -89,6 +90,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
             }
 
+            if (modulesToApply.Contains("AMLANALYSIS"))
+            {
+                _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
+                _ = services.AddDbContext<FCFKC>(opt => contextBuilder(opt, FCFKCContextConnection));
+                _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));
+            }
 
 
             _ = services.AddScoped<IDbService, DBService>();

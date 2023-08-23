@@ -19,10 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="Controllers\AML_ANALYSISController.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
 		</Reference>
@@ -31,8 +27,6 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Remove="Views\AML_ANALYSIS\bluider.cshtml" />
-		<Content Remove="Views\AML_ANALYSIS\Index.cshtml" />
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
@@ -44,9 +38,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
 		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
 		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
 		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
 		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
 	</ItemGroup>
 
@@ -1768,7 +1765,6 @@
 
 	<ItemGroup>
 		<Folder Include="Licenses\" />
-		<Folder Include="Views\AML_ANALYSIS\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 

@@ -9,6 +9,7 @@ using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -68,7 +69,6 @@ WebApplication app = builder.Build();
 List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
 using IServiceScope scope = app.Services.CreateScope();
 AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
 if (authContext.Database.GetPendingMigrations().Any())
 {
     authContext.Database.Migrate();
@@ -87,6 +87,8 @@ if (modules.Contains("ECM"))
 
 if (modules.Contains("SEG"))
 {
+    SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
+
     if (SegContext.Database.GetPendingMigrations().Any())
     {
         SegContext.Database.Migrate();
@@ -119,6 +121,15 @@ if (modules.Contains("DGAUDIT"))
     if (DgAuditContext.Database.GetPendingMigrations().Any())
     {
         DgAuditContext.Database.Migrate();
+    }
+}
+if (modules.Contains("AMLANALYSIS"))
+{
+    AmlAnalysisContext amlAnalysisContext = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
+
+    if (amlAnalysisContext.Database.GetPendingMigrations().Any())
+    {
+        amlAnalysisContext.Database.Migrate();
     }
 }
 

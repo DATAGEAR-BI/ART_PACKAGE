@@ -1,4 +1,6 @@
 ﻿@using ART_PACKAGE.Helpers;
+@using ART_PACKAGE.Helpers.Aml_Analysis;
+@using ART_PACKAGE.Helpers.HTMLHelpers;
 
 @{
     ViewData["Title"] = "bluider";
@@ -31,8 +33,10 @@
     align-items:center;
     padding:1%">
     <div id="query" class="col-xs-8 col-md-8 col-sm-8" ></div>
-    <select id="action" class="col-xs-2 col-md-2 col-sm-2 text-infol selectpicker" asp-items="Html.GetEnumValuesWithDisplayName<AmlAnalysisAction>()"></select>
-    <button id="sql" class="col-xs-2 col-md-2 col-sm-2 btn btn-primary">Okay</button>
+
+
+   <select id="action" class="col-xs-2 col-md-2 col-sm-2 text-infol selectpicker" asp-items="Html.GetEnumValuesWithDisplayName<AmlAnalysisAction>()"></select>
+        <button id="sql" class="col-xs-2 col-md-2 col-sm-2 btn btn-primary">Okay</button>
 </div>
 <div class="row">
     <span id="qeuryerror" class="text-danger col-12" hidden></span>
@@ -59,10 +63,7 @@
 </div>
 
 @section Scripts{
-    <script type="module" src="~/js/Modules/testimport.js" asp-append-version="true"></script>
     <script src="~/js/querybuilder.js"></script>
-    <script src="~/js/urlconsts.js"></script>
-    <script src="~/js/kendotoolbarreventhandlers.js"></script>
     <script src="~/js/dynamic.js" type="module" id="script" data-prop="Id" data-urlkey="Aml_AnalysisRules" data-handlerkey="Aml_AnalysisRules"></script>
 }
 

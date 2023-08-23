@@ -3108,5 +3108,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
         }
+
+        public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

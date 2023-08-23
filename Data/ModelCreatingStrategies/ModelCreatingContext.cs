@@ -45,5 +45,11 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnAuditModelCreating(modelBuilder);
 
         }
+
+        public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnAmlAnalysisModelCreating(modelBuilder);
+
+        }
     }
 }
