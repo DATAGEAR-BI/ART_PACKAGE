@@ -57,7 +57,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             AppUser user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                _logger.LogInformation("Unable to load user with user {user}.", email);
+                _logger.LogError("Unable to load user with user {user}.", email);
                 return NotFound($"Unable to load user with user '{email}'.");
             }
 

@@ -130,7 +130,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        _logger.LogInformation("redirect User {Email} to confirm register.", Input.Email);
+                        _logger.LogWarning("redirect User {Email} to confirm register.", Input.Email);
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
@@ -142,7 +142,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 }
                 foreach (IdentityError error in result.Errors)
                 {
-                    _logger.LogWarning("user {Email} happened this error {error}.", Input.Email, error.Description);
+                    _logger.LogError("user {Email} happened this error {error}.", Input.Email, error.Description);
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

@@ -63,7 +63,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);
                 if (info is null)
                 {
-                    _logger.LogInformation("something wrong happened while checking this user {name} on the server", Input.Email);
+                    _logger.LogError("something wrong happened while checking this user {name} on the server", Input.Email);
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
                     return Page();
                 }
