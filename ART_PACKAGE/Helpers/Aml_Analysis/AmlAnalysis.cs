@@ -363,12 +363,15 @@ end;";
             List<(bool isSucceed, IEnumerable<string>? FailedEntities)> failedRules = new List<(bool isSucceed, IEnumerable<string>? FailedEntities)>();
             foreach (var enities in closeEntities)
             {
-                (bool isSucceed, IEnumerable<string> ColseFailedEntities) = await CloseAllAlertsAsync(new CloseRequest
+                (bool isSucceed, IEnumerable<string>? ColseFailedEntities) = await CloseAllAlertsAsync(new CloseRequest
                 {
                     Entities = enities.AENs.ToList(),
                     Comment = $"Closed By AmlAnalysis Auto-Rules :{enities.rule}",
                     Desc = $"{enities.rule}--CLA"
                 }, "ART-SRV", "CLA");
+
+                if (!isSucceed)
+                    _logger.LogCritical("rule number {rule} failed cause this entities caused an issue : ({AENS})", enities.rule, string.Join(",", ColseFailedEntities))
             }
 
             return (true, null);
