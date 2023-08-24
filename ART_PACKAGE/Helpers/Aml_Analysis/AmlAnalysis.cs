@@ -359,7 +359,7 @@ end;";
         public async Task<(bool isSucceed, IEnumerable<string>? FailedEntities)> ExecuteBatch()
         {
             IQueryable<ArtAmlAnalysisRule> closeRules = _context.ArtAmlAnalysisRules.Where(x => x.Active && !x.Deleted && x.Action == AmlAnalysisAction.Close.ToString());
-            var closeEntities = closeRules.Select(x => new { rule = x.Id, AENs = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(a => a.PartyNumber) });
+            var closeEntities = closeRules.Select(x => new { rule = x.Id, AENs = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(a => a.PartyNumber) }).ToList();
             List<(bool isSucceed, IEnumerable<string>? FailedEntities)> failedRules = new List<(bool isSucceed, IEnumerable<string>? FailedEntities)>();
             foreach (var enities in closeEntities)
             {
@@ -371,9 +371,11 @@ end;";
                 }, "ART-SRV", "CLA");
 
                 if (!isSucceed)
-                    _logger.LogCritical("rule number {rule} failed cause this entities caused an issue : ({AENS})", enities.rule, string.Join(",", ColseFailedEntities))
+                    _logger.LogCritical("rule number {rule} failed cause this entities caused an issue : ({AENS})", enities.rule, string.Join(",", ColseFailedEntities));
             }
 
+            var routeRules = _context.ArtAmlAnalysisRules.Where(x => x.Active && !x.Deleted && x.Action == AmlAnalysisAction.Route.ToString());
+            var routeEntities = closeRules.Select(x => new { rule = x.Id, AENs = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(a => a.PartyNumber) }).ToList();
             return (true, null);
         }
     }
