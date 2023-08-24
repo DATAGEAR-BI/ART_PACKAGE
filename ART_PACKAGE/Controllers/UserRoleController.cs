@@ -212,7 +212,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     return RedirectToAction("Users");
                 }
-                AppUser old = found;
+
                 found.UserName = AfterEdit;
                 found.Active = active != null;
 
