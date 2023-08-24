@@ -9,5 +9,7 @@
         public Task<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> CloseAllAlertsAsync(CloseRequest closeRequest, string userName, string alertStatusCode);
 
         public Task<bool> CreateAmlAnalysisTable();
+
+        public Task<(bool isSucceed, IEnumerable<string>? FailedEntities)> ExecuteBatch();
     }
 }

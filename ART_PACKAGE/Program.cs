@@ -14,6 +14,7 @@ using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,8 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 
 builder.Services.AddScoped<IAmlAnalysis, AmlAnalysis>();
+builder.Services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
+builder.Services.AddHostedService<AmlAnalysisWatcher>();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -41,7 +44,6 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
-
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
 
@@ -103,7 +105,15 @@ if (modules.Contains("GOAML"))
         GoAmlContext.Database.Migrate();
     }
 }
+if (modules.Contains("SASAML"))
+{
+    SasAmlContext sasAmlContext = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
 
+    if (sasAmlContext.Database.GetPendingMigrations().Any())
+    {
+        sasAmlContext.Database.Migrate();
+    }
+}
 
 if (modules.Contains("DGAML"))
 {

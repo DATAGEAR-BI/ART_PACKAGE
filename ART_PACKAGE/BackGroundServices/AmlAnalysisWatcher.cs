@@ -5,16 +5,40 @@ namespace ART_PACKAGE.BackGroundServices
     public class AmlAnalysisWatcher : BackgroundService
     {
         private readonly ILogger<AmlAnalysisWatcher> _logger;
-        private readonly IAmlAnalysis _amlSrv;
-        public AmlAnalysisWatcher(ILogger<AmlAnalysisWatcher> logger, IAmlAnalysis amlSrv)
+        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly AmlAnalysisUpdateTableIndecator _updateInd;
+        public AmlAnalysisWatcher(ILogger<AmlAnalysisWatcher> logger, IServiceScopeFactory scopeFactory, AmlAnalysisUpdateTableIndecator updateInd)
         {
             _logger = logger;
-            _amlSrv = amlSrv;
+            _scopeFactory = scopeFactory;
+            _updateInd = updateInd;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using PeriodicTimer timer = new(TimeSpan.FromMinutes(10));
+            using PeriodicTimer timer = new(TimeSpan.FromMinutes(1));
+
+            while (await timer.WaitForNextTickAsync(stoppingToken))
+            {
+
+
+                try
+                {
+
+                    if (_updateInd.PerformInd)
+                    {
+                        IServiceScope scope = _scopeFactory.CreateScope();
+                        IAmlAnalysis _amlSrv = scope.ServiceProvider.GetRequiredService<IAmlAnalysis>();
+                        bool updateRes = await _amlSrv.CreateAmlAnalysisTable();
+                        _updateInd.PerformInd = !updateRes ? throw new InvalidOperationException("something went Wrong while creating aml analysis table") : false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("{ex}", ex.Message);
+                }
+            }
+
         }
     }
 }

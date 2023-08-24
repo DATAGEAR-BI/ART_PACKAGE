@@ -14,13 +14,15 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
         private readonly FCFKC _fcfkc;
         private readonly object _lock = new();
         private readonly AmlAnalysisContext _context;
+        private readonly AmlAnalysisUpdateTableIndecator _updateInd;
 
-        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKC fcfkc, AmlAnalysisContext context)
+        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKC fcfkc, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd)
         {
             _logger = logger;
             this.scopeFactory = scopeFactory;
             _fcfkc = fcfkc;
             _context = context;
+            _updateInd = updateInd;
         }
 
         public async Task<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> CloseAlertsAsync(CloseRequest closeReq, string userName, string alertStatusCode)
@@ -325,8 +327,51 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
         public async Task<bool> CreateAmlAnalysisTable()
         {
-            var res = await _context.Database.ExecuteSqlRawAsync("");
-            return true;
+
+
+            string oracleSql = $@"declare
+   c int;
+begin
+   select count(*) into c from user_tables where table_name = upper('ART_AML_ANALYSIS_VIEW_TB');
+   if c > 0 then
+      execute immediate 'drop table ART_AML_ANALYSIS_VIEW_TB';
+   end if;
+     execute immediate 'CREATE TABLE ART_AML_ANALYSIS_VIEW_TB AS SELECT * FROM ART_AML_ANALYSIS_VIEW';
+end;";
+            string msSql = "";
+
+            string sql = _context.Database.IsOracle() ? oracleSql : msSql;
+            try
+            {
+                if (!_updateInd.PerformInd)
+                    throw new InvalidOperationException("the update indecator is false can't call create aml analysis table");
+                int res = await _context.Database.ExecuteSqlRawAsync(sql);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical("something wrong jappend while creating aml analysis table : {ex}", ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<(bool isSucceed, IEnumerable<string>? FailedEntities)> ExecuteBatch()
+        {
+            IQueryable<ArtAmlAnalysisRule> closeRules = _context.ArtAmlAnalysisRules.Where(x => x.Active && !x.Deleted && x.Action == AmlAnalysisAction.Close.ToString());
+            var closeEntities = closeRules.Select(x => new { rule = x.Id, AENs = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(a => a.PartyNumber) });
+            List<(bool isSucceed, IEnumerable<string>? FailedEntities)> failedRules = new List<(bool isSucceed, IEnumerable<string>? FailedEntities)>();
+            foreach (var enities in closeEntities)
+            {
+                (bool isSucceed, IEnumerable<string> ColseFailedEntities) = await CloseAllAlertsAsync(new CloseRequest
+                {
+                    Entities = enities.AENs.ToList(),
+                    Comment = $"Closed By AmlAnalysis Auto-Rules :{enities.rule}",
+                    Desc = $"{enities.rule}--CLA"
+                }, "ART-SRV", "CLA");
+            }
+
+            return (true, null);
         }
     }
 }

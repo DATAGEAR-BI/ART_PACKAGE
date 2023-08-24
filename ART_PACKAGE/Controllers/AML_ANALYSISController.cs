@@ -3,6 +3,7 @@ using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Hubs;
 using Data.Data.AmlAnalysis;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -21,17 +22,30 @@ namespace DataGear_RV_Ver_1._7.Controllers
         private readonly IAmlAnalysis _amlSrv;
         private readonly IHubContext<AmlAnalysisHub> _amlHub;
         private readonly AmlAnalysisContext _context;
-        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context)
+        private readonly AmlAnalysisUpdateTableIndecator _updateInd;
+        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd)
         {
             this.logger = logger;
             _config = config;
             _amlSrv = amlSrv;
             _amlHub = amlHub;
             _context = context;
+            _updateInd = updateInd;
         }
 
 
+        public async Task<IActionResult> Test()
+        {
+            CloseRequest req = new()
+            {
+                Comment = "test Comment",
+                Desc = "test Desc",
+                Entities = new List<string> { "7289490391584485BC264C77BCD99053", "CB61E2E72B6244079CEA409DEB9C64E7" }
+            };
 
+            (bool isSucceed, IEnumerable<string>? ColseFailedEntities) res = await _amlSrv.CloseAllAlertsAsync(req, User.Identity.Name, "FBO");
+            return Ok(res);
+        }
 
         public ContentResult QueryBuilderData()
         {
@@ -265,55 +279,13 @@ namespace DataGear_RV_Ver_1._7.Controllers
         //}
 
 
-        //[AllowAnonymous]
-        //public IActionResult ExecuteBatchRules()
-        //{
-        //    try
-        //    {
-
-        //        var rules = fcfcore.FscRuleBaseds.Where(r => r.Deleted == 0 && !string.IsNullOrEmpty(r.OutputReadable)).ToList().OrderByDescending(r => r.CreatedDate);
-        //        StringBuilder sb = new StringBuilder("");
-        //        foreach (var rule in rules)
-        //        {
-        //            string query = ExtractQuery(rule);
-        //            var Entities = fcfcore.ArtAmlAnalysisViews.FromSqlRaw(query);
-        //            var count = Entities.Count();
-        //            if (rule.Action == "Route")
-        //            {
-        //                Entities.Select(x => x.PartyNumber).ToList()
-        //                    .Partition<string>(900).ToList()
-        //                    .ForEach(x =>
-        //                            _iaml.Route(null, x.ToArray(), "",
-        //                            $"{rule.RuleId}--RTQ--FAAR-Apply",
-        //                            "", $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", "ART-SRV"));
-        //                sb.AppendLine($"Rule number : {rule.RuleId} Routed {count} Entities");
-        //            }
-        //            else if (rule.Action == "Close")
-        //            {
-        //                Entities.Select(x => x.PartyNumber).ToList()
-        //                    .Partition<string>(900).ToList()
-        //                    .ForEach(x =>
-        //                                 _iaml.Close(x.ToArray()
-        //                                , $"{rule.RuleId}--CLA", "ART-SRV", "CLA"
-        //                                , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}"));
-
-        //                sb.AppendLine($"Rule number : {rule.RuleId} Closed {count} Entities");
-        //                fcfcore.RemoveRange(Entities);
-        //                fcfcore.SaveChanges();
-        //            }
-        //        }
-        //        return Ok($"Jobs Done for {DateTime.UtcNow} => [{sb.ToString()}]");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.LogError("ERROR:" + ex.Message + "---\n" + ex.InnerException);
-
-        //        return BadRequest(ex.Message);
-
-        //        throw;
-        //    }
-
-        //}
+        [AllowAnonymous]
+        public IActionResult ExecuteBatchRules()
+        {
+            _updateInd.PerformInd = true;
+            logger.LogInformation("Batch Ruleswill be excuted in the next 10 minutes");
+            return Ok();
+        }
         //public class ApplyRulesModel
         //{
         //    public int RuleId { get; set; }

@@ -41,6 +41,7 @@
 		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
 		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
 		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisUpdateTableIndecator.cs" />
 		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
 		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
 		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />

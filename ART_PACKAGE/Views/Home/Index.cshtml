@@ -23,11 +23,11 @@
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/kelly.js"></script>
-    @if (homeType.Contains(HomeType.AML))
+    @if (homeType.Contains(HomeType.AML) && modules.Contains("SASAML"))
             {
                 <script src="~/js/amlhome.js" type="module" defer></script>
             }
-            @if (homeType.Contains(HomeType.SANCTION))
+            @if (homeType.Contains(HomeType.SANCTION) && modules.Contains("ECM"))
             {
                 <script src="~/js/homechartsjs.js" type="module" defer></script>
             }
