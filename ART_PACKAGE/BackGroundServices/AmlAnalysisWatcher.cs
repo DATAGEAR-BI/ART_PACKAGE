@@ -31,11 +31,14 @@ namespace ART_PACKAGE.BackGroundServices
                         IAmlAnalysis _amlSrv = scope.ServiceProvider.GetRequiredService<IAmlAnalysis>();
                         bool updateRes = await _amlSrv.CreateAmlAnalysisTable();
                         _updateInd.PerformInd = !updateRes ? throw new InvalidOperationException("something went Wrong while creating aml analysis table") : false;
+                        await _amlSrv.ExecuteBatch();
+                        _logger.LogInformation("Batches has been succeeded");
+
                     }
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("{ex}", ex.Message);
+                    _logger.LogError("Aml Analysis Batch Error: {ex}", ex.Message);
                 }
             }
 

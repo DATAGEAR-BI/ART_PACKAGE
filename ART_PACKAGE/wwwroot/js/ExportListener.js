@@ -1,4 +1,4 @@
-﻿var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").configureLogging(signalR.LogLevel.Warning).build();
+﻿var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").build();
 exportConnection.start().then(x => {
     console.log("connection started");
 });

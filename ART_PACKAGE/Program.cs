@@ -164,6 +164,7 @@ app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
+app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

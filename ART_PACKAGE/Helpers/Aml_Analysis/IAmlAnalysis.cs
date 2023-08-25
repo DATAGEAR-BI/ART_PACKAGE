@@ -10,6 +10,6 @@
 
         public Task<bool> CreateAmlAnalysisTable();
 
-        public Task<(bool isSucceed, IEnumerable<string>? FailedEntities)> ExecuteBatch();
+        public Task ExecuteBatch();
     }
 }
