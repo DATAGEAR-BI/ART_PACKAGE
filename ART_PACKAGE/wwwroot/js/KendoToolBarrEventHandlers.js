@@ -97,6 +97,14 @@ export const Handlers = {
             all = false
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
+        if (total > 100000) {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'warning';
+            toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
+        }
+
         var para = {}
         if (id) {
             para.Id = id;
@@ -125,6 +133,7 @@ export const Handlers = {
                 body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
             });
         }
+
 
     },
     csvExportForStored: async (e, controller) => {

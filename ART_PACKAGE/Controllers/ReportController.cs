@@ -1,12 +1,15 @@
 ﻿
 
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -24,10 +27,11 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _config;
         private readonly IPdfService _pdfSrv;
         private DbContext dbInstance;
+        private readonly ICsvExport _csvSrv;
+        private readonly IHubContext<ExportHub> _exportHub;
 
 
-
-        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory)
+        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub)
         {
 
             this.logger = logger;
@@ -36,6 +40,8 @@ namespace ART_PACKAGE.Controllers
             _config = config;
             _pdfSrv = pdfSrv;
             this.dBFactory = dBFactory;
+            _csvSrv = csvSrv;
+            _exportHub = exportHub;
         }
 
         public IActionResult Index()
@@ -263,7 +269,7 @@ namespace ART_PACKAGE.Controllers
 
             return Ok(reportAfter);
         }
-        public IActionResult Export([FromBody] ExportDto<decimal> exportDto)
+        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> exportDto)
         {
             string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
             ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
@@ -278,14 +284,17 @@ namespace ART_PACKAGE.Controllers
             }).ToArray();
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
             byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata.Select(x => x.Data).ToList());
-            return File(bytes, "text/csv");
+            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+            await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvRecevied", bytes, FileName);
+            return new EmptyResult();
         }
 
         public async Task<IActionResult> ExportMyReports([FromBody] ExportDto<decimal> req)
         {
             IQueryable<ArtSavedCustomReport> data = db.ArtSavedCustomReports.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtSavedCustomReport, GenericCsvClassMapper<ArtSavedCustomReport, ReportController>>(req.Req);
-            return File(bytes, "test/csv");
+            await _csvSrv.ExportAllCsv<ArtSavedCustomReport, ReportController, decimal>(data, User.Identity.Name, req);
+            return new EmptyResult();
         }
         public async Task<IActionResult> ExportPdfMyReports([FromBody] KendoRequest req)
         {

@@ -1,6 +1,4 @@
-﻿
-
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -780,6 +778,9 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
 
         }
+
+
+
 
         public static async Task<byte[]> ExportToCSV<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {

@@ -1,16 +1,11 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using System.Globalization;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
@@ -21,14 +16,14 @@ namespace ART_PACKAGE.Controllers
         private readonly SasAmlContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        private readonly IHubContext<ExportHub> _exportHub;
-        public AlertDetailsController(SasAmlContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
+        private readonly ICsvExport _csvSrv;
+        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, ICsvExport csvSrv)
         {
             this.dbfcfkc = dbfcfkc;
 
             _dropDown = dropDown;
             _pdfSrv = pdfSrv;
-            _exportHub = exportHub;
+            _csvSrv = csvSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -86,24 +81,7 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
-            int i = 1;
-            foreach (Task<byte[]> item in data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req))
-            {
-                try
-                {
-                    byte[] bytes = await item;
-                    string FileName = GetType().Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                                .SendAsync("csvRecevied", bytes, FileName);
-                    i++;
-                }
-                catch (Exception)
-                {
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                                .SendAsync("csvErrorRecevied", i);
-                }
-
-            }
+            await _csvSrv.ExportAllCsv<ArtAmlAlertDetailView, AlertDetailsController, decimal>(data, User.Identity.Name, req);
             return new EmptyResult();
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
@@ -137,43 +115,7 @@ namespace ART_PACKAGE.Controllers
                 }
             }
         }
-        public async Task<IActionResult> StreamExport()
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews;
-            int totalRecords = data.Count();
-            CsvConfiguration csvConfig = new(CultureInfo.InvariantCulture)
-            {
-                Delimiter = ",",
-                HasHeaderRecord = true, // Set this to false if you don't want a header row
-            };
-            try
-            {
 
-                while (totalRecords > 0)
-                {
-                    MemoryStream stream = new();
-                    using StreamWriter writer = new(stream);
-                    using (CsvWriter csv = new(writer, csvConfig))
-                    {
-                        csv.WriteRecords(GetLargeDataSetInBatches(1000));
-                        byte[] bytes = stream.ToArray();
-                        await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                            .SendAsync("csvRecevied", bytes);
-                        writer.AutoFlush = true;
-                        stream.Position = 0;
-
-                    }
-                    totalRecords -= 1000;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return new EmptyResult();
-        }
         public IActionResult Index()
         {
             return View();
