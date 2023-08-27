@@ -60,7 +60,7 @@ namespace OracleMigrations.Migrations.AmlAnalysis
 from fcfcore.fsc_party_dim  pd inner join fcfkc.YR_BFR_ALRT_PRFL_V3  seg on pd.PARTY_NUMBER = seg.PARTY_NUMBER 
 inner join fcfkc.FSK_ALERTED_ENTITY  AE on Ae.ALERTED_ENTITY_NUMBER = seg.PARTY_NUMBER
 inner join FCFKC.AUTO_SUPP_PREDS  Preds on Preds.PARTY_NUMBER = seg.PARTY_NUMBER
-left join ART.ART_ALERTS_STATUS_CUSTOMER  alc on alc.ALERTED_ENTITY_NUMBER = Ae.ALERTED_ENTITY_NUMBER
+left join FCFKC.ART_ALERTS_STATUS_CUSTOMER  alc on alc.ALERTED_ENTITY_NUMBER = Ae.ALERTED_ENTITY_NUMBER
 where pd.CHANGE_CURRENT_IND = 'Y' 
 and ( AE.ALERTS_CNT >0 )");
 
