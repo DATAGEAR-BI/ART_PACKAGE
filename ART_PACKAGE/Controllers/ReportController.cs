@@ -245,7 +245,7 @@ namespace ART_PACKAGE.Controllers
             List<ArtSavedReportsColumns> columns = model.Columns.Select(e => new ArtSavedReportsColumns
             {
                 Column = e.Name,
-                IsNullable = e.IsNullable == "YES" || e.IsNullable == "Y",
+                IsNullable = e.IsNullable is "YES" or "Y",
                 JsType = e.JsDataType,
                 ReportId = report.Id
             }).ToList();

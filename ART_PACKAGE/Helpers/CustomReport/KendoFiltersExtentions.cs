@@ -738,8 +738,9 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
             CsvConfiguration config = new(CultureInfo.InvariantCulture)
             {
-                Delimiter = ",",
-                Encoding = Encoding.UTF8,
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
             };
             int batch = 10000;
             int skip = 0;
@@ -752,7 +753,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 yield return Task.Run(() =>
                 {
                     using MemoryStream stream = new();
-                    using (StreamWriter sw = new(stream, Encoding.UTF8))
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
                         _ = cw.Context.RegisterClassMap<T1>();
@@ -912,11 +913,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
                 IgnoreReferences = true,
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
 
             };
 
             MemoryStream stream = new();
-            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
             using (CsvWriter cw = new(sw, config))
             {
                 cw.WriteRecords(data);
