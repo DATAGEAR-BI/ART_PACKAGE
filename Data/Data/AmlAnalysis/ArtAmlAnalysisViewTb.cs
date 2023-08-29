@@ -8,6 +8,7 @@
         public string PartyTypeDesc { get; set; } = null!;
         public string? IndustryCode { get; set; }
         public string? IndustryDesc { get; set; }
+        public string? OccupationCode { get; set; }
         public string? OccupationDesc { get; set; }
         public decimal? TotalCreditAmount { get; set; }
         public decimal? TotalDebitAmount { get; set; }
@@ -216,11 +217,11 @@
         public decimal? TotalTtissuanceDAmt { get; set; }
         public decimal? TotalTtissuanceDCnt { get; set; }
         public decimal? MinTtissuanceDAmt { get; set; }
-        public byte? MaxMls { get; set; }
+        public int? MaxMls { get; set; }
         public decimal? AlertsCnt { get; set; }
         public string? PartyName { get; set; }
         public decimal? Prediction { get; set; }
-        public byte? AlertsCount { get; set; }
+        public int? AlertsCount { get; set; }
         public decimal? ClosedAlertsCount { get; set; }
     }
 }

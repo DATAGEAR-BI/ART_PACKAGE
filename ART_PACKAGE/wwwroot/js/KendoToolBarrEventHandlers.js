@@ -406,8 +406,6 @@ export const Handlers = {
     Aml_Analysis: {
         closeAlerts: async (e) => {
 
-
-            kendo.ui.progress($('#grid'), true);
             var selectedidz = await Select("/AML_ANALYSIS/GetData", "PartyNumber");
 
             if ([...selectedidz].length == 0) {
@@ -439,7 +437,7 @@ export const Handlers = {
                     Comment: comment.value,
                     Desc: document.getElementById("close-desc").value,
                 }
-                var res = await fetch("/AML_ANALYSIS/Close", {
+                var res =  fetch("/AML_ANALYSIS/Close", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -447,28 +445,8 @@ export const Handlers = {
                     },
                     body: JSON.stringify(para)
                 });
-                if (res.ok) {
-
-                    toastObj.icon = 'success';
-
-                }
-                else {
-
-                    toastObj.icon = 'error';
-
-                }
-                var resText = await res.json();
-                toastObj.text = resText;
-                toastObj.heading = "Close Status";
-                $.toast(toastObj);
-                comment.value = "";
-
                 $("#closeModal").modal("hide");
-                $("#grid").data("kendoGrid").refresh();
             }
-
-            kendo.ui.progress($('#grid'), false);
-
         },
         routeAlerts: async (e) => {
 
@@ -997,10 +975,6 @@ async function Select(url, idcolumn) {
 
     } else {
         var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
-
-
-
-
         return idz;
 
 

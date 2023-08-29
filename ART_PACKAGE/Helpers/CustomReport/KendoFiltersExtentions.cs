@@ -511,9 +511,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 }
                 else
                 {
-                    string v = "";
-
-                    v = $"{i.field},{i.@operator},{i.value ?? ""}";
+                    string v = $"{i.field},{i.@operator},{i.value ?? ""}";
                     _ = filterBuilder.AppendLine(v);
 
 

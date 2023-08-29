@@ -1,4 +1,4 @@
-﻿namespace Data.FCFKC
+﻿namespace Data.FCFKC.AmlAnalysis
 {
     public partial class FskEntityEvent
     {

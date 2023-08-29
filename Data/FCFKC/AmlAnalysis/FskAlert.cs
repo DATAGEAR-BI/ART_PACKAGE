@@ -1,10 +1,10 @@
-﻿namespace Data.FCFKC
+﻿namespace Data.FCFKC.AmlAnalysis
 {
     public partial class FskAlert
     {
         public FskAlert()
         {
-            FskAlertEvent1s = new HashSet<FskAlertEvent>();
+            FskAlertEvents = new HashSet<FskAlertEvent>();
         }
 
         public decimal AlertId { get; set; }
@@ -37,6 +37,6 @@
         public decimal? EntitySegmentId { get; set; }
         public string? QueueCode { get; set; }
 
-        public virtual ICollection<FskAlertEvent> FskAlertEvent1s { get; set; }
+        public virtual ICollection<FskAlertEvent> FskAlertEvents { get; set; }
     }
 }

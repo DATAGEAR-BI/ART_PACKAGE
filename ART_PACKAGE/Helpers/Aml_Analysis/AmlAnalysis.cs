@@ -1,6 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.IEnumerableExtentions;
 using Data.Data.AmlAnalysis;
-using Data.FCFKC;
+using Data.FCFKC.AmlAnalysis;
 using FakeItEasy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -10,21 +10,18 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
     public class AmlAnalysis : IAmlAnalysis
     {
         private readonly ILogger<IAmlAnalysis> _logger;
-        private readonly IServiceScopeFactory scopeFactory;
-        private readonly FCFKC _fcfkc;
+        private readonly FCFKCAmlAnalysisContext _fcfkc;
         private readonly object _lock = new();
         private readonly AmlAnalysisContext _context;
         private readonly AmlAnalysisUpdateTableIndecator _updateInd;
 
-        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKC fcfkc, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd)
+        public AmlAnalysis(ILogger<IAmlAnalysis> logger, IServiceScopeFactory scopeFactory, FCFKCAmlAnalysisContext fcfkc, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd)
         {
             _logger = logger;
-            this.scopeFactory = scopeFactory;
             _fcfkc = fcfkc;
             _context = context;
             _updateInd = updateInd;
         }
-
         public async Task<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> CloseAlertsAsync(CloseRequest closeReq, string userName, string alertStatusCode)
         {
 
@@ -51,11 +48,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                     return (false, closeReq.Entities);
                 }
                 bool commentsRes = await AddComments(closeReq.Entities, closeReq.Comment, userName);
-                if (!commentsRes)
-                {
-
-                    return (false, closeReq.Entities);
-                }
+                return !commentsRes ? ((bool isSucceed, IEnumerable<string>? ColseFailedEntities))(false, closeReq.Entities) : throw new Exception("brrrrrrrrr");
                 _ = await _fcfkc.SaveChangesAsync();
 
                 return (true, null);
@@ -200,6 +193,14 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
             }
 
         }
+
+        public async Task<bool> RemoveEntitiesFromBkTable(IEnumerable<string> AlertedEntities)
+        {
+            int res = await _context.Database.ExecuteSqlRawAsync($@"DELETE FROM ART_AML_ANALYSIS_VIEW_TB
+                                                                        WHERE PARTY_NUMBER IN ({string.Join(",", AlertedEntities)})");
+            return res > 0;
+        }
+
         private async Task<bool> CreateAlertsEvents(IEnumerable<decimal>? alertsIds, string desc, string userName)
         {
             IEnumerable<FskAlertEvent> events;
@@ -216,7 +217,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                     EventDescription = desc
                 });
                 _fcfkc.AddRange(events);
-                int res = _fcfkc.SaveChanges();
+                decimal res = _fcfkc.SaveChanges();
 
                 return res > 0;
             }
@@ -265,6 +266,8 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 Desc = closeRequest.Desc,
             });
             using IDbContextTransaction trans = _fcfkc.Database.BeginTransaction();
+            using IDbContextTransaction arTrans = _context.Database.BeginTransaction();
+
             List<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> res = new();
             try
             {
@@ -275,6 +278,14 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
                 if (res.All(x => x.isSucceed))
                 {
+
+                    foreach (CloseRequest request in requests)
+                    {
+                        bool deleteFromBkRes = await RemoveEntitiesFromBkTable(request.Entities);
+                        if (deleteFromBkRes)
+                            throw new InvalidOperationException($"Error While deleting entities from Table : ({string.Join(",", request.Entities)})");
+                    }
+                    arTrans.Commit();
                     trans.Commit();
                     return (true, null);
                 }
@@ -286,6 +297,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
             catch (Exception ex)
             {
                 _logger.LogCritical("something wrong happend {ex}", ex.Message);
+                arTrans.Rollback();
                 trans.Rollback();
                 return (false, res.SelectMany(x => x.ColseFailedEntities));
             }

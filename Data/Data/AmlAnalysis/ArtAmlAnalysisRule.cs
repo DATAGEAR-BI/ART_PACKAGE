@@ -1,5 +1,4 @@
-﻿
-namespace Data.Data.AmlAnalysis
+﻿namespace Data.Data.AmlAnalysis
 {
     public class ArtAmlAnalysisRule
     {

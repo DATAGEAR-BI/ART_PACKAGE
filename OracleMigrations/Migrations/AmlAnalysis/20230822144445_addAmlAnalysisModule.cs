@@ -14,7 +14,7 @@ namespace OracleMigrations.Migrations.AmlAnalysis
 
 
             migrationBuilder.Sql($@"CREATE or replace VIEW ART.ART_AML_ANALYSIS_VIEW AS
-  select seg.MONTH_KEY,seg.PARTY_NUMBER,seg.RISK_CLASSIFICATION,seg.PARTY_TYPE_DESC,seg.INDUSTRY_CODE,seg.INDUSTRY_DESC,pd.OCCUPATION_DESC
+  select seg.MONTH_KEY,seg.PARTY_NUMBER,seg.RISK_CLASSIFICATION,seg.PARTY_TYPE_DESC,seg.INDUSTRY_CODE,seg.INDUSTRY_DESC,pd.OCCUPATION_CODE,pd.OCCUPATION_DESC
   ,seg.TOTAL_CREDIT_AMOUNT,seg.TOTAL_DEBIT_AMOUNT,seg.TOTAL_CREDIT_CNT,seg.TOTAL_DEBIT_CNT,seg.TOTAL_AMOUNT,seg.TOTAL_CNT,seg.NUMBER_OF_LOCATIONS,
   seg.AVG_WIRE_C_AMT,seg.MAX_WIRE_C_AMT,seg.TOTAL_WIRE_C_AMT,seg.MIN_WIRE_C_AMT,seg.TOTAL_WIRE_C_CNT,seg.MAX_WIRE_D_AMT,seg.TOTAL_WIRE_D_AMT,seg.TOTAL_WIRE_D_CNT,
   seg.MIN_WIRE_D_AMT,seg.AVG_WIRE_D_AMT,seg.AVG_BUYSECURITY_C_AMT,seg.TOTAL_BUYSECURITY_C_CNT,seg.TOTAL_BUYSECURITY_C_AMT,seg.MIN_BUYSECURITY_C_AMT,
@@ -57,10 +57,10 @@ namespace OracleMigrations.Migrations.AmlAnalysis
     --pd.ENTITY_SEGMENT_ID as SEGMENT_SORTED , 
   pd.party_name ,round(Preds.PRED ,3) as Prediction  
   ,AE.ALERTS_CNT as Alerts_Count , alc.Closed_Alerts_Count as Closed_Alerts_Count
-from fcfcore.fsc_party_dim  pd inner join fcfkc.YR_BFR_ALRT_PRFL_V3  seg on pd.PARTY_NUMBER = seg.PARTY_NUMBER 
+from fcfcore.fsc_party_dim  pd inner join FCFCORE.YR_BFR_ALRT_PRFL_V3  seg on pd.PARTY_NUMBER = seg.PARTY_NUMBER 
 inner join fcfkc.FSK_ALERTED_ENTITY  AE on Ae.ALERTED_ENTITY_NUMBER = seg.PARTY_NUMBER
 inner join FCFKC.AUTO_SUPP_PREDS  Preds on Preds.PARTY_NUMBER = seg.PARTY_NUMBER
-left join FCFKC.ART_ALERTS_STATUS_CUSTOMER  alc on alc.ALERTED_ENTITY_NUMBER = Ae.ALERTED_ENTITY_NUMBER
+left join ART.ART_ALERTS_STATUS_CUSTOMER  alc on alc.ALERTED_ENTITY_NUMBER = Ae.ALERTED_ENTITY_NUMBER
 where pd.CHANGE_CURRENT_IND = 'Y' 
 and ( AE.ALERTS_CNT >0 )");
 

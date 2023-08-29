@@ -207,8 +207,9 @@ namespace DataGear_RV_Ver_1._7.Controllers
             if (closeRequest == null)
                 return BadRequest("You Should Send a Close request Body");
             //this action might take time so we used signalr
-            (bool isSucceed, IEnumerable<string>? ColseFailedEntities) res = await _amlSrv.CloseAllAlertsAsync(closeRequest, User.Identity.Name, "CLP");
-            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("CloseResult", res);
+            (bool isSucceed, IEnumerable<string>? ColseFailedEntities) = await _amlSrv.CloseAllAlertsAsync(closeRequest, User.Identity.Name, "CLP");
+            var response = new { isSucceed, ColseFailedEntities };
+            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("CloseResult", response);
             return Ok();
         }
         //[HttpPost]

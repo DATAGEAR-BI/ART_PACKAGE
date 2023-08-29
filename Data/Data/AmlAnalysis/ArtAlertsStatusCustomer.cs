@@ -2,7 +2,7 @@
 {
     public partial class ArtAlertsStatusCustomer
     {
-        public string AlertedEntityNumber { get; set; } = null!;
+        public string? AlertedEntityNumber { get; set; }
         public decimal? ClosedAlertsCount { get; set; }
     }
 }
