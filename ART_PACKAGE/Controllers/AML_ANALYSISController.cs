@@ -310,24 +310,31 @@ namespace DataGear_RV_Ver_1._7.Controllers
         //    return Ok();
         //}
 
-        //public ContentResult GetQueues()
-        //{
-        //    var result = fcfcore.ArtSasQueues.Select(Q => Q.Queuecode);
-        //    return Content(JsonConvert.SerializeObject(result), "application/json");
-        //}
-        //public ContentResult GetQueuesUsers([FromBody] string Queue)
-        //{
-        //    if (string.IsNullOrEmpty(Queue))
-        //    {
-        //        var result = fcfcore.ArtSasUserQueues.Select(U => U.Userid).Distinct();
-        //        return Content(JsonConvert.SerializeObject(result), "application/json");
-        //    }
-        //    else
-        //    {
-        //        var result = fcfcore.ArtSasUserQueues.Where(Q => Q.Queuecode == Queue).Select(U => U.Userid);
-        //        return Content(JsonConvert.SerializeObject(result), "application/json");
-        //    }
-        //}
+        public ContentResult GetQueues()
+        {
+            List<string> result = new List<string> { "TestQ", "TestQ1", "TestQ2" };
+            return Content(JsonConvert.SerializeObject(result), "application/json");
+        }
+        public ContentResult GetQueuesUsers([FromBody] string Queue)
+        {
+            List<string> Qs = new List<string> { "TestQ", "TestQ1", "TestQ2" };
+            Dictionary<string, List<string>> usersDict = new Dictionary<string, List<string>>()
+            {
+                { "TestQ" , new List<string> { "TestU1" , "TestU2" } },
+                { "TestQ1" , new List<string> { "TestU3" , "TestU4" } },
+                { "TestQ2" , new List<string> { "TestU5"  } },
+            };
+            if (string.IsNullOrEmpty(Queue))
+            {
+                IEnumerable<string> result = usersDict.Values.SelectMany(x => x);
+                return Content(JsonConvert.SerializeObject(result), "application/json");
+            }
+            else
+            {
+                List<string> result = usersDict[Queue];
+                return Content(JsonConvert.SerializeObject(result), "application/json");
+            }
+        }
         [HttpPost("[controller]/[action]")]
         public ContentResult GetRulesData([FromBody] KendoRequest req)
         {

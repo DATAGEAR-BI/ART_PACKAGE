@@ -48,7 +48,8 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                     return (false, closeReq.Entities);
                 }
                 bool commentsRes = await AddComments(closeReq.Entities, closeReq.Comment, userName);
-                return !commentsRes ? ((bool isSucceed, IEnumerable<string>? ColseFailedEntities))(false, closeReq.Entities) : throw new Exception("brrrrrrrrr");
+                if (!commentsRes)
+                    return ((bool isSucceed, IEnumerable<string>? ColseFailedEntities))(false, closeReq.Entities);
                 _ = await _fcfkc.SaveChangesAsync();
 
                 return (true, null);
@@ -282,7 +283,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                     foreach (CloseRequest request in requests)
                     {
                         bool deleteFromBkRes = await RemoveEntitiesFromBkTable(request.Entities);
-                        if (deleteFromBkRes)
+                        if (!deleteFromBkRes)
                             throw new InvalidOperationException($"Error While deleting entities from Table : ({string.Join(",", request.Entities)})");
                     }
                     arTrans.Commit();

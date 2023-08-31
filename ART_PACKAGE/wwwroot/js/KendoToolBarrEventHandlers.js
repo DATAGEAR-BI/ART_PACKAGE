@@ -444,8 +444,11 @@ export const Handlers = {
                         "Accept": "application/json"
                     },
                     body: JSON.stringify(para)
+                }).then(x => {
+                    localStorage.removeItem("selectedidz");
                 });
                 $("#closeModal").modal("hide");
+               
             }
         },
         routeAlerts: async (e) => {
