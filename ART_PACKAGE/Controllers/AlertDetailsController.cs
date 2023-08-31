@@ -63,6 +63,7 @@ namespace ART_PACKAGE.Controllers
                 columns = Data.Columns,
                 total = Data.Total,
                 containsActions = false,
+                selectable = true,
                 toolbar = new List<dynamic>  {new
                 {
                     id = "StreamExport",
@@ -78,10 +79,10 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
+        public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
-            await _csvSrv.ExportAllCsv<ArtAmlAlertDetailView, AlertDetailsController, decimal>(data, User.Identity.Name, req);
+            await _csvSrv.ExportSelectedCsv<ArtAmlAlertDetailView, AlertDetailsController, long?>(data, nameof(ArtAmlAlertDetailView.AlertId), User.Identity.Name, req);
             return new EmptyResult();
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
@@ -96,25 +97,6 @@ namespace ART_PACKAGE.Controllers
             return File(pdfBytes, "application/pdf");
         }
 
-        public IEnumerable<ArtAmlAlertDetailView> GetLargeDataSetInBatches(int batchSize)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews;
-            int totalRecords = data.Count();
-            // Implement your data retrieval logic here, fetching data in chunks of 'batchSize'
-            // For example, you could use database queries with pagination.
-            // Ensure that each batch is efficiently streamed and not loading all data at once.
-            // Return each batch of data as an IEnumerable<YourDataClass>.
-            // You may need to adjust the logic based on your specific data source.
-            // This is just a basic example:
-            for (int i = 0; i < totalRecords; i += batchSize)
-            {
-                IQueryable<ArtAmlAlertDetailView> batch = data.Skip(i * batchSize).Take(batchSize);
-                foreach (ArtAmlAlertDetailView? item in batch)
-                {
-                    yield return item;
-                }
-            }
-        }
 
         public IActionResult Index()
         {

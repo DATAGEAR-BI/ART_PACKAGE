@@ -27,7 +27,7 @@ spinnerStyle.rel = "stylesheet";
 spinnerStyle.href = "../lib/spin.js/spin.css";
 
 var grid = document.getElementById("grid");
-localStorage.setItem("selectedidz", "[]");
+localStorage.removeItem("selectedidz");
 localStorage.setItem("isAllSelected", false);
 var filtersDiv = document.createElement("div");
 var exRules = [];
@@ -446,11 +446,17 @@ function generateGrid() {
         pageable: true,
         sortable: true,
         change: function (e) {
-            selected[this.dataSource.page()] = [...this.select()].map((x) => {
-                var dataItem = grid.dataItem(x);
+            if ([...this.select()].length > 0) {
+                selected[this.dataSource.page()] = [...this.select()].map((x) => {
+                    var dataItem = grid.dataItem(x);
 
-                return dataItem;
-            });
+                    return dataItem;
+                });
+            } else {
+                
+                selected[this.dataSource.page()] = [];
+
+            }
 
             localStorage.setItem("selectedidz", JSON.stringify(selected));
         },
@@ -530,10 +536,12 @@ function generateGrid() {
     grid.tbody.on("click", ".k-checkbox", (e) => {
         selected = Object.entries(selected).reduce((acc, [key, value]) => {
             if (grid.dataSource.page() == key) {
+
                 acc[key] = value;
             }
             return acc;
         }, {});
+
         localStorage.setItem("selectedidz", JSON.stringify(selected));
         if (isAllSelected) {
             isAllSelected = false;
@@ -569,7 +577,7 @@ function generateGrid() {
                 csvhandler(e, controller);
             } else {
                 var csvhandler = Handlers["csvExport"];
-                csvhandler(e, controller, url);
+                csvhandler(e, controller, url, prop);
             }
 
         }
