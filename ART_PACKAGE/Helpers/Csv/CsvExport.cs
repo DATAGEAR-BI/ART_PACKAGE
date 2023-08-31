@@ -55,7 +55,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             return lambda.Compile();
         }
-        public async Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true)
+        public async Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, Func<T, bool> crt, string userName, ExportDto<T2> obj = null, bool all = true)
         {
             IEnumerable<Task> tasks;
             int i = 1;
@@ -67,10 +67,12 @@ namespace ART_PACKAGE.Helpers.Csv
             }
             else
             {
-                Type type = typeof(T);
-                System.Reflection.PropertyInfo? prop = type.GetProperty(propName);
-                Func<T, ExportDto<T2>, bool> crt = GetContainsExpression<T, T2>(propName);
-                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
+
+
+                // Modify the LINQ expression to use Any and Contains
+                tasks = data
+                    .Where(x => crt(x))
+                    .ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
             }
 
             foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())

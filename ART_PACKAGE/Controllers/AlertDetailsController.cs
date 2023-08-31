@@ -1,10 +1,11 @@
-﻿using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
@@ -16,14 +17,15 @@ namespace ART_PACKAGE.Controllers
         private readonly SasAmlContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        private readonly ICsvExport _csvSrv;
-        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, ICsvExport csvSrv)
+        private readonly IHubContext<ExportHub> _exportHub;
+        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
         {
             this.dbfcfkc = dbfcfkc;
 
             _dropDown = dropDown;
             _pdfSrv = pdfSrv;
-            _csvSrv = csvSrv;
+
+            _exportHub = exportHub;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -82,7 +84,42 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
-            await _csvSrv.ExportSelectedCsv<ArtAmlAlertDetailView, AlertDetailsController, long?>(data, nameof(ArtAmlAlertDetailView.AlertId), User.Identity.Name, req);
+            IEnumerable<Task> tasks;
+            int i = 1;
+            if (req.All)
+            {
+                tasks = data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+
+
+            }
+            else
+            {
+
+
+                // Modify the LINQ expression to use Any and Contains
+                tasks = data
+                    .Where(x => req.SelectedIdz.Contains(x.AlertId))
+                    .ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+            }
+
+            foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
+            {
+                try
+                {
+                    byte[] bytes = await item;
+                    string FileName = nameof(AlertDetailsController).Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvRecevied", bytes, FileName);
+                    i++;
+                }
+                catch (Exception ex)
+                {
+                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                                .SendAsync("csvErrorRecevied", i);
+
+                }
+
+            }
             return new EmptyResult();
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
