@@ -19,6 +19,13 @@ namespace Data.Data.ARTDGAML
         public virtual DbSet<ArtScenarioAdminView> ArtScenarioAdminViews { get; set; } = null!;
         public virtual DbSet<ArtScenarioHistoryView> ArtScenarioHistoryViews { get; set; } = null!;
         public virtual DbSet<ArtSuspectDetailView> ArtSuspectDetailViews { get; set; } = null!;
+        //DGAML Home
+        public virtual DbSet<ArtHomeDgamlAlertsPerDate> ArtHomeDgamlAlertsPerDates { get; set; } = null!;
+        public virtual DbSet<ArtHomeDgamlAlertsPerStatus> ArtHomeDgamlAlertsPerStatuses { get; set; } = null!;
+        public virtual DbSet<ArtHomeDgamlNumberOfAccount> ArtHomeDgamlNumberOfAccounts { get; set; } = null!;
+        public virtual DbSet<ArtHomeDgamlNumberOfCustomer> ArtHomeDgamlNumberOfCustomers { get; set; } = null!;
+        public virtual DbSet<ArtHomeDgamlNumberOfHighRiskCustomer> ArtHomeDgamlNumberOfHighRiskCustomers { get; set; } = null!;
+        public virtual DbSet<ArtHomeDgamlNumberOfPepCustomer> ArtHomeDgamlNumberOfPepCustomers { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
