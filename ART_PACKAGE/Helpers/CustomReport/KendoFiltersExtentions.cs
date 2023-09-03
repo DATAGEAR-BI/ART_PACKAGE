@@ -1,6 +1,4 @@
-﻿
-
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -81,6 +79,26 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         };
 
 
+        private static readonly Dictionary<string, string> readableOperators = new()
+        {
+            {"eq" , "Is Equal To" },
+            {"neq" , "Is Not Equal To" },
+            {"gt" , "Is Greater Than" },
+            {"gte" , "Is Greater Than Or Equal" },
+            {"lt" , "Is Less Than" },
+            {"lte" , "Is Less Than Or Equal" },
+            {"isnull" , "Is Null" },
+            {"isnotnull" , "Is Not Null" },
+            {"isempty" , "Is Empty" },
+            {"isnotempty" , "Is Not Empty" },
+            {"startswith" , "Starts With" },
+            {"doesnotstartwith" , "Doesn't Start With" },
+            {"contains" , "Contains" },
+            {"doesnotcontain" , "Doesn't Contain" },
+            {"endswith" , "Ends With" },
+            {"doesnotendwith" , "Doesn't End With" },
+        };
+
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
         {
             {
@@ -88,14 +106,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 "sqlServer"
             ,
             new Dictionary<string, string> {
-            { "eq", " = Convert(date,'{0}' ,105)" },
-            { "neq", " <> Convert(date,'{0}' ,105)" },
+            { "eq", " = Convert(datetime,'{0}')" },
+            { "neq", " <> Convert(datetime,'{0}')" },
             { "isnull", "IS NULL" },
             { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= Convert(date,'{0}' ,105)"},
-            {"gt"," > Convert(date,'{0}' ,105)"},
-            {"lte"," <= Convert(date,'{0}',105)"},
-            { "lt", " < Convert(date,'{0}',105)" },
+            {"gte"," >= Convert(datetime,'{0}')"},
+            {"gt"," > Convert(datetime,'{0}')"},
+            {"lte"," <= Convert(datetime,'{0}')"},
+            { "lt", " < Convert(datetime,'{0}')" },
                 }
             }
             ,
@@ -156,30 +174,18 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                         v = i.value is not null
                             ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString())
                             : NumberOp[i.@operator];
-
                     }
                     catch (Exception)
                     {
                         string value = ((JsonElement)i.value).ToObject<string>();
-                        if (DateTime.TryParse(value, out DateTime dt))
-                        {
-                            v = string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"));
-                            if (dbtype == "sqlServer")
-                            {
-                                i.field = $"Convert(date,{i.field},105)";
-                            }
-                        }
-                        else
-                        {
-                            v = string.Format(StringOp[i.@operator], value);
-                        }
-
-
+                        v = DateTime.TryParse(value, out DateTime dt)
+                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"))
+                            : string.Format(StringOp[i.@operator], value);
 
                     }
                     finally
                     {
-                        _ = dbtype == "oracle" ? _sb.Append(@$"""{i.field}"" {v}") : _sb.Append($"{i.field} {v}");
+                        _ = _sb.Append($"{i.field} {v}");
                     }
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
@@ -240,38 +246,47 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
                                 string value = ((JsonElement)i.value).ToObject<string>();
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value);
+
                             }
                         }
                         else if (underlyingType.Name == nameof(DateTime))
                         {
+
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(DateOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
                                 DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
                                 query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToString());
+
                             }
                         }
                         else if (underlyingType.IsEnum)
                         {
+
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
                                 MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
                                 object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
+
                             }
                         }
                         else
@@ -283,11 +298,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
+
+
                             }
                             else
                             {
                                 object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
+
                             }
                         }
                         _ = _sb.Append(query);
@@ -296,21 +314,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     {
                         if (propType.Name == nameof(String))
                         {
-                            if (i.@operator.ToLower().Contains("null".ToLower()))
-                            {
-                                query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
-                            }
-                            else
-                            {
-                                string value = ((JsonElement)i.value).ToObject<string>();
-                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
-                            }
+                            string value = ((JsonElement)i.value).ToObject<string>();
+                            query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
                         }
                         else if (propType.Name == nameof(DateTime))
                         {
                             DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date);
+                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date.ToString());
                         }
                         else if (propType.IsEnum)
                         {
@@ -482,50 +493,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         }
 
-        private static string GetFilterTextForCsv(this Filter Filters)
-        {
-            StringBuilder filterBuilder = new();
-            if (Filters is null)
-            {
-                return string.Empty;
-            }
-
-            string? logic = Filters.logic;
-
-            if (logic is null)
-            {
-                return string.Empty;
-            }
-
-            _ = new List<string>();
-            foreach (object? item in Filters.filters)
-            {
-                JsonElement t = (JsonElement)item;
-                FilterData i = t.ToObject<FilterData>();
-                if (i.field == null)
-                {
-                    Filter filter = t.ToObject<Filter>();
-                    _ = filterBuilder.AppendLine(GetFilterTextForCsv(filter));
-
-                }
-                else
-                {
-                    string v = $"{i.field},{i.@operator},{i.value ?? ""}";
-                    _ = filterBuilder.AppendLine(v);
 
 
-                }
-
-
-            }
-
-
-            return filterBuilder.ToString();
-
-
-
-
-        }
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
@@ -628,9 +597,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
 
             string? sortString = obj.Sort.GetSortString();
-            data = sortString is not null
-                ? data.OrderBy(sortString).AsQueryable()
-                : (IQueryable<T>)data.OrderBy(typeof(T).GetProperties().First().Name + " asc");
+            if (sortString is not null)
+            {
+                data = data.OrderBy(sortString).AsQueryable();
+            }
+
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
             {
@@ -721,66 +692,6 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return bytes;
         }
 
-        public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
-        {
-            string filterCells = GetFilterTextForCsv(obj.Filter);
-            decimal total = 0;
-            if (all)
-            {
-                KendoDataDesc<T> calldata = data.CallData(obj);
-                data = calldata.Data;
-                total = calldata.Total;
-
-            }
-            else
-            {
-                total = data.Count();
-            }
-
-
-            CsvConfiguration config = new(CultureInfo.InvariantCulture)
-            {
-                Delimiter = ",",
-                Encoding = Encoding.UTF8,
-            };
-            int batch = 10000;
-            int skip = 0;
-            List<Task<byte[]>> tasks = new() { };
-            while (total > 0)
-            {
-                IQueryable<T> tempDData = data.Skip(skip).Take(batch);
-                string sql = tempDData.ToQueryString();
-                List<T> tempData = tempDData.ToList();
-                yield return Task.Run(() =>
-                {
-                    using MemoryStream stream = new();
-                    using (StreamWriter sw = new(stream, Encoding.UTF8))
-                    using (CsvWriter cw = new(sw, config))
-                    {
-                        _ = cw.Context.RegisterClassMap<T1>();
-
-                        cw.WriteComment(filterCells.Replace("Ã¯Â»Â¿#", ""));
-
-                        cw.NextRecord();
-                        cw.WriteHeader<T>();
-                        cw.NextRecord();
-                        foreach (T? elm in tempData)
-                        {
-                            cw.WriteRecord(elm);
-                            cw.NextRecord();
-                        }
-                    }
-                    byte[] b = stream.ToArray();
-                    return b;
-                });
-                //tasks.Add(task);
-                total -= batch;
-                skip += batch;
-            }
-
-
-        }
-
         public static async Task<byte[]> ExportToCSV<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
             decimal total = 0;
@@ -808,7 +719,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
             using (CsvWriter cw = new(sw, config))
             {
-
+                sw.Write("");
                 _ = cw.Context.RegisterClassMap<T1>();
                 cw.WriteHeader<T>();
                 bytes = stream.ToArray();
@@ -825,6 +736,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
                     using (CsvWriter cw = new(sw, config))
                     {
+                        sw.Write("");
                         _ = cw.Context.RegisterClassMap<T1>();
                         cw.WriteHeader<T>();
                         cw.NextRecord();
@@ -905,26 +817,139 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return bytes;
         }
 
+        public static List<List<object>> GetFilterTextForCsv(this Filter Filters)
+        {
+            List<List<object>> returnList = new();
+            if (Filters is null)
+            {
+                return returnList;
+            }
 
-        public static byte[] ExportCustomReportToCSV(List<dynamic> data, List<List<dynamic>> Chartdata = null)
+            string? logic = Filters.logic;
+
+            if (logic is null)
+            {
+                return returnList;
+            }
+
+
+            foreach (object? item in Filters.filters)
+            {
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
+                if (i.field == null)
+                {
+                    Filter filter = t.ToObject<Filter>();
+                    returnList.AddRange(GetFilterTextForCsv(filter));
+
+                }
+                else
+                {
+                    List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
+                    returnList.Add(v);
+                }
+
+
+            }
+
+
+            return returnList;
+
+
+
+
+        }
+        public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
+        {
+            List<List<object>> filterCells = GetFilterTextForCsv(obj.Filter);
+            decimal total = 0;
+            if (all)
+            {
+                KendoDataDesc<T> calldata = data.CallData(obj);
+                data = calldata.Data;
+                total = calldata.Total;
+
+            }
+            else
+            {
+                total = data.Count();
+            }
+
+
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            {
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
+            };
+            int batch = 10000;
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            while (total > 0)
+            {
+                IQueryable<T> tempDData = data.Skip(skip).Take(batch);
+                string sql = tempDData.ToQueryString();
+                List<T> tempData = tempDData.ToList();
+                yield return Task.Run(() =>
+                {
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
+                    using (CsvWriter cw = new(sw, config))
+                    {
+                        _ = cw.Context.RegisterClassMap<T1>();
+                        foreach (List<object> item in filterCells)
+                        {
+                            cw.WriteComment(string.Join(",", item));
+                        }
+
+                        cw.NextRecord();
+                        cw.WriteHeader<T>();
+                        cw.NextRecord();
+                        foreach (T? elm in tempData)
+                        {
+                            cw.WriteRecord(elm);
+                            cw.NextRecord();
+                        }
+                    }
+                    byte[] b = stream.ToArray();
+                    return b;
+                });
+                //tasks.Add(task);
+                total -= batch;
+                skip += batch;
+            }
+
+
+        }
+
+
+        public static byte[] ExportCustomReportToCSV(List<dynamic> data, List<List<dynamic>> Chartdata = null, List<List<object>> filterCells = null)
         {
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
-                IgnoreReferences = true,
-
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
             };
 
             MemoryStream stream = new();
-            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
             using (CsvWriter cw = new(sw, config))
             {
-                cw.WriteRecords(data);
-
-                cw.WriteComment("Charts Data");
-                foreach (List<dynamic> chart in Chartdata)
+                foreach (List<object> item in filterCells)
                 {
-                    cw.WriteRecords(chart);
+                    cw.WriteComment(string.Join(",", item));
                 }
+                cw.WriteRecords(data);
+                if (Chartdata is not null)
+                {
+                    cw.WriteComment("Charts Data");
+                    foreach (List<dynamic> chart in Chartdata)
+                    {
+                        cw.WriteRecords(chart);
+                    }
+                }
+
 
             }
 
@@ -944,6 +969,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }));
             return sort;
         }
+
         private static BinaryExpression MapOp<T>(MemberExpression prop, ConstantExpression constant, string op)
         {
             switch (op)
