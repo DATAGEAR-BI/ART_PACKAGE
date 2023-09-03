@@ -182,12 +182,6 @@ namespace DataGear_RV_Ver_1._7.Controllers
                             text = "route Alerts"
                             , id = "routeAlerts"
                         },
-                        new
-                        {
-                            text = "Close All Customers"
-                            , id = "CloseAll"
-                        },
-
                     }
             };
             return new ContentResult
@@ -212,79 +206,16 @@ namespace DataGear_RV_Ver_1._7.Controllers
             await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("CloseResult", response);
             return Ok();
         }
-        //[HttpPost]
-        //public IActionResult ApplyRules(List<ApplyRulesModel> rules)
-        //{
-        //    try
-        //    {
-        //        foreach (var rule in rules)
-        //        {
-        //            if (String.IsNullOrEmpty(rule.AENs))
-        //                continue;
-
-        //            var AlertedEntityNumber = rule.AENs.Split(",");
-        //            var PartitionedAENs = AlertedEntityNumber.Partition<string>(900);
-        //            List<ArtAmlAnalysisView> EntitiesInTheTable = new();
-        //            foreach (var part in PartitionedAENs)
-        //            {
-        //                var temp = fcfcore.ArtAmlAnalysisViews.Where(x => part.Contains(x.PartyNumber)).ToList();
-        //                EntitiesInTheTable.AddRange(temp);
-        //            }
-
-        //            var AlertedENs = EntitiesInTheTable.Select(x => x.PartyNumber).ToArray();
-        //            if (rule.Action == "Route")
-        //            {
-        //                var str = rule.RouteUser.Split("--");
-        //                var queue = str[0];
-        //                var user = str[1];
-        //                _iaml.Route(null, AlertedENs, queue,
-        //                    $"{rule.RuleId}--RTQ--FAAR-Apply",
-        //                    user, $"Routed From AmlAnalysis Auto Rule :{rule.RuleId}", User.Identity.Name);
-        //            }
-        //            else if (rule.Action == "Close")
-        //            {
-        //                _iaml.Close(AlertedENs
-        //                    , $"{rule.RuleId}--CLA", User.Identity.Name, "CLA"
-        //                    , $"Closed By AmlAnalysis Auto-Rules :{rule.RuleId}");
-
-        //            }
-
-        //        }
-
-        //        return RedirectToAction("Rules");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(500);
-        //        throw;
-        //    }
 
 
-        //}
 
-
-        //public IActionResult GetAllEntities()
-        //{
-        //    var Alertedentitiesnumber = fcfkc.FskAlertedEntities.Where(x => x.AlertsCnt > 0).Select(x => x.AlertedEntityNumber);
-        //    var TotalEntities = fcfkc.FskAlertedEntities.Count();
-
-        //    var alerts = fcfkc.FskAlerts.Count(x => Alertedentitiesnumber.Contains(x.AlertedEntityNumber) && x.AlertStatusCode == "ACT");
-
-        //    return Ok(new
-        //    {
-        //        AlertedentitiesNumbers = Alertedentitiesnumber,
-        //        TotalEntities = TotalEntities,
-        //        AlertedEntities = Alertedentitiesnumber.Count(),
-        //        Alerts = alerts
-        //    });
-        //}
 
 
         [AllowAnonymous]
         public IActionResult ExecuteBatchRules()
         {
             _updateInd.PerformInd = true;
-            logger.LogInformation("Batch Ruleswill be excuted in the next 10 minutes");
+            logger.LogInformation("Batch Rules will be excuted in the next 10 minutes");
             return Ok();
         }
         //public class ApplyRulesModel
@@ -299,26 +230,27 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
 
 
-        //public async Task<IActionResult> Route([FromBody] RouteRequest routeRequest)
-        //{
-        //    if (routeRequest == null)
-        //        return BadRequest("You Should Send a Route request Body");
+        public async Task<IActionResult> Route([FromBody] RouteRequest routeRequest)
+        {
+            if (routeRequest == null)
+                return BadRequest("You Should Send a Route request Body");
 
 
-        //    (bool isSucceed, IEnumerable<string>? RouteFailedEntities) res = await _amlSrv.RouteAllAlertsAsync(routeRequest, User.Identity.Name);
-        //    await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("RouteResult", res);
-        //    return Ok();
-        //}
+            (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await _amlSrv.RouteAllAlertsAsync(routeRequest, User.Identity.Name);
+            var response = new { isSucceed, RouteFailedEntities };
+            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("RouteResult", response);
+            return Ok();
+        }
 
         public ContentResult GetQueues()
         {
-            List<string> result = new List<string> { "TestQ", "TestQ1", "TestQ2" };
+            List<string> result = new() { "TestQ", "TestQ1", "TestQ2" };
             return Content(JsonConvert.SerializeObject(result), "application/json");
         }
         public ContentResult GetQueuesUsers([FromBody] string Queue)
         {
-            List<string> Qs = new List<string> { "TestQ", "TestQ1", "TestQ2" };
-            Dictionary<string, List<string>> usersDict = new Dictionary<string, List<string>>()
+            List<string> Qs = new() { "TestQ", "TestQ1", "TestQ2" };
+            Dictionary<string, List<string>> usersDict = new()
             {
                 { "TestQ" , new List<string> { "TestU1" , "TestU2" } },
                 { "TestQ1" , new List<string> { "TestU3" , "TestU4" } },
@@ -381,76 +313,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
         }
 
-        //[HttpPost]
-        //public IActionResult RulesData(string query, string tableName)
-        //{
-        //    try
-        //    {
-        //        var count = fcfcore.FscRuleBaseds.Count();
-        //        int maxid = 0;
-        //        if (count != 0)
-        //        {
-        //            maxid = fcfcore.FscRuleBaseds.Select(r => r.RuleId).Max() ?? 0;
-        //        }
-        //        var queries = new List<FscRuleBased>();
 
-        //        int counter = maxid + 2;
-        //        int parent = maxid + 1;
-        //        var date = DateTime.Now;
-        //        var querysplited = query.Split(",");
-        //        foreach (var item in querysplited)
-        //        {
-        //            var strs = item.Split(" ");
-        //            string rel;
-        //            string col;
-        //            string op;
-        //            string val;
-
-        //            var q = new FscRuleBased();
-        //            if (item.Equals(querysplited.First()))
-        //            {
-        //                var readable = query.Replace(",", "");
-        //                col = strs[0];
-        //                op = strs[1];
-        //                val = strs[2];
-        //                q.RuleId = parent;
-        //                q.ParentId = null;
-        //                q.RelationName = null;
-        //                q.OutputReadable = readable;
-        //            }
-        //            else
-        //            {
-        //                rel = strs[0];
-        //                col = strs[1];
-        //                op = strs[2];
-        //                val = strs[3];
-        //                q.RuleId = counter;
-        //                q.ParentId = parent;
-        //                q.RelationName = rel;
-        //            }
-        //            q.OperatorName = op;
-        //            q.ColumnName = col;
-        //            q.TableName = tableName;
-        //            q.CreatedDate = date;
-        //            q.Deleted = 0;
-        //            q.Active = 1;
-        //            q.UserId = User.Identity.Name;
-        //            q.RuleValue = val;
-        //            queries.Add(q);
-        //            counter++;
-
-        //        }
-        //        fcfcore.AddRange(queries);
-        //        fcfcore.SaveChanges();
-        //        return Ok();
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //        throw e;
-        //    }
-
-        //}
 
 
         [HttpPost("[controller]/[action]")]
@@ -482,50 +345,10 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
 
 
-        //[HttpGet]
-        //public ContentResult GetRuleData(int id)
-        //{
-        //    var rule = fcfcore.FscRuleBaseds.Find(id);
-        //    return Content(JsonConvert.SerializeObject(rule), "application/json");
-        //}
-
-        //public ContentResult ActiveDeActive(int rule_id)
-        //{
-        //    var found = fcfcore.FscRuleBaseds.Find(rule_id);
-        //    if (found.Active == 0)
-        //    {
-        //        found.Active = 1;
-        //    }
-        //    else { found.Active = 0; }
-
-        //    fcfcore.SaveChanges();
-        //    return Content(JsonConvert.SerializeObject(found), "application/json");
-        //}
-
-
-        //[AllowAnonymous]
-        //public IActionResult getrulez()
-        //{
-        //    var data = typeof(AML_ANALYSISController).Assembly
-        //        .GetTypes()
-        //        .Where(t => t.IsClass && t.Namespace == "DataGear_RV_Ver_1._7.Controllers")
-        //        .Select(x => x.GetCustomAttribute<AuthorizeAttribute>()?.Roles)
-        //        .Where(x => x is not null)
-        //        .Select(x => new IdentityRole
-        //        {
-        //            Id = Guid.NewGuid().ToString(),
-        //            Name = x
-        //        });
 
 
 
-        //    return Content(JsonConvert.SerializeObject(data, new JsonSerializerSettings
-        //    {
-        //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-        //        TypeNameHandling = TypeNameHandling.None
 
-        //    }), "application/json");
-        //}
 
 
 
@@ -562,65 +385,28 @@ namespace DataGear_RV_Ver_1._7.Controllers
         //    fcfcore.SaveChanges();
         //    return;
         //}
-        //[HttpPost("[controller]/[action]")]
-        //public IActionResult TestRules([FromBody] List<int> rules)
-        //{
-        //    if (rules is null || rules.Count() == 0)
-        //        return BadRequest("There no rules selected");
-        //    var Rules = art.ArtAmlAnalysisRules.Where(r => rules.Contains(r.Id)).ToList();
-
-        //    var result = Rules.Select(x =>
-        //    {
-        //        var aens = fcfcore.ArtAmlAnalysisViews.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(x => x.PartyNumber).ToList();
-        //        var pair = new Dictionary<string, dynamic>
-        //        {
-        //            {"Id" , x.Id },
-        //            {"AlertedEntities" , aens.Count() },
-        //            {"Alerts" , fcfkc.FskAlerts.Where(a => aens.Contains(a.AlertedEntityNumber) && a.AlertStatusCode.ToUpper() == "ACT").Count()},
-        //            {"text1" , "dsfdfsdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"},
-        //            {"text2" , "dsfdfsdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"},
-        //        };
-        //        return pair;
-        //    });
-        //    return Ok(result);
-        //}
+        [HttpPost("[controller]/[action]")]
+        public async Task<IActionResult> TestRules([FromBody] List<int> rules)
+        {
+            if (rules is null || rules.Count() == 0)
+                return BadRequest("There no rules selected");
+            IEnumerable<TestRulesResult> result = await _amlSrv.TestRules(rules);
+            return Ok(result);
+        }
 
 
-        //[HttpPost("[controller]/[action]")]
-        //public IActionResult Apply([FromBody] List<int> rules)
-        //{
-        //    if (rules is null || rules.Count() == 0)
-        //        return BadRequest("There no rules selected");
-        //    try
-        //    {
-        //        var Rules = art.ArtAmlAnalysisRules.Where(r => rules.Contains(r.Id)).ToList();
-        //        var closeRules = Rules.Where(x => x.Action == AmlAnalysisAction.Close.ToString());
-        //        var routeRules = Rules.Where(x => x.Action == AmlAnalysisAction.Route.ToString());
-        //        foreach (var rule in closeRules)
-        //        {
-        //            var aens = fcfcore.ArtAmlAnalysisViews.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(x => x.PartyNumber).ToArray();
-        //            _iaml.Close(aens
-        //                        , $"{rule.Id}--CLA", User.Identity.Name, "CLA"
-        //                        , $"Closed By AmlAnalysis Auto-Rules :{rule.Id}");
-        //        }
+        [HttpPost("[controller]/[action]")]
+        public async Task<IActionResult> Apply([FromBody] List<int> rules)
+        {
+            if (rules is null || rules.Count() == 0)
+                return BadRequest("There no rules selected");
+            (bool isAllSucceed, IEnumerable<int> FailedRules) = await _amlSrv.ApplyRules(rules);
 
-        //        foreach (var rule in routeRules)
-        //        {
-        //            var aens = fcfcore.ArtAmlAnalysisViews.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(x => x.PartyNumber).ToArray();
-        //            _iaml.Route(null, aens, rule.RouteToUser.Split("--")[0],
-        //                       $"{rule.Id}--RTQ--FAAR-Apply",
-        //                       rule.RouteToUser.Split("--")[1], $"Routed From AmlAnalysis Auto Rule :{rule.Id}", User.Identity.Name);
-        //        }
+            return isAllSucceed
+                ? Ok("all rules has been apllied")
+                : BadRequest($"this rules : {string.Join(",", FailedRules)} made some issues please contact with support");
 
-        //        return Ok("The Rules Have Been Applied");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.LogCritical(e.Message + " " + e.InnerException.Message);
-        //        return BadRequest("something went wrong");
-        //    }
-
-        //}
+        }
 
 
         //[HttpGet]

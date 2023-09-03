@@ -3,10 +3,7 @@ connection.start().then(x => {
     console.log("connection started");
 });
 connection.on("RouteResult", (res) => {
-    console.log(res);
-    var grid = document.getElementById("grid");
-    if (grid)
-        $("#grid").data("kendoGrid").dataSource.read();
+    toastObj.hideAfter = false;
     if (res.isSucceed) {
         toastObj.icon = 'success';
         toastObj.text = "Route ended successfully";
@@ -21,7 +18,7 @@ connection.on("RouteResult", (res) => {
 
 })
 connection.on("CloseResult", (res) => {
-    console.log(res);
+    toastObj.hideAfter = false;
     var grid = document.getElementById("grid");
     if (grid)
         $("#grid").data("kendoGrid").dataSource.read();

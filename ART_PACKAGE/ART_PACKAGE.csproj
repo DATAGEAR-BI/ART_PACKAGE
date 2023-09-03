@@ -46,6 +46,7 @@
 		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
 		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
 		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

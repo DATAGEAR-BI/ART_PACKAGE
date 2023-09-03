@@ -437,7 +437,7 @@ export const Handlers = {
                     Comment: comment.value,
                     Desc: document.getElementById("close-desc").value,
                 }
-                var res =  fetch("/AML_ANALYSIS/Close", {
+                var res = fetch("/AML_ANALYSIS/Close", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -445,16 +445,14 @@ export const Handlers = {
                     },
                     body: JSON.stringify(para)
                 }).then(x => {
+                    comment.value = "";
                     localStorage.removeItem("selectedidz");
                 });
                 $("#closeModal").modal("hide");
-               
+
             }
         },
         routeAlerts: async (e) => {
-
-
-            kendo.ui.progress($('#grid'), true);
             var selectedidz = await Select("/AML_ANALYSIS/GetData", "PartyNumber");
 
             if ([...selectedidz].length == 0) {
@@ -561,35 +559,20 @@ export const Handlers = {
 
                 }
 
-                var res = await fetch("/AML_ANALYSIS/Route", {
+                var res = fetch("/AML_ANALYSIS/Route", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
                     body: JSON.stringify(para)
-                })
-                if (res.ok) {
+                }).then(x => {
+                    comment.value = "";
+                    localStorage.removeItem("selectedidz");
+                });
 
-                    toastObj.icon = 'info';
-
-                }
-                else {
-
-                    toastObj.icon = 'error';
-
-                }
-                var resText = await res.json();
-                toastObj.text = resText;
-                toastObj.heading = "Route Status";
-                $.toast(toastObj);
-
-
-                comment.value = "";
-
-                $("#closeModal").modal("hide");
+                $("#RouteModal").modal("hide");
             }
-            kendo.ui.progress($('#grid'), false);
 
         },
         CloseAll: async (e) => {
@@ -692,16 +675,16 @@ export const Handlers = {
                         transport: {
                             read: async (options) => {
                                 var data = await (res).json();
-
+                                console.log(data);
                                 options.success(data);
                             }
                         },
                         schema: {
                             model: {
                                 fields: {
-                                    Id: { type: "number" },
-                                    AlertedEntities: { type: "number" },
-                                    Alerts: { type: "number" }
+                                    id: { type: "number" },
+                                    alertedEntities: { type: "number" },
+                                    alerts: { type: "number" }
                                 }
                             }
                         },
@@ -723,9 +706,9 @@ export const Handlers = {
 
 
                     columns: [
-                        { field: "Id", title: "Rule ID", width: 80 },
-                        { field: "AlertedEntities", width: 80, title: "Number Of Matched Enities" },
-                        { field: "Alerts", title: "Number Of Matched Alerts", width: 80 },
+                        { field: "id", title: "Rule ID", width: 80 },
+                        { field: "alertedEntities", width: 80, title: "Number Of Matched Enities" },
+                        { field: "alerts", title: "Number Of Matched Alerts", width: 80 },
                     ]
 
                 });

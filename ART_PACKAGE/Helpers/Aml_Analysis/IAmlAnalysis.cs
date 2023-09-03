@@ -11,5 +11,8 @@
         public Task<bool> CreateAmlAnalysisTable();
 
         public Task ExecuteBatch();
+
+        public Task<(bool isAllSucceed, IEnumerable<int> FailedRules)> ApplyRules(IEnumerable<int> rules);
+        public Task<IEnumerable<TestRulesResult>> TestRules(IEnumerable<int> rules);
     }
 }

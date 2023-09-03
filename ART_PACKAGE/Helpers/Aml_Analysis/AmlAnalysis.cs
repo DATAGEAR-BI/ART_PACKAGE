@@ -124,9 +124,12 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 IEnumerable<string> newQueuesAlertedNumbers = entities.Except(existingQueues);
                 if (existingQueues is not null && existingQueues.Count() != 0)
                 {
+                    string sqlServerQeury = "SELECT TOP(1) alerted_entity_level_code FROM FCFKC.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number";
+                    string oracleQeury = "SELECT alerted_entity_level_code FROM FCFKC.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number FETCH FIRST  ROW ONLY";
+                    string sql = _fcfkc.Database.IsOracle() ? oracleQeury : sqlServerQeury;
                     int updateRes = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE FCFKC.FSK_ENTITY_QUEUE
                                                                             SET queue_code = '{queueCode}' , owner_userid = '{ownerId}' 
-                                                                            , alerted_entity_level_code = (SELECT TOP(1) alerted_entity_level_code FROM FCFKC.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number)
+                                                                            , alerted_entity_level_code = ({sql})
                                                                             WHERE alerted_entity_number IN ({string.Join(",", existingQueues.Select(x => $"'{x}'"))})");
                 }
 
@@ -411,6 +414,75 @@ end;";
             }
         }
 
+        public async Task<IEnumerable<TestRulesResult>> TestRules(IEnumerable<int> rules)
+        {
+            List<ArtAmlAnalysisRule> Rules = _context.ArtAmlAnalysisRules.Where(r => rules.Contains(r.Id)).ToList();
 
+            IEnumerable<TestRulesResult> result = Rules.Select(x =>
+            {
+                List<string> aens = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(x => x.PartyNumber).ToList();
+                TestRulesResult ruleRes = new()
+                {
+                    Id = x.Id,
+                    AlertedEntities = aens.Count(),
+                    Alerts = _fcfkc.FskAlerts.Where(a => aens.Contains(a.AlertedEntityNumber) && a.AlertStatusCode.ToUpper() == "ACT").Count()
+                };
+
+                return ruleRes;
+            });
+            return result;
+        }
+
+        public async Task<(bool isAllSucceed, IEnumerable<int> FailedRules)> ApplyRules(IEnumerable<int> rules)
+        {
+            List<int> allFailedRules = new();
+            bool allSucceed = true;
+            IQueryable<ArtAmlAnalysisRule> closeRules = _context.ArtAmlAnalysisRules.Where(x => x.Active && !x.Deleted && x.Action == AmlAnalysisAction.Close.ToString() && rules.Contains(x.Id));
+            List<string> closeEntities = new();
+            List<(bool isSucceed, IEnumerable<string>? FailedEntities)> failedRules = new();
+            foreach (ArtAmlAnalysisRule rule in closeRules)
+            {
+                List<string> AENs = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(a => a.PartyNumber).ToList();
+                closeEntities.AddRange(AENs);
+                (bool isSucceed, IEnumerable<string>? ColseFailedEntities) = await CloseAllAlertsAsync(new CloseRequest
+                {
+                    Entities = AENs,
+                    Comment = $"Closed By AmlAnalysis Auto-Rules :{rule.Id}",
+                    Desc = $"{rule.Id}--CLA"
+                }, "ART-SRV", "CLA");
+
+                if (!isSucceed)
+                {
+                    _logger.LogCritical("rule number {rule} failed cause this entities caused an issue : ({AENS})", rule.Id, string.Join(",", ColseFailedEntities));
+                    allSucceed = false;
+                    allFailedRules.Add(rule.Id);
+                }
+            }
+
+            IQueryable<ArtAmlAnalysisRule> routeRules = _context.ArtAmlAnalysisRules.Where(x => x.Active && !x.Deleted && x.Action == AmlAnalysisAction.Route.ToString() && rules.Contains(x.Id));
+            foreach (ArtAmlAnalysisRule rule in routeRules)
+            {
+                IEnumerable<string> ruleEntities = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(a => a.PartyNumber).ToList().Where(x => !closeEntities.Contains(x));
+                (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await RouteAllAlertsAsync(new RouteRequest
+                {
+                    Entities = ruleEntities.ToList(),
+                    Comment = $"Routed From AmlAnalysis Auto Rule :{rule.Id}",
+                    OwnerId = "",
+                    QueueCode = ""
+                }, "ART-SRV", $"{rule.Id}--RTQ--FAAR-Apply");
+
+                if (!isSucceed)
+                {
+                    _logger.LogCritical("rule number {rule} failed cause this entities caused an issue : ({AENS})", rule.Id, string.Join(",", RouteFailedEntities));
+                    allSucceed = false;
+                    allFailedRules.Add(rule.Id);
+                }
+            }
+
+
+            return allSucceed ? new(allSucceed, null) : new(allSucceed, allFailedRules);
+        }
     }
 }
+
+
