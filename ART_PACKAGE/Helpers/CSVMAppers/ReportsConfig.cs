@@ -1298,6 +1298,109 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
+            { nameof(FullJournalController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                {"Dataitem",new DisplayNameAndFormat { DisplayName ="Data Item"}},
+                {"Username",new DisplayNameAndFormat { DisplayName ="User Name"}},
+                {"MtceType",new DisplayNameAndFormat { DisplayName ="Mode"}},
+                {"Mcmtcetype",new DisplayNameAndFormat { DisplayName ="Mcmtcetype"}},
+                {"Mcusername",new DisplayNameAndFormat { DisplayName ="Mcusername"}},
+                {"AreaCode",new DisplayNameAndFormat { DisplayName ="AreaCode"}},
+                {"Area",new DisplayNameAndFormat { DisplayName ="Type"}},
+                {"Jkey",new DisplayNameAndFormat { DisplayName ="Jkey"}},
+                {"Datetime",new DisplayNameAndFormat { DisplayName ="Date"}},
+                {"Mcowner",new DisplayNameAndFormat { DisplayName ="Mcowner"}},
+                {"Entrytimeutc",new DisplayNameAndFormat { DisplayName ="Entrytimeutc"}},
+                {"Mcaction",new DisplayNameAndFormat { DisplayName ="Mcaction"}},
+                {"Mcnote",new DisplayNameAndFormat { DisplayName ="Mcnote"}},
+                {"DataAfter",new DisplayNameAndFormat { DisplayName ="Details After" , isLargeText = true}},
+                {"Databefore",new DisplayNameAndFormat { DisplayName ="Details Before" , isLargeText = true}},
+            },
+                SkipList = new List<string>
+            {
+                    "Mcmtcetype",
+                "Mcusername",
+                "AreaCode",
+                "Jkey",
+                "Mcowner",
+                "Entrytimeutc",
+                "Mcaction",
+                "Mcnote",
+            }
+    }
+            },
+            { nameof(EcmWorkflowProgController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                {"EcmReference",new DisplayNameAndFormat { DisplayName ="ECM Reference"}},
+                {"EcmCaseCreationDate",new DisplayNameAndFormat { DisplayName ="ECM Case Creation Date"}},
+                {"BranchId",new DisplayNameAndFormat { DisplayName ="Branch ID"}},
+                {"CutomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                {"Product",new DisplayNameAndFormat { DisplayName ="Product"}},
+                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                {"EcmEvent",new DisplayNameAndFormat { DisplayName ="ECM Event"}},
+                {"TransactionAmount",new DisplayNameAndFormat { DisplayName ="Transaction Amount",Format = "{0:n2}"}},
+                {"TransactionCurrency",new DisplayNameAndFormat { DisplayName ="Transaction Currency"}},
+                {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                {"CaseStatCd",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                {"UpdateUserId",new DisplayNameAndFormat { DisplayName ="Last Action taken by"}},
+                //{"Comments",new DisplayNameAndFormat { DisplayName ="Comments"}},
+                {"EcmRejectionType",new DisplayNameAndFormat { DisplayName ="ECM Rejection Reason"}},
+                {"EcmRejectionReason",new DisplayNameAndFormat { DisplayName ="ECM Rejection Description"}},
+                {"FtiReference",new DisplayNameAndFormat { DisplayName ="FTI Reference"}},
+                {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                {"EventStatus",new DisplayNameAndFormat { DisplayName ="Event Status"}},
+                {"EventCreationDate",new DisplayNameAndFormat { DisplayName ="Event Creation Date"}},
+                {"AssignedTo",new DisplayNameAndFormat { DisplayName ="Assigned To"}},
+                {"AssignmentType",new DisplayNameAndFormat { DisplayName ="Assignment Type"}},
+                {"EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
+                {"StepStatus",new DisplayNameAndFormat { DisplayName ="Step Status"}},
+                {"Lstmodtime",new DisplayNameAndFormat { DisplayName ="Last Modification Time"}},
+                {"Lstmoduser",new DisplayNameAndFormat { DisplayName ="Last Modification By"}},
+                {"WarningOverridden",new DisplayNameAndFormat { DisplayName ="Warning Overridden"}},
+                {"RejectionReason",new DisplayNameAndFormat { DisplayName ="Rejection Reason", isLargeText = true}},
+                {"SlaDeadline",new DisplayNameAndFormat { DisplayName ="SLA Deadline"}},
+                {"InputStepTime",new DisplayNameAndFormat { DisplayName ="Input Step Time"}},
+                {"InputSlaStatus",new DisplayNameAndFormat { DisplayName ="Input SLA Status"}},
+                {"InputMaxTime",new DisplayNameAndFormat { DisplayName ="Input Max Time"}},
+                {"ExternalReviewStepTime",new DisplayNameAndFormat { DisplayName ="External Review Step Time"}},
+                {"ExternalReviewSlaStatus",new DisplayNameAndFormat { DisplayName ="External Review SLA Status"}},
+                {"ReviewStepTime",new DisplayNameAndFormat { DisplayName ="Review Step Time"}},
+                {"ReviewSlaStatus",new DisplayNameAndFormat { DisplayName ="Review SLA Status"}},
+                {"AuthorizeStepTime",new DisplayNameAndFormat { DisplayName ="Authorize Step Time"}},
+                {"AuthorizeSlaStatus",new DisplayNameAndFormat { DisplayName ="Authorize SLA Status"}},
+                {"SlaDashboardAmber",new DisplayNameAndFormat { DisplayName ="SLA Dashboard Amber"}},
+                {"SlaDashboardRed",new DisplayNameAndFormat { DisplayName ="SLA Dashboard Red"}},
+                {"SlaRemainingTime",new DisplayNameAndFormat { DisplayName ="SLA Remaining TIme"}},
+            },
+                SkipList = new List<string>
+            {
+                "Comments",
+                "Product",
+                "Sovaluecode",
+                "Gfcun",
+                "CusMnm",
+                "SwBank",
+                "SwCtr",
+                "SwLoc",
+                "SwBranch",
+                "Active",
+                "CtrctDate",
+                "Outstamt",
+                "Outccyced",
+                "Outstccy",
+                "OutstamtEgp",
+                "Relmstrref",
+                "CcyCed",
+                "CreatedAt",
+                "RefnoPfix",
+                "RefnoSerl"
+            }
+    }
+            },
         };
 
     }

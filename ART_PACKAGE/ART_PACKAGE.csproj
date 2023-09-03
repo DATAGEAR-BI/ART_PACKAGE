@@ -1010,7 +1010,9 @@
 		<None Include="Views\Customers\Index.cshtml" />
 		<None Include="Views\DiaryExceptions\Index.cshtml" />
 		<None Include="Views\EcmTransactions\Index.cshtml" />
+		<None Include="Views\EcmWorkflowProg\Index.cshtml" />
 		<None Include="Views\FinancingInterestAccruals\Index.cshtml" />
+		<None Include="Views\FullJournal\Index.cshtml" />
 		<None Include="Views\GOAMLReportIndicatorDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSummary\Index.cshtml" />

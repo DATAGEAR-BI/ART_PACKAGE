@@ -7311,6 +7311,475 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("UTILIZATION_TRN");
             });
+            modelBuilder.Entity<ArtTiEcmWorkflowProgReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TI_ECM_WORKFLOW_PROG_REPORT");
+
+                entity.Property(e => e.AssignedTo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSIGNED_TO")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AssignmentType)
+                    .HasMaxLength(62)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSIGNMENT_TYPE");
+
+                entity.Property(e => e.AuthorizeSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("AUTHORIZE_SLA_STATUS");
+
+                entity.Property(e => e.AuthorizeStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AUTHORIZE_STEP_TIME");
+
+                entity.Property(e => e.BranchId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_ID");
+
+                entity.Property(e => e.CaseStatCd)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STAT_CD");
+
+                entity.Property(e => e.CutomerName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUTOMER_NAME");
+
+                entity.Property(e => e.EcmCaseCreationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ECM_CASE_CREATION_DATE");
+
+                entity.Property(e => e.EcmEvent)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_EVENT");
+
+                entity.Property(e => e.EcmReference)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REFERENCE");
+
+                entity.Property(e => e.EcmRejectionReason)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REJECTION_REASON");
+
+                entity.Property(e => e.EcmRejectionType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REJECTION_TYPE");
+
+                entity.Property(e => e.EventCreationDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("EVENT_CREATION_DATE");
+
+                entity.Property(e => e.EventName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EventStatus)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STATUS");
+
+                entity.Property(e => e.EventSteps)
+                    .HasMaxLength(21)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STEPS");
+
+                entity.Property(e => e.ExternalReviewSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTERNAL_REVIEW_SLA_STATUS");
+
+                entity.Property(e => e.ExternalReviewStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("EXTERNAL_REVIEW_STEP_TIME");
+
+                entity.Property(e => e.FtiReference)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("FTI_REFERENCE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.InputMaxTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("INPUT_MAX_TIME");
+
+                entity.Property(e => e.InputSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("INPUT_SLA_STATUS");
+
+                entity.Property(e => e.InputStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("INPUT_STEP_TIME");
+
+                entity.Property(e => e.Lstmodtime)
+                    .HasPrecision(6)
+                    .HasColumnName("LSTMODTIME");
+
+                entity.Property(e => e.Lstmoduser)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LSTMODUSER")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PrimaryOwner)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_OWNER");
+
+                entity.Property(e => e.Product)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.ProductType)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT_TYPE");
+
+                entity.Property(e => e.RejectionReason)
+                    .IsUnicode(false)
+                    .HasColumnName("REJECTION_REASON");
+
+                entity.Property(e => e.ReviewSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("REVIEW_SLA_STATUS");
+
+                entity.Property(e => e.ReviewStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("REVIEW_STEP_TIME");
+
+                entity.Property(e => e.SlaDashboardAmber)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DASHBOARD_AMBER");
+
+                entity.Property(e => e.SlaDashboardRed)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DASHBOARD_RED");
+
+                entity.Property(e => e.SlaDeadline)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DEADLINE");
+
+                entity.Property(e => e.SlaRemainingTime)
+                    .HasPrecision(15)
+                    .HasColumnName("SLA_REMAINING_TIME");
+
+                entity.Property(e => e.StepStatus)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("STEP_STATUS");
+
+                entity.Property(e => e.TransactionAmount)
+                    .HasColumnType("NUMBER(38,4)")
+                    .HasColumnName("TRANSACTION_AMOUNT");
+
+                entity.Property(e => e.TransactionCurrency)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CURRENCY");
+
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATE_USER_ID");
+
+                entity.Property(e => e.WarningOverridden)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("WARNING_OVERRIDDEN")
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<ArtTiFullJournalReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TI_FULL_JOURNAL_REPORT");
+
+                entity.Property(e => e.Area)
+                    .HasMaxLength(24)
+                    .IsUnicode(false)
+                    .HasColumnName("AREA");
+
+                entity.Property(e => e.AreaCode)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("AREA_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.DataAfter)
+                    .IsUnicode(false)
+                    .HasColumnName("DATA_AFTER");
+
+                entity.Property(e => e.Databefore)
+                    .IsUnicode(false)
+                    .HasColumnName("DATABEFORE");
+
+                entity.Property(e => e.Dataitem)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("DATAITEM")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Datetime)
+                    .HasColumnType("DATE")
+                    .HasColumnName("DATETIME");
+
+                entity.Property(e => e.Entrytimeutc)
+                    .HasPrecision(6)
+                    .HasColumnName("ENTRYTIMEUTC");
+
+                entity.Property(e => e.Jkey)
+                    .HasColumnType("NUMBER(20)")
+                    .HasColumnName("JKEY");
+
+                entity.Property(e => e.Mcaction)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("MCACTION");
+
+                entity.Property(e => e.Mcmtcetype)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("MCMTCETYPE");
+
+                entity.Property(e => e.Mcnote)
+                    .IsUnicode(false)
+                    .HasColumnName("MCNOTE");
+
+                entity.Property(e => e.Mcowner)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MCOWNER");
+
+                entity.Property(e => e.Mcusername)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("MCUSERNAME");
+
+                entity.Property(e => e.MtceType)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("MTCE_TYPE");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("USERNAME")
+                    .IsFixedLength();
+            });
+            modelBuilder.Entity<ArtTiEcmWorkflowProgReportOld>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TI_ECM_WORKFLOW_PROG_REPORT_OLD");
+
+                entity.Property(e => e.AssignedTo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSIGNED_TO")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AssignmentType)
+                    .HasMaxLength(62)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSIGNMENT_TYPE");
+
+                entity.Property(e => e.AuthorizeSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("AUTHORIZE_SLA_STATUS");
+
+                entity.Property(e => e.AuthorizeStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AUTHORIZE_STEP_TIME");
+
+                entity.Property(e => e.BranchId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_ID");
+
+                entity.Property(e => e.CaseStatCd)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STAT_CD");
+
+                entity.Property(e => e.Comments)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMENTS");
+
+                entity.Property(e => e.CutomerName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUTOMER_NAME");
+
+                entity.Property(e => e.EcmCaseCreationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ECM_CASE_CREATION_DATE");
+
+                entity.Property(e => e.EcmEvent)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_EVENT");
+
+                entity.Property(e => e.EcmReference)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REFERENCE");
+
+                entity.Property(e => e.EcmRejectionReason)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REJECTION_REASON");
+
+                entity.Property(e => e.EcmRejectionType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REJECTION_TYPE");
+
+                entity.Property(e => e.EventCreationDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("EVENT_CREATION_DATE");
+
+                entity.Property(e => e.EventName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EventStatus)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STATUS");
+
+                entity.Property(e => e.EventSteps)
+                    .HasMaxLength(21)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STEPS");
+
+                entity.Property(e => e.ExternalReviewSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTERNAL_REVIEW_SLA_STATUS");
+
+                entity.Property(e => e.ExternalReviewStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("EXTERNAL_REVIEW_STEP_TIME");
+
+                entity.Property(e => e.FtiReference)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("FTI_REFERENCE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.InputMaxTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("INPUT_MAX_TIME");
+
+                entity.Property(e => e.InputSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("INPUT_SLA_STATUS");
+
+                entity.Property(e => e.InputStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("INPUT_STEP_TIME");
+
+                entity.Property(e => e.Lstmodtime)
+                    .HasPrecision(6)
+                    .HasColumnName("LSTMODTIME");
+
+                entity.Property(e => e.Lstmoduser)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LSTMODUSER")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Note)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("NOTE");
+
+                entity.Property(e => e.NoteCreationTime)
+                    .HasPrecision(6)
+                    .HasColumnName("NOTE_CREATION_TIME");
+
+                entity.Property(e => e.PrimaryOwner)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_OWNER");
+
+                entity.Property(e => e.Product)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.ProductType)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT_TYPE");
+
+                entity.Property(e => e.RejectionReason)
+                    .IsUnicode(false)
+                    .HasColumnName("REJECTION_REASON");
+
+                entity.Property(e => e.ReviewSlaStatus)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("REVIEW_SLA_STATUS");
+
+                entity.Property(e => e.ReviewStepTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("REVIEW_STEP_TIME");
+
+                entity.Property(e => e.SlaDashboardAmber)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DASHBOARD_AMBER");
+
+                entity.Property(e => e.SlaDashboardRed)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DASHBOARD_RED");
+
+                entity.Property(e => e.SlaDeadline)
+                    .HasPrecision(6)
+                    .HasColumnName("SLA_DEADLINE");
+
+                entity.Property(e => e.SlaRemainingTime)
+                    .HasPrecision(15)
+                    .HasColumnName("SLA_REMAINING_TIME");
+
+                entity.Property(e => e.StepStatus)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("STEP_STATUS");
+
+                entity.Property(e => e.TransactionAmount)
+                    .HasColumnType("NUMBER(38,4)")
+                    .HasColumnName("TRANSACTION_AMOUNT");
+
+                entity.Property(e => e.TransactionCurrency)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CURRENCY");
+
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATE_USER_ID");
+
+                entity.Property(e => e.WarningOverridden)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("WARNING_OVERRIDDEN")
+                    .IsFixedLength();
+            });
             //for sake for build => toChange when convert to SqlServer
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {

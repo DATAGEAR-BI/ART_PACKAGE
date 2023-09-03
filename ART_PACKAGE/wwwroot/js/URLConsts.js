@@ -99,5 +99,7 @@
     WatchlistOSCheck: "/WatchlistOSCheck/GetData",
     FinintAcc: "/FinancingInterestAccruals/GetData",
     AdvancePaymentUtilization:"/AdvancePaymentUtilization/GetData",
+    FullJournal: "/FullJournal/GetData",
+    EcmWorkflowProg:"/EcmWorkflowProg/GetData",
 }
 

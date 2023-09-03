@@ -111,6 +111,9 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtTiWatchlistOsCheckReport> ArtTiWatchlistOsCheckReports { get; set; } = null!;
     public virtual DbSet<ArtTiFinanInterAccrual> ArtTiFinanInterAccruals { get; set; } = null!;
     public virtual DbSet<ArtTiAdvancePaymentUtilizationReport> ArtTiAdvancePaymentUtilizationReports { get; set; } = null!;
+    public virtual DbSet<ArtTiEcmWorkflowProgReport> ArtTiEcmWorkflowProgReports { get; set; } = null!;
+    public virtual DbSet<ArtTiFullJournalReport> ArtTiFullJournalReports { get; set; } = null!;
+    public virtual DbSet<ArtTiEcmWorkflowProgReportOld> ArtTiEcmWorkflowProgReportOlds { get; set; } = null!;
 
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
