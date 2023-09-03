@@ -1,0 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Data.Data
+{
+    public partial class ArtTiMastevehistProdFilter
+    {
+        public string? Product { get; set; }
+    }
+}

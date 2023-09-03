@@ -54,6 +54,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Controllers\AlertDetailsController.cs" />
+	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	  <Compile Remove="Controllers\AlertSummaryController.cs" />
+	  <Compile Remove="Controllers\ArtAuditCorporateController.cs" />
+	  <Compile Remove="Controllers\ArtAuditIndividualsController.cs" />
+	  <Compile Remove="Controllers\ArtKycExpiredIdController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycSummaryByRiskController.cs" />
+	  <Compile Remove="Controllers\AuditGroupsController.cs" />
+	  <Compile Remove="Controllers\AuditRolesController.cs" />
+	  <Compile Remove="Controllers\AuditUsersController.cs" />
+	  <Compile Remove="Controllers\CasesDetailsController.cs" />
+	  <Compile Remove="Controllers\CasesSummaryController.cs" />
+	  <Compile Remove="Controllers\CustomersController.cs" />
+	  <Compile Remove="Controllers\CustomersSummaryController.cs" />
 	  <Compile Remove="Controllers\DGAMLAlertDetailsController.cs" />
 	  <Compile Remove="Controllers\DGAMLAlertSummaryController.cs" />
 	  <Compile Remove="Controllers\DGAMLArtExternalCustomerDetailsController.cs" />
@@ -66,6 +92,32 @@
 	  <Compile Remove="Controllers\DGAMLCustomerSummaryController.cs" />
 	  <Compile Remove="Controllers\DGAMLExternalCustomerSummaryController.cs" />
 	  <Compile Remove="Controllers\DGAMLTriageController.cs" />
+	  <Compile Remove="Controllers\GOAMLReportIndicatorDetailsController.cs" />
+	  <Compile Remove="Controllers\GOAMLReportsDetailsController.cs" />
+	  <Compile Remove="Controllers\GOAMLReportsSummaryController.cs" />
+	  <Compile Remove="Controllers\GOAMLReportsSuspectController.cs" />
+	  <Compile Remove="Controllers\HighRiskController.cs" />
+	  <Compile Remove="Controllers\LastLoginPerDayController.cs" />
+	  <Compile Remove="Controllers\ListGroupsRolesSummaryController.cs" />
+	  <Compile Remove="Controllers\ListGroupsSubGroupsSummaryController.cs" />
+	  <Compile Remove="Controllers\ListOfDeletedUsersController.cs" />
+	  <Compile Remove="Controllers\ListOfGroupsController.cs" />
+	  <Compile Remove="Controllers\ListOfRoleController.cs" />
+	  <Compile Remove="Controllers\ListOfUserController.cs" />
+	  <Compile Remove="Controllers\ListOfUsersAndGroupsRoleController.cs" />
+	  <Compile Remove="Controllers\ListOfUsersGroupController.cs" />
+	  <Compile Remove="Controllers\ListOfUsersRolesController.cs" />
+	  <Compile Remove="Controllers\PeriodicCHRGsController.cs" />
+	  <Compile Remove="Controllers\RiskAssessmentController.cs" />
+	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+	  <Compile Remove="Controllers\RiskSummaryController.cs" />
+	  <Compile Remove="Controllers\SystemPerformanceController.cs" />
+	  <Compile Remove="Controllers\SystemPerformanceSummaryController.cs" />
+	  <Compile Remove="Controllers\TriageController.cs" />
+	  <Compile Remove="Controllers\UserPerformanceController.cs" />
+	  <Compile Remove="Controllers\UserPerformancePerActionUserController.cs" />
+	  <Compile Remove="Controllers\UserPerformancePerUserAndActionController.cs" />
+	  <Compile Remove="Controllers\UserPerformPerActionController.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -946,20 +998,42 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="Views\ACPostingsAccount\ACPostingAccountPdf.cshtml" />
+		<None Include="Views\ACPostingsAccount\Index.cshtml" />
+		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
+		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\DiaryExceptions\Index.cshtml" />
+		<None Include="Views\EcmTransactions\Index.cshtml" />
+		<None Include="Views\FinancingInterestAccruals\Index.cshtml" />
 		<None Include="Views\GOAMLReportIndicatorDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSummary\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSuspect\Index.cshtml" />
 		<None Include="Views\HighRisk\Index.cshtml" />
+		<None Include="Views\InterfaceDetails\Index.cshtml" />
+		<None Include="Views\MasterEventHistory\Index.cshtml" />
+		<None Include="Views\OSActivity\Index.cshtml" />
+		<None Include="Views\OSLiability\Index.cshtml" />
+		<None Include="Views\OSTransactionsAwaitiApprl\Index.cshtml" />
+		<None Include="Views\OSTransactionsByGateway\Index.cshtml" />
+		<None Include="Views\OSTransactionsByNonPri\Index.cshtml" />
+		<None Include="Views\OSTransactionsByPrincipal\Index.cshtml" />
+		<None Include="Views\OurChargesByCustomer\Index.cshtml" />
+		<None Include="Views\OurChargesByMaster\Index.cshtml" />
+		<None Include="Views\OurChargesDetails\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGSPayment\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
+		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />

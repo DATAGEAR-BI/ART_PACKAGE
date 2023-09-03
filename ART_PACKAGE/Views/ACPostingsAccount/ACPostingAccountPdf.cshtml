@@ -1,0 +1,57 @@
+﻿@using Data.Data;
+@model IQueryable<ArtTiAcpostingsAccReport>
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <h2>Customer</h2>
+                <p>Customer Details</p>
+            </div>
+            <div class="col-6 text-right">
+                <img src="~/imgs/logo.jpg" />
+            </div>
+
+
+        </div>
+
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <td>ProductType</td>
+                    <td>EmployeeInd</td>
+                    <td>QueueCode</td>
+                   
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.AccountType</td>
+                        <td>@item.AcctNo</td>
+                        <td>@item.BranchName</td>
+                      
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

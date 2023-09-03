@@ -497,11 +497,15 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                         Type = "number";
                 }
                 var name = x.Name;
+                var propDisplayExists = DisplayNamesAndFormat is not null && DisplayNamesAndFormat.ContainsKey(name);
                 var collectionTypes = new List<Type> { typeof(ICollection<>), typeof(IEnumerable<>), typeof(List<>) };
                 var isCollection = (x.PropertyType.IsGenericType && collectionTypes.Contains(x.PropertyType.GetGenericTypeDefinition()));
                 var isDropDown = columnsToDropDownd is not null && columnsToDropDownd.Keys.Contains(x.Name.ToLower());
                 var dropdownvalues = isDropDown ? columnsToDropDownd[name.ToLower()] : null;
                 var isnullabe = nullableType != null;
+                var agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
+                DisplayNamesAndFormat[name].AggType.ToString() : null;
+                var aggText = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].AggText) ? DisplayNamesAndFormat[name].AggText : null;
                 return new ColumnsDto
                 {
                     name = name,
@@ -513,7 +517,10 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null
                                         ,
                     isNullable = isnullabe,
-                    type = Type
+                    type = Type,
+
+                    AggType = agg,
+                    AggTitle = aggText,
                 };
 
             }).ToList();

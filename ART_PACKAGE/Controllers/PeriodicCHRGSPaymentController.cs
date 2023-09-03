@@ -1,0 +1,133 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
+using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Services.Pdf;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
+using Data.Data;
+using ART_PACKAGE.Helpers.CSVMAppers;
+
+namespace ART_PACKAGE.Controllers { 
+    //[Authorize(Policy = "Licensed" , Roles = "PeriodicCHRGSPayment")]
+
+    
+    public class PeriodicCHRGSPaymentController : Controller
+    {
+        private readonly AuthContext fti;
+        private readonly IPdfService _pdfSrv;
+
+
+
+        public PeriodicCHRGSPaymentController(IPdfService pdfSrv, AuthContext fti)
+        {
+            _pdfSrv = pdfSrv;
+            this.fti = fti;
+        }
+
+        public IActionResult GetData([FromBody] KendoRequest request)
+        {
+            IQueryable<ArtTiPeriodicChrgsPayReport> data = fti.ArtTiPeriodicChrgsPayReports.AsQueryable();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, List<dynamic>> DropDownColumn = null;
+            List<string> ColumnsToSkip = null;
+
+            if (request.IsIntialize)
+            {
+                DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
+
+                DropDownColumn = new Dictionary<string, List<dynamic>>
+            {
+                {"Fullname".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"Sovalue".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"Descr".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Descr).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"Descr1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Descr1).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"MasterRef".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"PcpAddress1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.PcpAddress1).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"Payrec".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Payrec).Distinct().Where(x=> x != null ).ToDynamicList() },
+                //{"AdvArr".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.adv).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"Outstccy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"NpcpAddress1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.NpcpAddress1).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"SchCcy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.SchCcy).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {"AccrueCcy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.AccrueCcy).Distinct().Where(x=> x != null ).ToDynamicList() },
+            };
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].SkipList;
+
+            }
+            var Data = data.CallData<ArtTiPeriodicChrgsPayReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            var result = new
+            {
+                data = Data.Data,
+                columns = Data.Columns,
+                total = Data.Total,
+                containsActions = false,
+                toolbar = new List<dynamic>
+                {
+
+
+                },
+                reportname = "PeriodicCHRGSPayment"
+            };
+
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(result)
+            };
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        {
+            var data = fti.ArtTiPeriodicChrgsPayReports;
+            var bytes = await data.ExportToCSV<ArtTiPeriodicChrgsPayReport, GenericCsvClassMapper<ArtTiPeriodicChrgsPayReport, PeriodicCHRGSPaymentController>>(para.Req);
+            return File(bytes, "text/csv");
+        }
+
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            var data = fti.ArtTiPeriodicChrgsPayReports.CallData<ArtTiPeriodicChrgsPayReport>(req).Data.ToList();
+            ViewData["title"] = "Periodic CHRGs Payment Report";
+            ViewData["desc"] = "This report produces all transactions which have a Pay Charges event within a period that you can specify";
+
+            var DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
+            var columnsToPrint = new List<string>()
+            { nameof(ArtTiPeriodicChrgsPayReport.MasterRef)
+            , nameof(ArtTiPeriodicChrgsPayReport.Sovalue)
+            , nameof(ArtTiPeriodicChrgsPayReport.NpcpAddress1)
+            , nameof(ArtTiPeriodicChrgsPayReport.PcpAddress1)
+            , nameof(ArtTiPeriodicChrgsPayReport.Descr1)
+            , nameof(ArtTiPeriodicChrgsPayReport.SchAmt)
+            , nameof(ArtTiPeriodicChrgsPayReport.SchCcy)
+            };
+            var ColumnsToSkip = typeof(ArtTiPeriodicChrgsPayReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+
+            if (req.Group is not null && req.Group.Count != 0)
+            {
+                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                                                   , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
+                return File(pdfBytes, "application/pdf");
+            }
+            else
+            {
+                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 7
+                                                   , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                return File(pdfBytes, "application/pdf");
+            }
+        }
+    }
+}

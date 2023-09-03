@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ART_PACKAGE.Helpers.CustomReport;
+using System.Collections.Generic;
 
 namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
@@ -11,6 +12,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         public List<SortOptions> Sort { get; set; }
         public Filter Filter { get; set; }
         public bool IsIntialize { get; set; }
+        public List<GridGroup>? Group { get; set; }
 
     }
 

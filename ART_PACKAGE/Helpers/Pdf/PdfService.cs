@@ -1,20 +1,11 @@
 ﻿
-
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
 using Rotativa.AspNetCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Services.Pdf
 {
@@ -160,6 +151,24 @@ namespace ART_PACKAGE.Services.Pdf
             //return outputStream.ToArray();
 
         }
+        public async Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data,
+                ViewDataDictionary ViewData, ActionContext ControllerContext,
+                string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
+                Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+        {
+            var grouped = data.AsQueryable()
+               .GroupBy($"new ({string.Join(",", GroupColumns.Select(x => x.field))})", "it")
+               .Select("new(it.Key As Key ,it as Items)")
+               .ToDynamicList().Select(x => (GroupedData)DynamicGroupToDict<T>(x, GroupColumns, ColumnsToSkip, DisplayNamesAndFormat));
+            string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
+            var pdf = new ViewAsPdf("GenericGroupedReportAsPdf", grouped)
+            {
+                CustomSwitches = footer,
+                ViewData = ViewData,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+            return await pdf.BuildFile(ControllerContext);
+        }
 
 
         private IEnumerable<Dictionary<string, object>> GetDataPArtitionedByColumnsForCustom(IEnumerable<dynamic> list,
@@ -173,7 +182,69 @@ namespace ART_PACKAGE.Services.Pdf
             });
             return res;
         }
+        private GroupedData DynamicGroupToDict<T>(dynamic dobj, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
+          Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+        {
+            //Dictionary<string, List<Dictionary<string, object>>> res = new Dictionary<string, List<Dictionary<string, object>>>();
+            List<string> key = new();
+            var keyProps = TypeDescriptor.GetProperties(dobj.Key);
+            Dictionary<string, object> keyValue = new Dictionary<string, object>();
 
+            foreach (PropertyDescriptor prop in keyProps)
+            {
+
+                key.Add(prop.Name);
+                var column = DisplayNamesAndFormat is not null
+                           && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+
+                keyValue.Add(column, prop.GetValue(dobj.Key));
+
+
+            }
+
+            var aggs = GroupColumns.All(x => x.aggregates == null) ? null : GroupColumns.SelectMany(x => x.aggregates);
+
+            var props = typeof(T).GetProperties();
+            List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
+            List<(string Column, bool HasAggreGate, string AggregateType)> Columns = new List<(string Column, bool HasAggreGate, string AggregateType)>();
+            foreach (var prop in props)
+            {
+                if (!ColumnsToSkip.Contains(prop.Name))
+                {
+                    var column = DisplayNamesAndFormat is not null
+                      && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+
+                    var propAggs = aggs != null && aggs.Count() != 0 ? aggs.FirstOrDefault(x => x.field == prop.Name) : null;
+                    var hasAggs = propAggs != null;
+                    var aggType = hasAggs ? propAggs.aggregate : "";
+                    Columns.Add((column, hasAggs, aggType));
+                }
+
+            }
+            foreach (T item in dobj.Items)
+            {
+                Dictionary<string, object> itemDict = new Dictionary<string, object>();
+
+                foreach (var prop in props)
+                {
+                    if (!ColumnsToSkip.Contains(prop.Name))
+                    {
+                        var column = DisplayNamesAndFormat is not null
+                        && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+                        var propType = prop.PropertyType;
+
+                        var nullableType = Nullable.GetUnderlyingType(propType);
+
+                        object val = nullableType != null && nullableType.IsNumericType() ? 0m : propType.IsNumericType() ? 0 : "-";
+                        itemDict.Add(column, prop.GetValue(item) ?? val);
+                    }
+
+                }
+                items.Add(itemDict);
+            }
+
+            return new GroupedData { Key = keyValue, Items = items, Columns = Columns };
+        }
         private Dictionary<string, object> dynamicToDict(dynamic dobj, IEnumerable<string> propertyNames)
         {
             var dictionary = new Dictionary<string, object>();

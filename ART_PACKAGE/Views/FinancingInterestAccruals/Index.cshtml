@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>     <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+
+<section class="content-header">
+    <h1>
+        Financing Interest Accruals Report
+        <small>This report produces details of interest accruals to date for financing transactions, showing for each the interest earned to date</small>
+    </h1>
+</section>
+
+<div id="grid"></div>
+
+
+
+@section Scripts{
+  
+    <script src="~/js/Dynamic.js" type="module" defer id="script"  data-urlkey="FinintAcc"></script>
+}
+
+
