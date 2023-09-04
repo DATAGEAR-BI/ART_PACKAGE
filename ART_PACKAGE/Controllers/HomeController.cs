@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, ArtDgAmlContext dgamlService)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
 
             _logger = logger;
@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Controllers
             if (modules.Contains("DGAML"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtDgAmlContext ecmService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
         }

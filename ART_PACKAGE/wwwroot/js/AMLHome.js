@@ -13,10 +13,16 @@
 //    numberOfAccounts.innerHTML = x.numberOfAccounts;
 //    numberOfHighRiskCustomers.innerHTML = x.numberOfHighRiskCustomers;
 //})
-
 fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
     x => {
-        makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month");
+       var statusData = x.statuses;
+        var changeChart = (di) => {
+            var year = di.year;
+            var yearedStatuseData = statusData.filter(x => x.year == year);
+            makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
+
+        }
+        makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month", changeChart);
         makedynamicChart(0, x.statuses, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
     }
 );
