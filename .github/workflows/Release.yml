@@ -46,15 +46,15 @@ jobs:
               content="${content//$'\n'/'%0A'}"
               content="${content//$'\r'/'%0D'}"
               # end of optional handling for multi line json
-              echo "{name}={$content}" >> $GITHUB_OUTPUT
-              echo "${{ steps.set_ver.outputs.packageJson }}"
+              echo "{appsettings}={$content}" >> $GITHUB_OUTPUT
+              echo "${{ steps.set_ver.outputs.appsettings }}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{fromJson(steps.set_ver.outputs.packageJson).Version}}
+          tag_name: ${{fromJson(steps.set_ver.outputs.appsettings).Version}}
           release_name: Release v1.0.2
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
