@@ -1,9 +1,12 @@
 ﻿using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Models;
+using Data.Data;
+using Data.Data.ARTDGAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
@@ -19,6 +22,8 @@ namespace ART_PACKAGE.Controllers
         private readonly IDbService _dbSrv;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
+        private readonly ArtDgAmlContext _dgaml;
+        private readonly List<string>? modules;
         public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
 
@@ -26,7 +31,7 @@ namespace ART_PACKAGE.Controllers
             _dbSrv = dbSrv;
             _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
-            List<string>? modules = _configuration.GetSection("Modules").Get<List<string>>();
+            modules = _configuration.GetSection("Modules").Get<List<string>>();
             if (modules.Contains("SASAML"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -38,6 +43,12 @@ namespace ART_PACKAGE.Controllers
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
                 _db = ecmService;
+            }
+            if (modules.Contains("DGAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                _dgaml = dgamlService;
             }
         }
 
@@ -107,24 +118,49 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetAmlChartsData()
         {
-            var dateData = _dbAml.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            if (modules.Contains("SASAML"))
             {
-                year = x.Key.ToString(),
-                value = x.Sum(x => x.NumberOfAlerts),
-                monthData = x.GroupBy(m => m.Month).Select(m => new
+                var dateData = _dbAml.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
                 {
-                    Month = m.Key.ToString(),
-                    value = m.Sum(x => x.NumberOfAlerts)
-                })
-            });
+                    year = x.Key.ToString(),
+                    value = x.Sum(x => x.NumberOfAlerts),
+                    monthData = x.GroupBy(m => m.Month).Select(m => new
+                    {
+                        Month = m.Key.ToString(),
+                        value = m.Sum(x => x.NumberOfAlerts)
+                    })
+                });
 
-            Microsoft.EntityFrameworkCore.DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _dbAml.ArtHomeAlertsPerStatuses;
+                DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _dbAml.ArtHomeAlertsPerStatuses;
 
-            return Ok(new
+                return Ok(new
+                {
+                    dates = dateData,
+                    statuses = alertsPerStatus
+                });
+            }
+            else if (modules.Contains("DGAML"))
             {
-                dates = dateData,
-                statuses = alertsPerStatus
-            });
+                var dateData = _dgaml.ArtHomeDgamlAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+                {
+                    year = x.Key.ToString(),
+                    value = x.Sum(x => x.NumberOfAlerts),
+                    monthData = x.GroupBy(m => m.Month).Select(m => new
+                    {
+                        Month = m.Key.ToString(),
+                        value = m.Sum(x => x.NumberOfAlerts)
+                    })
+                });
+
+                DbSet<ArtHomeDgamlAlertsPerStatus> alertsPerStatus = _dgaml.ArtHomeDgamlAlertsPerStatuses;
+
+                return Ok(new
+                {
+                    dates = dateData,
+                    statuses = alertsPerStatus
+                });
+            }
+            return Ok(false);
         }
     }
 }
