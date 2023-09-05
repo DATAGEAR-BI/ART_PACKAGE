@@ -11,5 +11,8 @@ namespace Data.ModelCreatingStrategies
         void OnEcmModelCreating(ModelBuilder modelBuilder);
         void OnSasAmlModelCreating(ModelBuilder modelBuilder);
         void OnAuditModelCreating(ModelBuilder modelBuilder);
+        void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder);
+        public void OnFcfkcAmlAnalysisModelCreating(ModelBuilder modelBuilder);
+        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder);
     }
 }

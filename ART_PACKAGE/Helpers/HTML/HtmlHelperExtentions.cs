@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Helpers.HTMLHelpers
             IEnumerable<SelectListItem> result = typeof(T).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
             {
                 OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
-                return !displayAttr.IsHidden;
+                return displayAttr == null || !displayAttr.IsHidden;
             }).Select(x =>
             {
                 OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();

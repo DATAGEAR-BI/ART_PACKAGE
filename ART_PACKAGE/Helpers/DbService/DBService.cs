@@ -2,7 +2,7 @@
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCFCORE;
-using Data.FCFKC;
+using Data.FCFKC.SASAML;
 using Data.GOAML;
 
 namespace ART_PACKAGE.Helpers.DBService
