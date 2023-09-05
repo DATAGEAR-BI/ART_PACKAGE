@@ -34,18 +34,27 @@ jobs:
       - name: Build and Publish
         run: dotnet publish -r win-x64 --self-contained true -c Release -o ./Release
 
-      - name: App Settings Variable Substitution
-        uses: microsoft/variable-substitution@v1
-        with:
-            files : ${{ github.workspace }}/ART_PACKAGE/appsettings.json
 
+      
+
+      - name: Get Version and Tag From Code
+        id: set_ver
+        run: |
+              content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
+              # the following lines are only required for multi line json
+              content="${content//'%'/'%25'}"
+              content="${content//$'\n'/'%0A'}"
+              content="${content//$'\r'/'%0D'}"
+              # end of optional handling for multi line json
+              echo "::set-output name=packageJson::$content"
+              echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{Version}}
+          tag_name: ${{fromJson(steps.set_var.outputs.packageJson).Version}}
           release_name: Release v1.0.2
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
