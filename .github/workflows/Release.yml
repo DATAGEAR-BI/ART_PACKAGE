@@ -47,14 +47,14 @@ jobs:
               content="${content//$'\r'/'%0D'}"
               # end of optional handling for multi line json
               echo "::set-output name=packageJson::$content"
-              echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
+              echo "${{fromJson(steps.set_ver.outputs.packageJson)}}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{fromJson(steps.set_var.outputs.packageJson).Version}}
+          tag_name: ${{fromJson(steps.set_ver.outputs.packageJson).Version}}
           release_name: Release v1.0.2
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
