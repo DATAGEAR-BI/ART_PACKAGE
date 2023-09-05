@@ -46,7 +46,7 @@ jobs:
               content="${content//$'\n'/'%0A'}"
               content="${content//$'\r'/'%0D'}"
               # end of optional handling for multi line json
-              echo "{appsettings}={$content}" >> $GITHUB_OUTPUT
+              echo "::set-output name=appsettings::$content"
               echo "${{ steps.set_ver.outputs.appsettings }}"
       - name: Create Release
         id: create_release
