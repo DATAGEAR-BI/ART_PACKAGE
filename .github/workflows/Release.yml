@@ -40,7 +40,7 @@ jobs:
       - name: Get Version and Tag From Code
         id: set_ver
         run: |
-              content=`cat ${{ github.workspace }}/appsettings.json`
+              content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
               # the following lines are only required for multi line json
               content="${content//'%'/'%25'}"
               content="${content//$'\n'/'%0A'}"
