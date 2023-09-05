@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
-using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
@@ -33,10 +32,8 @@ builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddAmlAnalysis();
 
-builder.Services.AddScoped<IAmlAnalysis, AmlAnalysis>();
-builder.Services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
-builder.Services.AddHostedService<AmlAnalysisWatcher>();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()

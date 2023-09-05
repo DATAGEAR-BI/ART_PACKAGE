@@ -2,6 +2,7 @@
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Models;
 using Data.Data.AmlAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace DataGear_RV_Ver_1._7.Controllers
+namespace ART_PACKAGE.Controllers
 {
 
     public class AML_ANALYSISController : Controller
@@ -34,18 +35,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
         }
 
 
-        public async Task<IActionResult> Test()
-        {
-            CloseRequest req = new()
-            {
-                Comment = "test Comment",
-                Desc = "test Desc",
-                Entities = new List<string> { "7289490391584485BC264C77BCD99053", "CB61E2E72B6244079CEA409DEB9C64E7" }
-            };
 
-            (bool isSucceed, IEnumerable<string>? ColseFailedEntities) res = await _amlSrv.CloseAllAlertsAsync(req, User.Identity.Name, "FBO");
-            return Ok(res);
-        }
 
         public ContentResult QueryBuilderData()
         {
@@ -218,17 +208,6 @@ namespace DataGear_RV_Ver_1._7.Controllers
             logger.LogInformation("Batch Rules will be excuted in the next 10 minutes");
             return Ok();
         }
-        //public class ApplyRulesModel
-        //{
-        //    public int RuleId { get; set; }
-        //    public string AENs { get; set; }
-        //    public string Action { get; set; }
-        //    public string RouteUser { get; set; }
-        //}
-
-        ////i made it public  for unit test --Ehab
-
-
 
         public async Task<IActionResult> Route([FromBody] RouteRequest routeRequest)
         {
@@ -307,14 +286,47 @@ namespace DataGear_RV_Ver_1._7.Controllers
                         text = "Create A rule",
                         id = "crtrule"
                     }
+                    , new
+                    {
+                        text = "Edit/Delete",
+                        id = "performAction"
+                    }
                     }
 
                 }), "application/json");
 
         }
 
+        [HttpPost("[controller]/[action]")]
+        public async Task<IActionResult> EditRule([FromBody] EditRuleDto ruledto)
+        {
+            ArtAmlAnalysisRule? rule = await _context.ArtAmlAnalysisRules.FindAsync(ruledto.Id);
+            if (rule == null)
+                return NotFound();
+
+            rule.Action = ruledto.Action.ToString();
+
+            rule.RouteToUser = ruledto.Action == AmlAnalysisAction.Route ? ruledto.RouteToUser : null;
 
 
+            rule.Active = ruledto.Active;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        [HttpDelete("[controller]/[action]/{id}")]
+        public async Task<IActionResult> DeleteRule(int? id)
+        {
+            if (id is null)
+                return BadRequest(new Error("argumentError", "You must Provide an id"));
+
+            ArtAmlAnalysisRule? rule = await _context.ArtAmlAnalysisRules.FindAsync(id);
+            if (rule is null)
+                return NotFound();
+            rule.Deleted = true;
+            int res = await _context.SaveChangesAsync();
+            return Ok();
+        }
 
         [HttpPost("[controller]/[action]")]
         public IActionResult AddRule([FromBody] AddRuleDto ruledto)
@@ -343,48 +355,19 @@ namespace DataGear_RV_Ver_1._7.Controllers
 
         }
 
+        [HttpGet("[controller]/[action]/{id}")]
+        public async Task<IActionResult> GetRuleById(int? id)
+        {
+            if (id is null)
+                return BadRequest(new Error("argumentError", "You must Provide an id"));
+
+            ArtAmlAnalysisRule? rule = await _context.ArtAmlAnalysisRules.FindAsync(id);
+
+            return rule is null ? NotFound() : Ok(rule);
+        }
 
 
 
-
-
-
-
-
-
-        //[HttpPost]
-        //public void EditRule(int? id, int action, string user)
-        //{
-        //    if (id == null)
-        //    {
-        //        return;
-        //    }
-        //    var rule = fcfcore.FscRuleBaseds.Find(id);
-        //    if (rule is null)
-        //    {
-        //        return;
-        //    }
-        //    rule.Action = action == (int)RuleAction.Close ? "Close" : "Route";
-        //    rule.RouteToUser = user;
-        //    fcfcore.SaveChanges();
-        //    return;
-        //}
-        //[HttpPost]
-        //public void DeletRole(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return;
-        //    }
-        //    var rule = fcfcore.FscRuleBaseds.Find(id);
-        //    if (rule is null)
-        //    {
-        //        return;
-        //    }
-        //    rule.Deleted = 1;
-        //    fcfcore.SaveChanges();
-        //    return;
-        //}
         [HttpPost("[controller]/[action]")]
         public async Task<IActionResult> TestRules([FromBody] List<int> rules)
         {
@@ -407,174 +390,7 @@ namespace DataGear_RV_Ver_1._7.Controllers
                 : BadRequest($"this rules : {string.Join(",", FailedRules)} made some issues please contact with support");
 
         }
-
-
-        //[HttpGet]
-        //public IActionResult GetAlertsCount(int?[] rules)
-        //{
-        //    var Rules = fcfcore.FscRuleBaseds.Where(r => rules.Contains(r.RuleId));
-        //    List<Dictionary<string, dynamic>> EnitiesAlertsPairs = new();
-        //    foreach (var rule in Rules)
-        //    {
-
-        //        Dictionary<string, dynamic> pair = new();
-        //        var query = ExtractQuery(rule);
-
-        //        var AENs = fcfcore.ArtAmlAnalysisViews.FromSqlRaw(query).Select(r => r.PartyNumber).ToList();
-        //        var PartitionedAENs = AENs.Partition<string>(900);
-        //        if (AENs is null)
-        //        {
-        //            pair.Add("RuleId", rule.RuleId);
-        //            pair.Add("AlertedEntities", 0);
-        //            pair.Add("Alerts", 0);
-        //            pair.Add("AENs", AENs);
-        //            pair.Add("Action", rule.Action);
-        //            pair.Add("RouteUser", rule.RouteToUser);
-        //            EnitiesAlertsPairs.Add(pair);
-        //            continue;
-        //        }
-        //        int count = 0;
-        //        foreach (var List in PartitionedAENs)
-        //        {
-        //            count += fcfkc.FskAlerts.Where(a => List.Contains(a.AlertedEntityNumber) && a.AlertStatusCode.ToUpper() == "ACT").Count();
-        //        }
-        //        //var AlertsCount = fcfkc.FskAlerts.Where(a => temp.Any(x=>x.Contains(a.AlertedEntityNumber)) && a.AlertStatusCode.ToUpper() == "ACT").Count();
-        //        pair.Add("RuleId", rule.RuleId);
-        //        pair.Add("AlertedEntities", AENs.Count());
-        //        pair.Add("Alerts", count);
-        //        pair.Add("AENs", AENs);
-        //        pair.Add("Action", rule.Action);
-        //        pair.Add("RouteUser", rule.RouteToUser);
-
-
-        //        EnitiesAlertsPairs.Add(pair);
-
-
-        //    }
-        //    return Ok(EnitiesAlertsPairs);
-
-        //}
-        //private static string ExtractQuery(FscRuleBased rule)
-        //{
-
-        //    // Table info 
-        //    //PARTY_NUMBER
-        //    string table = rule.TableName == "ART_AML_ANALYSIS_VIEW" ? "\"ART_AML_ANALYSIS_VIEW_Daily\"" : rule.TableName;
-        //    string query = $"select * from {rule.TableName} where ";
-        //    string[] readableOutputFullCondition = rule.OutputReadable.Split(" AND ");
-        //    for (int i = 0; i < readableOutputFullCondition.Length; i++)
-        //    {
-        //        var condition = MakeCondition(readableOutputFullCondition[i]);
-
-        //        string AND = i != readableOutputFullCondition.Length - 1 ? "AND" : " ";
-        //        string StringQueryCondition = $"{condition} {AND} ";
-        //        query += StringQueryCondition;
-        //    }
-        //    return query;
-        //}
-
-        //private static string MakeCondition(string condition)
-        //{
-        //    string[] stringColumns = { "SEGMENT", "SEGMENT_SORTED", "PARTY_NAME", "MONTH_KEY", "PARTY_NUMBER", "PARTY_TYPE_DESC", "INDUSTRY_CODE", "INDUSTRY_DESC", "OCCUPATION_CODE", "OCCUPATION_DESC" };
-        //    var spllitedCon = condition.Split(" ");
-        //    string ConditionCN = spllitedCon[0];
-        //    string ConditionOP = spllitedCon[1];
-
-        //    var value = spllitedCon.Skip(2);
-        //    var validvalue = String.Join(" ", value);
-        //    validvalue = validvalue.Trim();
-        //    string ConditionVAL = stringColumns.Contains(ConditionCN) ? $"'{validvalue}'" : validvalue;
-        //    string lowwercolumn = stringColumns.Contains(ConditionCN) ? $"LOWER({ConditionCN})" : ConditionCN;
-
-        //    string returnCondition = $" {lowwercolumn} {MapOperator(ConditionOP.ToLower(), ConditionVAL)} ";
-        //    return returnCondition;
-        //}
-
-        //private static string MapOperator(string conditionOP, string value)
-        //{
-        //    switch (conditionOP)
-        //    {
-        //        case "equal":
-        //            {
-        //                if (value.ToLower().Contains("null"))
-        //                    return $"IS NULL";
-        //                return $"= {value}";
-        //                break;
-        //            }
-        //        case "not equal":
-        //            {
-        //                if (value.ToLower().Contains("null"))
-        //                    return $"IS NOT NULL";
-        //                return $"<> {value}";
-        //                break;
-        //            }
-        //        case "not_equal":
-        //            {
-        //                if (value.ToLower().Contains("null"))
-        //                    return $"IS NOT NULL";
-        //                return $"<> {value}";
-        //                break;
-        //            }
-        //        case "less or equal":
-        //            {
-        //                return $"<= {value}";
-        //                break;
-        //            }
-        //        case "less":
-        //            {
-        //                return $"< {value}";
-        //                break;
-        //            }
-
-        //        case "greater or equal":
-        //            {
-        //                return $">= {value}";
-        //                break;
-        //            }
-        //        case "contains":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"LIKE '%{result}%'";
-        //                break;
-        //            }
-        //        case "not_contains":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"NOT LIKE '%{result}%'";
-        //                break;
-        //            }
-        //        case "ends_with":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"LIKE '%{result}'";
-        //                break;
-        //            }
-        //        case "begins_with":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"LIKE '{result}%'";
-        //                break;
-        //            }
-        //        case "not_begins_with":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"NOT LIKE '{result}%'";
-        //                break;
-        //            }
-        //        case "not_ends_with":
-        //            {
-        //                string result = value.Substring(1, value.Length - 2);
-        //                return $"NOT LIKE '%{result}'";
-        //                break;
-        //            }
-        //        default:
-        //            return "";
-        //            break;
-        //    }
-        //}
-
-
-        public IActionResult bluider()
+        public IActionResult Builder()
         {
             return View();
         }

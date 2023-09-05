@@ -16,7 +16,7 @@ namespace ART_PACKAGE.BackGroundServices
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using PeriodicTimer timer = new(TimeSpan.FromMinutes(1));
+            using PeriodicTimer timer = new(TimeSpan.FromMinutes(10));
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {

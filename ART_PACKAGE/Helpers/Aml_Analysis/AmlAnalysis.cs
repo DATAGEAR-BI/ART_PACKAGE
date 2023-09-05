@@ -263,7 +263,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
         public async Task<(bool isSucceed, IEnumerable<string>? ColseFailedEntities)> CloseAllAlertsAsync(CloseRequest closeRequest, string userName, string alertStatusCode)
         {
-            IEnumerable<CloseRequest> requests = closeRequest.Entities.Partition(2).Select(x => new CloseRequest
+            IEnumerable<CloseRequest> requests = closeRequest.Entities.Partition(1000).Select(x => new CloseRequest
             {
                 Entities = x,
                 Comment = closeRequest.Comment,
@@ -311,7 +311,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
         public async Task<(bool isSucceed, IEnumerable<string>? RouteFailedEntities)> RouteAllAlertsAsync(RouteRequest routeReq, string userName, string desc = "RTQ")
         {
-            IEnumerable<RouteRequest> requests = routeReq.Entities.Partition(2).Select(x => new RouteRequest
+            IEnumerable<RouteRequest> requests = routeReq.Entities.Partition(1000).Select(x => new RouteRequest
             {
                 Entities = x,
                 Comment = routeReq.Comment,
@@ -401,12 +401,14 @@ end;";
             foreach (ArtAmlAnalysisRule rule in routeRules)
             {
                 IEnumerable<string> ruleEntities = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(a => a.PartyNumber).ToList().Where(x => !closeEntities.Contains(x));
+                string[] queue_owner = rule.RouteToUser.Split("--");
+
                 (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await RouteAllAlertsAsync(new RouteRequest
                 {
                     Entities = ruleEntities.ToList(),
                     Comment = $"Routed From AmlAnalysis Auto Rule :{rule.Id}",
-                    OwnerId = "",
-                    QueueCode = ""
+                    OwnerId = queue_owner[1],
+                    QueueCode = queue_owner[0]
                 }, "ART-SRV", $"{rule.Id}--RTQ--FAAR-Apply");
 
                 if (!isSucceed)
@@ -463,12 +465,13 @@ end;";
             foreach (ArtAmlAnalysisRule rule in routeRules)
             {
                 IEnumerable<string> ruleEntities = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {rule.TableName} Where {rule.Sql}").Select(a => a.PartyNumber).ToList().Where(x => !closeEntities.Contains(x));
+                string[] queue_owner = rule.RouteToUser.Split("--");
                 (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await RouteAllAlertsAsync(new RouteRequest
                 {
                     Entities = ruleEntities.ToList(),
                     Comment = $"Routed From AmlAnalysis Auto Rule :{rule.Id}",
-                    OwnerId = "",
-                    QueueCode = ""
+                    OwnerId = queue_owner[1],
+                    QueueCode = queue_owner[0]
                 }, "ART-SRV", $"{rule.Id}--RTQ--FAAR-Apply");
 
                 if (!isSucceed)

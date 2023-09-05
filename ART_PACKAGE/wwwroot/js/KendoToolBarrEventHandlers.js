@@ -772,6 +772,247 @@ export const Handlers = {
         },
         crtrule: (e) => {
             $('#collapseDiv').collapse("toggle")
+        },
+        performAction: async (e) => {
+            //
+            //document.getElementById("ruleStatus").check();
+            //console.log(document.getElementById("ruleStatus").status);
+            var selectedRules = await Select("/AML_ANALYSIS/GetRulesData", "Id");
+            if (!selectedRules || [...selectedRules].length != 1) {
+                toastObj.icon = 'error';
+                toastObj.text = "you must select one and only one rule";
+                toastObj.heading = "Perform Action on rule Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+                return;
+            }
+
+            var rule = selectedRules[0];
+
+            var ruleRes = await fetch("/AML_ANALYSIS/GetRuleById/" + rule);
+            var ruleData = {};
+            if (ruleRes.ok)
+                ruleData = await ruleRes.json();
+            else {
+                var error = await ruleRes.json();
+                toastObj.icon = 'error';
+                toastObj.text = error.description;
+                toastObj.heading = "Perform Action on rule Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+                return;
+            }
+            var ruleSwitch = document.getElementById("ruleStatus");
+            var ruleActionSelect = document.getElementById("ruleAction");
+            var header = document.getElementById("ruleHeader");
+            var desc = document.getElementById("ruleDesc");
+            console.log(ruleData);
+            header.innerText = "Rule Number : " + ruleData.id
+            desc.innerText = ruleData.readableOutPut;
+            //make switch correspond to rule active
+            if (ruleData.active)
+                ruleSwitch.check();
+            else
+                ruleSwitch.unCheck();
+
+
+            var actionMap = {
+                0: "Close",
+                1: "Route",
+                2: "NoAction"
+            };
+            [...ruleActionSelect.options].forEach(async x => {
+                console.log(ruleData.action, actionMap[x.value]);
+                if (ruleData.action == actionMap[x.value]) {
+                    x.selected = true;
+
+                    var userrule = ruleData.routeToUser.split("--");
+                    await CreateQueueUserSelects(x.value, userrule[0], userrule[1]);
+                    
+                 
+                    $(ruleActionSelect).selectpicker('refresh');
+
+                }
+            });
+            async function CreateQueueUserSelects(action,queue,user) {
+                var container = document.getElementById("ruleStatus");
+                var queueuser = document.getElementById("queueuser");
+               
+                if (action == "1" && !queueuser) {
+                    var div = document.createElement("div");
+                    div.style.padding = "1%";
+                    div.classList = "row";
+                    div.id = "queueuser"
+                    var queueselect = document.createElement("select");
+                    queueselect.id = "queueSelect";
+                    queueselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
+                    queueselect.setAttribute("data-live-search", true);
+                    var queues = await(await fetch("/AML_ANALYSIS/GetQueues", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        }
+                    })).json();
+                    var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.innerText = "Select A Queue";
+                    queueselect.append(opt);
+                    queues.forEach(x => {
+                        var opt = document.createElement("option");
+                        opt.value = x;
+                        opt.innerText = x;
+                        if (queue && x == queue)
+                            opt.selected = true;
+                        queueselect.append(opt);
+                    });
+                    var q = queue ? queue : "";
+                    var userselect = document.createElement("select");
+                    userselect.id = "userSelect";
+                    userselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
+                    userselect.setAttribute("data-live-search", true);
+                    var users = await(await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(q)
+                    })).json();
+                    var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.innerText = "Select A User";
+                    userselect.append(opt);
+                    users.forEach(x => {
+                        var opt = document.createElement("option");
+                        opt.value = x;
+                        opt.innerText = x;
+                        if (user && x == user)
+                            opt.selected = true;
+                        userselect.append(opt);
+                    });
+                    div.appendChild(queueselect);
+                    div.appendChild(userselect);
+                    container.parentNode.insertBefore(div, container.nextSibling);
+                    $('#queueSelect').selectpicker('refresh');
+                    $('#userSelect').selectpicker('refresh');
+
+
+                    queueselect.onchange = async (ev) => {
+                        var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify(ev.target.value)
+                        })).json();
+
+                        userselect.innerHTML = "";
+                        var opt = document.createElement("option");
+                        opt.value = "";
+                        opt.innerText = "Select An User";
+                        userselect.append(opt);
+                        queueUsers.forEach(x => {
+                            var opt = document.createElement("option");
+                            opt.value = x;
+                            opt.innerText = x;
+                            userselect.append(opt);
+                        });
+
+                        $('#userSelect').selectpicker('refresh');
+                    }
+
+                }
+                else if (action != "1") {
+                    var queueUser = document.getElementById("queueuser");
+                    if (queueUser)
+                        container.parentNode.removeChild(queueUser);
+                }
+            }
+            var editBtn = document.getElementById("EditBtn");
+            var dltBtn = document.getElementById("DltBtn");
+            ruleActionSelect.onchange = async (e) => await CreateQueueUserSelects(e.target.value);
+
+            editBtn.onclick = async () => {
+                var para = {};
+                if (ruleActionSelect.value == 1) {
+                    var queueSelect = document.getElementById("queueSelect");
+                    var users = document.getElementById("userSelect");
+
+                    if ((!queueSelect.value || queueSelect.value == "") && (!users.value || users.value == "")) {
+                        toastObj.icon = 'error';
+                        toastObj.text = "You must select user, queue or both";
+                        toastObj.heading = "Edit Rule Status";
+                        $.toast(toastObj);
+                        return;
+                    }
+                    para.RouteToUser = queueSelect.value + "--" + users.value
+                }
+                 para = {
+                    Id: ruleData.id,
+                    Action: parseInt(ruleActionSelect.value),
+                    Active: ruleSwitch.status,
+                    ...para
+                };
+             
+                var editRes = await fetch("/AML_ANALYSIS/EditRule", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(para)
+                });
+
+                if (editRes.ok) {
+                    toastObj.icon = 'success';
+                    toastObj.text = "update done";
+                    toastObj.heading = "Edit Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+                else {
+                    toastObj.icon = 'error';
+                    toastObj.text = "something wrong happened while update,try again later";
+                    toastObj.heading = "Edit Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+               
+            }
+            dltBtn.onclick = async () => {
+                var dltRes = await fetch("/AML_ANALYSIS/DeleteRule/" + ruleData.id, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                });
+                if (dltRes.ok) {
+                    toastObj.icon = 'success';
+                    toastObj.text = "Delete done";
+                    toastObj.heading = "Delete Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+                else {
+                    toastObj.icon = 'error';
+                    toastObj.text = "something wrong happened while delete,try again later";
+                    toastObj.heading = "Delete Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+
+            }
+            $("#EditRule").modal("show");
+
+
+
         }
 
     },

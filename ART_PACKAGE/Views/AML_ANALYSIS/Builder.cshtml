@@ -24,7 +24,7 @@
 <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
 <script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
 
-<h2>AML Auto Rules ( Ver 2)</h2>
+<h2>AML Auto Rules</h2>
 <div id="collapseDiv" class="collapse">
 <div id="qeuryContainer" class="row" style="display:flex;
     justify-content:center;
@@ -60,8 +60,32 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="EditRule" tabindex="-1" role="dialog" aria-labelledby="EditRuleLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body row"  id="perFormActionBody">
+                <h2 id="ruleHeader"></h2>
+                <p id="ruleDesc"></p>
+                <select id="ruleAction" class="col-xs-12 col-md-12 col-sm-12 text-infol selectpicker" asp-items="Html.GetEnumValuesWithDisplayName<AmlAnalysisAction>()"></select>
+                <div class="d-flex justify-content-center align-items-center" style="margin: 3%;padding-top:1%" >
+                    <label for="ruleStatus" >Active</label>
+                    <art-switch style=" vertical-align: middle;"  id="ruleStatus"></art-switch>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                <button id="EditBtn" class="btn btn-warning" data-dismiss="modal">Edit</button>
+                    <button id="DltBtn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script src="~/js/querybuilder.js"></script>
     <script src="~/js/dynamic.js" type="module" id="script" data-prop="Id" data-urlkey="Aml_AnalysisRules" data-handlerkey="Aml_AnalysisRules"></script>
+    <script src="~/js/components/switch/switch.js"></script>
 }
 
