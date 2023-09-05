@@ -1721,6 +1721,90 @@ end)
   AND(BASEEVENT.CCY = SPOTRATE.currency(+) AND SPOTRATE.branch = 'BMEG')
  ORDER BY ALLRPTMSTRS.BHALF_BRN, ALLRPTMSTRS.WORKGROUP, ALLRPTMSTRS.MASTER_REF
             ");
+            //ART_TI_ECM_AUDIT_REPORT
+            migrationBuilder.Sql($@"
+            CREATE OR REPLACE FORCE NONEDITIONABLE VIEW ""ART"".""ART_TI_ECM_AUDIT_REPORT"" (""ECM_REFERENCE"", ""BRANCH_ID"", ""ECM_CASE_CREATION_DATE"", ""CUTOMER_NAME"", ""PRODUCT"", ""PRODUCTTYPE"", ""ECM_EVENT"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_CURRENCY"", ""PRIMARY_OWNER"", ""CASE_STAT_CD"", ""UPDATE_USER_ID"", ""COMMENTS"", ""FTI_REFERENCE"", ""EVENT_NAME"", ""EVENT_STATUS"", ""EVENT_CREATION_DATE"", ""MASTER_ASSIGNED_TO"", ""EVENT_STEPS"", ""STEP_STATUS"") AS 
+                                      select 
+                                    Case_Id ECM_Reference,
+                                    behalfOfBranch Branch_ID,
+                                    Create_Date ECM_Case_Creation_Date,
+                                    applicantName Cutomer_Name,
+                                    prod.val_desc product,
+                                    prodtype.val_desc productType,
+                                    event.val_desc ECM_Event,
+                                    transaction_amount , 
+                                    transaction_currency,
+                                    primary_Owner,
+                                    Case_Stat_Cd,
+                                    a.update_user_id,
+                                    comm.DESCRIPTION Comments,
+                                    mstr.master_ref FTI_Reference,
+                                    evname.longna85 Event_Name,
+                                    (case when Baseevent.STATUS ='i' then 'In progress' 
+                                    when Baseevent.STATUS ='c' then 'Completed'
+                                    when Baseevent.STATUS ='a' then 'Aborted'
+                                    end) Event_Status,
+                                    baseevent.start_date Event_Creation_Date,
+                                    evstp.ASSNTOUNME Master_Assigned_To,
+                                    (case
+                                    when evstp.type='x' then 'Abort'
+                                    when evstp.type='a1' then 'Review'
+                                    when evstp.type='a2' then 'Final review'
+                                    when evstp.type='c' then 'Create'
+                                    when evstp.type='i' then 'Input'
+                                    when evstp.type='l' then 'Log'
+                                    when evstp.type='r' then 'Release'
+                                    when evstp.type='-' then 'Complete'
+                                    when evstp.type='c1' then 'Limit check'
+                                    when evstp.type='c2' then 'Final limit check'
+                                    when evstp.type='g' then 'Gateway'
+                                    when evstp.type='s' then 'SWIFT In'
+                                    when evstp.type='rf' then 'Rate fixing'
+                                    when evstp.type='a%' then '*Review/Final review*'
+                                    when evstp.type='ra' then 'Fix auth'
+                                    when evstp.type='m' then 'Limit approval'
+                                    when evstp.type='fp' then 'Print'
+                                    when evstp.type='w' then 'Watch list check'
+                                    when evstp.type='rp' then 'Release pending'
+                                    when evstp.type='pr' then 'Post release'
+                                    when evstp.type='ie' then 'Exchange'
+                                    when evstp.type='er' then 'External review'
+                                    when evstp.type='in' then 'Internal'
+                                    when evstp.type='sy' then 'Synchronisation'
+                                    when evstp.type='b' then 'Batch'
+                                    when evstp.type='gi' then 'Gwy auto input'
+                                    when evstp.type='bi' then 'EoD auto input'
+                                    when evstp.type='ci' then 'Int auto input'
+                                    when evstp.type='si' then 'Swft auto input'
+                                    when evstp.type='ar' then 'Auto reject'
+                                    end
+                                    )Event_Steps,
+                                    (case
+                                    when evstp.STATUS ='i' then 'Initiated'
+                                    when evstp.STATUS ='d' then 'Assigned'
+                                    when evstp.STATUS ='p' then 'Pended'
+                                    when evstp.STATUS ='w' then 'Awaiting'
+                                    when evstp.STATUS ='r' then 'Requested'
+                                    when evstp.STATUS ='q' then 'Received'
+                                    when evstp.STATUS ='j' then 'Rejected'
+                                    when evstp.STATUS ='t' then 'Returned'
+                                    when evstp.STATUS ='a' then 'Aborted'
+                                    when evstp.STATUS ='c' then 'Completed'
+                                    end
+                                    ) STEP_STATUS
+                                    --note.note_text Note
+                                    from
+                                    dgcmgmt.case_live@DGDB_DGCMGMT a 
+                                    left join dgcmgmt.ref_table_val@DGDB_DGCMGMT prod on a.product=prod.val_cd
+                                    left join dgcmgmt.ref_table_val@DGDB_DGCMGMT prodtype on a.producttype=prodtype.val_cd
+                                    left join dgcmgmt.ref_table_val@DGDB_DGCMGMT event on a.eventname=event.val_cd
+                                    left join DGECM_METADATA.COMMENTS@DGDB_DGECM_METADATA comm on a.case_rk=comm.entity_rk
+                                    left join TIZONE2.extevent@TIZONE2_LINK ext on a.case_id=trim(ext.ecm_ref)
+                                    left join TIZONE2.Baseevent@TIZONE2_LINK on Baseevent.key97 = ext.event
+                                    left join TIZONE2.master@TIZONE2_LINK mstr on Baseevent.master_key = mstr.key97
+                                    left join TIZONE2.EXEMPL30@TIZONE2_LINK evname on mstr.exemplar = evname.key97
+                                    left join TIZONE2.EVENTSTEP@TIZONE2_LINK evstp on BASEEVENT.KEY97=evstp.EVENT_KEY
+                                    left join TIZONE2.EVENTSTEPNAMES@TIZONE2_LINK on evstp.KEY97=EVENTSTEPNAMES.STEPKEY");
             #endregion
         }
         protected override void Down(MigrationBuilder migrationBuilder)

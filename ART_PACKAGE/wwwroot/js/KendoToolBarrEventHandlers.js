@@ -841,6 +841,72 @@ export const dbClickHandlers = {
         kendo.ui.progress($('#grid'), false);
 
     },
+    EcmAuditTrial: async (dataItem) => {
+        kendo.ui.progress($('#grid'), true);
+        console.log(dataItem.EcmReference);
+        var commentData = await (await fetch(`/EcmAuditTrial/GetEcmComments/${dataItem.FtiReference}`)).json();
+        var title = document.getElementById("RiskTitle");
+        var old_title = title.innerText;
+        title.innerText = old_title.split(":")[0] + " : " + dataItem.FtiReference;
+        var commentGrid = document.getElementById("partyRiskGrid");
+        commentGrid.innerText = "";
+        if (commentData && [...commentData].length > 0) {
+            var table = document.createElement("table");
+            table.className = "table";
+            var thead = document.createElement("thead");
+            var tr = document.createElement("tr");
+            var headers = ["#", "Fti Reference", "Note"]
+            headers.forEach(x => {
+                var th = document.createElement("th");
+                th.setAttribute("scope", "col");
+                th.innerText = x;
+                tr.appendChild(th);
+            });
+
+            thead.appendChild(tr);
+            var tbody = document.createElement("tbody");
+            [...commentData].forEach((x, index) => {
+                console.log(x);
+                var tr = document.createElement("tr");
+
+                var rowNumberTd = document.createElement("th");
+                rowNumberTd.setAttribute("scope", "row");
+                rowNumberTd.innerText = index + 1;
+
+                var ecmReferenceTd = document.createElement("td");
+                ecmReferenceTd.innerText = x.ftiref;
+
+
+                var commentTd = document.createElement("td");
+                commentTd.innerText = x.comment;
+
+
+
+                tr.appendChild(rowNumberTd);
+                tr.appendChild(ecmReferenceTd);
+
+                tr.appendChild(commentTd);
+                tbody.appendChild(tr);
+            });
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+            commentGrid.appendChild(table);
+        }
+        else {
+            var noCommentsDiv = document.createElement("div");
+            noCommentsDiv.innerText = "There is no Notes for the FtiReference:" + dataItem.FtiReference
+            noCommentsDiv.className = "text-center";
+            commentGrid.appendChild(noCommentsDiv);
+        }
+
+        $("#RiskModal").modal("show");
+
+
+        kendo.ui.progress($('#grid'), false);
+
+    },
+
     messagesDbHandler: async (item) => {
         kendo.ui.progress($('#grid'), true);
         var id = item.RequestUid;

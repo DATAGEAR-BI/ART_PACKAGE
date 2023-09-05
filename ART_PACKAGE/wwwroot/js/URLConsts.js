@@ -101,5 +101,6 @@
     AdvancePaymentUtilization:"/AdvancePaymentUtilization/GetData",
     FullJournal: "/FullJournal/GetData",
     EcmWorkflowProg:"/EcmWorkflowProg/GetData",
+    EcmAuditTrial:"/EcmAuditTrial/GetData",
 }
 

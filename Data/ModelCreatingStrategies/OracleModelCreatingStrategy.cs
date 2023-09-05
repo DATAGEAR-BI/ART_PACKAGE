@@ -7780,6 +7780,108 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("WARNING_OVERRIDDEN")
                     .IsFixedLength();
             });
+            modelBuilder.Entity<ArtTiEcmAuditReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TI_ECM_AUDIT_REPORT");
+
+                entity.Property(e => e.BranchId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_ID");
+
+                entity.Property(e => e.CaseStatCd)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STAT_CD");
+
+                entity.Property(e => e.Comments)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMENTS");
+
+                entity.Property(e => e.CutomerName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUTOMER_NAME");
+
+                entity.Property(e => e.EcmCaseCreationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ECM_CASE_CREATION_DATE");
+
+                entity.Property(e => e.EcmEvent)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_EVENT");
+
+                entity.Property(e => e.EcmReference)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("ECM_REFERENCE");
+
+                entity.Property(e => e.EventCreationDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("EVENT_CREATION_DATE");
+
+                entity.Property(e => e.EventName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EventStatus)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STATUS");
+
+                entity.Property(e => e.EventSteps)
+                    .HasMaxLength(21)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_STEPS");
+
+                entity.Property(e => e.FtiReference)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("FTI_REFERENCE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.MasterAssignedTo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("MASTER_ASSIGNED_TO")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PrimaryOwner)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_OWNER");
+
+                entity.Property(e => e.Product)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.Producttype)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCTTYPE");
+
+                entity.Property(e => e.StepStatus)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("STEP_STATUS");
+
+                entity.Property(e => e.TransactionAmount)
+                    .HasColumnType("NUMBER(38,4)")
+                    .HasColumnName("TRANSACTION_AMOUNT");
+
+                entity.Property(e => e.TransactionCurrency)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CURRENCY");
+
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATE_USER_ID");
+            });
             //for sake for build => toChange when convert to SqlServer
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
             {

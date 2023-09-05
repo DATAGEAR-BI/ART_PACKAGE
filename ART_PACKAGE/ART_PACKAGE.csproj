@@ -1009,6 +1009,7 @@
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
 		<None Include="Views\DiaryExceptions\Index.cshtml" />
+		<None Include="Views\EcmAuditTrial\Index.cshtml" />
 		<None Include="Views\EcmTransactions\Index.cshtml" />
 		<None Include="Views\EcmWorkflowProg\Index.cshtml" />
 		<None Include="Views\FinancingInterestAccruals\Index.cshtml" />

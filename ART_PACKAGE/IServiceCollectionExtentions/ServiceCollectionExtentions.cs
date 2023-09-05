@@ -6,6 +6,7 @@ using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC;
 using Data.GOAML;
+using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.IServiceCollectionExtentions
@@ -20,6 +21,7 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
             var FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
             var GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
             var DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
+            var TIZONE2ContextConnection = config.GetConnectionString("TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'TIZONEContextConnection' not found.");
             //var DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
             var migrationsToApply = config.GetSection("migrations").Get<List<string>>();
             var dbType = config.GetValue<string>("dbType").ToUpper();
@@ -99,6 +101,18 @@ namespace ART_PACKAGE.IServiceCollectionExtentions
                     ),
                 DbTypes.Oracle => options.UseOracle(
                     DGUSERMANAGMENTContextConnection,
+                    x => x.MigrationsAssembly("OracleMigrations")
+                    ),
+                _ => throw new Exception($"Unsupported provider: {dbType}")
+            });
+            services.AddDbContext<TIZONE2Context>(options => _ = dbType switch
+            {
+                DbTypes.SqlServer => options.UseSqlServer(
+                    TIZONE2ContextConnection,
+                    x => x.MigrationsAssembly("SqlServerMigrations")
+                    ),
+                DbTypes.Oracle => options.UseOracle(
+                    TIZONE2ContextConnection,
                     x => x.MigrationsAssembly("OracleMigrations")
                     ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")

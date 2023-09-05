@@ -1401,6 +1401,55 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
+            { nameof(EcmAuditTrialController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                 {"EcmReference",new DisplayNameAndFormat { DisplayName ="ECM Reference"}},
+                {"BranchId",new DisplayNameAndFormat { DisplayName ="Branch ID"}},
+                {"EcmCaseCreationDate",new DisplayNameAndFormat { DisplayName ="ECM Case Creation Date"}},
+                {"CutomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                {"Product",new DisplayNameAndFormat { DisplayName ="Product"}},
+                {"Producttype",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                {"EcmEvent",new DisplayNameAndFormat { DisplayName ="Ecm Event"}},
+                {"TransactionAmount",new DisplayNameAndFormat { DisplayName ="Transaction Amount",Format = "{0:n2}"}},
+                {"TransactionCurrency",new DisplayNameAndFormat { DisplayName ="Transaction Currency"}},
+                {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                {"CaseStatCd",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                {"UpdateUserId",new DisplayNameAndFormat { DisplayName ="Last Action taken by"}},
+                {"Comments",new DisplayNameAndFormat { DisplayName ="Comments"}},
+                {"FtiReference",new DisplayNameAndFormat { DisplayName ="Fti Reference"}},
+                {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                {"EventStatus",new DisplayNameAndFormat { DisplayName ="Event Status"}},
+                {"EventCreationDate",new DisplayNameAndFormat { DisplayName ="Event Creation Date"}},
+                {"MasterAssignedTo",new DisplayNameAndFormat { DisplayName ="Master Assigned To"}},
+                {"EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
+                {"StepStatus",new DisplayNameAndFormat { DisplayName ="Step Status"}},
+            },
+                SkipList = new List<string>
+            {
+                    "Product",
+                "Sovaluecode",
+                "Gfcun",
+                "CusMnm",
+                "SwBank",
+                "SwCtr",
+                "SwLoc",
+                "SwBranch",
+                "Active",
+                "CtrctDate",
+                "Outstamt",
+                "Outccyced",
+                "Outstccy",
+                "OutstamtEgp",
+                "Relmstrref",
+                "CcyCed",
+                "CreatedAt",
+                "RefnoPfix",
+                "RefnoSerl",
+            }
+    }
+            },
         };
 
     }
