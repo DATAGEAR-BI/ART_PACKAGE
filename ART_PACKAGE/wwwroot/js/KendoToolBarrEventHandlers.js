@@ -806,7 +806,6 @@ export const Handlers = {
             var ruleActionSelect = document.getElementById("ruleAction");
             var header = document.getElementById("ruleHeader");
             var desc = document.getElementById("ruleDesc");
-            console.log(ruleData);
             header.innerText = "Rule Number : " + ruleData.id
             desc.innerText = ruleData.readableOutPut;
             //make switch correspond to rule active
@@ -828,16 +827,16 @@ export const Handlers = {
 
                     var userrule = ruleData.routeToUser.split("--");
                     await CreateQueueUserSelects(x.value, userrule[0], userrule[1]);
-                    
-                 
+
+
                     $(ruleActionSelect).selectpicker('refresh');
 
                 }
             });
-            async function CreateQueueUserSelects(action,queue,user) {
+            async function CreateQueueUserSelects(action, queue, user) {
                 var container = document.getElementById("ruleStatus");
                 var queueuser = document.getElementById("queueuser");
-               
+
                 if (action == "1" && !queueuser) {
                     var div = document.createElement("div");
                     div.style.padding = "1%";
@@ -847,7 +846,7 @@ export const Handlers = {
                     queueselect.id = "queueSelect";
                     queueselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
                     queueselect.setAttribute("data-live-search", true);
-                    var queues = await(await fetch("/AML_ANALYSIS/GetQueues", {
+                    var queues = await (await fetch("/AML_ANALYSIS/GetQueues", {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
@@ -871,7 +870,7 @@ export const Handlers = {
                     userselect.id = "userSelect";
                     userselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
                     userselect.setAttribute("data-live-search", true);
-                    var users = await(await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+                    var users = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -949,13 +948,13 @@ export const Handlers = {
                     }
                     para.RouteToUser = queueSelect.value + "--" + users.value
                 }
-                 para = {
+                para = {
                     Id: ruleData.id,
                     Action: parseInt(ruleActionSelect.value),
                     Active: ruleSwitch.status,
                     ...para
                 };
-             
+
                 var editRes = await fetch("/AML_ANALYSIS/EditRule", {
                     method: "POST",
                     headers: {
@@ -981,7 +980,7 @@ export const Handlers = {
                     $("#grid").data("kendoGrid").dataSource.read();
                     return;
                 }
-               
+
             }
             dltBtn.onclick = async () => {
                 var dltRes = await fetch("/AML_ANALYSIS/DeleteRule/" + ruleData.id, {
