@@ -18,6 +18,8 @@ namespace Data.Data
         public string? EventStatus { get; set; } 
         public DateTime? EventCreationDate { get; set; }
         public string? FirstLineParty { get; set; }
+        public string? TradeInstructions { get; set; }
+        public string? FirstLineInstructions { get; set; }
 
     }
 }

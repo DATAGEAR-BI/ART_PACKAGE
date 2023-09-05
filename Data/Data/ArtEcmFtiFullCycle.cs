@@ -27,6 +27,8 @@ namespace Data.Data
         public string? MasterAssignedTo { get; set; }
         public string? EventSteps { get; set; }
         public string? StepStatus { get; set; } 
-
+        public DateTime? StartdTime { get; set; }
+        public DateTime? LstModTime { get; set; }
+        public string? LstModUser { get; set; }
     }
 }

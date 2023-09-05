@@ -15,6 +15,7 @@ namespace Data.Data
         public DateTime? EventCreationDate { get; set; }
         public string? MasterAssignedTo { get; set; }
         public string? EventSteps { get; set; } 
-        public string? StepStatus { get; set; } 
+        public string? StepStatus { get; set; }
+        public string? Product { get; set; }
     }
 }

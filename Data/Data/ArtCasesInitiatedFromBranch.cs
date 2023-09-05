@@ -17,5 +17,8 @@ namespace Data.Data
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? EventName { get; set; }
+        public string? ApplicantId { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string? BeneficiaryName { get; set; }
     }
 }

@@ -40,6 +40,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Product",new DisplayNameAndFormat { DisplayName = "Product"}},
                         {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                         {  "EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                        {  "ApplicantId",new DisplayNameAndFormat { DisplayName ="Applicant ID"}},
+                        {  "ExpiryDate",new DisplayNameAndFormat { DisplayName ="Expiry Date"}},
+                        {  "BeneficiaryName",new DisplayNameAndFormat { DisplayName ="Beneficiary Name"}},
 
                     }
                 }
@@ -62,6 +65,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Product",new DisplayNameAndFormat { DisplayName = "Product"}},
                         {  "ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                         {  "EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                        {  "ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
+                        {  "Reference",new DisplayNameAndFormat { DisplayName ="Reference"}},
 
                     }
                 }
@@ -91,6 +96,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
                         {  "StepStatus",new DisplayNameAndFormat { DisplayName ="Step Status"}},
                         {  "LastActionTokenBy",new DisplayNameAndFormat { DisplayName ="Last Action Token By"}},
+                        {  "StartdTime",new DisplayNameAndFormat { DisplayName ="Started Time"}},
+                        {  "LstModTime",new DisplayNameAndFormat { DisplayName ="Last Modify Time"}},
+                        {  "LstModUser",new DisplayNameAndFormat { DisplayName ="Last Modify User"}},
 
                     }
                 }
@@ -109,6 +117,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "MasterAssignedTo",new DisplayNameAndFormat { DisplayName ="Master Assigned To"}},
                         {  "EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
                         {  "StepStatus",new DisplayNameAndFormat { DisplayName = "Step Status"}},
+                        {  "Product",new DisplayNameAndFormat { DisplayName = "Product"}},
 
                     }
                 }
@@ -129,6 +138,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "EventStatus",new DisplayNameAndFormat { DisplayName = "Event Status"}},
                         {  "EventCreationDate",new DisplayNameAndFormat { DisplayName = "Event Creation Date"}},
                         {  "FirstLineParty",new DisplayNameAndFormat { DisplayName = "First Line Party"}},
+                        {  "TradeInstructions",new DisplayNameAndFormat { DisplayName = "Trade Instructions"}},
+                        {  "FirstLineInstructions",new DisplayNameAndFormat { DisplayName = "First Line Instructions"}},
 
                     }
                 }

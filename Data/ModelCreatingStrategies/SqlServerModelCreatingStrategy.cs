@@ -3089,8 +3089,11 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CaseCreationDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CASE_CREATION_DATE");
+                    .HasColumnName("EXPIRY_DATE");
 
+                entity.Property(e => e.ExpiryDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CASE_CREATION_DATE");
                 entity.Property(e => e.CaseStatus)
                     .HasMaxLength(4000)
                     .HasColumnName("CASE_STATUS")
@@ -3138,6 +3141,16 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .HasColumnName("PRODUCT_TYPE")
                     .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ApplicantId)
+                    .HasMaxLength(4000)
+                    .HasColumnName("APPLICANT_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+                
+                entity.Property(e => e.BeneficiaryName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("BENEFICIARY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
             });
 
             modelBuilder.Entity<ArtDgecmActivity>(entity =>
@@ -3147,6 +3160,16 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGECM_ACTIVITIES", "ART_DB");
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
+                entity.Property(e => e.Reference)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("REFERENCE")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.ParentCaseId)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_CASE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.BranchId)
                     .HasMaxLength(1000)
@@ -3221,9 +3244,23 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("BRANCH_ID")
                     .UseCollation("Arabic_100_CI_AI");
 
+                entity.Property(e => e.LstModUser)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_MOD_USER")
+                    .UseCollation("Arabic_100_CI_AI");
+
                 entity.Property(e => e.CaseCreationDate)
                     .HasColumnType("datetime")
                     .HasColumnName("CASE_CREATION_DATE");
+                
+                entity.Property(e => e.StartdTime)
+                   .HasColumnType("datetime")
+                   .HasColumnName("STARTED_TIME");
+
+                entity.Property(e => e.LstModTime)
+                   .HasColumnType("datetime")
+                   .HasColumnName("LAST_MOD_TIME");
 
                 entity.Property(e => e.EventCreationDate)
                     .HasColumnType("datetime")
@@ -3328,6 +3365,11 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
+                entity.Property(e => e.Product)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("PRODUCT")
+                   .UseCollation("Arabic_100_CI_AI");
                 entity.Property(e => e.EventCreationDate)
                     .HasColumnType("datetime")
                     .HasColumnName("EVENT_CREATION_DATE");
@@ -3383,6 +3425,19 @@ namespace Data.ModelCreatingStrategies
                    .HasMaxLength(64)
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TradeInstructions)
+                  .HasMaxLength(4000)
+                  .IsUnicode(false)
+                  .HasColumnName("TRADE_INSTRUCTIONS")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FirstLineInstructions)
+                  .HasMaxLength(4000)
+                  .IsUnicode(false)
+                  .HasColumnName("FIRST_LINE_INSTRUCTIONS")
+                  .UseCollation("Arabic_100_CI_AI");
+
                 entity.Property(e => e.Product)
                    .HasMaxLength(4000)
                    .IsUnicode(false)
