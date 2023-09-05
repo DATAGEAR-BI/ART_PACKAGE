@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Extentions.QueryBuilderExtentions;
+using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Hubs;
@@ -24,7 +25,9 @@ namespace ART_PACKAGE.Controllers
         private readonly IHubContext<AmlAnalysisHub> _amlHub;
         private readonly AmlAnalysisContext _context;
         private readonly AmlAnalysisUpdateTableIndecator _updateInd;
-        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd)
+        private readonly UsersConnectionIds connections;
+
+        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd, UsersConnectionIds connections = null)
         {
             this.logger = logger;
             _config = config;
@@ -32,6 +35,7 @@ namespace ART_PACKAGE.Controllers
             _amlHub = amlHub;
             _context = context;
             _updateInd = updateInd;
+            this.connections = connections;
         }
 
 
@@ -193,7 +197,7 @@ namespace ART_PACKAGE.Controllers
             //this action might take time so we used signalr
             (bool isSucceed, IEnumerable<string>? ColseFailedEntities) = await _amlSrv.CloseAllAlertsAsync(closeRequest, User.Identity.Name, "CLP");
             var response = new { isSucceed, ColseFailedEntities };
-            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("CloseResult", response);
+            await _amlHub.Clients.Clients(connections.GetConnections(User.Identity.Name)).SendAsync("CloseResult", response);
             return Ok();
         }
 
@@ -217,7 +221,7 @@ namespace ART_PACKAGE.Controllers
 
             (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await _amlSrv.RouteAllAlertsAsync(routeRequest, User.Identity.Name);
             var response = new { isSucceed, RouteFailedEntities };
-            await _amlHub.Clients.Client(AmlAnalysisHub.Connections[User.Identity.Name]).SendAsync("RouteResult", response);
+            await _amlHub.Clients.Clients(connections.GetConnections(User.Identity.Name)).SendAsync("RouteResult", response);
             return Ok();
         }
 
@@ -311,7 +315,7 @@ namespace ART_PACKAGE.Controllers
 
             rule.Active = ruledto.Active;
 
-            await _context.SaveChangesAsync();
+            _ = await _context.SaveChangesAsync();
             return Ok();
         }
         [HttpDelete("[controller]/[action]/{id}")]
@@ -324,7 +328,7 @@ namespace ART_PACKAGE.Controllers
             if (rule is null)
                 return NotFound();
             rule.Deleted = true;
-            int res = await _context.SaveChangesAsync();
+            _ = await _context.SaveChangesAsync();
             return Ok();
         }
 

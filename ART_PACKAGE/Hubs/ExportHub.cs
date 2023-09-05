@@ -1,20 +1,30 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System.Collections.Concurrent;
+﻿using ART_PACKAGE.Helpers;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ART_PACKAGE.Hubs
 {
     public class ExportHub : Hub
     {
-        public static ConcurrentDictionary<string, string> Connections = new();
+        private readonly UsersConnectionIds connections;
 
+        public ExportHub(UsersConnectionIds connections)
+        {
+            this.connections = connections;
+        }
         public override Task OnConnectedAsync()
         {
 
             string? user = Context.User.Identity.Name;
-
-            _ = Connections.AddOrUpdate(user, Context.ConnectionId, (key, oldValue) => Context.ConnectionId);
-
+            connections.AddConnctionIdFor(user, Context.ConnectionId);
             return base.OnConnectedAsync();
+        }
+
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            string? user = Context.User.Identity.Name;
+            connections.RemoveConnection(user, Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
         }
     }
 }

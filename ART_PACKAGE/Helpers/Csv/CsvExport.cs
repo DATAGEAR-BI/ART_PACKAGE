@@ -9,10 +9,11 @@ namespace ART_PACKAGE.Helpers.Csv
     public class CsvExport : ICsvExport
     {
         private readonly IHubContext<ExportHub> _exportHub;
-
-        public CsvExport(IHubContext<ExportHub> exportHub)
+        private readonly UsersConnectionIds connections;
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             _exportHub = exportHub;
+            this.connections = connections;
         }
 
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
@@ -24,13 +25,13 @@ namespace ART_PACKAGE.Helpers.Csv
                 {
                     byte[] bytes = await item;
                     string FileName = typeof(T1).Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Client(ExportHub.Connections[userName])
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvRecevied", bytes, FileName);
                     i++;
                 }
                 catch (Exception)
                 {
-                    await _exportHub.Clients.Client(ExportHub.Connections[userName])
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvErrorRecevied", i);
 
                 }
@@ -62,8 +63,6 @@ namespace ART_PACKAGE.Helpers.Csv
             if (obj.All)
             {
                 tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
-
-
             }
             else
             {
@@ -81,13 +80,13 @@ namespace ART_PACKAGE.Helpers.Csv
                 {
                     byte[] bytes = await item;
                     string FileName = typeof(T1).Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Client(ExportHub.Connections[userName])
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvRecevied", bytes, FileName);
                     i++;
                 }
                 catch (Exception ex)
                 {
-                    await _exportHub.Clients.Client(ExportHub.Connections[userName])
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvErrorRecevied", i);
 
                 }

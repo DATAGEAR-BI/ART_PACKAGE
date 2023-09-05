@@ -1,6 +1,7 @@
 ﻿
 
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
@@ -29,9 +30,10 @@ namespace ART_PACKAGE.Controllers
         private DbContext dbInstance;
         private readonly ICsvExport _csvSrv;
         private readonly IHubContext<ExportHub> _exportHub;
+        private readonly UsersConnectionIds connections;
 
 
-        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub)
+        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
 
             this.logger = logger;
@@ -42,6 +44,7 @@ namespace ART_PACKAGE.Controllers
             this.dBFactory = dBFactory;
             _csvSrv = csvSrv;
             _exportHub = exportHub;
+            this.connections = connections;
         }
 
 
@@ -247,7 +250,7 @@ namespace ART_PACKAGE.Controllers
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
             byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
             string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-            await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+            await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
                                 .SendAsync("csvRecevied", bytes, FileName);
             return new EmptyResult();
         }

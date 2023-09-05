@@ -759,11 +759,12 @@ export const Handlers = {
                 2: "NoAction"
             };
             [...ruleActionSelect.options].forEach(async x => {
-                console.log(ruleData.action, actionMap[x.value]);
+
                 if (ruleData.action == actionMap[x.value]) {
                     x.selected = true;
-
-                    var userrule = ruleData.routeToUser.split("--");
+                    var userrule = [];
+                    if (ruleData.routeToUser)
+                        userrule = ruleData.routeToUser.split("--");
                     await CreateQueueUserSelects(x.value, userrule[0], userrule[1]);
 
 
@@ -772,7 +773,7 @@ export const Handlers = {
                 }
             });
             async function CreateQueueUserSelects(action, queue, user) {
-                var container = document.getElementById("ruleStatus");
+                var container = document.getElementById("activeDiv");
                 var queueuser = document.getElementById("queueuser");
 
                 if (action == "1" && !queueuser) {

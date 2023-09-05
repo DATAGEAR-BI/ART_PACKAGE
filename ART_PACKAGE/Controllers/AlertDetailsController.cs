@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Hubs;
@@ -18,7 +19,9 @@ namespace ART_PACKAGE.Controllers
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
         private readonly IHubContext<ExportHub> _exportHub;
-        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
+        private readonly UsersConnectionIds connections;
+
+        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             this.dbfcfkc = dbfcfkc;
 
@@ -26,6 +29,7 @@ namespace ART_PACKAGE.Controllers
             _pdfSrv = pdfSrv;
 
             _exportHub = exportHub;
+            this.connections = connections;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -108,13 +112,13 @@ namespace ART_PACKAGE.Controllers
                 {
                     byte[] bytes = await item;
                     string FileName = nameof(AlertDetailsController).Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
                                 .SendAsync("csvRecevied", bytes, FileName);
                     i++;
                 }
                 catch (Exception ex)
                 {
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
                                 .SendAsync("csvErrorRecevied", i);
 
                 }

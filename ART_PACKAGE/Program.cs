@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
@@ -36,12 +37,13 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddAmlAnalysis();
 builder.Services.AddScoped<ICsvExport, CsvExport>();
-builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
 
@@ -50,7 +52,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLicense(builder.Configuration);
-
+builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
 
