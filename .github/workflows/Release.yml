@@ -34,9 +34,6 @@ jobs:
       - name: Build and Publish
         run: dotnet publish -r win-x64 --self-contained true -c Release -o ./Release
 
-
-      
-
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
@@ -48,7 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{Version}
+          tag_name: ${{Version}}
           release_name: Release v1.0.2
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
