@@ -26,8 +26,23 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name : List Folders
-        run : ls
+      - name: Read value from appsettings.json
+        id: read-settings
+        run: |
+            import json
+
+            # Load appsettings.json
+            with open('${{ github.workspace }}/ART_PACKAGE/appsettings.json', 'r') as file:
+                appsettings = json.load(file)
+
+            # Access the desired value (replace 'key' with the actual key)
+            value = appsettings['Version']
+
+            echo "The value is $value"
+
+      - name: Set environment variable
+        run: echo "APP_SETTINGS_VALUE=${{ steps.read-settings.outputs.value }}" >> $GITHUB_ENV
+
       - name: Build
         run: dotnet build --no-restore
 
