@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace OracleMigrations.Migrations
+namespace OracleMigrations.Migrations.KYC
 {
-    public partial class KYCReports : Migration
+    public partial class KYCReport : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -890,7 +890,7 @@ namespace OracleMigrations.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+
         }
     }
 }
