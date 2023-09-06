@@ -66,5 +66,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnFTIModelCreating(modelBuilder);
         }
+
+        public void OnKYCModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnKYCModelCreating(modelBuilder);
+        }
     }
 }

@@ -4117,5 +4117,10 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+
+        public void OnKYCModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

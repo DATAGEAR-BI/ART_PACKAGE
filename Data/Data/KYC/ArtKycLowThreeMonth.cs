@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.KYC
 {
-    public partial class ArtKycHighTwoMonth
+    public partial class ArtKycLowThreeMonth
     {
         public string? ClientNumber { get; set; }
         public string? AmlRisk { get; set; }

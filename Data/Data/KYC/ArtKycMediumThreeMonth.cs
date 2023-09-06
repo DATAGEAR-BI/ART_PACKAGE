@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.KYC
 {
-    public partial class ArtKycLowExpired
+    public partial class ArtKycMediumThreeMonth
     {
         public string? ClientNumber { get; set; }
         public string? AmlRisk { get; set; }
@@ -11,5 +11,6 @@ namespace Data.Data
         public string? EntityName { get; set; }
         public string? RiskClassIndustry { get; set; }
         public DateTime? NextUpdateDate { get; set; }
+        public decimal? Month { get; set; }
     }
 }
