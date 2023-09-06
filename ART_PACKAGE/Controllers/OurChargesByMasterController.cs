@@ -45,7 +45,7 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var Data = data.CallData<ArtTiChargesByMasterReport>(request, DropDownColumn, DisplayNames: DisplayNames);
+            KendoDataDesc<ArtTiChargesByMasterReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames);
             var result = new
             {
                 data = Data.Data,
@@ -68,7 +68,7 @@ namespace ART_PACKAGE.Controllers
         }
         public IActionResult Index()
         {
-            var defaultGrouping = JsonConvert.SerializeObject(new
+            string defaultGrouping = JsonConvert.SerializeObject(new
             {
                 field = nameof(ArtTiChargesByMasterReport.Longname),
                 aggregates = new List<dynamic>
@@ -99,18 +99,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiChargesByMasterReports;
-            var bytes = await data.ExportToCSV<ArtTiChargesByMasterReport, GenericCsvClassMapper<ArtTiChargesByMasterReport, OurChargesByMasterController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiChargesByMasterReport> data = fti.ArtTiChargesByMasterReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiChargesByMasterReport, GenericCsvClassMapper<ArtTiChargesByMasterReport, OurChargesByMasterController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiChargesByMasterReports.CallData<ArtTiChargesByMasterReport>(req).Data.ToList();
+            List<ArtTiChargesByMasterReport> data = fti.ArtTiChargesByMasterReports.CallData(req).Data.ToList();
             ViewData["title"] = "Our Charges by Master";
             ViewData["desc"] = "This report produces total of paid, claimed and outstanding charges for the master record";
-            var DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByMasterController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByMasterController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new() {
                 nameof(ArtTiChargesByMasterReport.MasterRef)
                ,nameof(ArtTiChargesByMasterReport.Hvbad1)
                ,nameof(ArtTiChargesByMasterReport.TotoalClaimedChgDue)
@@ -118,17 +118,17 @@ namespace ART_PACKAGE.Controllers
                ,nameof(ArtTiChargesByMasterReport.TotoalOutstandingChgDue)
                ,nameof(ArtTiChargesByMasterReport.TotoalWaivedChgDue)
             };
-            var ColumnsToSkip = typeof(ArtTiChargesByMasterReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiChargesByMasterReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 7
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 7
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

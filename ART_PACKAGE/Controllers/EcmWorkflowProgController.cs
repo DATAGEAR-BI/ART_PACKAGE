@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var Data = data.CallData<ArtTiEcmWorkflowProgReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiEcmWorkflowProgReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -103,14 +103,14 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
 
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].SkipList;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].SkipList;
 
-            var data = fti.ArtTiEcmWorkflowProgReports.CallData<ArtTiEcmWorkflowProgReport>(req).Data.ToList();
+            List<ArtTiEcmWorkflowProgReport> data = fti.ArtTiEcmWorkflowProgReports.CallData(req).Data.ToList();
             ViewData["title"] = "ECM Workflow Progression Report";
             ViewData["desc"] = "";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
@@ -119,11 +119,11 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiEcmWorkflowProgReports.AsQueryable().CallData<ArtTiEcmWorkflowProgReport>(para.Req).Data;
-            var res = data.AsEnumerable<ArtTiEcmWorkflowProgReport>().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
-            var after = res.Select(x =>
+            IQueryable<ArtTiEcmWorkflowProgReport> data = fti.ArtTiEcmWorkflowProgReports.AsQueryable().CallData(para.Req).Data;
+            var res = data.AsEnumerable().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
+            IEnumerable<ExportDto> after = res.Select(x =>
             {
-                var ListOfMatchingEcm = fti.ArtTiEcmWorkflowProgReportOlds.Where(o => o.EcmReference == x.Key.EcmReference && x.Key.CaseStatCd == o.CaseStatCd && x.Key.EventSteps == o.EventSteps && x.Key.StepStatus == o.StepStatus);
+                IQueryable<ArtTiEcmWorkflowProgReportOld>? ListOfMatchingEcm = fti.ArtTiEcmWorkflowProgReportOlds.Where(o => o.EcmReference == x.Key.EcmReference && x.Key.CaseStatCd == o.CaseStatCd && x.Key.EventSteps == o.EventSteps && x.Key.StepStatus == o.StepStatus);
                 return new ExportDto
                 {
                     Record = x.FirstOrDefault(),
@@ -133,16 +133,16 @@ namespace ART_PACKAGE.Controllers
                 };
 
             });
-            var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
+            MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, CultureInfo.CurrentCulture))
             {
 
 
                 sw.Write("");
-                var props = typeof(ArtTiEcmWorkflowProgReport).GetProperties();
+                System.Reflection.PropertyInfo[] props = typeof(ArtTiEcmWorkflowProgReport).GetProperties();
 
-                foreach (var item in props)
+                foreach (System.Reflection.PropertyInfo item in props)
                 {
                     cw.WriteField(item.Name);
                 }
@@ -151,9 +151,9 @@ namespace ART_PACKAGE.Controllers
                 cw.WriteField("NoteCreationTime");
 
                 cw.NextRecord();
-                foreach (var elm in after)
+                foreach (ExportDto? elm in after)
                 {
-                    foreach (var prop in props)
+                    foreach (System.Reflection.PropertyInfo prop in props)
                     {
                         cw.WriteField(prop.GetValue(elm.Record));
                     }
@@ -161,7 +161,7 @@ namespace ART_PACKAGE.Controllers
                     cw.NextRecord();
                     for (int i = 0; i < elm.Comments.Count; i++)
                     {
-                        foreach (var prop in props)
+                        foreach (System.Reflection.PropertyInfo prop in props)
                         {
                             cw.WriteField("");
                         }

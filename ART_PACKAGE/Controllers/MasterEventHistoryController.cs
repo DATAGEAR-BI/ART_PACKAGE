@@ -56,7 +56,7 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var Data = data.CallData<ArtTiMasterEventHistory>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiMasterEventHistory> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -75,19 +75,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiMasterEventHistories;
-            var bytes = await data.ExportToCSV<ArtTiMasterEventHistory, GenericCsvClassMapper<ArtTiMasterEventHistory, MasterEventHistoryController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories;
+            byte[] bytes = await data.ExportToCSV<ArtTiMasterEventHistory, GenericCsvClassMapper<ArtTiMasterEventHistory, MasterEventHistoryController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].SkipList;
-            var data = fti.ArtTiMasterEventHistories.CallData<ArtTiMasterEventHistory>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].SkipList;
+            List<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories.CallData(req).Data.ToList();
             ViewData["title"] = "Master Event History Report";
             ViewData["desc"] = "This report produces a full history of the events for master records";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

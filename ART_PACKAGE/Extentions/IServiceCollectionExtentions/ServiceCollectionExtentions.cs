@@ -12,6 +12,7 @@ using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.FTI;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.DGAML;
@@ -20,6 +21,7 @@ using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
+using Data.TIZONE2;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +63,13 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
                 _ = services.AddDbContext<GoAmlContext>(opt => contextBuilder(opt, GOAMLContextConnection));
                 _ = services.AddDbContext<ArtGoAmlContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("FTI"))
+            {
+                string TIZONEContextConnection = config.GetConnectionString("TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
+                _ = services.AddDbContext<TIZONE2Context>(opt => contextBuilder(opt, TIZONEContextConnection));
+                _ = services.AddDbContext<FTIContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("DGAML"))

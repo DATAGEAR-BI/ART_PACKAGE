@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(DiaryExceptionsController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtTiDiaryExceptionsReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiDiaryExceptionsReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -76,19 +76,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiDiaryExceptionsReports;
-            var bytes = await data.ExportToCSV<ArtTiDiaryExceptionsReport, GenericCsvClassMapper<ArtTiDiaryExceptionsReport, DiaryExceptionsController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiDiaryExceptionsReport> data = fti.ArtTiDiaryExceptionsReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiDiaryExceptionsReport, GenericCsvClassMapper<ArtTiDiaryExceptionsReport, DiaryExceptionsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(DiaryExceptionsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(DiaryExceptionsController).ToLower()].SkipList;
-            var data = fti.ArtTiDiaryExceptionsReports.CallData<ArtTiDiaryExceptionsReport>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(DiaryExceptionsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(DiaryExceptionsController).ToLower()].SkipList;
+            List<ArtTiDiaryExceptionsReport> data = fti.ArtTiDiaryExceptionsReports.CallData(req).Data.ToList();
             ViewData["title"] = "Diary Exceptions Report";
             ViewData["desc"] = "This report produces a list of diary activities that were not carried out when due because of exception conditions";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

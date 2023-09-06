@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtTiAdvancePaymentUtilizationReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiAdvancePaymentUtilizationReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -78,20 +78,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiAdvancePaymentUtilizationReports;
-            var bytes = await data.ExportToCSV<ArtTiAdvancePaymentUtilizationReport, GenericCsvClassMapper<ArtTiAdvancePaymentUtilizationReport, AdvancePaymentUtilizationController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiAdvancePaymentUtilizationReport> data = fti.ArtTiAdvancePaymentUtilizationReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiAdvancePaymentUtilizationReport, GenericCsvClassMapper<ArtTiAdvancePaymentUtilizationReport, AdvancePaymentUtilizationController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiAdvancePaymentUtilizationReports.CallData<ArtTiAdvancePaymentUtilizationReport>(req).Data.ToList();
+            List<ArtTiAdvancePaymentUtilizationReport> data = fti.ArtTiAdvancePaymentUtilizationReports.CallData(req).Data.ToList();
             ViewData["title"] = "Advance Payment Utilization Report";
             ViewData["desc"] = "";
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].SkipList;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].SkipList;
 
-            var DisplayNames = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].DisplayNames;
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 9
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].DisplayNames;
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 9
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
 

@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Test()
         {
-            var d = fti.ArtTiFullJournalReports.Where(x => EF.Functions.Like(x.DataAfter, "hi"));
+            IQueryable<ArtTiFullJournalReport> d = fti.ArtTiFullJournalReports.Where(x => EF.Functions.Like(x.DataAfter, "hi"));
             return Ok(d);
         }
 
@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(FullJournalController).ToLower()].SkipList;
 
             }
-            var Data = data.CallData<ArtTiFullJournalReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiFullJournalReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,18 +85,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiFullJournalReports;
-            var bytes = await data.ExportToCSV<ArtTiFullJournalReport, GenericCsvClassMapper<ArtTiFullJournalReport, FullJournalController>>(para.Req);
+            DbSet<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiFullJournalReport, GenericCsvClassMapper<ArtTiFullJournalReport, FullJournalController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiFullJournalReports.CallData<ArtTiFullJournalReport>(req).Data.ToList();
+            List<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports.CallData(req).Data.ToList();
             ViewData["title"] = " Full Journal Report";
             ViewData["desc"] = "This report produces changes made to Fusion Trade Innovation system tailoring or static data";
-            var DisplayNames = ReportsConfig.CONFIG[nameof(FullJournalController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(FullJournalController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new() {
                 nameof(ArtTiFullJournalReport.Dataitem)
                ,nameof(ArtTiFullJournalReport.Username)
                ,nameof(ArtTiFullJournalReport.Area)
@@ -104,17 +104,17 @@ namespace ART_PACKAGE.Controllers
                ,nameof(ArtTiFullJournalReport.Datetime)
                ,nameof(ArtTiFullJournalReport.DataAfter)
             };
-            var ColumnsToSkip = typeof(ArtTiFullJournalReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiFullJournalReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 6
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 6
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

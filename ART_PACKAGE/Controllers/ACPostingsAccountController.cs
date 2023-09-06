@@ -50,7 +50,7 @@ namespace ART_PACKAGE.Controllers
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtTiAcpostingsAccReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiAcpostingsAccReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -79,19 +79,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiAcpostingsAccReports;
-            var bytes = await data.ExportToCSV<ArtTiAcpostingsAccReport, GenericCsvClassMapper<ArtTiAcpostingsAccReport, ACPostingsAccountController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiAcpostingsAccReport, GenericCsvClassMapper<ArtTiAcpostingsAccReport, ACPostingsAccountController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiAcpostingsAccReports.CallData<ArtTiAcpostingsAccReport>(req).Data.ToList();
+            List<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports.CallData(req).Data.ToList();
             ViewData["title"] = "A C Postings – Account Report";
             ViewData["desc"] = "This report produces all postings posted to an account by value date";
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new() {
                 nameof(ArtTiAcpostingsAccReport.EventRef)
                ,nameof(ArtTiAcpostingsAccReport.MasterRef)
                ,nameof(ArtTiAcpostingsAccReport.AccountType)
@@ -101,16 +101,16 @@ namespace ART_PACKAGE.Controllers
                ,nameof(ArtTiAcpostingsAccReport.Ccy)
                ,nameof(ArtTiAcpostingsAccReport.PostAmount)
             };
-            var ColumnsToSkip = typeof(ArtTiAcpostingsAccReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiAcpostingsAccReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 8
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 8
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

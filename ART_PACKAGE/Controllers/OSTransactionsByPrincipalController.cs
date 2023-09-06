@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].SkipList;
 
             }
-            var Data = data.CallData<ArtTiOsTransByPrincipalReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiOsTransByPrincipalReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -80,19 +80,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiOsTransByPrincipalReports;
-            var bytes = await data.ExportToCSV<ArtTiOsTransByPrincipalReport, GenericCsvClassMapper<ArtTiOsTransByPrincipalReport, OSTransactionsByPrincipalController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiOsTransByPrincipalReport> data = fti.ArtTiOsTransByPrincipalReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiOsTransByPrincipalReport, GenericCsvClassMapper<ArtTiOsTransByPrincipalReport, OSTransactionsByPrincipalController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].SkipList;
-            var data = fti.ArtTiOsTransByPrincipalReports.CallData<ArtTiOsTransByPrincipalReport>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].SkipList;
+            List<ArtTiOsTransByPrincipalReport> data = fti.ArtTiOsTransByPrincipalReports.CallData(req).Data.ToList();
             ViewData["title"] = "OS Transactions By Principal Report";
             ViewData["desc"] = "This report produces list information for master records that are not yet booked off or cancelled";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

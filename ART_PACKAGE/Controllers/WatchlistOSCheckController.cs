@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var Data = data.CallData<ArtTiWatchlistOsCheckReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiWatchlistOsCheckReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -75,19 +75,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiWatchlistOsCheckReports;
-            var bytes = await data.ExportToCSV<ArtTiWatchlistOsCheckReport, GenericCsvClassMapper<ArtTiWatchlistOsCheckReport, WatchlistOSCheckController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiWatchlistOsCheckReport> data = fti.ArtTiWatchlistOsCheckReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiWatchlistOsCheckReport, GenericCsvClassMapper<ArtTiWatchlistOsCheckReport, WatchlistOSCheckController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(WatchlistOSCheckController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(WatchlistOSCheckController).ToLower()].SkipList;
-            var data = fti.ArtTiWatchlistOsCheckReports.CallData<ArtTiWatchlistOsCheckReport>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(WatchlistOSCheckController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(WatchlistOSCheckController).ToLower()].SkipList;
+            List<ArtTiWatchlistOsCheckReport> data = fti.ArtTiWatchlistOsCheckReports.CallData(req).Data.ToList();
             ViewData["title"] = "Watchlist - OS Check Report";
             ViewData["desc"] = "This report produces lists of transactions that have been pended and are awaiting list checking";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

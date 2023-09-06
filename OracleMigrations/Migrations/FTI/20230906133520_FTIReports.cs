@@ -1,26 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Options;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Diagnostics.Metrics;
-using System.Drawing.Printing;
-using System.IO;
-using System.Net.Mail;
-using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json.Nodes;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace OracleMigrations.Migrations
+namespace OracleMigrations.Migrations.FTI
 {
-    public partial class FTI_Reports : Migration
+    public partial class FTIReports : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -587,7 +571,7 @@ namespace OracleMigrations.Migrations
                           select ""ECM_REFERENCE"",""ECM_CASE_CREATION_DATE"",""BRANCH_ID"",""CUTOMER_NAME"",""PRODUCT"",""PRODUCT_TYPE"",""ECM_EVENT"",""TRANSACTION_AMOUNT"",""TRANSACTION_CURRENCY"",""PRIMARY_OWNER"",""CASE_STAT_CD"",""UPDATE_USER_ID"",""ECM_REJECTION_TYPE"",""ECM_REJECTION_REASON"",""FTI_REFERENCE"",""EVENT_NAME"",""EVENT_STATUS"",""EVENT_CREATION_DATE"",""ASSIGNED_TO"",""ASSIGNMENT_TYPE"",""EVENT_STEPS"",""STEP_STATUS"",""LSTMODTIME"",""LSTMODUSER"",""WARNING_OVERRIDDEN"",""REJECTION_REASON"",""SLA_DEADLINE"",""INPUT_STEP_TIME"",""INPUT_SLA_STATUS"",""INPUT_MAX_TIME"",""EXTERNAL_REVIEW_STEP_TIME"",""EXTERNAL_REVIEW_SLA_STATUS"",""REVIEW_STEP_TIME"",""REVIEW_SLA_STATUS"",""AUTHORIZE_STEP_TIME"",""AUTHORIZE_SLA_STATUS"",""SLA_DASHBOARD_AMBER"",""SLA_DASHBOARD_RED"",""SLA_REMAINING_TIME"" from 
                         TIZONE2.ART_TI_ECM_WORKFLOW_PROG_REPORT@TIZONE2_LINK
 
-                    ") ;
+                    ");
             //ART_TI_ECM_WORKFLOW_PROG_REPORT_OLD
             migrationBuilder.Sql($@"
                            CREATE OR REPLACE FORCE NONEDITIONABLE VIEW ""ART"".""ART_TI_ECM_WORKFLOW_PROG_REPORT_OLD"" (""ECM_REFERENCE"", ""ECM_CASE_CREATION_DATE"", ""BRANCH_ID"", ""CUTOMER_NAME"", ""PRODUCT"", ""PRODUCT_TYPE"", ""ECM_EVENT"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_CURRENCY"", ""PRIMARY_OWNER"", ""CASE_STAT_CD"", ""UPDATE_USER_ID"", ""COMMENTS"", ""ECM_REJECTION_TYPE"", ""ECM_REJECTION_REASON"", ""FTI_REFERENCE"", ""EVENT_NAME"", ""EVENT_STATUS"", ""EVENT_CREATION_DATE"", ""ASSIGNED_TO"", ""ASSIGNMENT_TYPE"", ""EVENT_STEPS"", ""STEP_STATUS"", ""LSTMODTIME"", ""LSTMODUSER"", ""WARNING_OVERRIDDEN"", ""REJECTION_REASON"", ""SLA_DEADLINE"", ""INPUT_STEP_TIME"", ""INPUT_SLA_STATUS"", ""INPUT_MAX_TIME"", ""EXTERNAL_REVIEW_STEP_TIME"", ""EXTERNAL_REVIEW_SLA_STATUS"", ""REVIEW_STEP_TIME"", ""REVIEW_SLA_STATUS"", ""AUTHORIZE_STEP_TIME"", ""AUTHORIZE_SLA_STATUS"", ""SLA_DASHBOARD_AMBER"", ""SLA_DASHBOARD_RED"", ""SLA_REMAINING_TIME"", ""NOTE"", ""NOTE_CREATION_TIME"") AS 
@@ -1807,9 +1791,10 @@ end)
                                     left join TIZONE2.EVENTSTEPNAMES@TIZONE2_LINK on evstp.KEY97=EVENTSTEPNAMES.STEPKEY");
             #endregion
         }
+
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-           
+
         }
     }
 }

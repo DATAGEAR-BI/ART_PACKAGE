@@ -35,14 +35,14 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown().ToDynamicList() },
-                    {"ProfileRisk".ToLower(),_dropDown.GetDGProfileRiskDropDown().ToDynamicList() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetDGOwnerDropDown().ToDynamicList() },
-                    {"PoliticalExpPrsnInd".ToLower(),_dropDown.GetDGPoliticalExpPrsnIndDropDown().ToDynamicList() },
-                    {"RiskClassification".ToLower(),_dropDown.GetDGRiskClassificationDropDown().ToDynamicList() },
-                    {"CitizenCntryName".ToLower(),_dropDown.GetDGCitizenCountryNameDropDown().ToDynamicList() },
-                    {"CustIdentTypeDesc".ToLower(),_dropDown.GetDGCustIdentTypeDescDropDown().ToDynamicList() },
-                    {"OccupDesc".ToLower(),_dropDown.GetDGOccupDescDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),_dropDown           .GetDGBranchNameDropDown()              .ToDynamicList() },
+                    {"ProfileRisk".ToLower(),_dropDown          .GetDGProfileRiskDropDown()             .ToDynamicList() },
+                    {"OwnerUserid".ToLower(),_dropDown          .GetDGOwnerDropDown()                   .ToDynamicList() },
+                    {"PoliticalExpPrsnInd".ToLower(),_dropDown  .GetDGPoliticalExpPrsnIndDropDown()     .ToDynamicList() },
+                    {"RiskClassification".ToLower(),_dropDown   .GetDGRiskClassificationDropDown()      .ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenCountryNameDropDown()      .ToDynamicList() },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown    .GetDGCustIdentTypeDescDropDown()       .ToDynamicList() },
+                    {"OccupDesc".ToLower(),_dropDown            .GetDGOccupDescDropDown()               .ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtSuspectDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtSuspectDetailsController).ToLower()].SkipList : new();

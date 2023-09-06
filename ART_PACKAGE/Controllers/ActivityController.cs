@@ -56,7 +56,7 @@ namespace ART_PACKAGE.Controllers
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ActivityController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtTiActivityReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiActivityReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -83,19 +83,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiActivityReports;
-            var bytes = await data.ExportToCSV<ArtTiActivityReport, GenericCsvClassMapper<ArtTiActivityReport, ActivityController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiActivityReport> data = fti.ArtTiActivityReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiActivityReport, GenericCsvClassMapper<ArtTiActivityReport, ActivityController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiActivityReports.CallData<ArtTiActivityReport>(req).Data.ToList();
+            List<ArtTiActivityReport> data = fti.ArtTiActivityReports.CallData(req).Data.ToList();
             ViewData["title"] = "Activity Report";
             ViewData["desc"] = "This report produces information for a single master record or for all master records, showing what events have been initiated for each master record and the status of the current active steps for each event within it";
 
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ActivityController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>()
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ActivityController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new()
             { nameof(ArtTiActivityReport.MasterRef)
             , nameof(ArtTiActivityReport.Address1)
             , nameof(ArtTiActivityReport.Address12)
@@ -105,16 +105,16 @@ namespace ART_PACKAGE.Controllers
             , nameof(ArtTiActivityReport.Lstmoduser)
             , nameof(ArtTiActivityReport.StartDate)
             };
-            var ColumnsToSkip = typeof(ArtTiActivityReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiActivityReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 9
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 9
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
 

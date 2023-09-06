@@ -53,10 +53,7 @@ namespace ART_PACKAGE.Controllers
         {
             //var comments = fti.ArtTiEcmAuditReports.Where(x => x.EcmReference == EcmRefrence).Select(x => new { x.EcmReference, x.Comments, x.Note });
             var req = ti.Masters.Where(c => c.MasterRef == FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => new { ftiref = c.MasterRef, Comment = co.NoteText }).Where(x => x.Comment != null);
-            if (req is null)
-                return NotFound("there is no notes");
-            return Ok(req);
-
+            return req is null ? NotFound("there is no notes") : Ok(req);
         }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
@@ -91,7 +88,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtTiEcmAuditReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiEcmAuditReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -113,14 +110,14 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
 
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
 
-            var data = fti.ArtTiEcmAuditReports.CallData<ArtTiEcmAuditReport>(req).Data.ToList();
+            List<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.CallData(req).Data.ToList();
             ViewData["title"] = "ECM Audit Trial Report";
             ViewData["desc"] = "";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
@@ -129,11 +126,11 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiEcmAuditReports.AsQueryable().CallData<ArtTiEcmAuditReport>(para.Req).Data;
-            var res = data.AsEnumerable<ArtTiEcmAuditReport>().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.FtiReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
-            var after = res.Select(x =>
+            IQueryable<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.AsQueryable().CallData(para.Req).Data;
+            var res = data.AsEnumerable().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.FtiReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
+            IEnumerable<ExportDto> after = res.Select(x =>
             {
-                var ListOfMatchingEcm = ti.Masters.Where(c => c.MasterRef == x.Key.FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => co.NoteText);
+                IQueryable<string?>? ListOfMatchingEcm = ti.Masters.Where(c => c.MasterRef == x.Key.FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => co.NoteText);
                 return new ExportDto
                 {
                     Record = x.FirstOrDefault(),
@@ -142,16 +139,16 @@ namespace ART_PACKAGE.Controllers
                 };
 
             });
-            var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
+            MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, CultureInfo.CurrentCulture))
             {
 
 
                 sw.Write("");
-                var props = typeof(ArtTiEcmAuditReport).GetProperties();
+                System.Reflection.PropertyInfo[] props = typeof(ArtTiEcmAuditReport).GetProperties();
 
-                foreach (var item in props)
+                foreach (System.Reflection.PropertyInfo item in props)
                 {
                     cw.WriteField(item.Name);
                 }
@@ -160,9 +157,9 @@ namespace ART_PACKAGE.Controllers
 
 
                 cw.NextRecord();
-                foreach (var elm in after)
+                foreach (ExportDto? elm in after)
                 {
-                    foreach (var prop in props)
+                    foreach (System.Reflection.PropertyInfo prop in props)
                     {
                         cw.WriteField(prop.GetValue(elm.Record));
                     }
@@ -170,7 +167,7 @@ namespace ART_PACKAGE.Controllers
                     cw.NextRecord();
                     for (int i = 0; i < elm.Note.Count; i++)
                     {
-                        foreach (var prop in props)
+                        foreach (System.Reflection.PropertyInfo prop in props)
                         {
                             cw.WriteField("");
                         }

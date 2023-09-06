@@ -54,7 +54,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].SkipList;
 
             }
-            var Data = data.CallData<ArtTiPeriodicChrgsPayReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiPeriodicChrgsPayReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -82,19 +82,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiPeriodicChrgsPayReports;
-            var bytes = await data.ExportToCSV<ArtTiPeriodicChrgsPayReport, GenericCsvClassMapper<ArtTiPeriodicChrgsPayReport, PeriodicCHRGSPaymentController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiPeriodicChrgsPayReport> data = fti.ArtTiPeriodicChrgsPayReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiPeriodicChrgsPayReport, GenericCsvClassMapper<ArtTiPeriodicChrgsPayReport, PeriodicCHRGSPaymentController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiPeriodicChrgsPayReports.CallData<ArtTiPeriodicChrgsPayReport>(req).Data.ToList();
+            List<ArtTiPeriodicChrgsPayReport> data = fti.ArtTiPeriodicChrgsPayReports.CallData(req).Data.ToList();
             ViewData["title"] = "Periodic CHRGs Payment Report";
             ViewData["desc"] = "This report produces all transactions which have a Pay Charges event within a period that you can specify";
 
-            var DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>()
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new()
             { nameof(ArtTiPeriodicChrgsPayReport.MasterRef)
             , nameof(ArtTiPeriodicChrgsPayReport.Sovalue)
             , nameof(ArtTiPeriodicChrgsPayReport.NpcpAddress1)
@@ -103,17 +103,17 @@ namespace ART_PACKAGE.Controllers
             , nameof(ArtTiPeriodicChrgsPayReport.SchAmt)
             , nameof(ArtTiPeriodicChrgsPayReport.SchCcy)
             };
-            var ColumnsToSkip = typeof(ArtTiPeriodicChrgsPayReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiPeriodicChrgsPayReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 7
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 7
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

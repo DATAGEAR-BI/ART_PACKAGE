@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Controllers
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtTiPeriodicChrgsReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiPeriodicChrgsReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -79,19 +79,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiPeriodicChrgsReports;
-            var bytes = await data.ExportToCSV<ArtTiPeriodicChrgsReport, GenericCsvClassMapper<ArtTiPeriodicChrgsReport, PeriodicCHRGsController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiPeriodicChrgsReport> data = fti.ArtTiPeriodicChrgsReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiPeriodicChrgsReport, GenericCsvClassMapper<ArtTiPeriodicChrgsReport, PeriodicCHRGsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].SkipList;
-            var data = fti.ArtTiPeriodicChrgsReports.CallData<ArtTiPeriodicChrgsReport>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].SkipList;
+            List<ArtTiPeriodicChrgsReport> data = fti.ArtTiPeriodicChrgsReports.CallData(req).Data.ToList();
             ViewData["title"] = "Amortization Report";
             ViewData["desc"] = "This report produces all transactions which have not yet expired and which have periodic charges either accruing or amortising within a period that you can specify";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

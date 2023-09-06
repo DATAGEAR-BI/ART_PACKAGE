@@ -33,7 +33,8 @@ namespace ART_PACKAGE.Helpers
             bool isUserExist = Connections.ContainsKey(user);
             if (isUserExist)
             {
-                _ = Connections[user].Remove(connection);
+                string? con = Connections[user].FirstOrDefault(x => x == connection);
+                _ = Connections[user].Remove(con);
             }
         }
     }

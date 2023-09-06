@@ -1,8 +1,4 @@
-
-﻿using ART_PACKAGE.Helpers.CustomReport;
-
-
-﻿namespace ART_PACKAGE.Helpers.CustomReport
+namespace ART_PACKAGE.Helpers.CustomReport
 
 {
 

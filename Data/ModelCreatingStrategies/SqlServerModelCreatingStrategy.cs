@@ -4112,5 +4112,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("version_number");
             });
         }
+
+        public void OnFTIModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ART_PACKAGE.Helpers.CustomReport
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class GroupedData
     {

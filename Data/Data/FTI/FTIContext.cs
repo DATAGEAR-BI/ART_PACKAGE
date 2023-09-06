@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.ModelCreatingStrategies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.FTI
 {
@@ -36,6 +37,12 @@ namespace Data.Data.FTI
         public virtual DbSet<ArtTiEcmAuditReport> ArtTiEcmAuditReports { get; set; } = null!;
         public FTIContext(DbContextOptions<FTIContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
+            modelCreatingStrategy.OnFTIModelCreating(modelBuilder);
         }
     }
 }

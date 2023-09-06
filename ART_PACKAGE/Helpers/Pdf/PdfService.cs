@@ -155,12 +155,12 @@ namespace ART_PACKAGE.Helpers.Pdf
                 string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
                 Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
         {
-            var grouped = data.AsQueryable()
+            IEnumerable<GroupedData> grouped = data.AsQueryable()
                .GroupBy($"new ({string.Join(",", GroupColumns.Select(x => x.field))})", "it")
                .Select("new(it.Key As Key ,it as Items)")
                .ToDynamicList().Select(x => (GroupedData)DynamicGroupToDict<T>(x, GroupColumns, ColumnsToSkip, DisplayNamesAndFormat));
             string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
-            var pdf = new ViewAsPdf("GenericGroupedReportAsPdf", grouped)
+            ViewAsPdf pdf = new("GenericGroupedReportAsPdf", grouped)
             {
                 CustomSwitches = footer,
                 ViewData = ViewData,
@@ -186,14 +186,14 @@ namespace ART_PACKAGE.Helpers.Pdf
         {
             //Dictionary<string, List<Dictionary<string, object>>> res = new Dictionary<string, List<Dictionary<string, object>>>();
             List<string> key = new();
-            var keyProps = TypeDescriptor.GetProperties(dobj.Key);
-            Dictionary<string, object> keyValue = new Dictionary<string, object>();
+            dynamic keyProps = TypeDescriptor.GetProperties(dobj.Key);
+            Dictionary<string, object> keyValue = new();
 
             foreach (PropertyDescriptor prop in keyProps)
             {
 
                 key.Add(prop.Name);
-                var column = DisplayNamesAndFormat is not null
+                string column = DisplayNamesAndFormat is not null
                            && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
 
                 keyValue.Add(column, prop.GetValue(dobj.Key));
@@ -201,38 +201,38 @@ namespace ART_PACKAGE.Helpers.Pdf
 
             }
 
-            var aggs = GroupColumns.All(x => x.aggregates == null) ? null : GroupColumns.SelectMany(x => x.aggregates);
+            IEnumerable<GridAggregate>? aggs = GroupColumns.All(x => x.aggregates == null) ? null : GroupColumns.SelectMany(x => x.aggregates);
 
-            var props = typeof(T).GetProperties();
-            List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
-            List<(string Column, bool HasAggreGate, string AggregateType)> Columns = new List<(string Column, bool HasAggreGate, string AggregateType)>();
-            foreach (var prop in props)
+            System.Reflection.PropertyInfo[] props = typeof(T).GetProperties();
+            List<Dictionary<string, object>> items = new();
+            List<(string Column, bool HasAggreGate, string AggregateType)> Columns = new();
+            foreach (System.Reflection.PropertyInfo prop in props)
             {
                 if (!ColumnsToSkip.Contains(prop.Name))
                 {
-                    var column = DisplayNamesAndFormat is not null
+                    string column = DisplayNamesAndFormat is not null
                       && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
 
-                    var propAggs = aggs != null && aggs.Count() != 0 ? aggs.FirstOrDefault(x => x.field == prop.Name) : null;
-                    var hasAggs = propAggs != null;
-                    var aggType = hasAggs ? propAggs.aggregate : "";
+                    GridAggregate? propAggs = aggs != null && aggs.Count() != 0 ? aggs.FirstOrDefault(x => x.field == prop.Name) : null;
+                    bool hasAggs = propAggs != null;
+                    string aggType = hasAggs ? propAggs.aggregate : "";
                     Columns.Add((column, hasAggs, aggType));
                 }
 
             }
             foreach (T item in dobj.Items)
             {
-                Dictionary<string, object> itemDict = new Dictionary<string, object>();
+                Dictionary<string, object> itemDict = new();
 
-                foreach (var prop in props)
+                foreach (System.Reflection.PropertyInfo prop in props)
                 {
                     if (!ColumnsToSkip.Contains(prop.Name))
                     {
-                        var column = DisplayNamesAndFormat is not null
+                        string column = DisplayNamesAndFormat is not null
                         && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
-                        var propType = prop.PropertyType;
+                        Type propType = prop.PropertyType;
 
-                        var nullableType = Nullable.GetUnderlyingType(propType);
+                        Type? nullableType = Nullable.GetUnderlyingType(propType);
 
                         object val = nullableType != null && nullableType.IsNumericType() ? 0m : propType.IsNumericType() ? 0 : "-";
                         itemDict.Add(column, prop.GetValue(item) ?? val);

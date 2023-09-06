@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].SkipList;
 
             }
-            var Data = data.CallData<ArtTiChargesByCustReport>(request, DropDownColumn, DisplayNames: DisplayNames);
+            KendoDataDesc<ArtTiChargesByCustReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames);
             var result = new
             {
                 data = Data.Data,
@@ -71,18 +71,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiChargesByCustReports;
-            var bytes = await data.ExportToCSV<ArtTiChargesByCustReport, GenericCsvClassMapper<ArtTiChargesByCustReport, OurChargesByCustomerController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiChargesByCustReport> data = fti.ArtTiChargesByCustReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiChargesByCustReport, GenericCsvClassMapper<ArtTiChargesByCustReport, OurChargesByCustomerController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiChargesByCustReports.CallData<ArtTiChargesByCustReport>(req).Data.ToList();
+            List<ArtTiChargesByCustReport> data = fti.ArtTiChargesByCustReports.CallData(req).Data.ToList();
             ViewData["title"] = "Our Charges By Customer";
             ViewData["desc"] = "This report produces a list of charges by the customer paying the charges";
-            var DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new() {
                 nameof(ArtTiChargesByCustReport.MasterRef)
                ,nameof(ArtTiChargesByCustReport.Gfcun)
                ,nameof(ArtTiChargesByCustReport.Hvbad1)
@@ -90,17 +90,17 @@ namespace ART_PACKAGE.Controllers
                ,nameof(ArtTiChargesByCustReport.TotoalPaidChgDue)
                ,nameof(ArtTiChargesByCustReport.TotoalOutstandingChgDue)
                ,nameof(ArtTiChargesByCustReport.TotoalWaivedChgDue)   };
-            var ColumnsToSkip = typeof(ArtTiChargesByCustReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiChargesByCustReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 7
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 7
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

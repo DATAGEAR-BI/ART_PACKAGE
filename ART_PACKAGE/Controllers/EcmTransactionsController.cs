@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Controllers
             };
             }
 
-            var Data = data.CallData<ArtTiEcmTransactionsReport>(request, DropDownColumn, DisplayNames: DisplayNames);
+            KendoDataDesc<ArtTiEcmTransactionsReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames);
             var result = new
             {
                 data = Data.Data,
@@ -80,18 +80,18 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
             IQueryable<ArtTiEcmTransactionsReport> data = fti.ArtTiEcmTransactionsReports;
-            var bytes = await data.ExportToCSV<ArtTiEcmTransactionsReport>(para.Req);
+            byte[] bytes = await data.ExportToCSV(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(EcmTransactionsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = new List<string>() { };
-            var data = fti.ArtTiEcmTransactionsReports.CallData<ArtTiEcmTransactionsReport>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmTransactionsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = new() { };
+            List<ArtTiEcmTransactionsReport> data = fti.ArtTiEcmTransactionsReports.CallData(req).Data.ToList();
             ViewData["title"] = "ECM Transactions Report";
             ViewData["desc"] = "";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

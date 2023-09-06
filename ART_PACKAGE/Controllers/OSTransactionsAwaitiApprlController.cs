@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsAwaitiApprlController).ToLower()].SkipList;
 
             }
-            var Data = data.CallData<ArtTiOsTransAwaitiApprlReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiOsTransAwaitiApprlReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -77,19 +77,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiOsTransAwaitiApprlReports;
-            var bytes = await data.ExportToCSV<ArtTiOsTransAwaitiApprlReport, GenericCsvClassMapper<ArtTiOsTransAwaitiApprlReport, OSTransactionsAwaitiApprlController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiOsTransAwaitiApprlReport> data = fti.ArtTiOsTransAwaitiApprlReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiOsTransAwaitiApprlReport, GenericCsvClassMapper<ArtTiOsTransAwaitiApprlReport, OSTransactionsAwaitiApprlController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiOsTransAwaitiApprlReports.CallData<ArtTiOsTransAwaitiApprlReport>(req).Data.ToList();
+            List<ArtTiOsTransAwaitiApprlReport> data = fti.ArtTiOsTransAwaitiApprlReports.CallData(req).Data.ToList();
             ViewData["title"] = "OS Transactions Awaiti Apprl Report";
             ViewData["desc"] = "This report produces information transactions awaiting credit approval only with the related master records and the related events have been initiated with the related status";
 
-            var DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsAwaitiApprlController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>()
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsAwaitiApprlController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new()
             { nameof(ArtTiOsTransAwaitiApprlReport.MasterRef)
             , nameof(ArtTiOsTransAwaitiApprlReport.EventReference)
             , nameof(ArtTiOsTransAwaitiApprlReport.PcpAddress1)
@@ -99,17 +99,17 @@ namespace ART_PACKAGE.Controllers
             , nameof(ArtTiOsTransAwaitiApprlReport.Status)
             , nameof(ArtTiOsTransAwaitiApprlReport.Lstmoduser)
             };
-            var ColumnsToSkip = typeof(ArtTiOsTransAwaitiApprlReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiOsTransAwaitiApprlReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 8
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 8
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }

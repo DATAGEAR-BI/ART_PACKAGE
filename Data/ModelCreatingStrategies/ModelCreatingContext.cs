@@ -61,5 +61,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnFcfkcECMModelCreating(modelBuilder);
         }
+
+        public void OnFTIModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnFTIModelCreating(modelBuilder);
+        }
     }
 }

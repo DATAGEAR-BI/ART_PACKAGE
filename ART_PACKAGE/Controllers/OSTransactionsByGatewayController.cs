@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Controllers
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByGatewayController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtTiOsTransByGatewayReport>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiOsTransByGatewayReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -77,33 +77,33 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = fti.ArtTiOsTransByGatewayReports;
-            var bytes = await data.ExportToCSV<ArtTiOsTransByGatewayReport, GenericCsvClassMapper<ArtTiOsTransByGatewayReport, OSTransactionsByGatewayController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtTiOsTransByGatewayReport> data = fti.ArtTiOsTransByGatewayReports;
+            byte[] bytes = await data.ExportToCSV<ArtTiOsTransByGatewayReport, GenericCsvClassMapper<ArtTiOsTransByGatewayReport, OSTransactionsByGatewayController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var data = fti.ArtTiOsTransByGatewayReports.CallData<ArtTiOsTransByGatewayReport>(req).Data.ToList();
+            List<ArtTiOsTransByGatewayReport> data = fti.ArtTiOsTransByGatewayReports.CallData(req).Data.ToList();
             ViewData["title"] = "OS Transactions By Gateway Report";
             ViewData["desc"] = "This report produces information for master records that are not yet booked off or cancelled for only those transactions relating to customer gateway customers";
 
-            var DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByGatewayController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {nameof(ArtTiOsTransByGatewayReport.MasterRef)
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByGatewayController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new() {nameof(ArtTiOsTransByGatewayReport.MasterRef)
                 , nameof(ArtTiOsTransByGatewayReport.CtrctDate) ,
             nameof(ArtTiOsTransByGatewayReport.ExpiryDat) , nameof(ArtTiOsTransByGatewayReport.Amount) , nameof(ArtTiOsTransByGatewayReport.Ccy),
             nameof(ArtTiOsTransByGatewayReport.Outstamt),nameof(ArtTiOsTransByGatewayReport.Outstccy)   };
-            var ColumnsToSkip = typeof(ArtTiOsTransByGatewayReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+            List<string> ColumnsToSkip = typeof(ArtTiOsTransByGatewayReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
             if (req.Group is not null && req.Group.Count != 0)
             {
-                var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext
+                byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
             else
             {
-                var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 7
+                byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 7
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
