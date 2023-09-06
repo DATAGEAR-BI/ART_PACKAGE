@@ -17,5 +17,8 @@ namespace ART_PACKAGE.Services.Pdf
             , int ColumnsPerPage
             , string UserName
             , List<string> DataColumns);
+        public Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
+           , ActionContext ControllerContext, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null
+           , Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null);
     }
 }

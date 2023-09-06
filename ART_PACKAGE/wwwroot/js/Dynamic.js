@@ -68,7 +68,8 @@ var isDateField = [];
 var isNumberField = [];
 var id = document.getElementById("script").dataset.id;
 var defaultfilters = document.getElementById("script").dataset.defaultfilters;
-console.log(defaultfilters);
+var defaultGroup = document.getElementById("script").dataset.defaultgroup;
+var defaultAggs = document.getElementById("script").dataset.aggregates;
 var urlKey = document.getElementById("script").dataset.urlkey;
 var prop = document.getElementById("script").dataset.prop;
 var handlerkey = document.getElementById("script").dataset.handlerkey;
@@ -380,8 +381,10 @@ function generateGrid() {
             serverPaging: true,
             serverFiltering: true,
             ...(defaultfilters && { filter: JSON.parse(defaultfilters) }),
+            ...(defaultGroup && { group: JSON.parse(defaultGroup) }),
+            ...(defaultAggs && { aggregate: JSON.parse(defaultAggs) }),
             serverSorting: true,
-            pageSize: isHierarchy ? 1000 : 100
+            pageSize: isHierarchy ? 1000 : 100,
 
         },
         resizable: true,
@@ -819,6 +822,7 @@ function generateColumns(response) {
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
+            ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
