@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.Audit;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -12,10 +11,10 @@ namespace ART_PACKAGE.Controllers
 {
     public class LastLoginPerDayController : Controller
     {
-        private readonly AuthContext context;
+        private readonly ArtAuditContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
-        public LastLoginPerDayController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public LastLoginPerDayController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
@@ -44,7 +43,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].SkipList;
 
-            var Data = data.CallData<LastLoginPerDayView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<LastLoginPerDayView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -62,20 +61,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.LastLoginPerDayViews;
-            var bytes = await data.ExportToCSV<LastLoginPerDayView, GenericCsvClassMapper<LastLoginPerDayView, LastLoginPerDayController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<LastLoginPerDayView> data = context.LastLoginPerDayViews;
+            byte[] bytes = await data.ExportToCSV<LastLoginPerDayView, GenericCsvClassMapper<LastLoginPerDayView, LastLoginPerDayController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].SkipList;
-            var data = context.LastLoginPerDayViews.CallData<LastLoginPerDayView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(LastLoginPerDayController).ToLower()].SkipList;
+            List<LastLoginPerDayView> data = context.LastLoginPerDayViews.CallData(req).Data.ToList();
             ViewData["title"] = "User Last Login Per Day Report";
             ViewData["desc"] = "This Report presents each user with last login dateime for each day";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

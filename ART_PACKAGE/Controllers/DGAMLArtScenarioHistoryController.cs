@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,14 +12,14 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLArtScenarioHistoryController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLArtScenarioHistoryController(AuthContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLArtScenarioHistoryController(ArtDgAmlContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
 
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -45,7 +44,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-            var Data = data.CallData<ArtScenarioHistoryView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtScenarioHistoryView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -63,18 +62,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = _context.ArtScenarioHistoryViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtScenarioHistoryView, GenericCsvClassMapper<ArtScenarioHistoryView, DGAMLArtScenarioHistoryController>>(req.Req);
+            IQueryable<ArtScenarioHistoryView> data = _context.ArtScenarioHistoryViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtScenarioHistoryView, GenericCsvClassMapper<ArtScenarioHistoryView, DGAMLArtScenarioHistoryController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].SkipList : null;
-            var data = _context.ArtScenarioHistoryViews.CallData<ArtScenarioHistoryView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].SkipList : null;
+            List<ArtScenarioHistoryView> data = _context.ArtScenarioHistoryViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear Aml Art Scenario History";
             ViewData["desc"] = "Presents the art scenario history details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

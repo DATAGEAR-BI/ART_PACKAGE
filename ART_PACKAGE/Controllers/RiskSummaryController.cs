@@ -1,40 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-//using MimeKit;
-using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using Microsoft.Extensions.Caching.Memory;
-using Oracle.ManagedDataAccess.Client;
+﻿//using MimeKit;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.FCFKC;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
     public class RiskSummaryController : Controller
     {
-        private readonly AuthContext dbfcfcore;
+        private readonly SasAmlContext dbfcfcore;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly string dbType;
-        public RiskSummaryController(AuthContext dbfcfcore, IMemoryCache cache, IConfiguration config)
+        public RiskSummaryController(SasAmlContext dbfcfcore, IMemoryCache cache, IConfiguration config)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;
@@ -49,8 +32,8 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStAmlPropRiskClass> chart2data = Enumerable.Empty<ArtStAmlPropRiskClass>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -65,7 +48,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStAmlRiskClass>
                 {
                     ChartId = "StRiskClassSummary",

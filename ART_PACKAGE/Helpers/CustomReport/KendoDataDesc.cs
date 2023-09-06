@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 {
-    public class KendoDataDesc<T> 
+    public class KendoDataDesc<T>
     {
         public IQueryable<T> Data { get; set; }
         public List<ColumnsDto> Columns { get; set; }

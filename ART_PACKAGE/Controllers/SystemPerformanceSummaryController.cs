@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-
-using System.Data;
-using Microsoft.Extensions.Caching.Memory;
-using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using Data.Constants.StoredProcs;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Data.Constants.db;
+using Data.Constants.StoredProcs;
+using Data.Data.ECM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Data;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
 
@@ -19,15 +18,15 @@ namespace ART_PACKAGE.Controllers
     [AllowAnonymous]
     public class SystemPerformanceSummaryController : Controller
     {
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public SystemPerformanceSummaryController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
+        public SystemPerformanceSummaryController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
         {
-            this._env = env;
+            _env = env;
             _cache = cache;
             context = _context;
             _config = config;
@@ -73,9 +72,9 @@ namespace ART_PACKAGE.Controllers
             //{
             //    Value = endDate
             //};
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -95,7 +94,8 @@ namespace ART_PACKAGE.Controllers
 
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtSystemPrefPerStatus>
                 {
                     ChartId = "StSystemPerfPerStatus",
@@ -118,7 +118,7 @@ namespace ART_PACKAGE.Controllers
             };
             if (dbType == DbTypes.Oracle)
             {
-                chartData.Add(new ChartData<dynamic>
+                _ = chartData.Add(new ChartData<dynamic>
                 {
                     ChartId = "StSystemPerfPerDate",
                     //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
@@ -130,7 +130,7 @@ namespace ART_PACKAGE.Controllers
             }
             if (dbType == DbTypes.SqlServer)
             {
-                chartData.Add(new ChartData<ArtSystemPrefPerDirection>
+                _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
                     ChartId = "StSystemPerfPerTransDir",
                     Data = chart3Data.Select(x =>

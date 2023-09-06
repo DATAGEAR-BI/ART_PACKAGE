@@ -1,24 +1,20 @@
-﻿
-
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Globalization;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Linq.Dynamic.Core;
 
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
-
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public static partial class KendoFiltersExtentions
     {
 
-        private static Dictionary<string, string> StringOp = new()
+        private static readonly Dictionary<string, string> StringOp = new()
         {
             { "eq"              , " = '{0}'" },
             { "neq"             , " <> '{0}'" },
@@ -33,7 +29,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             { "endswith"        , " LIKE '%{0}'" },
             { "doesnotendwith"  , " NOT LIKE '%{0}'" },
         };
-        private static Dictionary<string, string> StringOpForC = new()
+        private static readonly Dictionary<string, string> StringOpForC = new()
         {
             { "eq"              , "{0}==\"{1}\"" },
             { "neq"             , "{0}!=\"{1}\"" },
@@ -48,7 +44,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             { "endswith"        , "{0}.EndsWith(\"{1}\")" },
             { "doesnotendwith"  , "!{0}.EndsWith(\"{1}\")" },
         };
-        private static Dictionary<string, string> NumberOp = new()
+        private static readonly Dictionary<string, string> NumberOp = new()
         {
             { "eq", " = {0}" },
             { "neq", " <> {0}" },
@@ -59,7 +55,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             {"lte"  ," <= {0}"},
             { "lt"  , " < {0}" },
         };
-        private static Dictionary<string, string> NumberOpForC = new()
+        private static readonly Dictionary<string, string> NumberOpForC = new()
         {
             { "eq", "{0} == {1}" },
             { "neq", "{0} != {1}" },
@@ -70,7 +66,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             {"lte"  ,"{0} <= {1}"},
             { "lt"  , "{0} < {1}" },
         };
-        private static Dictionary<string, string> DateOpForC = new()
+        private static readonly Dictionary<string, string> DateOpForC = new()
         {
             { "eq", "{0} == \"{1}\"" },
             { "neq", "{0} != \"{1}\"" },
@@ -83,7 +79,27 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         };
 
 
-        private static Dictionary<string, Dictionary<string, string>> DateOp = new()
+        private static readonly Dictionary<string, string> readableOperators = new()
+        {
+            {"eq" , "Is Equal To" },
+            {"neq" , "Is Not Equal To" },
+            {"gt" , "Is Greater Than" },
+            {"gte" , "Is Greater Than Or Equal" },
+            {"lt" , "Is Less Than" },
+            {"lte" , "Is Less Than Or Equal" },
+            {"isnull" , "Is Null" },
+            {"isnotnull" , "Is Not Null" },
+            {"isempty" , "Is Empty" },
+            {"isnotempty" , "Is Not Empty" },
+            {"startswith" , "Starts With" },
+            {"doesnotstartwith" , "Doesn't Start With" },
+            {"contains" , "Contains" },
+            {"doesnotcontain" , "Doesn't Contain" },
+            {"endswith" , "Ends With" },
+            {"doesnotendwith" , "Doesn't End With" },
+        };
+
+        private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
         {
             {
 
@@ -100,6 +116,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             { "lt", " < Convert(datetime,'{0}')" },
                 }
             }
+
             ,
 
             {
@@ -119,28 +136,34 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
         };
 
-        private static StringBuilder _sb = new();
+        private static readonly StringBuilder _sb = new();
         public static T ToObject<T>(this JsonElement element)
         {
 
-            var json = element.GetRawText();
+            string json = element.GetRawText();
             return JsonSerializer.Deserialize<T>(json);
         }
         private static void constructQuery(this Filter Filters, string dbtype)
         {
             if (Filters is null)
-                return;
-            var logic = Filters.logic;
-            _sb.Append("( ");
-            if (logic is null)
-                return;
-            foreach (var item in Filters.filters)
             {
-                var t = (JsonElement)item;
-                var i = t.ToObject<FilterData>();
+                return;
+            }
+
+            string? logic = Filters.logic;
+            _ = _sb.Append("( ");
+            if (logic is null)
+            {
+                return;
+            }
+
+            foreach (object? item in Filters.filters)
+            {
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
                 if (i.field == null)
                 {
-                    var filter = t.ToObject<Filter>();
+                    Filter filter = t.ToObject<Filter>();
                     constructQuery(filter, dbtype);
 
                 }
@@ -149,45 +172,34 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     string v = "";
                     try
                     {
-                        if (i.value is not null)
-                            v = string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString());
-                        else
-                            v = NumberOp[i.@operator];
-
+                        v = i.value is not null
+                            ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString())
+                            : NumberOp[i.@operator];
                     }
-                    catch (System.Exception)
+                    catch (Exception)
                     {
-                        var value = ((JsonElement)i.value).ToObject<string>();
-                        if (DateTime.TryParse(value, out DateTime dt))
-                        {
-                            v = string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"));
-                        }
-                        else
-                        {
-                            v = string.Format(StringOp[i.@operator], value);
-                        }
+                        string value = ((JsonElement)i.value).ToObject<string>();
+                        v = DateTime.TryParse(value, out DateTime dt)
+                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"))
+                            : string.Format(StringOp[i.@operator], value);
 
                     }
                     finally
                     {
-                        if (dbtype == "oracle")
-                            _sb.Append(@$"""{i.field}"" {v}");
-                        else
-                        {
-                            _sb.Append($"{i.field} {v}");
-
-                        }
+                        _ = _sb.Append($"{i.field} {v}");
                     }
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
-                    _sb.Append($" {logic} ");
+                {
+                    _ = _sb.Append($" {logic} ");
+                }
             }
 
-            _sb.Append(" )");
+            _ = _sb.Append(" )");
         }
         public static string GetFiltersString(this Filter Filters, string dbtype)
         {
-            _sb.Clear();
+            _ = _sb.Clear();
             Filters.constructQuery(dbtype);
             return _sb.ToString();
         }
@@ -196,31 +208,37 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         private static void GetFiltersString<T>(this Filter Filters)
         {
             if (Filters == null || Filters.filters.Count == 0)
-                return;
-            var logic = Filters.logic;
-            _sb.Append("( ");
-            if (logic is null)
-                return;
-            foreach (var item in Filters.filters)
             {
-                var t = (JsonElement)item;
-                var i = t.ToObject<FilterData>();
+                return;
+            }
+
+            string? logic = Filters.logic;
+            _ = _sb.Append("( ");
+            if (logic is null)
+            {
+                return;
+            }
+
+            foreach (object? item in Filters.filters)
+            {
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
                 if (i.field == null)
                 {
-                    var filter = t.ToObject<Filter>();
+                    Filter filter = t.ToObject<Filter>();
                     GetFiltersString<T>(filter);
 
                 }
                 else
                 {
-                    var propType = typeof(T).GetProperty(i.field).PropertyType;
+                    Type propType = typeof(T).GetProperty(i.field).PropertyType;
                     string query = "";
-                    var underlyingType = Nullable.GetUnderlyingType(propType);
+                    Type? underlyingType = Nullable.GetUnderlyingType(propType);
                     if (underlyingType != null)
                     {
 
                         query = $"para.{i.field}.HasValue && ";
-                        if (underlyingType.Name == typeof(string).Name)
+                        if (underlyingType.Name == nameof(String))
                         {
 
 
@@ -229,95 +247,100 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
-                                var value = ((JsonElement)i.value).ToObject<string>();
+                                string value = ((JsonElement)i.value).ToObject<string>();
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value);
+
                             }
                         }
-                        else if (underlyingType.Name == typeof(DateTime).Name)
+                        else if (underlyingType.Name == nameof(DateTime))
                         {
+
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(DateOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
-                                var value = ((JsonElement)i.value).ToObject<DateTime>();
+                                DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
                                 query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToString());
+
                             }
                         }
                         else if (underlyingType.IsEnum)
                         {
+
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(StringOpForC[i.@operator], $"para.{i.field}");
+
                             }
                             else
                             {
-                                var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                                var Gmethod = method.MakeGenericMethod(underlyingType);
-                                var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+                                MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
+
                             }
                         }
                         else
                         {
-                            var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                            var Gmethod = method.MakeGenericMethod(underlyingType);
+                            MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
                                 query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
+
+
                             }
                             else
                             {
-                                var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
+
                             }
                         }
-                        _sb.Append(query);
+                        _ = _sb.Append(query);
                     }
                     else
                     {
-                        if (propType.Name == typeof(string).Name)
+                        if (propType.Name == nameof(String))
                         {
-                            if (i.@operator.ToLower().Contains("null".ToLower()))
-                            {
-                                query = string.Format(NumberOpForC[i.@operator], $"para.{i.field}");
-                            }
-                            else
-                            {
-                                var value = ((JsonElement)i.value).ToObject<string>();
-                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
-                            }
+                            string value = ((JsonElement)i.value).ToObject<string>();
+                            query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value);
                         }
-                        else if (propType.Name == typeof(DateTime).Name)
+                        else if (propType.Name == nameof(DateTime))
                         {
-                            var value = ((JsonElement)i.value).ToObject<DateTime>();
+                            DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date);
+                            query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Date", value.Date.ToString());
                         }
                         else if (propType.IsEnum)
                         {
-                            var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                            var Gmethod = method.MakeGenericMethod(propType);
-                            var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
 
                             query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value.ToString());
                         }
                         else
                         {
-                            var method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                            var Gmethod = method.MakeGenericMethod(propType);
+                            MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
 
-                            var value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
                             query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}", value);
                         }
-                        _sb.Append(query);
+                        _ = _sb.Append(query);
                     }
 
 
@@ -325,13 +348,13 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
                 {
-                    var l = logic == "and" ? "&&" : "||";
-                    _sb.Append($" {l} ");
+                    string l = logic == "and" ? "&&" : "||";
+                    _ = _sb.Append($" {l} ");
                 }
 
             }
 
-            _sb.Append(" )");
+            _ = _sb.Append(" )");
         }
 
 
@@ -340,23 +363,26 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         {
 
             if (Filters == null || Filters.filters.Count == 0)
+            {
                 return null;
+            }
 
-
-            var logic = Filters.logic;
+            string? logic = Filters.logic;
 
             if (logic is null)
+            {
                 return null;
+            }
 
             BinaryExpression Ex = null;
 
-            var method = typeof(KendoFiltersExtentions).GetMethod(nameof(GetConstEx), BindingFlags.Static | BindingFlags.NonPublic);
-            var mapMethod = typeof(KendoFiltersExtentions).GetMethod(nameof(MapOp), BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo? method = typeof(KendoFiltersExtentions).GetMethod(nameof(GetConstEx), BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo? mapMethod = typeof(KendoFiltersExtentions).GetMethod(nameof(MapOp), BindingFlags.Static | BindingFlags.NonPublic);
 
-            var firstFilter = ((JsonElement)Filters.filters[0]).ToObject<FilterData>();
+            FilterData firstFilter = ((JsonElement)Filters.filters[0]).ToObject<FilterData>();
             if (firstFilter.field == null)
             {
-                var filter = ((JsonElement)Filters.filters[0]).ToObject<Filter>();
+                Filter filter = ((JsonElement)Filters.filters[0]).ToObject<Filter>();
 
                 Ex = filter.GetFilterLamdbaEx<T>(parameterExpression);
 
@@ -365,25 +391,28 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             else
             {
 
-                var fieldType = typeof(T).GetProperty(firstFilter.field).PropertyType;
+                Type fieldType = typeof(T).GetProperty(firstFilter.field).PropertyType;
 
-                var Gmethod = method.MakeGenericMethod(fieldType);
-                var GmapMethod = mapMethod.MakeGenericMethod(fieldType);
-                var constEx = (ConstantExpression)Gmethod.Invoke(null, new object[] { firstFilter });
-                var propEx = firstFilter.field.GetPropertyEx(parameterExpression);
+                MethodInfo Gmethod = method.MakeGenericMethod(fieldType);
+                MethodInfo GmapMethod = mapMethod.MakeGenericMethod(fieldType);
+                ConstantExpression? constEx = (ConstantExpression)Gmethod.Invoke(null, new object[] { firstFilter });
+                MemberExpression propEx = firstFilter.field.GetPropertyEx(parameterExpression);
 
                 Ex = (BinaryExpression)GmapMethod.Invoke(null, new object[] { propEx, constEx, firstFilter.@operator });
             }
 
-            foreach (var item in Filters.filters)
+            foreach (object? item in Filters.filters)
             {
                 if (item.GetHashCode() == Filters.filters[0].GetHashCode())
+                {
                     continue;
-                var t = (JsonElement)item;
-                var i = t.ToObject<FilterData>();
+                }
+
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
                 if (i.field == null)
                 {
-                    var filter = t.ToObject<Filter>();
+                    Filter filter = t.ToObject<Filter>();
 
                     Ex = logic.ToLower() == "and" ? Expression.And(Ex, filter.GetFilterLamdbaEx<T>(parameterExpression))
                          : Expression.Or(Ex, filter.GetFilterLamdbaEx<T>(parameterExpression));
@@ -391,14 +420,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 }
                 else
                 {
-                    var iType = typeof(T).GetProperty(i.field).PropertyType;
-                    var imethod = typeof(KendoFiltersExtentions).GetMethod(nameof(GetConstEx), BindingFlags.Static | BindingFlags.NonPublic);
-                    var IGmethod = method.MakeGenericMethod(iType);
-                    var GmapMethod = mapMethod.MakeGenericMethod(iType);
-                    var itemConst = (ConstantExpression)IGmethod.Invoke(null, new object[] { i });
-                    var prop = i.field.GetPropertyEx(parameterExpression);
+                    Type iType = typeof(T).GetProperty(i.field).PropertyType;
+                    MethodInfo? imethod = typeof(KendoFiltersExtentions).GetMethod(nameof(GetConstEx), BindingFlags.Static | BindingFlags.NonPublic);
+                    MethodInfo IGmethod = method.MakeGenericMethod(iType);
+                    MethodInfo GmapMethod = mapMethod.MakeGenericMethod(iType);
+                    ConstantExpression? itemConst = (ConstantExpression)IGmethod.Invoke(null, new object[] { i });
+                    MemberExpression prop = i.field.GetPropertyEx(parameterExpression);
 
-                    var itemEx = (BinaryExpression)GmapMethod.Invoke(null, new object[] { prop, itemConst, i.@operator });
+                    BinaryExpression? itemEx = (BinaryExpression)GmapMethod.Invoke(null, new object[] { prop, itemConst, i.@operator });
 
                     Ex = logic.ToLower() == "and" ? Expression.And(Ex, itemEx)
                         : Expression.Or(Ex, itemEx);
@@ -412,13 +441,14 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         public static Func<T, bool> GetFunc<T>(this Filter Filters)
         {
             if (Filters == null || Filters.filters.Count == 0)
+            {
                 return null;
+            }
 
-
-            var type = typeof(T);
-            var parameterExpression = Expression.Parameter(type, "para");
-            var Ex = Filters.GetFilterLamdbaEx<T>(parameterExpression);
-            var e = Expression.Lambda<Func<T, bool>>(Ex, parameterExpression);
+            Type type = typeof(T);
+            ParameterExpression parameterExpression = Expression.Parameter(type, "para");
+            BinaryExpression Ex = Filters.GetFilterLamdbaEx<T>(parameterExpression);
+            Expression<Func<T, bool>> e = Expression.Lambda<Func<T, bool>>(Ex, parameterExpression);
             return e.Compile();
         }
 
@@ -435,10 +465,10 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
             try
             {
-                var Const = ((JsonElement)fd.value).ToObject<T>();
-                if (typeof(T).Name == typeof(DateTime).Name)
+                T? Const = ((JsonElement)fd.value).ToObject<T>();
+                if (typeof(T).Name == nameof(DateTime))
                 {
-                    var c = ((JsonElement)fd.value).ToObject<DateTime>();
+                    DateTime c = ((JsonElement)fd.value).ToObject<DateTime>();
                     c = c.ToLocalTime();
                     return Expression.Constant(c, typeof(DateTime));
                 }
@@ -453,7 +483,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 }
                 else
                 {
-                    var defult = Activator.CreateInstance(typeof(T));
+                    object? defult = Activator.CreateInstance(typeof(T));
                     return Expression.Constant(defult, typeof(T));
                 }
 
@@ -468,40 +498,60 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
-            var props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
+            IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
 
             List<ColumnsDto> columns = props.Select(x =>
             {
                 string Type = "";
-                var nullableType = Nullable.GetUnderlyingType(x.PropertyType);
+                Type? nullableType = Nullable.GetUnderlyingType(x.PropertyType);
                 if (nullableType != null)
                 {
-                    if (nullableType.Name == typeof(string).Name)
+                    if (nullableType.Name == nameof(String))
+                    {
                         Type = "string";
-                    else if (nullableType.Name == typeof(DateTime).Name)
+                    }
+                    else if (nullableType.Name == nameof(DateTime))
+                    {
                         Type = "date";
-                    else if (nullableType.Name == typeof(bool).Name)
+                    }
+                    else if (nullableType.Name == nameof(Boolean))
+                    {
                         Type = "boolean";
+                    }
                     else if (nullableType.IsNumericType())
+                    {
                         Type = "number";
+                    }
                 }
                 else
                 {
-                    if (x.PropertyType.Name == typeof(string).Name)
+                    if (x.PropertyType.Name == nameof(String))
+                    {
                         Type = "string";
-                    else if (x.PropertyType.Name == typeof(DateTime).Name)
+                    }
+                    else if (x.PropertyType.Name == nameof(DateTime))
+                    {
                         Type = "date";
-                    else if (x.PropertyType.Name == typeof(bool).Name)
+                    }
+                    else if (x.PropertyType.Name == nameof(Boolean))
+                    {
                         Type = "boolean";
+                    }
                     else if (x.PropertyType.IsNumericType())
+                    {
                         Type = "number";
+                    }
                 }
-                var name = x.Name;
-                var collectionTypes = new List<Type> { typeof(ICollection<>), typeof(IEnumerable<>), typeof(List<>) };
-                var isCollection = (x.PropertyType.IsGenericType && collectionTypes.Contains(x.PropertyType.GetGenericTypeDefinition()));
-                var isDropDown = columnsToDropDownd is not null && columnsToDropDownd.Keys.Contains(x.Name.ToLower());
-                var dropdownvalues = isDropDown ? columnsToDropDownd[name.ToLower()] : null;
-                var isnullabe = nullableType != null;
+                string name = x.Name;
+                bool propDisplayExists = DisplayNamesAndFormat is not null && DisplayNamesAndFormat.ContainsKey(name);
+                List<Type> collectionTypes = new() { typeof(ICollection<>), typeof(IEnumerable<>), typeof(List<>) };
+                bool isCollection = x.PropertyType.IsGenericType && collectionTypes.Contains(x.PropertyType.GetGenericTypeDefinition());
+                bool isDropDown = columnsToDropDownd is not null && columnsToDropDownd.Keys.Contains(x.Name.ToLower());
+                List<dynamic>? dropdownvalues = isDropDown ? columnsToDropDownd[name.ToLower()] : null;
+                bool isnullabe = nullableType != null;
+                string? agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
+                DisplayNamesAndFormat[name].AggType.ToString() : null;
+                string? aggText = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].AggText) ? DisplayNamesAndFormat[name].AggText : null;
                 return new ColumnsDto
                 {
                     name = name,
@@ -513,7 +563,10 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null
                                         ,
                     isNullable = isnullabe,
-                    type = Type
+                    type = Type,
+
+                    AggType = agg,
+                    AggTitle = aggText,
                 };
 
             }).ToList();
@@ -523,23 +576,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         }
         public static bool IsNumericType(this Type o)
         {
-            switch (Type.GetTypeCode(o))
+            return Type.GetTypeCode(o) switch
             {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
-                default:
-                    return false;
-            }
+                TypeCode.Byte or TypeCode.SByte or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.Decimal or TypeCode.Double or TypeCode.Single => true,
+                _ => false,
+            };
         }
         public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
         {
@@ -554,21 +595,27 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
             finally
             {
-                _sb.Clear();
+                _ = _sb.Clear();
             }
 
 
             if (!string.IsNullOrEmpty(filter))
+            {
                 data = data.Where("para => " + filter).AsQueryable();
+            }
 
-
-
-            var sortString = obj.Sort.GetSortString();
+            string? sortString = obj.Sort.GetSortString();
             if (sortString is not null)
+            {
                 data = data.OrderBy(sortString).AsQueryable();
+            }
+
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
+            {
                 columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
+            }
+
             int Count = 0;
             if (!obj.IsIntialize)
             {
@@ -588,12 +635,12 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
 
         }
-        public async static Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, KendoRequest obj = null, bool all = true)
+        public static async Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, KendoRequest obj = null, bool all = true)
         {
             decimal total = 0;
             if (all)
             {
-                var calldata = data.CallData<T>(obj);
+                KendoDataDesc<T> calldata = data.CallData(obj);
                 data = calldata.Data;
                 total = calldata.Total;
 
@@ -603,16 +650,16 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 total = data.Count();
             }
 
-            var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
                 IgnoreReferences = true,
             };
-            var skip = 0;
-            var tasks = new List<Task<byte[]>> { };
-            var bytes = new byte[] { };
-            using var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, config))
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            byte[] bytes = new byte[] { };
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
             {
                 sw.Write("");
                 cw.WriteHeader<T>();
@@ -620,30 +667,30 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
             while (total > 0)
             {
-                var tempData = data.Skip(skip).Take(100000).ToList();
-                var task = Task.Run<byte[]>(() =>
+                List<T> tempData = data.Skip(skip).Take(100000).ToList();
+                Task<byte[]> task = Task.Run(() =>
                 {
-                    using var stream = new MemoryStream();
-                    using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-                    using (CsvWriter cw = new CsvWriter(sw, config))
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (CsvWriter cw = new(sw, config))
                     {
                         sw.Write("");
                         cw.WriteHeader<T>();
                         cw.NextRecord();
-                        foreach (var elm in tempData)
+                        foreach (T? elm in tempData)
                         {
-                            cw.WriteRecord<T>(elm);
+                            cw.WriteRecord(elm);
                             cw.NextRecord();
                         }
                     }
-                    var b = stream.ToArray();
+                    byte[] b = stream.ToArray();
                     return b;
                 });
                 tasks.Add(task);
                 total -= 100000;
                 skip += 100000;
             }
-            var results = await Task.WhenAll(tasks);
+            byte[][] results = await Task.WhenAll(tasks);
             tasks.ForEach(x =>
             {
                 Console.WriteLine(x.Result.Length);
@@ -658,7 +705,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             decimal total = 0;
             if (all)
             {
-                var calldata = data.CallData<T>(obj);
+                KendoDataDesc<T> calldata = data.CallData(obj);
                 data = calldata.Data;
                 total = calldata.Total;
 
@@ -669,52 +716,52 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
 
 
-            var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
 
             };
-            var skip = 0;
-            var tasks = new List<Task<byte[]>> { };
-            var bytes = new byte[] { };
-            using var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, config))
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            byte[] bytes = new byte[] { };
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
             {
                 sw.Write("");
-                cw.Context.RegisterClassMap<T1>();
+                _ = cw.Context.RegisterClassMap<T1>();
                 cw.WriteHeader<T>();
                 bytes = stream.ToArray();
             }
             while (total > 0)
             {
-                var datasql = data.ToQueryString();
-                var tempDData = data.Skip(skip).Take(100000);
-                var sql = tempDData.ToQueryString();
-                var tempData = tempDData.ToList();
-                var task = Task.Run<byte[]>(() =>
+                string datasql = data.ToQueryString();
+                IQueryable<T> tempDData = data.Skip(skip).Take(100000);
+                string sql = tempDData.ToQueryString();
+                List<T> tempData = tempDData.ToList();
+                Task<byte[]> task = Task.Run(() =>
                 {
-                    using var stream = new MemoryStream();
-                    using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-                    using (CsvWriter cw = new CsvWriter(sw, config))
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (CsvWriter cw = new(sw, config))
                     {
                         sw.Write("");
-                        cw.Context.RegisterClassMap<T1>();
+                        _ = cw.Context.RegisterClassMap<T1>();
                         cw.WriteHeader<T>();
                         cw.NextRecord();
-                        foreach (var elm in tempData)
+                        foreach (T? elm in tempData)
                         {
-                            cw.WriteRecord<T>(elm);
+                            cw.WriteRecord(elm);
                             cw.NextRecord();
                         }
                     }
-                    var b = stream.ToArray();
+                    byte[] b = stream.ToArray();
                     return b;
                 });
                 tasks.Add(task);
                 total -= 100000;
                 skip += 100000;
             }
-            var results = await Task.WhenAll(tasks);
+            byte[][] results = await Task.WhenAll(tasks);
             tasks.ForEach(x =>
             {
                 bytes = bytes.Concat(x.Result).ToArray();
@@ -725,19 +772,19 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         }
         public static async Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, KendoRequest obj)
         {
-            var calldata = data.CallData<T>(obj);
+            KendoDataDesc<T> calldata = data.CallData(obj);
             data = calldata.Data;
-            var total = calldata.Total;
-            var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            decimal total = calldata.Total;
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
                 IgnoreReferences = true,
             };
-            var skip = 0;
-            var tasks = new List<Task<byte[]>> { };
-            var bytes = new byte[] { };
-            using var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, config))
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            byte[] bytes = new byte[] { };
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
             {
                 sw.Write("");
                 cw.WriteHeader<T>();
@@ -745,30 +792,30 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             }
             while (total > 0)
             {
-                var tempData = data.Skip(skip).Take(100000).ToList();
-                var task = Task.Run<byte[]>(() =>
+                List<T> tempData = data.Skip(skip).Take(100000).ToList();
+                Task<byte[]> task = Task.Run(() =>
                 {
-                    using var stream = new MemoryStream();
-                    using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-                    using (CsvWriter cw = new CsvWriter(sw, config))
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (CsvWriter cw = new(sw, config))
                     {
                         sw.Write("");
                         cw.WriteHeader<T>();
                         cw.NextRecord();
-                        foreach (var elm in tempData)
+                        foreach (T? elm in tempData)
                         {
-                            cw.WriteRecord<T>(elm);
+                            cw.WriteRecord(elm);
                             cw.NextRecord();
                         }
                     }
-                    var b = stream.ToArray();
+                    byte[] b = stream.ToArray();
                     return b;
                 });
                 tasks.Add(task);
                 total -= 100000;
                 skip += 100000;
             }
-            var results = await Task.WhenAll(tasks);
+            byte[][] results = await Task.WhenAll(tasks);
             tasks.ForEach(x =>
             {
                 Console.WriteLine(x.Result.Length);
@@ -778,26 +825,139 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             return bytes;
         }
 
-
-        public static byte[] ExportCustomReportToCSV(List<dynamic> data, List<List<dynamic>> Chartdata = null)
+        public static List<List<object>> GetFilterTextForCsv(this Filter Filters)
         {
-            var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            List<List<object>> returnList = new();
+            if (Filters is null)
             {
-                IgnoreReferences = true,
+                return returnList;
+            }
 
+            string? logic = Filters.logic;
+
+            if (logic is null)
+            {
+                return returnList;
+            }
+
+
+            foreach (object? item in Filters.filters)
+            {
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
+                if (i.field == null)
+                {
+                    Filter filter = t.ToObject<Filter>();
+                    returnList.AddRange(GetFilterTextForCsv(filter));
+
+                }
+                else
+                {
+                    List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
+                    returnList.Add(v);
+                }
+
+
+            }
+
+
+            return returnList;
+
+
+
+
+        }
+        public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
+        {
+            List<List<object>> filterCells = GetFilterTextForCsv(obj.Filter);
+            decimal total = 0;
+            if (all)
+            {
+                KendoDataDesc<T> calldata = data.CallData(obj);
+                data = calldata.Data;
+                total = calldata.Total;
+
+            }
+            else
+            {
+                total = data.Count();
+            }
+
+
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            {
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
+            };
+            int batch = 10000;
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            while (total > 0)
+            {
+                IQueryable<T> tempDData = data.Skip(skip).Take(batch);
+                string sql = tempDData.ToQueryString();
+                List<T> tempData = tempDData.ToList();
+                yield return Task.Run(() =>
+                {
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
+                    using (CsvWriter cw = new(sw, config))
+                    {
+                        _ = cw.Context.RegisterClassMap<T1>();
+                        foreach (List<object> item in filterCells)
+                        {
+                            cw.WriteComment(string.Join(",", item));
+                        }
+
+                        cw.NextRecord();
+                        cw.WriteHeader<T>();
+                        cw.NextRecord();
+                        foreach (T? elm in tempData)
+                        {
+                            cw.WriteRecord(elm);
+                            cw.NextRecord();
+                        }
+                    }
+                    byte[] b = stream.ToArray();
+                    return b;
+                });
+                //tasks.Add(task);
+                total -= batch;
+                skip += batch;
+            }
+
+
+        }
+
+
+        public static byte[] ExportCustomReportToCSV(List<dynamic> data, List<List<dynamic>> Chartdata = null, List<List<object>> filterCells = null)
+        {
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                Encoding = new UTF8Encoding(false),
+                IgnoreBlankLines = true,
+                AllowComments = true,
             };
 
-            var stream = new MemoryStream();
-            using (StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, config))
+            MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
+            using (CsvWriter cw = new(sw, config))
             {
-                cw.WriteRecords(data);
-
-                cw.WriteComment("Charts Data");
-                foreach (var chart in Chartdata)
+                foreach (List<object> item in filterCells)
                 {
-                    cw.WriteRecords(chart);
+                    cw.WriteComment(string.Join(",", item));
                 }
+                cw.WriteRecords(data);
+                if (Chartdata is not null)
+                {
+                    cw.WriteComment("Charts Data");
+                    foreach (List<dynamic> chart in Chartdata)
+                    {
+                        cw.WriteRecords(chart);
+                    }
+                }
+
 
             }
 
@@ -806,37 +966,40 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         public static string GetSortString(this List<SortOptions> opt)
         {
             if (opt is null || opt.Count() == 0)
-                return null;
-
-            var sort = string.Join(",", opt.Select(x =>
             {
-                var dir = x.dir == "desc" ? " " + x.dir : "";
+                return null;
+            }
+
+            string sort = string.Join(",", opt.Select(x =>
+            {
+                string dir = x.dir == "desc" ? " " + x.dir : "";
                 return $"{x.field}{dir}";
             }));
             return sort;
         }
+
         private static BinaryExpression MapOp<T>(MemberExpression prop, ConstantExpression constant, string op)
         {
             switch (op)
             {
                 case "eq":
-                    if ((Nullable.GetUnderlyingType(typeof(T)) != null && Nullable.GetUnderlyingType(typeof(T)).Name == typeof(DateTime).Name) || (typeof(T).Name == typeof(DateTime).Name))
+                    if ((Nullable.GetUnderlyingType(typeof(T)) != null && Nullable.GetUnderlyingType(typeof(T)).Name == nameof(DateTime)) || (typeof(T).Name == nameof(DateTime)))
                     {
                         DateTime datecosnt;
 
                         if (Nullable.GetUnderlyingType(typeof(T)) != null)
                         {
                             datecosnt = ((DateTime?)constant.Value).Value.Date;
-                            var nulableValue = Expression.Property(prop, "Value");
-                            var nullableEx = Expression.Property(nulableValue, "Date");
-                            var nullescapeEx = Expression.NotEqual(prop, Expression.Constant(null));
-                            var actualEx = Expression.Equal(nullableEx, Expression.Constant(datecosnt, typeof(DateTime)));
+                            MemberExpression nulableValue = Expression.Property(prop, "Value");
+                            MemberExpression nullableEx = Expression.Property(nulableValue, "Date");
+                            BinaryExpression nullescapeEx = Expression.NotEqual(prop, Expression.Constant(null));
+                            BinaryExpression actualEx = Expression.Equal(nullableEx, Expression.Constant(datecosnt, typeof(DateTime)));
                             return Expression.And(nullescapeEx, actualEx);
                         }
                         else
                         {
                             datecosnt = ((DateTime)constant.Value).Date;
-                            var DateEx = Expression.Property(prop, "Date");
+                            MemberExpression DateEx = Expression.Property(prop, "Date");
                             return Expression.Equal(DateEx, Expression.Constant(datecosnt, typeof(DateTime)));
                         }
 
@@ -846,11 +1009,11 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                     }
                     return Expression.Equal(prop, constant);
                 case "neq":
-                    if (typeof(T).Name == typeof(DateTime).Name)
+                    if (typeof(T).Name == nameof(DateTime))
                     {
-                        var datecosnt = ((DateTime)constant.Value).ToShortDateString();
-                        var ToShortDateMethod = typeof(DateTime).GetMethod("ToShortDateString");
-                        var CallToshortDate = Expression.Call(prop, ToShortDateMethod);
+                        string datecosnt = ((DateTime)constant.Value).ToShortDateString();
+                        MethodInfo? ToShortDateMethod = typeof(DateTime).GetMethod("ToShortDateString");
+                        MethodCallExpression CallToshortDate = Expression.Call(prop, ToShortDateMethod);
                         return Expression.NotEqual(CallToshortDate, Expression.Constant(datecosnt, typeof(string)));
 
                     }
@@ -872,28 +1035,28 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                 case "isnotempty":
                     return Expression.NotEqual(prop, Expression.Constant(""));
                 case "startswith":
-                    var StartsWith = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
-                    var call = Expression.Call(prop, StartsWith, constant);
+                    MethodInfo? StartsWith = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
+                    MethodCallExpression call = Expression.Call(prop, StartsWith, constant);
                     return Expression.Equal(call, Expression.Constant(true));
                 case "doesnotstartwith":
-                    var StartsWith1 = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
-                    var call1 = Expression.Call(prop, StartsWith1, constant);
+                    MethodInfo? StartsWith1 = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
+                    MethodCallExpression call1 = Expression.Call(prop, StartsWith1, constant);
                     return Expression.Equal(call1, Expression.Constant(false));
                 case "contains":
-                    var Contains = typeof(string).GetMethod("Contains", new Type[] { typeof(string) });
-                    var callContains = Expression.Call(prop, Contains, constant);
+                    MethodInfo? Contains = typeof(string).GetMethod("Contains", new Type[] { typeof(string) });
+                    MethodCallExpression callContains = Expression.Call(prop, Contains, constant);
                     return Expression.Equal(callContains, Expression.Constant(true));
                 case "doesnotcontain":
-                    var DoesNotContain = typeof(string).GetMethod("Contains", new Type[] { typeof(string) });
-                    var callDoesNotContain = Expression.Call(prop, DoesNotContain, constant);
+                    MethodInfo? DoesNotContain = typeof(string).GetMethod("Contains", new Type[] { typeof(string) });
+                    MethodCallExpression callDoesNotContain = Expression.Call(prop, DoesNotContain, constant);
                     return Expression.Equal(callDoesNotContain, Expression.Constant(false));
                 case "endswith":
-                    var EndsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
-                    var callEndsWith = Expression.Call(prop, EndsWith, constant);
+                    MethodInfo? EndsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+                    MethodCallExpression callEndsWith = Expression.Call(prop, EndsWith, constant);
                     return Expression.Equal(callEndsWith, Expression.Constant(true));
                 case "doesnotendwith":
-                    var DoesNotEndsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
-                    var callDoesNotEndsWith = Expression.Call(prop, DoesNotEndsWith, constant);
+                    MethodInfo? DoesNotEndsWith = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+                    MethodCallExpression callDoesNotEndsWith = Expression.Call(prop, DoesNotEndsWith, constant);
                     return Expression.Equal(callDoesNotEndsWith, Expression.Constant(false));
                 default:
                     return null;

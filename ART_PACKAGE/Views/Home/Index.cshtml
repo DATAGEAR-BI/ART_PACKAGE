@@ -3,114 +3,133 @@
 @{
     ViewData["Title"] = "Home Page";
     var homeType = Configuration.GetValue<string>("homeType").ToUpper();
+    var modules = Configuration.GetSection("Modules").Get<string[]>();
 }
 
-@section Scripts {
+
+@if(modules is null)
+{
+    <h1> You Dont Have Any Modules in the app </h1>
+}else
+{
+    @if (!modules.Contains("SASAML") && !modules.Contains("ECM") && !modules.Contains("DGAML"))
+    {
+        <h1> You Dont Have ECM OR SASAML Modules in the app </h1>
+    }
+    else
+    {
+        @section Scripts {
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/kelly.js"></script>
-    @if (homeType.Contains(HomeType.AML))
-    {
-        <script src="~/js/amlhome.js" type="module" defer></script>
+    @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
+            {
+                <script src="~/js/amlhome.js" type="module" defer></script>
+            }
+            @if (homeType.Contains(HomeType.SANCTION) && modules.Contains("ECM"))
+            {
+                <script src="~/js/homechartsjs.js" type="module" defer></script>
+            }
+
+}
+        @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
+        {
+
+            <section class="content-header">
+
+                <h1>
+                    AML Dashboard
+                </h1>
+
+            </section>
+            @*<div class="row" style="margin-top:2%">
+
+                <div class="col-xs-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-users" aria-hidden="true"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Number Of Customers</span>
+                            <span class="info-box-number" style="margin-top:10%" id="numberOfCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-user" aria-hidden="true"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Number Of Pep Customers</span>
+                            <span class="info-box-number" style="margin-top:10%" id="numberOfPepCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+
+
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-exclamation" aria-hidden="true"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Number Of High Risk Customers</span>
+                            <span class="info-box-number" style="margin-top:10%" id="numberOfHighRiskCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-user" aria-hidden="true"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Number Of Accounts</span>
+                            <span class="info-box-number" style="margin-top:10%" id="numberOfAccounts"> <i class="fa fa-spinner load" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>*@
+            <div class="row" style="margin-top:2%">
+                <div class="col-sm-12 col-md-12 col-xs-12" id="alertPerDate" style="height:600px"></div>
+                <div class="col-sm-12 col-md-12 col-xs-12" id="alertPerStatus" style="height:600px"></div>
+            </div>
+
+
+        }
+
+        @if (homeType.Contains(HomeType.SANCTION) && modules.Contains("ECM"))
+        {
+            <section class="content-header">
+
+                <h1>
+                    Sanction Dashboard
+
+                </h1>
+
+            </section>
+            <section class="content container-fluid">
+
+                <div style="align-content:center">
+                    <div id="charts" class="row">
+                        <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="date" style="height:600px"></div>
+                        <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="type"></div>
+                        <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="status"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <img src="~/imgs/4.png" alt="Avatar" style="width:20%;height:30%" />
+                </div>
+            </section>
+        }
     }
-    @if (homeType.Contains(HomeType.SANCTION))
-    {
-        <script src="~/js/homechartsjs.js" type="module" defer></script>
-    }
 
 }
 
-@if (homeType.Contains(HomeType.AML))
-{
-
-    <section class="content-header">
-
-        <h1>
-            AML Dashboard
-        </h1>
-
-    </section>
-    <div class="row" style="margin-top:2%">
-
-        <div class="col-xs-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-blue"><i class="fa fa-users" aria-hidden="true"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Number Of Customers</span>
-                    <span class="info-box-number" style="margin-top:10%" id="numberOfCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-xs-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-blue"><i class="fa fa-user" aria-hidden="true"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Number Of Pep Customers</span>
-                    <span class="info-box-number" style="margin-top:10%" id="numberOfPepCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-3">
 
 
-            <div class="info-box">
-                <span class="info-box-icon bg-blue"><i class="fa fa-exclamation" aria-hidden="true"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Number Of High Risk Customers</span>
-                    <span class="info-box-number" style="margin-top:10%" id="numberOfHighRiskCustomers"><i class="fa fa-spinner load" aria-hidden="true"></i></span>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xs-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-blue"><i class="fa fa-user" aria-hidden="true"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Number Of Accounts</span>
-                    <span class="info-box-number" style="margin-top:10%" id="numberOfAccounts"> <i class="fa fa-spinner load" aria-hidden="true"></i></span>
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
-    <div class="row" style="margin-top:2%">
-        <div class="col-sm-12 col-md-12 col-xs-12" id="alertPerDate" style="height:600px"></div>
-        <div class="col-sm-12 col-md-12 col-xs-12" id="alertPerStatus" style="height:600px"></div>
-    </div>
-
-  
-}
-
-@if (homeType.Contains(HomeType.SANCTION))
-{
-    <section class="content-header">
-
-        <h1>
-            Sanction Dashboard
-            
-        </h1>
-
-    </section>
-    <section class="content container-fluid">
-
-        <div style="align-content:center">
-            <div id="charts" class="row">
-                <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="date" style="height:600px"></div>
-                <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="type"></div>
-                <div class="col-md-12 col-xl-12  col-sm-12 col-xs-12" id="status"></div>
-            </div>
-        </div>
-        <div class="text-center">
-            <img src="~/imgs/4.png" alt="Avatar" style="width:20%;height:30%" />
-        </div>
-    </section>
-}
 
 
  

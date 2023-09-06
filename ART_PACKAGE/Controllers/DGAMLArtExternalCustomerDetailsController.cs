@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,14 +12,14 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLArtExternalCustomerDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLArtExternalCustomerDetailsController(AuthContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLArtExternalCustomerDetailsController(ArtDgAmlContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
 
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -36,13 +35,13 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown().ToDynamicList() },
-                    {"CitizenCntryName".ToLower(),_dropDown.GetDGCitizenshipCountryNameDropDown().ToDynamicList() },
-                    {"ResidCntryName".ToLower(),_dropDown.GetDGresidenceCountryNameDropDown().ToDynamicList() },
-                    {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown().ToDynamicList() },
-                    {"CityName".ToLower(),_dropDown.GetDGCityNameDropDown().ToDynamicList() },
-                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown().ToDynamicList() },
-                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),_dropDown           .GetDGExternalCustomerBranchNameDropDown()      .ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenshipCountryNameDropDown()          .ToDynamicList() },
+                    {"ResidCntryName".ToLower(),_dropDown       .GetDGresidenceCountryNameDropDown()            .ToDynamicList() },
+                    {"CntryName".ToLower(),_dropDown            .GetDGStreetCountryNameDropDown()               .ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown             .GetDGCityNameDropDown()                        .ToDynamicList() },
+                    {"IdentTypeDesc".ToLower(),_dropDown        .GetDGCustomerIdentificationTypeDropDown()      .ToDynamicList() },
+                    {"ExtCustTypeDesc".ToLower(),_dropDown      .GetDGCustomerTypeDropDown()                    .ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : new();
@@ -50,7 +49,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-            var Data = data.CallData<ArtExternalCustomerDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtExternalCustomerDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -68,18 +67,18 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
         {
-            var data = _context.ArtExternalCustomerDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtExternalCustomerDetailView, GenericCsvClassMapper<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>>(req.Req);
+            IQueryable<ArtExternalCustomerDetailView> data = _context.ArtExternalCustomerDetailViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtExternalCustomerDetailView, GenericCsvClassMapper<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>>(req.Req);
             return File(bytes, "test/csv");
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : null;
-            var data = _context.ArtExternalCustomerDetailViews.CallData<ArtExternalCustomerDetailView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : null;
+            List<ArtExternalCustomerDetailView> data = _context.ArtExternalCustomerDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear AML External Customer Details";
             ViewData["desc"] = "Presents the external customer details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

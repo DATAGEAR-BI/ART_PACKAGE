@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+namespace ART_PACKAGE.Helpers.CustomReport
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
 {
 
     public class KendoRequest
@@ -11,6 +10,7 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
         public List<SortOptions> Sort { get; set; }
         public Filter Filter { get; set; }
         public bool IsIntialize { get; set; }
+        public List<GridGroup>? Group { get; set; }
 
     }
 

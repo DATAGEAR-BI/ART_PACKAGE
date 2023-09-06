@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 {
 
     public class ColumnsDto
@@ -15,6 +13,8 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
 
         public string format { get; set; }
         public List<dynamic> menu { get; set; }
+        public string AggType { get; set; }
+        public string AggTitle { get; set; }
     }
 
 }

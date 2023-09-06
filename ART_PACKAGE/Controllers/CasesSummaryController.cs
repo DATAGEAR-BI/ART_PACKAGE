@@ -1,24 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Microsoft.Extensions.Caching.Memory;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
     public class CasesSummaryController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly SasAmlContext dbfcfkc;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public CasesSummaryController(AuthContext dbfcfkc, IMemoryCache cache, IConfiguration config)
+        public CasesSummaryController(SasAmlContext dbfcfkc, IMemoryCache cache, IConfiguration config)
         {
             this.dbfcfkc = dbfcfkc;
             _config = config;
@@ -36,10 +34,10 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStCasesPerPriority> chart4Data = Enumerable.Empty<ArtStCasesPerPriority>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
-            var chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -60,7 +58,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStCasesPerStatus>
                 {
                     ChartId = "StCasesPerStatus",

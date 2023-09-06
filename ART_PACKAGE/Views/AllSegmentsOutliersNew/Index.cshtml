@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+
+<link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
+
+
+<section class="content-header">
+    <div style="text-align:center;">
+        <h1>
+            All Segment Outliers
+            @*<small>All Segment Outliers Description</small>*@
+        </h1>
+    </div>
+</section>
+<br/>
+<div class="text-center">
+<div class="row top-buffer">
+    <div class="col-md-4  ">
+        <!-- <label style="display: block; text-align: center;">Hi</label> -->
+        <label>Run Month</label>
+        <select name="monthKey" id="MonthKey"
+                class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+            <option value="monthKey">-- Not Selected --</option>
+
+        </select>
+    </div>
+    <div class="col-md-4  ">
+        <label>Segment Type</label>
+        <!-- <label style="display: block; text-align: center;">Hi</label> -->
+        <select name="segmentTypes" id="PartyTypeDesc"
+                class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+            <option value="segmentType">-- Not Selected --</option>
+
+        </select>
+    </div>
+    <div class="col-md-4  ">
+        <label>Segment ID</label>
+        <!-- <label style="display: block; text-align: center;">Hi</label> -->
+        <select name="segmentId" id="Segment"
+                class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+            <option value="segmentId">-- Not Selected --</option>
+
+        </select>
+    </div>
+</div>
+</div>
+<br/>
+<div id="grid"></div>
+<br/>
+<div id="charts">
+    <div id="ch1" class="col-md-12 col-xs-12 col-sm-12 mb-2 mt-2" data-type="2" style="padding-bottom:50px;padding-top:50px;"></div>
+
+    <div id="ch2" class="col-md-12 col-xs-12 col-sm-12" data-type="2"></div>
+</div>
+@section scripts {
+
+    <script src="~/js/Dynamic.js" type="module"  defer id="script"  data-urlkey="AllSegmentsOutliersNew"  data-handlerkey="AllSegmentsOutliersNew" ></script>
+    <script src="~/js/segmentdetails.js" type="module" defer></script>
+}

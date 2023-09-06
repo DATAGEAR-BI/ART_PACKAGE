@@ -1,18 +1,15 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Models;
-using Data.DGCMGMT;
-using Data.FCF71;
+using Data.Data;
+using Data.Data.ARTDGAML;
+using Data.Data.ECM;
+using Data.Data.SASAml;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
-using Data.Constants.StoredProcs;
-using Microsoft.Data.SqlClient;
 using System.Data;
-using Data.Data;
-using Oracle.ManagedDataAccess.Client;
+using System.Diagnostics;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -20,18 +17,44 @@ namespace ART_PACKAGE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AuthContext _db;
+        private readonly EcmContext _db;
+        private readonly SasAmlContext _dbAml;
         private readonly IDbService _dbSrv;
-        public HomeController(ILogger<HomeController> logger, AuthContext db/*, FCF71Context fcf71*/, IDbService dbSrv)
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ArtDgAmlContext _dgaml;
+        private readonly List<string>? modules;
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
+
             _logger = logger;
-            this._db = db;
             _dbSrv = dbSrv;
+            _configuration = configuration;
+            _serviceScopeFactory = serviceScopeFactory;
+            modules = _configuration.GetSection("Modules").Get<List<string>>();
+            if (modules.Contains("SASAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                _dbAml = amlService;
+            }
+            if (modules.Contains("ECM"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                _db = ecmService;
+            }
+            if (modules.Contains("DGAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                _dgaml = dgamlService;
+            }
         }
 
         public IActionResult Index()
         {
-            _logger.LogInformation("info");
+
             return View();
         }
 
@@ -46,12 +69,14 @@ namespace ART_PACKAGE.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
+
         public IActionResult CardsData()
         {
-            var numberOfCustomers = _db.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
-            var numberOfPepCustomers = _db.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
-            var numberOfAccounts = _db.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
-            var numberOfHighRiskCustomers = _db.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
+            int numberOfCustomers = _dbAml.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
+            int numberOfPepCustomers = _dbAml.ArtHomeNumberOfPepCustomers.FirstOrDefault()?.NumberOfPepCustomers ?? 0;
+            int numberOfAccounts = _dbAml.ArtHomeNumberOfAccounts.FirstOrDefault()?.NumberOfAccounts ?? 0;
+            int numberOfHighRiskCustomers = _dbAml.ArtHomeNumberOfHighRiskCustomers.FirstOrDefault()?.NumberOfHighRiskCustomers ?? 0;
 
             return Ok(new
             {
@@ -75,8 +100,8 @@ namespace ART_PACKAGE.Controllers
                     value = m.Sum(x => x.NumberOfCases)
                 })
             });
-            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR });
-            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", NumberOfCases = x.NumberOfCases, year = x.YEAR }); ;
+            var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", x.NumberOfCases, year = x.YEAR });
+            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR }); ;
 
 
 
@@ -89,44 +114,53 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-        public IActionResult Test()
-        {
-            //var sdch2 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2020-01-01")
-            //};
-            //var edch2 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = DateTime.Parse("2023-01-01")
-            //};
 
-            //var data = _db.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, sdch2, edch2);
-            //return Ok(data);
-
-            var distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.ResidenceCountryName == null || string.IsNullOrEmpty(x.ResidenceCountryName.Trim()) ? "UNKNOWN" : x.ResidenceCountryName).Distinct().ToList();
-            return Ok(distinct_value);
-        }
 
         public IActionResult GetAmlChartsData()
         {
-            var dateData = _db.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            if (modules.Contains("SASAML"))
             {
-                year = x.Key.ToString(),
-                value = x.Sum(x => x.NumberOfAlerts),
-                monthData = x.GroupBy(m => m.Month).Select(m => new
+                var dateData = _dbAml.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
                 {
-                    Month = m.Key.ToString(),
-                    value = m.Sum(x => x.NumberOfAlerts)
-                })
-            });
+                    year = x.Key.ToString(),
+                    value = x.Sum(x => x.NumberOfAlerts),
+                    monthData = x.GroupBy(m => m.Month).Select(m => new
+                    {
+                        Month = m.Key.ToString(),
+                        value = m.Sum(x => x.NumberOfAlerts)
+                    })
+                });
 
-            var alertsPerStatus = _db.ArtHomeAlertsPerStatuses;
+                DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _dbAml.ArtHomeAlertsPerStatuses;
 
-            return Ok(new
+                return Ok(new
+                {
+                    dates = dateData,
+                    statuses = alertsPerStatus
+                });
+            }
+            else
             {
-                dates = dateData,
-                statuses = alertsPerStatus
-            });
+                var dateData = _dgaml.ArtHomeDgamlAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+                {
+                    year = x.Key.ToString(),
+                    value = x.Sum(x => x.NumberOfAlerts),
+                    monthData = x.GroupBy(m => m.Month).Select(m => new
+                    {
+                        Month = m.Key.ToString(),
+                        value = m.Sum(x => x.NumberOfAlerts)
+                    })
+                });
+
+                DbSet<ArtHomeDgamlAlertsPerStatus> alertsPerStatus = _dgaml.ArtHomeDgamlAlertsPerStatuses;
+
+                return Ok(new
+                {
+                    dates = dateData,
+                    statuses = alertsPerStatus
+                });
+            }
+
         }
     }
 }

@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DGAML\**" />
     <Compile Remove="DGCMGMT\**" />
-    <EmbeddedResource Remove="DGAML\**" />
     <EmbeddedResource Remove="DGCMGMT\**" />
-    <None Remove="DGAML\**" />
     <None Remove="DGCMGMT\**" />
   </ItemGroup>
 

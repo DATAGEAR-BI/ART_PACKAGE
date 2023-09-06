@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
 
 namespace ART_PACKAGE.Areas.Identity.Data;
@@ -14,7 +13,7 @@ public class UserConfigration : IEntityTypeConfiguration<AppUser>
 
 
         builder.HasData(
-            new IdentityUser
+            new AppUser
             {
                 Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 UserName = "Art_Admin@datagearbi.com",
@@ -23,6 +22,7 @@ public class UserConfigration : IEntityTypeConfiguration<AppUser>
                 NormalizedEmail = "Art_Admin@datagearbi.com".ToUpper(),
                 PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
                 EmailConfirmed = true,
+                Active = true,
 
 
             }

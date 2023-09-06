@@ -1,24 +1,22 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     public class DGAMLCasesDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLCasesDetailsController(AuthContext _context, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLCasesDetailsController(ArtDgAmlContext _context, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -50,7 +48,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].SkipList : new();
             }
 
-            var Data = data.CallData<ArtDgAmlCaseDetailView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtDgAmlCaseDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -79,19 +77,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = _context.ArtDgAmlCaseDetailViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtDgAmlCaseDetailView, GenericCsvClassMapper<ArtDgAmlCaseDetailView, DGAMLCasesDetailsController>>(para.Req);
+            IQueryable<ArtDgAmlCaseDetailView> data = _context.ArtDgAmlCaseDetailViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtDgAmlCaseDetailView, GenericCsvClassMapper<ArtDgAmlCaseDetailView, DGAMLCasesDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].DisplayNames : null;
-            var ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList : null;
-            var data = _context.ArtDgAmlCaseDetailViews.CallData<ArtDgAmlCaseDetailView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].DisplayNames : null;
+            List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList : null;
+            List<ArtDgAmlCaseDetailView> data = _context.ArtDgAmlCaseDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Cases Details";
             ViewData["desc"] = "Presents the cases details in the table below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

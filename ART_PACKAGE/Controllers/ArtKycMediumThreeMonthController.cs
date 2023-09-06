@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Newtonsoft.Json;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using Data.Data;
-using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers
 {

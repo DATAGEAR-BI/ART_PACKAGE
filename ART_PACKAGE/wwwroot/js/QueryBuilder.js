@@ -5,7 +5,7 @@ fetch("/AML_ANALYSIS/QueryBuilderData").
     then(x => x.json())
     .then(x => {
         $("#query").queryBuilder({
-            filters:[...x],
+            filters: [...x],
         });
     })
 
@@ -21,7 +21,7 @@ action.onchange = async (e) => {
         queueselect.id = "queueSelect";
         queueselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
         queueselect.setAttribute("data-live-search", true);
-        var queues = await(await fetch("/AML_ANALYSIS/GetQueues", {
+        var queues = await (await fetch("/AML_ANALYSIS/GetQueues", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +29,7 @@ action.onchange = async (e) => {
             }
         })).json();
         var opt = document.createElement("option");
-        opt.value ="";
+        opt.value = "";
         opt.innerText = "Select A Queue";
         queueselect.append(opt);
         queues.forEach(x => {
@@ -118,7 +118,7 @@ document.getElementById("sql").onclick = async () => {
     };
     var para = {};
     console.log(action.value);
-  
+
     if (action.value == 1) {
         var queueSelect = document.getElementById("queueSelect");
         var users = document.getElementById("userSelect");
@@ -134,14 +134,14 @@ document.getElementById("sql").onclick = async () => {
     }
     var sql = $("#query").queryBuilder('getSQL');
     var rules = $('#query').queryBuilder('getRules');
-     para = {
+    para = {
         ReadableOutPut: getReadableRules(rules),
-        TableName: "ART_AML_ANALYSIS_VIEW",
+        TableName: "ART_AML_ANALYSIS_VIEW_TB",
         Sql: sql.sql,
-         Action: parseInt(action.value),
+        Action: parseInt(action.value),
         ...para
-     };
-    
+    };
+
     var res = await fetch("/AML_ANALYSIS/AddRule", {
         method: "POST",
         headers: {
@@ -150,11 +150,11 @@ document.getElementById("sql").onclick = async () => {
         },
         body: JSON.stringify(para)
     });
-  
+
     var resText = await res.json();
     toastObj.text = resText;
     toastObj.heading = "Add Rule Status";
-    
+
     if (res.ok) {
 
         toastObj.icon = 'success';
@@ -174,8 +174,8 @@ function getReadableRules(obj) {
     if (obj != null) {
         if (obj.hasOwnProperty("value")) {
             if (Object.prototype.toString.call(obj.value) !== '[object Array]') {
-                
-                return obj.id + " " + obj.operator +" " + obj.value
+
+                return obj.id + " " + obj.operator + " " + obj.value
             }
         }
         if (obj.hasOwnProperty("rules") && obj.rules != null) {
@@ -184,11 +184,11 @@ function getReadableRules(obj) {
                 if (i == (obj.rules.length - 1)) {
                     str += getReadableRules(obj.rules[i])
                 } else {
-                    str += getReadableRules(obj.rules[i]) + " " + obj.condition + " "; 
+                    str += getReadableRules(obj.rules[i]) + " " + obj.condition + " ";
 
                 }
             }
-            return str+" )";
+            return str + " )";
         }
     }
 }

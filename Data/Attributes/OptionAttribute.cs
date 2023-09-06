@@ -3,7 +3,7 @@
 
     public class OptionAttribute : Attribute
     {
-        public string DisplayName { get; set; }
-        public bool IsHidden { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
+        public bool IsHidden { get; set; } = false;
     }
 }

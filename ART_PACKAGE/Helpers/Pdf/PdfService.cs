@@ -1,22 +1,12 @@
 ﻿
-
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using ART_PACKAGE.Helpers.CustomReport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
 using Rotativa.AspNetCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Services.Pdf
+namespace ART_PACKAGE.Helpers.Pdf
 {
     public class PdfService : IPdfService
     {
@@ -24,19 +14,19 @@ namespace ART_PACKAGE.Services.Pdf
         {
             ViewData["user"] = UserName;
             List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
-            var props = PartitionProPertiesOf(DataColumns, ColumnsPerPage);
+            List<List<string>> props = PartitionProPertiesOf(DataColumns, ColumnsPerPage);
 
-            foreach (var group in props)
+            foreach (List<string> group in props)
             {
                 dataColumnsParts.Add(GetDataPArtitionedByColumnsForCustom(data, group));
             }
             //string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
-            var coverPdf = new ViewAsPdf("ReportPdfCover")
+            _ = new ViewAsPdf("ReportPdfCover")
             {
                 ViewData = ViewData,
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
             };
-            var pdf = new ViewAsPdf("GenericReportAsPdf", dataColumnsParts)
+            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
             {
                 ViewData = ViewData,
                 //CustomSwitches = footer,
@@ -89,13 +79,13 @@ namespace ART_PACKAGE.Services.Pdf
         {
             ViewData["user"] = UserName;
             List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
-            var props = PartitionProPertiesOf<T>(ColumnsToSkip, ColumnsPerPage);
-            foreach (var group in props)
+            List<List<string>> props = PartitionProPertiesOf<T>(ColumnsToSkip, ColumnsPerPage);
+            foreach (List<string> group in props)
             {
-                dataColumnsParts.Add(GetDataPArtitionedByColumns<T>(data, group, DisplayNamesAndFormat));
+                dataColumnsParts.Add(GetDataPArtitionedByColumns(data, group, DisplayNamesAndFormat));
             }
             //string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
-            var coverPdf = new ViewAsPdf("ReportPdfCover")
+            _ = new ViewAsPdf("ReportPdfCover")
             {
                 ViewData = ViewData,
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
@@ -108,7 +98,7 @@ namespace ART_PACKAGE.Services.Pdf
             //});
 
 
-            var pdf = new ViewAsPdf("GenericReportAsPdf", dataColumnsParts)
+            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
             {
                 ViewData = ViewData,
                 //CustomSwitches = footer,
@@ -160,24 +150,104 @@ namespace ART_PACKAGE.Services.Pdf
             //return outputStream.ToArray();
 
         }
+        public async Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data,
+                ViewDataDictionary ViewData, ActionContext ControllerContext,
+                string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
+                Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+        {
+            IEnumerable<GroupedData> grouped = data.AsQueryable()
+               .GroupBy($"new ({string.Join(",", GroupColumns.Select(x => x.field))})", "it")
+               .Select("new(it.Key As Key ,it as Items)")
+               .ToDynamicList().Select(x => (GroupedData)DynamicGroupToDict<T>(x, GroupColumns, ColumnsToSkip, DisplayNamesAndFormat));
+            string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
+            ViewAsPdf pdf = new("GenericGroupedReportAsPdf", grouped)
+            {
+                CustomSwitches = footer,
+                ViewData = ViewData,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+            return await pdf.BuildFile(ControllerContext);
+        }
 
 
         private IEnumerable<Dictionary<string, object>> GetDataPArtitionedByColumnsForCustom(IEnumerable<dynamic> list,
          IEnumerable<string> propertyNames,
          Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
         {
-            List<Dictionary<string, object>> res = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> res = new();
             list.ToList().ForEach(x =>
             {
                 res.Add(dynamicToDict(x, propertyNames));
             });
             return res;
         }
+        private GroupedData DynamicGroupToDict<T>(dynamic dobj, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
+          Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+        {
+            //Dictionary<string, List<Dictionary<string, object>>> res = new Dictionary<string, List<Dictionary<string, object>>>();
+            List<string> key = new();
+            dynamic keyProps = TypeDescriptor.GetProperties(dobj.Key);
+            Dictionary<string, object> keyValue = new();
 
+            foreach (PropertyDescriptor prop in keyProps)
+            {
+
+                key.Add(prop.Name);
+                string column = DisplayNamesAndFormat is not null
+                           && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+
+                keyValue.Add(column, prop.GetValue(dobj.Key));
+
+
+            }
+
+            IEnumerable<GridAggregate>? aggs = GroupColumns.All(x => x.aggregates == null) ? null : GroupColumns.SelectMany(x => x.aggregates);
+
+            System.Reflection.PropertyInfo[] props = typeof(T).GetProperties();
+            List<Dictionary<string, object>> items = new();
+            List<(string Column, bool HasAggreGate, string AggregateType)> Columns = new();
+            foreach (System.Reflection.PropertyInfo prop in props)
+            {
+                if (!ColumnsToSkip.Contains(prop.Name))
+                {
+                    string column = DisplayNamesAndFormat is not null
+                      && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+
+                    GridAggregate? propAggs = aggs != null && aggs.Count() != 0 ? aggs.FirstOrDefault(x => x.field == prop.Name) : null;
+                    bool hasAggs = propAggs != null;
+                    string aggType = hasAggs ? propAggs.aggregate : "";
+                    Columns.Add((column, hasAggs, aggType));
+                }
+
+            }
+            foreach (T item in dobj.Items)
+            {
+                Dictionary<string, object> itemDict = new();
+
+                foreach (System.Reflection.PropertyInfo prop in props)
+                {
+                    if (!ColumnsToSkip.Contains(prop.Name))
+                    {
+                        string column = DisplayNamesAndFormat is not null
+                        && DisplayNamesAndFormat.ContainsKey(prop.Name) ? DisplayNamesAndFormat[prop.Name].DisplayName : prop.Name;
+                        Type propType = prop.PropertyType;
+
+                        Type? nullableType = Nullable.GetUnderlyingType(propType);
+
+                        object val = nullableType != null && nullableType.IsNumericType() ? 0m : propType.IsNumericType() ? 0 : "-";
+                        itemDict.Add(column, prop.GetValue(item) ?? val);
+                    }
+
+                }
+                items.Add(itemDict);
+            }
+
+            return new GroupedData { Key = keyValue, Items = items, Columns = Columns };
+        }
         private Dictionary<string, object> dynamicToDict(dynamic dobj, IEnumerable<string> propertyNames)
         {
-            var dictionary = new Dictionary<string, object>();
-            var props = TypeDescriptor.GetProperties(dobj);
+            Dictionary<string, object> dictionary = new();
+            dynamic props = TypeDescriptor.GetProperties(dobj);
             foreach (PropertyDescriptor propertyDescriptor in props)
             {
                 if (dictionary.Keys.Count == propertyNames.Count())
@@ -203,7 +273,7 @@ namespace ART_PACKAGE.Services.Pdf
             return list.Select(x =>
             {
 
-                var elmDict = propertyNames.ToDictionary(p => DisplayNamesAndFormat is not null && DisplayNamesAndFormat.Keys.Contains(p) ? DisplayNamesAndFormat[p].DisplayName : p
+                Dictionary<string, object> elmDict = propertyNames.ToDictionary(p => DisplayNamesAndFormat is not null && DisplayNamesAndFormat.Keys.Contains(p) ? DisplayNamesAndFormat[p].DisplayName : p
                 , p => x.GetType().GetProperty(p).GetValue(x, null) ?? "-");
                 return elmDict;
             });
@@ -212,7 +282,7 @@ namespace ART_PACKAGE.Services.Pdf
         {
 
 
-            var props =
+            List<List<string>> props =
 
                                                       Columns.Select((value, index) => new { Value = value, Index = index })
                                                        .GroupBy(x => x.Index / ColumnsPerPage)
@@ -223,8 +293,8 @@ namespace ART_PACKAGE.Services.Pdf
         private List<List<string>> PartitionProPertiesOf<T>(List<string> ColumnsToSkip, int ColumnsPerPage)
         {
 
-            ColumnsToSkip = ColumnsToSkip ?? new List<string>();
-            var props = typeof(T).GetProperties()
+            ColumnsToSkip ??= new List<string>();
+            List<List<string>> props = typeof(T).GetProperties()
                                                        .Where(x => !ColumnsToSkip.Contains(x.Name))
                                                        .Select((value, index) => new { Value = value.Name, Index = index })
                                                        .GroupBy(x => x.Index / ColumnsPerPage)

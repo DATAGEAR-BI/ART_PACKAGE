@@ -4,7 +4,51 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
+	<Target Name="CleanCodeTask" BeforeTargets="Build">
+		<Exec Command="dotnet format style -v detailed" />
+	</Target>
+
+	<ItemGroup>
+		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="Helpers\Aml_Analysis\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="bcprov-jdk15on-1.68">
+			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
+		</Reference>
+		<Reference Include="commons-codec-1.11">
+			<HintPath>commons-codec-1.11.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\segmentReport.js" />
+		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisUpdateTableIndecator.cs" />
+		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\EditRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
+		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Views\DGAMLAlertDetails\**" />
@@ -54,18 +98,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Controllers\DGAMLAlertDetailsController.cs" />
-	  <Compile Remove="Controllers\DGAMLAlertSummaryController.cs" />
-	  <Compile Remove="Controllers\DGAMLArtExternalCustomerDetailsController.cs" />
-	  <Compile Remove="Controllers\DGAMLArtScenarioAdminController.cs" />
-	  <Compile Remove="Controllers\DGAMLArtScenarioHistoryController.cs" />
-	  <Compile Remove="Controllers\DGAMLArtSuspectDetailsController.cs" />
-	  <Compile Remove="Controllers\DGAMLCasesDetailsController.cs" />
-	  <Compile Remove="Controllers\DGAMLCasesSummaryController.cs" />
-	  <Compile Remove="Controllers\DGAMLCustomersDetailsController.cs" />
-	  <Compile Remove="Controllers\DGAMLCustomerSummaryController.cs" />
-	  <Compile Remove="Controllers\DGAMLExternalCustomerSummaryController.cs" />
-	  <Compile Remove="Controllers\DGAMLTriageController.cs" />
+	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	  <Compile Remove="Controllers\ArtAuditCorporateController.cs" />
+	  <Compile Remove="Controllers\ArtAuditIndividualsController.cs" />
+	  <Compile Remove="Controllers\ArtKycExpiredIdController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycHighTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycLowTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumExpiredController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumThreeMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumTwoMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycSummaryByRiskController.cs" />
+	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -946,20 +996,50 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="Views\ACPostingsAccount\ACPostingAccountPdf.cshtml" />
+		<None Include="Views\ACPostingsAccount\Index.cshtml" />
+		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
+		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\DiaryExceptions\Index.cshtml" />
+		<None Include="Views\EcmAuditTrial\Index.cshtml" />
+		<None Include="Views\EcmTransactions\Index.cshtml" />
+		<None Include="Views\EcmWorkflowProg\Index.cshtml" />
+		<None Include="Views\FinancingInterestAccruals\Index.cshtml" />
+		<None Include="Views\FullJournal\Index.cshtml" />
 		<None Include="Views\GOAMLReportIndicatorDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSummary\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSuspect\Index.cshtml" />
 		<None Include="Views\HighRisk\Index.cshtml" />
+		<None Include="Views\InterfaceDetails\Index.cshtml" />
+		<None Include="Views\MasterEventHistory\Index.cshtml" />
+		<None Include="Views\OSActivity\Index.cshtml" />
+		<None Include="Views\OSLiability\Index.cshtml" />
+		<None Include="Views\OSTransactionsAwaitiApprl\Index.cshtml" />
+		<None Include="Views\OSTransactionsByGateway\Index.cshtml" />
+		<None Include="Views\OSTransactionsByNonPri\Index.cshtml" />
+		<None Include="Views\OSTransactionsByPrincipal\Index.cshtml" />
+		<None Include="Views\OurChargesByCustomer\Index.cshtml" />
+		<None Include="Views\OurChargesByMaster\Index.cshtml" />
+		<None Include="Views\OurChargesDetails\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGSPayment\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
+
+		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
+		<None Include="Views\UserRole\Roles.cshtml" />
+		<None Include="Views\UserRole\Users.cshtml" />
+		<None Include="Views\UserRole\UsersRolesMatrix.cshtml" />
+
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />
@@ -1737,6 +1817,8 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\segmentReport.js" />
+		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 
@@ -1746,6 +1828,7 @@
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="IKVM" Version="8.6.2" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -1776,6 +1859,11 @@
 	<ItemGroup>
 		<TypeScriptCompile Include="wwwroot\lib\spin.js\spin.d.ts" />
 		<TypeScriptCompile Include="wwwroot\lib\spin.js\SpinnerOptions.d.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Licenses\" />
+		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 
 </Project>

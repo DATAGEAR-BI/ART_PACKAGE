@@ -1,7 +1,7 @@
 ﻿
 using ART_PACKAGE.Areas.Identity.Data;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class Chart
     {

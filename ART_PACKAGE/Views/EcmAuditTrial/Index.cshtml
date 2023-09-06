@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+
+@*<link href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/simple-3D-pie-chart/index.css" rel="stylesheet" />
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>*@
+
+<script src="~/js/site.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+
+
+<section class="content-header">
+    <h1>
+        ECM Audit Trial Report
+        @*<small>This report produces a list of diary activities that were not carried out when due because of exception conditions</small>*@
+    </h1>
+</section>
+
+<div id="grid"></div>
+
+<div class="modal fade" id="RiskModal" tabindex="-1" role="dialog" aria-labelledby="RiskModalLablel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RiskTitle">Note details For case with reference :  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="RiskModelBodyHTML">
+                <div id="partyRiskGrid" style="max-height:333px;max-width:1463px;overflow:scroll">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+  
+    
+    <script src="~/js/Dynamic.js" type="module" defer id="script" data-prop="EcmReference" data-urlkey="EcmAuditTrial" data-handlerkey="EcmAuditTrial" ></script>
+}
+

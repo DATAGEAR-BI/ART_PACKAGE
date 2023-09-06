@@ -1,10 +1,8 @@
-﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace ART_PACKAGE.Services.Pdf
+namespace ART_PACKAGE.Helpers.Pdf
 {
     public interface IPdfService
     {
@@ -19,5 +17,8 @@ namespace ART_PACKAGE.Services.Pdf
             , int ColumnsPerPage
             , string UserName
             , List<string> DataColumns);
+        public Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
+           , ActionContext ControllerContext, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null
+           , Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null);
     }
 }

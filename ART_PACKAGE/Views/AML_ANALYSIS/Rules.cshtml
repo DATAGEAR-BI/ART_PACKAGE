@@ -1,0 +1,1005 @@
+﻿@using DataGear_RV_Ver_1._7.ViewModels; 
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<style>
+
+
+    /*the container must be positioned relative:*/
+    .user-autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+    input.user-input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        input.user-input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+
+
+    .user-autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the user-autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .user-autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+            /*when hovering an item:*/
+            .user-autocomplete-items div:hover {
+                background-color: #e9e9e9;
+            }
+
+    /*when navigating through the items using the arrow keys:*/
+    .user-autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+
+<style>
+
+
+    /*the container must be positioned relative:*/
+    .user-autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+    input.user-input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        input.user-input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+
+
+    .user-autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the user-autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .user-autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+            /*when hovering an item:*/
+            .user-autocomplete-items div:hover {
+                background-color: #e9e9e9;
+            }
+
+    /*when navigating through the items using the arrow keys:*/
+    .user-autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        AML Analysis Rules
+        <small>All Rules </small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content container-fluid">
+    <!--------------------------
+    | Your Page Content Here |
+    -------------------------->
+    <!-- GRID -->
+    <div class="row">
+        <button id="PredReload" title="Reload list" onclick="reloadGrid()" type="button" class="btn btn-primary col-md-1"> Refresh </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1"></div>
+        <button type="button" style="float:right;width:auto; margin-left:10px;" id="ACT_BTN" class="btn btn-primary col-md-2" disabled onclick="Active_DeActive()"> Rule Active / DeActive  </button>&nbsp;
+        <button type="button" style="float: right; width: auto; margin-left: 10px;" id="Edit_BTN" class="btn btn-primary col-md-2" disabled data-toggle="modal" data-target="#EditModal"> Edit Action </button>&nbsp;
+        <button type="button" style="float: right; width: auto;" id="Delete_BTN" class="btn btn-primary col-md-2" disabled data-toggle="modal" data-target="#DeletModel"> Delete Action </button>
+        <button type="button" style="float: right; width: auto;" id="TestRule_BTN" class="btn btn-primary col-md-2" onclick="fillTest()" disabled data-toggle="modal" data-target="#TestModel"> Test Rules </button>
+
+    </div>
+    <div id="notify"></div>
+    <!--   Start Rules   -->
+    <!--S QBuilder --->
+    <link rel="stylesheet" href="~/lib/QBuilder/dist/css/query-builder.dark.css" id="qb-theme" />
+    <!--E QBuilder --->
+
+    <div class="row">
+
+        <br>
+        <div id="example_2">
+            <div id="gridRules"></div>
+
+
+        </div>
+
+
+
+        <br><br>
+        <section class="content-header">
+            <h1>
+                AML Analysis Rules ( Automatic Close & Route )
+                <small>Customize Your Rule </small>
+            </h1>
+        </section>
+        <br>
+        <!--   Start Rules   -->
+        <div id='append'>
+            <div id="builder"></div>
+            <br>
+            <button class="btn btn-primary parse-json">Apply</button>
+        </div>
+        <br><br><br>
+
+
+    </div>
+    <!--   End Rules   -->
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Routing Alerted Entites...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ModelBodyHTML">
+                    <div class="row">
+                        <div class=" panel panel-primary customer-details medium-capped-width">
+                            <div class="panel-body">
+
+                                <div id="rulereadable" class="text-center text-primary  text-bold">
+
+                                </div>
+
+
+                                <div class="input-group mb-3">
+
+                                    <select id="actionSelect" asp-items="Html.GetEnumSelectList<RuleAction>()" name="action" onchange="CloseOrRoute(this)" class="form-control" aria-label="Adress">
+                                        <option value="">Please select an action</option>
+                                    </select>
+                                    <div id="routeDiv" class="input-group mb-3 mt-3" hidden>
+                                        <div class="text-primary aml-panel-title text-bold">
+                                            Select Queue...
+                                        </div>
+                                        <select name="routeToQueue" id="routeToQueue" onchange="ChangeQueueSelect(this)"
+                                                class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                                        </select>
+
+                                        <div class="text-primary aml-panel-title text-bold">
+                                            Select User...
+                                        </div>
+
+                                        <div class="user-autocomplete" style="width:300px;">
+                                            <input id="user-input" disabled class="user-input form-control" type="text" name="User" autocomplete="off" placeholder="User...">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button id="modalRoutBtn" class="btn btn-success " disabled onclick="editRule();">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="DeletModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Confirm To delete the role ?</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ModelBodyHTML">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                    <button id="modalDeletRoleBtn" class="btn btn-danger " onclick="DeletRole();">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="TestModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body" id="ModelBodyHTML">
+                    <div id="testRulesGrid"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                    <button id="modalDeletRoleBtn" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" data-target="#ApplyModal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ApplyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Confirm Apply
+                </div>
+                <div class="modal-body" id="ModelBodyHTML">
+                    <div class="row">
+                        Do You Wantt To Apply This Rules ?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ApplyRules()">Apply</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="~/lib/QBuilder/dist/js/query-builder.standalone.js"></script>
+<script src="~/lib/QBuilder/app.js"></script>
+<script>
+    function CloseOrRoute(e) {
+        
+        document.getElementById("user-input").value = "";
+        currentUserSelected = "";
+        chickValidety(currentUserSelected);
+        if (e.value == 1) {
+            $('#routeDiv').show(1000);
+            getQueue();
+            getUsers("");
+            $("#user-input").prop('disabled', false);
+            
+        }
+        else {
+            $('#routeDiv').hide(1000);
+            $("#user-input").prop('disabled', true);
+        }
+    }
+    var usersList =[];
+    function fillEdit(selected) {
+        
+        $.ajax({
+            type: "GET",
+            url: "/AML_ANALYSIS/GetRuleData",
+            data: {
+                id: selected
+            },
+            success: function (res) {
+               
+                document.getElementById("rulereadable").innerText = res.OutputReadable;
+
+                //$("#idinput").val = res.RuleID;
+                //$("#rulereadable").text = res.OutputReadable;
+                
+
+
+            }
+        });
+        $('#routeDiv').hide();
+
+    }
+    function getUsers(queue) {
+        $.ajax({
+            type: "GET",
+            url: "/AML_ANALYSIS/GetQueuesUsers",
+            data: {
+                Queue: queue
+            },
+            success: function (data) {
+                usersList = [];
+                usersList = data;
+                console.log("qdata", JSON.stringify(usersList));
+
+                /*initiate the autocomplete function on the "user-input" element, and pass along the countries array as possible autocomplete values:*/
+                autocomplete(document.getElementById("user-input"), usersList);
+
+            },
+                    @* dataType: dataType *@
+                });
+    }
+    function DeletRole(){
+        var id = currentSelected[0];
+        $.ajax({
+            type: "POST",
+            url: "/AML_ANALYSIS/DeletRole",
+            data: {
+                id: id,
+               
+            },
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+    }
+    function editRule() {
+    
+        var id = currentSelected[0];
+        var action = document.getElementById("actionSelect").value;
+        var user =  document.getElementById("user-input").value;
+        var queue = document.getElementById("routeToQueue").value;
+        var queueUser="";
+        if (action==1) {
+            queueUser = `${queue}--${user}`;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/AML_ANALYSIS/EditRule",
+            data: {
+                id: id,
+                action: action,
+                user: queueUser
+            },
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+
+    }
+    var currentUserSelected = "";
+    var currentQueueSelected = "";
+    function ChangeQueueSelect(e) {
+        currentUserSelected = "";
+        currentQueueSelected = e.value;
+        usersList = [];
+        document.getElementById("user-input").value = "";
+
+        if (currentQueueSelected == "Not Selected" || currentQueueSelected == "") {
+            //$('#modalRoutBtn').prop('disabled', true);
+            //console.log("disable");
+            getUsers("");
+            // alert("enabled");
+        } else {
+            //$('#modalRoutBtn').prop('disabled', false);
+            //console.log("enable");
+            getUsers(currentQueueSelected);
+            //alert("disabled");
+        }
+
+    }
+    function autocomplete2(inp, arr) {
+
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+
+        chickValidety(currentUserSelected);
+
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            console.log("input Listener Invoking");
+
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            currentUserSelected = val;
+
+            chickValidety(currentUserSelected);
+
+            if (!val) { return false; }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "user-autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        // console.log("User Selected Invoking");
+
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        currentUserSelected = this.getElementsByTagName("input")[0].value;
+                        chickValidety(currentUserSelected);
+
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "user-autocomplete-active":*/
+            x[currentFocus].classList.add("user-autocomplete-active");
+        }
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("user-autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+             *
+             *
+            except the one passed as an argument:*/
+            @*if (((document.getElementById("user-input").value == "" || usersList.includes(document.getElementById("user-input").value, 0)) && (currentQueueSelected != "Not Selected" || currentQueueSelected != ""))) {
+                $('#modalRoutBtn').prop('disabled', false);
+                // alert("enabled");
+            } else {
+                $('#modalRoutBtn').prop('disabled', true);
+                //alert("disabled");
+            }*@
+
+                    var x = document.getElementsByClassName("user-autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        //execute a function when someone clicks in the document:
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+            //alert("autocomplete closd");
+            
+                });
+    }
+    function autocomplete(inp, arr) {
+
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+
+        chickValidety(currentUserSelected, currentQueueSelected);
+
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            console.log("input Listener Invoking");
+
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            currentUserSelected = val;
+
+            chickValidety(currentUserSelected, currentQueueSelected);
+
+            if (!val) { return false; }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "user-autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        // console.log("User Selected Invoking");
+
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        currentUserSelected = this.getElementsByTagName("input")[0].value;
+                        chickValidety(currentUserSelected, currentQueueSelected);
+
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "user-autocomplete-active":*/
+            x[currentFocus].classList.add("user-autocomplete-active");
+        }
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("user-autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+             *
+             *
+            except the one passed as an argument:*/
+
+            var x = document.getElementsByClassName("user-autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+            //alert("autocomplete closd");
+
+        });
+    }
+    function fillTest() {
+
+
+        $('#testRulesGrid').empty();
+            $("#testRulesGrid").kendoGrid({
+                dataSource: {
+                    type: "api",
+                    transport: {
+                        read: "/AML_ANALYSIS/GetAlertsCount?rules=" + currentSelected.join('&rules=')
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                RuleId: { type: "number" },
+                                AlertedEntities: { type: "number" },
+                                Alerts: { type: "number" },
+                                AENs: { type: "string" },
+                                Action: {type:"string"},
+                                RouteUser: {type:"string"}
+                            }
+                        }
+                    },
+                    pageSize: 100,
+                    serverPaging: false,
+                    serverFiltering: false,
+                    serverSorting: false
+                },
+                height: 400,
+                filterable: true,
+                sortable: true,
+                reorderable: true,
+                pageable: {
+                    numeric: true,
+                    previousNext: true
+                },
+                resizable: true,
+                scrollable: { virtual: true },
+
+
+                columns: [
+                    { field: "RuleId", title: "Rule ID", width: 80 },
+                    { field: "AlertedEntities", width: 80, title: "Number Of Matched Enities" },
+                    { field: "Alerts", title: "Number Of Matched Alerts", width: 80 },
+
+
+
+                    //,{ command: { text: "View Details"}, title: "View Details" }
+                ]
+
+            });
+        
+        
+    }
+
+    function chickValidety2(cUser) {
+        console.log("chick Called");
+        if (document.getElementById("actionSelect").value == 1) {
+            if ((usersList.includes(cUser, 0))) {
+                //enable
+                //console.log("QNV - UV");
+                $('#modalRoutBtn').prop('disabled', false);
+            } else {
+                //disable
+                //console.log("QNV - UNV");
+                $('#modalRoutBtn').prop('disabled', true);
+            }
+        } else if (document.getElementById("actionSelect").value == 0) {
+            $('#modalRoutBtn').prop('disabled', false);
+        } else {
+            $('#modalRoutBtn').prop('disabled', true);
+        }
+        
+        
+    }
+    function chickValidety(cUser, cQueue) {
+
+        if (document.getElementById("actionSelect").value == 1) {
+            if ((cQueue != "" && cQueue != "Not Selected")) {
+                if ((!usersList.includes(cUser, 0))) {
+
+                    if (cUser == "") {
+                        //enable
+                        $('#modalRoutBtn').prop('disabled', false);
+                        //console.log("QV - UV");
+                    } else {
+                        //disable
+                        $('#modalRoutBtn').prop('disabled', true);
+                        //console.log("QV - UNV");
+                    }
+
+                } else {
+                    //enable
+                    $('#modalRoutBtn').prop('disabled', false);
+                    //console.log("QV - UV");
+                }
+            } else {
+                if ((usersList.includes(cUser, 0))) {
+                    //enable
+                    //console.log("QNV - UV");
+                    $('#modalRoutBtn').prop('disabled', false);
+                } else {
+                    //disable
+                    //console.log("QNV - UNV");
+                    $('#modalRoutBtn').prop('disabled', true);
+                }
+            }
+        } else if (document.getElementById("actionSelect").value == 0) {
+            $('#modalRoutBtn').prop('disabled', false);
+        } else {
+            $('#modalRoutBtn').prop('disabled', true);
+        }
+
+        // console.log("chick Called");
+        
+
+    }
+
+    function ApplyRules() {
+        
+        //function test(item) {
+        //    return {
+        //        RuleId= item.RuleId,
+        //        AlertedEntities= item.AlertedEntities,
+        //        Alerts =item.Alerts,
+        //        AENs =item.AENs,
+        //        Action= item.Action,
+        //        RouteUser=  item.RouteUser
+        //    }
+        //}
+
+        function selectFewerProps(show) {
+            const { RuleId, AENs, Action, RouteUser } = show;
+            return { RuleId, AENs, Action, RouteUser };
+        }
+        var data =[]
+        var RuleGridData = $("#testRulesGrid").data("kendoGrid").dataSource.data();
+        console.table(RuleGridData);
+        data = RuleGridData.map(selectFewerProps);
+       
+
+        $.ajax({
+           
+            type: "POST",
+            url: "/AML_ANALYSIS/ApplyRules",
+            data: {
+                rules: data //JSON.stringify(data)
+            },
+            success: function (data) {
+                notify("Done", "suc");
+            },
+            error: function () {
+                notify("Something Went wrong", "error");
+            }
+        });
+       
+    }
+    function notify(msg, typ) {
+        $.ajax({
+
+            url: "/AML_ANALYSIS/notyfMesg",
+            data: {
+                Msg_Body: msg,
+                msg_type: typ
+            },
+            success: function (data) {
+                $("#notify").html(data);
+            }
+        });
+    }
+    function getQueue() {
+
+        $.ajax({
+            type: "GET",
+            url: "/AML_ANALYSIS/GetQueues",
+            data: {
+            },
+            success: function (data) {
+                queueList = data;
+
+                var select = document.getElementById('routeToQueue');
+                select.innerHTML = "";
+                var fopt = document.createElement('option');
+                fopt.value = "Not Selected";
+                fopt.innerHTML = "Not Selected";
+                select.appendChild(fopt);
+                queueList.forEach(q => {
+                    var opt = document.createElement('option');
+                    opt.value = q;
+                    opt.innerHTML = q;
+                    select.appendChild(opt);
+                })
+            },
+
+                    @* dataType: dataType *@
+                });
+
+    }
+
+</script>
+<script>
+
+    var currentSelected = [];
+    function onChange(e) {
+
+        var idz = [];
+        var rows = e.sender.select();
+
+        //to get the selected alerted  entity numbers of selected rows
+        rows.each(function (e) {
+            var grid = $("#gridRules").data("kendoGrid");
+            var dataItem = grid.dataItem(this);
+            var id = dataItem.RuleId;
+            idz.push(id);
+
+            if (dataItem.Active == 0) {
+                
+                $('#ACT_BTN').removeClass("btn-danger");
+                $('#ACT_BTN').addClass("btn-success");
+                $('#ACT_BTN').text('Activate');
+            }
+            else {
+               
+
+                $('#ACT_BTN').removeClass("btn-success");
+                $('#ACT_BTN').addClass("btn-danger");
+                $('#ACT_BTN').text('De Activate');
+            }
+
+        })
+        currentSelected = idz;
+
+        if (currentSelected.length == 1) {
+            console.log(currentSelected[0]);
+            fillEdit(currentSelected[0]);
+            
+            $('#Edit_BTN').prop('disabled', false);
+            $('#Delete_BTN').prop('disabled', false);
+
+            $('#Delete_BTN').removeClass("btn-primary");
+            $('#Delete_BTN').addClass("btn-danger");
+
+
+        } else {
+            $('#Edit_BTN').prop('disabled', true);
+            $('#Delete_BTN').prop('disabled', true);
+            $('#Delete_BTN').removeClass("btn-primary");
+            $('#Delete_BTN').addClass("btn-success");
+
+        }
+        if (currentSelected.length > 0) {
+            $('#TestRule_BTN').prop('disabled', false);
+            $('#ACT_BTN').prop('disabled', false);
+        } else {
+            $('#TestRule_BTN').prop('disabled', true);
+            $('#ACT_BTN').prop('disabled', true);
+        }
+        
+    };
+
+    $("#gridRules").kendoGrid({
+        dataSource: {
+            type: "api",
+            transport: {
+                read: "/AML_ANALYSIS/GetRules"
+            },
+            schema: {
+                model: {
+                    fields: {
+                        RuleId: { type: "number" },
+                        TableName: { type: "string" },
+                        OutputReadable: { type: "string" },
+                        Action: { type: "string" },
+                        RouteToUser: { type: "string" },
+                        CreatedDate: { type: "date" },
+                        Active: { type: "number" }
+
+                    }
+                }
+            },
+            pageSize: 100,
+            serverPaging: false,
+            serverFiltering: false,
+            serverSorting: false
+        },
+        height: 670,
+        filterable: true,
+        sortable: true,
+        reorderable: true,
+        pageable: {
+            numeric: true,
+            previousNext: true
+        },
+        resizable: true,
+        scrollable: { virtual: true },
+        change: onChange,
+        selectable: "multiple",
+        toolbar: ["excel"],
+        excel: {
+            fileName: "Data_Export.xlsx",
+            allPages: true,
+            filterable: true
+        },
+
+        columns: [
+            { field: "RuleId", title: "Rule ID", width: 80 },
+            { field: "TableName", width: 120, title: "Table" },
+            { field: "OutputReadable", title: "Rule", width: 600 },
+            { field: "CreatedDate", title: "Date", width: 120, format: "{0: yyyy-MM-dd HH:mm:ss}" },
+            { field: "Action", width: 120, title: "Action" },
+            { field: "RouteToUser", width: 120, title: "Route ? TO:" },
+            { field: "Active", title: "Active ?", width: 80 },
+
+
+            //,{ command: { text: "View Details"}, title: "View Details" }
+        ]
+
+    });
+
+   
+    function reloadGrid() {
+        $("#gridRules").data("kendoGrid").dataSource.read();
+        $("#gridRules").data("kendoGrid").refresh();
+
+        var grid = $("#gridRules").data("kendoGrid");
+        // select the first table row
+        //grid.select("tr:eq(1)");
+        grid.clearSelection();
+
+    };
+
+    function Active_DeActive() {
+
+        //console.log(currentSelected[0]);
+        //$.getJSON("/AML_ANALYSIS/ActiveDeActive?" + "rule_id=" + currentSelected[0], function (data) {
+        //    console.log("FromActive/DeActive"+data);
+        //    reloadGrid();
+        //});
+        $.ajax({
+            type: "POST",
+            url: "/AML_ANALYSIS/ActiveDeActive",
+            data: {
+                rule_id: currentSelected[0]
+            },
+            success: function (res) {
+
+
+
+                //$("#idinput").val = res.RuleID;
+                //$("#rulereadable").text = res.OutputReadable;
+
+                reloadGrid();
+
+            }
+        });
+    };
+
+</script>

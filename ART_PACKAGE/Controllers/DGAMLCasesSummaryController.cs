@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,11 +13,11 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLCasesSummaryController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public DGAMLCasesSummaryController(AuthContext _context, IMemoryCache cache, IConfiguration config)
+        public DGAMLCasesSummaryController(ArtDgAmlContext _context, IMemoryCache cache, IConfiguration config)
         {
             this._context = _context;
             _config = config;
@@ -34,9 +34,9 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStDgAmlCasesPerPriority> chart4Data = Enumerable.Empty<ArtStDgAmlCasesPerPriority>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -56,7 +56,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStDgAmlCasesPerStatus>
                 {
                     ChartId = "StCasesPerStatus",

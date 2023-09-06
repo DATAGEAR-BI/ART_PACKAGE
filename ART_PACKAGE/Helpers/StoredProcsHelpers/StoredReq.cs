@@ -1,7 +1,4 @@
-﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 
 
 namespace ART_PACKAGE.Helpers.StoredProcsHelpers

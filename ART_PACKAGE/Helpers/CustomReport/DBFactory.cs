@@ -1,9 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.DGCMGMT;
-using Data.FCF71;
+using ART_PACKAGE.Helpers.DBService;
 using Microsoft.EntityFrameworkCore;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class DBFactory
     {
@@ -15,17 +14,12 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
             _db = db;
         }
 
-        public DbContext GetDbInstance(string schemaName)
+        public DbContext? GetDbInstance(string schemaName)
         {
 
-            if (schemaName == DbSchema.DGCMGMT.ToString())
-                return _db.ECM;
-            if (schemaName == DbSchema.KC.ToString())
-                return _db.KC;
-            if (schemaName == DbSchema.CORE.ToString())
-                return _db.CORE;
-            else
-                return null;
+            return schemaName == DbSchema.DGCMGMT.ToString()
+                ? _db.ECM
+                : schemaName == DbSchema.KC.ToString() ? _db.KC : schemaName == DbSchema.CORE.ToString() ? _db.CORE : (DbContext?)null;
         }
     }
 }
