@@ -1,29 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Text;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using CsvHelper;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.Pdf;
+using CsvHelper;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Data;
+using System.Globalization;
+using System.Linq.Dynamic.Core;
+using System.Text;
 
-namespace ART_PACKAGE.Controllers { 
-    
+namespace ART_PACKAGE.Controllers
+{
+
     //[Authorize(Policy = "Licensed" , Roles = "EcmWorkflowProg")]
 
-    
+
     public class EcmWorkflowProgController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public EcmWorkflowProgController( IPdfService pdfSrv, AuthContext fti)
+        public EcmWorkflowProgController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -105,7 +103,7 @@ namespace ART_PACKAGE.Controllers {
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames  = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
+            var DisplayNames = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
 
             var ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].SkipList;
 
@@ -122,7 +120,7 @@ namespace ART_PACKAGE.Controllers {
         public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
             var data = fti.ArtTiEcmWorkflowProgReports.AsQueryable().CallData<ArtTiEcmWorkflowProgReport>(para.Req).Data;
-            var res = data.AsEnumerable<ArtTiEcmWorkflowProgReport>().OrderBy(x=>x.EcmReference).GroupBy(x => new { x.EcmReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
+            var res = data.AsEnumerable<ArtTiEcmWorkflowProgReport>().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
             var after = res.Select(x =>
             {
                 var ListOfMatchingEcm = fti.ArtTiEcmWorkflowProgReportOlds.Where(o => o.EcmReference == x.Key.EcmReference && x.Key.CaseStatCd == o.CaseStatCd && x.Key.EventSteps == o.EventSteps && x.Key.StepStatus == o.StepStatus);

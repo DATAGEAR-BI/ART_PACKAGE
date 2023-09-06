@@ -1,23 +1,23 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "OurChargesByMaster")]
 
-    
+
     public class OurChargesByMasterController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public OurChargesByMasterController(IPdfService pdfSrv, AuthContext fti)
+        public OurChargesByMasterController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -112,11 +112,11 @@ namespace ART_PACKAGE.Controllers {
             var DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByMasterController).ToLower()].DisplayNames;
             var columnsToPrint = new List<string>() {
                 nameof(ArtTiChargesByMasterReport.MasterRef)
-               ,nameof(ArtTiChargesByMasterReport.Hvbad1) 
-               ,nameof(ArtTiChargesByMasterReport.TotoalClaimedChgDue) 
+               ,nameof(ArtTiChargesByMasterReport.Hvbad1)
+               ,nameof(ArtTiChargesByMasterReport.TotoalClaimedChgDue)
                ,nameof(ArtTiChargesByMasterReport.TotoalPaidChgDue)
                ,nameof(ArtTiChargesByMasterReport.TotoalOutstandingChgDue)
-               ,nameof(ArtTiChargesByMasterReport.TotoalWaivedChgDue)   
+               ,nameof(ArtTiChargesByMasterReport.TotoalWaivedChgDue)
             };
             var ColumnsToSkip = typeof(ArtTiChargesByMasterReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 

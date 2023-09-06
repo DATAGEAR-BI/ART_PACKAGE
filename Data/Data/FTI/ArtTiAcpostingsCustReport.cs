@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
-    public partial class ArtTiAcpostingsAccReport
+    public partial class ArtTiAcpostingsCustReport
     {
         public string? EventRef { get; set; }
         public string? MasterRef { get; set; }

@@ -112,6 +112,7 @@
 	  <Compile Remove="Controllers\ArtKycLowTwoMonthController.cs" />
 	  <Compile Remove="Controllers\ArtKycMediumExpiredController.cs" />
 	  <Compile Remove="Controllers\ArtKycMediumOneMonthController.cs" />
+	  <Compile Remove="Controllers\ArtKycMediumThreeMonthController.cs" />
 	  <Compile Remove="Controllers\ArtKycMediumTwoMonthController.cs" />
 	  <Compile Remove="Controllers\ArtKycSummaryByRiskController.cs" />
 	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />

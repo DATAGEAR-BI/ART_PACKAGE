@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
-    public partial class ArtTiWatchlistOsCheckReport
+    public partial class ArtTiOsTransAwaitiApprlReport
     {
         public string? Descri56 { get; set; }
-        public string? Longna85 { get; set; }
         public string? RefnoPfix { get; set; }
         public decimal? RefnoSerl { get; set; }
+        public string? EventReference { get; set; }
         public DateTime? Touched { get; set; }
         public decimal? Amount { get; set; }
         public string? Ccy { get; set; }
@@ -18,20 +18,20 @@ namespace Data.Data
         public string? MasterRef { get; set; }
         public string? CcyCed { get; set; }
         public string? BhalfBrn { get; set; }
-        public string? Pcpaddress1 { get; set; }
-        public string? Pcpgfcun { get; set; }
-        public string? PcpcusMnm { get; set; }
-        public string? PcpswBank { get; set; }
-        public string? PcpswCtr { get; set; }
-        public string? PcpswLoc { get; set; }
-        public string? PcpswBranch { get; set; }
-        public string? Npcpaddress1 { get; set; }
-        public string? Npcpgfcun { get; set; }
-        public string? NpcpcusMnm { get; set; }
-        public string? NpcpswBank { get; set; }
-        public string? NpcpswCtr { get; set; }
-        public string? NpcpswLoc { get; set; }
-        public string? NpcpswBranch { get; set; }
+        public string? PcpAddress1 { get; set; }
+        public string? PcpGfcun { get; set; }
+        public string? PcpCusMnm { get; set; }
+        public string? PcpSwBank { get; set; }
+        public string? PcpSwCtr { get; set; }
+        public string? PcpSwLoc { get; set; }
+        public string? PcpSwBranch { get; set; }
+        public string? NpcpAddress1 { get; set; }
+        public string? NpcpGfcun { get; set; }
+        public string? NpcpCusMnm { get; set; }
+        public string? NpcpSwBank { get; set; }
+        public string? NpcpSwCtr { get; set; }
+        public string? NpcpSwLoc { get; set; }
+        public string? NpcpSwBranch { get; set; }
         public DateTime? Started { get; set; }
         public string? Language { get; set; }
         public string? Shortname { get; set; }

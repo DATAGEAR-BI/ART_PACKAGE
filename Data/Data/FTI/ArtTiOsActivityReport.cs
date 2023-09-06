@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
     public partial class ArtTiOsActivityReport
     {

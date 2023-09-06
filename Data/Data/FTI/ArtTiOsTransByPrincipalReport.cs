@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
-    public partial class ArtTiOsTransByNonpriReport
+    public partial class ArtTiOsTransByPrincipalReport
     {
         public string? Descrip { get; set; }
         public string? Partptd { get; set; }
@@ -13,8 +13,9 @@ namespace Data.Data
         public decimal? Outstamt { get; set; }
         public string? Outstccy { get; set; }
         public decimal? OutstamtEgp { get; set; }
+        public decimal? Outccyspt { get; set; }
         public string? Outccysei { get; set; }
-        public string? BranchName { get; set; }
+        public string? Fullname { get; set; }
         public string? Address1 { get; set; }
         public string? SwBank { get; set; }
         public string? SwCtr { get; set; }
@@ -25,6 +26,8 @@ namespace Data.Data
         public string? Country { get; set; }
         public string? Status { get; set; }
         public string? MasterRef { get; set; }
+        public string? Outccyced { get; set; }
+        public string? CcyCed { get; set; }
         public decimal? Amount { get; set; }
         public string? Ccy { get; set; }
         public decimal? AmountEgp { get; set; }

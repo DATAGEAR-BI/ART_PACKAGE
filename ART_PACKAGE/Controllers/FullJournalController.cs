@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Data;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "FullJournal")]
 
-    
+
     public class FullJournalController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public FullJournalController(IPdfService pdfSrv, AuthContext fti)
+        public FullJournalController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -27,7 +26,7 @@ namespace ART_PACKAGE.Controllers {
 
         public IActionResult Test()
         {
-            var d = fti.ArtTiFullJournalReports.Where(x =>EF.Functions.Like(x.DataAfter, "hi")  );
+            var d = fti.ArtTiFullJournalReports.Where(x => EF.Functions.Like(x.DataAfter, "hi"));
             return Ok(d);
         }
 
@@ -100,10 +99,10 @@ namespace ART_PACKAGE.Controllers {
             var columnsToPrint = new List<string>() {
                 nameof(ArtTiFullJournalReport.Dataitem)
                ,nameof(ArtTiFullJournalReport.Username)
-               ,nameof(ArtTiFullJournalReport.Area) 
-               ,nameof(ArtTiFullJournalReport.MtceType) 
+               ,nameof(ArtTiFullJournalReport.Area)
+               ,nameof(ArtTiFullJournalReport.MtceType)
                ,nameof(ArtTiFullJournalReport.Datetime)
-               ,nameof(ArtTiFullJournalReport.DataAfter)  
+               ,nameof(ArtTiFullJournalReport.DataAfter)
             };
             var ColumnsToSkip = typeof(ArtTiFullJournalReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 

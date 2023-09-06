@@ -1,8 +1,8 @@
-﻿using Data.Data;
-using Data.Data.AmlAnalysis;
+﻿using Data.Data.AmlAnalysis;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.FTI;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.FCF71;
@@ -839,7 +839,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
 
-//FTI
+            //FTI
             modelBuilder.Entity<ArtTiAcpostingsAccReport>(entity =>
             {
                 entity.HasNoKey();
@@ -9556,7 +9556,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("QUEUE_CODE");
             });
-    }
+        }
         public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();

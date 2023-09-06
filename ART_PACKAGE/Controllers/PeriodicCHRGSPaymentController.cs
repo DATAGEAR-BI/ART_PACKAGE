@@ -1,36 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Data;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "PeriodicCHRGSPayment")]
 
-    
+
     public class PeriodicCHRGSPaymentController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
 
 
-        public PeriodicCHRGSPaymentController(IPdfService pdfSrv, AuthContext fti)
+        public PeriodicCHRGSPaymentController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;

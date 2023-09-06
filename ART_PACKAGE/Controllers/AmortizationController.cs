@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
 
 namespace ART_PACKAGE.Controllers
 {
     //[Authorize(Policy = "Licensed", Roles = "Amortization")]
-    public class AmortizationController : Controller 
+    public class AmortizationController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public AmortizationController(IPdfService pdfSrv, AuthContext fti)
+        public AmortizationController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -84,7 +83,8 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "Amortization Report";
             ViewData["desc"] = "This report produces all postings posted to an account by value date";
             var DisplayNames = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() {
+            var columnsToPrint = new List<string>()
+            {
                 // nameof(ArtTiAmortizationReport.EventRef)
                 //,nameof(ArtTiAmortizationReport.MasterRef)
                 //,nameof(ArtTiAmortizationReport.AccountType)

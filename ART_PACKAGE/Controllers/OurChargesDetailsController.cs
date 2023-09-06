@@ -1,23 +1,23 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers {
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "OurChargesDetails")]
 
-    
+
     public class OurChargesDetailsController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public OurChargesDetailsController(IPdfService pdfSrv, AuthContext fti)
+        public OurChargesDetailsController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -88,8 +88,8 @@ namespace ART_PACKAGE.Controllers {
                         field = "ChgDueEgp",
                         aggregate = GridAggregateType.sum.ToString()
                     }
-                    
-                    
+
+
                 }
             });
             ViewBag.defaultGroup = defaultGrouping;
@@ -113,13 +113,13 @@ namespace ART_PACKAGE.Controllers {
             var columnsToPrint = new List<string>() {
                 nameof(ArtTiChargesDetailsReport.MasterRef)
                ,nameof(ArtTiChargesDetailsReport.EventRef)
-               ,nameof(ArtTiChargesDetailsReport.Address1) 
-               ,nameof(ArtTiChargesDetailsReport.Action) 
+               ,nameof(ArtTiChargesDetailsReport.Address1)
+               ,nameof(ArtTiChargesDetailsReport.Action)
                ,nameof(ArtTiChargesDetailsReport.Status)
                ,nameof(ArtTiChargesDetailsReport.ChgDue)
                ,nameof(ArtTiChargesDetailsReport.ChgCcy)
                ,nameof(ArtTiChargesDetailsReport.SchAmt)
-               ,nameof(ArtTiChargesDetailsReport.Descr)    
+               ,nameof(ArtTiChargesDetailsReport.Descr)
             };
             var ColumnsToSkip = typeof(ArtTiChargesDetailsReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
 
@@ -135,7 +135,7 @@ namespace ART_PACKAGE.Controllers {
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
                 return File(pdfBytes, "application/pdf");
             }
-            
+
         }
     }
 }

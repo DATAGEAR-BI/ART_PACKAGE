@@ -1,25 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
 
-namespace ART_PACKAGE.Controllers {
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "OurChargesByCustomer")]
 
-    
+
     public class OurChargesByCustomerController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public OurChargesByCustomerController(IPdfService pdfSrv, AuthContext fti)
+        public OurChargesByCustomerController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -65,7 +63,7 @@ namespace ART_PACKAGE.Controllers {
         }
         public IActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -86,9 +84,9 @@ namespace ART_PACKAGE.Controllers {
             var DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].DisplayNames;
             var columnsToPrint = new List<string>() {
                 nameof(ArtTiChargesByCustReport.MasterRef)
-               ,nameof(ArtTiChargesByCustReport.Gfcun) 
-               ,nameof(ArtTiChargesByCustReport.Hvbad1) 
-               ,nameof(ArtTiChargesByCustReport.TotoalClaimedChgDue) 
+               ,nameof(ArtTiChargesByCustReport.Gfcun)
+               ,nameof(ArtTiChargesByCustReport.Hvbad1)
+               ,nameof(ArtTiChargesByCustReport.TotoalClaimedChgDue)
                ,nameof(ArtTiChargesByCustReport.TotoalPaidChgDue)
                ,nameof(ArtTiChargesByCustReport.TotoalOutstandingChgDue)
                ,nameof(ArtTiChargesByCustReport.TotoalWaivedChgDue)   };

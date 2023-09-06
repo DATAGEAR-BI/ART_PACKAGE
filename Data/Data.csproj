@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DGAML\**" />
     <Compile Remove="DGCMGMT\**" />
-    <EmbeddedResource Remove="DGAML\**" />
     <EmbeddedResource Remove="DGCMGMT\**" />
-    <None Remove="DGAML\**" />
     <None Remove="DGCMGMT\**" />
   </ItemGroup>
 
@@ -19,10 +16,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.90" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\FTI\" />
   </ItemGroup>
 
 </Project>

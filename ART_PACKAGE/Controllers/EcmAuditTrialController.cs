@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Text;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using CsvHelper;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.Pdf;
+using CsvHelper;
+using Data.Data.FTI;
 using Data.TIZONE2;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Data;
+using System.Globalization;
+using System.Linq.Dynamic.Core;
+using System.Text;
 
-namespace ART_PACKAGE.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles ="EcmAuditTrial")]
 
-    
+
     public class EcmAuditTrialController : Controller
     {
 
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly TIZONE2Context ti;
         //private readonly ACTIVITI_FTI_DB.ModelContext ACTIVITI_FTI;
         //private readonly DGCMGMT_FTI_DB.ModelContext DGCMGMT_FTI;
@@ -30,7 +28,7 @@ namespace ART_PACKAGE.Controllers {
 
 
 
-        public EcmAuditTrialController(IPdfService pdfSrv, AuthContext fti, TIZONE2Context ti)
+        public EcmAuditTrialController(IPdfService pdfSrv, FTIContext fti, TIZONE2Context ti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -115,9 +113,9 @@ namespace ART_PACKAGE.Controllers {
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames  = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
+            var DisplayNames = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
 
-            var ColumnsToSkip  = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
+            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
 
             var data = fti.ArtTiEcmAuditReports.CallData<ArtTiEcmAuditReport>(req).Data.ToList();
             ViewData["title"] = "ECM Audit Trial Report";
@@ -132,7 +130,7 @@ namespace ART_PACKAGE.Controllers {
         public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
             var data = fti.ArtTiEcmAuditReports.AsQueryable().CallData<ArtTiEcmAuditReport>(para.Req).Data;
-            var res = data.AsEnumerable<ArtTiEcmAuditReport>().OrderBy(x=>x.EcmReference).GroupBy(x => new {  x.EcmReference,x.FtiReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
+            var res = data.AsEnumerable<ArtTiEcmAuditReport>().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.FtiReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
             var after = res.Select(x =>
             {
                 var ListOfMatchingEcm = ti.Masters.Where(c => c.MasterRef == x.Key.FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => co.NoteText);

@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
@@ -15,10 +14,10 @@ namespace ART_PACKAGE.Controllers
 
     public class ACPostingsAccountController : Controller
     {
-        private readonly AuthContext fti;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
 
-        public ACPostingsAccountController(IPdfService pdfSrv, AuthContext fti, IDropDownService dropDown)
+        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;

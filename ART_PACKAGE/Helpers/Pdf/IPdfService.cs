@@ -1,8 +1,8 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace ART_PACKAGE.Services.Pdf
+namespace ART_PACKAGE.Helpers.Pdf
 {
     public interface IPdfService
     {

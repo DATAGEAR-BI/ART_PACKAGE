@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
-    public partial class ArtTiChargesByCustReport
+    public partial class ArtTiChargesByMasterReport
     {
         public string? Hvbad1 { get; set; }
-        public string? Gfcun { get; set; }
         public string? Longname { get; set; }
         public string? MasterRef { get; set; }
         public decimal? TotoalPeriodicBilledChgDue { get; set; }

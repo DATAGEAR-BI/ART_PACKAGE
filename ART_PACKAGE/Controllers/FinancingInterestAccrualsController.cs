@@ -1,24 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Data;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
     //[Authorize(Policy = "Licensed" , Roles = "FinancingInterestAccruals")]
 
-    
+
     public class FinancingInterestAccrualsController : Controller
     {
-        private readonly AuthContext fti ;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-        public FinancingInterestAccrualsController(IPdfService pdfSrv, AuthContext fti)
+        public FinancingInterestAccrualsController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
@@ -89,11 +87,11 @@ namespace ART_PACKAGE.Controllers {
             ViewData["desc"] = "This report produces details of interest accruals to date for financing transactions, showing for each the interest earned to date";
 
             var DisplayNames = ReportsConfig.CONFIG[nameof(FinancingInterestAccrualsController).ToLower()].DisplayNames;
-            var columnsToPrint = new List<string>() 
+            var columnsToPrint = new List<string>()
             {nameof(ArtTiFinanInterAccrual.MasterRef)
-            , nameof(ArtTiFinanInterAccrual.Address1) 
-            , nameof(ArtTiFinanInterAccrual.Prodcut) 
-            , nameof(ArtTiFinanInterAccrual.Startdate) 
+            , nameof(ArtTiFinanInterAccrual.Address1)
+            , nameof(ArtTiFinanInterAccrual.Prodcut)
+            , nameof(ArtTiFinanInterAccrual.Startdate)
             , nameof(ArtTiFinanInterAccrual.Maturity)
             , nameof(ArtTiFinanInterAccrual.InterestRateType)
 

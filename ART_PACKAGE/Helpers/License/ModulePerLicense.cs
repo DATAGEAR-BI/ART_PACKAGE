@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Helpers.License
             nameof(UserPerformancePerActionUserController).ToLower() ,
             nameof(UserPerformancePerUserAndActionController).ToLower() ,
             nameof(UserPerformPerActionController).ToLower() ,
-            nameof(AlertedEntitiesController).ToLower() ,
+            //nameof(AlertedEntitiesController).ToLower() ,
         };
 
 
