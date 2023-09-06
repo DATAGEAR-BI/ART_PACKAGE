@@ -39,12 +39,13 @@ namespace ART_PACKAGE.Helpers.CustomReportHelpers
                                 AND c.TABLE_NAME = N'{1}'
                                 AND o.type = '{2}';"},
             {"oracle",@"select
-                               col.table_name as VIEW_NAME, 
-                               col.column_name as COLUMN_NAME
+                               col.COLUMN_NAME as ""Name"", 
+                               col.DATA_TYPE as ""SqlDataType"",
+                               col.NULLABLE as ""IsNullable""
                         from sys.all_tab_columns col
-                        inner join (    SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
+                        inner join (    SELECT view_name  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
                                         union  all
-                                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME , 'U' as TYPE  FROM user_tables  ) v
+                                        SELECT table_name as VIEW_NAME , 'U' as TYPE  FROM user_tables  ) v
                         on col.table_name = v.VIEW_NAME and v.view_name = '{0}' and v.TYPE = '{1}'"}
         };
         private static readonly Dictionary<string, string> DataSql = new()

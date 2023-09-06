@@ -356,6 +356,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li class="active ">
+                                    <a href="@Url.Action("Index", "GOAMLReportsSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Reports Summary</span></a>
+                                </li>
+                                <li class="active ">
                                     <a href="@Url.Action("Index", "GOAMLReportIndicatorDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Report Indicator Details</span></a>
                                 </li>
                                 <li class="active ">
@@ -363,9 +366,6 @@
                                 </li>
                                 <li class="active ">
                                     <a href="@Url.Action("Index", "GOAMLReportsSuspect")"><i class="glyphicon glyphicon-tasks"></i> <span>Reports Suspect</span></a>
-                                </li>
-                                <li class="active ">
-                                    <a href="@Url.Action("Index", "GOAMLReportsSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Reports Summary</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -400,7 +400,31 @@
                 
                 
             </li>
+
+                @if (Modules.Contains("AMLANALYSIS"))
+                {
+
+
+                    <li class="treeview ">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-cog"></i> <span>Aml Analysis</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class=" ">
+                                <a href="@Url.Action("Index", "AML_ANALYSIS")"><i class="glyphicon glyphicon-user"></i> <span>Aml Analysis Report</span></a>
+                            </li>
+                            <li class=" ">
+                                <a href="@Url.Action("Builder", "AML_ANALYSIS")"><i class="glyphicon glyphicon-stop"></i> <span>Aml Analysis Auto Rules</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+
             }
+            
             <li class="treeview ">
                 <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Custom Report</span>
@@ -436,8 +460,8 @@
                         <a href="@Url.Action("Roles", "UserRole")"><i class="glyphicon glyphicon-stop"></i> <span>Roles</span></a>
                     </li>
                 </ul>
-            </li> 
-            
+            </li>    
+           
         </ul>
 
     </section>

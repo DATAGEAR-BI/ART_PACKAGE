@@ -2,7 +2,7 @@
 {
     public class ExportDto<T>
     {
-        public T[] SelectedIdz { get; set; }
+        public List<T> SelectedIdz { get; set; }
         public KendoRequest Req { get; set; }
 
         public bool All { get; set; }

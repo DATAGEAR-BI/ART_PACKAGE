@@ -45,5 +45,21 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnAuditModelCreating(modelBuilder);
 
         }
+
+        public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnAmlAnalysisModelCreating(modelBuilder);
+
+        }
+
+        public void OnFcfkcAmlAnalysisModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnFcfkcAmlAnalysisModelCreating(modelBuilder);
+        }
+
+        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnFcfkcECMModelCreating(modelBuilder);
+        }
     }
 }

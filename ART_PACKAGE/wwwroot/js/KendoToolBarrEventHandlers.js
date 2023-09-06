@@ -13,90 +13,26 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
 
 }
 export const Handlers = {
-    csvExport: async (e, controller, url) => {
-
-        //kendo.ui.progress($('#grid'), true);
-        //var ds = $("#grid").data("kendoGrid");
-        //var total = ds.dataSource.total();
-        //var take = 1000;
-        //var skip = 0;
-        //var id = document.getElementById("script").dataset.id;
-        //var selectedrecords = [];
-        //var all = true;
-        //if (selectedrecords && [...selectedrecords].length != 0)
-        //    all = false
-        //var filters = ds.dataSource.filter();
-        //var para = {}
-        //if (id) {
-        //    para.Id = id;
-        //}
-
-        //para.Filter = filters;
-        //var promses = [];
-        //while (total > 0) {
-        //    para.Take = take;
-        //    para.Skip = skip;
-        //    var promise = new Promise(async (resolve, reject) => {
-
-
-        //        var isMyreports = window.location.href.toLowerCase().includes('myreports');
-        //        var res;
-        //        if (isMyreports) {
-        //            res = await fetch(`/${controller}/ExportMyReports`, {
-        //                method: "POST",
-        //                headers: {
-        //                    "Content-Type": "application/json",
-        //                    "Accept": "application/json"
-        //                },
-        //                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-        //            });
-        //        } else {
-        //            res = await fetch(`/${controller}/Export`, {
-        //                method: "POST",
-        //                headers: {
-        //                    "Content-Type": "application/json",
-        //                    "Accept": "application/json"
-        //                },
-        //                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-        //            });
-        //        }
-
-        //        //const contentDispositionHeader = res.headers.get('Content-Disposition');
-
-        //        //const filename = contentDispositionHeader.split(";")[1].trim().split("=")[1].split(".")[0];
-
-        //        var r = await res.blob();
-        //        resolve({
-        //            blob: r
-
-        //        });
-        //    });
-        //    promses.push(promise);
-        //    skip += take;
-        //    total -= take;
-        //}
-
-        //var results = await Promise.all(promses);
-        //results.forEach((x, i) => {
-        //    var a = document.createElement("a");
-        //    var dateNow = new Date();
-
-        //    a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".csv");
-        //    a.href = window.URL.createObjectURL(x.blob);
-        //    a.click();
-        //});
-        //kendo.ui.progress($('#grid'), false);
+    csvExport: async (e, controller, url, prop) => {
 
 
         var id = document.getElementById("script").dataset.id;
         var ds = $("#grid").data("kendoGrid");
         var selectedrecords = [];
 
-        var all = true;
-        if (selectedrecords && [...selectedrecords].length != 0)
-            all = false
+        var all = !localStorage.getItem("selectedidz") || [...Object.values(JSON.parse(localStorage.getItem("selectedidz")))].every(x => x.length == 0) || localStorage.getItem("isAllSelected") === "true";
+        if (!all)
+            selectedrecords = await Select(prop)
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
+        if (total > 100000) {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'warning';
+            toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
+        }
+
         var para = {}
         if (id) {
             para.Id = id;
@@ -124,7 +60,9 @@ export const Handlers = {
                 },
                 body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
             });
+
         }
+        localStorage.removeItem("selectedidz");
 
     },
     csvExportForStored: async (e, controller) => {
@@ -406,9 +344,7 @@ export const Handlers = {
     Aml_Analysis: {
         closeAlerts: async (e) => {
 
-
-            kendo.ui.progress($('#grid'), true);
-            var selectedidz = await Select("/AML_ANALYSIS/GetData", "PartyNumber");
+            var selectedidz = await Select("PartyNumber");
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
@@ -439,42 +375,23 @@ export const Handlers = {
                     Comment: comment.value,
                     Desc: document.getElementById("close-desc").value,
                 }
-                var res = await fetch("/AML_ANALYSIS/Close", {
+                var res = fetch("/AML_ANALYSIS/Close", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
                     body: JSON.stringify(para)
+                }).then(x => {
+                    comment.value = "";
+                    localStorage.removeItem("selectedidz");
                 });
-                if (res.ok) {
-
-                    toastObj.icon = 'success';
-
-                }
-                else {
-
-                    toastObj.icon = 'error';
-
-                }
-                var resText = await res.json();
-                toastObj.text = resText;
-                toastObj.heading = "Close Status";
-                $.toast(toastObj);
-                comment.value = "";
-
                 $("#closeModal").modal("hide");
-                $("#grid").data("kendoGrid").refresh();
+
             }
-
-            kendo.ui.progress($('#grid'), false);
-
         },
         routeAlerts: async (e) => {
-
-
-            kendo.ui.progress($('#grid'), true);
-            var selectedidz = await Select("/AML_ANALYSIS/GetData", "PartyNumber");
+            var selectedidz = await Select("PartyNumber");
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
@@ -580,35 +497,20 @@ export const Handlers = {
 
                 }
 
-                var res = await fetch("/AML_ANALYSIS/Route", {
+                var res = fetch("/AML_ANALYSIS/Route", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
                     body: JSON.stringify(para)
-                })
-                if (res.ok) {
+                }).then(x => {
+                    comment.value = "";
+                    localStorage.removeItem("selectedidz");
+                });
 
-                    toastObj.icon = 'info';
-
-                }
-                else {
-
-                    toastObj.icon = 'error';
-
-                }
-                var resText = await res.json();
-                toastObj.text = resText;
-                toastObj.heading = "Route Status";
-                $.toast(toastObj);
-
-
-                comment.value = "";
-
-                $("#closeModal").modal("hide");
+                $("#RouteModal").modal("hide");
             }
-            kendo.ui.progress($('#grid'), false);
 
         },
         CloseAll: async (e) => {
@@ -686,7 +588,7 @@ export const Handlers = {
     Aml_AnalysisRules: {
         testRules: async (e) => {
             kendo.ui.progress($('#grid'), true);
-            var selectedidz = await Select("/AML_ANALYSIS/GetRulesData", "Id")
+            var selectedidz = await Select("Id")
             if (!selectedidz || [...selectedidz].length == 0) {
                 toastObj.icon = 'error';
                 toastObj.text = "there is no rules selected";
@@ -711,16 +613,16 @@ export const Handlers = {
                         transport: {
                             read: async (options) => {
                                 var data = await (res).json();
-
+                                console.log(data);
                                 options.success(data);
                             }
                         },
                         schema: {
                             model: {
                                 fields: {
-                                    Id: { type: "number" },
-                                    AlertedEntities: { type: "number" },
-                                    Alerts: { type: "number" }
+                                    id: { type: "number" },
+                                    alertedEntities: { type: "number" },
+                                    alerts: { type: "number" }
                                 }
                             }
                         },
@@ -742,9 +644,9 @@ export const Handlers = {
 
 
                     columns: [
-                        { field: "Id", title: "Rule ID", width: 80 },
-                        { field: "AlertedEntities", width: 80, title: "Number Of Matched Enities" },
-                        { field: "Alerts", title: "Number Of Matched Alerts", width: 80 },
+                        { field: "id", title: "Rule ID", width: 80 },
+                        { field: "alertedEntities", width: 80, title: "Number Of Matched Enities" },
+                        { field: "alerts", title: "Number Of Matched Alerts", width: 80 },
                     ]
 
                 });
@@ -808,6 +710,247 @@ export const Handlers = {
         },
         crtrule: (e) => {
             $('#collapseDiv').collapse("toggle")
+        },
+        performAction: async (e) => {
+            //
+            //document.getElementById("ruleStatus").check();
+            //console.log(document.getElementById("ruleStatus").status);
+            var selectedRules = await Select("Id");
+            if (!selectedRules || [...selectedRules].length != 1) {
+                toastObj.icon = 'error';
+                toastObj.text = "you must select one and only one rule";
+                toastObj.heading = "Perform Action on rule Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+                return;
+            }
+
+            var rule = selectedRules[0];
+
+            var ruleRes = await fetch("/AML_ANALYSIS/GetRuleById/" + rule);
+            var ruleData = {};
+            if (ruleRes.ok)
+                ruleData = await ruleRes.json();
+            else {
+                var error = await ruleRes.json();
+                toastObj.icon = 'error';
+                toastObj.text = error.description;
+                toastObj.heading = "Perform Action on rule Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+                return;
+            }
+            var ruleSwitch = document.getElementById("ruleStatus");
+            var ruleActionSelect = document.getElementById("ruleAction");
+            var header = document.getElementById("ruleHeader");
+            var desc = document.getElementById("ruleDesc");
+            header.innerText = "Rule Number : " + ruleData.id
+            desc.innerText = ruleData.readableOutPut;
+            //make switch correspond to rule active
+            if (ruleData.active)
+                ruleSwitch.check();
+            else
+                ruleSwitch.unCheck();
+
+
+            var actionMap = {
+                0: "Close",
+                1: "Route",
+                2: "NoAction"
+            };
+            [...ruleActionSelect.options].forEach(async x => {
+
+                if (ruleData.action == actionMap[x.value]) {
+                    x.selected = true;
+                    var userrule = [];
+                    if (ruleData.routeToUser)
+                        userrule = ruleData.routeToUser.split("--");
+                    await CreateQueueUserSelects(x.value, userrule[0], userrule[1]);
+
+
+                    $(ruleActionSelect).selectpicker('refresh');
+
+                }
+            });
+            async function CreateQueueUserSelects(action, queue, user) {
+                var container = document.getElementById("activeDiv");
+                var queueuser = document.getElementById("queueuser");
+
+                if (action == "1" && !queueuser) {
+                    var div = document.createElement("div");
+                    div.style.padding = "1%";
+                    div.classList = "row";
+                    div.id = "queueuser"
+                    var queueselect = document.createElement("select");
+                    queueselect.id = "queueSelect";
+                    queueselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
+                    queueselect.setAttribute("data-live-search", true);
+                    var queues = await (await fetch("/AML_ANALYSIS/GetQueues", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        }
+                    })).json();
+                    var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.innerText = "Select A Queue";
+                    queueselect.append(opt);
+                    queues.forEach(x => {
+                        var opt = document.createElement("option");
+                        opt.value = x;
+                        opt.innerText = x;
+                        if (queue && x == queue)
+                            opt.selected = true;
+                        queueselect.append(opt);
+                    });
+                    var q = queue ? queue : "";
+                    var userselect = document.createElement("select");
+                    userselect.id = "userSelect";
+                    userselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
+                    userselect.setAttribute("data-live-search", true);
+                    var users = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(q)
+                    })).json();
+                    var opt = document.createElement("option");
+                    opt.value = "";
+                    opt.innerText = "Select A User";
+                    userselect.append(opt);
+                    users.forEach(x => {
+                        var opt = document.createElement("option");
+                        opt.value = x;
+                        opt.innerText = x;
+                        if (user && x == user)
+                            opt.selected = true;
+                        userselect.append(opt);
+                    });
+                    div.appendChild(queueselect);
+                    div.appendChild(userselect);
+                    container.parentNode.insertBefore(div, container.nextSibling);
+                    $('#queueSelect').selectpicker('refresh');
+                    $('#userSelect').selectpicker('refresh');
+
+
+                    queueselect.onchange = async (ev) => {
+                        var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify(ev.target.value)
+                        })).json();
+
+                        userselect.innerHTML = "";
+                        var opt = document.createElement("option");
+                        opt.value = "";
+                        opt.innerText = "Select An User";
+                        userselect.append(opt);
+                        queueUsers.forEach(x => {
+                            var opt = document.createElement("option");
+                            opt.value = x;
+                            opt.innerText = x;
+                            userselect.append(opt);
+                        });
+
+                        $('#userSelect').selectpicker('refresh');
+                    }
+
+                }
+                else if (action != "1") {
+                    var queueUser = document.getElementById("queueuser");
+                    if (queueUser)
+                        container.parentNode.removeChild(queueUser);
+                }
+            }
+            var editBtn = document.getElementById("EditBtn");
+            var dltBtn = document.getElementById("DltBtn");
+            ruleActionSelect.onchange = async (e) => await CreateQueueUserSelects(e.target.value);
+
+            editBtn.onclick = async () => {
+                var para = {};
+                if (ruleActionSelect.value == 1) {
+                    var queueSelect = document.getElementById("queueSelect");
+                    var users = document.getElementById("userSelect");
+
+                    if ((!queueSelect.value || queueSelect.value == "") && (!users.value || users.value == "")) {
+                        toastObj.icon = 'error';
+                        toastObj.text = "You must select user, queue or both";
+                        toastObj.heading = "Edit Rule Status";
+                        $.toast(toastObj);
+                        return;
+                    }
+                    para.RouteToUser = queueSelect.value + "--" + users.value
+                }
+                para = {
+                    Id: ruleData.id,
+                    Action: parseInt(ruleActionSelect.value),
+                    Active: ruleSwitch.status,
+                    ...para
+                };
+
+                var editRes = await fetch("/AML_ANALYSIS/EditRule", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(para)
+                });
+
+                if (editRes.ok) {
+                    toastObj.icon = 'success';
+                    toastObj.text = "update done";
+                    toastObj.heading = "Edit Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+                else {
+                    toastObj.icon = 'error';
+                    toastObj.text = "something wrong happened while update,try again later";
+                    toastObj.heading = "Edit Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+
+            }
+            dltBtn.onclick = async () => {
+                var dltRes = await fetch("/AML_ANALYSIS/DeleteRule/" + ruleData.id, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                });
+                if (dltRes.ok) {
+                    toastObj.icon = 'success';
+                    toastObj.text = "Delete done";
+                    toastObj.heading = "Delete Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+                else {
+                    toastObj.icon = 'error';
+                    toastObj.text = "something wrong happened while delete,try again later";
+                    toastObj.heading = "Delete Rule Status";
+                    $.toast(toastObj);
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    return;
+                }
+
+            }
+            $("#EditRule").modal("show");
+
+
+
         }
 
     },
@@ -963,49 +1106,14 @@ export const changeRowColorHandlers = {
         chngeRowColor(dataItem, row, colorMapping);
     }
 }
-async function Select(url, idcolumn) {
-    var idz = [];
-    var isAllSelected = localStorage.getItem("isAllSelected");
-    var ds = $("#grid").data("kendoGrid");
-    if (isAllSelected !== 'false') {
+async function Select(idcolumn) {
+
+    var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
 
 
-        var id = document.getElementById("script").dataset.id;
+    console.log(idz);
 
-        var filters = ds.dataSource.filter();
-        var total = ds.dataSource.total();
-        var para = {}
-        if (id) {
-            para.Id = id;
-        }
-        para.Take = total;
-        para.Skip = 0;
-        para.Filter = filters;
-        var temp = await (await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(para)
-        })).json()
-
-
-        idz = temp.data.map(x => x[idcolumn]);
-
-        return idz;
-
-    } else {
-        var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
-
-
-
-
-        return idz;
-
-
-    }
-
+    return idz;
 
 
 

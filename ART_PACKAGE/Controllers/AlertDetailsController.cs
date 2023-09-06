@@ -1,16 +1,13 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using System.Globalization;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
@@ -22,13 +19,17 @@ namespace ART_PACKAGE.Controllers
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
         private readonly IHubContext<ExportHub> _exportHub;
-        public AlertDetailsController(SasAmlContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub)
+        private readonly UsersConnectionIds connections;
+
+        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             this.dbfcfkc = dbfcfkc;
 
             _dropDown = dropDown;
             _pdfSrv = pdfSrv;
+
             _exportHub = exportHub;
+            this.connections = connections;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -68,6 +69,7 @@ namespace ART_PACKAGE.Controllers
                 columns = Data.Columns,
                 total = Data.Total,
                 containsActions = false,
+                selectable = true,
                 toolbar = new List<dynamic>  {new
                 {
                     id = "StreamExport",
@@ -83,24 +85,42 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> req)
+        public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
+            IEnumerable<Task> tasks;
             int i = 1;
-            foreach (Task<byte[]> item in data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req))
+            if (req.All)
+            {
+                tasks = data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+
+
+            }
+            else
+            {
+
+
+                // Modify the LINQ expression to use Any and Contains
+                tasks = data
+                    .Where(x => req.SelectedIdz.Contains(x.AlertId))
+                    .ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+            }
+
+            foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
             {
                 try
                 {
                     byte[] bytes = await item;
-                    string FileName = GetType().Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                    string FileName = nameof(AlertDetailsController).Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
                                 .SendAsync("csvRecevied", bytes, FileName);
                     i++;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
+                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
                                 .SendAsync("csvErrorRecevied", i);
+
                 }
 
             }
@@ -118,62 +138,7 @@ namespace ART_PACKAGE.Controllers
             return File(pdfBytes, "application/pdf");
         }
 
-        public IEnumerable<ArtAmlAlertDetailView> GetLargeDataSetInBatches(int batchSize)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews;
-            int totalRecords = data.Count();
-            // Implement your data retrieval logic here, fetching data in chunks of 'batchSize'
-            // For example, you could use database queries with pagination.
-            // Ensure that each batch is efficiently streamed and not loading all data at once.
-            // Return each batch of data as an IEnumerable<YourDataClass>.
-            // You may need to adjust the logic based on your specific data source.
-            // This is just a basic example:
-            for (int i = 0; i < totalRecords; i += batchSize)
-            {
-                IQueryable<ArtAmlAlertDetailView> batch = data.Skip(i * batchSize).Take(batchSize);
-                foreach (ArtAmlAlertDetailView? item in batch)
-                {
-                    yield return item;
-                }
-            }
-        }
-        public async Task<IActionResult> StreamExport()
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews;
-            int totalRecords = data.Count();
-            CsvConfiguration csvConfig = new(CultureInfo.InvariantCulture)
-            {
-                Delimiter = ",",
-                HasHeaderRecord = true, // Set this to false if you don't want a header row
-            };
-            try
-            {
 
-                while (totalRecords > 0)
-                {
-                    MemoryStream stream = new();
-                    using StreamWriter writer = new(stream);
-                    using (CsvWriter csv = new(writer, csvConfig))
-                    {
-                        csv.WriteRecords(GetLargeDataSetInBatches(1000));
-                        byte[] bytes = stream.ToArray();
-                        await _exportHub.Clients.Client(ExportHub.Connections[User.Identity.Name])
-                            .SendAsync("csvRecevied", bytes);
-                        writer.AutoFlush = true;
-                        stream.Position = 0;
-
-                    }
-                    totalRecords -= 1000;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return new EmptyResult();
-        }
         public IActionResult Index()
         {
             return View();

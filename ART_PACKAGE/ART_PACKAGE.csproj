@@ -10,6 +10,14 @@
 	<Target Name="CleanCodeTask" BeforeTargets="Build">
 		<Exec Command="dotnet format style -v detailed" />
 	</Target>
+
+	<ItemGroup>
+		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="Helpers\Aml_Analysis\**" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
@@ -19,6 +27,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
+		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -26,6 +35,19 @@
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisUpdateTableIndecator.cs" />
+		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\EditRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
+		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

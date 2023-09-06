@@ -1,6 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
@@ -8,10 +10,12 @@ using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +32,12 @@ builder.Services.AddSignalR();
 builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
-
-builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddAmlAnalysis();
+builder.Services.AddScoped<ICsvExport, CsvExport>();
+builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 
@@ -46,6 +52,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLicense(builder.Configuration);
+builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
 
@@ -65,7 +72,6 @@ WebApplication app = builder.Build();
 List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
 using IServiceScope scope = app.Services.CreateScope();
 AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
-SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
 if (authContext.Database.GetPendingMigrations().Any())
 {
     authContext.Database.Migrate();
@@ -84,6 +90,8 @@ if (modules.Contains("ECM"))
 
 if (modules.Contains("SEG"))
 {
+    SegmentationContext SegContext = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
+
     if (SegContext.Database.GetPendingMigrations().Any())
     {
         SegContext.Database.Migrate();
@@ -98,7 +106,15 @@ if (modules.Contains("GOAML"))
         GoAmlContext.Database.Migrate();
     }
 }
+if (modules.Contains("SASAML"))
+{
+    SasAmlContext sasAmlContext = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
 
+    if (sasAmlContext.Database.GetPendingMigrations().Any())
+    {
+        sasAmlContext.Database.Migrate();
+    }
+}
 
 if (modules.Contains("DGAML"))
 {
@@ -116,6 +132,15 @@ if (modules.Contains("DGAUDIT"))
     if (DgAuditContext.Database.GetPendingMigrations().Any())
     {
         DgAuditContext.Database.Migrate();
+    }
+}
+if (modules.Contains("AMLANALYSIS"))
+{
+    AmlAnalysisContext amlAnalysisContext = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
+
+    if (amlAnalysisContext.Database.GetPendingMigrations().Any())
+    {
+        amlAnalysisContext.Database.Migrate();
     }
 }
 
@@ -140,6 +165,7 @@ app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
+app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
