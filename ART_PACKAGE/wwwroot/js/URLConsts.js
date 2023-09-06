@@ -68,6 +68,7 @@
     ArtKycHighThreeMonth: "/ArtKycHighThreeMonth/GetData",
     ArtKycHighTwoMonth: "/ArtKycHighTwoMonth/GetData",
     ArtKycLowExpired: "/ArtKycLowExpired/GetData",
+    ArtKycLowOneMonth: "/ArtKycLowOneMonth/GetData",
     ArtKycLowThreeMonth: "/ArtKycLowThreeMonth/GetData",
     ArtKycLowTwoMonth: "/ArtKycLowTwoMonth/GetData",
     ArtKycMediumExpired: "/ArtKycMediumExpired/GetData",
