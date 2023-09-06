@@ -1,42 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Linq.Dynamic.Core;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using Data.DGECM;
-using Microsoft.EntityFrameworkCore;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Services.Pdf;
+using Data.Data.ECM;
+using Data.DGECM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     [AllowAnonymous]
     public class SystemPerformanceController : Controller
     {
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly DGECMContext db;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
 
-        public SystemPerformanceController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
+        public SystemPerformanceController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
-            this._env = env;
+            _env = env;
             _pdfSrv = pdfSrv;
             context = _context;
             this.db = db;
             _dropSrv = dropSrv;
         }
 
-        public IActionResult Test()
-        {
-            var data = context.ArtSystemPerformances.Where(x => x.CreateDate.Date.CompareTo(new DateTime(2022, 04, 12).Date) == 0).Take(10);
-            return Ok(data);
-        }
+
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtSystemPreformance> data = context.ArtSystemPreformances.AsQueryable();
@@ -62,7 +55,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
-            var Data = data.CallData<ArtSystemPreformance>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtSystemPreformance> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -80,20 +73,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtSystemPreformances;
-            var bytes = await data.ExportToCSV<ArtSystemPreformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtSystemPreformance> data = context.ArtSystemPreformances;
+            byte[] bytes = await data.ExportToCSV<ArtSystemPreformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            var data = context.ArtSystemPreformances.CallData<ArtSystemPreformance>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
+            List<ArtSystemPreformance> data = context.ArtSystemPreformances.CallData(req).Data.ToList();
             ViewData["title"] = "System Performance Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

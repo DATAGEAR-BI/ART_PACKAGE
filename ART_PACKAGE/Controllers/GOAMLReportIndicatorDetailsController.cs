@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.DropDown;
 using System.Linq.Dynamic.Core;
+using Data.Data.ARTGOAML;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GOAMLReportIndicatorDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtGoAmlContext _context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
 
-        public GOAMLReportIndicatorDetailsController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public GOAMLReportIndicatorDetailsController(ArtGoAmlContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             _context = context;
             _pdfSrv = pdfSrv;
@@ -43,7 +42,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtGoamlReportsIndicator>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtGoamlReportsIndicator> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -61,19 +60,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = _context.ArtGoamlReportsIndicators.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtGoamlReportsIndicator, GenericCsvClassMapper<ArtGoamlReportsIndicator, GOAMLReportIndicatorDetailsController>>(para.Req);
+            IQueryable<ArtGoamlReportsIndicator> data = _context.ArtGoamlReportsIndicators.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtGoamlReportsIndicator, GenericCsvClassMapper<ArtGoamlReportsIndicator, GOAMLReportIndicatorDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].SkipList;
-            var data = _context.ArtGoamlReportsIndicators.CallData<ArtGoamlReportsIndicator>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].SkipList;
+            List<ArtGoamlReportsIndicator> data = _context.ArtGoamlReportsIndicators.CallData(req).Data.ToList();
             ViewData["title"] = "GOAML Reports Indicatores";
             ViewData["desc"] = "Presents each GOAML report with the related indicators";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

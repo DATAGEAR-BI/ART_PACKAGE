@@ -1,7 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
 
-using System.Collections.Generic;
-
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
     public class ReportConfig

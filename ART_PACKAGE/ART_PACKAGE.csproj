@@ -4,7 +4,51 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
+	<Target Name="CleanCodeTask" BeforeTargets="Build">
+		<Exec Command="dotnet format style -v detailed" />
+	</Target>
+
+	<ItemGroup>
+		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="Helpers\Aml_Analysis\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="bcprov-jdk15on-1.68">
+			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
+		</Reference>
+		<Reference Include="commons-codec-1.11">
+			<HintPath>commons-codec-1.11.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\segmentReport.js" />
+		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
+		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisUpdateTableIndecator.cs" />
+		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\EditRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
+		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Views\DGAMLAlertDetails\**" />
@@ -1036,7 +1080,12 @@
 		<None Include="Views\RiskSummary\Index.cshtml" />
 		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
+
 		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
+		<None Include="Views\UserRole\Roles.cshtml" />
+		<None Include="Views\UserRole\Users.cshtml" />
+		<None Include="Views\UserRole\UsersRolesMatrix.cshtml" />
+
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />
@@ -1814,6 +1863,8 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\segmentReport.js" />
+		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 
@@ -1823,6 +1874,7 @@
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="IKVM" Version="8.6.2" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -1853,6 +1905,11 @@
 	<ItemGroup>
 		<TypeScriptCompile Include="wwwroot\lib\spin.js\spin.d.ts" />
 		<TypeScriptCompile Include="wwwroot\lib\spin.js\SpinnerOptions.d.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Licenses\" />
+		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 
 </Project>

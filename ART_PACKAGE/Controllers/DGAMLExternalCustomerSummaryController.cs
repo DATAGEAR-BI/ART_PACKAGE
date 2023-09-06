@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -14,11 +14,11 @@ namespace ART_PACKAGE.Controllers
     public class DGAMLExternalCustomerSummaryController : Controller
     {
 
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public DGAMLExternalCustomerSummaryController(AuthContext _context, IMemoryCache cache, IConfiguration config)
+        public DGAMLExternalCustomerSummaryController(ArtDgAmlContext _context, IMemoryCache cache, IConfiguration config)
         {
             this._context = _context;
             _config = config;
@@ -33,8 +33,8 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStDgAmlExternalCustomerPerBranch> chart1Data = Enumerable.Empty<ArtStDgAmlExternalCustomerPerBranch>().AsQueryable();
             IEnumerable<ArtStDgAmlExternalCustomerPerType> chart3Data = Enumerable.Empty<ArtStDgAmlExternalCustomerPerType>().AsQueryable();
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -52,7 +52,8 @@ namespace ART_PACKAGE.Controllers
 
             }
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStDgAmlExternalCustomerPerType>
                 {
                     ChartId = "StCustomerPerType",

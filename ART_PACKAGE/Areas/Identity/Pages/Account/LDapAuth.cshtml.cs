@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {
@@ -61,7 +60,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var info = ldapUM.Authnticate(this.Input.Email, this.Input.Password);
+                UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);
                 if (info is null)
                 {
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
@@ -69,8 +68,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    var email = info.ProviderKey;
-                    AppUser user = null;
+                    string? email = info.ProviderKey;
                     //if (email is not null )
                     //{
                     //    user = await uM.FindByEmailAsync(email);
@@ -80,7 +78,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     //        return View("login", model);
                     //    }
                     //}
-                    var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, this.Input.RememberMe, true);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, Input.RememberMe, true);
 
                     if (result.Succeeded)
                     {
@@ -91,7 +89,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                         if (email is not null)
                         {
-                            user = await _userManager.FindByEmailAsync(email);
+                            AppUser user = await _userManager.FindByEmailAsync(email);
                             if (user is null)
                             {
                                 user = new AppUser()
@@ -99,14 +97,14 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                     Email = email,
                                     UserName = email
                                 };
-                                var createresult = await _userManager.CreateAsync(user);
+                                IdentityResult createresult = await _userManager.CreateAsync(user);
                                 if (!createresult.Succeeded)
                                 {
                                     ModelState.AddModelError("", $"There is an error while creating an email for you");
                                     return Page();
                                 }
                             }
-                            await _userManager.AddLoginAsync(user, info);
+                            _ = await _userManager.AddLoginAsync(user, info);
                             await _signInManager.SignInAsync(user, true);
 
                         }

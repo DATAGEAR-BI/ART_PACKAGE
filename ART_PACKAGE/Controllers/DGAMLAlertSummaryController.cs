@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
@@ -12,11 +12,11 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLAlertSummaryController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public DGAMLAlertSummaryController(AuthContext _context, IConfiguration config)
+        public DGAMLAlertSummaryController(ArtDgAmlContext _context, IConfiguration config)
         {
             this._context = _context;
             _config = config;
@@ -34,10 +34,10 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ArtStDgAmlAlertsPerScenario> chart4data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
 
 
-            var chart1Params = para.procFilters.MapToParameters(dbType);
-            var chart2Params = para.procFilters.MapToParameters(dbType);
-            var chart3Params = para.procFilters.MapToParameters(dbType);
-            var chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -56,7 +56,8 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var chartData = new ArrayList {
+            ArrayList chartData = new()
+            {
                 new ChartData<ArtStDgAmlAlertsPerStatus>
                 {
                     ChartId = "StAlertsPerStatus",

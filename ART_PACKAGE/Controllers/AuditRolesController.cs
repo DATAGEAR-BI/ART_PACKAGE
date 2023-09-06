@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Services.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using Data.DGECM;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Services.Pdf;
+using Data.Data.Audit;
+using Data.DGECM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -18,16 +15,16 @@ namespace ART_PACKAGE.Controllers
     public class AuditRolesController : Controller
     {
 
-        private readonly AuthContext context;
+        private readonly ArtAuditContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly DGECMContext db;
         private readonly IDropDownService _dropSrv;
 
 
-        public AuditRolesController(AuthContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
+        public AuditRolesController(ArtAuditContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
         {
-            this._env = env; _pdfSrv = pdfSrv; context = _context;
+            _env = env; _pdfSrv = pdfSrv; context = _context;
             this.db = db;
             _dropSrv = dropSrv;
         }
@@ -59,7 +56,7 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var Data = data.CallData<ArtRolesAuditView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtRolesAuditView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -76,19 +73,19 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            var data = context.ArtRolesAuditViews;
-            var bytes = await data.ExportToCSV<ArtRolesAuditView, GenericCsvClassMapper<ArtRolesAuditView, AuditRolesController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ArtRolesAuditView> data = context.ArtRolesAuditViews;
+            byte[] bytes = await data.ExportToCSV<ArtRolesAuditView, GenericCsvClassMapper<ArtRolesAuditView, AuditRolesController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].SkipList;
-            var data = context.ArtRolesAuditViews.CallData<ArtRolesAuditView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].SkipList;
+            List<ArtRolesAuditView> data = context.ArtRolesAuditViews.CallData(req).Data.ToList();
             ViewData["title"] = "ART Role Audit Report";
             ViewData["desc"] = "This report Presents all events of roles with the related information as below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "UsersRolesMatrix";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>UsersRolesMatrix</h2>
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+
+<div id="grid"></div>
+
+<script>
+
+    @*
+     getting columns schema from url
+    *@
+    var columnsData = function () {
+        var tmp = null;
+        $.ajax({
+            'async': false,
+            'type': "POST",
+            'global': false,
+            'dataType': 'json',
+            'url': '/UserRole/GetUserRolesMatrexColumns',
+            'success': function (data) {
+                tmp = data;
+            }
+        });
+        return tmp;
+    }();
+
+   @*
+       filling data source
+   *@
+    var mydataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "/UserRole/GetUsersRolesData",
+                dataType: "json"
+            }
+        },
+        schema: createShcema(columnsData),
+        pageSize: 17,
+
+        serverPaging: false,
+        serverFiltering: false,
+        serverSorting: false
+
+
+    });
+    callKendo();
+
+    @* auto create shcema *@
+    function createShcema(columnsData) {
+        model = {};
+        fields = {};
+        field = {};
+        columnsData.forEach((col,index) => {
+            fieldDAta = {};
+            if (index == 0) {
+                fieldDAta["type"] = "string";
+            } else {
+                fieldDAta["type"] = "boolean";
+            }
+            field[col] = fieldDAta;
+        });
+        fields["fields"] = field;
+        model["model"] = fields;
+        return model;
+
+    }
+
+    @* auto create columns *@
+    function createcolumns(coluViewBagnsData) {
+        var columns = [];
+        columnsData.forEach((col,index) => {
+            column = {};
+            column["field"] = col;
+            column["title"] = col;
+            if (index > 0) {
+
+                column["template"] = "#=dirtyField(data,\"" + col + "\")#<input type=\"checkbox\" #= " + col + " ? \'checked=\"checked\"\' : \"\" # class=\"chkbx k-checkbox\" />";
+            } else {
+                column["locked"] = true;
+            }
+            columns.push(column);
+        });
+        return columns
+    }
+
+    @* create grid *@
+    function callKendo() {
+        $("#grid").kendoGrid({
+            toolbar: ["excel", "pdf"],
+            excel: {
+                fileName: " sheet.xlsx",
+                filterable: true,
+                allPages: true
+            },
+            pdf: {
+                fileName:  " sheet.pdf",
+                allPages: true
+
+            },
+            dataSource: mydataSource,
+            sortable: { mode: "single", allowUnsort: true },
+            reorderable: true,
+            resizable: true,
+            selectable: "single",
+            filterable: true,
+            columns: createcolumns(columnsData),
+            pageable: true,
+            dataBound: function () {
+                for (var i = 0; i < this.columns.length; i++) {
+                    this.autoFitColumn(i);
+                }
+            },
+        });
+
+    };
+    $("#grid .k-grid-content").on("change", "td", "input.chkbx", function (e) {
+        var grid = $("#grid").data("kendoGrid"),
+            dataItem = grid.dataItem($(e.target).closest("tr"));
+        var row = $(this).closest("tr");
+        var colIdx = $("td", row).index(this)+1;
+        var item = grid.dataItem(row);
+        var colName = $('#grid').find('th').eq(colIdx).text()
+        var checkboxValue = item[colName];
+        if (checkboxValue == true) {
+            checkboxValue = false;
+        } else {
+            checkboxValue = true;
+        }
+        $.ajax({
+            url: "/UserRole/ControllUserRolles", //Call to back end
+            data: {
+                UserName: item["UserName"], //passing UserName  ,
+                RoleName: colName, //passing RoleName ,
+                CheckBoxValue: checkboxValue, //passing CheckBoxValue
+            },
+            success: function (result) {
+                //check that all thing tmam
+                console.log('success');
+            },
+            error: function () {
+                //something went wrong
+                alert("Error Please Refresh Page");
+            }
+        });
+    });
+
+    function dirtyField(data, fieldName) {
+        var hasClass = $("[data-uid=" + data.uid + "]").find(".k-dirty-cell").length < 1;
+        if (data.dirty && data.dirtyFields[fieldName] && hasClass) {
+            return "<span class='k-dirty'></span>"
+        }
+        else {
+            return "";
+        }
+    }
+</script>

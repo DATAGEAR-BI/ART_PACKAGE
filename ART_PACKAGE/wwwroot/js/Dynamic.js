@@ -27,7 +27,7 @@ spinnerStyle.rel = "stylesheet";
 spinnerStyle.href = "../lib/spin.js/spin.css";
 
 var grid = document.getElementById("grid");
-localStorage.setItem("selectedidz", "[]");
+localStorage.removeItem("selectedidz");
 localStorage.setItem("isAllSelected", false);
 var filtersDiv = document.createElement("div");
 var exRules = [];
@@ -129,7 +129,7 @@ function intializeGrid() {
             }
             model = generateModel(d);
             columns = generateColumns(d);
-            toolbar = genrateToolBar(d.toolbar);
+            toolbar = genrateToolBar(d.toolbar, d.doesNotContainAllFun);
             var title = document.getElementById("title");
             var desc = document.getElementById("desc");
 
@@ -142,29 +142,33 @@ function intializeGrid() {
 
         });
 }
-function genrateToolBar(data) {
-    var toolbar = [
-        {
-            name: "custom",
-            template: `<span id="tbdataCount"></span>`,
-        },
-        {
-            name: "custom",
-            template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
-        },
-        {
-            name: "custom",
-            template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
-        },
-        {
-            name: "custom",
-            template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
-        },
-        {
-            name: "custom",
-            template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
-        },
-    ];
+function genrateToolBar(data, doesnotcontainsll) {
+    var toolbar = [];
+    if (!doesnotcontainsll) {
+        toolbar = [
+            {
+                name: "custom",
+                template: `<span id="tbdataCount"></span>`,
+            },
+            {
+                name: "custom",
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
+            },
+            {
+                name: "custom",
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
+            },
+            {
+                name: "custom",
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
+            },
+            {
+                name: "custom",
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
+            },
+        ];
+    }
+
     if (data) {
         data.forEach((x) => {
             toolbar.push({
@@ -265,6 +269,7 @@ function generateGrid() {
 
 
                     function readdata() {
+                        url = URLS[urlKey].toString();
                         fetch(url, {
                             method: "POST",
                             headers: {
@@ -284,8 +289,11 @@ function generateGrid() {
                                     options.success(temp);
                                 }
                                 else {
-                                    var tpcountSpan = document.getElementById("tbdataCount");
-                                    tpcountSpan.innerText = `${options.data.skip + 1} - ${options.data.skip + 100} of ${d.total} items`
+                                    if (!d.doesNotContainAllFun) {
+                                        var tpcountSpan = document.getElementById("tbdataCount");
+                                        tpcountSpan.innerText = `${options.data.skip + 1} - ${options.data.skip + 100} of ${d.total} items`
+
+                                    }
                                     options.success([...d.data]);
                                 }
 
@@ -441,11 +449,17 @@ function generateGrid() {
         pageable: true,
         sortable: true,
         change: function (e) {
-            selected[this.dataSource.page()] = [...this.select()].map((x) => {
-                var dataItem = grid.dataItem(x);
+            if ([...this.select()].length > 0) {
+                selected[this.dataSource.page()] = [...this.select()].map((x) => {
+                    var dataItem = grid.dataItem(x);
 
-                return dataItem;
-            });
+                    return dataItem;
+                });
+            } else {
+                
+                selected[this.dataSource.page()] = [];
+
+            }
 
             localStorage.setItem("selectedidz", JSON.stringify(selected));
         },
@@ -525,10 +539,12 @@ function generateGrid() {
     grid.tbody.on("click", ".k-checkbox", (e) => {
         selected = Object.entries(selected).reduce((acc, [key, value]) => {
             if (grid.dataSource.page() == key) {
+
                 acc[key] = value;
             }
             return acc;
         }, {});
+
         localStorage.setItem("selectedidz", JSON.stringify(selected));
         if (isAllSelected) {
             isAllSelected = false;
@@ -564,7 +580,7 @@ function generateGrid() {
                 csvhandler(e, controller);
             } else {
                 var csvhandler = Handlers["csvExport"];
-                csvhandler(e, controller, url);
+                csvhandler(e, controller, url, prop);
             }
 
         }
@@ -588,7 +604,6 @@ function generateGrid() {
             sh_filtershandler(e);
         } else {
             var handler = Handlers[handlerkey][e.target.id];
-            console.log(handler);
             handler(e);
         }
     });

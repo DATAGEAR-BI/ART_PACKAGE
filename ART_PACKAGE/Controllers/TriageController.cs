@@ -1,31 +1,23 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Services;
-using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     public class TriageController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly SasAmlContext dbfcfkc;
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public TriageController(AuthContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public TriageController(SasAmlContext dbfcfkc, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _cache = cache;
@@ -51,7 +43,7 @@ namespace ART_PACKAGE.Controllers
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
             }
-            var Data = data.CallData<ArtAmlTriageView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAmlTriageView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -77,27 +69,27 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<string> exportDto)
         {
 
-            var data = dbfcfkc.ArtAmlTriageViews;
+            Microsoft.EntityFrameworkCore.DbSet<ArtAmlTriageView> data = dbfcfkc.ArtAmlTriageViews;
             if (exportDto.All)
             {
-                var bytes = await data.ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(exportDto.Req);
+                byte[] bytes = await data.ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(exportDto.Req);
                 return File(bytes, "text/csv");
             }
             else
             {
-                var bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(all: false);
+                byte[] bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, TriageController>>(all: false);
                 return File(bytes, "text/csv");
             }
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
-            var data = dbfcfkc.ArtAmlTriageViews.CallData<ArtAmlTriageView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
+            List<ArtAmlTriageView> data = dbfcfkc.ArtAmlTriageViews.CallData(req).Data.ToList();
             ViewData["title"] = "Triage";
             ViewData["desc"] = "Presents each entity with the related active alerts count";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

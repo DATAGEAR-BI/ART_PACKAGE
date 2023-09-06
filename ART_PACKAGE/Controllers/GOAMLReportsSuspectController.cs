@@ -1,24 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.ARTGOAML;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GOAMLReportsSuspectController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtGoAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public GOAMLReportsSuspectController(AuthContext context, IDropDownService dropDown, IPdfService pdfSrv)
+        public GOAMLReportsSuspectController(ArtGoAmlContext context, IDropDownService dropDown, IPdfService pdfSrv)
         {
-            this._context = context;
+            _context = context;
             _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
@@ -45,11 +43,11 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var ColumnsToSkip = new List<string>
+            List<string> ColumnsToSkip = new()
             {
 
             };
-            var Data = data.CallData<ArtGoamlReportsSusbectParty>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtGoamlReportsSusbectParty> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -68,20 +66,20 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = _context.ArtGoamlReportsSusbectParties.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtGoamlReportsSusbectParty, GenericCsvClassMapper<ArtGoamlReportsSusbectParty, GOAMLReportsSuspectController>>(para.Req);
+            IQueryable<ArtGoamlReportsSusbectParty> data = _context.ArtGoamlReportsSusbectParties.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtGoamlReportsSusbectParty, GenericCsvClassMapper<ArtGoamlReportsSusbectParty, GOAMLReportsSuspectController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].SkipList;
-            var data = _context.ArtGoamlReportsSusbectParties.CallData<ArtGoamlReportsSusbectParty>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].SkipList;
+            List<ArtGoamlReportsSusbectParty> data = _context.ArtGoamlReportsSusbectParties.CallData(req).Data.ToList();
             ViewData["title"] = "GOAML Reports Suspected Partites Details";
             ViewData["desc"] = "Presents details about the GOAML reports with the related suspected parties";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

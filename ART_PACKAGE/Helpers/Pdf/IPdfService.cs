@@ -1,10 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Services.Pdf
 {

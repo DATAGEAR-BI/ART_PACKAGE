@@ -214,10 +214,7 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
 
     chart.scrollbarX = new am4core.Scrollbar();
 
-    var title = chart.titles.create();
-    title.text = curvtitle;
-    title.fontSize = 25;
-    title.marginBottom = 30;
+    
     //chart.exporting.menu = new am4core.ExportMenu();
 }
 

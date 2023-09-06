@@ -1,7 +1,9 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
-using System.Collections.Generic;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿using ART_PACKAGE.Helpers.CustomReport;
+
+
+﻿namespace ART_PACKAGE.Helpers.CustomReportHelpers
+
 {
 
     public class KendoRequest

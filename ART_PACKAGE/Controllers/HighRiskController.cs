@@ -1,24 +1,23 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReportHelpers;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Services.Pdf;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     public class HighRiskController : Controller
     {
-        private readonly AuthContext dbfcfcore;
+        private readonly SasAmlContext dbfcfcore;
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public HighRiskController(AuthContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/, IDropDownService dropDown, IPdfService pdfSrv)
+        public HighRiskController(SasAmlContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfcore = dbfcfcore;
             _cache = cache;
@@ -51,11 +50,11 @@ namespace ART_PACKAGE.Controllers
             }
 
 
-            var ColumnsToSkip = new List<string>
+            List<string> ColumnsToSkip = new()
             {
 
             };
-            var Data = data.CallData<ArtAmlHighRiskCustView>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtAmlHighRiskCustView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -74,19 +73,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtAmlHighRiskCustView, GenericCsvClassMapper<ArtAmlHighRiskCustView, HighRiskController>>(para.Req);
+            IQueryable<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtAmlHighRiskCustView, GenericCsvClassMapper<ArtAmlHighRiskCustView, HighRiskController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
-            var data = dbfcfcore.ArtAmlHighRiskCustViews.CallData<ArtAmlHighRiskCustView>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
+            List<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.CallData(req).Data.ToList();
             ViewData["title"] = "High Risk Customers Details";
             ViewData["desc"] = "Presents the High Risk Customers Details";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

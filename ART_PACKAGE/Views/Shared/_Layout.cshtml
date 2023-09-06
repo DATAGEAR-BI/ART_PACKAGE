@@ -22,8 +22,10 @@
     <!-- jQuery 3 -->
 
     <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+   <environment names="UAT,Staging,Production">
+    <script  src="~/js/prodscript.js"></script>
+    </environment>
 
-  
 
 
 
@@ -75,15 +77,19 @@
 
         });
     </script>
-    
+    <link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+    <script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
     @RenderSection("scripts", required: false)
-
-
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/exportlistener.js"></script>
+    <script src="~/js/amlanalysislistener.js"></script>
+    <script src="~/js/activelink.js"></script>
     <script>
         $(document).ready(function () {
 
             if (window.sessionStorage.getItem('sidebarShown')) {
-
+               
                 $('[data-toggle="push-menu"]').pushMenu('toggle');
 
             }
