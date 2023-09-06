@@ -1,25 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DropDown;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Services.Pdf;
 using Data.Data.KYC;
+using ART_PACKAGE.Helpers.Pdf;
+using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Controllers
 {
     public class ArtKycHighExpiredController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly KYCContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public ArtKycHighExpiredController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtKycHighExpiredController(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -45,7 +42,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighExpiredController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtKycHighExpired>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtKycHighExpired> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -63,19 +60,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfkc.ArtKycHighExpireds.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtKycHighExpired, GenericCsvClassMapper<ArtKycHighExpired, ArtKycHighExpiredController>>(para.Req);
+            IQueryable<ArtKycHighExpired> data = dbfcfkc.ArtKycHighExpireds.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtKycHighExpired, GenericCsvClassMapper<ArtKycHighExpired, ArtKycHighExpiredController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighExpiredController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighExpiredController).ToLower()].SkipList;
-            var data = dbfcfkc.ArtKycHighExpireds.CallData<ArtKycHighExpired>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighExpiredController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighExpiredController).ToLower()].SkipList;
+            List<ArtKycHighExpired> data = dbfcfkc.ArtKycHighExpireds.CallData(req).Data.ToList();
             ViewData["title"] = "High risk expired customers Report";
             ViewData["desc"] = "presents all high-risk customers need to be update their expired KYCs with the related information below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

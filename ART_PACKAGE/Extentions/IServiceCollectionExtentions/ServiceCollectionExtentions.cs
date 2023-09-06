@@ -13,6 +13,7 @@ using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.FTI;
+using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.DGAML;
@@ -112,7 +113,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddAmlAnalysis();
             }
 
-
+            if (modulesToApply.Contains("KYC"))
+            {
+                _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
             _ = services.AddScoped<IDbService, DBService>();
             return services;
         }
