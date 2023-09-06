@@ -54,7 +54,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("info");
+
             return View();
         }
 
@@ -139,7 +139,7 @@ namespace ART_PACKAGE.Controllers
                     statuses = alertsPerStatus
                 });
             }
-            else if (modules.Contains("DGAML"))
+            else
             {
                 var dateData = _dgaml.ArtHomeDgamlAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
                 {
@@ -160,7 +160,7 @@ namespace ART_PACKAGE.Controllers
                     statuses = alertsPerStatus
                 });
             }
-            return Ok(false);
+
         }
     }
 }

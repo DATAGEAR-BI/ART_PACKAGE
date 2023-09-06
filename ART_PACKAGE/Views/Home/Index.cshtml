@@ -23,7 +23,7 @@
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/kelly.js"></script>
-    @if (homeType.Contains(HomeType.AML) && modules.Contains("SASAML"))
+    @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
             {
                 <script src="~/js/amlhome.js" type="module" defer></script>
             }

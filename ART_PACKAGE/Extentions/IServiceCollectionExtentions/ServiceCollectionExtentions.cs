@@ -100,6 +100,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
                 _ = services.AddDbContext<FCFKCAmlAnalysisContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddAmlAnalysis();
             }
 
 

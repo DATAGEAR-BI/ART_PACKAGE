@@ -35,7 +35,7 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
-builder.Services.AddAmlAnalysis();
+
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
