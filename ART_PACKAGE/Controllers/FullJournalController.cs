@@ -7,7 +7,7 @@ using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.CSVMAppers;
 
 namespace ART_PACKAGE.Controllers { 

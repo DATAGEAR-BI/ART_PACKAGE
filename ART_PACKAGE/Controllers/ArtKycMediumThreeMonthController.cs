@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Areas.Identity.Data;

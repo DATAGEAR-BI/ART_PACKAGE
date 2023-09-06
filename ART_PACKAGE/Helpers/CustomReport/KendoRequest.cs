@@ -2,7 +2,7 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
 
 
-﻿namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 
 {
 

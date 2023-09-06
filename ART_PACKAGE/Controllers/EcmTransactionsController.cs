@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
 

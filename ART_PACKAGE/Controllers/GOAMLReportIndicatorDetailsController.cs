@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Services.Pdf;
 using ART_PACKAGE.Helpers.DropDown;

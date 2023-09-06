@@ -1,7 +1,7 @@
 ﻿using ART_PACKAGE.Extentions.QueryBuilderExtentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Aml_Analysis;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Models;
 using Data.Data.AmlAnalysis;

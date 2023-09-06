@@ -1,4 +1,4 @@
-﻿namespace ART_PACKAGE.Helpers.CustomReportHelpers
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class ExportDto<T>
     {

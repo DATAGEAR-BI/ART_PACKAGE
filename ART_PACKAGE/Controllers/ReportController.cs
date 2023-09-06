@@ -4,7 +4,7 @@ using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Services.Pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using static ART_PACKAGE.Helpers.CustomReportHelpers.DbContextExtentions;
+using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
 {

@@ -9,7 +9,7 @@ using System.Data;
 using System.Text;
 using static Dapper.SqlMapper;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public static partial class DbContextExtentions
     {

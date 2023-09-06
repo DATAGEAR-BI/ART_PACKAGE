@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
+using Data.Data;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

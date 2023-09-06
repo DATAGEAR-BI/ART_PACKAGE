@@ -1,5 +1,5 @@
 ﻿using ART_PACKAGE.Extentions.DbContextExtentions;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using ART_PACKAGE.Services.Pdf;
 using Data.Constants.StoredProcs;

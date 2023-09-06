@@ -1,23 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Services.Pdf;
+using Data.Data;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
-using System.Dynamic;
-using ART_PACKAGE.Services.Pdf;
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Data.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
 
-namespace ART_PACKAGE._7.Controllers { 
+namespace ART_PACKAGE.Controllers
+{
 
-    
+
     public class ACPostingsAccountController : Controller
     {
         private readonly AuthContext fti;
@@ -98,16 +93,16 @@ namespace ART_PACKAGE._7.Controllers {
             ViewData["desc"] = "This report produces all postings posted to an account by value date";
             var DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].DisplayNames;
             var columnsToPrint = new List<string>() {
-                nameof(ArtTiAcpostingsAccReport.EventRef) 
+                nameof(ArtTiAcpostingsAccReport.EventRef)
                ,nameof(ArtTiAcpostingsAccReport.MasterRef)
-               ,nameof(ArtTiAcpostingsAccReport.AccountType) 
-               ,nameof(ArtTiAcpostingsAccReport.Valuedate) 
+               ,nameof(ArtTiAcpostingsAccReport.AccountType)
+               ,nameof(ArtTiAcpostingsAccReport.Valuedate)
                ,nameof(ArtTiAcpostingsAccReport.AcctNo)
-               ,nameof(ArtTiAcpostingsAccReport.DrCrFlg) 
-               ,nameof(ArtTiAcpostingsAccReport.Ccy) 
-               ,nameof(ArtTiAcpostingsAccReport.PostAmount) 
+               ,nameof(ArtTiAcpostingsAccReport.DrCrFlg)
+               ,nameof(ArtTiAcpostingsAccReport.Ccy)
+               ,nameof(ArtTiAcpostingsAccReport.PostAmount)
             };
-            var ColumnsToSkip = typeof(ArtTiAcpostingsAccReport).GetProperties().Select(x => x.Name).Where(x=> !columnsToPrint.Contains(x)).ToList();
+            var ColumnsToSkip = typeof(ArtTiAcpostingsAccReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
             if (req.Group is not null && req.Group.Count != 0)
             {
                 var pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, this.ControllerContext

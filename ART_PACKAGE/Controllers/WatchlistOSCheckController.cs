@@ -1,6 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Services.Pdf;
 using Data.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +8,8 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers { 
-    //[Authorize(Policy = "Licensed" , Roles = "WatchlistOSCheck")]
-
-    
+namespace ART_PACKAGE.Controllers
+{
     public class WatchlistOSCheckController : Controller
     {
         private readonly AuthContext fti;
@@ -44,7 +42,7 @@ namespace ART_PACKAGE.Controllers {
                {"Shortname".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Shortname).Distinct().Where(x=> x != null ).ToDynamicList() },
                {"Descr".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Descr).Distinct().Where(x=> x != null ).ToDynamicList() },
                {"Status".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Status).Distinct().Where(x=> x != null ).ToDynamicList() },
-               
+
             };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(WatchlistOSCheckController).ToLower()].SkipList;
 

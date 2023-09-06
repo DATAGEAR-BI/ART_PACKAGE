@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public static partial class KendoFiltersExtentions
     {
