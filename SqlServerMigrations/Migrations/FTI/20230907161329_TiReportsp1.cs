@@ -132,11 +132,11 @@ namespace SqlServerMigrations.Migrations.FTI
                                         left join DGECM.DGCmgmt.Ref_Table_Val EV on cl.eventName = EV.Val_Cd and EV.Ref_Table_Name='FTI_EVENT'
                                         left join DGECM.DGCmgmt.Ref_Table_Val cs on cl.Case_Stat_Cd = cs.Val_Cd and cs.Ref_Table_Name='RT_CASE_STATUS'
                                         --left join DGECM_METADATA.COMMENTS comm on CL.case_rk=comm.entity_rk
-                                        left join tizone1.extevent ext on cl.case_id COLLATE Arabic_CI_AS =trim(ext.ecm_ref)
-                                        left join tizone1.Baseevent on Baseevent.key97 = ext.event
-                                        left join tizone1.master mstr on Baseevent.master_key = mstr.key97
-                                        left join tizone1.EXEMPL30 evname on mstr.exemplar = evname.key97
-                                        left join tizone1.EVENTSTEP evstp on BASEEVENT.KEY97=evstp.EVENT_KEY");
+                                        left join TI.tizone1.extevent ext on cl.case_id COLLATE Arabic_CI_AS =trim(ext.ecm_ref)
+                                        left join TI.tizone1.Baseevent on Baseevent.key97 = ext.event
+                                        left join TI.tizone1.master mstr on Baseevent.master_key = mstr.key97
+                                        left join TI.tizone1.EXEMPL30 evname on mstr.exemplar = evname.key97
+                                        left join TI.tizone1.EVENTSTEP evstp on BASEEVENT.KEY97=evstp.EVENT_KEY");
             //ART_FTI_ACTIVITIES
             migrationBuilder.Sql($@"CREATE OR ALTER VIEW [ART_DB].[ART_FTI_ACTIVITIES] as
                                     select 
@@ -198,12 +198,12 @@ namespace SqlServerMigrations.Migrations.FTI
                                         ext.ecm_ref ECM_REFERENCE
                                         from
                                         tizone1.master Mstr
-                                        left join tizone1.EXEMPL30 product on mstr.exemplar = product.key97
-                                        left join tizone1.Baseevent on Baseevent.master_key = mstr.key97
-                                         join tizone1.EXEMPL30 evname on Baseevent.exemplar = evname.key97
-                                        left join tizone1.EVENTSTEP evstp on BASEEVENT.KEY97=evstp.EVENT_KEY
+                                        left join TI.tizone1.EXEMPL30 product on mstr.exemplar = product.key97
+                                        left join TI.tizone1.Baseevent on Baseevent.master_key = mstr.key97
+                                        join TI.tizone1.EXEMPL30 evname on Baseevent.exemplar = evname.key97
+                                        left join TI.tizone1.EVENTSTEP evstp on BASEEVENT.KEY97=evstp.EVENT_KEY
 
-                                        left join tizone1.extevent ext on Baseevent.key97 = ext.event");
+                                        left join TI.tizone1.extevent ext on Baseevent.key97 = ext.event");
             //ART_FTI_ECM_TRANSACTIONS
             migrationBuilder.Sql($@"CREATE OR ALTER VIEW [ART_DB].[ART_FTI_ECM_TRANSACTIONS] AS
                         SELECT 
@@ -229,11 +229,11 @@ namespace SqlServerMigrations.Migrations.FTI
                         left join DGECM.dgcmgmt.ref_table_val prod on cl.product=prod.val_cd
                         left join DGECM.dgcmgmt.ref_table_val prodtype on cl.producttype=prodtype.val_cd
                         left join DGECM.dgcmgmt.ref_table_val event on cl.eventname=event.val_cd
-                        left join TIZONE1.extevent ext on cl.case_id COLLATE Arabic_CI_AS =trim(ext.ecm_ref)
-                        left join TIZONE1.Baseevent on Baseevent.key97 = ext.event
-                        left join TIZONE1.master mstr on Baseevent.master_key = mstr.key97
-                        left join TIZONE1.EXEMPL30 evname on mstr.exemplar = evname.key97
-                        left join TIZONE1.EXTEVENTECM exteve on Baseevent.EXTFIELD = exteve.fk_event");
+                        left join TI.TIZONE1.extevent ext on cl.case_id COLLATE Arabic_CI_AS =trim(ext.ecm_ref)
+                        left join TI.TIZONE1.Baseevent on Baseevent.key97 = ext.event
+                        left join TI.TIZONE1.master mstr on Baseevent.master_key = mstr.key97
+                        left join TI.TIZONE1.EXEMPL30 evname on mstr.exemplar = evname.key97
+                        left join TI.TIZONE1.EXTEVENTECM exteve on Baseevent.EXTFIELD = exteve.fk_event");
 
         }
 
