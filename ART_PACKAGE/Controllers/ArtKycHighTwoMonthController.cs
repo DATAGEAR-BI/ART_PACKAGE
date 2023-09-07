@@ -1,25 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DropDown;
-using Data.Data;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Services.Pdf;
+using Data.Data.KYC;
+using ART_PACKAGE.Helpers.Pdf;
+using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Controllers
 {
     public class ArtKycHighTwoMonthController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly KYCContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public ArtKycHighTwoMonthController(AuthContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtKycHighTwoMonthController(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
-            this._dropDown = dropDown;
+            _dropDown = dropDown;
             _pdfSrv = pdfSrv;
         }
 
@@ -45,7 +42,7 @@ namespace ART_PACKAGE.Controllers
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthController).ToLower()].SkipList;
             }
 
-            var Data = data.CallData<ArtKycHighTwoMonth>(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtKycHighTwoMonth> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -63,19 +60,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            var data = dbfcfkc.ArtKycHighTwoMonths.AsQueryable();
-            var bytes = await data.ExportToCSV<ArtKycHighTwoMonth, GenericCsvClassMapper<ArtKycHighTwoMonth, ArtKycHighTwoMonthController>>(para.Req);
+            IQueryable<ArtKycHighTwoMonth> data = dbfcfkc.ArtKycHighTwoMonths.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtKycHighTwoMonth, GenericCsvClassMapper<ArtKycHighTwoMonth, ArtKycHighTwoMonthController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            var DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthController).ToLower()].DisplayNames;
-            var ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthController).ToLower()].SkipList;
-            var data = dbfcfkc.ArtKycHighTwoMonths.CallData<ArtKycHighTwoMonth>(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthController).ToLower()].SkipList;
+            List<ArtKycHighTwoMonth> data = dbfcfkc.ArtKycHighTwoMonths.CallData(req).Data.ToList();
             ViewData["title"] = "High risk within 2 months customers Report";
             ViewData["desc"] = "presents all high-risk customers need to be update their KYCs within 2 months with the related information below";
-            var pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, this.ControllerContext, 5
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }

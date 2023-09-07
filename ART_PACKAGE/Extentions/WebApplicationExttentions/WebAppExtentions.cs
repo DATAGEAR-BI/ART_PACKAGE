@@ -5,6 +5,7 @@ using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.FTI;
+using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +97,15 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 if (fti.Database.GetPendingMigrations().Any())
                 {
                     fti.Database.Migrate();
+                }
+            }
+            if (modules.Contains("KYC"))
+            {
+                KYCContext kyc = scope.ServiceProvider.GetRequiredService<KYCContext>();
+
+                if (kyc.Database.GetPendingMigrations().Any())
+                {
+                    kyc.Database.Migrate();
                 }
             }
         }

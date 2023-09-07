@@ -58,7 +58,8 @@
   AuditUsers: "/AuditUsers/GetData",
   AuditRoles: "/AuditRoles/GetData",
   AuditGroups: "/AuditGroups/GetData",
-
+  
+   
   //KYC
   ArtAuditCorporate: "/ArtAuditCorporate/GetData",
   ArtAuditIndividuals: "/ArtAuditIndividuals/GetData",
@@ -68,6 +69,7 @@
   ArtKycHighThreeMonth: "/ArtKycHighThreeMonth/GetData",
   ArtKycHighTwoMonth: "/ArtKycHighTwoMonth/GetData",
   ArtKycLowExpired: "/ArtKycLowExpired/GetData",
+  ArtKycLowOneMonth: "/ArtKycLowOneMonth/GetData",
   ArtKycLowThreeMonth: "/ArtKycLowThreeMonth/GetData",
   ArtKycLowTwoMonth: "/ArtKycLowTwoMonth/GetData",
   ArtKycMediumExpired: "/ArtKycMediumExpired/GetData",
