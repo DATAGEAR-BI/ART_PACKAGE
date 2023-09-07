@@ -1,20 +1,13 @@
-# Release Notes - FTI v1.0.1
+# Release Notes - ABK v1.0.0
 
-We are pleased to announce the release of Test App v2.0.20. This version includes several bug fixes and improvements to enhance the overall performance and stability of the app.
+this is the first Art package Released for ABK
 
 ## New Features
 
-- Test Feature
-
-## Improvements
-
-- Test Improvements
-
-## Bug Fixes
-
-- Fixed export in acc posting report
+- Sanction Home DashBoard
+- 5 Reports For FTI Named => (FTI ECM Transaction - FTI Activity - ECM FTI Full Cycle - ECM Activity - Cases Initiated From Branch)
 
 
-We encourage all users to update to the latest version of Test App to take advantage of these improvements and bug fixes.
 
-Thank you for your continued support of Test App. If you have any feedback or issues, please don't hesitate to contact us.
+## Release Date
+released at 09-07-2023 : 8:00PM
