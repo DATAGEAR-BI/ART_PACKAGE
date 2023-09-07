@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
@@ -16,11 +17,13 @@ namespace ART_PACKAGE.Controllers
         private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _drpSrv;
-        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv)
+        private readonly ICsvExport _csvSrv;
+        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv, ICsvExport csvSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
             _drpSrv = drpSrv;
+            _csvSrv = csvSrv;
         }
 
 
@@ -83,8 +86,8 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtFtiEcmTransaction> data = dbfcfkc.ArtFtiEcmTransactions.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtFtiEcmTransaction, GenericCsvClassMapper<ArtFtiEcmTransaction, ArtFtiEcmTransactionController>>(para.Req);
-            return File(bytes, "text/csv");
+            await _csvSrv.ExportAllCsv<ArtFtiEcmTransaction, ArtFtiEcmTransactionController, int>(data, User.Identity.Name, para);
+            return new EmptyResult();
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

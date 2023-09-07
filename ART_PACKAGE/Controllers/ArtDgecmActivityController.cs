@@ -1,26 +1,28 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.FTI;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtDgecmActivity", Policy = "License")]
+
     public class ArtDgecmActivityController : Controller
     {
         private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
-        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService)
+        private readonly ICsvExport _csvSrv;
+        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService, ICsvExport csvSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
+            _csvSrv = csvSrv;
         }
 
 
@@ -84,8 +86,8 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtDgecmActivity, GenericCsvClassMapper<ArtDgecmActivity, ArtDgecmActivityController>>(para.Req);
-            return File(bytes, "text/csv");
+            await _csvSrv.ExportAllCsv<ArtDgecmActivity, ArtDgecmActivityController, int>(data, User.Identity.Name, para);
+            return new EmptyResult();
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
