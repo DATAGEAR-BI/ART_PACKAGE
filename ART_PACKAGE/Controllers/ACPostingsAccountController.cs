@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
@@ -16,11 +17,12 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-
-        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown)
+        private readonly ICsvExport _csvSrv;
+        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown, ICsvExport csvSrv)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
+            _csvSrv = csvSrv;
         }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
@@ -79,9 +81,10 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiAcpostingsAccReport, GenericCsvClassMapper<ArtTiAcpostingsAccReport, ACPostingsAccountController>>(para.Req);
-            return File(bytes, "text/csv");
+            IQueryable<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports.AsQueryable();
+            await _csvSrv.ExportAllCsv<ArtTiAcpostingsAccReport, ACPostingsAccountController, decimal>(data, User.Identity.Name, para);
+            return new EmptyResult();
+
         }
 
 
