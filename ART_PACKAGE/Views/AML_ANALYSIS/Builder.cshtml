@@ -1,0 +1,108 @@
+﻿@using ART_PACKAGE.Helpers;
+@using ART_PACKAGE.Helpers.Aml_Analysis;
+@using ART_PACKAGE.Helpers.HTMLHelpers;
+
+@{
+    ViewData["Title"] = "bluider";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bootstrap-select:not(.input-group-btn), .bootstrap-select[class*=col-] {
+        /* float: none; */
+        display: inline-block;
+        margin-bottom: 1%;
+    }
+</style>
+<link href="~/lib/jquery-querybuilder/css/query-builder.dark.css" rel="stylesheet" />
+<link href="~/lib/jquery-querybuilder/css/query-builder.dark.min.css" rel="stylesheet" />
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
+<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
+<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
+
+<h2>AML Auto Rules</h2>
+<div id="collapseDiv" class="collapse">
+<div id="qeuryContainer" class="row" style="display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:1%">
+    <div id="query" class="col-xs-8 col-md-8 col-sm-8" ></div>
+
+
+   <select id="action" class="col-xs-2 col-md-2 col-sm-2 text-infol selectpicker" asp-items="Html.GetEnumValuesWithDisplayName<AmlAnalysisAction>()"></select>
+        <button id="sql" class="col-xs-2 col-md-2 col-sm-2 btn btn-primary">Okay</button>
+</div>
+<div class="row">
+    <span id="qeuryerror" class="text-danger col-12" hidden></span>
+</div>
+</div>
+
+<div id="grid"></div>
+
+<div class="modal fade" id="TestModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModelBodyHTML">
+                <div id="testRulesGrid"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                <button id="ApplyBtn" class="btn btn-danger" >Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="EditRule" tabindex="-1" role="dialog" aria-labelledby="EditRuleLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2  class="modal-title" id="ruleHeader"></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row"  id="perFormActionBody" style="padding: 5%">
+                <p id="ruleDesc"></p>
+                <div>
+                <select id="ruleAction" class="col-xs-12 col-md-12 col-sm-12 text-infol selectpicker"  asp-items="Html.GetEnumValuesWithDisplayName<AmlAnalysisAction>()"></select>
+                </div >
+                <div class="d-flex justify-content-center align-items-center" id="activeDiv">
+                    <label for="ruleStatus" >Active</label>
+                    <art-switch style=" vertical-align: middle;"  id="ruleStatus"></art-switch>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                <button id="EditBtn" class="btn btn-warning" data-dismiss="modal">Edit</button>
+                    <button id="DltBtn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/querybuilder.js"></script>
+    <script src="~/js/dynamic.js" type="module" id="script" data-prop="Id" data-urlkey="Aml_AnalysisRules" data-handlerkey="Aml_AnalysisRules"></script>
+    <script src="~/js/components/switch/switch.js"></script>
+}
+

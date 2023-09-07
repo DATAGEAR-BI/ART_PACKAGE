@@ -1,14 +1,13 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Caching.Memory;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using ART_PACKAGE.Services.Pdf;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.SASAml;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -18,10 +17,10 @@ namespace ART_PACKAGE.Controllers
         //dbfcfcore.ModelContext db = new dbfcfcore.ModelContext();
         //dbfcfkc.ModelContext dbfcfkc = new dbfcfkc.ModelContext();
 
-        private readonly AuthContext dbfcfcore;
+        private readonly SasAmlContext dbfcfcore;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public CustomersController(AuthContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public CustomersController(SasAmlContext dbfcfcore, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfcore = dbfcfcore;
             _dropDown = dropDown;

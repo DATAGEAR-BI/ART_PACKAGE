@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,10 +12,10 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLArtExternalCustomerDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLArtExternalCustomerDetailsController(AuthContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLArtExternalCustomerDetailsController(ArtDgAmlContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
 
@@ -36,13 +35,13 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown().ToDynamicList() },
-                    {"CitizenCntryName".ToLower(),_dropDown.GetDGCitizenshipCountryNameDropDown().ToDynamicList() },
-                    {"ResidCntryName".ToLower(),_dropDown.GetDGresidenceCountryNameDropDown().ToDynamicList() },
-                    {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown().ToDynamicList() },
-                    {"CityName".ToLower(),_dropDown.GetDGCityNameDropDown().ToDynamicList() },
-                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown().ToDynamicList() },
-                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),_dropDown           .GetDGExternalCustomerBranchNameDropDown()      .ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenshipCountryNameDropDown()          .ToDynamicList() },
+                    {"ResidCntryName".ToLower(),_dropDown       .GetDGresidenceCountryNameDropDown()            .ToDynamicList() },
+                    {"CntryName".ToLower(),_dropDown            .GetDGStreetCountryNameDropDown()               .ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown             .GetDGCityNameDropDown()                        .ToDynamicList() },
+                    {"IdentTypeDesc".ToLower(),_dropDown        .GetDGCustomerIdentificationTypeDropDown()      .ToDynamicList() },
+                    {"ExtCustTypeDesc".ToLower(),_dropDown      .GetDGCustomerTypeDropDown()                    .ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : new();

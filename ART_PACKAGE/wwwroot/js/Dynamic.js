@@ -27,7 +27,7 @@ spinnerStyle.rel = "stylesheet";
 spinnerStyle.href = "../lib/spin.js/spin.css";
 
 var grid = document.getElementById("grid");
-localStorage.setItem("selectedidz", "[]");
+localStorage.removeItem("selectedidz");
 localStorage.setItem("isAllSelected", false);
 var filtersDiv = document.createElement("div");
 var exRules = [];
@@ -68,7 +68,8 @@ var isDateField = [];
 var isNumberField = [];
 var id = document.getElementById("script").dataset.id;
 var defaultfilters = document.getElementById("script").dataset.defaultfilters;
-console.log(defaultfilters);
+var defaultGroup = document.getElementById("script").dataset.defaultgroup;
+var defaultAggs = document.getElementById("script").dataset.aggregates;
 var urlKey = document.getElementById("script").dataset.urlkey;
 var prop = document.getElementById("script").dataset.prop;
 var handlerkey = document.getElementById("script").dataset.handlerkey;
@@ -380,8 +381,10 @@ function generateGrid() {
             serverPaging: true,
             serverFiltering: true,
             ...(defaultfilters && { filter: JSON.parse(defaultfilters) }),
+            ...(defaultGroup && { group: JSON.parse(defaultGroup) }),
+            ...(defaultAggs && { aggregate: JSON.parse(defaultAggs) }),
             serverSorting: true,
-            pageSize: isHierarchy ? 1000 : 100
+            pageSize: isHierarchy ? 1000 : 100,
 
         },
         resizable: true,
@@ -446,11 +449,17 @@ function generateGrid() {
         pageable: true,
         sortable: true,
         change: function (e) {
-            selected[this.dataSource.page()] = [...this.select()].map((x) => {
-                var dataItem = grid.dataItem(x);
+            if ([...this.select()].length > 0) {
+                selected[this.dataSource.page()] = [...this.select()].map((x) => {
+                    var dataItem = grid.dataItem(x);
 
-                return dataItem;
-            });
+                    return dataItem;
+                });
+            } else {
+                
+                selected[this.dataSource.page()] = [];
+
+            }
 
             localStorage.setItem("selectedidz", JSON.stringify(selected));
         },
@@ -530,10 +539,12 @@ function generateGrid() {
     grid.tbody.on("click", ".k-checkbox", (e) => {
         selected = Object.entries(selected).reduce((acc, [key, value]) => {
             if (grid.dataSource.page() == key) {
+
                 acc[key] = value;
             }
             return acc;
         }, {});
+
         localStorage.setItem("selectedidz", JSON.stringify(selected));
         if (isAllSelected) {
             isAllSelected = false;
@@ -569,7 +580,7 @@ function generateGrid() {
                 csvhandler(e, controller);
             } else {
                 var csvhandler = Handlers["csvExport"];
-                csvhandler(e, controller, url);
+                csvhandler(e, controller, url, prop);
             }
 
         }
@@ -811,6 +822,7 @@ function generateColumns(response) {
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
+            ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)

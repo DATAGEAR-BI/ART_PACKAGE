@@ -22,8 +22,10 @@
     <!-- jQuery 3 -->
 
     <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+   <environment names="UAT,Staging,Production">
+    <script  src="~/js/prodscript.js"></script>
+    </environment>
 
-  
 
 
 
@@ -81,6 +83,7 @@
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/exportlistener.js"></script>
+    <script src="~/js/amlanalysislistener.js"></script>
     <script src="~/js/activelink.js"></script>
     <script>
         $(document).ready(function () {

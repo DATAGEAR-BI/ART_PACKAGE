@@ -1,18 +1,21 @@
 ﻿
 
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using ART_PACKAGE.Services.Pdf;
+using ART_PACKAGE.Helpers.Pdf;
+using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
+using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
-using static ART_PACKAGE.Helpers.CustomReportHelpers.DbContextExtentions;
 
 
 namespace ART_PACKAGE.Controllers
@@ -27,10 +30,12 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _config;
         private readonly IPdfService _pdfSrv;
         private DbContext dbInstance;
+        private readonly ICsvExport _csvSrv;
+        private readonly IHubContext<ExportHub> _exportHub;
+        private readonly UsersConnectionIds connections;
 
 
-
-        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory)
+        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
 
             this.logger = logger;
@@ -39,7 +44,11 @@ namespace ART_PACKAGE.Controllers
             _config = config;
             _pdfSrv = pdfSrv;
             this.dBFactory = dBFactory;
+            _csvSrv = csvSrv;
+            _exportHub = exportHub;
+            this.connections = connections;
         }
+
 
         public IActionResult Index()
         {
@@ -145,41 +154,6 @@ namespace ART_PACKAGE.Controllers
             return View();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult GetMyReportsData([FromBody] KendoRequest obj)
         {
             string user = userManager.GetUserId(User);
@@ -195,12 +169,6 @@ namespace ART_PACKAGE.Controllers
             };
 
             KendoDataDesc<ArtSavedCustomReport> Data = alerts.CallData(obj, propertiesToSkip: skipList);
-
-
-
-
-
-
 
             var data = new
             {
@@ -266,7 +234,7 @@ namespace ART_PACKAGE.Controllers
 
             return Ok(reportAfter);
         }
-        public IActionResult Export([FromBody] ExportDto<decimal> exportDto)
+        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> exportDto)
         {
             string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
             ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
@@ -274,21 +242,26 @@ namespace ART_PACKAGE.Controllers
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
             string filter = exportDto.Req.Filter.GetFiltersString(dbtype);
-            List<ChartData<dynamic>> chartsdata = dbInstance.GetChartData(charts, filter);
+            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
                 name = x.Column
             }).ToArray();
+            List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
+
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
-            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata.Select(x => x.Data).ToList());
-            return File(bytes, "text/csv");
+            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
+            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+            await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
+                                .SendAsync("csvRecevied", bytes, FileName);
+            return new EmptyResult();
         }
 
         public async Task<IActionResult> ExportMyReports([FromBody] ExportDto<decimal> req)
         {
             IQueryable<ArtSavedCustomReport> data = db.ArtSavedCustomReports.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtSavedCustomReport, GenericCsvClassMapper<ArtSavedCustomReport, ReportController>>(req.Req);
-            return File(bytes, "test/csv");
+            await _csvSrv.ExportAllCsv<ArtSavedCustomReport, ReportController, decimal>(data, User.Identity.Name, req);
+            return new EmptyResult();
         }
         public async Task<IActionResult> ExportPdfMyReports([FromBody] KendoRequest req)
         {
@@ -297,6 +270,7 @@ namespace ART_PACKAGE.Controllers
             List<ArtSavedCustomReport> data = db.ArtSavedCustomReports.CallData(req).Data.ToList();
             ViewData["title"] = $"My Reports ({User.Identity.Name})";
             ViewData["desc"] = $"Reports That Are Made Using Custom Report Module By ({User.Identity.Name})";
+            ViewData["filters"] = req.Filter.GetFilterTextForCsv();
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames);
             return File(pdfBytes, "application/pdf");
@@ -317,6 +291,7 @@ namespace ART_PACKAGE.Controllers
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
             ViewData["title"] = Report.Name;
             ViewData["desc"] = Report.Description;
+            ViewData["filters"] = req.Filter.GetFilterTextForCsv();
             byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data.Data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, Report.Columns.Select(x => x.Column).ToList());
             return File(pdfBytes, "application/pdf");

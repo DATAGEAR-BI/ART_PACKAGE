@@ -1,0 +1,103 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Data.TIZONE2
+{
+    public partial class Master
+    {
+        public decimal Key97 { get; set; }
+        public string? RefnoMbe { get; set; }
+        public string? RefnoPfix { get; set; }
+        public string? RefnoBrn { get; set; }
+        public decimal? RefnoSerl { get; set; }
+        public string? PrinameL1 { get; set; }
+        public decimal? Exemplar { get; set; }
+        public string? Status { get; set; }
+        public string? Prdclass { get; set; }
+        public long? UtilisAmt { get; set; }
+        public string? UtilisCcy { get; set; }
+        public string? OrigRef { get; set; }
+        public decimal? ParentEv { get; set; }
+        public string? InputBrn { get; set; }
+        public string? BhalfBrn { get; set; }
+        public DateTime? ExpiryDat { get; set; }
+        public string? ExpiryLoc { get; set; }
+        public long? Amount { get; set; }
+        public string? Ccy { get; set; }
+        public long? AmtOS { get; set; }
+        public string? DfltWkgrp { get; set; }
+        public decimal? PcpPty { get; set; }
+        public decimal? NpcpPty { get; set; }
+        public string? ChargeFor { get; set; }
+        public string? Usercode1 { get; set; }
+        public string? Usercode2 { get; set; }
+        public string? Usercode3 { get; set; }
+        public decimal? RespUser { get; set; }
+        public DateTime? CtrctDate { get; set; }
+        public string? Workgroup { get; set; }
+        public long? LiabAmt { get; set; }
+        public string? LiabCcy { get; set; }
+        public string? TfrMthd { get; set; }
+        public string? Sharedliab { get; set; }
+        public string? Mailtobrn { get; set; }
+        public decimal? Relmstrkey { get; set; }
+        public string? Relmstrref { get; set; }
+        public decimal? Prodtype { get; set; }
+        public decimal? Primarycus { get; set; }
+        public decimal? Useroptn1 { get; set; }
+        public decimal? Useroptn2 { get; set; }
+        public decimal? Useroptn3 { get; set; }
+        public decimal? Useroptn4 { get; set; }
+        public decimal? Useroptn5 { get; set; }
+        public long? Totliabamt { get; set; }
+        public string? Totliabccy { get; set; }
+        public string? ReimbChgs { get; set; }
+        public string? Billlevel { get; set; }
+        public string? Pccenddadj { get; set; }
+        public DateTime? Bookoffdat { get; set; }
+        public decimal? EcflnkKey { get; set; }
+        public string? EcflnkRef { get; set; }
+        public DateTime? DeactDate { get; set; }
+        public string? Datatakeon { get; set; }
+        public string? Active { get; set; }
+        public DateTime? Eligfordel { get; set; }
+        public string? PrevSts { get; set; }
+        public string? MasterRef { get; set; }
+        public string? RefLock { get; set; }
+        public string? Pricustsbb { get; set; }
+        public string? Pricustmnm { get; set; }
+        public decimal? Verlevel { get; set; }
+        public string? Canourref { get; set; }
+        public decimal? EvCount { get; set; }
+        public decimal? Extfield { get; set; }
+        public string? NoBrowse { get; set; }
+        public string? PriRef { get; set; }
+        public string? Canprnref { get; set; }
+        public string? NprRef { get; set; }
+        public string? Cannprnref { get; set; }
+        public string? Takeon { get; set; }
+        public decimal? TakeAmdno { get; set; }
+        public DateTime? TakeDate { get; set; }
+        public decimal? TakePayno { get; set; }
+        public string? Origname { get; set; }
+        public string? Origteam { get; set; }
+        public string? Origisuser { get; set; }
+        public string? Origbranch { get; set; }
+        public decimal? Origuser { get; set; }
+        public string? Origref1 { get; set; }
+        public string? Ebankmsref { get; set; }
+        public string? Nprcustsbb { get; set; }
+        public string? Nprcustmnm { get; set; }
+        public string? NprnameL1 { get; set; }
+        public string? TransBrn { get; set; }
+        public string? Locked { get; set; }
+        public string? AcctBrn { get; set; }
+        public string? PcpSwBic { get; set; }
+        public string? NpcSwBic { get; set; }
+        public decimal? Swiftversn { get; set; }
+        public string? Docsprep { get; set; }
+        public string? Docspreprq { get; set; }
+        public decimal? Typeflag { get; set; }
+        public decimal? Tstamp { get; set; }
+    }
+}

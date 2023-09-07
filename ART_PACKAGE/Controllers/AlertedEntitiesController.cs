@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -12,10 +11,10 @@ namespace ART_PACKAGE.Controllers
 {
     public class AlertedEntitiesController : Controller
     {
-        private readonly AuthContext context;
+        private readonly EcmContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
-        public AlertedEntitiesController(AuthContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public AlertedEntitiesController(EcmContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;

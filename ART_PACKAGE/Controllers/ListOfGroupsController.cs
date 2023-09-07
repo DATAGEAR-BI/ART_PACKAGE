@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.Audit;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -12,14 +12,17 @@ namespace ART_PACKAGE.Controllers
 {
     public class ListOfGroupsController : Controller
     {
-        private readonly AuthContext context;
+        private readonly ArtAuditContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
-        public ListOfGroupsController(AuthContext context, IPdfService pdfSrv, IDropDownService dropDownService)
+        private readonly ICsvExport _csvSrv;
+
+        public ListOfGroupsController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
+            _csvSrv = csvSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -64,8 +67,8 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
             Microsoft.EntityFrameworkCore.DbSet<ListOfGroup> data = context.ListOfGroups;
-            byte[] bytes = await data.ExportToCSV<ListOfGroup, GenericCsvClassMapper<ListOfGroup, ListOfGroupsController>>(para.Req);
-            return File(bytes, "text/csv");
+            await _csvSrv.ExportAllCsv<ListOfGroup, ListOfGroupsController, decimal>(data, User.Identity.Name, para);
+            return new EmptyResult();
         }
 
 

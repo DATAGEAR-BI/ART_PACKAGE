@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "UsersRolesMatrix";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+
 }
 
 <h2>UsersRolesMatrix</h2>
@@ -63,7 +63,7 @@
         columnsData.forEach((col,index) => {
             fieldDAta = {};
             if (index == 0) {
-                fieldDAta["type"] = "string"; 
+                fieldDAta["type"] = "string";
             } else {
                 fieldDAta["type"] = "boolean";
             }
@@ -148,7 +148,7 @@
                 console.log('success');
             },
             error: function () {
-                //something went wrong 
+                //something went wrong
                 alert("Error Please Refresh Page");
             }
         });

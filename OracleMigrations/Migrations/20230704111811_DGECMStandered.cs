@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,10 +6,16 @@ namespace OracleMigrations.Migrations
 {
     public partial class DGECMStandered : Migration
     {
+        private readonly bool IsAppliable;
+        public DGECMStandered()
+        {
+            var m = MigrationsModules.GetModules();
+            IsAppliable = m.Contains("ECM");
+        }
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
-
+            if (!IsAppliable)
+                return;
 
             #region Views
             //ART_SYSTEM_PERFORMANCE

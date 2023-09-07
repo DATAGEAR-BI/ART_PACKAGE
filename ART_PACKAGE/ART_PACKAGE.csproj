@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		 <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	 <Target Name="CleanCodeTask" BeforeTargets="Build">
       <Exec Command="dotnet format style -v detailed" />
@@ -62,6 +62,13 @@
 	   <Compile Remove="Controllers\UserPerformPerActionController.cs" />
 	 </ItemGroup>
 	<ItemGroup>
+		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="Helpers\Aml_Analysis\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Reference Include="bcprov-jdk15on-1.68">
 			<HintPath>bcprov-jdk15on-1.68.dll</HintPath>
 		</Reference>
@@ -70,6 +77,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
+		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -77,6 +85,71 @@
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="Helpers\Aml_Analysis\AddRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisAction.cs" />
+		<Compile Include="Helpers\Aml_Analysis\AmlAnalysisUpdateTableIndecator.cs" />
+		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\EditRuleDto.cs" />
+		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
+		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
+		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Views\DGAMLAlertDetails\**" />
+	  <Compile Remove="Views\DGAMLAlertSummary\**" />
+	  <Compile Remove="Views\DGAMLArtExternalCustomerDetails\**" />
+	  <Compile Remove="Views\DGAMLArtScenarioAdmin\**" />
+	  <Compile Remove="Views\DGAMLArtScenarioHistory\**" />
+	  <Compile Remove="Views\DGAMLArtSuspectDetails\**" />
+	  <Compile Remove="Views\DGAMLCasesDetails\**" />
+	  <Compile Remove="Views\DGAMLCasesSummary\**" />
+	  <Compile Remove="Views\DGAMLCustomersDetails\**" />
+	  <Compile Remove="Views\DGAMLCustomerSummary\**" />
+	  <Compile Remove="Views\DGAMLExternalCustomerSummary\**" />
+	  <Content Remove="Views\DGAMLAlertDetails\**" />
+	  <Content Remove="Views\DGAMLAlertSummary\**" />
+	  <Content Remove="Views\DGAMLArtExternalCustomerDetails\**" />
+	  <Content Remove="Views\DGAMLArtScenarioAdmin\**" />
+	  <Content Remove="Views\DGAMLArtScenarioHistory\**" />
+	  <Content Remove="Views\DGAMLArtSuspectDetails\**" />
+	  <Content Remove="Views\DGAMLCasesDetails\**" />
+	  <Content Remove="Views\DGAMLCasesSummary\**" />
+	  <Content Remove="Views\DGAMLCustomersDetails\**" />
+	  <Content Remove="Views\DGAMLCustomerSummary\**" />
+	  <Content Remove="Views\DGAMLExternalCustomerSummary\**" />
+	  <EmbeddedResource Remove="Views\DGAMLAlertDetails\**" />
+	  <EmbeddedResource Remove="Views\DGAMLAlertSummary\**" />
+	  <EmbeddedResource Remove="Views\DGAMLArtExternalCustomerDetails\**" />
+	  <EmbeddedResource Remove="Views\DGAMLArtScenarioAdmin\**" />
+	  <EmbeddedResource Remove="Views\DGAMLArtScenarioHistory\**" />
+	  <EmbeddedResource Remove="Views\DGAMLArtSuspectDetails\**" />
+	  <EmbeddedResource Remove="Views\DGAMLCasesDetails\**" />
+	  <EmbeddedResource Remove="Views\DGAMLCasesSummary\**" />
+	  <EmbeddedResource Remove="Views\DGAMLCustomersDetails\**" />
+	  <EmbeddedResource Remove="Views\DGAMLCustomerSummary\**" />
+	  <EmbeddedResource Remove="Views\DGAMLExternalCustomerSummary\**" />
+	  <None Remove="Views\DGAMLAlertDetails\**" />
+	  <None Remove="Views\DGAMLAlertSummary\**" />
+	  <None Remove="Views\DGAMLArtExternalCustomerDetails\**" />
+	  <None Remove="Views\DGAMLArtScenarioAdmin\**" />
+	  <None Remove="Views\DGAMLArtScenarioHistory\**" />
+	  <None Remove="Views\DGAMLArtSuspectDetails\**" />
+	  <None Remove="Views\DGAMLCasesDetails\**" />
+	  <None Remove="Views\DGAMLCasesSummary\**" />
+	  <None Remove="Views\DGAMLCustomersDetails\**" />
+	  <None Remove="Views\DGAMLCustomerSummary\**" />
+	  <None Remove="Views\DGAMLExternalCustomerSummary\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -957,20 +1030,47 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="Views\ACPostingsAccount\ACPostingAccountPdf.cshtml" />
+		<None Include="Views\ACPostingsAccount\Index.cshtml" />
+		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
+		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\DiaryExceptions\Index.cshtml" />
+		<None Include="Views\EcmAuditTrial\Index.cshtml" />
+		<None Include="Views\EcmTransactions\Index.cshtml" />
+		<None Include="Views\EcmWorkflowProg\Index.cshtml" />
+		<None Include="Views\FinancingInterestAccruals\Index.cshtml" />
+		<None Include="Views\FullJournal\Index.cshtml" />
 		<None Include="Views\GOAMLReportIndicatorDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsDetails\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSummary\Index.cshtml" />
 		<None Include="Views\GOAMLReportsSuspect\Index.cshtml" />
 		<None Include="Views\HighRisk\Index.cshtml" />
+		<None Include="Views\InterfaceDetails\Index.cshtml" />
+		<None Include="Views\MasterEventHistory\Index.cshtml" />
+		<None Include="Views\OSActivity\Index.cshtml" />
+		<None Include="Views\OSLiability\Index.cshtml" />
+		<None Include="Views\OSTransactionsAwaitiApprl\Index.cshtml" />
+		<None Include="Views\OSTransactionsByGateway\Index.cshtml" />
+		<None Include="Views\OSTransactionsByNonPri\Index.cshtml" />
+		<None Include="Views\OSTransactionsByPrincipal\Index.cshtml" />
+		<None Include="Views\OurChargesByCustomer\Index.cshtml" />
+		<None Include="Views\OurChargesByMaster\Index.cshtml" />
+		<None Include="Views\OurChargesDetails\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGSPayment\Index.cshtml" />
+		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
+
+
+		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
 		<None Include="Views\UserRole\Roles.cshtml" />
 		<None Include="Views\UserRole\Users.cshtml" />
 		<None Include="Views\UserRole\UsersRolesMatrix.cshtml" />

@@ -1,4 +1,4 @@
-﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Models;
 using ART_PACKAGE.Security;

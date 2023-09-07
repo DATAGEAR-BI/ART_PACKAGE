@@ -1,9 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -11,10 +10,10 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLCasesDetailsController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLCasesDetailsController(AuthContext _context, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLCasesDetailsController(ArtDgAmlContext _context, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
             _dropDown = dropDown;

@@ -1,4 +1,4 @@
-﻿using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {

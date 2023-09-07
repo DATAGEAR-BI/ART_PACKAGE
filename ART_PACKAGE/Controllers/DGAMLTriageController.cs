@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Services.Pdf;
-using Data.Data;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTDGAML;
+using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,11 +13,11 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLTriageController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IMemoryCache _cache;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public DGAMLTriageController(AuthContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
+        public DGAMLTriageController(ArtDgAmlContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this._context = _context;
             _cache = cache;

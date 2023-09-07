@@ -1,4 +1,5 @@
-﻿namespace ART_PACKAGE.Helpers.CustomReportHelpers
+namespace ART_PACKAGE.Helpers.CustomReport
+
 {
 
     public class KendoRequest
@@ -9,6 +10,7 @@
         public List<SortOptions> Sort { get; set; }
         public Filter Filter { get; set; }
         public bool IsIntialize { get; set; }
+        public List<GridGroup>? Group { get; set; }
 
     }
 

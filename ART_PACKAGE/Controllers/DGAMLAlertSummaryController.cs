@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data;
+using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
@@ -12,11 +12,11 @@ namespace ART_PACKAGE.Controllers
 {
     public class DGAMLAlertSummaryController : Controller
     {
-        private readonly AuthContext _context;
+        private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public DGAMLAlertSummaryController(AuthContext _context, IConfiguration config)
+        public DGAMLAlertSummaryController(ArtDgAmlContext _context, IConfiguration config)
         {
             this._context = _context;
             _config = config;
