@@ -1,22 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Data.DGECM
+namespace Data.DGECMMETADATA
 {
-    public partial class DGECMContext : DbContext
+    public partial class DGECMMETADATAContext:DbContext
     {
-        public DGECMContext()
-        {
-        }
-
-        public DGECMContext(DbContextOptions<DGECMContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<RefTableVal> RefTableVals { get; set; } = null!;
-        public virtual DbSet<CaseLive> CaseLives { get; set; } = null!;
-
-
+        public DGECMMETADATAContext() { }
+        public DGECMMETADATAContext(DbContextOptions<DGECMMETADATAContext> options) : base(options) { }
+        public virtual DbSet<Comment> Comments { get; set; }=null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (this.Database.IsSqlServer())
@@ -31,4 +26,3 @@ namespace Data.DGECM
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
-

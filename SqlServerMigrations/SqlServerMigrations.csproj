@@ -19,6 +19,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20230601132713_DGECMStandered.cs" />
+    <Compile Remove="Migrations\20230601132713_DGECMStandered.Designer.cs" />
+    <Compile Remove="Migrations\20230612140634_AMLReports.cs" />
+    <Compile Remove="Migrations\20230612140634_AMLReports.Designer.cs" />
+    <Compile Remove="Migrations\20230615095750_GOAMLREports.cs" />
+    <Compile Remove="Migrations\20230615095750_GOAMLREports.Designer.cs" />
+    <Compile Remove="Migrations\20230618145038_AduitReports.cs" />
+    <Compile Remove="Migrations\20230618145038_AduitReports.Designer.cs" />
+    <Compile Remove="Migrations\20230705095445_DGAMLReports.cs" />
+    <Compile Remove="Migrations\20230705095445_DGAMLReports.Designer.cs" />
+    <Compile Remove="Migrations\20230709090253_DGAMLUpdateReports.cs" />
+    <Compile Remove="Migrations\20230709090253_DGAMLUpdateReports.Designer.cs" />
+    <Compile Remove="Migrations\20230710145905_AlertSummaryReports.cs" />
+    <Compile Remove="Migrations\20230710145905_AlertSummaryReports.Designer.cs" />
+    <Compile Remove="Migrations\20230716084018_SegmentReports.cs" />
+    <Compile Remove="Migrations\20230716084018_SegmentReports.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16">

@@ -16,9 +16,11 @@ using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
+
+
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "CustomReport", Policy = "License")]
     public partial class ReportController : Controller
     {
         private readonly AuthContext db;

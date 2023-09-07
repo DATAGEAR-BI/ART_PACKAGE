@@ -7,10 +7,16 @@
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
-	<Target Name="CleanCodeTask" BeforeTargets="Build">
-		<Exec Command="dotnet format style -v detailed" />
-	</Target>
-
+	 <Target Name="CleanCodeTask" BeforeTargets="Build">
+      <Exec Command="dotnet format style -v detailed" />
+    </Target>
+	 <ItemGroup>
+	   <Compile Remove="Controllers\ACPostingsAccountController.cs" />
+	   <Compile Remove="Controllers\ACPostingsCustomersController.cs" />
+	   <Compile Remove="Controllers\ActivityController.cs" />
+	   <Compile Remove="Controllers\AdvancePaymentUtilizationController.cs" />
+	   <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	 </ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />
@@ -99,7 +105,31 @@
 
 	<ItemGroup>
 	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	  <Compile Remove="Controllers\AmortizationController.cs" />
+	  <Compile Remove="Controllers\ArtAuditCorporateController.cs" />
+	  <Compile Remove="Controllers\ArtAuditIndividualsController.cs" />
+	  <Compile Remove="Controllers\DiaryExceptionsController.cs" />
+	  <Compile Remove="Controllers\EcmAuditTrialController.cs" />
+	  <Compile Remove="Controllers\EcmTransactionsController.cs" />
+	  <Compile Remove="Controllers\EcmWorkflowProgController.cs" />
+	  <Compile Remove="Controllers\FinancingInterestAccrualsController.cs" />
+	  <Compile Remove="Controllers\FullJournalController.cs" />
+	  <Compile Remove="Controllers\InterfaceDetailsController.cs" />
+	  <Compile Remove="Controllers\MasterEventHistoryController.cs" />
+	  <Compile Remove="Controllers\OSActivityController.cs" />
+	  <Compile Remove="Controllers\OSLiabilityController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsAwaitiApprlController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByGatewayController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByNonPriController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByPrincipalController.cs" />
+	  <Compile Remove="Controllers\OurChargesByCustomerController.cs" />
+	  <Compile Remove="Controllers\OurChargesByMasterController.cs" />
+	  <Compile Remove="Controllers\OurChargesDetailsController.cs" />
+	  <Compile Remove="Controllers\PeriodicCHRGsController.cs" />
+	  <Compile Remove="Controllers\PeriodicCHRGSPaymentController.cs" />
 	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+	  <Compile Remove="Controllers\SystemTailoringController.cs" />
+	  <Compile Remove="Controllers\WatchlistOSCheckController.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -1019,11 +1049,11 @@
 		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
 
+
 		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
 		<None Include="Views\UserRole\Roles.cshtml" />
 		<None Include="Views\UserRole\Users.cshtml" />
 		<None Include="Views\UserRole\UsersRolesMatrix.cshtml" />
-
 		<None Include="wwwroot\bower_components\font-awesome\.gitignore" />
 		<None Include="wwwroot\bower_components\font-awesome\.npmignore" />
 		<None Include="wwwroot\bower_components\font-awesome\css\font-awesome.css.map" />

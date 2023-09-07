@@ -18,7 +18,7 @@ namespace Data.DGECM
         public decimal DisplayOrdrNo { get; set; }
         public string ActiveFlg { get; set; } = null!;
         public byte Deleted { get; set; }
-
+        public string ModuleName { get; set; }
         public virtual RefTableVal? Parent { get; set; }
         public virtual ICollection<RefTableVal> InverseParent { get; set; }
     }

@@ -13,7 +13,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Home", Policy = "License")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -113,7 +113,6 @@ namespace ART_PACKAGE.Controllers
             });
 
         }
-
 
 
         public IActionResult GetAmlChartsData()

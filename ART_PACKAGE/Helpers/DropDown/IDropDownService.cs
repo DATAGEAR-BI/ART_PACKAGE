@@ -100,6 +100,11 @@
         public List<string> GetDGCustomerIdentificationTypeDropDown();
         public List<string> GetDGCustomerTypeDropDown();
         public List<string> GetDGCreateUserIdDropDown();
+        public List<string> GetECMREFERNCEDropDown();
+        public List<string> GetBranchIDDropDown();
+        public List<string> GetCustomerNameDropDown();
+        public List<string> GetProductDropDown();
+        public List<string> GetProductTypeDropDown();
 
     }
 }

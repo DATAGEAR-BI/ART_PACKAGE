@@ -1,4 +1,5 @@
-﻿using Data.DGECM;
+using Data.DGECM;
+using Data.DGECMMETADATA;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
@@ -21,8 +22,11 @@ namespace Data
                 entity.ToTable("Ref_Table_Val", "DGCmgmt");
 
                 entity.Property(e => e.RefTableName)
-                    .HasMaxLength(30)
+                    .HasMaxLength(200)
                     .HasColumnName("Ref_Table_Name");
+                entity.Property(e => e.ModuleName)
+                    .HasMaxLength(30)
+                    .HasColumnName("module_Name");
 
                 entity.Property(e => e.ValCd)
                     .HasMaxLength(32)
@@ -82,61 +86,66 @@ namespace Data
                     .HasColumnType("datetime")
                     .HasColumnName("AMENDDATE");
 
-                entity.Property(e => e.AnyBicFieldBic)
+                entity.Property(e => e.Anybicfieldbic)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("anyBicFieldBic");
 
-                entity.Property(e => e.ApplicantId)
+                entity.Property(e => e.Applicantid)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("applicantId");
 
-                entity.Property(e => e.ApplicantName)
+                entity.Property(e => e.EcmWorkflow)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Ecm_Workflow");
+
+                entity.Property(e => e.Applicantname)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("applicantName");
 
-                entity.Property(e => e.ApplicantRef)
+                entity.Property(e => e.Applicantref)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("applicantRef");
 
-                entity.Property(e => e.ApplicationDate)
+                entity.Property(e => e.Applicationdate)
                     .HasColumnType("datetime")
                     .HasColumnName("applicationDate");
 
-                entity.Property(e => e.BehalfOfBranch)
+                entity.Property(e => e.Behalfofbranch)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("behalfOfBranch");
 
-                entity.Property(e => e.BeneficiaryAccountNum)
+                entity.Property(e => e.Beneficiaryaccountnum)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("beneficiaryAccountNum");
 
-                entity.Property(e => e.BeneficiaryBirthYear)
+                entity.Property(e => e.Beneficiarybirthyear)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("beneficiaryBirthYear");
 
-                entity.Property(e => e.BeneficiaryCountry)
+                entity.Property(e => e.Beneficiarycountry)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("beneficiaryCountry");
 
-                entity.Property(e => e.BeneficiaryIdentity)
+                entity.Property(e => e.Beneficiaryidentity)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("beneficiaryIdentity");
 
-                entity.Property(e => e.BeneficiaryNationality)
+                entity.Property(e => e.Beneficiarynationality)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("beneficiaryNationality");
 
-                entity.Property(e => e.BirthPlace)
+                entity.Property(e => e.Birthplace)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("birthPlace");
@@ -205,7 +214,7 @@ namespace Data
                     .HasMaxLength(60)
                     .HasColumnName("Create_User_Id");
 
-                entity.Property(e => e.CreditorAgentBankBic)
+                entity.Property(e => e.Creditoragentbankbic)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("creditorAgentBankBic");
@@ -234,7 +243,7 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("customer_residency");
 
-                entity.Property(e => e.DebtorAgentBankBic)
+                entity.Property(e => e.Debtoragentbankbic)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("debtorAgentBankBic");
@@ -245,7 +254,7 @@ namespace Data
                     .HasColumnName("Delete_Flag")
                     .IsFixedLength();
 
-                entity.Property(e => e.DocumentReference)
+                entity.Property(e => e.Documentreference)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
@@ -255,17 +264,17 @@ namespace Data
                     .HasColumnName("Employee_Ind")
                     .IsFixedLength();
 
-                entity.Property(e => e.EventName)
+                entity.Property(e => e.Eventname)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("eventName");
 
-                entity.Property(e => e.EventRef)
+                entity.Property(e => e.Eventref)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("eventRef");
 
-                entity.Property(e => e.ExpiryDate)
+                entity.Property(e => e.Expirydate)
                     .HasColumnType("datetime")
                     .HasColumnName("expiryDate");
 
@@ -274,12 +283,12 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("hits_count");
 
-                entity.Property(e => e.InputName)
+                entity.Property(e => e.Inputname)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("inputName");
 
-                entity.Property(e => e.IntermediaryCode)
+                entity.Property(e => e.Intermediarycode)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("intermediaryCode");
@@ -288,7 +297,7 @@ namespace Data
                     .HasMaxLength(60)
                     .HasColumnName("Investr_User_Id");
 
-                entity.Property(e => e.IssueDate)
+                entity.Property(e => e.Issuedate)
                     .HasColumnType("datetime")
                     .HasColumnName("issueDate");
 
@@ -297,12 +306,12 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("LOCKED_BY");
 
-                entity.Property(e => e.MasterRef)
+                entity.Property(e => e.Masterref)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("masterRef");
 
-                entity.Property(e => e.MaxSensitivityRank).HasColumnName("maxSensitivityRank");
+                entity.Property(e => e.Maxsensitivityrank).HasColumnName("maxSensitivityRank");
 
                 entity.Property(e => e.Nationality)
                     .HasMaxLength(4000)
@@ -313,21 +322,21 @@ namespace Data
                     .HasColumnType("datetime")
                     .HasColumnName("Open_Date");
 
-                entity.Property(e => e.OthNationality)
+                entity.Property(e => e.Othnationality)
                     .HasMaxLength(4000)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PartyTypeDesc)
+                entity.Property(e => e.Partytypedesc)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("partyTypeDesc");
 
-                entity.Property(e => e.PayDestinationCountry)
+                entity.Property(e => e.Paydestinationcountry)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("payDestinationCountry");
 
-                entity.Property(e => e.PayOriginCountry)
+                entity.Property(e => e.Payorigincountry)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("payOriginCountry");
@@ -346,22 +355,22 @@ namespace Data
                     .IsUnicode(false)
                     .HasColumnName("product");
 
-                entity.Property(e => e.ProductType)
+                entity.Property(e => e.Producttype)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("productType");
 
-                entity.Property(e => e.ReceiverBankBic)
+                entity.Property(e => e.Receiverbankbic)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("receiverBankBic");
 
-                entity.Property(e => e.ReceiverBic)
+                entity.Property(e => e.Receiverbic)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("receiverBic");
 
-                entity.Property(e => e.ReceiverCtry)
+                entity.Property(e => e.Receiverctry)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("receiverCtry");
@@ -376,27 +385,27 @@ namespace Data
                     .HasColumnName("Regu_Rpt_Rqd_Flag")
                     .IsFixedLength();
 
-                entity.Property(e => e.RemitterAccountNum)
+                entity.Property(e => e.Remitteraccountnum)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("remitterAccountNum");
 
-                entity.Property(e => e.RemitterBirthYear)
+                entity.Property(e => e.Remitterbirthyear)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("remitterBirthYear");
 
-                entity.Property(e => e.RemitterCountry)
+                entity.Property(e => e.Remittercountry)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("remitterCountry");
 
-                entity.Property(e => e.RemitterIdentity)
+                entity.Property(e => e.Remitteridentity)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("remitterIdentity");
 
-                entity.Property(e => e.RemitterNationality)
+                entity.Property(e => e.Remitternationality)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("remitterNationality");
@@ -405,37 +414,37 @@ namespace Data
                     .HasColumnType("datetime")
                     .HasColumnName("REOpen_Date");
 
-                entity.Property(e => e.SearchCountry)
+                entity.Property(e => e.Searchcountry)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("searchCountry");
 
-                entity.Property(e => e.SearchUnit)
+                entity.Property(e => e.Searchunit)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("searchUnit");
 
-                entity.Property(e => e.SearchUser)
+                entity.Property(e => e.Searchuser)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("searchUser");
 
-                entity.Property(e => e.SenderBankBic)
+                entity.Property(e => e.Senderbankbic)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("senderBankBic");
 
-                entity.Property(e => e.SenderBic)
+                entity.Property(e => e.Senderbic)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("senderBic");
 
-                entity.Property(e => e.SenderCtry)
+                entity.Property(e => e.Senderctry)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("senderCtry");
 
-                entity.Property(e => e.SenderReceiverAgentCode)
+                entity.Property(e => e.Senderreceiveragentcode)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("senderReceiverAgentCode");
@@ -501,7 +510,7 @@ namespace Data
                     .HasColumnType("numeric(10, 0)")
                     .HasColumnName("Ver_No");
 
-                entity.Property(e => e.WasPending)
+                entity.Property(e => e.Waspending)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("wasPending");
@@ -517,79 +526,73 @@ namespace Data
                     .HasColumnName("X_IDENTITY");
             });
         }
+        public static void CommentSqlServerOnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseCollation("Arabic_100_CI_AI");
 
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("COMMENTS", "DGECM_METADATA");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.CommentId)
+                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnName("COMMENT_ID");
+
+                entity.Property(e => e.DeleteFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("DELETE_FLG")
+                    .HasDefaultValueSql("('0')")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Description).HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.DescriptionJson).HasColumnName("DESCRIPTION_JSON");
+
+                entity.Property(e => e.EntityRk)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("ENTITY_RK");
+
+                entity.Property(e => e.EntityType)
+                    .HasMaxLength(10)
+                    .HasColumnName("ENTITY_TYPE");
+
+                entity.Property(e => e.Subject)
+                    .HasMaxLength(100)
+                    .HasColumnName("SUBJECT");
+
+                entity.Property(e => e.UploadDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPLOAD_DATE");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+            });
+
+            modelBuilder.HasSequence("attachment_seq", "DGMETADATA").StartsAt(10000);
+
+            modelBuilder.HasSequence("case_attachment_seq", "DGMETADATA").StartsAt(10000);
+
+            modelBuilder.HasSequence("comment_seq", "DGMETADATA").StartsAt(10000);
+
+            modelBuilder.HasSequence("custome_properties_seq", "DGMETADATA").StartsAt(10000);
+
+            modelBuilder.HasSequence("ui_file_seq", "DGMETADATA").StartsAt(10000);
+        }
 
         public static void DGECMOracleOnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("DGCMGMT");
+        }
+        public static void CommentOracleOnModelCreating(ModelBuilder modelBuilder)
+        {
 
-            modelBuilder.Entity<RefTableVal>(entity =>
-            {
-                entity.HasKey(e => new { e.RefTableName, e.ValCd })
-                    .HasName("REF_TABLE_VAL_PK");
-
-                entity.ToTable("REF_TABLE_VAL");
-
-                entity.HasIndex(e => new { e.ParentRefTableName, e.ParentValCd }, "REF_TABLE_VAL_FK1");
-
-                entity.Property(e => e.RefTableName)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("REF_TABLE_NAME");
-
-                entity.Property(e => e.ValCd)
-                    .HasMaxLength(4000)
-                    .IsUnicode(false)
-                    .HasColumnName("VAL_CD");
-
-                entity.Property(e => e.ActiveFlg)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTIVE_FLG")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Deleted)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("DELETED")
-                    .HasDefaultValueSql("0")
-                    .IsFixedLength();
-
-                entity.Property(e => e.DisplayOrdrNo)
-                    .HasPrecision(6)
-                    .HasColumnName("DISPLAY_ORDR_NO");
-
-
-
-                entity.Property(e => e.ParentRefTableName)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("PARENT_REF_TABLE_NAME");
-
-                entity.Property(e => e.ParentValCd)
-                    .HasMaxLength(32)
-                    .IsUnicode(false)
-                    .HasColumnName("PARENT_VAL_CD");
-
-                entity.Property(e => e.ValDesc)
-                    .IsUnicode(false)
-                    .HasColumnName("VAL_DESC");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
-                    .HasConstraintName("REF_TABLE_VAL_FK1");
-            });
-
-            modelBuilder.HasSequence("CASE_RK_SEQ");
-
-            modelBuilder.HasSequence("CUST_RK_SEQ");
-
-            modelBuilder.HasSequence("EVENT_RK_SEQ");
-
-            modelBuilder.HasSequence("OCCS_RK_SEQ");
-
-            modelBuilder.HasSequence("USER_AUTH_DOMAIN_SEQUENCE");
         }
         public static void OracleOnModelCreating(ModelBuilder modelBuilder)
         {

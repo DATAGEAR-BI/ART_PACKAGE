@@ -5,7 +5,6 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
@@ -23,11 +22,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<LicenseWatcher>();
-builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
@@ -39,7 +38,6 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
      opt.LoginPath = new PathString("/Ldapauth/login");
  });
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

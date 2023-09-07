@@ -1,4 +1,9 @@
 ﻿export const URLS = {
+  ArtCasesInitiatedFromBranch: "/ArtCasesInitiatedFromBranch/GetData",
+  ArtDgecmActivity: "/ArtDgecmActivity/GetData",
+  ArtEcmFtiFullCycle: "/ArtEcmFtiFullCycle/GetData",
+  ArtFtiActivity: "/ArtFtiActivity/GetData",
+  ArtFtiEcmTransaction: "/ArtFtiEcmTransaction/GetData",
   License: "/License/GetData",
   CustomReport: "/report/GetGridData/",
   MyReports: "/report/GetMyReportsData/",
@@ -58,8 +63,7 @@
   AuditUsers: "/AuditUsers/GetData",
   AuditRoles: "/AuditRoles/GetData",
   AuditGroups: "/AuditGroups/GetData",
-  
-   
+
   //KYC
   ArtAuditCorporate: "/ArtAuditCorporate/GetData",
   ArtAuditIndividuals: "/ArtAuditIndividuals/GetData",
