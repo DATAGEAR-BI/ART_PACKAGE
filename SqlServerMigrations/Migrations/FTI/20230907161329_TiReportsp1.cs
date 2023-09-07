@@ -197,7 +197,7 @@ namespace SqlServerMigrations.Migrations.FTI
                                         ) STEP_STATUS,
                                         ext.ecm_ref ECM_REFERENCE
                                         from
-                                        tizone1.master Mstr
+                                        TI.tizone1.master Mstr
                                         left join TI.tizone1.EXEMPL30 product on mstr.exemplar = product.key97
                                         left join TI.tizone1.Baseevent on Baseevent.master_key = mstr.key97
                                         join TI.tizone1.EXEMPL30 evname on Baseevent.exemplar = evname.key97
