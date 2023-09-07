@@ -31,63 +31,7 @@
                     </a>
 
                     <ul class="treeview-menu">
-                       @* @if (Modules.Contains("ECM"))
-                        {
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> <span>SANCTION REPORTS</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Sys Performance</span>
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "SystemPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
-                                            </li>
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "SystemPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>User Performance</span>
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            @*<li class="active ">
-                                    <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
-                                    </li>*@
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
-                                            </li>
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "UserPerformPerAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action</span></a>
-                                            </li>
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "UserPerformancePerActionUser")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action User</span></a>
-                                            </li>
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "UserPerformancePerUserAndAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per User And Action</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-
-                                </ul>
-                            </li>
-
-                        }*@
+            
                         @if (Modules.Contains("SASAML"))
                         {
                             <li class="treeview">
