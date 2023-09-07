@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Data
+namespace Data.Data.FTI
 {
     public class ArtFtiEcmTransaction
     {
@@ -15,7 +15,7 @@ namespace Data.Data
         public string? Currency { get; set; }
         public string? FtiReference { get; set; }
         public string? EventName { get; set; }
-        public string? EventStatus { get; set; } 
+        public string? EventStatus { get; set; }
         public DateTime? EventCreationDate { get; set; }
         public string? FirstLineParty { get; set; }
         public string? TradeInstructions { get; set; }

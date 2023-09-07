@@ -2,12 +2,14 @@
 
 #nullable disable
 
-namespace SqlServerMigrations.Migrations
+namespace SqlServerMigrations.Migrations.FTI
 {
-    public partial class ABKReports : Migration
+    public partial class TiReportsp1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+
             //ART_CASES_INITIATED_FROM_BRANCH
             migrationBuilder.Sql($@"CREATE OR ALTER VIEW [ART_DB].[ART_CASES_INITIATED_FROM_BRANCH] AS
                                select cl.case_id ECM_REFERENCE, 
@@ -232,10 +234,12 @@ namespace SqlServerMigrations.Migrations
                         left join TIZONE1.master mstr on Baseevent.master_key = mstr.key97
                         left join TIZONE1.EXEMPL30 evname on mstr.exemplar = evname.key97
                         left join TIZONE1.EXTEVENTECM exteve on Baseevent.EXTFIELD = exteve.fk_event");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 using Data.DGECM;
+using Data.DGECMMETADATA;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data

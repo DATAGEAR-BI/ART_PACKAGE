@@ -11,55 +11,11 @@
       <Exec Command="dotnet format style -v detailed" />
     </Target>
 	 <ItemGroup>
-	   <Compile Remove="Controllers\AlertDetailsController.cs" />
+	   <Compile Remove="Controllers\ACPostingsAccountController.cs" />
+	   <Compile Remove="Controllers\ACPostingsCustomersController.cs" />
+	   <Compile Remove="Controllers\ActivityController.cs" />
+	   <Compile Remove="Controllers\AdvancePaymentUtilizationController.cs" />
 	   <Compile Remove="Controllers\AlertedEntitiesController.cs" />
-	   <Compile Remove="Controllers\AlertSummaryController.cs" />
-	   <Compile Remove="Controllers\AllSegmentsOutliersNewController.cs" />
-	   <Compile Remove="Controllers\AuditGroupsController.cs" />
-	   <Compile Remove="Controllers\AuditRolesController.cs" />
-	   <Compile Remove="Controllers\AuditUsersController.cs" />
-	   <Compile Remove="Controllers\CasesDetailsController.cs" />
-	   <Compile Remove="Controllers\CasesSummaryController.cs" />
-	   <Compile Remove="Controllers\CustomersController.cs" />
-	   <Compile Remove="Controllers\CustomersSummaryController.cs" />
-	   <Compile Remove="Controllers\DGAMLAlertDetailsController.cs" />
-	   <Compile Remove="Controllers\DGAMLAlertSummaryController.cs" />
-	   <Compile Remove="Controllers\DGAMLArtExternalCustomerDetailsController.cs" />
-	   <Compile Remove="Controllers\DGAMLArtScenarioAdminController.cs" />
-	   <Compile Remove="Controllers\DGAMLArtScenarioHistoryController.cs" />
-	   <Compile Remove="Controllers\DGAMLArtSuspectDetailsController.cs" />
-	   <Compile Remove="Controllers\DGAMLCasesDetailsController.cs" />
-	   <Compile Remove="Controllers\DGAMLCasesSummaryController.cs" />
-	   <Compile Remove="Controllers\DGAMLCustomersDetailsController.cs" />
-	   <Compile Remove="Controllers\DGAMLCustomerSummaryController.cs" />
-	   <Compile Remove="Controllers\DGAMLExternalCustomerSummaryController.cs" />
-	   <Compile Remove="Controllers\DGAMLTriageController.cs" />
-	   <Compile Remove="Controllers\GOAMLReportIndicatorDetailsController.cs" />
-	   <Compile Remove="Controllers\GOAMLReportsDetailsController.cs" />
-	   <Compile Remove="Controllers\GOAMLReportsSummaryController.cs" />
-	   <Compile Remove="Controllers\GOAMLReportsSuspectController.cs" />
-	   <Compile Remove="Controllers\HighRiskController.cs" />
-	   <Compile Remove="Controllers\LastLoginPerDayController.cs" />
-	   <Compile Remove="Controllers\ListGroupsRolesSummaryController.cs" />
-	   <Compile Remove="Controllers\ListGroupsSubGroupsSummaryController.cs" />
-	   <Compile Remove="Controllers\ListOfDeletedUsersController.cs" />
-	   <Compile Remove="Controllers\ListOfGroupsController.cs" />
-	   <Compile Remove="Controllers\ListOfRoleController.cs" />
-	   <Compile Remove="Controllers\ListOfUserController.cs" />
-	   <Compile Remove="Controllers\ListOfUsersAndGroupsRoleController.cs" />
-	   <Compile Remove="Controllers\ListOfUsersGroupController.cs" />
-	   <Compile Remove="Controllers\ListOfUsersRolesController.cs" />
-	   <Compile Remove="Controllers\RiskAssessmentController.cs" />
-	   <Compile Remove="Controllers\RiskSummaryController.cs" />
-	   <Compile Remove="Controllers\SegmentationChartsController.cs" />
-	   <Compile Remove="Controllers\SegmentSummaryController.cs" />
-	   <Compile Remove="Controllers\SystemPerformanceController.cs" />
-	   <Compile Remove="Controllers\SystemPerformanceSummaryController.cs" />
-	   <Compile Remove="Controllers\TriageController.cs" />
-	   <Compile Remove="Controllers\UserPerformanceController.cs" />
-	   <Compile Remove="Controllers\UserPerformancePerActionUserController.cs" />
-	   <Compile Remove="Controllers\UserPerformancePerUserAndActionController.cs" />
-	   <Compile Remove="Controllers\UserPerformPerActionController.cs" />
 	 </ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
@@ -149,7 +105,31 @@
 
 	<ItemGroup>
 	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	  <Compile Remove="Controllers\AmortizationController.cs" />
+	  <Compile Remove="Controllers\ArtAuditCorporateController.cs" />
+	  <Compile Remove="Controllers\ArtAuditIndividualsController.cs" />
+	  <Compile Remove="Controllers\DiaryExceptionsController.cs" />
+	  <Compile Remove="Controllers\EcmAuditTrialController.cs" />
+	  <Compile Remove="Controllers\EcmTransactionsController.cs" />
+	  <Compile Remove="Controllers\EcmWorkflowProgController.cs" />
+	  <Compile Remove="Controllers\FinancingInterestAccrualsController.cs" />
+	  <Compile Remove="Controllers\FullJournalController.cs" />
+	  <Compile Remove="Controllers\InterfaceDetailsController.cs" />
+	  <Compile Remove="Controllers\MasterEventHistoryController.cs" />
+	  <Compile Remove="Controllers\OSActivityController.cs" />
+	  <Compile Remove="Controllers\OSLiabilityController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsAwaitiApprlController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByGatewayController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByNonPriController.cs" />
+	  <Compile Remove="Controllers\OSTransactionsByPrincipalController.cs" />
+	  <Compile Remove="Controllers\OurChargesByCustomerController.cs" />
+	  <Compile Remove="Controllers\OurChargesByMasterController.cs" />
+	  <Compile Remove="Controllers\OurChargesDetailsController.cs" />
+	  <Compile Remove="Controllers\PeriodicCHRGsController.cs" />
+	  <Compile Remove="Controllers\PeriodicCHRGSPaymentController.cs" />
 	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+	  <Compile Remove="Controllers\SystemTailoringController.cs" />
+	  <Compile Remove="Controllers\WatchlistOSCheckController.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

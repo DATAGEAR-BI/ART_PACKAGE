@@ -1,23 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Services.Pdf;
-using Microsoft.AspNetCore.Authorization;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     [Authorize(Roles = "ArtCasesInitiatedFromBranch")]
     public class ArtCasesInitiatedFromBranchController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
-        public ArtCasesInitiatedFromBranchController(AuthContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService)
+        public ArtCasesInitiatedFromBranchController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
@@ -39,11 +38,11 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
-                    {"BranchId".ToLower(),dropDownService.GetBranchIDDropDown().ToDynamicList() },
-                    {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
-                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
-                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
+                    {"EcmReference".ToLower(),dropDownService   .GetECMREFERNCEDropDown()   .ToDynamicList() },
+                    {"BranchId".ToLower(),dropDownService       .GetBranchIDDropDown()      .ToDynamicList() },
+                    {"CustomerName".ToLower(),dropDownService   .GetCustomerNameDropDown()  .ToDynamicList() },
+                    {"Product".ToLower(),dropDownService        .GetProductDropDown()       .ToDynamicList() },
+                    {"ProductType".ToLower(),dropDownService    .GetProductTypeDropDown()   .ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].SkipList;
             }

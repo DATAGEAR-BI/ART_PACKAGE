@@ -1,23 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ART_PACKAGE.Helpers.CustomReportHelpers;
-using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data;
-using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Services.Pdf;
-using Microsoft.AspNetCore.Authorization;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.FTI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
     [Authorize(Roles = "ArtFtiEcmTransaction", Policy = "License")]
     public class ArtFtiEcmTransactionController : Controller
     {
-        private readonly AuthContext dbfcfkc;
+        private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _drpSrv;
-        public ArtFtiEcmTransactionController(AuthContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv)
+        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
