@@ -5,11 +5,11 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
-using ART_PACKAGE.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -22,6 +22,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<LicenseWatcher>();
+builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
@@ -36,7 +37,7 @@ builder.Services.AddDefaultIdentity<AppUser>()
 builder.Services.ConfigureApplicationCookie(opt =>
  {
 
-     opt.LoginPath = new PathString("/Ldapauth/login");
+     opt.LoginPath = new PathString("/Account/Ldapauth/login");
  });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -76,7 +77,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
-app.UseLicense();
+//app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
