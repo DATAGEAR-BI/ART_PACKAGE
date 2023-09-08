@@ -140,6 +140,12 @@ function intializeGrid() {
             $(".spinner").remove();
             generateGrid();
 
+        }).catch(err => {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'error';
+            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
+            toastObj.heading = "Report Status";
+            $.toast(toastObj);
         });
 }
 function genrateToolBar(data, doesnotcontainsll) {
@@ -367,7 +373,13 @@ function generateGrid() {
                                         );
                                     });
                                 }
-                            });
+                            }).catch(err => {
+                                toastObj.hideAfter = false;
+                                toastObj.icon = 'error';
+                                toastObj.text = "Some thing wrong hannped while retreving data for the report please reload page or call support";
+                                toastObj.heading = "Report Status";
+                                $.toast(toastObj);
+                            });;
                     }
                 },
             },
@@ -456,7 +468,7 @@ function generateGrid() {
                     return dataItem;
                 });
             } else {
-                
+
                 selected[this.dataSource.page()] = [];
 
             }

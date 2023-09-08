@@ -55,6 +55,48 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
             }
     }
+            },    {
+                nameof(ArtCasesInitiatedFromBranchController).ToLower(),new ReportConfig
+                {
+                   SkipList =  new List<string>()
+                    {
+                    }
+                }
+            },
+            {
+                nameof(ArtDgecmActivityController).ToLower(),new ReportConfig
+                {
+                   SkipList =  new List<string>()
+                    {
+                    }
+                }
+            },
+            {
+                nameof(ArtEcmFtiFullCycleController).ToLower(),new ReportConfig
+                {
+                    SkipList =  new List<string>()
+                    {
+
+
+                    }
+                }
+            },    {
+                nameof(ArtFtiActivityController).ToLower(),new ReportConfig
+                {
+                   SkipList =  new List<string>()
+                    {
+
+                    }
+                }
+            },    {
+                nameof(ArtFtiEcmTransactionController).ToLower(),new ReportConfig
+                {
+                   SkipList =  new List<string>()
+            {
+
+
+            }
+    }
             },
     //        {
     //            nameof(AlertedEntitiesController).ToLower(),new ReportConfig
