@@ -4133,11 +4133,11 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CaseCreationDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("EXPIRY_DATE");
+                    .HasColumnName("CASE_CREATION_DATE");
 
                 entity.Property(e => e.ExpiryDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CASE_CREATION_DATE");
+                    .HasColumnName("EXPIRY_DATE");
                 entity.Property(e => e.CaseStatus)
                     .HasMaxLength(4000)
                     .HasColumnName("CASE_STATUS")
