@@ -17,7 +17,7 @@ namespace ART_PACKAGE.Controllers
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService dropDownService, ICsvExport csvSrv)
+        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;

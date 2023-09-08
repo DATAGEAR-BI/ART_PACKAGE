@@ -4,21 +4,20 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.FTI;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtFtiEcmTransaction", Policy = "License")]
+
     public class ArtFtiEcmTransactionController : Controller
     {
         private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _drpSrv;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, DropDownService drpSrv, ICsvExport csvSrv)
+        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService drpSrv, ICsvExport csvSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _pdfSrv = pdfSrv;
