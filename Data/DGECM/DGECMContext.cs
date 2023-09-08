@@ -20,10 +20,10 @@ namespace Data.DGECM
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (this.Database.IsSqlServer())
-                ModelCreatingConfigurator.CommentSqlServerOnModelCreating(modelBuilder);
+                ModelCreatingConfigurator.DGECMSqlServerOnModelCreating(modelBuilder);
 
             if (this.Database.IsOracle())
-                ModelCreatingConfigurator.CommentOracleOnModelCreating(modelBuilder);
+                ModelCreatingConfigurator.DGECMSqlServerOnModelCreating(modelBuilder);
 
             OnModelCreatingPartial(modelBuilder);
         }
