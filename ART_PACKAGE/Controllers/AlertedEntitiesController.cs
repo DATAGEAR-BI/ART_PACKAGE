@@ -1,11 +1,11 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -14,11 +14,13 @@ namespace ART_PACKAGE.Controllers
         private readonly EcmContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
-        public AlertedEntitiesController(EcmContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        private readonly ICsvExport _csvSrv;
+        public AlertedEntitiesController(EcmContext context, IPdfService pdfSrv, IDropDownService dropSrv, ICsvExport csvSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
             _dropSrv = dropSrv;
+            _csvSrv = csvSrv;
         }
 
         public IActionResult GetData([FromBody] KendoRequest request)
@@ -35,16 +37,7 @@ namespace ART_PACKAGE.Controllers
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    ////{"CaseType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseType).Distinct().ToDynamicList() },
-                    ////{"CaseStatus".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.CaseStatus).Distinct().ToDynamicList() },
-                    ////{"Priority".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.Priority).Distinct().ToDynamicList() },
-                    ////{"TransactionDirection".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionDirection).Distinct().ToDynamicList() },
-                    ////{"TransactionType".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.TransactionType).Distinct().ToDynamicList() },
-                    ////{"UpdateUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.UpdateUserId).Distinct().ToDynamicList() },
-                    ////{"InvestrUserId".ToLower(),dbdgcmgmt.ArtSystemPerformances.Select(x=>x.InvestrUserId).Distinct().ToDynamicList() },
-                    {"CaseType".ToLower(),_dropSrv.GetCaseTypeDropDown().ToDynamicList() },
-                    {"CaseStatus".ToLower(),_dropSrv.GetCaseStatusDropDown().ToDynamicList()},
-                    {"Priority".ToLower(),_dropSrv.GetPriorityDropDown().ToDynamicList() }
+
                 };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
@@ -69,8 +62,8 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
             Microsoft.EntityFrameworkCore.DbSet<ArtAlertedEntity> data = context.ArtAlertedEntities;
-            byte[] bytes = await data.ExportToCSV<ArtAlertedEntity, GenericCsvClassMapper<ArtAlertedEntity, AlertedEntitiesController>>(para.Req);
-            return File(bytes, "text/csv");
+            await _csvSrv.ExportAllCsv<ArtAlertedEntity, AlertedEntitiesController, decimal>(data, User.Identity.Name, para);
+            return new EmptyResult();
         }
 
 

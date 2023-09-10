@@ -19,6 +19,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
             using IServiceScope scope = app.Services.CreateScope();
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+
+
             if (authContext.Database.GetPendingMigrations().Any())
             {
                 authContext.Database.Migrate();
@@ -26,7 +28,6 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
             if (modules.Contains("ECM"))
             {
-
                 EcmContext ecmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
 
                 if (ecmContext.Database.GetPendingMigrations().Any())

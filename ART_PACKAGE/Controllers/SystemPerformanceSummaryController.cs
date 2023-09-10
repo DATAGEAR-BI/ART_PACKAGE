@@ -10,7 +10,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Data;
-using System.Globalization;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
@@ -122,7 +121,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     ChartId = "StSystemPerfPerDate",
                     //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
-                    Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
+                    Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
                     Title = "Cases Per Trans Direction",
                     Cat = "Date",
                     Val = "CASES"

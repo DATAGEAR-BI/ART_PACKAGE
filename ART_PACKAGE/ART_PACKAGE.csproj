@@ -98,7 +98,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Controllers\AlertedEntitiesController.cs" />
 	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 	</ItemGroup>
 
