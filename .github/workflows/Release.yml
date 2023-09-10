@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - ABK
+      - NCBA
   pull_request:
     branches:
       - main
       - ABK 
+      - NCBA
 
 jobs:
   build:
