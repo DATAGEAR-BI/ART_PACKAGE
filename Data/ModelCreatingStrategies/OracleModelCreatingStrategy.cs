@@ -1868,9 +1868,9 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("PRIORITY");
 
-                entity.Property(e => e.SwiftMessage)
-                    .HasColumnType("CLOB")
-                    .HasColumnName("SWIFT_MESSAGE");
+                //entity.Property(e => e.SwiftMessage)
+                //    .HasColumnType("CLOB")
+                //    .HasColumnName("SWIFT_MESSAGE");
 
                 entity.Property(e => e.SwiftReference)
                     .HasMaxLength(1000)

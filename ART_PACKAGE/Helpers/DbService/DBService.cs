@@ -29,6 +29,10 @@ namespace ART_PACKAGE.Helpers.DBService
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 DGAMLContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLContext>();
+                fcf71Context core = scope.ServiceProvider.GetRequiredService<fcf71Context>();
+                FCFKC kc = scope.ServiceProvider.GetRequiredService<FCFKC>();
+                KC = kc;
+                CORE = core;
                 DGAML = dgAml;
             }
             if (modules.Contains("GOAML"))

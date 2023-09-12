@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.StoredProcs;
 using Data.Data.ECM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
@@ -12,6 +13,7 @@ using System.Data;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "UserPerformPerAction")]
     public class UserPerformPerActionController : Controller
     {
         private readonly IMemoryCache _cache;

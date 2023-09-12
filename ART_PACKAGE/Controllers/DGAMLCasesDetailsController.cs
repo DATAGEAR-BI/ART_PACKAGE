@@ -3,11 +3,14 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "CasesDetails")]
     public class DGAMLCasesDetailsController : Controller
     {
         private readonly ArtDgAmlContext _context;
@@ -36,14 +39,11 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
-                    //{"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
-                    //{"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown().ToDynamicList() },
-                    //{"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    //{"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"Owner".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown().ToDynamicList() },
+                    {"CaseStatus".ToLower(),_dropDown.GetDGCaseStatusDropDown().ToDynamicList() },
+                    {"CasePriority".ToLower(),_dropDown.GetDGCasePriorityDropDown().ToDynamicList() },
+                    {"CaseCategory".ToLower(),_dropDown.GetDGCaseCategoryDropDown().ToDynamicList() },
+                    {"CreatedBy".ToLower(),_dropDown.GetDGCreatedByDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].SkipList : new();
             }

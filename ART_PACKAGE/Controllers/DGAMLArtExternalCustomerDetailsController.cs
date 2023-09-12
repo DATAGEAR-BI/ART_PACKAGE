@@ -3,6 +3,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ExternalCustomerDetails")]
     public class DGAMLArtExternalCustomerDetailsController : Controller
     {
         private readonly ArtDgAmlContext _context;
@@ -36,12 +38,10 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"BranchName".ToLower(),_dropDown           .GetDGExternalCustomerBranchNameDropDown()      .ToDynamicList() },
-                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenshipCountryNameDropDown()          .ToDynamicList() },
-                    {"ResidCntryName".ToLower(),_dropDown       .GetDGresidenceCountryNameDropDown()            .ToDynamicList() },
-                    {"CntryName".ToLower(),_dropDown            .GetDGStreetCountryNameDropDown()               .ToDynamicList() },
-                    {"CityName".ToLower(),_dropDown             .GetDGCityNameDropDown()                        .ToDynamicList() },
-                    {"IdentTypeDesc".ToLower(),_dropDown        .GetDGCustomerIdentificationTypeDropDown()      .ToDynamicList() },
-                    {"ExtCustTypeDesc".ToLower(),_dropDown      .GetDGCustomerTypeDropDown()                    .ToDynamicList() },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGExternalCustomerCitizenshipCountryNameDropDown()          .ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown             .GetDGExternalCustomerCityNameDropDown()                        .ToDynamicList() },
+                    {"CustomerType".ToLower(),_dropDown      .GetDGExternalCustomerTypeDropDown()                    .ToDynamicList() },
+                    {"CustomerIdentificationType".ToLower(),_dropDown      .GetDGCustomerIdentificationTypeDropDown()                    .ToDynamicList() },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtExternalCustomerDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtExternalCustomerDetailsController).ToLower()].SkipList : new();

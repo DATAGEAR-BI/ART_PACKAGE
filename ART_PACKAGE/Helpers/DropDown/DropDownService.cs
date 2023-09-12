@@ -599,6 +599,21 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<string?> distinct_value = _dbSrv.DGAML.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Distinct().ToList();
             return distinct_value;
         }
+        public List<string> GetDGAlertStatusDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => !string.IsNullOrEmpty(x.LkpValDesc) && x.LkpName == "ALARM_STATUS").Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGSubCategoryDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => !string.IsNullOrEmpty(x.LkpValDesc) && x.LkpName == "ALARM_SUBCATEGORY").Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCategoryDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => !string.IsNullOrEmpty(x.LkpValDesc) && x.LkpName == "ALARM_CATEGORY").Select(x => x.LkpValDesc).Distinct().ToList();
+            return distinct_value;
+        }
         public List<string> GetDGProfileRiskDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.RiskScoreCd)).Select(x => x.RiskScoreCd).Distinct().ToList();
@@ -629,9 +644,55 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustIdentTypeDesc)).Select(x => x.CustIdentTypeDesc).Distinct().ToList();
             return distinct_value;
         }
+        public List<string> GetDGCustomerTypeDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustTypeDesc)).Select(x => x.CustTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetCustomerIdentificationTypDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustIdentTypeDesc)).Select(x => x.CustIdentTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCityNameDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CityName)).Select(x => x.CityName).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCustomerStatusDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustStatusDesc)).Select(x => x.CustStatusDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGStreetPostalCodeDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.PostCd)).Select(x => x.PostCd).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGStreetCountryNameDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGGovernorateNameDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.StateName)).Select(x => x.StateName).Distinct().ToList();
+            return distinct_value;
+        }
+
         public List<string> GetDGOccupDescDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.OccupDesc)).Select(x => x.OccupDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGIndustryDescDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.IndsDesc)).Select(x => x.IndsDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCitizenshipCountryNameDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Distinct().ToList();
             return distinct_value;
         }
         public List<string> GetDGRoutineCreateUserIdDropDown()
@@ -639,7 +700,7 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<string> distinct_value = _dbSrv.DGAML.AcRoutines.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Distinct().ToList();
             return distinct_value;
         }
-        public List<string> GetDGCustomerTypeDropDown()
+        public List<string> GetDGExternalCustomerTypeDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Distinct().ToList();
             return distinct_value;
@@ -651,13 +712,13 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
         }
 
-        public List<string> GetDGCityNameDropDown()
+        public List<string> GetDGExternalCustomerCityNameDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CityName)).Select(x => x.CityName).Distinct().ToList();
             return distinct_value;
         }
 
-        public List<string> GetDGStreetCountryNameDropDown()
+        public List<string> GetDGExternalCustomerStreetCountryNameDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Distinct().ToList();
             return distinct_value;
@@ -669,7 +730,7 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
         }
 
-        public List<string> GetDGCitizenshipCountryNameDropDown()
+        public List<string> GetDGExternalCustomerCitizenshipCountryNameDropDown()
         {
             List<string?> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Distinct().ToList();
             return distinct_value;
@@ -688,6 +749,47 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetDGParmTypeDescDropDown()
         {
             List<string> distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGTriageBranchName()
+        {
+            List<string?> distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.Branch)).Select(x => x.Branch).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGTriageRiskClassificationDropDown()
+        {
+            List<string> distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => x.RiskScoreCd != null).Select(x => x.RiskScoreCd.ToString()).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCaseStatusDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.ECM.RefTableVals.Where(x => x.RefTableName == "FCF_CASE_STATUS" && x.ValDesc != null).Select(x => x.ValDesc).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCasePriorityDropDown()
+        {
+            List<string> distinct_value = _dbSrv.ECM.RefTableVals
+                .Where(a => a.RefTableName.StartsWith("X_RT_PRIORITY")).Select(x => x.ValDesc)
+                .ToList();
+            return distinct_value;
+
+        }
+        public List<string> GetDGCaseCategoryDropDown()
+        {
+            List<string> distinct_value = _dbSrv.ECM.RefTableVals
+               .Where(a => a.RefTableName.StartsWith("RT_CASE_CATEGORY")).Select(x => x.ValDesc)
+               .ToList();
+            return distinct_value;
+
+        }
+        public List<string> GetDGCaseSubCategoryDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.ECM.CaseLives.Where(x => x.CaseSubCtgryCd != null).Select(x => x.CaseSubCtgryCd).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetDGCreatedByDropDown()
+        {
+            List<string?> distinct_value = _dbSrv.ECM.CaseLives.Where(x => x.CreateUserId != null).Select(x => x.CreateUserId).Distinct().ToList();
             return distinct_value;
         }
     }

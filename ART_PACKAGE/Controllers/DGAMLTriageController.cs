@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "Triage")]
     public class DGAMLTriageController : Controller
     {
         private readonly ArtDgAmlContext _context;
@@ -37,9 +39,9 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
+                    {"BranchName".ToLower(), _dropDown.GetDGTriageBranchName().ToDynamicList() },
+                    {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetDGOwnerDropDown().ToDynamicList() }
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : new();
             }

@@ -100,6 +100,25 @@
         public List<string> GetDGCustomerIdentificationTypeDropDown();
         public List<string> GetDGCustomerTypeDropDown();
         public List<string> GetDGCreateUserIdDropDown();
+        public List<string> GetDGAlertStatusDropDown();
+        public List<string> GetDGCaseSubCategoryDropDown();
+        public List<string> GetDGCategoryDropDown();
+        public List<string> GetDGTriageBranchName();
+        public List<string> GetDGTriageRiskClassificationDropDown();
+        public List<string> GetDGCaseStatusDropDown();
+        public List<string> GetDGCaseCategoryDropDown();
+        public List<string> GetDGSubCategoryDropDown();
+        public List<string> GetDGCasePriorityDropDown();
+        public List<string> GetDGCreatedByDropDown();
+        public List<string> GetDGExternalCustomerTypeDropDown();
+        public List<string> GetCustomerIdentificationTypDropDown();
+        public List<string> GetDGGovernorateNameDropDown();
+        public List<string> GetDGExternalCustomerCityNameDropDown();
+        public List<string> GetDGCustomerStatusDropDown();
+        public List<string> GetDGStreetPostalCodeDropDown();
+        public List<string> GetDGExternalCustomerStreetCountryNameDropDown();
+        public List<string> GetDGIndustryDescDropDown();
+        public List<string> GetDGExternalCustomerCitizenshipCountryNameDropDown();
 
     }
 }
