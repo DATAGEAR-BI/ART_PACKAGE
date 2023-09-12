@@ -1,20 +1,15 @@
-# Release Notes - FTI v1.0.1
+# Release Notes - TUB v1.0.1
 
-We are pleased to announce the release of Test App v2.0.20. This version includes several bug fixes and improvements to enhance the overall performance and stability of the app.
+this is the first Art package Released for TUB
+
 
 ## New Features
 
-- Test Feature
+- Sanction && AML Home DashBoard
+- Reports For TUB Named => (6 SANCTION REPORTS --> System Performance Summary - System Performance Details - UserPerformance Details - User Perform Per Action - User Performance Per Action User - User Performance Per User And Action) - (12 AML Reports --> Alert Summary - Alert Details - Triage - Cases Summary - Cases Details - Customers Summary - Customers Details - External Customer Summary - External Customer Details - Scenario Admin - Scenario Audit - Suspect Detail Audit )
 
-## Improvements
+## Release Date
 
-- Test Improvements
-
-## Bug Fixes
-
-- Fixed export in acc posting report
+released at 09-12-2023 9:00 PM
 
 
-We encourage all users to update to the latest version of Test App to take advantage of these improvements and bug fixes.
-
-Thank you for your continued support of Test App. If you have any feedback or issues, please don't hesitate to contact us.
