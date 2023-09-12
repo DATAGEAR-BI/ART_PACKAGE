@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - ABK
+      - TUB
   pull_request:
     branches:
       - main
       - ABK 
+      - TUB
 
 jobs:
   build:
