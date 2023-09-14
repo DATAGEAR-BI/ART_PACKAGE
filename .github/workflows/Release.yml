@@ -35,6 +35,7 @@ jobs:
         run: dotnet publish -c Release -o ./Release
 
 
+
       
 
       - name: Get Version and Tag From Code

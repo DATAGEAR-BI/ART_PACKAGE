@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
@@ -16,11 +17,12 @@ namespace ART_PACKAGE.Controllers.FTI
     {
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-
-        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown)
+        private readonly ICsvExport _csvSrv;
+        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown, ICsvExport csvSrv)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
+            _csvSrv = csvSrv;
         }
         public IActionResult GetData([FromBody] KendoRequest request)
         {
