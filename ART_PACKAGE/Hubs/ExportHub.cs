@@ -10,7 +10,7 @@ namespace ART_PACKAGE.Hubs
     {
         private readonly UsersConnectionIds connections;
         private readonly ICsvExport _csvSrv;
-        private readonly EcmContext context
+        private readonly EcmContext context;
 
         public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, EcmContext context)
         {
@@ -30,6 +30,7 @@ namespace ART_PACKAGE.Hubs
         {
             await Clients.Caller.SendAsync("iAmAlive");
         }
+
 
         public async Task Export(ExportDto<object> para, string controller)
         {
