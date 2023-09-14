@@ -1,0 +1,12 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    var Modules = Configuration.GetSection("Modules")
+                        .Get<List<string>>();
+}
+
+
+@if (Modules.Contains("AMLANALYSIS"))
+{
+
+    <script src="~/js/amlanalysislistener.js"></script>
+}

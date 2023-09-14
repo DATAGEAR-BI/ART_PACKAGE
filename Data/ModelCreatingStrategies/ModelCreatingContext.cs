@@ -2,11 +2,12 @@
 
 namespace Data.ModelCreatingStrategies
 {
-    public class ModelCreatingContext : IModelCreatingStrategy
+    public class ModelCreatingContext : IBaseModelCreatingStrategy
     {
-        private readonly IModelCreatingStrategy _strategy;
+        private readonly IBaseModelCreatingStrategy _strategy;
 
-        public ModelCreatingContext(IModelCreatingStrategy strategy)
+
+        public ModelCreatingContext(IBaseModelCreatingStrategy strategy)
         {
             _strategy = strategy;
         }
@@ -70,6 +71,11 @@ namespace Data.ModelCreatingStrategies
         public void OnKYCModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnKYCModelCreating(modelBuilder);
+        }
+
+        public void OnDGECMModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGECMModelCreating(modelBuilder);
         }
     }
 }

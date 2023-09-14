@@ -17,6 +17,8 @@ connection.on("RouteResult", (res) => {
     }
 
 })
+
+
 connection.on("CloseResult", (res) => {
     toastObj.hideAfter = false;
     var grid = document.getElementById("grid");

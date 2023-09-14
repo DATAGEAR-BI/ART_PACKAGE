@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -18,7 +13,7 @@ namespace Data.ModelCreatingStrategies
         }
 
 
-        public IModelCreatingStrategy CreateModelCreatingStrategyInstance()
+        public IBaseModelCreatingStrategy CreateModelCreatingStrategyInstance()
         {
             if (_context.Database.IsSqlServer())
                 return new SqlServerModelCreatingStrategy();

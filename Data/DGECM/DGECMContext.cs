@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.ModelCreatingStrategies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.DGECM
 {
@@ -19,15 +20,10 @@ namespace Data.DGECM
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (this.Database.IsSqlServer())
-                ModelCreatingConfigurator.DGECMSqlServerOnModelCreating(modelBuilder);
-
-            if (this.Database.IsOracle())
-                ModelCreatingConfigurator.DGECMOracleOnModelCreating(modelBuilder);
-
-            OnModelCreatingPartial(modelBuilder);
+            var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
+            modelCreatingStrategy.OnDGECMModelCreating(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
     }
 }

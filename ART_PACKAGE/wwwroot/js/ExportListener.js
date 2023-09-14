@@ -1,6 +1,26 @@
-﻿var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").build();
-exportConnection.start().then(x => {
-    console.log("connection started");
+﻿import { keepAlive } from './HubUtils.js'
+var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").build();
+var keepAliveInterval;
+export async function start() {
+    try {
+        await exportConnection.start();
+        console.log("SignalR Connected.");
+        keepAliveInterval = setInterval(() => keepAlive(exportConnection, "KeepAlive"), 1000);
+
+
+    } catch (err) {
+        console.log(err);
+        clearInterval(keepAliveInterval);
+        setTimeout(start, 5000);
+    }
+};
+export const invokeExport = (para, controller) => exportConnection.invoke("Export", para, controller);
+
+    await start();
+
+
+exportConnection.on("iAmAlive", () => {
+    console.log("iam alive");
 });
 var toastObj = {
     text: "", // Text that is to be shown in the toast

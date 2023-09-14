@@ -1,4 +1,5 @@
 ﻿
+import { invokeExport, start } from './ExportListener.js'
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {
@@ -42,26 +43,32 @@ export const Handlers = {
         para.Filter = filters;
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
         var res;
-        if (isMyreports) {
-            res = await fetch(`/${controller}/ExportMyReports`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
-        } else {
-            res = await fetch(`/${controller}/Export`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
+        await start();
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller);
 
-        }
+
+
+
+        //if (isMyreports) {
+        //    res = await fetch(`/${controller}/ExportMyReports`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+        //} else {
+        //    res = await fetch(`/${controller}/Export`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+
+        //}
         localStorage.removeItem("selectedidz");
 
     },

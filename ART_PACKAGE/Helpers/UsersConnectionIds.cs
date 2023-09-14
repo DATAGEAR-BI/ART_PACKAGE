@@ -5,7 +5,7 @@ namespace ART_PACKAGE.Helpers
     public class UsersConnectionIds
     {
         private readonly ConcurrentDictionary<string, List<string>> Connections = new();
-
+        private readonly object _lock = new();
         public void AddConnctionIdFor(string user, string connection)
         {
             if (user == null)
@@ -30,12 +30,16 @@ namespace ART_PACKAGE.Helpers
         {
             if (user == null)
                 return;
-            bool isUserExist = Connections.ContainsKey(user);
-            if (isUserExist)
+            lock (_lock)
             {
-                string? con = Connections[user].FirstOrDefault(x => x == connection);
-                _ = Connections[user].Remove(con);
+                bool isUserExist = Connections.ContainsKey(user);
+                if (isUserExist)
+                {
+                    string? con = Connections[user].FirstOrDefault(x => x == connection);
+                    _ = Connections[user].Remove(con);
+                }
             }
+
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
+using Data.Data.ARTDGAML;
+using Data.Data.ECM;
+using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq.Expressions;
 
@@ -10,12 +14,46 @@ namespace ART_PACKAGE.Helpers.Csv
     {
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        private readonly EcmContext _db;
+        private readonly SasAmlContext _dbAml;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ArtDgAmlContext _dgaml;
+        private readonly List<string>? modules;
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
             _exportHub = exportHub;
             this.connections = connections;
+            _configuration = configuration;
+            _serviceScopeFactory = serviceScopeFactory;
+            modules = _configuration.GetSection("Modules").Get<List<string>>();
+            if (modules.Contains("SASAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                _dbAml = amlService;
+            }
+            if (modules.Contains("ECM"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                _db = ecmService;
+            }
+            if (modules.Contains("DGAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                _dgaml = dgamlService;
+            }
         }
-
+        public async Task Export(string controller, string userName, ExportDto<object> obj)
+        {
+            if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower())
+            {
+                Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformanceNcba> data = _db.ArtSystemPerformanceNcbas;
+                await ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, object>(data, userName, obj);
+            }
+        }
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
         {
             int i = 1;
@@ -28,6 +66,8 @@ namespace ART_PACKAGE.Helpers.Csv
                     await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvRecevied", bytes, FileName);
                     i++;
+                    Thread.Sleep(30000);
+
                 }
                 catch (Exception)
                 {

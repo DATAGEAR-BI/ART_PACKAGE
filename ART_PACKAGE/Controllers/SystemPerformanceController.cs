@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
@@ -19,20 +20,22 @@ namespace ART_PACKAGE.Controllers
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
+        private readonly ICsvExport _csvSrv;
 
-        public SystemPerformanceController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv)
+        public SystemPerformanceController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropSrv, ICsvExport csvSrv)
         {
             _env = env;
             _pdfSrv = pdfSrv;
             context = _context;
             this.db = db;
             _dropSrv = dropSrv;
+            _csvSrv = csvSrv;
         }
 
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtSystemPreformance> data = context.ArtSystemPreformances.AsQueryable();
+            IQueryable<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -55,7 +58,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
-            KendoDataDesc<ArtSystemPreformance> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtSystemPerformanceNcba> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -71,11 +74,11 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
-            Microsoft.EntityFrameworkCore.DbSet<ArtSystemPreformance> data = context.ArtSystemPreformances;
-            byte[] bytes = await data.ExportToCSV<ArtSystemPreformance, GenericCsvClassMapper<ArtSystemPreformance, SystemPerformanceController>>(para.Req);
-            return File(bytes, "text/csv");
+            Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas;
+            _csvSrv.ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
+            return new EmptyResult();
         }
 
 
@@ -83,7 +86,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            List<ArtSystemPreformance> data = context.ArtSystemPreformances.CallData(req).Data.ToList();
+            List<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas.CallData(req).Data.ToList();
             ViewData["title"] = "System Performance Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
