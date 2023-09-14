@@ -5,7 +5,7 @@ using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     //[Authorize(Policy = "Licensed" , Roles = "InterfaceDetails")]
 

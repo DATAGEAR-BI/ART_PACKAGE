@@ -1,10 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
-using Data.Data.ARTDGAML;
-using Data.Data.ECM;
-using Data.Data.FTI;
-using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -15,13 +11,6 @@ namespace ART_PACKAGE.Helpers.Csv
     {
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        private readonly EcmContext _db;
-        private readonly SasAmlContext _dbAml;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly IConfiguration _configuration;
-        private readonly ArtDgAmlContext _dgaml;
-        private readonly FTIContext _fti;
-        private readonly List<string>? modules;
         public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
             _exportHub = exportHub;
