@@ -1,5 +1,5 @@
 ﻿import { keepAlive } from './HubUtils.js'
-var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").build();
+export var exportConnection = new signalR.HubConnectionBuilder().withUrl("/ExportHub").withAutomaticReconnect().build();
 var keepAliveInterval;
 export async function start() {
     try {
@@ -16,7 +16,7 @@ export async function start() {
 };
 export const invokeExport = (para, controller) => exportConnection.invoke("Export", para, controller);
 
-    await start();
+await start();
 
 
 exportConnection.on("iAmAlive", () => {
