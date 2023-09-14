@@ -83,12 +83,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            DbSet<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiFullJournalReport, GenericCsvClassMapper<ArtTiFullJournalReport, FullJournalController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

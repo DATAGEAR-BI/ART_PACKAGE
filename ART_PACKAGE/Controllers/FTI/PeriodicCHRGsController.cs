@@ -76,14 +76,6 @@ namespace ART_PACKAGE.Controllers.FTI
 
 
 
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiPeriodicChrgsReport> data = fti.ArtTiPeriodicChrgsReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiPeriodicChrgsReport, GenericCsvClassMapper<ArtTiPeriodicChrgsReport, PeriodicCHRGsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGsController).ToLower()].DisplayNames;

@@ -76,12 +76,7 @@ namespace ART_PACKAGE.Controllers.FTI
             return View();
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiAdvancePaymentUtilizationReport> data = fti.ArtTiAdvancePaymentUtilizationReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiAdvancePaymentUtilizationReport, GenericCsvClassMapper<ArtTiAdvancePaymentUtilizationReport, AdvancePaymentUtilizationController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

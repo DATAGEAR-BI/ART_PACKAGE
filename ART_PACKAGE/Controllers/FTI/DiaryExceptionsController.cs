@@ -74,12 +74,6 @@ namespace ART_PACKAGE.Controllers.FTI
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiDiaryExceptionsReport> data = fti.ArtTiDiaryExceptionsReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiDiaryExceptionsReport, GenericCsvClassMapper<ArtTiDiaryExceptionsReport, DiaryExceptionsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

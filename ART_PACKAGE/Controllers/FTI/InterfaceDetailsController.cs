@@ -74,15 +74,6 @@ namespace ART_PACKAGE.Controllers.FTI
         }
 
 
-
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiInterfaceDetailsReport> data = fti.ArtTiInterfaceDetailsReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiInterfaceDetailsReport, GenericCsvClassMapper<ArtTiInterfaceDetailsReport, InterfaceDetailsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(InterfaceDetailsController).ToLower()].DisplayNames;

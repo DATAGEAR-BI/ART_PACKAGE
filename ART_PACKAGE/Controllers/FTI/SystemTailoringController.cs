@@ -73,12 +73,6 @@ namespace ART_PACKAGE.Controllers.FTI
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiSystemTailoringReport> data = fti.ArtTiSystemTailoringReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiSystemTailoringReport, GenericCsvClassMapper<ArtTiSystemTailoringReport, SystemTailoringController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

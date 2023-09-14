@@ -81,13 +81,6 @@ namespace ART_PACKAGE.Controllers.FTI
             return View();
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiActivityReport> data = fti.ArtTiActivityReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiActivityReport, GenericCsvClassMapper<ArtTiActivityReport, ActivityController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             List<ArtTiActivityReport> data = fti.ArtTiActivityReports.CallData(req).Data.ToList();

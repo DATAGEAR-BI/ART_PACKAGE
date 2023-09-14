@@ -70,12 +70,7 @@ namespace ART_PACKAGE.Controllers.FTI
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiAmortizationReport> data = fti.ArtTiAmortizationReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiAmortizationReport, GenericCsvClassMapper<ArtTiAmortizationReport, AmortizationController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

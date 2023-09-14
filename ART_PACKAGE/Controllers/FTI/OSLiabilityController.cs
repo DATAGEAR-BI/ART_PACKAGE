@@ -77,13 +77,6 @@ namespace ART_PACKAGE.Controllers.FTI
             return View();
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiOsLiabilityReport> data = fti.ArtTiOsLiabilityReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiOsLiabilityReport, GenericCsvClassMapper<ArtTiOsLiabilityReport, OSLiabilityController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             List<ArtTiOsLiabilityReport> data = fti.ArtTiOsLiabilityReports.CallData(req).Data.ToList();

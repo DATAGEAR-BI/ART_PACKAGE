@@ -73,13 +73,6 @@ namespace ART_PACKAGE.Controllers.FTI
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiFinanInterAccrual> data = fti.ArtTiFinanInterAccruals;
-            byte[] bytes = await data.ExportToCSV<ArtTiFinanInterAccrual, GenericCsvClassMapper<ArtTiFinanInterAccrual, FinancingInterestAccrualsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             List<ArtTiFinanInterAccrual> data = fti.ArtTiFinanInterAccruals.CallData(req).Data.ToList();

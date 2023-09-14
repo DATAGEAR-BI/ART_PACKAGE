@@ -97,13 +97,6 @@ namespace ART_PACKAGE.Controllers.FTI
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiChargesByMasterReport> data = fti.ArtTiChargesByMasterReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiChargesByMasterReport, GenericCsvClassMapper<ArtTiChargesByMasterReport, OurChargesByMasterController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
-
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             List<ArtTiChargesByMasterReport> data = fti.ArtTiChargesByMasterReports.CallData(req).Data.ToList();

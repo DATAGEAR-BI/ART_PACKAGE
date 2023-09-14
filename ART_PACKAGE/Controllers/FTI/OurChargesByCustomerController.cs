@@ -69,12 +69,6 @@ namespace ART_PACKAGE.Controllers.FTI
 
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiChargesByCustReport> data = fti.ArtTiChargesByCustReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiChargesByCustReport, GenericCsvClassMapper<ArtTiChargesByCustReport, OurChargesByCustomerController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
