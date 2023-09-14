@@ -74,10 +74,10 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        public IActionResult Export([FromBody] ExportDto<decimal> para)
         {
             Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas;
-            await _csvSrv.ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
+            _csvSrv.ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
             return new EmptyResult();
         }
 

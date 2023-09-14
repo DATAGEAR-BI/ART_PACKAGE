@@ -17,9 +17,9 @@ namespace ART_PACKAGE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDbService _dbSrv;
         private readonly EcmContext _db;
         private readonly SasAmlContext _dbAml;
-        private readonly IDbService _dbSrv;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;

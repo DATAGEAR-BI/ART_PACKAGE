@@ -19,7 +19,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 {
     EnvironmentName = "Development",
 });
-
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<LicenseWatcher>();
@@ -37,7 +36,7 @@ builder.Services.AddDefaultIdentity<AppUser>()
 builder.Services.ConfigureApplicationCookie(opt =>
  {
 
-     opt.LoginPath = new PathString("/Ldapauth/login");
+     opt.LoginPath = new PathString("/Account/Ldapauth/login");
  });
 
 // Add services to the container.

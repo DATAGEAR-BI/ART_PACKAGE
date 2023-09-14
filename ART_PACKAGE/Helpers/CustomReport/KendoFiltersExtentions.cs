@@ -890,7 +890,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 IgnoreBlankLines = true,
                 AllowComments = true,
             };
-            int batch = 10000;
+            int batch = 100;
             int skip = 0;
             List<Task<byte[]>> tasks = new() { };
             while (total > 0)

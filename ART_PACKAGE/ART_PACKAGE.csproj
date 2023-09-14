@@ -28,11 +28,13 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\HubUtils.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\js\HubUtils.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -1800,6 +1802,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\HubUtils.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>

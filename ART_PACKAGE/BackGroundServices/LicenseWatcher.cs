@@ -21,7 +21,7 @@ namespace ART_PACKAGE.BackGroundServices
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            using PeriodicTimer timer = new(TimeSpan.FromDays(1));
+            using PeriodicTimer timer = new(TimeSpan.FromMinutes(1));
 
             try
             {
