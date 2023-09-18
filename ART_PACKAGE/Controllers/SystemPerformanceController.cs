@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : Controller
     {
         private readonly EcmContext context;
@@ -74,12 +74,12 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public IActionResult Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformance> data = context.ArtSystemPerformances;
-            _csvSrv.ExportAllCsv<ArtSystemPerformance, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
-            return new EmptyResult();
-        }
+        //public IActionResult Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformance> data = context.ArtSystemPerformances;
+        //    _csvSrv.ExportAllCsv<ArtSystemPerformance, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
+        //    return new EmptyResult();
+        //}
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

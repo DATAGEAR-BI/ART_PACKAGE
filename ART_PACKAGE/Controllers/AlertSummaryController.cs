@@ -3,12 +3,14 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "AlertSummary")]
     public class AlertSummaryController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

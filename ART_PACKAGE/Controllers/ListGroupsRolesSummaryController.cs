@@ -60,12 +60,12 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries;
-            byte[] bytes = await data.ExportToCSV<ListGroupsRolesSummary, GenericCsvClassMapper<ListGroupsRolesSummary, ListGroupsRolesSummaryController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries;
+        //    byte[] bytes = await data.ExportToCSV<ListGroupsRolesSummary, GenericCsvClassMapper<ListGroupsRolesSummary, ListGroupsRolesSummaryController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

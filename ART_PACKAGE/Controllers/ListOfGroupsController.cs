@@ -66,12 +66,12 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ListOfGroup> data = context.ListOfGroups;
-            await _csvSrv.ExportAllCsv<ListOfGroup, ListOfGroupsController, decimal>(data, User.Identity.Name, para);
-            return new EmptyResult();
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ListOfGroup> data = context.ListOfGroups;
+        //    await _csvSrv.ExportAllCsv<ListOfGroup, ListOfGroupsController, decimal>(data, User.Identity.Name, para);
+        //    return new EmptyResult();
+        //}
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
