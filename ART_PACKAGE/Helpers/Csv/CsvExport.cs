@@ -1,11 +1,8 @@
-﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
-using Data.Data.ARTDGAML;
-using Data.Data.ECM;
-using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ART_PACKAGE.Helpers.Csv
@@ -14,59 +11,42 @@ namespace ART_PACKAGE.Helpers.Csv
     {
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        private readonly EcmContext _db;
-        private readonly SasAmlContext _dbAml;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly IConfiguration _configuration;
-        private readonly ArtDgAmlContext _dgaml;
-        private readonly List<string>? modules;
-        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment)
         {
             _exportHub = exportHub;
             this.connections = connections;
-            _configuration = configuration;
-            _serviceScopeFactory = serviceScopeFactory;
-            modules = _configuration.GetSection("Modules").Get<List<string>>();
-            if (modules.Contains("SASAML"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
-                _dbAml = amlService;
-            }
-            if (modules.Contains("ECM"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
-                _db = ecmService;
-            }
-            if (modules.Contains("DGAML"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
-                _dgaml = dgamlService;
-            }
+            _webHostEnvironment = webHostEnvironment;
         }
-        public async Task Export(string controller, string userName, ExportDto<object> obj)
+
+        public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj, Func<TModel, bool> predicate = null) where TModel : class
         {
-            if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower())
-            {
-                Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformanceNcba> data = _db.ArtSystemPerformanceNcbas;
-                await ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, object>(data, userName, obj);
-            }
+            IQueryable<TModel> data = _db.Set<TModel>();
+            if (predicate is not null)
+                data = data.Where(predicate).AsQueryable();
+            await ExportAllCsv<TModel, TController, object>(data, userName, obj);
+
         }
+
+
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
         {
-            int i = 1;
+            int i = 0;
+            string reqId = Guid.NewGuid().ToString();
             foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req))
             {
                 try
                 {
+
                     byte[] bytes = await item;
-                    string FileName = typeof(T1).Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    string FileName = i + 1 + "." + typeof(T1).Name.Replace("Controller", "") + DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm") + ".csv";
+                    SaveByteArrayAsCsv(bytes, FileName, reqId);
+
+
                     await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvRecevied", bytes, FileName);
+                                .SendAsync("csvRecevied", bytes, FileName, i, reqId);
                     i++;
-                    Thread.Sleep(30000);
 
                 }
                 catch (Exception)
@@ -76,6 +56,30 @@ namespace ART_PACKAGE.Helpers.Csv
 
                 }
 
+            }
+            await _exportHub.Clients.Clients(connections.GetConnections(userName))
+                               .SendAsync("FinishedExportFor", reqId, i);
+        }
+        private void SaveByteArrayAsCsv(byte[] byteArray, string fileName, string folderGuid)
+        {
+            try
+            {
+                // Create a directory with the GUID as its name
+                string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                // Create a file path within the directory using the provided file name
+                string filePath = Path.Combine(folderPath, fileName);
+
+                // Write the byte array to the CSV file
+                File.WriteAllBytes(filePath, byteArray);
+
+                Console.WriteLine($"Byte array saved as '{fileName}' in folder '{folderGuid}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
         public Func<T, ExportDto<T2>, bool> GetContainsExpression<T, T2>(string propName)
@@ -96,43 +100,27 @@ namespace ART_PACKAGE.Helpers.Csv
 
             return lambda.Compile();
         }
-        public async Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, Func<T, bool> crt, string userName, ExportDto<T2> obj = null, bool all = true)
+
+        public async Task ExportMissed(string reqId, string UserName, List<int> missedFiles)
         {
-            IEnumerable<Task> tasks;
-            int i = 1;
-            if (obj.All)
-            {
-                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
-            }
-            else
-            {
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), reqId);
+            IEnumerable<string> FilesNames = Directory.EnumerateFiles(folderPath);
+            IEnumerable<string> missedFilesNames = FilesNames.Where(f => missedFiles.Any(x => Path.GetFileName(f).StartsWith(x.ToString())));
 
-
-                // Modify the LINQ expression to use Any and Contains
-                tasks = data
-                    .Where(x => crt(x))
-                    .ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
-            }
-
-            foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
-            {
-                try
-                {
-                    byte[] bytes = await item;
-                    string FileName = typeof(T1).Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvRecevied", bytes, FileName);
-                    i++;
-                }
-                catch (Exception ex)
-                {
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvErrorRecevied", i);
-
-                }
-
-            }
+            var files = missedFilesNames.Select(x => new { file = File.ReadAllBytes(x), fileName = Path.GetFileName(x) });
+            await _exportHub.Clients.Clients(connections.GetConnections(UserName))
+                                .SendAsync("missedFilesRecived", files, reqId);
         }
 
+        public void ClearExportFolder(string reqId)
+        {
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), reqId);
+            Directory.Delete(folderPath, true);
+        }
+
+        public Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

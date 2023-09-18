@@ -1868,9 +1868,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("PRIORITY");
 
-                entity.Property(e => e.SwiftMessage)
-                    .HasColumnType("CLOB")
-                    .HasColumnName("SWIFT_MESSAGE");
+
 
                 entity.Property(e => e.SwiftReference)
                     .HasMaxLength(1000)
@@ -11248,57 +11246,57 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("AMENDDATE");
 
-                entity.Property(e => e.Anybicfieldbic)
+                entity.Property(e => e.AnyBicFieldBic)
                     .IsUnicode(false)
                     .HasColumnName("ANYBICFIELDBIC");
 
-                entity.Property(e => e.Applicantid)
+                entity.Property(e => e.ApplicantId)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("APPLICANTID");
 
-                entity.Property(e => e.Applicantname)
+                entity.Property(e => e.ApplicantName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("APPLICANTNAME");
 
-                entity.Property(e => e.Applicantref)
+                entity.Property(e => e.ApplicantRef)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("APPLICANTREF");
 
-                entity.Property(e => e.Applicationdate)
+                entity.Property(e => e.ApplicationDate)
                     .HasPrecision(6)
                     .HasColumnName("APPLICATIONDATE");
 
-                entity.Property(e => e.Behalfofbranch)
+                entity.Property(e => e.BehalfOfBranch)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("BEHALFOFBRANCH");
 
-                entity.Property(e => e.Beneficiaryaccountnum)
+                entity.Property(e => e.BeneficiaryAccountNum)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("BENEFICIARYACCOUNTNUM");
 
-                entity.Property(e => e.Beneficiarybirthyear)
+                entity.Property(e => e.BeneficiaryBirthYear)
                     .IsUnicode(false)
                     .HasColumnName("BENEFICIARYBIRTHYEAR");
 
-                entity.Property(e => e.Beneficiarycountry)
+                entity.Property(e => e.BeneficiaryCountry)
                     .IsUnicode(false)
                     .HasColumnName("BENEFICIARYCOUNTRY");
 
-                entity.Property(e => e.Beneficiaryidentity)
+                entity.Property(e => e.BeneficiaryIdentity)
                     .IsUnicode(false)
                     .HasColumnName("BENEFICIARYIDENTITY");
 
-                entity.Property(e => e.Beneficiarynationality)
+                entity.Property(e => e.BeneficiaryNationality)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("BENEFICIARYNATIONALITY");
 
-                entity.Property(e => e.Birthplace)
+                entity.Property(e => e.BirthPlace)
                     .IsUnicode(false)
                     .HasColumnName("BIRTHPLACE");
 
@@ -11374,7 +11372,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CREATE_USER_ID");
 
-                entity.Property(e => e.Creditoragentbankbic)
+                entity.Property(e => e.CreditorAgentBankBic)
                     .IsUnicode(false)
                     .HasColumnName("CREDITORAGENTBANKBIC");
 
@@ -11403,7 +11401,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CUSTOMER_RESIDENCY");
 
-                entity.Property(e => e.Debtoragentbankbic)
+                entity.Property(e => e.DebtorAgentBankBic)
                     .IsUnicode(false)
                     .HasColumnName("DEBTORAGENTBANKBIC");
 
@@ -11413,7 +11411,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("DELETE_FLAG")
                     .IsFixedLength();
 
-                entity.Property(e => e.Documentreference)
+                entity.Property(e => e.DocumentReference)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("DOCUMENTREFERENCE");
@@ -11424,17 +11422,17 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYEE_IND")
                     .IsFixedLength();
 
-                entity.Property(e => e.Eventname)
+                entity.Property(e => e.EventName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("EVENTNAME");
 
-                entity.Property(e => e.Eventref)
+                entity.Property(e => e.EventRef)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("EVENTREF");
 
-                entity.Property(e => e.Expirydate)
+                entity.Property(e => e.ExpiryDate)
                     .HasPrecision(6)
                     .HasColumnName("EXPIRYDATE");
 
@@ -11443,11 +11441,11 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("HITS_COUNT");
 
-                entity.Property(e => e.Inputname)
+                entity.Property(e => e.InputName)
                     .IsUnicode(false)
                     .HasColumnName("INPUTNAME");
 
-                entity.Property(e => e.Intermediarycode)
+                entity.Property(e => e.IntermediaryCode)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("INTERMEDIARYCODE");
@@ -11457,7 +11455,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("INVESTR_USER_ID");
 
-                entity.Property(e => e.Issuedate)
+                entity.Property(e => e.IssueDate)
                     .HasPrecision(6)
                     .HasColumnName("ISSUEDATE");
 
@@ -11466,12 +11464,12 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("LOCKED_BY");
 
-                entity.Property(e => e.Masterref)
+                entity.Property(e => e.MasterRef)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("MASTERREF");
 
-                entity.Property(e => e.Maxsensitivityrank)
+                entity.Property(e => e.MaxSensitivityRank)
                     .HasColumnType("NUMBER(38,4)")
                     .HasColumnName("MAXSENSITIVITYRANK");
 
@@ -11483,21 +11481,21 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("OPEN_DATE");
 
-                entity.Property(e => e.Othnationality)
+                entity.Property(e => e.OthNationality)
                     .IsUnicode(false)
                     .HasColumnName("OTHNATIONALITY");
 
-                entity.Property(e => e.Partytypedesc)
+                entity.Property(e => e.PartyTypeDesc)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("PARTYTYPEDESC");
 
-                entity.Property(e => e.Paydestinationcountry)
+                entity.Property(e => e.PayDestinationCountry)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PAYDESTINATIONCOUNTRY");
 
-                entity.Property(e => e.Payorigincountry)
+                entity.Property(e => e.PayOriginCountry)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PAYORIGINCOUNTRY");
@@ -11517,20 +11515,20 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("PRODUCT");
 
-                entity.Property(e => e.Producttype)
+                entity.Property(e => e.ProductType)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("PRODUCTTYPE");
 
-                entity.Property(e => e.Receiverbankbic)
+                entity.Property(e => e.ReceiverBankBic)
                     .IsUnicode(false)
                     .HasColumnName("RECEIVERBANKBIC");
 
-                entity.Property(e => e.Receiverbic)
+                entity.Property(e => e.ReceiverBic)
                     .IsUnicode(false)
                     .HasColumnName("RECEIVERBIC");
 
-                entity.Property(e => e.Receiverctry)
+                entity.Property(e => e.ReceiverCtry)
                     .IsUnicode(false)
                     .HasColumnName("RECEIVERCTRY");
 
@@ -11545,24 +11543,24 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("REGU_RPT_RQD_FLAG")
                     .IsFixedLength();
 
-                entity.Property(e => e.Remitteraccountnum)
+                entity.Property(e => e.RemitterAccountNum)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("REMITTERACCOUNTNUM");
 
-                entity.Property(e => e.Remitterbirthyear)
+                entity.Property(e => e.RemitterBirthYear)
                     .IsUnicode(false)
                     .HasColumnName("REMITTERBIRTHYEAR");
 
-                entity.Property(e => e.Remittercountry)
+                entity.Property(e => e.RemitterCountry)
                     .IsUnicode(false)
                     .HasColumnName("REMITTERCOUNTRY");
 
-                entity.Property(e => e.Remitteridentity)
+                entity.Property(e => e.RemitterIdentity)
                     .IsUnicode(false)
                     .HasColumnName("REMITTERIDENTITY");
 
-                entity.Property(e => e.Remitternationality)
+                entity.Property(e => e.RemitterNationality)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("REMITTERNATIONALITY");
@@ -11571,32 +11569,32 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("REOPEN_DATE");
 
-                entity.Property(e => e.Searchcountry)
+                entity.Property(e => e.SearchCountry)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("SEARCHCOUNTRY");
 
-                entity.Property(e => e.Searchunit)
+                entity.Property(e => e.SearchUnit)
                     .HasMaxLength(1000)
                     .HasColumnName("SEARCHUNIT");
 
-                entity.Property(e => e.Searchuser)
+                entity.Property(e => e.SearchUser)
                     .HasMaxLength(1000)
                     .HasColumnName("SEARCHUSER");
 
-                entity.Property(e => e.Senderbankbic)
+                entity.Property(e => e.SenderBankBic)
                     .IsUnicode(false)
                     .HasColumnName("SENDERBANKBIC");
 
-                entity.Property(e => e.Senderbic)
+                entity.Property(e => e.SenderBic)
                     .IsUnicode(false)
                     .HasColumnName("SENDERBIC");
 
-                entity.Property(e => e.Senderctry)
+                entity.Property(e => e.SenderCtry)
                     .IsUnicode(false)
                     .HasColumnName("SENDERCTRY");
 
-                entity.Property(e => e.Senderreceiveragentcode)
+                entity.Property(e => e.SenderReceiverAgentCode)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("SENDERRECEIVERAGENTCODE");
@@ -11677,7 +11675,7 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(10)
                     .HasColumnName("VER_NO");
 
-                entity.Property(e => e.Waspending)
+                entity.Property(e => e.WasPending)
                     .IsUnicode(false)
                     .HasColumnName("WASPENDING");
 
