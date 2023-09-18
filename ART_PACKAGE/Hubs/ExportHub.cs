@@ -110,7 +110,6 @@ namespace ART_PACKAGE.Hubs
             if (nameof(SystemTailoringController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtTiSystemTailoringReport, SystemTailoringController>(_fti, Context.User.Identity.Name, para);
             #endregion
 
-
         }
 
 
