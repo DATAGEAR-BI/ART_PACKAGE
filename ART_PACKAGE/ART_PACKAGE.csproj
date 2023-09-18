@@ -53,55 +53,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Views\DGAMLAlertDetails\**" />
-	  <Compile Remove="Views\DGAMLAlertSummary\**" />
-	  <Compile Remove="Views\DGAMLArtExternalCustomerDetails\**" />
-	  <Compile Remove="Views\DGAMLArtScenarioAdmin\**" />
-	  <Compile Remove="Views\DGAMLArtScenarioHistory\**" />
-	  <Compile Remove="Views\DGAMLArtSuspectDetails\**" />
-	  <Compile Remove="Views\DGAMLCasesDetails\**" />
-	  <Compile Remove="Views\DGAMLCasesSummary\**" />
-	  <Compile Remove="Views\DGAMLCustomersDetails\**" />
-	  <Compile Remove="Views\DGAMLCustomerSummary\**" />
-	  <Compile Remove="Views\DGAMLExternalCustomerSummary\**" />
-	  <Content Remove="Views\DGAMLAlertDetails\**" />
-	  <Content Remove="Views\DGAMLAlertSummary\**" />
-	  <Content Remove="Views\DGAMLArtExternalCustomerDetails\**" />
-	  <Content Remove="Views\DGAMLArtScenarioAdmin\**" />
-	  <Content Remove="Views\DGAMLArtScenarioHistory\**" />
-	  <Content Remove="Views\DGAMLArtSuspectDetails\**" />
-	  <Content Remove="Views\DGAMLCasesDetails\**" />
-	  <Content Remove="Views\DGAMLCasesSummary\**" />
-	  <Content Remove="Views\DGAMLCustomersDetails\**" />
-	  <Content Remove="Views\DGAMLCustomerSummary\**" />
-	  <Content Remove="Views\DGAMLExternalCustomerSummary\**" />
-	  <EmbeddedResource Remove="Views\DGAMLAlertDetails\**" />
-	  <EmbeddedResource Remove="Views\DGAMLAlertSummary\**" />
-	  <EmbeddedResource Remove="Views\DGAMLArtExternalCustomerDetails\**" />
-	  <EmbeddedResource Remove="Views\DGAMLArtScenarioAdmin\**" />
-	  <EmbeddedResource Remove="Views\DGAMLArtScenarioHistory\**" />
-	  <EmbeddedResource Remove="Views\DGAMLArtSuspectDetails\**" />
-	  <EmbeddedResource Remove="Views\DGAMLCasesDetails\**" />
-	  <EmbeddedResource Remove="Views\DGAMLCasesSummary\**" />
-	  <EmbeddedResource Remove="Views\DGAMLCustomersDetails\**" />
-	  <EmbeddedResource Remove="Views\DGAMLCustomerSummary\**" />
-	  <EmbeddedResource Remove="Views\DGAMLExternalCustomerSummary\**" />
-	  <None Remove="Views\DGAMLAlertDetails\**" />
-	  <None Remove="Views\DGAMLAlertSummary\**" />
-	  <None Remove="Views\DGAMLArtExternalCustomerDetails\**" />
-	  <None Remove="Views\DGAMLArtScenarioAdmin\**" />
-	  <None Remove="Views\DGAMLArtScenarioHistory\**" />
-	  <None Remove="Views\DGAMLArtSuspectDetails\**" />
-	  <None Remove="Views\DGAMLCasesDetails\**" />
-	  <None Remove="Views\DGAMLCasesSummary\**" />
-	  <None Remove="Views\DGAMLCustomersDetails\**" />
-	  <None Remove="Views\DGAMLCustomerSummary\**" />
-	  <None Remove="Views\DGAMLExternalCustomerSummary\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
-	  <Compile Remove="Controllers\SystemPerformanceController.cs" />
+		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+		<Compile Remove="Controllers\SystemPerformanceController.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -992,6 +945,17 @@
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
+		<None Include="Views\DGAMLAlertDetails\Index.cshtml" />
+		<None Include="Views\DGAMLAlertSummary\Index.cshtml" />
+		<None Include="Views\DGAMLArtExternalCustomerDetails\Index.cshtml" />
+		<None Include="Views\DGAMLArtScenarioAdmin\Index.cshtml" />
+		<None Include="Views\DGAMLArtScenarioHistory\Index.cshtml" />
+		<None Include="Views\DGAMLArtSuspectDetails\Index.cshtml" />
+		<None Include="Views\DGAMLCasesDetails\Index.cshtml" />
+		<None Include="Views\DGAMLCasesSummary\Index.cshtml" />
+		<None Include="Views\DGAMLCustomersDetails\Index.cshtml" />
+		<None Include="Views\DGAMLCustomerSummary\Index.cshtml" />
+		<None Include="Views\DGAMLExternalCustomerSummary\Index.cshtml" />
 		<None Include="Views\DiaryExceptions\Index.cshtml" />
 		<None Include="Views\EcmAuditTrial\Index.cshtml" />
 		<None Include="Views\EcmTransactions\Index.cshtml" />
