@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Controllers.FTI;
+﻿using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
@@ -81,8 +80,6 @@ namespace ART_PACKAGE.Hubs
 
         public async Task Export(ExportDto<object> para, string controller)
         {
-            if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower())
-                await _csvSrv.Export<ArtSystemPerformanceNcba, SystemPerformanceController>(_ecm, Context.User.Identity.Name, para);
 
             #region FTI
             if (nameof(EcmAuditTrialController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportForAuditTrial(para);

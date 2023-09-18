@@ -101,6 +101,7 @@
 
 	<ItemGroup>
 	  <Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+	  <Compile Remove="Controllers\SystemPerformanceController.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
