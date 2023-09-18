@@ -21,7 +21,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
+                CREATE VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
                 select  (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end) ALERT_STATUS,
                 count(FSK_ALERT.alert_id) Alerts_Count
                 FROM fcf71.fcfkc.FSK_ALERT FSK_ALERT 
@@ -47,7 +47,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
+                CREATE VIEW [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
                 select Year_ Year,Month__ Month,Day_ Day,Number_Of_ALerts from
                 (select 
                 YEAR(a.create_date) Year_,
@@ -79,7 +79,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
                 select  count(*) Number_Of_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y';
@@ -98,7 +98,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
                 select  count(*) Number_Of_PEP_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -118,7 +118,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
                 select  count(*) Number_Of_High_Risk_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -138,7 +138,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_Number_Of_Accounts] AS
+                CREATE VIEW [ART_DB].[ART_HOME_Number_Of_Accounts] AS
                 select  count(*) Number_Of_Accounts
                 FROM fcf71.fcfcore.FSC_ACCOUNT_DIM a
                 where a.change_current_ind = 'Y';
@@ -157,7 +157,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
+                            CREATE VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
                               SELECT
                                     FSK_ALERTED_ENTITY.ALERTED_ENTITY_NAME ALERTED_ENTITY_NAME,
 		                            FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER ALERTED_ENTITY_NUMBER,
@@ -206,7 +206,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
+                            CREATE VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
                               SELECT 
                             ALERTED_ENTITY_NUMBER,
                             ALERTED_ENTITY_NAME,
@@ -369,7 +369,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
+                            CREATE VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
                               SELECT        
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_name customer_name,
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_number customer_number,
@@ -446,7 +446,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
+                            CREATE VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
                                SELECT 
                             ""CASE"".CASE_ID,
                             FSK_CASE_ENTITY.ENTITY_NAME,
@@ -549,7 +549,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
+                            CREATE VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
                            SELECT 
                                     FSC_PARTY_DIM.PARTY_NUMBER AS PARTY_NUMBER,
                                     FSC_PARTY_DIM.PARTY_TYPE_DESC AS PARTY_TYPE_DESC,
@@ -604,7 +604,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
+                            CREATE VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
                             SELECT
                                     RISK_STATUS.LOV_TYPE_DESC RISK_STATUS,
                                     RISK_CLASS.LOV_TYPE_DESC RISK_CLASS,
@@ -668,7 +668,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -710,7 +710,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -744,7 +744,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -778,7 +778,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -850,7 +850,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -884,7 +884,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -929,7 +929,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -963,7 +963,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
                             (
                             @V_START_DATE date , 
                             @V_END_DATE date
