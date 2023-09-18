@@ -66,12 +66,12 @@ namespace ART_PACKAGE.Controllers
                 Content = JsonConvert.SerializeObject(result)
             };
         }
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles;
-            byte[] bytes = await data.ExportToCSV<ListOfUsersAndGroupsRole, GenericCsvClassMapper<ListOfUsersAndGroupsRole, ListOfUsersAndGroupsRoleController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles;
+        //    byte[] bytes = await data.ExportToCSV<ListOfUsersAndGroupsRole, GenericCsvClassMapper<ListOfUsersAndGroupsRole, ListOfUsersAndGroupsRoleController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

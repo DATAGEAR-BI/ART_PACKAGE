@@ -14,7 +14,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "SystemPerformanceSummary")]
     public class SystemPerformanceSummaryController : Controller
     {
         private readonly EcmContext context;
