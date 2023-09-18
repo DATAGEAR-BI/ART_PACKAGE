@@ -19,7 +19,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             return schemaName == DbSchema.DGCMGMT.ToString()
                 ? _db.ECM
-                : schemaName == DbSchema.KC.ToString() ? _db.KC : schemaName == DbSchema.CORE.ToString() ? _db.CORE : (DbContext?)null;
+                : schemaName == DbSchema.KC.ToString() ? _db.KC : schemaName == DbSchema.CORE.ToString() ? _db.CORE
+                : schemaName == DbSchema.FTI.ToString() ? _db.TI
+                : schemaName == DbSchema.DGWLLOGS.ToString() ? _db.DGAML
+                : (DbContext?)null;
         }
     }
 }
