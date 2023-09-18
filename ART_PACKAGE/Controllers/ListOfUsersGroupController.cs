@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "ListOfUsersGroup")]
     public class ListOfUsersGroupController : Controller
     {
 
