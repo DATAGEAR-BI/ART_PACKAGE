@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     //[Authorize(Policy = "Licensed" , Roles = "FullJournal")]
 
@@ -83,12 +83,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            DbSet<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiFullJournalReport, GenericCsvClassMapper<ArtTiFullJournalReport, FullJournalController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

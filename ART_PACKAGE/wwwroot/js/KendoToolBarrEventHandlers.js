@@ -1,5 +1,5 @@
 ﻿
-import { invokeExport, start } from './ExportListener.js'
+import { invokeExport, start, exportConnection } from './ExportListener.js'
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {
@@ -43,7 +43,9 @@ export const Handlers = {
         para.Filter = filters;
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
         var res;
-        await start();
+        if (exportConnection.state !== "Connected")
+            await start();
+
         invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller);
 
 

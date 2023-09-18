@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
 
     //[Authorize(Policy = "Licensed" , Roles = "Activity")]
@@ -79,13 +79,6 @@ namespace ART_PACKAGE.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiActivityReport> data = fti.ArtTiActivityReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiActivityReport, GenericCsvClassMapper<ArtTiActivityReport, ActivityController>>(para.Req);
-            return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
