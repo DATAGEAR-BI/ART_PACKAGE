@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "AuditRoles")]
     public class AuditRolesController : Controller
     {
 
@@ -71,12 +71,12 @@ namespace ART_PACKAGE.Controllers
                 Content = JsonConvert.SerializeObject(result)
             };
         }
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtRolesAuditView> data = context.ArtRolesAuditViews;
-            byte[] bytes = await data.ExportToCSV<ArtRolesAuditView, GenericCsvClassMapper<ArtRolesAuditView, AuditRolesController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ArtRolesAuditView> data = context.ArtRolesAuditViews;
+        //    byte[] bytes = await data.ExportToCSV<ArtRolesAuditView, GenericCsvClassMapper<ArtRolesAuditView, AuditRolesController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

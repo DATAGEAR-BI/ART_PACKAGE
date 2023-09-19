@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-
+    [Authorize(Roles = "Customers")]
     public class CustomersController : Controller
     {
         //dbfcfcore.ModelContext db = new dbfcfcore.ModelContext();
@@ -77,12 +78,12 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtAmlCustomersDetailsView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, CustomersController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
+        //{
+        //    IQueryable<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.AsQueryable();
+        //    byte[] bytes = await data.ExportToCSV<ArtAmlCustomersDetailsView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, CustomersController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

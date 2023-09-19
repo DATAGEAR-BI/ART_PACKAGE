@@ -7,21 +7,28 @@ export async function start() {
         console.log("SignalR Connected.");
         keepAliveInterval = setInterval(() => keepAlive(exportConnection, "KeepAlive"), 60000);
 
-
     } catch (err) {
         console.log(err);
         clearInterval(keepAliveInterval);
         setTimeout(start, 5000);
     }
 };
+
 export const invokeExport = (para, controller) => exportConnection.invoke("Export", para, controller);
 
 await start();
 
+exportConnection.onreconnecting(err => {
+    toastObj.icon = 'error';
+    toastObj.text = "connection with server lost trying to reconnect this might cause losing some files";
+    toastObj.heading = "Export Status";
+    $.toast(toastObj);
+})
 
 exportConnection.on("iAmAlive", () => {
     console.log("iam alive");
 });
+
 var toastObj = {
     text: "", // Text that is to be shown in the toast
     heading: '', // Optional heading to be shown on the toast
@@ -35,6 +42,7 @@ var toastObj = {
     loader: true,  // Whether to show loader or not. True by default
     loaderBg: '#9EC600',  // Background color of the toast loader
 };
+
 exportConnection.on("csvErrorRecevied", async (batch) => {
 
     toastObj.icon = 'error';
@@ -44,12 +52,72 @@ exportConnection.on("csvErrorRecevied", async (batch) => {
 
 });
 
+exportConnection.on("missedFilesRecived", async (files, reqId) => {
+    console.log("tttttttttt", reqId, files);
+    files.forEach(f => {
+        console.log(f.fileName);
+        downloadfile(f.file, f.fileName);
 
-exportConnection.on("csvRecevied", async (file, fileName) => {
+        toastObj.icon = 'success';
+        toastObj.text = `export done for this file : ${f.fileName}, check your downloads`;
+        toastObj.heading = "Export Status";
+        $.toast(toastObj);
+    });
+    exportConnection.invoke("ClearExportFolder", reqId);
+    localStorage.removeItem(reqId);
+
+});
+
+exportConnection.on("FinishedExportFor", async (reqId, len) => {
+    var recivedFiles = JSON.parse(localStorage.getItem(reqId));
+    console.log(reqId, len, recivedFiles.length);
+    if (len === recivedFiles.length) {
+        console.log("clr");
+        exportConnection.invoke("ClearExportFolder", reqId);
+    }
+
+    else {
+        var missedFiles = [];
+        for (var j = 0; j <= len; j++) {
+
+            if (!recivedFiles.includes(j)) {
+                console.log(j + 1);
+                missedFiles.push(j + 1);
+            }
+
+        }
+        exportConnection.invoke("GetMissedFiles", reqId, missedFiles);
+    }
+});
+exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
+    console.log(guid, i);
+    var recivedFiles = JSON.parse(localStorage.getItem(guid));
+    if (recivedFiles)
+        localStorage.setItem(guid, JSON.stringify([...recivedFiles, i]));
+    else
+        localStorage.setItem(guid, JSON.stringify([i]));
+    //var lastItem = JSON.stringify(localStorage.getItem(guid));
+    //if (!lastItem)
+    //    localStorage.setItem(guid, { lastItem: i, lostRanges: []});
+    //else {
+    //    if (parseInt(i) - parseInt(lastItem.lastItem) != 1)
+    //        exportConnection.invoke("ExportLost", guid, [...lastItem.lostRanges, { From: parseInt(lastItem.lastItem) + 1, To: i }])
+
+    //    localStorage.setItem(guid, { lastItem: i, lostRanges: [...lastItem.lostRanges, { From: parseInt(lastItem.lastItem) + 1,To: i}]});
+    //}
     // Assuming you have a byte array called 'byteArray' containing the bytes
     // You can also get the 'byteArray' from a server response, FileReader, or other sources.
 
     // Convert bytes to a Uint8Array (assuming the byteArray is Uint8Array)
+    downloadfile(file, fileName);
+
+    toastObj.icon = 'success';
+    toastObj.text = `export done for this file : ${fileName}, check your downloads`;
+    toastObj.heading = "Export Status";
+    $.toast(toastObj);
+})
+
+function downloadfile(file, fileName) {
     const uint8Array = atob(file);
 
     // Create a Blob from the Uint8Array data
@@ -67,9 +135,4 @@ exportConnection.on("csvRecevied", async (file, fileName) => {
 
     // Don't forget to revoke the object URL to free up memory after the download is initiated.
     URL.revokeObjectURL(objectURL);
-
-    toastObj.icon = 'success';
-    toastObj.text = `export done for this file : ${fileName}, check your downloads`;
-    toastObj.heading = "Export Status";
-    $.toast(toastObj);
-})
+}

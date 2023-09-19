@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-
+    [Authorize(Roles = "AlertDetails")]
     public class AlertDetailsController : Controller
     {
         private readonly SasAmlContext dbfcfkc;
@@ -85,47 +86,47 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
-        {
-            IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
-            IEnumerable<Task> tasks;
-            int i = 1;
-            if (req.All)
-            {
-                tasks = data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+        //public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
+        //{
+        //    IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
+        //    IEnumerable<Task> tasks;
+        //    int i = 1;
+        //    if (req.All)
+        //    {
+        //        tasks = data.ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
 
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
 
-                // Modify the LINQ expression to use Any and Contains
-                tasks = data
-                    .Where(x => req.SelectedIdz.Contains(x.AlertId))
-                    .ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
-            }
+        //        // Modify the LINQ expression to use Any and Contains
+        //        tasks = data
+        //            .Where(x => req.SelectedIdz.Contains(x.AlertId))
+        //            .ExportToCSVE<ArtAmlAlertDetailView, GenericCsvClassMapper<ArtAmlAlertDetailView, AlertDetailsController>>(req.Req);
+        //    }
 
-            foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
-            {
-                try
-                {
-                    byte[] bytes = await item;
-                    string FileName = nameof(AlertDetailsController).Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
-                                .SendAsync("csvRecevied", bytes, FileName);
-                    i++;
-                }
-                catch (Exception ex)
-                {
-                    await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
-                                .SendAsync("csvErrorRecevied", i);
+        //    foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
+        //    {
+        //        try
+        //        {
+        //            byte[] bytes = await item;
+        //            string FileName = nameof(AlertDetailsController).Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+        //            await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
+        //                        .SendAsync("csvRecevied", bytes, FileName);
+        //            i++;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
+        //                        .SendAsync("csvErrorRecevied", i);
 
-                }
+        //        }
 
-            }
-            return new EmptyResult();
-        }
+        //    }
+        //    return new EmptyResult();
+        //}
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;

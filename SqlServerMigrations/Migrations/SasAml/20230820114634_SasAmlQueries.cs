@@ -21,7 +21,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
+                CREATE VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
                 select  (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end) ALERT_STATUS,
                 count(FSK_ALERT.alert_id) Alerts_Count
                 FROM fcf71.fcfkc.FSK_ALERT FSK_ALERT 
@@ -47,7 +47,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
+                CREATE VIEW [ART_DB].[ART_HOME_ALERTS_PER_DATE] as
                 select Year_ Year,Month__ Month,Day_ Day,Number_Of_ALerts from
                 (select 
                 YEAR(a.create_date) Year_,
@@ -79,7 +79,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_CUSTOMERS] AS
                 select  count(*) Number_Of_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y';
@@ -98,7 +98,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_PEP_CUSTOMERS] AS
                 select  count(*) Number_Of_PEP_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -118,7 +118,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
+                CREATE VIEW [ART_DB].[ART_HOME_NUMBER_OF_High_Risk_CUSTOMERS] AS
                 select  count(*) Number_Of_High_Risk_Customers
                 FROM fcf71.fcfcore.FSC_PARTY_DIM a
                 where a.change_current_ind = 'Y'
@@ -138,7 +138,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                 SET QUOTED_IDENTIFIER ON
                 GO
 
-                CREATE OR ALTER VIEW [ART_DB].[ART_HOME_Number_Of_Accounts] AS
+                CREATE VIEW [ART_DB].[ART_HOME_Number_Of_Accounts] AS
                 select  count(*) Number_Of_Accounts
                 FROM fcf71.fcfcore.FSC_ACCOUNT_DIM a
                 where a.change_current_ind = 'Y';
@@ -157,11 +157,11 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
+                            CREATE VIEW [ART_DB].[ART_AML_TRIAGE_VIEW] AS
                               SELECT
                                     FSK_ALERTED_ENTITY.ALERTED_ENTITY_NAME ALERTED_ENTITY_NAME,
 		                            FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER ALERTED_ENTITY_NUMBER,
-                                    Party_Branch.BRANCH_NUMBER BRANCH_NUMBER,
+                                    branch_number.BRANCH_NUMBER BRANCH_NUMBER,
                                     (Case when Party_Branch.BRANCH_NAME is null then 'Unknown' else Party_Branch.BRANCH_NAME end) BRANCH_NAME,
                                     RISK_SCORE.LOV_TYPE_DESC RISK_SCORE,
                                     EQ.OWNER_USERID OWNER_USERID,
@@ -180,7 +180,14 @@ namespace SqlServerMigrations.Migrations.SasAml
                                LEFT JOIN FCF71.FCFKC.FSK_ENTITY_QUEUE EQ ON FSK_ALERTED_ENTITY.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
                                LEFT JOIN
                                FCF71.FCFCORE.FSC_PARTY_DIM PARTY on FSK_ALERTED_ENTITY.alerted_entity_number = Party.party_number AND PARTY.CHANGE_CURRENT_IND ='Y'
-                               LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
+                               left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							   --LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
                                 WHERE
                                     FSK_ALERTED_ENTITY.ALERTS_CNT > 0 
 		                            ;
@@ -199,7 +206,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
+                            CREATE VIEW [ART_DB].[ART_AML_ALERT_DETAIL_VIEW] AS 
                               SELECT 
                             ALERTED_ENTITY_NUMBER,
                             ALERTED_ENTITY_NAME,
@@ -246,7 +253,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                  '' REPORT_CLOSE_RSN,
 	                             PARTDM.EMPLOYEE_IND,
                                  (Case when Party_Branch.BRANCH_NAME is null then 'UNKNOWN' else Party_Branch.BRANCH_NAME end) branch_name,
-	                             Party_Branch.BRANCH_NUMBER,
+	                             branch_number.BRANCH_NUMBER,
                                  (datediff(DAY,FSK_ALERT.CREATE_DATE,getdate())) Investigation_Days
                                 FROM
                                     FCF71.FCFKC.FSK_ALERT FSK_ALERT 
@@ -259,9 +266,15 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     and ALERT_SUB_CAT.LOV_TYPE_NAME='RT_CASE_SUBCATEGORY' AND ALERT_SUB_CAT.Lov_Language_Desc='en'
                                     left join FCF71.FCFCORE.FSC_PARTY_DIM PARTDM on FSK_ALERT.ALERTED_ENTITY_NUMBER = PARTDM.PARTY_NUMBER and PARTDM.CHANGE_CURRENT_IND ='Y'
                                     LEFT JOIN FCF71.FCFKC.FSK_ENTITY_QUEUE EQ ON AE.ALERTED_ENTITY_NUMBER = EQ.ALERTED_ENTITY_NUMBER
-                            left join
-
-                            FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTDM.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
+                            left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							        Party_Branch on PARTDM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							--left join
+                            --FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTDM.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
                                     left join FCF71.FCFKC.FSK_ALERT_CASE AC on FSK_ALERT.ALERT_ID = AC.ALERT_ID
 
 
@@ -290,7 +303,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     CLOS_RN.LOV_TYPE_DESC REPORT_CLOSE_RSN,
 		                            PARTDM.EMPLOYEE_IND,
                                  (Case when Party_Branch.BRANCH_NAME is null then 'UNKNOWN' else Party_Branch.BRANCH_NAME end) branch_name,
-	 	                             Party_Branch.BRANCH_NUMBER,
+	 	                             branch_number.BRANCH_NUMBER,
                                  (datediff(day,FSK_ALERT.Run_Date,ALERT_EVE.CREATE_DATE)) Investigation_Days
                                 FROM
                                     FCF71.FCFKC.FSK_ALERT FSK_ALERT 
@@ -319,8 +332,15 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     LEFT JOIN
                                     FCF71.FCFKC.FSK_LOV CLOS_RN ON ALERT_EVE.EVENT_DESCRIPTION = CLOS_RN.Lov_Type_Code
                                     and CLOS_RN.LOV_TYPE_NAME='RT_CLOSE_REASON' AND CLOS_RN.Lov_Language_Desc='en'
-                                   left join
-                            FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTDM.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
+                                   left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [fcf71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [fcf71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							        Party_Branch on PARTDM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+								    LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+								   --left join
+                            --FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTDM.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
                              left join FCF71.FCFKC.FSK_ALERT_CASE AC on FSK_ALERT.ALERT_ID = AC.ALERT_ID
                                     where  
                                      FSK_ALERT.ALERT_STATUS_CODE <> 'ACT' 
@@ -349,7 +369,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
+                            CREATE VIEW [ART_DB].[ART_AML_CUSTOMERS_DETAILS_VIEW]  AS 
                               SELECT        
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_name customer_name,
                             FCF71.FCFCORE.FSC_PARTY_DIM.party_number customer_number,
@@ -391,14 +411,22 @@ namespace SqlServerMigrations.Migrations.SasAml
                             FCF71.FCFCORE.FSC_PARTY_DIM.non_profit_org_ind,
                             FCF71.FCFCORE.FSC_PARTY_DIM.politically_exposed_person_ind,
                             Risk.ACTIVE_FLG,
-                            (Case when BRAN.BRANCH_NAME is null then 'Unknown' else BRAN.BRANCH_NAME end) BRANCH_NAME,
-                            BRAN.BRANCH_NUMBER
+                            (Case when Party_Branch.BRANCH_NAME is null then 'Unknown' else Party_Branch.BRANCH_NAME end) BRANCH_NAME,
+                            branch_number.BRANCH_NUMBER
 
                             FROM            
                             FCF71.FCFCORE.FSC_PARTY_DIM LEFT OUTER JOIN
                             FCF71.FCFKC.FSK_LOV Risk ON FCF71.FCFCORE.FSC_PARTY_DIM.risk_classification = Risk.lov_type_code AND Risk.lov_language_desc = 'en'
                             AND Risk.lov_type_name = 'RT_RISK_CLASSIFICATION'  
-                            LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM BRAN ON FSC_PARTY_DIM.STREET_STATE_CODE = BRAN.BRANCH_Number and bran.change_current_ind='Y'
+                           left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							   Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							   
+						    --LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM BRAN ON FSC_PARTY_DIM.STREET_STATE_CODE = BRAN.BRANCH_Number and bran.change_current_ind='Y'
                             WHERE (FCF71.FCFCORE.FSC_PARTY_DIM.party_key > - 1 and FSC_PARTY_DIM.change_current_ind = 'y'
                             );
 
@@ -418,13 +446,13 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
-                              SELECT 
+                            CREATE VIEW [ART_DB].[ART_AML_CASE_DETAILS_VIEW] AS 
+                               SELECT 
                             ""CASE"".CASE_ID,
                             FSK_CASE_ENTITY.ENTITY_NAME,
                             FSK_CASE_ENTITY.ENTITY_NUMBER,
                             PARTY_BRANCH.BRANCH_NAME,
-                            PARTY_BRANCH.BRANCH_NUMBER,
+                            branch_number.BRANCH_NUMBER,
                             ""CASE_PRIORITY"".LOV_TYPE_DESC ""CASE_PRIORITY"",
                             ""CASE_STATUS"".LOV_TYPE_DESC ""CASE_STATUS"",
                             ""CASE_CATEGORY"".LOV_TYPE_DESC ""CASE_CATEGORY"",
@@ -448,8 +476,16 @@ namespace SqlServerMigrations.Migrations.SasAml
                             LEFT JOIN FCF71.FCFKC.FSK_LOV ""ENTITY_LEVEL"" ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ENTITY_LEVEL.LOV_TYPE_CODE
                             AND ENTITY_LEVEL.LOV_TYPE_NAME ='RT_CASE_ENTITY_LEVEL' AND ENTITY_LEVEL.LOV_LANGUAGE_DESC ='en'
                             left JOIN FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y'
-                            LEFT JOIN
-                            FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
+                            left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							  
+							--LEFT JOIN
+                           -- FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
                             WHERE
                             CASE_STATUS.LOV_TYPE_DESC ='Open'
                             AND entity_level_code ='PTY'
@@ -461,7 +497,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             FSK_CASE_ENTITY.ENTITY_NAME,
                             FSK_CASE_ENTITY.ENTITY_NUMBER,
                             PARTY_BRANCH.BRANCH_NAME,
-                            PARTY_BRANCH.BRANCH_NUMBER,
+                            branch_number.BRANCH_NUMBER,
                             ""CASE_PRIORITY"".LOV_TYPE_DESC ""CASE_PRIORITY"",
                             ""CASE_STATUS"".LOV_TYPE_DESC ""CASE_STATUS"",
                             ""CASE_CATEGORY"".LOV_TYPE_DESC ""CASE_CATEGORY"",
@@ -485,8 +521,16 @@ namespace SqlServerMigrations.Migrations.SasAml
                             LEFT JOIN FCF71.FCFKC.FSK_LOV ""ENTITY_LEVEL"" ON FSK_CASE_ENTITY.ENTITY_LEVEL_CODE = ""ENTITY_LEVEL"".LOV_TYPE_CODE
                             AND ""ENTITY_LEVEL"".LOV_TYPE_NAME ='RT_CASE_ENTITY_LEVEL' AND ""ENTITY_LEVEL"".LOV_LANGUAGE_DESC ='en'
                             left JOIN FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_CASE_ENTITY.ENTITY_NUMBER = party.PARTY_NUMBER and party.CHANGE_CURRENT_IND ='Y'
-                            LEFT JOIN
-                            FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
+                            left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							  
+							--LEFT JOIN
+                            --FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch on PARTY.STREET_STATE_CODE = Party_Branch.branch_number and Party_Branch.CHANGE_CURRENT_IND ='Y'
                             WHERE
                             ""CASE_STATUS"".LOV_TYPE_DESC <>'Open'
                             AND entity_level_code ='PTY'
@@ -505,8 +549,8 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
-                            SELECT 
+                            CREATE VIEW [ART_DB].[ART_AML_HIGH_RISK_CUST_VIEW] AS 
+                           SELECT 
                                     FSC_PARTY_DIM.PARTY_NUMBER AS PARTY_NUMBER,
                                     FSC_PARTY_DIM.PARTY_TYPE_DESC AS PARTY_TYPE_DESC,
                                     FSC_PARTY_DIM.PARTY_TAX_ID AS PARTY_TAX_ID,
@@ -524,11 +568,19 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     FSC_PARTY_DIM.POLITICALLY_EXPOSED_PERSON_IND AS POLITICALLY_EXPOSED_PERSON_IND,
 		                            RISK_CLASS.LOV_TYPE_DESC RISK_CLASSIFICATION,
                                     PARTY_BRANCH.BRANCH_NAME,
-		                            PARTY_BRANCH.BRANCH_NUMBER
+		                            branch_number.BRANCH_NUMBER
                                 FROM
                                     FCF71.FCFCORE.FSC_PARTY_DIM FSC_PARTY_DIM 
-                                    LEFT JOIN
-                                    FCF71.FCFCORE.FSC_BRANCH_DIM PARTY_BRANCH ON FSC_PARTY_DIM.STREET_STATE_CODE = PARTY_BRANCH.branch_number and PARTY_BRANCH.change_current_ind='Y'
+									left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							        Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							  
+                                    --LEFT JOIN
+                                    --FCF71.FCFCORE.FSC_BRANCH_DIM PARTY_BRANCH ON FSC_PARTY_DIM.STREET_STATE_CODE = PARTY_BRANCH.branch_number and PARTY_BRANCH.change_current_ind='Y'
                                      LEFT JOIN 
                                     FCF71.FCFKC.FSK_LOV RISK_CLASS on FSC_PARTY_DIM.RISK_CLASSIFICATION = RISK_CLASS.LOV_TYPE_CODE and RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                     WHERE
@@ -552,13 +604,13 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                            CREATE OR ALTER VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
+                            CREATE VIEW [ART_DB].[ART_AML_RISK_ASSESSMENT_VIEW] AS
                             SELECT
                                     RISK_STATUS.LOV_TYPE_DESC RISK_STATUS,
                                     RISK_CLASS.LOV_TYPE_DESC RISK_CLASS,
                                     PROPOSED_RISK_CLASS.LOV_TYPE_DESC PROPOSED_RISK_CLASS,        
                                     PARTY_BRANCH.BRANCH_NAME  AS BRANCH_NAME,
-		                            PARTY_BRANCH.BRANCH_NUMBER BRANCH_NUMBER,
+		                            branch_number.BRANCH_NUMBER BRANCH_NUMBER,
                                     FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_ID  AS RISK_ASSESSMENT_ID,
                                     FSK_RISK_ASSESSMENT.PARTY_NUMBER  AS PARTY_NUMBER,
                                     FSK_RISK_ASSESSMENT.PARTY_NAME AS PARTY_NAME,
@@ -580,9 +632,17 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     FCF71.FCFKC.FSK_LOV PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                 LEFT JOIN
                                     FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
-                                     LEFT JOIN
-                                    FCF71.FCFCORE.FSC_BRANCH_DIM PARTY_BRANCH ON PARTY.STREET_STATE_CODE = PARTY_BRANCH.branch_number and PARTY_BRANCH.change_current_ind='Y'
-                                    WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
+                                     left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							        Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
+							   
+									 --LEFT JOIN
+                                    --FCF71.FCFCORE.FSC_BRANCH_DIM PARTY_BRANCH ON PARTY.STREET_STATE_CODE = PARTY_BRANCH.branch_number and PARTY_BRANCH.change_current_ind='Y'
+                                    WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
 
                             GO
 
@@ -608,14 +668,14 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_ALERT_PER_OWNER]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
                             BEGIN
                             SET NOCOUNT ON;
 
-                            select (case when a.OWNER_USERID is null then 'UNKNOWN' else a.OWNER_USERID end) AS OWNER_USERID,
+                           select (case when a.OWNER_USERID is null then 'UNKNOWN' else a.OWNER_USERID end) AS OWNER_USERID,
                              CAST(count(distinct alert_id) AS DECIMAL(10, 0)) ALERTS_CNT_SUM 
                             from (
                             select  FSK_ENTITY_QUEUE.OWNER_USERID OWNER_USERID, alert_id
@@ -650,13 +710,12 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
                             BEGIN
                             SET NOCOUNT ON;
-
                             select ALERT_STATUS.LOV_TYPE_DESC ALERT_STATUS,
                              CAST(count(FSK_ALERT.alert_id) AS DECIMAL(10, 0)) ALERTS_COUNT
                              FROM
@@ -667,7 +726,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             where   CAST(FSK_ALERT.create_date AS date) >= @V_START_DATE AND CAST(FSK_ALERT.create_date AS date) <= @V_END_DATE
                             group by ALERT_STATUS.LOV_TYPE_DESC 
                             ;
-                            END ;
+                        END ;
                             GO
 
                             ----------------------------------------------------------------------------------------------------
@@ -685,7 +744,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_CATEGORY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -701,7 +760,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             GROUP BY --CASE_CATEGORY
                             CASE_CATEGORY.lov_type_desc
                             ;
-                            END;
+                            END ;
                             GO
 
                             ----------------------------------------------------------------------------------------------------------
@@ -719,7 +778,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_PRIORITY]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -734,7 +793,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             where CAST(create_date AS date) >= @V_START_DATE AND CAST(create_date AS date) <= @V_END_DATE
                             GROUP BY CASE_PRIORITY.lov_type_desc
                             ;
-                            END;
+                               END ;
                             GO
 
                             ------------------------------------------------------------------------------------------------------------
@@ -752,7 +811,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_STATUS]
+                              CREATE  PROCEDURE [ART_DB].[ART_ST_CASES_PER_STATUS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -771,7 +830,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             GROUP BY 
                             case_status.lov_type_desc
                             ;
-                            END;
+                            END ;
                             GO
 
                             ---------------------------------------------------------------------------------------
@@ -791,14 +850,14 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CASES_PER_SUBCAT]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
                             BEGIN
                             SET NOCOUNT ON;
 
-                            select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY , CAST(count(1) AS DECIMAL(10, 0)) NUMBER_OF_CASES
+                             select CASE_SUBCATEGORY.lov_type_desc CASE_SUBCATEGORY , CAST(count(1) AS DECIMAL(10, 0)) NUMBER_OF_CASES
                             FROM FCF71.FCFKC.FSK_CASE  
                             LEFT JOIN FCF71.FCFKC.FSK_LOV CASE_SUBCATEGORY ON CASE_SUBCATEGORY.LOV_TYPE_CODE = FSK_CASE.CASE_SUB_CATEGORY_CODE
                             AND CASE_SUBCATEGORY.LOV_TYPE_NAME ='RT_CASE_SUBCATEGORY' AND CASE_SUBCATEGORY.LOV_LANGUAGE_DESC ='en'
@@ -806,7 +865,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             GROUP BY
                             CASE_SUBCATEGORY.lov_type_desc
                             ;
-                            END;
+                             END ;
                             GO
 
                             ----------------------------------------------------------------------------------------------
@@ -825,7 +884,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_BRANCH]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -833,11 +892,19 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET NOCOUNT ON;
 
                             SELECT        
-                            Party_Branch.branch_name BRANCH_NAME, CAST(count(FCF71.FCFCORE.fsc_party_dim.party_key)AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
+                            (Case when Party_Branch.BRANCH_NAME is null then 'Unknown' else Party_Branch.BRANCH_NAME end) BRANCH_NAME
+							, CAST(count(FCF71.FCFCORE.fsc_party_dim.party_key)AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                             FROM            
                             FCF71.FCFCORE.FSC_PARTY_DIM 
-                            LEFT JOIN
-                            FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch ON FSC_PARTY_DIM.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER 
+                            left join 
+									(select 
+									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									where a.Role_Key=1 and a.change_current_ind='Y')
+							   Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
+							  
+							--LEFT JOIN
+                            --FCF71.FCFCORE.FSC_BRANCH_DIM Party_Branch ON FSC_PARTY_DIM.STREET_STATE_CODE = Party_Branch.BRANCH_NUMBER 
                             AND party_branch.change_current_ind = 'Y'
                             WHERE (FCF71.FCFCORE.FSC_PARTY_DIM.party_key > - 1 and FCF71.FCFCORE.fsc_party_dim.change_current_ind='Y')
                             and CAST(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE AS date) >= @V_START_DATE AND CAST(FSC_PARTY_DIM.CUSTOMER_SINCE_DATE AS date) <= @V_END_DATE
@@ -862,7 +929,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_RISK]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -896,7 +963,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             SET QUOTED_IDENTIFIER ON
                             GO
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
+                              CREATE PROCEDURE [ART_DB].[ART_ST_CUST_PER_TYPE]
                             (
                             @V_START_DATE date , 
                             @V_END_DATE date
@@ -904,7 +971,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             BEGIN
                             SET NOCOUNT ON;
 
-                            SELECT        
+                             SELECT        
                             (case when FCF71.FCFCORE.FSC_PARTY_DIM.party_type_desc = 'organization' then 'ORGANIZATION' 
                             when FCF71.FCFCORE.FSC_PARTY_DIM.party_type_desc is null then 'UNKNOWN'
                             when FCF71.FCFCORE.FSC_PARTY_DIM.party_type_desc =' 'then 'UNKNOWN'
@@ -940,7 +1007,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_PROP_RISK_CLASS]
+                              CREATE  PROCEDURE [ART_DB].[ART_ST_AML_PROP_RISK_CLASS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -957,7 +1024,9 @@ namespace SqlServerMigrations.Migrations.SasAml
                                     FCF71.FCFKC.FSK_LOV PROPOSED_RISK_CLASS on FSK_RISK_ASSESSMENT.PROPOSED_RISK_CLASSIFICATION = PROPOSED_RISK_CLASS.LOV_TYPE_CODE and PROPOSED_RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and PROPOSED_RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                 LEFT JOIN
                                     FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
-                                    WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
+                                    LEFT JOIN 
+                                FCF71.FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
+									WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
 		                            and CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) >= @V_START_DATE AND CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) <= @V_END_DATE
 		                            group by  (case when PROPOSED_RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else PROPOSED_RISK_CLASS.lov_type_desc end);
 		                            END ;
@@ -979,7 +1048,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 
 
 
-                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_AML_RISK_CLASS]
+                              CREATE  PROCEDURE [ART_DB].[ART_ST_AML_RISK_CLASS]
                             (
                             @V_START_DATE date , @V_END_DATE date
                             ) AS 
@@ -988,17 +1057,19 @@ namespace SqlServerMigrations.Migrations.SasAml
 
                              select 
                              (case when RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else RISK_CLASS.lov_type_desc end) AS RISK_CLASSIFICATION, 
-                             CAST(count(PARTY.party_key) AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
+							 CAST(count(PARTY.party_key) AS DECIMAL(10, 0)) NUMBER_OF_CUSTOMERS
                              FROM
                                     FCF71.FCFKC.FSK_RISK_ASSESSMENT FSK_RISK_ASSESSMENT 
                                 LEFT JOIN 
                                     FCF71.FCFKC.FSK_LOV RISK_CLASS on FSK_RISK_ASSESSMENT.RISK_CLASSIFICATION = RISK_CLASS.LOV_TYPE_CODE and RISK_CLASS.LOV_TYPE_NAME ='RT_RISK_CLASSIFICATION' and RISK_CLASS.LOV_LANGUAGE_DESC='en'
                                 LEFT JOIN
                                     FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
-                                    WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
+                                    LEFT JOIN 
+                                FCF71.FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
+									WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
 		                            and CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) >= @V_START_DATE AND CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) <= @V_END_DATE
 		                            group by  (case when RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else RISK_CLASS.lov_type_desc end);
-		                            END ;
+		                            END ;
                             GO
                             ");
         }

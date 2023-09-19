@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : Controller
     {
         private readonly EcmContext context;
@@ -35,7 +35,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas.AsQueryable();
+            IQueryable<ArtSystemPerformance> data = context.ArtSystemPerformances.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -58,7 +58,7 @@ namespace ART_PACKAGE.Controllers
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
 
-            KendoDataDesc<ArtSystemPerformanceNcba> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtSystemPerformance> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -74,19 +74,19 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public IActionResult Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas;
-            _csvSrv.ExportAllCsv<ArtSystemPerformanceNcba, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
-            return new EmptyResult();
-        }
+        //public IActionResult Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ArtSystemPerformance> data = context.ArtSystemPerformances;
+        //    _csvSrv.ExportAllCsv<ArtSystemPerformance, SystemPerformanceController, decimal>(data, User.Identity.Name, para);
+        //    return new EmptyResult();
+        //}
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
-            List<ArtSystemPerformanceNcba> data = context.ArtSystemPerformanceNcbas.CallData(req).Data.ToList();
+            List<ArtSystemPerformance> data = context.ArtSystemPerformances.CallData(req).Data.ToList();
             ViewData["title"] = "System Performance Report";
             ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

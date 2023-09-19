@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "ListOfUser")]
     public class ListOfUserController : Controller
     {
 
@@ -66,12 +66,12 @@ namespace ART_PACKAGE.Controllers
                 Content = JsonConvert.SerializeObject(result)
             };
         }
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ListOfUser> data = context.ListOfUsers;
-            byte[] bytes = await data.ExportToCSV<ListOfUser, GenericCsvClassMapper<ListOfUser, ListOfUserController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ListOfUser> data = context.ListOfUsers;
+        //    byte[] bytes = await data.ExportToCSV<ListOfUser, GenericCsvClassMapper<ListOfUser, ListOfUserController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

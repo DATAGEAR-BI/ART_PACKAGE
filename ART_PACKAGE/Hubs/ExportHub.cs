@@ -1,3 +1,4 @@
+
 ﻿using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
@@ -23,6 +24,8 @@ namespace ART_PACKAGE.Hubs
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
+        private readonly ArtAuditContext _dbAd;
+        private readonly List<string>? modules;
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
         private readonly List<string>? modules;
@@ -44,6 +47,7 @@ namespace ART_PACKAGE.Hubs
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+
                 _ecm = ecmService;
             }
             if (modules.Contains("DGAML"))
@@ -53,6 +57,7 @@ namespace ART_PACKAGE.Hubs
                 _dgaml = dgamlService;
             }
 
+
             if (modules.Contains("FTI"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -61,8 +66,6 @@ namespace ART_PACKAGE.Hubs
                 _fti = fticontext;
                 ti = _ti;
             }
-            _serviceScopeFactory = serviceScopeFactory;
-            _configuration = configuration;
         }
         public override Task OnConnectedAsync()
         {
@@ -80,6 +83,7 @@ namespace ART_PACKAGE.Hubs
 
         public async Task Export(ExportDto<object> para, string controller)
         {
+
 
             #region FTI
             if (nameof(EcmAuditTrialController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportForAuditTrial(para);
