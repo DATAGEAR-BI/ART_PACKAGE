@@ -183,7 +183,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
