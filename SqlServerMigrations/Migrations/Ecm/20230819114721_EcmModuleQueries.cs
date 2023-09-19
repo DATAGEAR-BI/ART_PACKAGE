@@ -107,7 +107,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         GO
 
                                         CREATE VIEW [ART_DB].[ART_SYSTEM_PERFORMANCE] (""CASE_ID"", ""CASE_RK"", ""VALID_FROM_DATE"", ""CASE_TYPE"", ""CASE_STATUS"", ""CASE_DESC"", ""PRIORITY"", ""CREATE_USER_ID"", ""INVESTR_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""TRANSACTION_TYPE"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_DIRECTION"", ""TRANSACTION_CURRENCY"", ""SWIFT_REFERENCE"", ""CLIENT_NAME"", ""IDENTITY_NUM"", ""LOCKED_BY"", ""ECM_LAST_STATUS_DATE"", ""HITS_COUNT"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
-                                        select 
+                                       select 
                                         a.CASE_ID, 
                                         a.CASE_RK, 
                                         a.VALID_FROM_DATE, 
@@ -134,10 +134,10 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         g.LOCK_USER_ID AS Locked_By, 
                                         M.CREATE_DTTM ECM_LAST_STATUS_DATE,
                                         a.hits_count,
-                                        DATEDIFF(SECOND, a.create_date, M.CREATE_DTTM ) AS DURATIONS_In_Seconds,
-                                        DATEDIFF(MINUTE, a.create_date, M.CREATE_DTTM ) AS DURATIONS_In_minutes,
-                                        DATEDIFF(HOUR, a.create_date, M.CREATE_DTTM ) as DURATIONS_In_hours,
-                                        DATEDIFF(DAY, a.create_date, M.CREATE_DTTM ) AS DURATIONS_In_days
+                                      CAST(  DATEDIFF(SECOND, a.create_date, M.CREATE_DTTM ) AS decimal) AS DURATIONS_In_Seconds,
+                                       CAST(  DATEDIFF(MINUTE, a.create_date, M.CREATE_DTTM ) AS decimal) AS  DURATIONS_In_minutes,
+                                      CAST(   DATEDIFF(HOUR, a.create_date, M.CREATE_DTTM ) AS decimal) AS  DURATIONS_In_hours,
+                                       CAST(  DATEDIFF(DAY, a.create_date, M.CREATE_DTTM ) AS decimal) AS  DURATIONS_In_days
                                         from
                                         [DGECM].dgcmgmt.CASE_LIVE a  LEFT JOIN
                                         [DGECM].dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
