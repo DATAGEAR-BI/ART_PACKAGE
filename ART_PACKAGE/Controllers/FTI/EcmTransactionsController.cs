@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     //[Authorize(Policy = "Licensed" , Roles = "EcmTransactions")]
 
@@ -73,15 +73,6 @@ namespace ART_PACKAGE.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            IQueryable<ArtTiEcmTransactionsReport> data = fti.ArtTiEcmTransactionsReports;
-            byte[] bytes = await data.ExportToCSV(para.Req);
-            return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

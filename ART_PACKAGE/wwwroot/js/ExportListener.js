@@ -6,7 +6,6 @@ export async function start() {
         await exportConnection.start();
         console.log("SignalR Connected.");
         keepAliveInterval = setInterval(() => keepAlive(exportConnection, "KeepAlive"), 60000);
-        console.log(exportConnection.state);
 
     } catch (err) {
         console.log(err);

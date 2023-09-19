@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     public class WatchlistOSCheckController : Controller
     {
@@ -71,13 +71,6 @@ namespace ART_PACKAGE.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiWatchlistOsCheckReport> data = fti.ArtTiWatchlistOsCheckReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiWatchlistOsCheckReport, GenericCsvClassMapper<ArtTiWatchlistOsCheckReport, WatchlistOSCheckController>>(para.Req);
-            return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

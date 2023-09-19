@@ -1,16 +1,13 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
-using CsvHelper;
 using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
-using System.Globalization;
 using System.Linq.Dynamic.Core;
-using System.Text;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
 
     //[Authorize(Policy = "Licensed" , Roles = "EcmWorkflowProg")]
@@ -117,73 +114,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        public IActionResult Export([FromBody] ExportDto<decimal> para)
-        {
-            IQueryable<ArtTiEcmWorkflowProgReport> data = fti.ArtTiEcmWorkflowProgReports.AsQueryable().CallData(para.Req).Data;
-            var res = data.AsEnumerable().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
-            IEnumerable<ExportDto> after = res.Select(x =>
-            {
-                IQueryable<ArtTiEcmWorkflowProgReportOld>? ListOfMatchingEcm = fti.ArtTiEcmWorkflowProgReportOlds.Where(o => o.EcmReference == x.Key.EcmReference && x.Key.CaseStatCd == o.CaseStatCd && x.Key.EventSteps == o.EventSteps && x.Key.StepStatus == o.StepStatus);
-                return new ExportDto
-                {
-                    Record = x.FirstOrDefault(),
-                    Comments = ListOfMatchingEcm?.Select(e => e.Comments).ToList(),
-                    Note = ListOfMatchingEcm?.Select(e => e.Note).ToList(),
-                    NoteCreationTime = ListOfMatchingEcm?.Select(e => e.NoteCreationTime).ToList()
-                };
 
-            });
-            MemoryStream stream = new();
-            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new(sw, CultureInfo.CurrentCulture))
-            {
-
-
-                sw.Write("");
-                System.Reflection.PropertyInfo[] props = typeof(ArtTiEcmWorkflowProgReport).GetProperties();
-
-                foreach (System.Reflection.PropertyInfo item in props)
-                {
-                    cw.WriteField(item.Name);
-                }
-                cw.WriteField("Comments");
-                cw.WriteField("Note");
-                cw.WriteField("NoteCreationTime");
-
-                cw.NextRecord();
-                foreach (ExportDto? elm in after)
-                {
-                    foreach (System.Reflection.PropertyInfo prop in props)
-                    {
-                        cw.WriteField(prop.GetValue(elm.Record));
-                    }
-
-                    cw.NextRecord();
-                    for (int i = 0; i < elm.Comments.Count; i++)
-                    {
-                        foreach (System.Reflection.PropertyInfo prop in props)
-                        {
-                            cw.WriteField("");
-                        }
-                        cw.WriteField(elm.Comments[i]);
-                        cw.WriteField(elm.Note[i]);
-                        cw.WriteField(elm.NoteCreationTime[i]);
-                        cw.NextRecord();
-                    }
-                }
-            }
-
-            return File(stream.ToArray(), "text/csv");
-        }
-
-
-        public class ExportDto
-        {
-            public ArtTiEcmWorkflowProgReport Record { get; set; }
-            public List<string> Comments { get; set; }
-            public List<string> Note { get; set; }
-            public List<DateTime?> NoteCreationTime { get; set; }
-        }
 
         public IActionResult Index()
         {

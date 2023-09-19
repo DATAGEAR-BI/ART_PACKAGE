@@ -4,6 +4,7 @@ using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
+using Data.TIZONE2;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -49,6 +50,12 @@ namespace ART_PACKAGE.Helpers.DBService
                 AuditContext audit = scope.ServiceProvider.GetRequiredService<AuditContext>();
                 AUDIT = audit;
             }
+            if (modules.Contains("FTI"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                TIZONE2Context ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
+                TI = ti;
+            }
         }
 
         public FCFKC KC { get; }
@@ -59,5 +66,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public AuditContext AUDIT { get; }
         public DGAMLContext DGAML { get; }
+
+        public TIZONE2Context TI { get; }
     }
 }

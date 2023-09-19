@@ -42,8 +42,6 @@ namespace ART_PACKAGE.Helpers.Csv
             {
                 data = _db.Set<TModel>();
             }
-
-
             await ExportAllCsv<TModel, TController, object>(data, userName, obj);
 
         }
@@ -67,7 +65,6 @@ namespace ART_PACKAGE.Helpers.Csv
                     await _exportHub.Clients.Clients(connections.GetConnections(userName))
                                 .SendAsync("csvRecevied", bytes, FileName, i, reqId);
                     i++;
-
                 }
                 catch (Exception)
                 {

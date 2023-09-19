@@ -1,17 +1,14 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
-using CsvHelper;
 using Data.Data.FTI;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
-using System.Globalization;
 using System.Linq.Dynamic.Core;
-using System.Text;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     //[Authorize(Policy = "Licensed" , Roles ="EcmAuditTrial")]
 
@@ -121,79 +118,11 @@ namespace ART_PACKAGE.Controllers
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
-
-
-
-        public IActionResult Export([FromBody] ExportDto<decimal> para)
-        {
-            IQueryable<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.AsQueryable().CallData(para.Req).Data;
-            var res = data.AsEnumerable().OrderBy(x => x.EcmReference).GroupBy(x => new { x.EcmReference, x.FtiReference, x.CaseStatCd, x.EventSteps, x.StepStatus });
-            IEnumerable<ExportDto> after = res.Select(x =>
-            {
-                IQueryable<string?>? ListOfMatchingEcm = ti.Masters.Where(c => c.MasterRef == x.Key.FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => co.NoteText);
-                return new ExportDto
-                {
-                    Record = x.FirstOrDefault(),
-                    Note = ListOfMatchingEcm?.Select(e => e).ToList(),
-
-                };
-
-            });
-            MemoryStream stream = new();
-            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new(sw, CultureInfo.CurrentCulture))
-            {
-
-
-                sw.Write("");
-                System.Reflection.PropertyInfo[] props = typeof(ArtTiEcmAuditReport).GetProperties();
-
-                foreach (System.Reflection.PropertyInfo item in props)
-                {
-                    cw.WriteField(item.Name);
-                }
-
-                cw.WriteField("Note");
-
-
-                cw.NextRecord();
-                foreach (ExportDto? elm in after)
-                {
-                    foreach (System.Reflection.PropertyInfo prop in props)
-                    {
-                        cw.WriteField(prop.GetValue(elm.Record));
-                    }
-
-                    cw.NextRecord();
-                    for (int i = 0; i < elm.Note.Count; i++)
-                    {
-                        foreach (System.Reflection.PropertyInfo prop in props)
-                        {
-                            cw.WriteField("");
-                        }
-
-                        cw.WriteField(elm.Note[i]);
-
-                        cw.NextRecord();
-                    }
-                    cw.NextRecord();
-                }
-            }
-
-            return File(stream.ToArray(), "text/csv");
-        }
-
-        public class ExportDto
-        {
-            public ArtTiEcmAuditReport Record { get; set; }
-
-            public List<string> Note { get; set; }
-
-        }
-
         public IActionResult Index()
         {
             return View();
         }
     }
+
 }
+
