@@ -32,6 +32,12 @@ export const Handlers = {
             toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
+        } else {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'warning';
+            toastObj.text = "Export strated in backgroud you will get a notification when it finished";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
         }
 
         var para = {}
