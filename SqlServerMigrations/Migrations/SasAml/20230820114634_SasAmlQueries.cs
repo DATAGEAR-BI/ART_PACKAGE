@@ -269,7 +269,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							        Party_Branch on PARTDM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -421,7 +421,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                            left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							   Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -479,7 +479,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -524,7 +524,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							   Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							   LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -574,7 +574,7 @@ namespace SqlServerMigrations.Migrations.SasAml
 									left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							        Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -635,7 +635,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                      left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							        Party_Branch on party.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							        LEFT JOIN FCF71.FCFCORE.FSC_BRANCH_DIM branch_number on branch_number.branch_name = Party_Branch.branch_name and Party_Branch.CHANGE_CURRENT_IND ='Y'
@@ -899,7 +899,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                             left join 
 									(select 
 									a.*,b.account_open_date,b.account_primary_branch_name branch_name,row_number() over (PARTITION by a.party_number order by b.account_open_date asc) Rank
-									from [FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
+									from [FCF71].[FCFCORE].[FSC_PARTY_ACCOUNT_BRIDGE] a left join [FCF71].[FCFCORE].FSC_ACCOUNT_DIM b on a.account_key= b.account_key
 									where a.Role_Key=1 and a.change_current_ind='Y')
 							   Party_Branch on FSC_PARTY_DIM.party_number = Party_Branch.party_number and Party_Branch.RANK = 1
 							  
@@ -1025,7 +1025,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                 LEFT JOIN
                                     FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
                                     LEFT JOIN 
-                                FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
+                                FCF71.FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
 									WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
 		                            and CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) >= @V_START_DATE AND CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) <= @V_END_DATE
 		                            group by  (case when PROPOSED_RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else PROPOSED_RISK_CLASS.lov_type_desc end);
@@ -1065,7 +1065,7 @@ namespace SqlServerMigrations.Migrations.SasAml
                                 LEFT JOIN
                                     FCF71.FCFCORE.FSC_PARTY_DIM PARTY ON FSK_RISK_ASSESSMENT.PARTY_NUMBER = PARTY.PARTY_NUMBER
                                     LEFT JOIN 
-                                FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
+                                FCF71.FCFKC.FSK_LOV RISK_STATUS on FSK_RISK_ASSESSMENT.RISK_ASSESSMENT_STATUS_CODE = RISK_STATUS.LOV_TYPE_CODE and RISK_STATUS.LOV_TYPE_NAME ='RT_ASMT_STATUS' and RISK_STATUS.LOV_LANGUAGE_DESC='en'
 									WHERE PARTY.CHANGE_CURRENT_IND='Y' and PARTY.party_key > - 1
 		                            and CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) >= @V_START_DATE AND CAST(FSK_RISK_ASSESSMENT.CREATE_DATE AS date) <= @V_END_DATE
 		                            group by  (case when RISK_CLASS.lov_type_desc is null then 'UNKNOWN' else RISK_CLASS.lov_type_desc end);
