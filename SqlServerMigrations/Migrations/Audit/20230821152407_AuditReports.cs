@@ -223,10 +223,24 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
- CREATE view [ART_DB].[LAST_LOGIN_PER_DAY_VIEW]  AS 
- select distinct *, cast(LoginDateTime as date)  LoginDate from CMC.VA_LAST_LOGIN
-where ""APPNAME"" in ('Compliance Solutions Mid 7.1.','DATAGEAR ECM')
- order by LoginDateTime desc;
+ CREATE OR ALTER view [ART_DB].[LAST_LOGIN_PER_DAY_VIEW]  AS 
+  select ""USER_NAME"",
+      ""APP_NAME"",
+      [DEVICE_NAME],
+      [DEVICE_TYPE], 
+	  [IP],
+      [LOCATION],
+	  LOGINDATETIME  from 
+  (select ""USER_NAME"",
+      ""APP_NAME"",
+      [DEVICE_NAME],
+      [DEVICE_TYPE], 
+	  [IP],
+      [LOCATION],
+	  create_date LOGINDATETIME ,
+	  row_number() over (PARTITION by user_name, cast(create_date as date) order by create_date desc) rn
+  from [DGUSERMANAGMENT].[DGMGMT].[logged_user] ) as  aa
+  where aa.rn = 1
   ;
 GO");
             /*                VIEW  LIST_GROUPS_ROLES_SUMMARY*/

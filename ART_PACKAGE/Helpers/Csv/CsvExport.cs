@@ -22,19 +22,19 @@ namespace ART_PACKAGE.Helpers.Csv
         }
         public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
         {
-            await this.Export<TModel, TController, object>(_db, userName, obj);
+            await Export<TModel, TController, object>(_db, userName, obj);
         }
 
         public async Task Export<TModel, TController, TColumn>(DbContext _db, string userName, ExportDto<object> obj, string idColumn = null) where TModel : class
         {
-            var tableData = _db.Model.FindEntityType(typeof(TModel));
-            var tbName = tableData.GetTableName() ?? tableData.GetViewName();
-            var columnName = tableData.GetProperty(idColumn).GetColumnName();
+            Microsoft.EntityFrameworkCore.Metadata.IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
+            string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
+            string columnName = tableData.GetProperty(idColumn).GetColumnName();
             IQueryable<TModel> data = null;
             if (idColumn is not null && obj.SelectedIdz is not null && obj.SelectedIdz.Count() > 0)
             {
-                var idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
-                var idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
+                IEnumerable<TColumn> idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
+                string idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
                 data = _db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchema()}.{tbName}
                                                         WHERE {columnName} IN ({idzForSql})");
             }
@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Helpers.Csv
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
         {
             int i = 0;
-            var reqId = Guid.NewGuid().ToString();
+            string reqId = Guid.NewGuid().ToString();
             string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
             foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req))
             {
@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 {
 
                     byte[] bytes = await item;
-                    string FileName = (i + 1) + "." + typeof(T1).Name.Replace("Controller", "") + "_" + Date + ".csv";
+                    string FileName = i + 1 + "." + typeof(T1).Name.Replace("Controller", "") + "_" + Date + ".csv";
                     SaveByteArrayAsCsv(bytes, FileName, reqId);
 
 
@@ -165,8 +165,8 @@ namespace ART_PACKAGE.Helpers.Csv
         public async Task ExportMissed(string reqId, string UserName, List<int> missedFiles)
         {
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), reqId);
-            var FilesNames = Directory.EnumerateFiles(folderPath);
-            var missedFilesNames = FilesNames.Where(f => missedFiles.Any(x => Path.GetFileName(f).StartsWith(x.ToString())));
+            IEnumerable<string> FilesNames = Directory.EnumerateFiles(folderPath);
+            IEnumerable<string> missedFilesNames = FilesNames.Where(f => missedFiles.Any(x => Path.GetFileName(f).StartsWith(x.ToString())));
 
             var files = missedFilesNames.Select(x => new { file = File.ReadAllBytes(x), fileName = Path.GetFileName(x) });
             await _exportHub.Clients.Clients(connections.GetConnections(UserName))

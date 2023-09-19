@@ -91,6 +91,8 @@ namespace ART_PACKAGE.Hubs
             if (nameof(ListOfDeletedUsersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfDeletedUser, ListOfDeletedUsersController>(_dbAd, Context.User.Identity.Name, para);
             if (nameof(LastLoginPerDayController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<LastLoginPerDayView, LastLoginPerDayController>(_dbAd, Context.User.Identity.Name, para);
             if (nameof(AuditUsersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUsersAuditView, AuditUsersController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(AuditGroupsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtGroupsAuditView, AuditGroupsController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(AuditRolesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtRolesAuditView, AuditRolesController>(_dbAd, Context.User.Identity.Name, para);
 
         }
 
