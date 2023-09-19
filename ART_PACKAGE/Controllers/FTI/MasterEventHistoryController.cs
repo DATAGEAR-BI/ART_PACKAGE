@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
     //[Authorize(Policy = "Licensed" , Roles = "MasterEventHistory")]
 
@@ -71,13 +71,6 @@ namespace ART_PACKAGE.Controllers
                 ContentType = "application/json",
                 Content = JsonConvert.SerializeObject(result)
             };
-        }
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories;
-            byte[] bytes = await data.ExportToCSV<ArtTiMasterEventHistory, GenericCsvClassMapper<ArtTiMasterEventHistory, MasterEventHistoryController>>(para.Req);
-            return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)

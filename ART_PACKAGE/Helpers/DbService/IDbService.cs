@@ -4,6 +4,7 @@ using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
+using Data.TIZONE2;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -16,5 +17,6 @@ namespace ART_PACKAGE.Helpers.DBService
         public AuditContext AUDIT { get; }
 
         public DGAMLContext DGAML { get; }
+        public TIZONE2Context TI { get; }
     }
 }

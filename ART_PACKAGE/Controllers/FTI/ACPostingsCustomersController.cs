@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
 
 
@@ -114,11 +114,6 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtTiAcpostingsCustReport> data = fti.ArtTiAcpostingsCustReports;
-            byte[] bytes = await data.ExportToCSV<ArtTiAcpostingsCustReport, GenericCsvClassMapper<ArtTiAcpostingsCustReport, ACPostingsCustomersController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
     }
 }

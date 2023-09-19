@@ -1,7 +1,5 @@
-﻿using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
@@ -9,31 +7,30 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-
-
-    public class ACPostingsAccountController : Controller
+    //[Authorize(Policy = "Licensed", Roles = "Amortization")]
+    public class AmortizationController : Controller
     {
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-        private readonly ICsvExport _csvSrv;
-        public ACPostingsAccountController(IPdfService pdfSrv, FTIContext fti, IDropDownService dropDown, ICsvExport csvSrv)
+
+        public AmortizationController(IPdfService pdfSrv, FTIContext fti)
         {
             _pdfSrv = pdfSrv;
             this.fti = fti;
-            _csvSrv = csvSrv;
         }
+
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports.AsQueryable();
+            IQueryable<ArtTiAmortizationReport> data = fti.ArtTiAmortizationReports.AsQueryable();
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
 
@@ -50,9 +47,9 @@ namespace ART_PACKAGE.Controllers
                 { "Spsk".ToLower(), fti.ArtTiAcpostingsAccReports.Select(x => x.Spsk).Distinct().Where(x=> x != null ).ToDynamicList() },
 
             };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].SkipList;
             }
-            KendoDataDesc<ArtTiAcpostingsAccReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtTiAmortizationReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -63,7 +60,7 @@ namespace ART_PACKAGE.Controllers
                 {
 
                 },
-                reportname = "ACPostingsAccount"
+                reportname = "Amortization"
 
             };
             return new ContentResult
@@ -73,38 +70,27 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            IQueryable<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports.AsQueryable();
-            await _csvSrv.ExportAllCsv<ArtTiAcpostingsAccReport, ACPostingsAccountController, decimal>(data, User.Identity.Name, para);
-            return new EmptyResult();
-
-        }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            List<ArtTiAcpostingsAccReport> data = fti.ArtTiAcpostingsAccReports.CallData(req).Data.ToList();
-            ViewData["title"] = "A C Postings – Account Report";
+            List<ArtTiAmortizationReport> data = fti.ArtTiAmortizationReports.CallData(req).Data.ToList();
+            ViewData["title"] = "Amortization Report";
             ViewData["desc"] = "This report produces all postings posted to an account by value date";
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsAccountController).ToLower()].DisplayNames;
-            List<string> columnsToPrint = new() {
-                nameof(ArtTiAcpostingsAccReport.EventRef)
-               ,nameof(ArtTiAcpostingsAccReport.MasterRef)
-               ,nameof(ArtTiAcpostingsAccReport.AccountType)
-               ,nameof(ArtTiAcpostingsAccReport.Valuedate)
-               ,nameof(ArtTiAcpostingsAccReport.AcctNo)
-               ,nameof(ArtTiAcpostingsAccReport.DrCrFlg)
-               ,nameof(ArtTiAcpostingsAccReport.Ccy)
-               ,nameof(ArtTiAcpostingsAccReport.PostAmount)
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].DisplayNames;
+            List<string> columnsToPrint = new()
+            {
+                // nameof(ArtTiAmortizationReport.EventRef)
+                //,nameof(ArtTiAmortizationReport.MasterRef)
+                //,nameof(ArtTiAmortizationReport.AccountType)
+                //,nameof(ArtTiAmortizationReport.Valuedate)
+                //,nameof(ArtTiAmortizationReport.AcctNo)
+                //,nameof(ArtTiAmortizationReport.DrCrFlg)
+                //,nameof(ArtTiAmortizationReport.Ccy)
+                //,nameof(ArtTiAmortizationReport.PostAmount)
             };
             List<string> ColumnsToSkip = typeof(ArtTiAcpostingsAccReport).GetProperties().Select(x => x.Name).Where(x => !columnsToPrint.Contains(x)).ToList();
+
             if (req.Group is not null && req.Group.Count != 0)
             {
                 byte[] pdfBytes = await _pdfSrv.ExportGroupedToPdf(data, ViewData, ControllerContext
@@ -120,5 +106,10 @@ namespace ART_PACKAGE.Controllers
 
         }
 
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
