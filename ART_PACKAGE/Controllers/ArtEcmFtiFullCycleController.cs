@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtEcmFtiFullCycle", Policy = "License")]
+    [Authorize(Roles = "ArtEcmFtiFullCycle")]
     public class ArtEcmFtiFullCycleController : Controller
     {
         private readonly FTIContext dbfcfkc;
