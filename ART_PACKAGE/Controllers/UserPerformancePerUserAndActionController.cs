@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
@@ -47,11 +48,12 @@ namespace ART_PACKAGE.Controllers
                 Value = endDate
             };
             data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformancePerUserAndActionController).ToLower()].DisplayNames;
 
 
 
 
-            KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req, DisplayNames: DisplayNames);
 
 
             var result = new
@@ -114,12 +116,13 @@ namespace ART_PACKAGE.Controllers
             {
                 Value = endDate
             };
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(UserPerformancePerUserAndActionController).ToLower()].DisplayNames;
 
             data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, sd, ed/*, ci, ct, cs, cd, cf, cl*/);
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name);
+                                                    , User.Identity.Name, DisplayNamesAndFormat: DisplayNames);
             return File(bytes, "text/csv");
         }
     }

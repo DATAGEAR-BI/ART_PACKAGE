@@ -23,12 +23,13 @@ namespace SqlServerMigrations.Migrations.SasAml
 
                 CREATE VIEW [ART_DB].[ART_HOME_ALERTS_PER_STATUS] as
                 select  (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end) ALERT_STATUS,
-                count(FSK_ALERT.alert_id) Alerts_Count
+                count(FSK_ALERT.alert_id) Alerts_Count,
+				YEAR(FSK_ALERT.create_date) Year
                 FROM fcf71.fcfkc.FSK_ALERT FSK_ALERT 
                 LEFT JOIN 
                 fcf71.fcfkc.FSK_LOV ALERT_STATUS ON FSK_ALERT.ALERT_STATUS_CODE = Alert_Status.Lov_Type_Code
                 and ALERT_STATUS.LOV_TYPE_NAME='RT_ALERT_STATUS' AND ALERT_STATUS.Lov_Language_Desc='en'
-                group by (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end);
+                group by (case when ALERT_STATUS.LOV_TYPE_DESC is null then 'Unknown' else ALERT_STATUS.LOV_TYPE_DESC end),YEAR(FSK_ALERT.create_date);
 
                 GO
 

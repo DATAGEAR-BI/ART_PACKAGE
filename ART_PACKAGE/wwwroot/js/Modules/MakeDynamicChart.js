@@ -387,7 +387,6 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
     am4core.addLicense("ch-custom-attribution");
     var chart = am4core.create(divId, am4charts.XYChart);
     chart.data = data;
-
     chart.exporting.menu = new am4core.ExportMenu();
     chart.exporting.menu.items = [{
         "label": "...",

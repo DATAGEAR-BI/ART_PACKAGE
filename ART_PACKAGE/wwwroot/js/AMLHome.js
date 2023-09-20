@@ -18,6 +18,7 @@ fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
        var statusData = x.statuses;
         var changeChart = (di) => {
             var year = di.year;
+            console.log(statusData);
             var yearedStatuseData = statusData.filter(x => x.year == year);
             makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
 

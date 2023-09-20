@@ -2640,7 +2640,62 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
              },
 
-
+             {
+                nameof(UserPerformPerActionController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "action",new DisplayNameAndFormat { DisplayName ="Action"}},
+                        {  "Total_Number_Of_Cases",new DisplayNameAndFormat { DisplayName ="Total Number Of Cases"}},
+                        {  "durations_in_seconds",new DisplayNameAndFormat { DisplayName ="Durations In Seconds"}},
+                        {  "AVG_durations_in_seconds",new DisplayNameAndFormat { DisplayName ="AVG Durations In Seconds"}},
+                        {  "durations_in_minutes",new DisplayNameAndFormat { DisplayName ="Durations In Minutes"}},
+                        {  "AVG_durations_in_minutes",new DisplayNameAndFormat { DisplayName ="AVG Durations In Minutes"}},
+                        {  "durations_in_hours",new DisplayNameAndFormat { DisplayName ="Durations In Hours"}},
+                        {  "AVG_durations_in_hours",new DisplayNameAndFormat { DisplayName ="AVG Durations In Hours"}},
+                        {  "durations_in_days",new DisplayNameAndFormat { DisplayName ="Durations In Days"}},
+                        {  "AVG_durations_in_days",new DisplayNameAndFormat { DisplayName ="AVG Durations In Days"}},
+                    }
+                }
+             },
+             {
+                nameof(UserPerformancePerUserAndActionController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                         {  "ACTION",new DisplayNameAndFormat { DisplayName ="Action"}},
+                        {  "ACTION_USER",new DisplayNameAndFormat { DisplayName ="Action User"}},
+                        {  "TOTAL_NUMBER_OF_CASES",new DisplayNameAndFormat { DisplayName ="Total Number Of Cases"}},
+                        {  "DURATIONS_IN_SECONDS",new DisplayNameAndFormat { DisplayName ="Durations In Seconds"}},
+                        {  "AVG_DURATIONS_IN_SECONDS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Seconds"}},
+                        {  "DURATIONS_IN_MINUTES",new DisplayNameAndFormat { DisplayName ="Durations In Minutes"}},
+                        {  "AVG_DURATIONS_IN_MINUTES",new DisplayNameAndFormat { DisplayName ="AVG Durations In Minutes"}},
+                        {  "DURATIONS_IN_HOURS",new DisplayNameAndFormat { DisplayName ="Durations In Hours"}},
+                        {  "AVG_DURATIONS_IN_HOURS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Hours"}},
+                        {  "DURATIONS_IN_DAYS",new DisplayNameAndFormat { DisplayName ="Durations In Days"}},
+                        {  "AVG_DURATIONS_IN_DAYS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Days"}},
+                    }
+                }
+             },
+             {
+                nameof(UserPerformancePerActionUserController).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ACTION",new DisplayNameAndFormat { DisplayName ="Action"}},
+                        {  "ACTION_USER",new DisplayNameAndFormat { DisplayName ="Action User"}},
+                        {  "TOTAL_NUMBER_OF_CASES",new DisplayNameAndFormat { DisplayName ="Total Number Of Cases"}},
+                        {  "DURATIONS_IN_SECONDS",new DisplayNameAndFormat { DisplayName ="Durations In Seconds"}},
+                        {  "AVG_DURATIONS_IN_SECONDS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Seconds"}},
+                        {  "DURATIONS_IN_MINUTES",new DisplayNameAndFormat { DisplayName ="Durations In Minutes"}},
+                        {  "AVG_DURATIONS_IN_MINUTES",new DisplayNameAndFormat { DisplayName ="AVG Durations In Minutes"}},
+                        {  "DURATIONS_IN_HOURS",new DisplayNameAndFormat { DisplayName ="Durations In Hours"}},
+                        {  "AVG_DURATIONS_IN_HOURS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Hours"}},
+                        {  "DURATIONS_IN_DAYS",new DisplayNameAndFormat { DisplayName ="Durations In Days"}},
+                        {  "AVG_DURATIONS_IN_DAYS",new DisplayNameAndFormat { DisplayName ="AVG Durations In Days"}},
+                    }
+                }
+             },
         };
 
     }
