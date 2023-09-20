@@ -37,17 +37,18 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string dbType = config.GetValue<string>("dbType").ToUpper();
             string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
-            void contextBuilder(DbContextOptionsBuilder options, string conn)
+            void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {
                 _ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
-                        x => x.MigrationsAssembly("SqlServerMigrations")
+                        x => { x.MigrationsAssembly("SqlServerMigrations"); x.CommandTimeout(commandTimeOut); }
+
                         ),
                     DbTypes.Oracle => options.UseOracle(
                         conn,
-                        x => x.MigrationsAssembly("OracleMigrations")
+                        x => { x.MigrationsAssembly("OracleMigrations"); x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
@@ -84,7 +85,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
-                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString,180));
             }
 
             if (modulesToApply.Contains("SASAML"))

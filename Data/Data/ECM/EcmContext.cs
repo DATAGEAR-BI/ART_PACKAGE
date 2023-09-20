@@ -5,10 +5,7 @@ namespace Data.Data.ECM
 {
     public class EcmContext : DbContext
     {
-        public EcmContext()
-        {
-            Database.SetCommandTimeout(TimeSpan.FromMinutes(2));
-        }
+      
         //ECM 
         public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; } = null!;
         public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; } = null!;

@@ -32,6 +32,10 @@ namespace ART_PACKAGE.Controllers
             _csvSrv = csvSrv;
         }
 
+        public IActionResult TestGET()
+        {
+            return Ok(context.ArtSystemPerformances.Take(100));
+        }
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
