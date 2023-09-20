@@ -9,16 +9,16 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLExternalCustomerSummaryController : Controller
+    public class DGAMLCustomerSummaryController : Controller
     {
 
         private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public DGAMLExternalCustomerSummaryController(ArtDgAmlContext _context, IMemoryCache cache, IConfiguration config)
+        public DGAMLCustomerSummaryController(ArtDgAmlContext _context, IMemoryCache cache, IConfiguration config)
         {
             this._context = _context;
             _config = config;
@@ -30,8 +30,8 @@ namespace ART_PACKAGE.Controllers
         {
 
 
-            IEnumerable<ArtStDgAmlExternalCustomerPerBranch> chart1Data = Enumerable.Empty<ArtStDgAmlExternalCustomerPerBranch>().AsQueryable();
-            IEnumerable<ArtStDgAmlExternalCustomerPerType> chart3Data = Enumerable.Empty<ArtStDgAmlExternalCustomerPerType>().AsQueryable();
+            IEnumerable<ArtStDgAmlCustomerPerType> chart1Data = Enumerable.Empty<ArtStDgAmlCustomerPerType>().AsQueryable();
+            IEnumerable<ArtStDgAmlCustomerPerBranch> chart3Data = Enumerable.Empty<ArtStDgAmlCustomerPerBranch>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
@@ -39,8 +39,8 @@ namespace ART_PACKAGE.Controllers
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
-                chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(SQLSERVERSPNames.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlCustomerPerType>(SQLSERVERSPNames.ART_ST_DGAML_CUSTOMER_PER_TYPE, chart1Params.ToArray());
+                chart3Data = _context.ExecuteProc<ArtStDgAmlCustomerPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_CUSTOMER_PER_BRANCH, chart3Params.ToArray());
 
             }
 
@@ -54,20 +54,20 @@ namespace ART_PACKAGE.Controllers
 
             ArrayList chartData = new()
             {
-                new ChartData<ArtStDgAmlExternalCustomerPerType>
+                new ChartData<ArtStDgAmlCustomerPerType>
                 {
                     ChartId = "StCustomerPerType",
-                    Data = chart3Data.ToList(),
-                    Title = "External Customer Per Type",
+                    Data = chart1Data.ToList(),
+                    Title = "Customer Per Type",
                     Cat = "CUSTOMER_TYPE",
                     Val = "NUMBER_OF_CUSTOMERS"
                 },
 
-                new ChartData<ArtStDgAmlExternalCustomerPerBranch>
+                new ChartData<ArtStDgAmlCustomerPerBranch>
                 {
                     ChartId = "StCustomerPerBranch",
-                    Data = chart1Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
-                    Title = "External Customer Per Branch",
+                    Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
+                    Title = "Customer Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "NUMBER_OF_CUSTOMERS"
                 }

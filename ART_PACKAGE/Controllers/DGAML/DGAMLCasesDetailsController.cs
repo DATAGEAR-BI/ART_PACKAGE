@@ -6,7 +6,7 @@ using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.DGAML
 {
     public class DGAMLCasesDetailsController : Controller
     {
