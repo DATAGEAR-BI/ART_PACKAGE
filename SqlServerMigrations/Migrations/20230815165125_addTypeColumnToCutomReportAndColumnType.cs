@@ -8,8 +8,7 @@ namespace SqlServerMigrations.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-               name: "ART_DB");
+
 
             migrationBuilder.AddColumn<string>(
                 name: "Type",

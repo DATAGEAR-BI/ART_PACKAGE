@@ -293,7 +293,7 @@ namespace SqlServerMigrations.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.Sql($"CREATE Schema [ART_DB]");
+            
 
         }
 
