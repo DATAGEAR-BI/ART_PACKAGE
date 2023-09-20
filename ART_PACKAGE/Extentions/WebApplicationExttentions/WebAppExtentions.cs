@@ -1,18 +1,21 @@
-﻿namespace ART_PACKAGE.Extentions.WebApplicationExttentions
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
     public static class WebAppExtentions
     {
         public static void ApplyModulesMigrations(this WebApplication app)
         {
-            //List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
-            //using IServiceScope scope = app.Services.CreateScope();
-            //AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
+            using IServiceScope scope = app.Services.CreateScope();
+            AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            //if (authContext.Database.GetPendingMigrations().Any())
-            //{
-            //    authContext.Database.Migrate();
-            //}
+            if (authContext.Database.GetPendingMigrations().Any())
+            {
+                authContext.Database.Migrate();
+            }
 
             //if (modules.Contains("ECM"))
             //{
