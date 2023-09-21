@@ -3,14 +3,12 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "CasesDetails")]
     public class DGAMLCasesDetailsController : Controller
     {
         private readonly ArtDgAmlContext _context;
@@ -75,12 +73,7 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtDgAmlCaseDetailView> data = _context.ArtDgAmlCaseDetailViews.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtDgAmlCaseDetailView, GenericCsvClassMapper<ArtDgAmlCaseDetailView, DGAMLCasesDetailsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

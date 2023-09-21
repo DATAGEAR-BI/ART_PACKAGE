@@ -37,17 +37,17 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string dbType = config.GetValue<string>("dbType").ToUpper();
             string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
-            void contextBuilder(DbContextOptionsBuilder options, string conn)
+            void contextBuilder(DbContextOptionsBuilder options, string conn, int timeout = 120)
             {
                 _ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
-                        x => x.MigrationsAssembly("SqlServerMigrations")
+                        x => { x.MigrationsAssembly("SqlServerMigrations"); x.CommandTimeout(timeout); }
                         ),
                     DbTypes.Oracle => options.UseOracle(
                         conn,
-                        x => x.MigrationsAssembly("OracleMigrations")
+                        x => { x.MigrationsAssembly("OracleMigrations"); x.CommandTimeout(timeout); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };

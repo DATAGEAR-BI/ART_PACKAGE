@@ -3,8 +3,6 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
-using Data.Data.SASAml;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -12,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "Triage")]
+
     public class DGAMLTriageController : Controller
     {
         private readonly ArtDgAmlContext _context;
@@ -68,21 +66,7 @@ namespace ART_PACKAGE.Controllers
         //    return File(bytes, "test/csv");
         //}
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<string> exportDto)
-        {
 
-            Microsoft.EntityFrameworkCore.DbSet<ArtDgAmlTriageView> data = _context.ArtDGAMLTriageViews;
-            if (exportDto.All)
-            {
-                byte[] bytes = await data.ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtDgAmlTriageView, DGAMLTriageController>>(exportDto.Req);
-                return File(bytes, "text/csv");
-            }
-            else
-            {
-                byte[] bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.AlertedEntityNumber)).ExportToCSV<ArtDgAmlTriageView, GenericCsvClassMapper<ArtAmlTriageView, DGAMLTriageController>>(all: false);
-                return File(bytes, "text/csv");
-            }
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

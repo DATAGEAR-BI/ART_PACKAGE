@@ -95,3 +95,5 @@ namespace ART_PACKAGE.Controllers
             return File(bytes, "application/pdf");
         }
     }
+
+}

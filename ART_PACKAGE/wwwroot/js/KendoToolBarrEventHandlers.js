@@ -1,4 +1,5 @@
 ﻿
+import { invokeExport, start, exportConnection } from './ExportListener.js'
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {
@@ -7,15 +8,9 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
             row.addClass(key);
         }
     })
-
-
-
-
 }
 export const Handlers = {
     csvExport: async (e, controller, url, prop) => {
-
-
         var id = document.getElementById("script").dataset.id;
         var ds = $("#grid").data("kendoGrid");
         var selectedrecords = [];
@@ -31,37 +26,51 @@ export const Handlers = {
             toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
+        } else {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'warning';
+            toastObj.text = "Export strated in backgroud you will get a notification when it finished";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
         }
 
         var para = {}
         if (id) {
-            para.Id = id;
+            para.Id = parseInt(id);
         }
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
         var res;
-        if (isMyreports) {
-            res = await fetch(`/${controller}/ExportMyReports`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
-        } else {
-            res = await fetch(`/${controller}/Export`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-            });
+        if (exportConnection.state !== "Connected")
+            await start();
+        var Method = isMyreports ? "MyReports" : "";
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method);
 
-        }
+
+
+
+        //if (isMyreports) {
+        //    res = await fetch(`/${controller}/ExportMyReports`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+        //} else {
+        //    res = await fetch(`/${controller}/Export`, {
+        //        method: "POST",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json"
+        //        },
+        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
+        //    });
+
+        //}
         localStorage.removeItem("selectedidz");
 
     },
