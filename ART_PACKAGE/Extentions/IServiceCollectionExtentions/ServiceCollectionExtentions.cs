@@ -43,12 +43,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
-                        x => { x.MigrationsAssembly("SqlServerMigrations"); x.CommandTimeout(commandTimeOut); }
+                        x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
 
                         ),
                     DbTypes.Oracle => options.UseOracle(
                         conn,
-                        x => { x.MigrationsAssembly("OracleMigrations"); x.CommandTimeout(commandTimeOut); }
+                        x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
-                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString,180));
+                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString, 180));
             }
 
             if (modulesToApply.Contains("SASAML"))

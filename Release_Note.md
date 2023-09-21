@@ -4,17 +4,10 @@ We are pleased to announce the release of Test App v2.0.20. This version include
 
 ## New Features
 
-- Test Feature
-
-## Improvements
-
-- Test Improvements
-
-## Bug Fixes
-
-- Fixed export in acc posting report
+- Sanction && AML Home DashBoard
+     Reports For BYC Named => (6 SANCTION REPORTS --> System Performance Summary - System Performance Details - UserPerformance Details - User Perform Per Action - User Performance Per Action User - User Performance Per User And Action) - (10 AML Reports --> Alert Summary - Alert Details - Triage - Cases Summary - Cases Details - Customers Summary - Customers Details - Risk Summary - Risk Assessment - High Risk ) -
+     (13 Audit Report --> List Of User - List Of Groups - List Of Role - List Of Users And Groups Role - List Of Users Group - List Of Users Roles - List Groups Roles Summary - List Groups Sub Groups Summary - List Of Deleted Users - User Last Login Per Day - User Audit - Group Audit - Role Audit)
 
 
-We encourage all users to update to the latest version of Test App to take advantage of these improvements and bug fixes.
-
-Thank you for your continued support of Test App. If you have any feedback or issues, please don't hesitate to contact us.
+## Release Date
+- released at 09-21-2023 11:45 AM

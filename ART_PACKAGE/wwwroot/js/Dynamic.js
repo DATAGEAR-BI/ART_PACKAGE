@@ -2,6 +2,24 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+
+const handleError = (error) => {
+    if (error instanceof Error) {
+        // This is a client-side error (e.g., network issues)
+        console.error('Client-side error:', error.message);
+    } else {
+        // This is a server error (e.g., 500 Internal Server Error)
+        console.error('Server error:', error);
+        if (error.response && error.response.status === 500) {
+            // Handle 500 Internal Server Error here
+            toastObj.hideAfter = false;
+            toastObj.icon = 'error';
+            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
+            toastObj.heading = "Report Status";
+            $.toast(toastObj);
+        }
+    }
+}
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -24,7 +42,7 @@ var spinnerOpts = {
 };
 var spinnerStyle = document.createElement("link");
 spinnerStyle.rel = "stylesheet";
-spinnerStyle.href = "../lib/spin.js/spin.css";
+spinnerStyle.href = "/lib/spin.js/spin.css";
 
 var grid = document.getElementById("grid");
 localStorage.removeItem("selectedidz");
@@ -140,13 +158,7 @@ function intializeGrid() {
             $(".spinner").remove();
             generateGrid();
 
-        }).catch(err => {
-            toastObj.hideAfter = false;
-            toastObj.icon = 'error';
-            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
-            toastObj.heading = "Report Status";
-            $.toast(toastObj);
-        });
+        }).catch(handleError);
 }
 function genrateToolBar(data, doesnotcontainsll) {
     var toolbar = [];
@@ -356,8 +368,9 @@ function generateGrid() {
 
                                 //}
                                 if (chartsDiv) {
-                                    var chartdata = [...d.chartdata];
-                                    console.log(chartdata);
+                                    var chartdata = [];
+                                    if (d.chartdata)
+                                        chartdata = [...d.chartdata];
                                     chartdata.forEach((x) => {
                                         var div = document.getElementById(x.ChartId);
 
@@ -373,13 +386,7 @@ function generateGrid() {
                                         );
                                     });
                                 }
-                            }).catch(err => {
-                                toastObj.hideAfter = false;
-                                toastObj.icon = 'error';
-                                toastObj.text = "Some thing wrong hannped while retreving data for the report please reload page or call support";
-                                toastObj.heading = "Report Status";
-                                $.toast(toastObj);
-                            });;
+                            }).catch(handleError);
                     }
                 },
             },

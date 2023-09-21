@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
     {
         public static void ApplyModulesMigrations(this WebApplication app)
         {
-            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
+            _ = app.Configuration.GetSection("Modules").Get<List<string>>();
             using IServiceScope scope = app.Services.CreateScope();
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
