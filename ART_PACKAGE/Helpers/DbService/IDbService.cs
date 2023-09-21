@@ -1,6 +1,7 @@
 ﻿using Data.Audit;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGWLLOGS;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -16,5 +17,6 @@ namespace ART_PACKAGE.Helpers.DBService
         public AuditContext AUDIT { get; }
 
         public DGAMLContext DGAML { get; }
+        public DGWLLOGSContext DGWLLOGS { get; }
     }
 }

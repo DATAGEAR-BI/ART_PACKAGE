@@ -18,6 +18,7 @@ using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGWLLOGS;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
@@ -53,7 +54,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 };
             }
 
-            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            _ = services.AddDbContext<AuthContext>(opt => { contextBuilder(opt, connectionString); _ = opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); });
             if (modulesToApply.Contains("SEG"))
             {
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
@@ -83,7 +84,9 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("ECM"))
             {
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                string DGWLLOGSContextConnection = config.GetConnectionString("DGWLLOGSContextConnection") ?? throw new InvalidOperationException("Connection string 'DGWLLOGSContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+                _ = services.AddDbContext<DGWLLOGSContext>(opt => contextBuilder(opt, DGWLLOGSContextConnection));
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
             }
 

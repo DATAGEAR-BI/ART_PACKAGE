@@ -1,6 +1,7 @@
 ﻿using Data.Audit;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGWLLOGS;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -41,6 +42,8 @@ namespace ART_PACKAGE.Helpers.DBService
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+                DGWLLOGSContext DGWLLOGSService = scope.ServiceProvider.GetRequiredService<DGWLLOGSContext>();
+                DGWLLOGS = DGWLLOGSService;
                 ECM = ecmService;
             }
             if (modules.Contains("DGAUDIT"))
@@ -59,5 +62,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public AuditContext AUDIT { get; }
         public DGAMLContext DGAML { get; }
+        public DGWLLOGSContext DGWLLOGS { get; }
+
     }
 }

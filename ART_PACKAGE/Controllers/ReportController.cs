@@ -224,9 +224,15 @@ namespace ART_PACKAGE.Controllers
             report.UserId = userManager.GetUserId(User);
             report.Charts = charts;
             report.Columns = columns;
-
-            _ = db.Add(report);
-            _ = db.SaveChanges();
+            try
+            {
+                _ = db.Add(report);
+                _ = db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             ArtSavedCustomReport? reportAfter = db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.User).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
 
