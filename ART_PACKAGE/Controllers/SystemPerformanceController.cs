@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : Controller
     {
         private readonly EcmContext context;

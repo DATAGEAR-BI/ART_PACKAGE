@@ -1772,7 +1772,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NumberOfCases)
                     .HasColumnType("int")
-                    .HasColumnName("NUMBER_OF_CASES");
+                    .HasColumnName("TOTAL_NUMBER_OF_CASES");
+                entity.Property(e => e.YEAR)
+                    .HasColumnType("int")
+                    .HasColumnName("YEAR");
             });
 
             modelBuilder.Entity<ArtHomeCasesType>(entity =>
@@ -1789,7 +1792,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NumberOfCases)
                     .HasColumnType("int")
-                    .HasColumnName("NUMBER_OF_CASES");
+                    .HasColumnName("TOTAL_NUMBER_OF_CASES");
+                entity.Property(e => e.YEAR)
+                    .HasColumnType("int")
+                    .HasColumnName("YEAR");
             });
 
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
@@ -1914,15 +1920,14 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CASE_ID");
 
                 entity.Property(e => e.CreateDate)
-                    .HasPrecision(6)
                     .HasColumnName("CREATE_DATE");
 
                 entity.Property(e => e.Name)
-                    .HasColumnType("CLOB")
+                    .HasMaxLength(4000)
                     .HasColumnName("NAME");
 
                 entity.Property(e => e.PepInd)
-                    .HasColumnType("CLOB")
+                    .HasMaxLength(5)
                     .HasColumnName("PEP_IND");
             });
 

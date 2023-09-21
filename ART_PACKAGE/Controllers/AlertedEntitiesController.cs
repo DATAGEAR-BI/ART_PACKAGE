@@ -4,11 +4,14 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "AlertedEntities")]
+
     public class AlertedEntitiesController : Controller
     {
         private readonly EcmContext context;

@@ -1,13 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data.AmlAnalysis;
-using Data.Data.ARTDGAML;
-using Data.Data.ARTGOAML;
-using Data.Data.Audit;
-using Data.Data.ECM;
-using Data.Data.FTI;
-using Data.Data.KYC;
-using Data.Data.SASAml;
-using Data.Data.Segmentation;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
@@ -16,7 +7,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
     {
         public static void ApplyModulesMigrations(this WebApplication app)
         {
-            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
+            _ = app.Configuration.GetSection("Modules").Get<List<string>>();
             using IServiceScope scope = app.Services.CreateScope();
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 

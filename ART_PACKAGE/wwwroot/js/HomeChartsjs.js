@@ -43,7 +43,7 @@ getData().then(x => {
 
 
 async function getData() {
-    var data = await (await fetch("/home/getchartsdata")).json();
+    var data = await (await fetch("/Home/getChartsData")).json();
     dateData = data.dates;
     typeData = data.types;
     statusData = data.status;
