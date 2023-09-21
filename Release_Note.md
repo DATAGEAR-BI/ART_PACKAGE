@@ -1,4 +1,4 @@
-# Release Notes - FTI v1.0.1
+# Release Notes - BYC v1.0.0
 
 We are pleased to announce the release of Test App v2.0.20. This version includes several bug fixes and improvements to enhance the overall performance and stability of the app.
 
