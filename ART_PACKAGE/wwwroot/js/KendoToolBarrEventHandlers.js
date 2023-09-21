@@ -15,8 +15,6 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
 }
 export const Handlers = {
     csvExport: async (e, controller, url, prop) => {
-
-
         var id = document.getElementById("script").dataset.id;
         var ds = $("#grid").data("kendoGrid");
         var selectedrecords = [];
@@ -42,7 +40,7 @@ export const Handlers = {
 
         var para = {}
         if (id) {
-            para.Id = id;
+            para.Id = parseInt(id);
         }
         para.Take = total;
         para.Skip = 0;
@@ -51,8 +49,8 @@ export const Handlers = {
         var res;
         if (exportConnection.state !== "Connected")
             await start();
-
-        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller);
+        var Method = isMyreports ? "MyReports" : "";
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method);
 
 
 

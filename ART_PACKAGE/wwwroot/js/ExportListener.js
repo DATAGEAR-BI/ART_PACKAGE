@@ -15,7 +15,10 @@ export async function start() {
     }
 };
 
-export const invokeExport = (para, controller) => exportConnection.invoke("Export", para, controller);
+export const invokeExport = (para, controller,method) => {
+    console.log(controller, para);
+    exportConnection.invoke("Export", para, controller, method);
+}
 
 await start();
 

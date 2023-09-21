@@ -78,9 +78,20 @@ namespace ART_PACKAGE.Hubs
         }
 
 
-        public async Task Export(ExportDto<object> para, string controller)
+        public async Task Export(ExportDto<object> para, string controller, string method)
         {
-            if (nameof(ReportController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportCustomReport(para);
+            if (nameof(ReportController).ToLower().Replace("controller", "") == controller.ToLower())
+            {
+                if (method == "MyReports")
+                {
+                    await _csvSrv.Export<ArtSavedCustomReport, ReportController>(db, Context.User.Identity.Name, para);
+                }
+                else
+                {
+                    await ExportCustomReport(para);
+                }
+
+            }
             if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformance, SystemPerformanceController>(_db, Context.User.Identity.Name, para);
             if (nameof(UserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUserPerformance, UserPerformanceController>(_db, Context.User.Identity.Name, para);
             if (nameof(AlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAlertDetailView, AlertDetailsController, long?>(_dbAml, Context.User.Identity.Name, para, nameof(ArtAmlAlertDetailView.AlertId));
