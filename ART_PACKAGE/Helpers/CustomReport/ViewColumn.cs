@@ -14,7 +14,7 @@
             {
                 "number" or "int" or "smallint" or "bigint" or "decimal" or "float" or "real" => "number",
                 "char" or "varchar2" or "nchar" or "nvarchar2" or "clob" or "nclob" => "string",
-                "date" or "timestamp" or "timestampltz" or "timestamptz" => "Date",
+                "date" or "timestamp" or "timestampltz" or "timestamptz" => "date",
                 "boolean" => "boolean",
                 "int" or "smallint" or "tinyint" or "bigint" or "numeric" or "decimal" or "float" or "real" => "number",
                 "bit" => "boolean",
