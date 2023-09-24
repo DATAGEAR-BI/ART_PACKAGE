@@ -48,10 +48,12 @@ namespace ART_PACKAGE.Helpers.LDap
                                                     searchFilter,
                                                     requiredAttr,
                                                     false);
+
                 try
                 {
                     conn.Bind(LogedInOn, LogedInPassword);
                     _logger.LogWarning("ldap bounded {con}", conn.Bound);
+                    _logger.LogWarning("search count", lsr.Count);
 
                 }
                 catch (Exception ex)
@@ -62,6 +64,7 @@ namespace ART_PACKAGE.Helpers.LDap
                 try
                 {
                     LdapEntry user = lsr.next();
+
                     if (user == null)
                     {
                         return null;
