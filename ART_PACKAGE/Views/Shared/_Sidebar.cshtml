@@ -642,26 +642,29 @@
                     </li>
                 </ul>
             </li>
-            <li class="treeview ">
-                <a href="#">
-                    <i class="glyphicon glyphicon-cog"></i> <span>Admin Panel</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Users", "UserRole")"><i class="glyphicon glyphicon-user"></i> <span>Users</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("UsersRolesMatrix","UserRole")"><i class="glyphicon glyphicon-eye-close"></i> <span>Roles Matrix</span></a>
-                    </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="treeview ">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-cog"></i> <span>Admin Panel</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class=" ">
+                            <a href="@Url.Action("Users", "UserRole")"><i class="glyphicon glyphicon-user"></i> <span>Users</span></a>
+                        </li>
+                        <li class=" ">
+                            <a href="@Url.Action("UsersRolesMatrix","UserRole")"><i class="glyphicon glyphicon-eye-close"></i> <span>Roles Matrix</span></a>
+                        </li>
 
-                    <li class=" ">
-                        <a href="@Url.Action("Roles", "UserRole")"><i class="glyphicon glyphicon-stop"></i> <span>Roles</span></a>
-                    </li>
-                </ul>
-            </li>
+                        <li class=" ">
+                            <a href="@Url.Action("Roles", "UserRole")"><i class="glyphicon glyphicon-stop"></i> <span>Roles</span></a>
+                        </li>
+                    </ul>
+                </li>
+            }
         </ul>
 
     </section>

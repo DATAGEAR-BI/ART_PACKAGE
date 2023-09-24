@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,7 +10,7 @@ using System.Data;
 namespace ART_PACKAGE.Controllers
 {
 
-
+    [Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
 

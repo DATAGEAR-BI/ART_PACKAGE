@@ -10,18 +10,37 @@
 
             public string IsNullable { get; set; } = null!;
 
-            public string JsDataType => SqlDataType.ToLower() switch
+
+
+            public string JsDataType
             {
-                "number" or "int" or "smallint" or "bigint" or "decimal" or "float" or "real" => "number",
-                "char" or "varchar2" or "nchar" or "nvarchar2" or "clob" or "nclob" => "string",
-                "date" or "timestamp" or "timestampltz" or "timestamptz" => "date",
-                "boolean" => "boolean",
-                "int" or "smallint" or "tinyint" or "bigint" or "numeric" or "decimal" or "float" or "real" => "number",
-                "bit" => "boolean",
-                "date" or "datetime" or "datetime2" or "datetimeoffset" or "smalldatetime" or "time" => "date",
-                "char" or "varchar" or "nchar" or "nvarchar" or "text" or "ntext" or "xml" => "text",
-                _ => "text",// Fallback to "any" if there's no direct mapping.
-            };
+                get
+                {
+                    List<string> numberTypes = new List<string>() { 
+                    /*,acle Types*/    "int", "smallint", "bigint", "decimal", "float", "real" ,
+                    /*SqlServer Types*/    "int" , "smallint" , "tinyint" , "bigint" , "numeric" , "decimal" , "float" , "real"
+                    };
+                    List<string> stringTypes = new List<string>() { 
+                    /*,acle Types*/   "char" , "varchar2" , "nchar" , "nvarchar2" , "clob" , "nclob",
+                    /*SqlServer Types*/    "char" , "varchar" , "nchar" , "nvarchar" , "text" , "ntext" , "xml"
+                    };
+                    List<string> dateTypes = new List<string>() { 
+                    /*,acle Types*/  "date" , "timestamp" , "timestampltz" , "timestamptz",
+                    /*SqlServer Types*/     "date" , "datetime" , "datetime2" , "datetimeoffset" , "smalldatetime" , "time"
+                    };
+                    List<string> boolTypes = new List<string>() { 
+                    /*,acle Types*/  "bit",
+                    /*SqlServer Types*/    "boolean"
+                    };
+                    if (numberTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
+                        return "number";
+                    if (stringTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
+                        return "string";
+                    if (dateTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
+                        return "date";
+                    return boolTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())) ? "boolean" : "string";
+                }
+            }
         }
 
     }
