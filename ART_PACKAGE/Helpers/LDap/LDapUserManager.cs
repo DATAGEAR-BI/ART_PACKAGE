@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Helpers.LDap
                 }
 
                 LdapSearchResults lsr = conn.Search(SearchPase,
-                                                    LdapConnection.SCOPE_BASE,
+                                                    LdapConnection.SCOPE_SUB,
                                                     searchFilter,
                                                     requiredAttr,
                                                     false);
