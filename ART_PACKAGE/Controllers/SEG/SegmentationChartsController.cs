@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Data;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.SEG
 {
     //[Authorize(Roles = "SegmentationCharts", Policy = "Licensed")]
     public class SegmentationChartsController : Controller

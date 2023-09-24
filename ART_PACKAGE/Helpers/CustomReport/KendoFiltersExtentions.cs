@@ -16,18 +16,18 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         private static readonly Dictionary<string, string> StringOp = new()
         {
-            { "eq"              , " = '{0}'" },
-            { "neq"             , " <> '{0}'" },
-            { "isnull"          , "IS NULL" },
-            { "isnotnull"       , "IS NOT NULL" },
-            { "isempty"         , $@" = ''" },
-            { "isnotempty"      , $@" <> ''" },
-            { "startswith"      , " LIKE '{0}%'" },
-            { "doesnotstartwith", " NOT LIKE '{0}%'" },
-            { "contains"        , " LIKE '%{0}%'" },
-            { "doesnotcontain"  , " NOT LIKE '%{0}%'" },
-            { "endswith"        , " LIKE '%{0}'" },
-            { "doesnotendwith"  , " NOT LIKE '%{0}'" },
+            { "eq"              , "{1} = '{0}'" },
+            { "neq"             , "{1} <> '{0}'" },
+            { "isnull"          , "{1} IS NULL" },
+            { "isnotnull"       , "{1} IS NOT NULL" },
+            { "isempty"         , $@"{{1}} = ''" },
+            { "isnotempty"      , $@"{{1}} <> ''" },
+            { "startswith"      , "{1} LIKE '{0}%'" },
+            { "doesnotstartwith", "{1} NOT LIKE '{0}%'" },
+            { "contains"        , "{1} LIKE '%{0}%'" },
+            { "doesnotcontain"  , "{1} NOT LIKE '%{0}%'" },
+            { "endswith"        , "{1} LIKE '%{0}'" },
+            { "doesnotendwith"  , "{1} NOT LIKE '%{0}'" },
         };
         private static readonly Dictionary<string, string> StringOpForC = new()
         {
@@ -46,14 +46,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
         };
         private static readonly Dictionary<string, string> NumberOp = new()
         {
-            { "eq", " = {0}" },
-            { "neq", " <> {0}" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"  ," >= {0}"},
-            {"gt"   ," > {0}"},
-            {"lte"  ," <= {0}"},
-            { "lt"  , " < {0}" },
+            { "eq", "{1} = {0}" },
+            { "neq", "{1} <> {0}" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte"  ,"{1} >= {0}"},
+            {"gt"   ,"{1} > {0}"},
+            {"lte"  ,"{1} <= {0}"},
+            { "lt"  , "{1} < {0}" },
         };
         private static readonly Dictionary<string, string> NumberOpForC = new()
         {
@@ -106,14 +106,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 "sqlServer"
             ,
             new Dictionary<string, string> {
-            { "eq", " = Convert(datetime,'{0}')" },
-            { "neq", " <> Convert(datetime,'{0}')" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= Convert(datetime,'{0}')"},
-            {"gt"," > Convert(datetime,'{0}')"},
-            {"lte"," <= Convert(datetime,'{0}')"},
-            { "lt", " < Convert(datetime,'{0}')" },
+            { "eq", "{1} = Convert(datetime,'{0}')" },
+            { "neq", "{1} <> Convert(datetime,'{0}')" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte","{1} >= Convert(datetime,'{0}')"},
+            {"gt","{1} > Convert(datetime,'{0}')"},
+            {"lte","{1} <= Convert(datetime,'{0}')"},
+            { "lt", "{1} < Convert(datetime,'{0}')" },
                 }
             }
 
@@ -124,14 +124,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 "oracle"
             ,
                 new Dictionary<string, string> {
-            { "eq", " = to_date('{0}', 'dd-MM-yyyy')" },
-            { "neq", " <> to_date('{0}', 'dd-MM-yyyy')" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= to_date('{0}', 'dd-MM-yyyy')"},
-            {"gt"," > to_date('{0}', 'dd-MM-yyyy')"},
-            {"lte"," <= to_date('{0}', 'dd-MM-yyyy')"},
-            { "lt", " < to_date('{0}', 'dd-MM-yyyy')" },
+            { "eq", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },
+            { "neq", "TRUNC({1}) <> to_date('{0}', 'dd-MM-yyyy')" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte","TRUNC({1}) >= to_date('{0}', 'dd-MM-yyyy')"},
+            {"gt","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
+            {"lte","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
+            { "lt", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
             }
             }
         };
@@ -173,20 +173,20 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     try
                     {
                         v = i.value is not null
-                            ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString())
+                            ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString(), i.field)
                             : NumberOp[i.@operator];
                     }
                     catch (Exception)
                     {
                         string value = ((JsonElement)i.value).ToObject<string>();
                         v = DateTime.TryParse(value, out DateTime dt)
-                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"))
-                            : string.Format(StringOp[i.@operator], value);
+                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"), i.field)
+                            : string.Format(StringOp[i.@operator], value, i.field);
 
                     }
                     finally
                     {
-                        _ = _sb.Append($"{i.field} {v}");
+                        _ = _sb.Append($"{v}");
                     }
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 {
 
     public class AML_ANALYSISController : Controller

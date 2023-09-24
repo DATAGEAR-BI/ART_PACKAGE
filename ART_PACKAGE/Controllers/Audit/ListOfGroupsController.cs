@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.Audit
 {
     [Authorize(Roles = "ListOfGroups")]
     public class ListOfGroupsController : Controller

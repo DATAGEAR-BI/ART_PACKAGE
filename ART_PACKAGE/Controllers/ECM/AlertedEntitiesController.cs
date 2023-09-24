@@ -7,7 +7,7 @@ using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.ECM
 {
     public class AlertedEntitiesController : Controller
     {

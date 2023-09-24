@@ -3614,7 +3614,7 @@ namespace Data.ModelCreatingStrategies
 
         }
 
-        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
+        public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FskRiskAssessment>(entity =>
             {

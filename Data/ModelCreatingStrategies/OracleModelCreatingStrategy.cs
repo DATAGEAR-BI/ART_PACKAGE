@@ -9,6 +9,7 @@ using Data.Data.Segmentation;
 using Data.DGECM;
 using Data.FCF71;
 using Data.FCFKC.AmlAnalysis;
+using Data.FCFKC.SASAML;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.ModelCreatingStrategies
@@ -5078,9 +5079,495 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("QUEUE_CODE");
             });
         }
-        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
+        public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.Entity<FskCase>(entity =>
+            {
+                entity.HasKey(e => e.CaseId)
+                    .HasName("XPKFSK_CASE");
+
+                entity.ToTable("FSK_CASE");
+
+                entity.Property(e => e.CaseId)
+                    .HasPrecision(12)
+                    .ValueGeneratedNever()
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.AggregateAmt)
+                    .HasColumnType("NUMBER(15,3)")
+                    .HasColumnName("AGGREGATE_AMT");
+
+                entity.Property(e => e.CaseCategoryCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CATEGORY_CODE");
+
+                entity.Property(e => e.CaseCloseReasonCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CLOSE_REASON_CODE");
+
+                entity.Property(e => e.CaseDescription)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_DESCRIPTION");
+
+                entity.Property(e => e.CasePriorityCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_PRIORITY_CODE");
+
+                entity.Property(e => e.CaseStatusCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS_CODE");
+
+                entity.Property(e => e.CaseSubCategoryCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_SUB_CATEGORY_CODE");
+
+                entity.Property(e => e.CaseSummary)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_SUMMARY");
+
+                entity.Property(e => e.CaseTypeCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_TYPE_CODE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYEE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.FirstTransactionDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("FIRST_TRANSACTION_DATE");
+
+                entity.Property(e => e.LastTransactionDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_TRANSACTION_DATE");
+
+                entity.Property(e => e.LeContactAgency)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("LE_CONTACT_AGENCY");
+
+                entity.Property(e => e.LeContactDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LE_CONTACT_DATE");
+
+                entity.Property(e => e.LeContactName)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("LE_CONTACT_NAME");
+
+                entity.Property(e => e.LeContactPhone)
+                    .HasMaxLength(16)
+                    .IsUnicode(false)
+                    .HasColumnName("LE_CONTACT_PHONE");
+
+                entity.Property(e => e.LeContactPhoneExt)
+                    .HasMaxLength(16)
+                    .IsUnicode(false)
+                    .HasColumnName("LE_CONTACT_PHONE_EXT");
+
+                entity.Property(e => e.LeContactedInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("LE_CONTACTED_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("LOGICAL_DELETE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LstupdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LSTUPDATE_DATE");
+
+                entity.Property(e => e.LstupdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("LSTUPDATE_USER_ID");
+
+                entity.Property(e => e.ModifiedInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("MODIFIED_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OpenedInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("OPENED_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerUserLongId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USER_LONG_ID");
+
+                entity.Property(e => e.VersionNumber)
+                    .HasPrecision(10)
+                    .HasColumnName("VERSION_NUMBER");
+            });
+
+            modelBuilder.Entity<FskLov>(entity =>
+            {
+                entity.HasKey(e => new { e.LovTypeName, e.LovTypeCode, e.LovLanguageDesc })
+                    .HasName("PK_LOV");
+
+                entity.ToTable("FSK_LOV");
+
+                entity.Property(e => e.LovTypeName)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("LOV_TYPE_NAME");
+
+                entity.Property(e => e.LovTypeCode)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("LOV_TYPE_CODE");
+
+                entity.Property(e => e.LovLanguageDesc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LOV_LANGUAGE_DESC");
+
+                entity.Property(e => e.ActiveFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVE_FLG")
+                    .HasDefaultValueSql("'Y'  ")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LovSortPositionNumber)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LOV_SORT_POSITION_NUMBER");
+
+                entity.Property(e => e.LovTypeDesc)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("LOV_TYPE_DESC");
+            });
+
+            modelBuilder.Entity<FskRiskAssessment>(entity =>
+            {
+                entity.HasKey(e => e.RiskAssessmentId)
+                    .HasName("PK_RISK_ASMNT");
+
+                entity.ToTable("FSK_RISK_ASSESSMENT");
+
+                entity.HasIndex(e => e.PartyKey, "XIE5FSK_RISK_ASMNT");
+
+                entity.HasIndex(e => e.PartyNumber, "XIE9FSK_RISK_ASMNT");
+
+                entity.Property(e => e.RiskAssessmentId)
+                    .HasPrecision(12)
+                    .ValueGeneratedNever()
+                    .HasColumnName("RISK_ASSESSMENT_ID");
+
+                entity.Property(e => e.AssessmentCategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_CATEGORY_CD");
+
+                entity.Property(e => e.AssessmentSubcategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_SUBCATEGORY_CD");
+
+                entity.Property(e => e.AssessmentTypeCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_TYPE_CD");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYEE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("LOGICAL_DELETE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerUserLongId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USER_LONG_ID");
+
+                entity.Property(e => e.PartyKey)
+                    .HasPrecision(12)
+                    .HasColumnName("PARTY_KEY");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.ProposedRiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("PROPOSED_RISK_CLASSIFICATION");
+
+                entity.Property(e => e.RiskAssessmentDuration)
+                    .HasPrecision(3)
+                    .HasColumnName("RISK_ASSESSMENT_DURATION");
+
+                entity.Property(e => e.RiskAssessmentStatusCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_ASSESSMENT_STATUS_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.StartingMonthKey)
+                    .HasPrecision(6)
+                    .HasColumnName("STARTING_MONTH_KEY");
+
+                entity.Property(e => e.VersionNumber)
+                    .HasPrecision(10)
+                    .HasColumnName("VERSION_NUMBER");
+            });
+
+            modelBuilder.Entity<FskScenario>(entity =>
+            {
+                entity.HasKey(e => e.ScenarioId)
+                    .HasName("PK_SCENARIO");
+
+                entity.ToTable("FSK_SCENARIO");
+
+                entity.HasIndex(e => e.HeaderId, "IDX_SCENARIO_HEADER");
+
+                entity.HasIndex(e => e.RoutingGroupId, "XIF2FSK_SCENARIO");
+
+                entity.Property(e => e.ScenarioId)
+                    .HasPrecision(12)
+                    .ValueGeneratedNever()
+                    .HasColumnName("SCENARIO_ID");
+
+                entity.Property(e => e.AlertCategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_CATEGORY_CD");
+
+                entity.Property(e => e.AlertSubcategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_SUBCATEGORY_CD");
+
+                entity.Property(e => e.AlertTypeCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_TYPE_CD");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.CurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CURRENT_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.DfltSuppressDurationCount)
+                    .HasPrecision(8)
+                    .HasColumnName("DFLT_SUPPRESS_DURATION_COUNT");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("END_DATE")
+                    .HasDefaultValueSql("to_date('59990101','YYYYMMDD')  ");
+
+                entity.Property(e => e.EndUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("END_USER_ID");
+
+                entity.Property(e => e.EntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_LEVEL_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ExecutionProbabilityRate)
+                    .HasColumnType("NUMBER(7,7)")
+                    .HasColumnName("EXECUTION_PROBABILITY_RATE");
+
+                entity.Property(e => e.HeaderId)
+                    .HasPrecision(12)
+                    .HasColumnName("HEADER_ID");
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("LOGICAL_DELETE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LstupdateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LSTUPDATE_DATE");
+
+                entity.Property(e => e.LstupdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("LSTUPDATE_USER_ID");
+
+                entity.Property(e => e.MoneyLaunderingBayesWeight)
+                    .HasColumnType("NUMBER(15,5)")
+                    .HasColumnName("MONEY_LAUNDERING_BAYES_WEIGHT");
+
+                entity.Property(e => e.OrderInHeader)
+                    .HasPrecision(5)
+                    .HasColumnName("ORDER_IN_HEADER");
+
+                entity.Property(e => e.PrimaryEntityNumberVarName)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_ENTITY_NUMBER_VAR_NAME");
+
+                entity.Property(e => e.ProductTypeCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT_TYPE_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RiskFactorInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_FACTOR_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RootKey)
+                    .HasPrecision(12)
+                    .HasColumnName("ROOT_KEY");
+
+                entity.Property(e => e.RoutingGroupId)
+                    .HasPrecision(12)
+                    .HasColumnName("ROUTING_GROUP_ID");
+
+                entity.Property(e => e.RoutingUserLongId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROUTING_USER_LONG_ID");
+
+                entity.Property(e => e.SaveTrigTransInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("SAVE_TRIG_TRANS_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ScenarioCategoryCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_CATEGORY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ScenarioCodeLocationDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_CODE_LOCATION_DESC");
+
+                entity.Property(e => e.ScenarioDescription)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_DESCRIPTION");
+
+                entity.Property(e => e.ScenarioDurationCount)
+                    .HasPrecision(8)
+                    .HasColumnName("SCENARIO_DURATION_COUNT");
+
+                entity.Property(e => e.ScenarioName)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_NAME");
+
+                entity.Property(e => e.ScenarioRunFrequencyCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_RUN_FREQUENCY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ScenarioShortDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_SHORT_DESCRIPTION");
+
+                entity.Property(e => e.ScenarioStatusCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_STATUS_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ScenarioTypeCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SCENARIO_TYPE_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.SkipIfNoTransCurrDayInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("SKIP_IF_NO_TRANS_CURR_DAY_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.TerrorFinancingBayesWeight)
+                    .HasColumnType("NUMBER(15,5)")
+                    .HasColumnName("TERROR_FINANCING_BAYES_WEIGHT");
+
+                entity.Property(e => e.VersionNumber)
+                    .HasPrecision(5)
+                    .HasColumnName("VERSION_NUMBER");
+
+                entity.Property(e => e.VsdDeploymentName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("VSD_DEPLOYMENT_NAME");
+
+                entity.Property(e => e.VsdWindowName)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("VSD_WINDOW_NAME");
+            });
         }
 
         public void OnFTIModelCreating(ModelBuilder modelBuilder)

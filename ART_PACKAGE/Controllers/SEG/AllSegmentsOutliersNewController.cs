@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.SEG
 {
     public class AllSegmentsOutliersNewController : Controller
     {

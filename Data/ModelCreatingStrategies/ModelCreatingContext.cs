@@ -58,9 +58,9 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnFcfkcAmlAnalysisModelCreating(modelBuilder);
         }
 
-        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
+        public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
-            _strategy.OnFcfkcECMModelCreating(modelBuilder);
+            _strategy.OnFcfkcSASAMLModelCreating(modelBuilder);
         }
 
         public void OnFTIModelCreating(ModelBuilder modelBuilder)

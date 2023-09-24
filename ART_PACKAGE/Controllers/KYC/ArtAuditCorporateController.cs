@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.DropDown;
-using Data.Data.KYC;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.KYC;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.KYC
 {
     public class ArtAuditCorporateController : Controller
     {
