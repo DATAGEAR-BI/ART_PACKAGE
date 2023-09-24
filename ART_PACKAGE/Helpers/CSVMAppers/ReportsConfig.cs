@@ -1,7 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.Audit;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.FTI;
+using ART_PACKAGE.Controllers.GOAML;
+using ART_PACKAGE.Controllers.KYC;
+using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.Audit;
 
