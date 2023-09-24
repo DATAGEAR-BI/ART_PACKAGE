@@ -1,16 +1,26 @@
 
+using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.Audit;
+using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.FTI;
+using ART_PACKAGE.Controllers.GOAML;
+using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SEG;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using CsvHelper;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.SASAml;
+using Data.Data.Segmentation;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
+using System.Data;
 using System.Globalization;
 using System.Text;
 
@@ -26,6 +36,8 @@ namespace ART_PACKAGE.Hubs
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly ArtAuditContext _dbAd;
+        private readonly ArtGoAmlContext _dbGoAml;
+        private readonly SegmentationContext _seg;
         private readonly List<string>? modules;
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
@@ -66,6 +78,26 @@ namespace ART_PACKAGE.Hubs
                 _fti = fticontext;
                 ti = _ti;
             }
+            if (modules.Contains("GOAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtGoAmlContext goamlcontext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+                _dbGoAml = goamlcontext;
+
+            }
+            if (modules.Contains("DGAUDIT"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
+                _dbAd = auditcontext;
+
+            }
+            if (modules.Contains("DGAUDIT"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
+                _seg = seg;
+            }
         }
         public override Task OnConnectedAsync()
         {
@@ -81,9 +113,51 @@ namespace ART_PACKAGE.Hubs
         }
 
 
-        public async Task Export(ExportDto<object> para, string controller)
+        public async Task Export(ExportDto<object> para, string controller, List<string> @params)
         {
 
+            #region SASAML
+            if (nameof(AlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAlertDetailView, AlertDetailsController, long?>(_dbAml, Context.User.Identity.Name, para, nameof(ArtAmlAlertDetailView.AlertId));
+            if (nameof(TriageController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlTriageView, TriageController, string>(_dbAml, Context.User.Identity.Name, para, nameof(ArtAmlTriageView.AlertedEntityNumber));
+            if (nameof(CasesDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlCaseDetailsView, CasesDetailsController>(_dbAml, Context.User.Identity.Name, para);
+            if (nameof(CustomersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlCustomersDetailsView, CustomersController>(_dbAml, Context.User.Identity.Name, para);
+            if (nameof(RiskAssessmentController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtRiskAssessmentView, RiskAssessmentController>(_dbAml, Context.User.Identity.Name, para);
+            if (nameof(HighRiskController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlHighRiskCustView, HighRiskController>(_dbAml, Context.User.Identity.Name, para);
+
+            #endregion
+
+            #region ECM
+            if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformance, SystemPerformanceController>(_ecm, Context.User.Identity.Name, para);
+            if (nameof(UserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUserPerformance, UserPerformanceController>(_ecm, Context.User.Identity.Name, para);
+            #endregion
+
+            #region DGAML
+            if (nameof(DGAMLAlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlCaseDetailView, DGAMLAlertDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLArtExternalCustomerDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLArtScenarioAdminController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioAdminView, DGAMLArtScenarioAdminController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLArtScenarioHistoryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioHistoryView, DGAMLArtScenarioHistoryController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLArtSuspectDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSuspectDetailView, DGAMLArtSuspectDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLCasesDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlCaseDetailView, DGAMLCasesDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLCustomersDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlCustomerDetailView, DGAMLCustomersDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLTriageController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlTriageView, DGAMLTriageController>(_dgaml, Context.User.Identity.Name, para);
+            #endregion
+
+            #region Audit
+            if (nameof(ListOfUserController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfUser, ListOfUserController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfGroupsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfGroup, ListOfGroupsController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfRoleController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfRole, ListOfRoleController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfUsersAndGroupsRoleController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfUsersAndGroupsRole, ListOfUsersAndGroupsRoleController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfUsersGroupController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfUsersGroup, ListOfUsersGroupController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfUsersRolesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfUsersRole, ListOfUsersRolesController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListGroupsRolesSummaryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListGroupsRolesSummary, ListGroupsRolesSummaryController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListGroupsSubGroupsSummaryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListGroupsSubGroupsSummary, ListGroupsSubGroupsSummaryController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(ListOfDeletedUsersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListOfDeletedUser, ListOfDeletedUsersController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(LastLoginPerDayController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<LastLoginPerDayView, LastLoginPerDayController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(AuditUsersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUsersAuditView, AuditUsersController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(AuditGroupsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtGroupsAuditView, AuditGroupsController>(_dbAd, Context.User.Identity.Name, para);
+            if (nameof(AuditRolesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtRolesAuditView, AuditRolesController>(_dbAd, Context.User.Identity.Name, para);
+
+            #endregion
 
             #region FTI
             if (nameof(EcmAuditTrialController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportForAuditTrial(para);
@@ -114,9 +188,27 @@ namespace ART_PACKAGE.Hubs
             if (nameof(SystemTailoringController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtTiSystemTailoringReport, SystemTailoringController>(_fti, Context.User.Identity.Name, para);
             #endregion
 
+            #region GOAML
+            if (nameof(GOAMLReportIndicatorDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtGoamlReportsIndicator, GOAMLReportIndicatorDetailsController>(_dbGoAml, Context.User.Identity.Name, para);
+            if (nameof(GOAMLReportsDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtGoamlReportsDetail, GOAMLReportsDetailsController>(_dbGoAml, Context.User.Identity.Name, para);
+            if (nameof(GOAMLReportsSuspectController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtGoamlReportsSusbectParty, GOAMLReportsSuspectController>(_dbGoAml, Context.User.Identity.Name, para);
+
+            #endregion
+
+            #region SEG
+            if (nameof(AllSegmentsOutliersNewController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportSegOutliers(para, @params);
+            #endregion
+
         }
 
-
+        private async Task ExportSegOutliers(ExportDto<object> para, List<string> @params)
+        {
+            int monthKey = Convert.ToInt32(@params.First());
+            string desc = @params[1];
+            string seg = @params[2];
+            IQueryable<ArtAllSegmentsOutliersTb> data = _seg.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == monthKey.ToString() && x.PartyTypeDesc == desc && x.SegmentSorted == seg);
+            await _csvSrv.ExportAllCsv<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController, object>(data, Context.User.Identity.Name, para);
+        }
         private async Task ExportForAuditTrial(ExportDto<object> para)
         {
             IQueryable<ArtTiEcmAuditReport> data = _fti.ArtTiEcmAuditReports.AsQueryable().CallData(para.Req).Data;

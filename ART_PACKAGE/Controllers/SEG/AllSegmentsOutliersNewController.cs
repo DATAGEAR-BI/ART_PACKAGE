@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.Segmentation;
 using Microsoft.AspNetCore.Mvc;
@@ -171,29 +170,7 @@ namespace ART_PACKAGE.Controllers.SEG
 
 
 
-        public async Task<IActionResult> Export([FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment, [FromBody] ExportDto<string> exportDto)
-        {
-            bool returnData = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
-            if (!returnData)
-            {
-                return File(new byte[] { }, "text/csv");
-            }
 
-            IQueryable<ArtAllSegmentsOutliersTb> data = _context.ArtAllSegmentsOutliersTbs.Where(x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString()); ;
-            if (exportDto.All)
-            {
-
-                byte[] bytes = await data.ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(exportDto.Req);
-                return File(bytes, "text/csv");
-
-            }
-            else
-            {
-                byte[] bytes = await data.Where(x => exportDto.SelectedIdz.Contains(x.PartyNumber)).ExportToCSV<ArtAllSegmentsOutliersTb, GenericCsvClassMapper<ArtAllSegmentsOutliersTb, AllSegmentsOutliersNewController>>(all: false);
-                return File(bytes, "text/csv");
-            }
-
-        }
         public async Task<IActionResult> ExportPdf([FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment, [FromBody] KendoRequest req)
         {
             //var DisplayNames = ReportsConfig.CONFIG[nameof(AllSegmentsOutliersNewController).ToLower()].DisplayNames;

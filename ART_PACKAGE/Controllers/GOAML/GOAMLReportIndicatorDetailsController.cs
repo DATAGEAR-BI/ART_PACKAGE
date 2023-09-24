@@ -58,12 +58,6 @@ namespace ART_PACKAGE.Controllers.GOAML
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtGoamlReportsIndicator> data = _context.ArtGoamlReportsIndicators.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtGoamlReportsIndicator, GenericCsvClassMapper<ArtGoamlReportsIndicator, GOAMLReportIndicatorDetailsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

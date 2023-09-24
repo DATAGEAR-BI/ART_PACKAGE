@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.ARTGOAML;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.Pdf;
-using ART_PACKAGE.Helpers.DropDown;
-using Data.Data.ARTGOAML;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
@@ -58,12 +58,6 @@ namespace ART_PACKAGE.Controllers.GOAML
             };
         }
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtGoamlReportsDetail> data = _context.ArtGoamlReportsDetails.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtGoamlReportsDetail, GenericCsvClassMapper<ArtGoamlReportsDetail, GOAMLReportsDetailsController>>(para.Req);
-            return File(bytes, "text/csv");
-        }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {

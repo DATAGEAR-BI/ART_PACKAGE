@@ -29,10 +29,10 @@ namespace ART_PACKAGE.Helpers.Csv
         {
             Microsoft.EntityFrameworkCore.Metadata.IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
             string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
-            string columnName = tableData.GetProperty(idColumn).GetColumnName();
             IQueryable<TModel> data = null;
             if (idColumn is not null && obj.SelectedIdz is not null && obj.SelectedIdz.Count() > 0)
             {
+                string columnName = tableData.GetProperty(idColumn).GetColumnName();
                 IEnumerable<TColumn> idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
                 string idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
                 data = _db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchema()}.{tbName}
