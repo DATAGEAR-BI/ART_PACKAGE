@@ -9,6 +9,7 @@ using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
 {

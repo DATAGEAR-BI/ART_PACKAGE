@@ -16,19 +16,19 @@
             {
                 get
                 {
-                    List<string> numberTypes = new List<string>() { 
+                    List<string> numberTypes = new() { 
                     /*,acle Types*/    "int", "smallint", "bigint", "decimal", "float", "real" ,
                     /*SqlServer Types*/    "int" , "smallint" , "tinyint" , "bigint" , "numeric" , "decimal" , "float" , "real"
                     };
-                    List<string> stringTypes = new List<string>() { 
+                    List<string> stringTypes = new() { 
                     /*,acle Types*/   "char" , "varchar2" , "nchar" , "nvarchar2" , "clob" , "nclob",
                     /*SqlServer Types*/    "char" , "varchar" , "nchar" , "nvarchar" , "text" , "ntext" , "xml"
                     };
-                    List<string> dateTypes = new List<string>() { 
+                    List<string> dateTypes = new() { 
                     /*,acle Types*/  "date" , "timestamp" , "timestampltz" , "timestamptz",
                     /*SqlServer Types*/     "date" , "datetime" , "datetime2" , "datetimeoffset" , "smalldatetime" , "time"
                     };
-                    List<string> boolTypes = new List<string>() { 
+                    List<string> boolTypes = new() { 
                     /*,acle Types*/  "bit",
                     /*SqlServer Types*/    "boolean"
                     };
@@ -36,9 +36,9 @@
                         return "number";
                     if (stringTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
                         return "string";
-                    if (dateTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
-                        return "date";
-                    return boolTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())) ? "boolean" : "string";
+                    return dateTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower()))
+                        ? "date"
+                        : boolTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())) ? "boolean" : "string";
                 }
             }
         }
