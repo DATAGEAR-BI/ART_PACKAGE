@@ -53,7 +53,7 @@ namespace ART_PACKAGE.Helpers.LDap
                 {
                     conn.Bind(LogedInOn, LogedInPassword);
                     _logger.LogWarning("ldap bounded {con}", conn.Bound);
-                    _logger.LogWarning("search count", lsr.Count);
+                    _logger.LogWarning("search count {count}", lsr.Count);
 
                 }
                 catch (Exception ex)
