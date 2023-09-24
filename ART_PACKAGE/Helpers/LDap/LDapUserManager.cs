@@ -41,6 +41,7 @@ namespace ART_PACKAGE.Helpers.LDap
                 {
                     return null;
                 }
+                _logger.LogWarning("ldap connected {con}", conn.Connected);
 
                 LdapSearchResults lsr = conn.Search(SearchPase,
                                                     LdapConnection.SCOPE_SUB,
@@ -50,6 +51,8 @@ namespace ART_PACKAGE.Helpers.LDap
                 try
                 {
                     conn.Bind(LogedInOn, LogedInPassword);
+                    _logger.LogWarning("ldap bounded {con}", conn.Bound);
+
                 }
                 catch (Exception ex)
                 {
@@ -63,8 +66,9 @@ namespace ART_PACKAGE.Helpers.LDap
                     {
                         return null;
                     }
-
+                    _logger.LogWarning("before user DN");
                     string userToconnect = user.DN;
+                    _logger.LogWarning("user DN {user}", userToconnect);
                     try
                     {
                         conn.Bind(userToconnect, password);
