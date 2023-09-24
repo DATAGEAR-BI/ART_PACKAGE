@@ -18,7 +18,7 @@ using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "CutomReport")]
     public partial class ReportController : Controller
     {
         private readonly AuthContext db;
