@@ -13,7 +13,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "Home", Policy = "License")]
+    [Authorize(Roles = "Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
