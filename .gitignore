@@ -397,4 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-ART_PACKAGE/wwwroot/CSV
+/ART_PACKAGE/wwwroot/CSV
