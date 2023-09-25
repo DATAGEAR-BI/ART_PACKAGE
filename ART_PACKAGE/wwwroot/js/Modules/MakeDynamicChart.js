@@ -13,6 +13,24 @@ var types = {
     line: 10
 }
 
+const exportMenu = [{
+    "label": "...",
+    "menu": [{
+        "label": "Image",
+        "menu": [
+            { "type": "svg", "label": "Save" },
+        ]
+    }, {
+        "label": "Data",
+        "menu": [
+            
+            { "type": "csv", "label": "CSV" },
+            { "type": "xlsx", "label": "XLSX" }
+            
+        ]
+    }]
+}];
+
 export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
     /**
   * ---------------------------------------
@@ -43,12 +61,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     chart.height = am4core.percent(100);
     chart.layout = "horizontal";
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
 
     /**
@@ -176,12 +189,7 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 
@@ -224,12 +232,7 @@ function callClyChart(data, clytitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20;
@@ -278,12 +281,7 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = chartValue;
@@ -316,12 +314,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     // Add data
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20;
@@ -389,12 +382,7 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
     chart.data = data;
 
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -764,12 +752,7 @@ function callLineChart(data, lineTitle, divId, chartValue, chartCategory) {
     }
 
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     createSeries(chartValue, chartCategory);
     chart.legend = new am4charts.Legend();
@@ -813,12 +796,7 @@ function callDonutChart(data, donuttitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var pieSeries = chart.series.push(new am4charts.PieSeries3D());
     pieSeries.dataFields.value = chartValue;
@@ -872,12 +850,7 @@ function callClusterd(data, clusterdtitle, chartId,) {
     chart.legend.paddingBottom = 20
     chart.legend.labels.template.maxWidth = 95
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
 
     var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
     xAxis.renderer.labels.template.fontSize = 20;

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.ModelCreatingStrategies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.FCFKC.SASAML
 {
@@ -17,9 +18,10 @@ namespace Data.FCFKC.SASAML
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
 
+            var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
+            modelCreatingStrategy.OnFcfkcSASAMLModelCreating(modelBuilder);
         }
     }
 }

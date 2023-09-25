@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
@@ -10,7 +9,6 @@ using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
-using ART_PACKAGE.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -21,7 +19,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
-builder.Services.AddHostedService<LicenseWatcher>();
+//builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
@@ -43,7 +41,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddLicense(builder.Configuration);
+//builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -77,7 +75,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
-app.UseLicense();
+//app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");

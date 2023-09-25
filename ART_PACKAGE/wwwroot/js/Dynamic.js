@@ -24,8 +24,24 @@ var spinnerOpts = {
 };
 var spinnerStyle = document.createElement("link");
 spinnerStyle.rel = "stylesheet";
-spinnerStyle.href = "../lib/spin.js/spin.css";
-
+spinnerStyle.href = "/lib/spin.js/spin.css";
+const handleError = (error) => {
+    if (error instanceof Error) {
+        // This is a client-side error (e.g., network issues)
+        console.error('Client-side error:', error.message);
+    } else {
+        // This is a server error (e.g., 500 Internal Server Error)
+        console.error('Server error:', error);
+        if (error.response && error.response.status === 500) {
+            // Handle 500 Internal Server Error here
+            toastObj.hideAfter = false;
+            toastObj.icon = 'error';
+            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
+            toastObj.heading = "Report Status";
+            $.toast(toastObj);
+        }
+    }
+}
 var grid = document.getElementById("grid");
 localStorage.removeItem("selectedidz");
 localStorage.setItem("isAllSelected", false);
@@ -140,13 +156,7 @@ function intializeGrid() {
             $(".spinner").remove();
             generateGrid();
 
-        }).catch(err => {
-            toastObj.hideAfter = false;
-            toastObj.icon = 'error';
-            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
-            toastObj.heading = "Report Status";
-            $.toast(toastObj);
-        });
+        }).catch(handleError);
 }
 function genrateToolBar(data, doesnotcontainsll) {
     var toolbar = [];
@@ -356,8 +366,9 @@ function generateGrid() {
 
                                 //}
                                 if (chartsDiv) {
-                                    var chartdata = [...d.chartdata];
-                                    console.log(chartdata);
+                                    var chartdata = [];
+                                    if (d.chartdata)
+                                        chartdata = [...d.chartdata];
                                     chartdata.forEach((x) => {
                                         var div = document.getElementById(x.ChartId);
 
@@ -373,13 +384,7 @@ function generateGrid() {
                                         );
                                     });
                                 }
-                            }).catch(err => {
-                                toastObj.hideAfter = false;
-                                toastObj.icon = 'error';
-                                toastObj.text = "Some thing wrong hannped while retreving data for the report please reload page or call support";
-                                toastObj.heading = "Report Status";
-                                $.toast(toastObj);
-                            });;
+                            }).catch(handleError);;
                     }
                 },
             },
@@ -604,7 +609,7 @@ function generateGrid() {
                 csvhandler(e, controller, reportName);
             } else {
                 var csvhandler = Handlers["clientPdExport"];
-                csvhandler(e, controller, reportName);
+                csvhandler(e, controller, url);
             }
         }
 

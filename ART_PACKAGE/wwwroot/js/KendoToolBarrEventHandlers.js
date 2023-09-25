@@ -13,8 +13,15 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
 
 
 }
+
+function getQueryParameters(urlString) {
+    const searchParams = new URL("http://test.com" + urlString).searchParams;
+    return [...searchParams.values()];
+}
+
 export const Handlers = {
     csvExport: async (e, controller, url, prop) => {
+
 
 
         var id = document.getElementById("script").dataset.id;
@@ -46,31 +53,7 @@ export const Handlers = {
         if (exportConnection.state !== "Connected")
             await start();
 
-        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller);
-
-
-
-
-        //if (isMyreports) {
-        //    res = await fetch(`/${controller}/ExportMyReports`, {
-        //        method: "POST",
-        //        headers: {
-        //            "Content-Type": "application/json",
-        //            "Accept": "application/json"
-        //        },
-        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-        //    });
-        //} else {
-        //    res = await fetch(`/${controller}/Export`, {
-        //        method: "POST",
-        //        headers: {
-        //            "Content-Type": "application/json",
-        //            "Accept": "application/json"
-        //        },
-        //        body: JSON.stringify({ Req: para, All: all, SelectedIdz: selectedrecords })
-        //    });
-
-        //}
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, getQueryParameters(url));
         localStorage.removeItem("selectedidz");
 
     },
@@ -143,7 +126,8 @@ export const Handlers = {
     },
 
 
-    clientPdExport: async (e, controller) => {
+    clientPdExport: async (e, controller, url) => {
+        var params = url.split("?")[1];
         kendo.ui.progress($('#grid'), true);
         var ds = $("#grid").data("kendoGrid");
         var total = ds.dataSource.total();
@@ -175,7 +159,8 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 } else {
-                    res = await fetch(`/${controller}/ExportPdf`, {
+                    var exportUrl = params ? `/${controller}/ExportPdf?${params}` : `/${controller}/ExportPdf`;
+                    res = await fetch(exportUrl, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -184,11 +169,6 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 }
-
-                //const contentDispositionHeader = res.headers.get('Content-Disposition');
-
-                //const filename = contentDispositionHeader.split(";")[1].trim().split("=")[1].split(".")[0];
-
                 var r = await res.blob();
                 resolve({
                     blob: r

@@ -20,7 +20,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                         CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_DATE] (""YEAR"", ""MONTH"", ""DAY"", ""NUMBER_OF_CASES"") AS 
+                                         CREATE VIEW [ART_DB].[ART_HOME_CASES_DATE] (""YEAR"", ""MONTH"", ""DAY"", ""NUMBER_OF_CASES"") AS 
                                           select Year_ Year,Month__ Month,Day_ Day,NUMBER_OF_CASES from
                                         (
                                         select
@@ -55,7 +55,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                        CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_STATUS] (""Year"",""CASE_STATUS"", ""NUMBER_OF_CASES"") AS
+                                        CREATE VIEW [ART_DB].[ART_HOME_CASES_STATUS] (""Year"",""CASE_STATUS"", ""NUMBER_OF_CASES"") AS
                                     select Year_ Year,CASE_status,NUMBER_OF_CASES from
                                     (
                                     select
@@ -83,7 +83,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                           CREATE OR ALTER VIEW [ART_DB].[ART_HOME_CASES_TYPES] (""Year"",""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
+                                           CREATE VIEW [ART_DB].[ART_HOME_CASES_TYPES] (""Year"",""CASE_TYPE"", ""NUMBER_OF_CASES"") AS 
                                          select Year_ Year,CASE_TYPE,NUMBER_OF_CASES from
                                         (
                                         select
@@ -106,7 +106,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                        CREATE OR ALTER VIEW [ART_DB].[ART_SYSTEM_PERFORMANCE] (""CASE_ID"", ""CASE_RK"", ""VALID_FROM_DATE"", ""CASE_TYPE"", ""CASE_STATUS"", ""CASE_DESC"", ""PRIORITY"", ""CREATE_USER_ID"", ""INVESTR_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""TRANSACTION_TYPE"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_DIRECTION"", ""TRANSACTION_CURRENCY"", ""SWIFT_REFERENCE"", ""CLIENT_NAME"", ""IDENTITY_NUM"", ""LOCKED_BY"", ""ECM_LAST_STATUS_DATE"", ""HITS_COUNT"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
+                                        CREATE VIEW [ART_DB].[ART_SYSTEM_PERFORMANCE] (""CASE_ID"", ""CASE_RK"", ""VALID_FROM_DATE"", ""CASE_TYPE"", ""CASE_STATUS"", ""CASE_DESC"", ""PRIORITY"", ""CREATE_USER_ID"", ""INVESTR_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""TRANSACTION_TYPE"", ""TRANSACTION_AMOUNT"", ""TRANSACTION_DIRECTION"", ""TRANSACTION_CURRENCY"", ""SWIFT_REFERENCE"", ""CLIENT_NAME"", ""IDENTITY_NUM"", ""LOCKED_BY"", ""ECM_LAST_STATUS_DATE"", ""HITS_COUNT"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
                                         select 
                                         a.CASE_ID, 
                                         a.CASE_RK, 
@@ -169,7 +169,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                   SET QUOTED_IDENTIFIER ON
                                   GO
 
-                                  CREATE OR ALTER VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
+                                  CREATE VIEW [ART_DB].[ART_USER_PERFORMANCE] (""CASE_RK"", ""CASE_ID"", ""VALID_FROM_DATE"", ""CASE_TYPE_CD"", ""CASE_STATUS"", ""PRIORITY"", ""CASE_DESC"", ""LOCKED_BY"", ""CREATE_USER_ID"", ""CREATE_DATE"", ""UPDATE_USER_ID"", ""ASSSIGNED_TIME"", ""ACTION_USER"", ""ACTION"", ""RELEASED_DATE"", ""DURATIONS_IN_SECONDS"", ""DURATIONS_IN_MINUTES"", ""DURATIONS_IN_HOURS"", ""DURATIONS_IN_DAYS"") AS 
                                                 select 
                                                     a.CASE_RK,
                                                     a.CASE_ID,
@@ -259,7 +259,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         GO
                                         SET QUOTED_IDENTIFIER ON
                                         GO
-                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_DIRECTION] 
+                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_DIRECTION] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -299,7 +299,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_STATUS] 
+                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_STATUS] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -328,7 +328,7 @@ namespace SqlServerMigrations.Migrations.Ecm
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_TYPE] 
+                                          CREATE PROCEDURE [ART_DB].[ART_ST_SYSTEM_PERF_PER_TYPE] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -357,7 +357,7 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
                                             SET QUOTED_IDENTIFIER ON
                                             GO
 
-                                              CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION] 
+                                              CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION] 
                                             (
                                             @V_START_DATE date , @V_END_DATE date
                                             ) AS 
@@ -394,7 +394,7 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
                                         SET QUOTED_IDENTIFIER ON
                                         GO
 
-                                          CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER] 
+                                          CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER] 
                                         (
                                         @V_START_DATE date , @V_END_DATE date
                                         ) AS 
@@ -428,7 +428,7 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
                                             GO
                                             SET QUOTED_IDENTIFIER ON
                                             GO
-                                            CREATE OR ALTER PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION] 
+                                            CREATE PROCEDURE [ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION] 
                                             (
                                             @V_START_DATE date , @V_END_DATE date
                                             ) AS 

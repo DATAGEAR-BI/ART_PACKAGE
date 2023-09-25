@@ -33,7 +33,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                                    DATA_TYPE [SqlDataType], 
                                    IS_NULLABLE [IsNullable]
                             FROM INFORMATION_SCHEMA.COLUMNS c
-                            INNER JOIN sys.objects o
+                            INNER JOIN (Select distinct type ,  name  from  sys.objects) o
                                 ON c.TABLE_NAME = o.name
                             WHERE c.TABLE_SCHEMA = N'{0}'
                                 AND c.TABLE_NAME = N'{1}'
@@ -129,22 +129,23 @@ namespace ART_PACKAGE.Helpers.CustomReport
             bool isOracle = db.Database.IsOracle();
             string sql = "";
             string sqlCount = "";
-            string oracleNormalizedName = "";
+            string NormalizedName = "";
             string progection = string.Join(", ", isOracle ? columns.Select(x => @$"""{x}""") : columns);
             string? restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
 
             if (isOracle)
             {
-                oracleNormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
+
             }
             if (isSqlServer)
             {
-
-                sqlCount = string.Format(DataCountSql["sqlserver"], view, restriction);
+                NormalizedName = string.Join(".", view.Split(".").Select(x => @$"[{x}]"));
+                sqlCount = string.Format(DataCountSql["sqlserver"], NormalizedName, restriction);
             }
             else if (isOracle)
             {
-                sqlCount = string.Format(DataCountSql["oracle"], oracleNormalizedName, restriction);
+                NormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
+                sqlCount = string.Format(DataCountSql["oracle"], NormalizedName, restriction);
             };
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
@@ -169,11 +170,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             if (isSqlServer)
             {
-                sql = string.Format(DataSql["sqlserver"], progection, view, restriction, orderBy, skip, take);
+                sql = string.Format(DataSql["sqlserver"], progection, NormalizedName, restriction, orderBy, skip, take);
             }
             else if (isOracle)
             {
-                sql = string.Format(DataSql["oracle"], progection, oracleNormalizedName, restriction, orderBy, skip, take);
+                sql = string.Format(DataSql["oracle"], progection, NormalizedName, restriction, orderBy, skip, take);
             }
 
             List<dynamic> data = conn.Query(sql, commandTimeout: 120).ToList();

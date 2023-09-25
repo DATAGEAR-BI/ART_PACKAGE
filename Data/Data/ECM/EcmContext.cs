@@ -17,7 +17,10 @@ namespace Data.Data.ECM
         public virtual DbSet<ArtUserPerformPerUserAndAction> ArtUserPerformPerUserAndActions { get; set; } = null!;
         public virtual DbSet<ArtSystemPrefPerStatus> ArtSystemPrefPerStatuses { get; set; } = null!;
         public virtual DbSet<ArtAlertedEntity> ArtAlertedEntities { get; set; } = null!;
+        public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
+
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;
+
         public EcmContext(DbContextOptions<EcmContext> opt) : base(opt) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
