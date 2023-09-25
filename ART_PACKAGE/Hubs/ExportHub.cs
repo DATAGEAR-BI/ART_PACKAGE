@@ -59,7 +59,6 @@ namespace ART_PACKAGE.Hubs
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
-
                 _ecm = ecmService;
             }
             if (modules.Contains("DGAML"))

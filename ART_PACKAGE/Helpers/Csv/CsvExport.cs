@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 // Create a directory with the GUID as its name
                 string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
                 if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
+                    _ = Directory.CreateDirectory(folderPath);
 
                 // Create a file path within the directory using the provided file name
                 string filePath = Path.Combine(folderPath, fileName);

@@ -3,14 +3,13 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.Audit;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.Audit
 {
-    [Authorize(Roles = "ListOfDeletedUsers")]
+
     public class ListOfDeletedUsersController : Controller
     {
         private readonly ArtAuditContext context;

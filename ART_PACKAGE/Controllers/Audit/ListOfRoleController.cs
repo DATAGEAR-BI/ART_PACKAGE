@@ -3,27 +3,23 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.Audit;
-using Data.DGECM;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.Audit
 {
-    [Authorize(Roles = "ListOfRole")]
+
     public class ListOfRoleController : Controller
     {
 
         private readonly ArtAuditContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
-        private readonly DGECMContext db;
         private readonly IDropDownService dropDownService;
-        public ListOfRoleController(ArtAuditContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, DGECMContext db, IDropDownService dropDownService)
+        public ListOfRoleController(ArtAuditContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IPdfService pdfSrv, IDropDownService dropDownService)
         {
             _env = env; _pdfSrv = pdfSrv; context = _context;
-            this.db = db;
             this.dropDownService = dropDownService;
         }
 

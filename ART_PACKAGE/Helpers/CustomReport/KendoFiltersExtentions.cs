@@ -609,6 +609,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 data = data.OrderBy(sortString).AsQueryable();
             }
+            else
+            {
+                string sort = typeof(T).GetProperties().First().Name;
+                data = data.OrderBy(sort).AsQueryable();
+            }
 
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
@@ -890,7 +895,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 IgnoreBlankLines = true,
                 AllowComments = true,
             };
-            int batch = 100;
+            int batch = 100000;
             int skip = 0;
             List<Task<byte[]>> tasks = new() { };
             while (total > 0)
