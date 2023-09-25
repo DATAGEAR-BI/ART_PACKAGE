@@ -18,7 +18,7 @@ namespace SqlServerMigrations.Migrations.Audit
                             GO
                             SET QUOTED_IDENTIFIER ON
                             GO
-                            CREATE OR ALTER view [ART_DB].[ART_GROUPS_AUDIT_VIEW] as 
+                            CREATE view [ART_DB].[ART_GROUPS_AUDIT_VIEW] as 
                             with ST1 AS
 (SELECT g.*,g2.name sub_group_name ,r.name role_name ,u.name member_user
   FROM [DGUSERMANAGMENT].[DGMGMT_AUDIT].[group_dg_aud] g
@@ -92,7 +92,7 @@ GO
 
 
 /****** Script for SelectTopNRows command from SSMS  ******/
-CREATE OR ALTER view [ART_DB].[ART_ROLES_AUDIT_VIEW] as 
+CREATE view [ART_DB].[ART_ROLES_AUDIT_VIEW] as 
 with ST1 AS
 (SELECT r.*,g.name group_name,u.name member_user
   FROM [DGUSERMANAGMENT].[DGMGMT_AUDIT].[role_dg_aud] r
@@ -150,7 +150,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER view [ART_DB].[ART_USERS_AUDIT_VIEW] as 
+CREATE view [ART_DB].[ART_USERS_AUDIT_VIEW] as 
 WITH ST1 AS 
 (SELECT  u.id , u.rev, u.revtype, u.name , u.address, U.description, U.display_name, u.email, u.phone, u.status,
 U.created_by, u.created_date, U.last_updated_by,  u.last_updated_date, U.last_login_date, U.last_failed_login, u.enable,
@@ -252,7 +252,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
- CREATE OR ALTER view [ART_DB].[LIST_GROUPS_ROLES_SUMMARY] AS
+ CREATE view [ART_DB].[LIST_GROUPS_ROLES_SUMMARY] AS
 select distinct g.name GROUP_NAME , 
 (Case when r.name is null then 'No Role' else r.name end) AS  ROLE_NAME
 FROM [DGUSERMANAGMENT].[DGMGMT].[group_dg] g
@@ -270,7 +270,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER view [ART_DB].[LIST_GROUPS_SUB_GROUPS_SUMMARY] AS
+CREATE view [ART_DB].[LIST_GROUPS_SUB_GROUPS_SUMMARY] AS
 select  g.name GROUP_NAME , 
 g2.name SUB_GROUP_NAME
 FROM [DGUSERMANAGMENT].[DGMGMT].[group_dg] g
@@ -288,7 +288,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER view [ART_DB].[LIST_OF_DELTED_USERS] as
+CREATE view [ART_DB].[LIST_OF_DELTED_USERS] as
 select ua.name USER_NAME
       ,[address]
       ,[description]
@@ -314,7 +314,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE OR ALTER view [ART_DB].[LIST_OF_GROUPS] as
+CREATE view [ART_DB].[LIST_OF_GROUPS] as
 select g.name group_name, g.description, g.group_type, g.display_name, g.created_by, cast(g.created_date as datetime) created_date,
   g.last_updated_by, cast(g.last_updated_date as datetime) last_updated_date
   FROM [DGUSERMANAGMENT].[DGMGMT].[group_dg] g;
@@ -328,7 +328,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER view [ART_DB].[LIST_OF_ROLES] as
+CREATE view [ART_DB].[LIST_OF_ROLES] as
 select 
 name role_name, 
 description, display_name,
@@ -345,7 +345,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE OR ALTER view [ART_DB].[LIST_OF_USERS] as 
+CREATE view [ART_DB].[LIST_OF_USERS] as 
 select u.name user_name, u.address, u.description, u.display_name, u.email, u.phone, u.user_type,
    u.created_by, cast(u.created_date as datetime) created_date, u.last_updated_by, cast(u.last_updated_date as datetime) last_updated_date, 
    cast(u.last_login_date as datetime) last_login_date, cast(u.last_failed_login as datetime) last_failed_login,
@@ -362,7 +362,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE OR ALTER VIEW [ART_DB].[LIST_OF_USERS_AND_GROUPS_ROLES] as
+CREATE VIEW [ART_DB].[LIST_OF_USERS_AND_GROUPS_ROLES] as
 select distinct u.name USER_NAME, u.display_name DISPLAY_NAME, u.email EMAIL, g.name MEMBER_OF_GROUP , r.name ROLE_OF_GROUP
 FROM [DGUSERMANAGMENT].[DGMGMT].[user_dg] u
 left join [DGUSERMANAGMENT].[DGMGMT].[user_group_dg] ug
@@ -383,7 +383,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER VIEW [ART_DB].[LIST_OF_USERS_GROUPS] as
+CREATE VIEW [ART_DB].[LIST_OF_USERS_GROUPS] as
 select distinct u.name USER_NAME, u.display_name DISPLAY_NAME, u.email EMAIL, g.name MEMBER_OF_GROUP
 FROM [DGUSERMANAGMENT].[DGMGMT].[user_dg] u
 left join [DGUSERMANAGMENT].[DGMGMT].[user_group_dg] ug
@@ -401,7 +401,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE OR ALTER VIEW [ART_DB].[LIST_OF_USERS_ROLES] as
+CREATE VIEW [ART_DB].[LIST_OF_USERS_ROLES] as
 select distinct  u.name USER_NAME, u.display_name DISPLAY_NAME, u.email EMAIL, r.name USER_ROLE
 FROM [DGUSERMANAGMENT].[DGMGMT].[user_dg] u
 left join [DGUSERMANAGMENT].[DGMGMT].[user_role_dg] ur

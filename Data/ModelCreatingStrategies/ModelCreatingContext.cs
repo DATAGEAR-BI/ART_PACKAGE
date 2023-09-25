@@ -58,9 +58,9 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnFcfkcAmlAnalysisModelCreating(modelBuilder);
         }
 
-        public void OnFcfkcECMModelCreating(ModelBuilder modelBuilder)
+        public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
-            _strategy.OnFcfkcECMModelCreating(modelBuilder);
+            _strategy.OnFcfkcSASAMLModelCreating(modelBuilder);
         }
 
         public void OnFTIModelCreating(ModelBuilder modelBuilder)
@@ -76,6 +76,31 @@ namespace Data.ModelCreatingStrategies
         public void OnDGECMModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnDGECMModelCreating(modelBuilder);
+        }
+
+        public void OnDgAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDgAuditModelCreating(modelBuilder);
+        }
+
+        public void OnDgAMLModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDgAMLModelCreating(modelBuilder);
+        }
+
+        public void OnFCFCOREModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnFCFCOREModelCreating(modelBuilder);
+        }
+
+        public void OnGoAmlModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnGoAmlModelCreating(modelBuilder);
+        }
+
+        public void OnTiZoneModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnTiZoneModelCreating(modelBuilder);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -293,7 +289,7 @@ namespace SqlServerMigrations.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.Sql($"CREATE Schema [ART_DB]");
+
 
         }
 
