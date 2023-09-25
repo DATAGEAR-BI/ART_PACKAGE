@@ -461,8 +461,10 @@
 
                 }
             }
-            <li class="treeview ">
-                <a href="#">
+            @if (User.IsInRole("CustomReport"))
+            {
+                <li class="treeview ">
+                    <a href="#">
                     <i class="glyphicon glyphicon-book"></i> <span>Custom Report</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -477,6 +479,7 @@
                     </li>
                 </ul>
             </li>
+            }
             <li class="treeview ">
                 <a href="#">
                     <i class="glyphicon glyphicon-cog"></i> <span>Admin Panel</span>
