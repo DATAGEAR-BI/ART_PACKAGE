@@ -1,4 +1,5 @@
 
+using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.Audit;
 using ART_PACKAGE.Controllers.DGAML;
@@ -20,14 +21,17 @@ using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
 using System.Text;
+using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
 {
     public class ExportHub : Hub
     {
+        private readonly AuthContext db;
         private readonly UsersConnectionIds connections;
         private readonly ICsvExport _csvSrv;
         private readonly EcmContext _ecm;
@@ -41,8 +45,10 @@ namespace ART_PACKAGE.Hubs
         private readonly List<string>? modules;
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
+        private readonly DBFactory dBFactory;
+        private DbContext dbInstance;
 
-        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
+        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
         {
             this.connections = connections;
             _csvSrv = csvSrv;
@@ -97,6 +103,9 @@ namespace ART_PACKAGE.Hubs
                 SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
                 _seg = seg;
             }
+
+            this.db = db;
+            this.dBFactory = dBFactory;
         }
         public override Task OnConnectedAsync()
         {
@@ -112,8 +121,21 @@ namespace ART_PACKAGE.Hubs
         }
 
 
-        public async Task Export(ExportDto<object> para, string controller, List<string> @params)
+        public async Task Export(ExportDto<object> para, string controller, string method, List<string> @params)
         {
+
+            if (nameof(ReportController).ToLower().Replace("controller", "") == controller.ToLower())
+            {
+                if (method == "MyReports")
+                {
+                    await _csvSrv.Export<ArtSavedCustomReport, ReportController>(db, Context.User.Identity.Name, para);
+                }
+                else
+                {
+                    await ExportCustomReport(para);
+                }
+
+            }
 
             #region SASAML
             if (nameof(AlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAlertDetailView, AlertDetailsController, long?>(_dbAml, Context.User.Identity.Name, para, nameof(ArtAmlAlertDetailView.AlertId));
@@ -266,6 +288,30 @@ namespace ART_PACKAGE.Hubs
             string FileName = nameof(EcmAuditTrialController).Replace("Controller", "") + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
             await Clients.Caller
                               .SendAsync("csvRecevied", stream.ToArray(), FileName);
+        }
+
+
+        private async Task ExportCustomReport(ExportDto<object> exportDto)
+        {
+            string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
+            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
+            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+            dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
+            string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+            string filter = exportDto.Req.Filter.GetFiltersString(dbtype);
+            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
+            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+            {
+                name = x.Column
+            }).ToArray();
+
+            List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
+
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
+            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
+            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+            await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
+                                .SendAsync("csvRecevied", bytes, FileName);
         }
 
         private async Task ExportForWorkflowProg(ExportDto<object> para)

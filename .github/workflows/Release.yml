@@ -61,6 +61,11 @@ jobs:
           draft: false
           prerelease: false
           
+
+
+      - name: Copy ReleaseNote To Release Folder
+        run: cp Release_Note.md ./Release
+
       - name: Zip folder
         run: |
           zip -r Release.zip ./Release
