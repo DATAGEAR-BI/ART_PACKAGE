@@ -100,7 +100,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "DGECM-Activities";
             ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()

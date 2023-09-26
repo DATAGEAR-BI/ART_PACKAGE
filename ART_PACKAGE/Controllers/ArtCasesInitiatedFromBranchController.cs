@@ -97,7 +97,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "Cases Initiated from Branch";
             ViewData["desc"] = "Transaction initiated from branch, Include DGECM cases main details, created and processed to FTI";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()

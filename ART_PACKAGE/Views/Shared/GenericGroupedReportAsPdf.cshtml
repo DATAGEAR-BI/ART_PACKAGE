@@ -1,0 +1,196 @@
+﻿@using ART_PACKAGE.Helpers.CustomReport;
+@model IEnumerable<GroupedData>
+@{
+    Layout = null;
+    var columns = Model.First().Columns;
+    var groupColumns = Model.First().Key.Select(x=>x.Key);
+    var groupColSpan = columns.Where(x => !groupColumns.Contains(x.Column)).Count() + 1;
+    int recordsCounter = 0;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        .table-container {
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .group-header {
+            font-weight: bold;
+            background-color: #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr {
+            page-break-inside: avoid;
+        }
+        .brk {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron" style="height: 100%">
+            <h1 class="display-4">@ViewData["title"]</h1>
+            <p class="lead">@ViewData["desc"]</p>
+            <hr class="my-4">
+            <div class="d-flex justify-content-between">
+                <img src="~/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
+            </div>
+        </div>
+
+        @if (!Model.Any())
+        {
+
+        }
+        else
+        {
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        @foreach (var column in columns)
+                        {
+                            if (!groupColumns.Contains(column.Column))
+                            {
+                                <th>@column.Column</th>
+                            }
+                            
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model)
+                    {
+                        <tr>
+                            @{
+                                List<string> GroupText = new List<string>();
+                                foreach (var key in group.Key)
+                                {
+                                    var aggcolumn = columns.FirstOrDefault(x => x.Column.ToLower() == key.Key.ToLower());
+                                    if ( aggcolumn.HasAggreGate)
+                                    {
+                                        if (aggcolumn.AggregateType == "sum")
+                                        {
+                                            GroupText .Add( $"{key.Key} : {key.Value} (Sum : {@group.Items.Sum(x => (decimal)x[aggcolumn.Column])})");
+
+                                        }
+                                        else if (aggcolumn.AggregateType == "count")
+                                        {
+                                            GroupText.Add($"{key.Key} : {key.Value} (Count : {@group.Items.Select(x => x[aggcolumn.Column]).Count()})");
+                                        }
+
+                                        else if (aggcolumn.AggregateType == "average")
+                                        {
+                                            GroupText.Add($"{key.Key} : {key.Value} (Average : {@group.Items.Select(x => (decimal)x[aggcolumn.Column]).Average()})");
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        GroupText.Add($"{key.Key} : {key.Value}");
+                                    }
+                                }
+
+                               
+                            }
+                            <td colspan="@groupColSpan" class="group-header">@string.Join(" - ", GroupText)</td>
+                        </tr>
+                        
+                        @foreach (var item in group.Items)
+                        {
+                        <tr>
+                            <td></td>
+                            
+                            @foreach (var column in columns)
+                            {
+                                    if (!group.Key.ContainsKey(column.Column))
+                                    {
+                                        <td>@item[column.Column]</td>
+                                    }
+                            }
+                                
+                                @{
+                                    recordsCounter++;
+                                } 
+                            </tr>
+                            
+                            @if (recordsCounter == 17)
+                            {
+                                <div class="brk"></div>
+                            }
+                        }
+                        @if (columns.Any(x => !group.Key.ContainsKey(x.Column) && x.HasAggreGate))
+                        {
+                            <tr>
+                                <td colspan="1"></td>
+                                @foreach (var column in columns)
+                                {
+                                    if (!group.Key.ContainsKey(column.Column))
+                                    {
+                                        if (!column.HasAggreGate)
+                                        {
+                                            <td colspan="1"></td>
+                                        }
+                                        else
+                                        {
+
+                                            if (column.AggregateType == "sum")
+                                            {
+                                                <td>Sum : @group.Items.Sum(x=> (decimal)x[column.Column])</td>
+                                            }
+                                            if (column.AggregateType == "count")
+                                            {
+                                                <td>Count : @group.Items.Select(x=> x[column.Column]).Count()</td>
+                                            }
+
+                                            if (column.AggregateType == "average")
+                                            {
+                                                <td>Average : @group.Items.Select(x=> (decimal)x[column.Column]).Average()</td>
+                                            }
+
+                                        }
+                                    }
+
+
+                                }
+                            </tr>
+                        }
+                        
+                    }
+                    
+                    
+                </tbody>
+            </table>
+        }
+    
+        </div>
+</body>
+</html>

@@ -99,7 +99,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "ECM-FTI Full cycle";
             ViewData["desc"] = "The full cycle between DGECM and FTI, DGECM case main details, Request and response on comment section, FTI main details, Action/ Feedback requested from FTI to DGECM first line, FTI Notes";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()

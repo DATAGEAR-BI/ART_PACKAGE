@@ -99,7 +99,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "FTI-ECM Transaction";
             ViewData["desc"] = "FTI Activity report showing what transaction have been created from DGECM or from FTI and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()

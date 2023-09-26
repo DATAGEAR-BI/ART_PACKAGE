@@ -270,7 +270,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["desc"] = $"Reports That Are Made Using Custom Report Module By ({User.Identity.Name})";
             ViewData["filters"] = req.Filter.GetFilterTextForCsv();
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames);
+                                                    , User.Identity.Name, null, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
 

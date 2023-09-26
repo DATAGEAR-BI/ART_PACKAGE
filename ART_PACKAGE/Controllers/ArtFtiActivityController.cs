@@ -131,7 +131,7 @@ namespace ART_PACKAGE.Controllers
             ViewData["title"] = "FTI-Activities";
             ViewData["desc"] = "DGECM Activity Report showing what cases have been created and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
+                                                    , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
         public IActionResult Index()

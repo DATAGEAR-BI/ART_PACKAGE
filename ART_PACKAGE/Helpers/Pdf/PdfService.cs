@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             //return outputStream.ToArray();
         }
 
-        public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data
+        public async Task<byte[]> ExportNotGroupedToPdf<T>(IEnumerable<T> data
             , ViewDataDictionary ViewData
             , ActionContext ControllerContext
             , int ColumnsPerPage
@@ -301,6 +301,15 @@ namespace ART_PACKAGE.Helpers.Pdf
                                                        .Select(group => group.Select(x => x.Value).ToList())
                                                        .ToList();
             return props;
+        }
+
+        public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData, ActionContext ControllerContext, int ColumnsPerPage, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+        {
+            return GroupColumns is not null && GroupColumns.Count != 0
+                ? await ExportGroupedToPdf(data, ViewData, ControllerContext
+                                                   , UserName, GroupColumns, ColumnsToSkip, DisplayNamesAndFormat)
+                : await ExportNotGroupedToPdf(data, ViewData, ControllerContext, ColumnsPerPage
+                                                   , UserName, ColumnsToSkip, DisplayNamesAndFormat);
         }
     }
 }
