@@ -604,7 +604,7 @@ function generateGrid() {
                 csvhandler(e, controller, reportName);
             } else {
                 var csvhandler = Handlers["clientPdExport"];
-                csvhandler(e, controller, reportName,url);
+                csvhandler(e, controller,url);
             }
         }
 
