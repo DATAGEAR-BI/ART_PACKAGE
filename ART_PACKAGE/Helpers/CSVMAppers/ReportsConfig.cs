@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Controllers;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
@@ -40,20 +41,20 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             //        }
             //           }
             //        },
-            //        {
-            //            nameof(ReportController).ToLower(),new ReportConfig
-            //            {
-            //               SkipList =  new List<string>()
-            //        {
-            //              nameof(ArtSavedCustomReport.User),
-            //              nameof(ArtSavedCustomReport.UserId),
-            //            nameof(ArtSavedCustomReport.Schema),
-            //            nameof(ArtSavedCustomReport.Columns),
-            //            nameof(ArtSavedCustomReport.Charts),
+                    {
+                        nameof(ReportController).ToLower(),new ReportConfig
+                        {
+                           SkipList =  new List<string>()
+                    {
+                          nameof(ArtSavedCustomReport.User),
+                          nameof(ArtSavedCustomReport.UserId),
+                        nameof(ArtSavedCustomReport.Schema),
+                        nameof(ArtSavedCustomReport.Columns),
+                        nameof(ArtSavedCustomReport.Charts),
 
-            //        }
-            //}
-        //},
+                    }
+            }
+        },
         {
                         nameof(ArtCasesInitiatedFromBranchController).ToLower(),new ReportConfig
                         {
