@@ -23,7 +23,7 @@ namespace OracleMigrations.Migrations.Ecm
                     EXTRACT(Day FROM a.create_date) Day_,
                     count(a.case_rk) Number_Of_Cases
                     from
-                    dgcmgmt.case_live@DGCMGMTLINK A 
+                    dgcmgmt.case_live A 
 
                     --where
                     --A.CASE_STAT_CD IN ('MSC','SMT','ST','HIT','SC','NOHIT','SP','POSTPOND','SO','SN')
@@ -44,9 +44,9 @@ namespace OracleMigrations.Migrations.Ecm
                     select 
                         EXTRACT(YEAR FROM a.create_date) Year,
                         (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) case_status,count(a.case_rk)Total_Number_of_Cases
-                        from dgcmgmt.case_live@DGCMGMTLINK a 
+                        from dgcmgmt.case_live a 
                         LEFT JOIN
-                        dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                        dgcmgmt.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                         --where a.Case_Type_Cd in ('WEB','BULK','DELTA','WHITELIST','ACH','SWIFT')
                         GROUP BY
                         EXTRACT(YEAR FROM a.create_date),
@@ -61,9 +61,9 @@ namespace OracleMigrations.Migrations.Ecm
                     select 
                         EXTRACT(YEAR FROM a.create_date) Year,
                         (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end) CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
-                        from dgcmgmt.case_live@DGCMGMTLINK a 
+                        from dgcmgmt.case_live a 
                         LEFT JOIN
-                        dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                        dgcmgmt.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
                         GROUP BY
                         EXTRACT(YEAR FROM a.create_date),
                         (case when b.VAL_DESC is null then 'Unknown' else b.VAL_DESC end)
@@ -106,18 +106,18 @@ namespace OracleMigrations.Migrations.Ecm
                                             trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date)),1) AS DURATIONS_In_days
 
                                             from
-                                            dgcmgmt.CASE_LIVE@DGCMGMTLINK a  LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
-                                            dgcmgmt.ECM_ENTITY_LOCK@DGCMGMTLINK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
+                                            dgcmgmt.CASE_LIVE a  LEFT JOIN
+                                            dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
+                                            dgcmgmt.ECM_ENTITY_LOCK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
+                                            dgcmgmt.REF_TABLE_VAL H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
                                             LEFT JOIN
-                                            dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK T ON lower(T.VAL_CD) = lower(a.Case_Type_Cd) AND T.REF_TABLE_NAME = 'RT_CASE_TYPE' 
+                                            dgcmgmt.REF_TABLE_VAL T ON lower(T.VAL_CD) = lower(a.Case_Type_Cd) AND T.REF_TABLE_NAME = 'RT_CASE_TYPE' 
                                             LEFT JOIN
                                             (
                                             SELECT        
                                             m.BUSINESS_OBJECT_RK,max(m.create_date)CREATE_DTTM
                                             FROM
-                                            dgcmgmt.ECM_EVENT@DGCMGMTLINK M
+                                            dgcmgmt.ECM_EVENT M
                                             WHERE       
                                             m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
                                             GROUP BY BUSINESS_OBJECT_RK) M 
@@ -157,19 +157,19 @@ trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24*60,1) AS DU
 trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date))*24 ,1) as DURATIONS_IN_HOURS,
 trunc((cast(M.CREATE_DTTM as date) - cast(a.create_date as date)),1) AS DURATIONS_IN_DAYS
 from
-dgcmgmt.CASE_LIVE@DGCMGMTLINK a  
+dgcmgmt.CASE_LIVE a  
 LEFT JOIN
-dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK t ON lower(t.VAL_CD) = lower(a.CASE_TYPE_CD) AND t.REF_TABLE_NAME = 'RT_CASE_TYPE'
+dgcmgmt.REF_TABLE_VAL t ON lower(t.VAL_CD) = lower(a.CASE_TYPE_CD) AND t.REF_TABLE_NAME = 'RT_CASE_TYPE'
 LEFT JOIN
-dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
-dgcmgmt.ECM_ENTITY_LOCK@DGCMGMTLINK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
-dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
+dgcmgmt.REF_TABLE_VAL c ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS' LEFT JOIN
+dgcmgmt.ECM_ENTITY_LOCK g ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME = 'CASE' LEFT JOIN
+dgcmgmt.REF_TABLE_VAL H ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY' 
 LEFT JOIN
 (
 SELECT        
 m.BUSINESS_OBJECT_RK,m.EVENT_DESC,max(m.create_date)CREATE_DTTM
 FROM
-dgcmgmt.ECM_EVENT@DGCMGMTLINK M
+dgcmgmt.ECM_EVENT M
 WHERE       
 m.BUSINESS_OBJECT_NAME = 'CASE' and m.event_desc not in ('Unlock Case','LOCK CASE')
 GROUP BY BUSINESS_OBJECT_RK,EVENT_DESC) M 
@@ -201,24 +201,24 @@ ON a.CASE_RK = M.BUSINESS_OBJECT_RK AND a.CASE_STAT_CD = M.EVENT_DESC");
                                                 trunc((cast(I.CREATE_DATE as date) - cast(bb.CREATE_DTTM as date)),1) AS DURATIONS_In_days
         
                                         from 
-                                        case_live@DGCMGMTLINK a 
-                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK c
+                                        dgcmgmt.case_live a 
+                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL c
                                         ON c.VAL_CD = a.CASE_STAT_CD AND c.REF_TABLE_NAME = 'RT_CASE_STATUS'
 
-                                        LEFT JOIN dgcmgmt.ECM_ENTITY_LOCK@DGCMGMTLINK g
+                                        LEFT JOIN dgcmgmt.ECM_ENTITY_LOCK g
                                         ON a.case_rk = g.ENTITY_RK AND g.ENTITY_NAME ='CASE'
 
-                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL@DGCMGMTLINK H
+                                        LEFT JOIN dgcmgmt.REF_TABLE_VAL H
                                         ON H.VAL_CD = a.PRIORITY_CD AND H.REF_TABLE_NAME = 'X_RT_PRIORITY'
 
-                                        left JOIN dgcmgmt.ECM_EVENT@DGCMGMTLINK I
+                                        left JOIN dgcmgmt.ECM_EVENT I
                                         on I.BUSINESS_OBJECT_RK=a.CASE_RK   AND I.EVENT_TYPE_CD in('ACTVCWF','UPDCWF')
 
                                         left join (
                                         SELECT CREATE_USER_ID, CREATE_DATE CREATE_DTTM, BUSINESS_OBJECT_RK
                                         from (
                                         select ECM_EVENT.*, rank() OVER (PARTITION BY CREATE_USER_ID,BUSINESS_OBJECT_RK ORDER BY CREATE_DATE ASC) As RK
-                                        from dgcmgmt.ECM_EVENT@DGCMGMTLINK
+                                        from dgcmgmt.ECM_EVENT
                                         where BUSINESS_OBJECT_NAME='CASE'
                                         )a
                                         where RK=1
@@ -238,7 +238,7 @@ ON a.CASE_RK = M.BUSINESS_OBJECT_RK AND a.CASE_STAT_CD = M.EVENT_DESC");
 
             //ِAlerted Entities
             migrationBuilder.Sql($@"CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_ALERTED_ENTITY"" 
-as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""@DGCMGMTLINK
+as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""
 ");
             #endregion
 
@@ -248,7 +248,7 @@ as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""@DGCMGMTLINK
             //ART_ST_SYSTEM_PERF_PER_DIRECTION
             migrationBuilder.Sql($@"
 
-                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_DIRECTION"" 
+                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_DIR"" 
                                     (
                                       DATA_CUR OUT SYS_REFCURSOR 
                                     , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
@@ -264,7 +264,7 @@ as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""@DGCMGMTLINK
                                     WHEN Null THEN 'Unknown' 
                                     ELSE A.TRANSACTION_DIRECTION END) AS TRANSACTION_DIRECTION
                                     ,count(a.case_rk)Total_Number_of_Cases 
-                                    from DGCMGMT.case_live@DGCMGMTLINK a 
+                                    from DGCMGMT.case_live a 
                                     --LEFT JOIN
                                     --DGCMGMT.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                     WHERE 
@@ -294,9 +294,9 @@ as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""@DGCMGMTLINK
 
                                     select 
                                     b.val_desc case_status,count(a.case_rk)Total_Number_of_Cases
-                                    from case_live@DGCMGMTLINK a 
+                                    from DGCMGMT.case_live a 
                                     LEFT JOIN
-                                    REF_TABLE_VAL@DGCMGMTLINK b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
+                                    DGCMGMT.REF_TABLE_VAL b ON b.val_cd = a.CASE_STAT_CD AND b.REF_TABLE_NAME = 'RT_CASE_STATUS'
                                     where 
                                     to_char(a.create_date,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
                                     AND to_char(a.create_date,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -318,9 +318,9 @@ as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""@DGCMGMTLINK
 
                                         select 
                                         b.VAL_DESC CASE_TYPE,count(a.case_rk)Total_Number_of_Cases
-                                        from case_live@DGCMGMTLINK a 
+                                        from DGCMGMT.case_live a 
                                         LEFT JOIN
-                                        REF_TABLE_VAL@DGCMGMTLINK b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
+                                        DGCMGMT.REF_TABLE_VAL b ON lower(b.VAL_CD) = lower(a.CASE_TYPE_CD) AND b.REF_TABLE_NAME = 'RT_CASE_TYPE'
                                         where
                                         --CASE_TYPE_CD not in ('FATCA_INDV','FATCA_ENTITY')
                                         --and
@@ -347,7 +347,7 @@ EXTRACT(YEAR FROM a.create_date) Year_,
 EXTRACT(Month FROM a.create_date) Month_,
 TO_CHAR(a.create_date, 'MON') Month__,
 count(a.case_id) Number_Of_Cases
-from  dgcmgmt.case_live@DGCMGMTLINK a
+from  dgcmgmt.case_live a
 where
 to_char(a.create_date,'dd-MON-yy') >=  to_date(V_START_DATE,'yyyy-MM-dd')
 AND to_char(a.create_date,'dd-MON-yy') <=   to_date(V_END_DATE,'yyyy-MM-dd')
@@ -363,7 +363,7 @@ END ART_ST_SYSTEM_PERF_PER_DATE;");
             //ART_ST_USER_PERFORMANCE_PER_ACTION
             migrationBuilder.Sql(@$"
 
-                                          CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_ACTION"" 
+                                          CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERF_PER_ACTION"" 
                                         (
                                           DATA_CUR OUT SYS_REFCURSOR 
                                         , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
@@ -412,11 +412,11 @@ END ART_ST_SYSTEM_PERF_PER_DATE;");
                                         --connect by trim(regexp_substr(V_PREV_STATUS, '[^,]+', 1, level)) is not null))
                                         group by  action
                                         ;
-                                        END ART_ST_USER_PERFORMANCE_PER_ACTION;");
+                                        END ART_ST_USER_PERF_PER_ACTION;");
             //ART_ST_USER_PERFORMANCE_PER_ACTION_USER
             migrationBuilder.Sql($@"
 
-                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_ACTION_USER"" 
+                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERF_PER_ACT_USER"" 
                                     (
                                       DATA_CUR OUT SYS_REFCURSOR 
                                     , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
@@ -465,11 +465,11 @@ END ART_ST_SYSTEM_PERF_PER_DATE;");
                                     --connect by trim(regexp_substr(V_PREV_STATUS, '[^,]+', 1, level)) is not null))
                                     group by  a.action_user
                                     ;
-                                    END ART_ST_USER_PERFORMANCE_PER_ACTION_USER;");
+                                    END ART_ST_USER_PERF_PER_ACT_USER;");
             //ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION
             migrationBuilder.Sql($@"
 
-                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION"" 
+                                      CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_USR_PRF_PER_USR_AND_ACT"" 
                                     (
                                       DATA_CUR OUT SYS_REFCURSOR 
                                     , V_START_DATE IN VARCHAR2 DEFAULT to_date(SYSDATE,'dd-MON-yy')
@@ -520,7 +520,7 @@ END ART_ST_SYSTEM_PERF_PER_DATE;");
                                     group by  a.action_user,
                                     (case when A.action is null then 'Manually Closed' else  A.action end)
                                     ;
-                                    END ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION;
+                                    END ART_ST_USR_PRF_PER_USR_AND_ACT;
                                     ");
             #endregion
 

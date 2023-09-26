@@ -2,16 +2,16 @@
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
+using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ECM;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    [Authorize(Roles = "UserPerformPerAction")]
+
     public class UserPerformPerActionController : Controller
     {
         private readonly IMemoryCache _cache;
@@ -35,10 +35,17 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
+            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            if (dbType == DbTypes.SqlServer)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
+            else if (dbType == DbTypes.Oracle)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
 
 
             KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
@@ -71,20 +78,34 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
-            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
 
+            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
+            if (dbType == DbTypes.SqlServer)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
+            else if (dbType == DbTypes.Oracle)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
-            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
 
+            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
+            if (dbType == DbTypes.SqlServer)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
+            else if (dbType == DbTypes.Oracle)
+            {
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+            }
             ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

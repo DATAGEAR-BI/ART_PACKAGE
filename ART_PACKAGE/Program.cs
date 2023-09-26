@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
@@ -58,7 +59,7 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
-//app.ApplyModulesMigrations();
+app.ApplyModulesMigrations();
 
 
 // Configure the HTTP request pipeline.

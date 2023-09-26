@@ -975,10 +975,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 return null;
             }
 
-            string sort = string.Join(",", opt.Select(x =>
+            string sort = string.Join(" , ", opt.Select(x =>
             {
-                string dir = x.dir == "desc" ? " " + x.dir : "";
-                return $"{x.field}{dir}";
+                //string dir = x.dir == "desc" ? " " + x.dir : "";
+                return $"{x.field} {x.dir}";
             }));
             return sort;
         }

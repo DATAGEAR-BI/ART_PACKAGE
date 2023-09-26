@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Constants.StoredProcs
+﻿namespace Data.Constants.StoredProcs
 {
     public static class ORACLESPName
     {
         //Sanction
-        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIRECTION";
+        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIR";
         public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART.ART_ST_SYSTEM_PERF_PER_DATE";
         public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART.ART_ST_SYSTEM_PERF_PER_STATUS";
         public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART.ART_ST_SYSTEM_PERF_PER_TYPE";
-        public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION_USER";
-        public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION";
-        public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION";
+        public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERF_PER_ACT_USER";
+        public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERF_PER_ACTION";
+        public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
         //AML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_AML_ALERTS_PER_STATUS";

@@ -366,15 +366,15 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
 
                                             select 
                                             (case when A.action is null then 'Manually Closed' else  A.action end) action,
-                                            count(distinct a.case_rk)Total_Number_Of_Cases,
-                                            sum(a.durations_in_seconds) durations_in_seconds,
-                                            floor(sum(a.durations_in_seconds)/count(a.case_rk)) AVG_durations_in_seconds,
-                                            sum(a.durations_in_minutes) durations_in_minutes,
-                                            floor(sum(a.durations_in_minutes)/count(a.case_rk)) AVG_durations_in_minutes,
-                                            sum(a.durations_in_hours) durations_in_hours,
-                                            floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
-                                            sum(a.durations_in_days) durations_in_days,
-                                            floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
+                                             CAST(count(distinct a.case_rk)                             as decimal)    Total_Number_Of_Cases,
+                                             CAST(sum(a.durations_in_seconds)     as decimal)   durations_in_seconds, 
+                                             CAST(floor(sum(a.durations_in_seconds)/count(a.case_rk))   as decimal)    AVG_durations_in_seconds,
+                                             CAST(sum(a.durations_in_minutes)      as decimal)              durations_in_minutes,
+                                             CAST(floor(sum(a.durations_in_minutes)/count(a.case_rk))   as decimal)    AVG_durations_in_minutes,
+                                             CAST(sum(a.durations_in_hours)        as decimal) durations_in_hours,  
+                                             CAST(floor(sum(a.durations_in_hours)/count(a.case_rk))     as decimal)    AVG_durations_in_hours,
+                                             CAST(sum(a.durations_in_days)           as decimal)    durations_in_days, 
+                                            CAST(floor(sum(a.durations_in_days)/count(a.case_rk)) as decimal) AVG_durations_in_days 
                                             from [ART_DB].art_user_performance a 
                                             WHERE
                                             
@@ -403,15 +403,15 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
 
                                         select 
                                         a.action_user,
-                                        count(distinct a.case_rk)Total_Number_Of_Cases,
-                                        sum(a.durations_in_seconds) durations_in_seconds,
-                                        floor(sum(a.durations_in_seconds)/count(a.case_rk)) AVG_durations_in_seconds,
-                                        sum(a.durations_in_minutes) durations_in_minutes,
-                                        floor(sum(a.durations_in_minutes)/count(a.case_rk)) AVG_durations_in_minutes,
-                                        sum(a.durations_in_hours) durations_in_hours,
-                                        floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
-                                        sum(a.durations_in_days) durations_in_days,
-                                        floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
+                                        CAST(count(distinct a.case_rk)                           as decimal)       Total_Number_Of_Cases,
+                                        CAST(sum(a.durations_in_seconds)                         as decimal)       durations_in_seconds,
+                                        CAST(floor(sum(a.durations_in_seconds)/count(a.case_rk)) as decimal)       AVG_durations_in_seconds,
+                                        CAST(sum(a.durations_in_minutes)                         as decimal)       durations_in_minutes,
+                                        CAST(floor(sum(a.durations_in_minutes)/count(a.case_rk)) as decimal)       AVG_durations_in_minutes,
+                                        CAST(sum(a.durations_in_hours)                           as decimal)       durations_in_hours,
+                                        CAST(floor(sum(a.durations_in_hours)/count(a.case_rk))   as decimal)       AVG_durations_in_hours,
+                                        CAST(sum(a.durations_in_days)                            as decimal)       durations_in_days,
+                                        CAST(floor(sum(a.durations_in_days)/count(a.case_rk))    as decimal)       AVG_durations_in_days 
                                         from [ART_DB].art_user_performance a 
                                         WHERE
                                         CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE
@@ -437,15 +437,15 @@ CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= 
                                             select 
                                             a.action_user,
                                             (case when A.action is null then 'Manually Closed' else  A.action end) action,
-                                            count(distinct a.case_rk)Total_Number_Of_Cases,
-                                            sum(a.durations_in_seconds) durations_in_seconds,
-                                            floor(sum(a.durations_in_seconds)/count(a.case_rk)) AVG_durations_in_seconds,
-                                            sum(a.durations_in_minutes) durations_in_minutes,
-                                            floor(sum(a.durations_in_minutes)/count(a.case_rk)) AVG_durations_in_minutes,
-                                            sum(a.durations_in_hours) durations_in_hours,
-                                            floor(sum(a.durations_in_hours)/count(a.case_rk)) AVG_durations_in_hours,
-                                            sum(a.durations_in_days) durations_in_days,
-                                            floor(sum(a.durations_in_days)/count(a.case_rk)) AVG_durations_in_days 
+                                            CAST(count(distinct a.case_rk)                             as decimal)     Total_Number_Of_Cases,
+                                            CAST(sum(a.durations_in_seconds)                           as decimal)     durations_in_seconds,
+                                            CAST(floor(sum(a.durations_in_seconds)/count(a.case_rk))   as decimal)     AVG_durations_in_seconds,
+                                            CAST(sum(a.durations_in_minutes)                           as decimal)     durations_in_minutes,
+                                            CAST(floor(sum(a.durations_in_minutes)/count(a.case_rk))   as decimal)     AVG_durations_in_minutes,
+                                            CAST(sum(a.durations_in_hours)                             as decimal)     durations_in_hours,
+                                            CAST(floor(sum(a.durations_in_hours)/count(a.case_rk))     as decimal)     AVG_durations_in_hours,
+                                            CAST(sum(a.durations_in_days)                              as decimal)     durations_in_days,
+                                            CAST(floor(sum(a.durations_in_days)/count(a.case_rk))      as decimal)     AVG_durations_in_days 
                                             from [ART_DB].art_user_performance a 
                                             WHERE
                                             CAST(A.CREATE_DATE AS date) >= @V_START_DATE AND CAST(A.CREATE_DATE AS date) <= @V_END_DATE

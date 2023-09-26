@@ -3,7 +3,6 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.SASAml;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -11,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    [Authorize(Roles = "Customers")]
+
     public class CustomersController : Controller
     {
         //dbfcfcore.ModelContext db = new dbfcfcore.ModelContext();
