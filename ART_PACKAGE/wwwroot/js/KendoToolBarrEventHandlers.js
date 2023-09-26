@@ -134,7 +134,8 @@ export const Handlers = {
     },
 
 
-    clientPdExport: async (e, controller) => {
+    clientPdExport: async (e, controller, url) => {
+        var params = url.split("?")[1];
         kendo.ui.progress($('#grid'), true);
         var ds = $("#grid").data("kendoGrid");
         var total = ds.dataSource.total();
@@ -143,6 +144,7 @@ export const Handlers = {
         var id = document.getElementById("script").dataset.id;
 
         var filters = ds.dataSource.filter();
+        var groups = ds.dataSource.group();
         var promses = [];
         while (total > 0) {
             var promise = new Promise(async (resolve, reject) => {
@@ -153,6 +155,7 @@ export const Handlers = {
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
+                para.Group = groups;
 
                 var isMyreports = window.location.href.toLowerCase().includes('myreports');
                 var res;
@@ -166,7 +169,8 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 } else {
-                    res = await fetch(`/${controller}/ExportPdf`, {
+                    var exportUrl = params ? `/${controller}/ExportPdf?${params}` : `/${controller}/ExportPdf`;
+                    res = await fetch(exportUrl, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -175,11 +179,6 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 }
-
-                //const contentDispositionHeader = res.headers.get('Content-Disposition');
-
-                //const filename = contentDispositionHeader.split(";")[1].trim().split("=")[1].split(".")[0];
-
                 var r = await res.blob();
                 resolve({
                     blob: r

@@ -83,9 +83,9 @@ namespace ART_PACKAGE.Helpers.LDap
                         return null;
                     }
                 }
-                catch (Exception ex)
+                catch (LdapException ex)
                 {
-                    _logger.LogError($"LDap Search Error --------- {ex.Message}");
+                    _logger.LogError($"LDap Search Error --------- {ex.LdapErrorMessage}");
                     return null;
                 }
             }
