@@ -6,7 +6,6 @@ export async function start() {
         await exportConnection.start();
         console.log("SignalR Connected.");
         keepAliveInterval = setInterval(() => keepAlive(exportConnection, "KeepAlive"), 60000);
-        console.log(exportConnection.state);
 
     } catch (err) {
         console.log(err);
@@ -15,9 +14,8 @@ export async function start() {
     }
 };
 
-export const invokeExport = (para, controller, method) => {
-    exportConnection.invoke("Export", para, controller, method);
-}
+export const invokeExport = (para, controller, method, params) => exportConnection.invoke("Export", para, controller, method, params);
+;
 
 await start();
 
@@ -56,7 +54,9 @@ exportConnection.on("csvErrorRecevied", async (batch) => {
 });
 
 exportConnection.on("missedFilesRecived", async (files, reqId) => {
+    console.log("tttttttttt", reqId, files);
     files.forEach(f => {
+        console.log(f.fileName);
         downloadfile(f.file, f.fileName);
 
         toastObj.icon = 'success';
@@ -71,7 +71,9 @@ exportConnection.on("missedFilesRecived", async (files, reqId) => {
 
 exportConnection.on("FinishedExportFor", async (reqId, len) => {
     var recivedFiles = JSON.parse(localStorage.getItem(reqId));
+    console.log(reqId, len, recivedFiles.length);
     if (len === recivedFiles.length) {
+        console.log("clr");
         exportConnection.invoke("ClearExportFolder", reqId);
     }
 
@@ -80,7 +82,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
         for (var j = 0; j <= len; j++) {
 
             if (!recivedFiles.includes(j)) {
-
+                console.log(j + 1);
                 missedFiles.push(j + 1);
             }
 
@@ -115,23 +117,3 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
     toastObj.heading = "Export Status";
     $.toast(toastObj);
 })
-
-function downloadfile(file, fileName) {
-    const uint8Array = atob(file);
-
-    // Create a Blob from the Uint8Array data
-    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
-
-    // Create an object URL from the Blob
-    const objectURL = URL.createObjectURL(csvBlob);
-
-    // Now you can use the 'objectURL' to create a downloadable link or perform other operations
-    // For example, creating a download link:
-    const downloadLink = document.createElement('a');
-    downloadLink.href = objectURL;
-    downloadLink.download = fileName;
-    downloadLink.click(); // Simulate a click on the link to trigger the download
-
-    // Don't forget to revoke the object URL to free up memory after the download is initiated.
-    URL.revokeObjectURL(objectURL);
-}

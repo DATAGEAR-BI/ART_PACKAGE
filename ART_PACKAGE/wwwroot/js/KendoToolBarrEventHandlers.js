@@ -1,4 +1,5 @@
-﻿
+﻿import { invokeExport, start, exportConnection } from './ExportListener.js'
+
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {
@@ -29,12 +30,6 @@ export const Handlers = {
             toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
-        } else {
-            toastObj.hideAfter = false;
-            toastObj.icon = 'warning';
-            toastObj.text = "Export strated in backgroud you will get a notification when it finished";
-            toastObj.heading = "Export Status";
-            $.toast(toastObj);
         }
 
         var para = {}
@@ -48,8 +43,12 @@ export const Handlers = {
         var res;
         if (exportConnection.state !== "Connected")
             await start();
+
+        console.log(getQueryParameters(url));
         var Method = isMyreports ? "MyReports" : "";
-        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method);
+        console.log(Method);
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method, [...getQueryParameters(url)]);
+        localStorage.removeItem("selectedidz");
 
 
 
@@ -1272,5 +1271,8 @@ async function Select(idcolumn) {
 
 }
 
-
+function getQueryParameters(urlString) {
+    const searchParams = new URL("http://test.com" + urlString).searchParams;
+    return [...searchParams.values()];
+}
 
