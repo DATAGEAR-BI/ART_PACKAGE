@@ -15,8 +15,10 @@ using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
+
     EnvironmentName = "Development",
 });
+
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
