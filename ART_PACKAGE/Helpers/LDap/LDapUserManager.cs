@@ -42,7 +42,7 @@ namespace ART_PACKAGE.Helpers.LDap
                     return null;
                 }
                 _logger.LogWarning("ldap connected {con}", conn.Connected);
-
+                conn.Bind(LogedInOn, LogedInPassword);
                 LdapSearchResults lsr = conn.Search(SearchPase,
                                                     LdapConnection.SCOPE_SUB,
                                                     searchFilter,
@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Helpers.LDap
 
                 try
                 {
-                    conn.Bind(LogedInOn, LogedInPassword);
+                    _logger.LogWarning("Ldap search result {ldap}", lsr);
                     _logger.LogWarning("ldap bounded {con}", conn.Bound);
                     _logger.LogWarning("search count {count}", lsr.Count);
 
