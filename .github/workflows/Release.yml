@@ -6,6 +6,7 @@ on:
       - main
       - ABK
       - MAIN_TEST
+      - TUB_PROD
   pull_request:
     branches:
       - main
