@@ -1814,6 +1814,13 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CASE_STATUS");
 
+                entity.Property(e => e.CreateUserId)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+                entity.Property(e => e.CaseRk)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_RK");
+
                 entity.Property(e => e.CaseType)
                     .HasMaxLength(32)
                     .IsUnicode(false)
@@ -1826,6 +1833,10 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CreateDate)
                     .HasPrecision(6)
                     .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.ValidFromDate)
+                    .HasPrecision(6)
+                    .HasColumnName("VALID_FROM_DATE");
 
                 entity.Property(e => e.DurationsInDays)
                     .HasColumnType("NUMBER")
