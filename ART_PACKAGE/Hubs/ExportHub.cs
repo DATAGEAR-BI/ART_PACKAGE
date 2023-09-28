@@ -4,8 +4,10 @@ using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.FTI;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -89,8 +91,9 @@ namespace ART_PACKAGE.Hubs
 
         }
 
-        public async Task Export(ExportDto<object> para, string controller, string method)
+        public async Task Export(ExportDto<object> para, string controller, string method, List<string> @params)
         {
+
             if (nameof(ReportController).ToLower().Replace("controller", "") == controller.ToLower())
             {
                 if (method == "MyReports")
@@ -104,12 +107,11 @@ namespace ART_PACKAGE.Hubs
 
             }
 
+
             #region ECM
             if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformanceNcba, SystemPerformanceController>(_db, Context.User.Identity.Name, para);
             if (nameof(AlertedEntitiesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAlertedEntity, AlertedEntitiesController>(_db, Context.User.Identity.Name, para);
-            #endregion
-
-
+            #endregion            
 
         }
 
