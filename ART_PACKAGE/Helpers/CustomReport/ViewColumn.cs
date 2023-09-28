@@ -32,11 +32,11 @@
                     /*,acle Types*/  "bit",
                     /*SqlServer Types*/    "boolean"
                     };
-                    if (numberTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
-                        return "number";
-                    if (stringTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())))
-                        return "string";
-                    return dateTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower()))
+                    return numberTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower()))
+                        ? "number"
+                        : stringTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower()))
+                        ? "string"
+                        : dateTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower()))
                         ? "date"
                         : boolTypes.Any(x => SqlDataType.ToLower().Contains(x.ToLower())) ? "boolean" : "string";
                 }

@@ -117,3 +117,22 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
     toastObj.heading = "Export Status";
     $.toast(toastObj);
 })
+function downloadfile(file, fileName) {
+    const uint8Array = atob(file);
+
+    // Create a Blob from the Uint8Array data
+    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
+
+    // Create an object URL from the Blob
+    const objectURL = URL.createObjectURL(csvBlob);
+
+    // Now you can use the 'objectURL' to create a downloadable link or perform other operations
+    // For example, creating a download link:
+    const downloadLink = document.createElement('a');
+    downloadLink.href = objectURL;
+    downloadLink.download = fileName;
+    downloadLink.click(); // Simulate a click on the link to trigger the download
+
+    // Don't forget to revoke the object URL to free up memory after the download is initiated.
+    URL.revokeObjectURL(objectURL);
+}

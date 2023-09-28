@@ -40,8 +40,8 @@ namespace ART_PACKAGE.Helpers.LDap
                 if (!conn.Connected)
                 {
                     return null;
-                }      
-                
+                }
+
                 try
                 {
                     conn.Bind(LogedInOn, LogedInPassword);
