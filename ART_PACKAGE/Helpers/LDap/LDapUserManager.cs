@@ -40,13 +40,8 @@ namespace ART_PACKAGE.Helpers.LDap
                 if (!conn.Connected)
                 {
                     return null;
-                }
-
-                LdapSearchResults lsr = conn.Search(SearchPase,
-                                                    LdapConnection.SCOPE_BASE,
-                                                    searchFilter,
-                                                    requiredAttr,
-                                                    false);
+                }      
+                
                 try
                 {
                     conn.Bind(LogedInOn, LogedInPassword);
@@ -55,6 +50,11 @@ namespace ART_PACKAGE.Helpers.LDap
                 {
                     _logger.LogError($"Couldn't bind to the Admin user due to invalid creds --------- {ex.Message}");
                 }
+                LdapSearchResults lsr = conn.Search(SearchPase,
+                                                    LdapConnection.SCOPE_BASE,
+                                                    searchFilter,
+                                                    requiredAttr,
+                                                    false);
 
                 try
                 {
