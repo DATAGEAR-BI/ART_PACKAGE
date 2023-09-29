@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Helpers.LDap
                     _logger.LogError($"Couldn't bind to the Admin user due to invalid creds --------- {ex.Message}");
                 }
                 LdapSearchResults lsr = conn.Search(SearchPase,
-                                                    LdapConnection.SCOPE_BASE,
+                                                    LdapConnection.SCOPE_SUB,
                                                     searchFilter,
                                                     requiredAttr,
                                                     false);
