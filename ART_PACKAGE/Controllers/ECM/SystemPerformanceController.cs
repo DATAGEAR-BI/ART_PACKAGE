@@ -5,13 +5,14 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
 using Data.DGECM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-
+    [Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : Controller
     {
         private readonly EcmContext context;
@@ -30,6 +31,14 @@ namespace ART_PACKAGE.Controllers.ECM
             _dropSrv = dropSrv;
             _csvSrv = csvSrv;
         }
+
+        public IActionResult Test()
+        {
+            return Ok(context.ArtSystemPerformances.Select(x => x.DurationsInDays).Take(100));
+        }
+
+
+
 
 
         public IActionResult GetData([FromBody] KendoRequest request)

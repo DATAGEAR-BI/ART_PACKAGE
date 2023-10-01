@@ -1874,19 +1874,19 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.DurationsInDays)
-                    .HasColumnType("decimal(10, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("DURATIONS_IN_DAYS");
 
                 entity.Property(e => e.DurationsInHours)
-                    .HasColumnType("decimal(10, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("DURATIONS_IN_HOURS");
 
                 entity.Property(e => e.DurationsInMinutes)
-                    .HasColumnType("decimal(10, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("DURATIONS_IN_MINUTES");
 
                 entity.Property(e => e.DurationsInSeconds)
-                    .HasColumnType("decimal(10, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("DURATIONS_IN_SECONDS");
 
                 entity.Property(e => e.EcmLastStatusDate)

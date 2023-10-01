@@ -12,7 +12,7 @@
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
         //AML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
-        public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_AML_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART.ART_ST_CASES_PER_PRIORITY";
         public static readonly string ART_ST_CASES_PER_STATUS = "ART.ART_ST_CASES_PER_STATUS";
