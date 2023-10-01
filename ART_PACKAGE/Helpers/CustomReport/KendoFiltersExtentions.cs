@@ -889,11 +889,12 @@ namespace ART_PACKAGE.Helpers.CustomReport
             }
 
 
-            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
-                Encoding = new UTF8Encoding(false),
+                Encoding = Encoding.UTF8,
                 IgnoreBlankLines = true,
                 AllowComments = true,
+
             };
             int batch = 100000;
             int skip = 0;
@@ -909,6 +910,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
+
                         _ = cw.Context.RegisterClassMap<T1>();
                         foreach (List<object> item in filterCells)
                         {
