@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Data.FCFCORE
 {
@@ -23,8 +20,6 @@ namespace Data.FCFCORE
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("Arabic_CI_AI");
-
-
 
             modelBuilder.Entity<FscPartyDim>(entity =>
             {
