@@ -30,11 +30,17 @@ exportConnection.on("csvRecevied", async (file, fileName) => {
     // You can also get the 'byteArray' from a server response, FileReader, or other sources.
 
     // Convert bytes to a Uint8Array (assuming the byteArray is Uint8Array)
+    console.log(file);
     const uint8Array = atob(file);
+    console.log(uint8Array);
 
+    var bytes = new Uint8Array(uint8Array.length);
+    for (var i = 0; i < uint8Array.length; i++) {
+        bytes[i] = uint8Array.charCodeAt(i);
+    }
     // Create a Blob from the Uint8Array data
-    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
-
+    console.log(String.fromCharCode(...new Uint16Array(bytes.buffer)));
+    const csvBlob = new Blob([bytes], { type: 'text/csv; charset=utf-8' });
     // Create an object URL from the Blob
     const objectURL = URL.createObjectURL(csvBlob);
 
