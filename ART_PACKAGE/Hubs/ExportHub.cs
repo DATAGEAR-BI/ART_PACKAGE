@@ -1,15 +1,100 @@
-﻿using ART_PACKAGE.Helpers;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CustomReport;
+using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
+using Data.Data.Audit;
+using Data.Data.ECM;
+using Data.Data.FTI;
+using Data.Data.SASAml;
+using Data.Data.Segmentation;
+using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
 {
     public class ExportHub : Hub
     {
+        private readonly AuthContext db;
         private readonly UsersConnectionIds connections;
+        private readonly ICsvExport _csvSrv;
+        private readonly EcmContext _ecm;
+        private readonly SasAmlContext _dbAml;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ArtDgAmlContext _dgaml;
+        private readonly ArtAuditContext _dbAd;
+        private readonly ArtGoAmlContext _dbGoAml;
+        private readonly SegmentationContext _seg;
+        private readonly List<string>? modules;
+        private readonly FTIContext _fti;
+        private readonly TIZONE2Context ti;
+        private readonly DBFactory dBFactory;
+        private DbContext dbInstance;
 
-        public ExportHub(UsersConnectionIds connections)
+        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
         {
             this.connections = connections;
+            _csvSrv = csvSrv;
+            _configuration = configuration;
+            _serviceScopeFactory = serviceScopeFactory;
+            modules = _configuration.GetSection("Modules").Get<List<string>>();
+            if (modules.Contains("SASAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                _dbAml = amlService;
+            }
+            if (modules.Contains("ECM"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                _ecm = ecmService;
+            }
+            if (modules.Contains("DGAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                _dgaml = dgamlService;
+            }
+
+
+            if (modules.Contains("FTI"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                FTIContext fticontext = scope.ServiceProvider.GetRequiredService<FTIContext>();
+                TIZONE2Context _ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
+                _fti = fticontext;
+                ti = _ti;
+            }
+            if (modules.Contains("GOAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtGoAmlContext goamlcontext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+                _dbGoAml = goamlcontext;
+
+            }
+            if (modules.Contains("DGAUDIT"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
+                _dbAd = auditcontext;
+
+            }
+            if (modules.Contains("DGAUDIT"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
+                _seg = seg;
+            }
+
+            this.db = db;
+            this.dBFactory = dBFactory;
         }
         public override Task OnConnectedAsync()
         {
@@ -19,12 +104,84 @@ namespace ART_PACKAGE.Hubs
             return base.OnConnectedAsync();
         }
 
+        public async Task KeepAlive()
+        {
+            await Clients.Caller.SendAsync("iAmAlive");
+        }
+
+
+        public async Task Export(ExportDto<object> para, string controller, string method, List<string> @params)
+        {
+
+            if (nameof(ReportController).ToLower().Replace("controller", "") == controller.ToLower())
+            {
+                if (method == "MyReports")
+                {
+                    await _csvSrv.Export<ArtSavedCustomReport, ReportController>(db, Context.User.Identity.Name, para);
+                }
+                else
+                {
+                    await ExportCustomReport(para);
+                }
+
+            }
+
+            #region FTI
+            if (nameof(ArtCasesInitiatedFromBranchController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtDgecmActivityController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgecmActivity, ArtDgecmActivityController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtEcmFtiFullCycleController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtEcmFtiFullCycle, ArtEcmFtiFullCycleController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtFtiActivityController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiActivity, ArtFtiActivityController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtFtiEcmTransactionController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiEcmTransaction, ArtFtiEcmTransactionController>(_fti, Context.User.Identity.Name, para);
+
+            #endregion
+
+        }
+
+
+
+        private async Task ExportCustomReport(ExportDto<object> exportDto)
+        {
+            string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
+            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
+            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+            dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
+            string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+            string filter = exportDto.Req.Filter.GetFiltersString(dbtype);
+            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
+            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+            {
+                name = x.Column
+            }).ToArray();
+
+            List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
+
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
+            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
+            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+            await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
+                                .SendAsync("csvRecevied", bytes, FileName);
+        }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
             string? user = Context.User.Identity.Name;
             connections.RemoveConnection(user, Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
+        }
+
+        public class ExportDto
+        {
+            public ArtTiEcmAuditReport Record { get; set; }
+
+            public List<string> Note { get; set; }
+
+        }
+        public class ExportDtoWorkflowProg
+        {
+            public ArtTiEcmWorkflowProgReport Record { get; set; }
+            public List<string> Comments { get; set; }
+            public List<string> Note { get; set; }
+            public List<DateTime?> NoteCreationTime { get; set; }
         }
     }
 }

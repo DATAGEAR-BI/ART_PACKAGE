@@ -82,12 +82,12 @@ namespace ART_PACKAGE.Controllers
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
-            await _csvSrv.ExportAllCsv<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController, int>(data, User.Identity.Name, para);
-            return new EmptyResult();
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
+        //{
+        //    IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
+        //    await _csvSrv.ExportAllCsv<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController, int>(data, User.Identity.Name, para);
+        //    return new EmptyResult();
+        //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
