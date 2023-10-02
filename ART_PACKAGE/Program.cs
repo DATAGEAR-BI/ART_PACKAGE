@@ -15,7 +15,7 @@ using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
 
-    EnvironmentName = "Development",
+    EnvironmentName = "UAT",
 });
 
 builder.Services.AddDbs(builder.Configuration);

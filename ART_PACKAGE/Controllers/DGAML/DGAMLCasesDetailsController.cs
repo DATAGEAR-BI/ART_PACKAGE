@@ -6,6 +6,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -37,14 +38,11 @@ namespace ART_PACKAGE.Controllers.DGAML
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
-                    //{"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown().ToDynamicList() },
-                    //{"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown().ToDynamicList() },
-                    //{"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    //{"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"Owner".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown().ToDynamicList() }
+                    {"BranchName".ToLower()                 ,_context.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).ToDynamicList()          },
+                    {"CaseStatus".ToLower()                 ,_context.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null).ToDynamicList()          },
+                    {"CasePriority".ToLower()               ,_context.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null).ToDynamicList()          },
+                    {"CaseCategory".ToLower()               ,_context.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null).ToDynamicList()          },
+                    {"EntityLevel".ToLower()                ,_context.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null).ToDynamicList()          }
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].SkipList : new();
             }

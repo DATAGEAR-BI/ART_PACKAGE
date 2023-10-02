@@ -37,9 +37,10 @@ namespace ART_PACKAGE.Controllers.DGAML
                 DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : new();
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"BranchName".ToLower(), _dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() }
+                    {"BranchName".ToLower()         ,_context.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).ToDynamicList()         },
+                    {"RiskScore".ToLower()          ,_context.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).ToDynamicList()          },
+                    {"OwnerUserid".ToLower()        ,_context.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()         .Where(x=> x != null).ToDynamicList()          },
+                    {"AlertedEntityLevel".ToLower()        ,_context.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()             .Where(x=> x != null).ToDynamicList()          }
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : new();
             }

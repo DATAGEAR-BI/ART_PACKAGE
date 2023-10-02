@@ -908,12 +908,17 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     {
 
                         _ = cw.Context.RegisterClassMap<T1>();
-                        foreach (List<object> item in filterCells)
+                        if (filterCells is not null && filterCells.Count != 0)
                         {
-                            cw.WriteComment(string.Join(",", item));
+                            foreach (List<object> item in filterCells)
+                            {
+                                cw.WriteComment(string.Join(",", item));
+                            }
+                            cw.NextRecord();
                         }
 
-                        cw.NextRecord();
+
+
                         cw.WriteHeader<T>();
                         cw.NextRecord();
                         foreach (T? elm in tempData)

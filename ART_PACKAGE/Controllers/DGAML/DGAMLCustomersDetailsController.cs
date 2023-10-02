@@ -7,6 +7,7 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -39,20 +40,22 @@ namespace ART_PACKAGE.Controllers.DGAML
                     {
                         "Y","N"
                     };
-                //DropDownColumn = new Dictionary<string, List<dynamic>>
-                //{
-                //    {"CustomerType".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                //    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                //    {"NonProfitOrgInd".ToLower(),Indlist.ToDynamicList() },
-                //    {"PoliticallyExposedPersonInd".ToLower(),Indlist.ToDynamicList() },
-                //    {"CharityDonationsInd".ToLower(),Indlist.ToDynamicList() },
-                //    {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown().ToDynamicList() },
-                //    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                //    {"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown().ToDynamicList() },
-                //    {"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown().ToDynamicList() },
-                //    {"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown().ToDynamicList() },
-                //    {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown().ToDynamicList() }
-                //};
+                DropDownColumn = new Dictionary<string, List<dynamic>>
+                {
+                    {"CustomerType".ToLower()                           ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerType)                   .Distinct()                               .Where(x=>x!=null)  .ToDynamicList() },
+                    {"RiskClassification".ToLower()                     ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.RiskClassification)             .Distinct()                               .Where(x=>x!=null)  .ToDynamicList() },
+                    {"ResidenceCountryName".ToLower()                   ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.ResidenceCountryName)           .Distinct()                           .Where(x=>x!=null)  .ToDynamicList() },
+                    {"BranchName".ToLower()                             ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.BranchName)                     .Distinct()                       .Where(x=>x!=null)  .ToDynamicList() },
+                    {"IndustryDesc".ToLower()                           ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc)                   .Distinct()               .Where(x=>x!=null)  .ToDynamicList() },
+                    {"CustomerIdentificationType".ToLower()             ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerIdentificationType)     .Distinct()           .Where(x=>x!=null)  .ToDynamicList() },
+                    {"OccupationDesc".ToLower()                         ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc)                 .Distinct()           .Where(x=>x!=null)  .ToDynamicList() },
+                    {"CitizenshipCountryName".ToLower()                 ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.CitizenshipCountryName)         .Distinct()                       .Where(x=>x!=null)  .ToDynamicList() },
+                    {"CityName".ToLower()                 ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.CityName)                                     .Distinct()               .Where(x=>x!=null)  .ToDynamicList() },
+                    {"MaritalStatusDesc".ToLower()                 ,_context.ArtDGAMLCustomerDetailViews.Select(x=>x.MaritalStatusDesc)                   .Distinct()           .Where(x=>x!=null)  .ToDynamicList() },
+                    {"NonProfitOrgInd".ToLower()                        ,Indlist.ToDynamicList() },
+                    {"PoliticallyExposedPersonInd".ToLower()            ,Indlist.ToDynamicList() },
+
+                };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCustomersDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCustomersDetailsController).ToLower()].SkipList : new();
             }
 

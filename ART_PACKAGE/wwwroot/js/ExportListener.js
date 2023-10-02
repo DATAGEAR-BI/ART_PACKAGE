@@ -14,8 +14,8 @@ export async function start() {
     }
 };
 
-export const invokeExport = (para, controller, method, params) =>   exportConnection.invoke("Export", para, controller, method, params);
-      ;
+export const invokeExport = (para, controller, method, params) => exportConnection.invoke("Export", para, controller, method, params);
+;
 
 await start();
 
@@ -128,8 +128,8 @@ function downloadfile(file, fileName) {
         bytes[i] = uint8Array.charCodeAt(i);
     }
     // Create a Blob from the Uint8Array data
-    console.log(String.fromCharCode(...new Uint16Array(bytes.buffer)));
-    const csvBlob = new Blob([bytes], { type: 'text/csv; charset=utf-8' });
+    console.log(bytes);
+    const csvBlob = new Blob(["\ufeff", bytes], { type: 'text/csv; charset=utf-8' });
     // Create an object URL from the Blob
     const objectURL = URL.createObjectURL(csvBlob);
 

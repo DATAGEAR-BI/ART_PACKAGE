@@ -138,7 +138,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetCaseTypeDropDown()
         {
             List<string> distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE") && SANCTION_TYPES_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
+                // .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE") && SANCTION_TYPES_FILTER.Contains(a.ValCd))
                 .Select(x => x.ValDesc)
                 .ToList();
             return distinct_value;
@@ -177,7 +178,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
 
             List<string> distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS") && SANCTION_STATUS_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
                 .Select(x => x.ValDesc)
                 .ToList();
@@ -435,13 +436,13 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetUpdateUserIdDropDown()
         {
-            List<string> distinct_value = _dbSrv.ECM.CaseLives.Where(x => SANCTION_TYPES_FILTER.Contains(x.CaseTypeCd)).Select(x => x.UpdateUserId == null || string.IsNullOrEmpty(x.UpdateUserId.Trim()) ? "UNKNOWN" : x.UpdateUserId).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.UpdateUserId == null || string.IsNullOrEmpty(x.UpdateUserId.Trim()) ? "UNKNOWN" : x.UpdateUserId).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetInvestagtorDropDown()
         {
-            List<string> distinct_value = _dbSrv.ECM.CaseLives.Where(x => SANCTION_TYPES_FILTER.Contains(x.CaseTypeCd)).Select(x => x.PrimaryOwner == null || string.IsNullOrEmpty(x.PrimaryOwner.Trim()) ? "UNKNOWN" : x.PrimaryOwner).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.PrimaryOwner == null || string.IsNullOrEmpty(x.PrimaryOwner.Trim()) ? "UNKNOWN" : x.PrimaryOwner).Distinct().ToList();
             return distinct_value;
         }
 

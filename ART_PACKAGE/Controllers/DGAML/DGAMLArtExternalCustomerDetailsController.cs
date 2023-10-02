@@ -36,9 +36,9 @@ namespace ART_PACKAGE.Controllers.DGAML
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"BranchName".ToLower(),_dropDown           .GetDGExternalCustomerBranchNameDropDown()      .ToDynamicList() },
-                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenshipCountryNameDropDown()          .ToDynamicList() },
-                    {"ResidCntryName".ToLower(),_dropDown       .GetDGresidenceCountryNameDropDown()            .ToDynamicList() },
-                    {"CntryName".ToLower(),_dropDown            .GetDGStreetCountryNameDropDown()               .ToDynamicList() },
+                    {nameof(ArtExternalCustomerDetailView.CitizenshipCountryName).ToLower(),_dropDown     .GetDGCitizenshipCountryNameDropDown()          .ToDynamicList() },
+                    {nameof(ArtExternalCustomerDetailView.ResidenceCountryName).ToLower(),_dropDown       .GetDGresidenceCountryNameDropDown()            .ToDynamicList() },
+                   // {"CntryName".ToLower(),_dropDown            .GetDGStreetCountryNameDropDown()               .ToDynamicList() },
                     {"CityName".ToLower(),_dropDown             .GetDGCityNameDropDown()                        .ToDynamicList() },
                     {"IdentTypeDesc".ToLower(),_dropDown        .GetDGCustomerIdentificationTypeDropDown()      .ToDynamicList() },
                     {"ExtCustTypeDesc".ToLower(),_dropDown      .GetDGCustomerTypeDropDown()                    .ToDynamicList() },

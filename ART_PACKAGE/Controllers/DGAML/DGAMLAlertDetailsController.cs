@@ -7,6 +7,7 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -39,13 +40,17 @@ namespace ART_PACKAGE.Controllers
                     };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    //{"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    ////{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    //{"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
+                    {"AlertStatus".ToLower()                    ,_context.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)          .ToDynamicList()         },
+                    {"AlertSubcategory".ToLower()                    ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.AlertSubcategory) .Distinct()   .Where(x=> x != null)          .ToDynamicList()         },
+                    {"AlertCategory".ToLower()                    ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.AlertCategory)       .Distinct()   .Where(x=> x != null)          .ToDynamicList()         },
+                    //{"OwnerUserid".ToLower()                  ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.)                      .Distinct()   .Where(x=> x != null)          .ToDynamicList()                      },
+                    {"BranchName".ToLower()                     ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.BranchName)            .Distinct()   .Where(x=> x != null)          .ToDynamicList()                              },
+                    {"ScenarioName".ToLower()                   ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.ScenarioName)          .Distinct()   .Where(x=> x != null)          .ToDynamicList()          },
+                    {"ClosedUserId".ToLower()                   ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.ClosedUserId)          .Distinct()   .Where(x=> x != null)       .ToDynamicList()          },
+                    {"CloseUserName".ToLower()                   ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.CloseUserName)        .Distinct()   .Where(x=> x != null)       .ToDynamicList()          },
+                    {"CloseReason".ToLower()                   ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.CloseReason)            .Distinct()   .Where(x=> x != null)       .ToDynamicList()          },
+                    {"PoliticallyExposedPersonInd".ToLower()    ,PEPlist.ToDynamicList()                                                },
+                    {"EmpInd".ToLower()    ,PEPlist.ToDynamicList()                                                },
                 };
 
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLAlertDetailsController).ToLower()].SkipList : new();
