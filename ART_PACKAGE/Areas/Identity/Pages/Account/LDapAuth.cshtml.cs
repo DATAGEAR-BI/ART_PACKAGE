@@ -58,7 +58,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            this.ReturnUrl = returnUrl;
+            ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);

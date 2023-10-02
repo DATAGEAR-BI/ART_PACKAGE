@@ -21,7 +21,7 @@ await start();
 
 exportConnection.onreconnecting(err => {
     toastObj.icon = 'error';
-    toastObj.text = "connection with server lost trying to reconnect this might cause losing some files";
+    toastObj.text = `connection with server lost trying to reconnect this might cause losing some files`;
     toastObj.heading = "Export Status";
     $.toast(toastObj);
 })
@@ -47,7 +47,7 @@ var toastObj = {
 exportConnection.on("csvErrorRecevied", async (batch) => {
 
     toastObj.icon = 'error';
-    toastObj.text = "something wrong happend in batch number " + batch;
+    toastObj.text = `something wrong happend in batch number ` + batch;
     toastObj.heading = "Export Status";
     $.toast(toastObj);
 
@@ -60,7 +60,7 @@ exportConnection.on("missedFilesRecived", async (files, reqId) => {
         downloadfile(f.file, f.fileName);
 
         toastObj.icon = 'success';
-        toastObj.text = `export done for this file : ${f.fileName}, check your downloads`;
+        toastObj.text = `export done for this file : ${ f.fileName }, check your downloads`;
         toastObj.heading = "Export Status";
         $.toast(toastObj);
     });
@@ -74,7 +74,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
     console.log(reqId, len, recivedFiles.length);
     if (len === recivedFiles.length) {
         console.log("clr");
-        exportConnection.invoke("ClearExportFolder", reqId);
+        //exportConnection.invoke("ClearExportFolder", reqId);
     }
 
     else {
@@ -91,7 +91,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
     }
 });
 exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
-    console.log(guid, i);
+    console.log(file);
     var recivedFiles = JSON.parse(localStorage.getItem(guid));
     if (recivedFiles)
         localStorage.setItem(guid, JSON.stringify([...recivedFiles, i]));
@@ -119,11 +119,17 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
 })
 
 function downloadfile(file, fileName) {
+    console.log(file);
     const uint8Array = atob(file);
+    console.log(uint8Array);
 
+    var bytes = new Uint8Array(uint8Array.length);
+    for (var i = 0; i < uint8Array.length; i++) {
+        bytes[i] = uint8Array.charCodeAt(i);
+    }
     // Create a Blob from the Uint8Array data
-    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
-
+    console.log(String.fromCharCode(...new Uint16Array(bytes.buffer)));
+    const csvBlob = new Blob([bytes], { type: 'text/csv; charset=utf-8' });
     // Create an object URL from the Blob
     const objectURL = URL.createObjectURL(csvBlob);
 

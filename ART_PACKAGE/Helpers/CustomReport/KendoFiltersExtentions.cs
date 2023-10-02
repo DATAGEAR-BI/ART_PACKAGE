@@ -16,18 +16,18 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         private static readonly Dictionary<string, string> StringOp = new()
         {
-            { "eq"              , " = '{0}'" },
-            { "neq"             , " <> '{0}'" },
-            { "isnull"          , "IS NULL" },
-            { "isnotnull"       , "IS NOT NULL" },
-            { "isempty"         , $@" = ''" },
-            { "isnotempty"      , $@" <> ''" },
-            { "startswith"      , " LIKE '{0}%'" },
-            { "doesnotstartwith", " NOT LIKE '{0}%'" },
-            { "contains"        , " LIKE '%{0}%'" },
-            { "doesnotcontain"  , " NOT LIKE '%{0}%'" },
-            { "endswith"        , " LIKE '%{0}'" },
-            { "doesnotendwith"  , " NOT LIKE '%{0}'" },
+            { "eq"              , "{1} = '{0}'" },
+            { "neq"             , "{1} <> '{0}'" },
+            { "isnull"          , "{1} IS NULL" },
+            { "isnotnull"       , "{1} IS NOT NULL" },
+            { "isempty"         , $@"{{1}} = ''" },
+            { "isnotempty"      , $@"{{1}} <> ''" },
+            { "startswith"      , "{1} LIKE '{0}%'" },
+            { "doesnotstartwith", "{1} NOT LIKE '{0}%'" },
+            { "contains"        , "{1} LIKE '%{0}%'" },
+            { "doesnotcontain"  , "{1} NOT LIKE '%{0}%'" },
+            { "endswith"        , "{1} LIKE '%{0}'" },
+            { "doesnotendwith"  , "{1} NOT LIKE '%{0}'" },
         };
         private static readonly Dictionary<string, string> StringOpForC = new()
         {
@@ -46,14 +46,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
         };
         private static readonly Dictionary<string, string> NumberOp = new()
         {
-            { "eq", " = {0}" },
-            { "neq", " <> {0}" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"  ," >= {0}"},
-            {"gt"   ," > {0}"},
-            {"lte"  ," <= {0}"},
-            { "lt"  , " < {0}" },
+            { "eq", "{1} = {0}" },
+            { "neq", "{1} <> {0}" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte"  ,"{1} >= {0}"},
+            {"gt"   ,"{1} > {0}"},
+            {"lte"  ,"{1} <= {0}"},
+            { "lt"  , "{1} < {0}" },
         };
         private static readonly Dictionary<string, string> NumberOpForC = new()
         {
@@ -106,14 +106,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 "sqlServer"
             ,
             new Dictionary<string, string> {
-            { "eq", " = Convert(datetime,'{0}')" },
-            { "neq", " <> Convert(datetime,'{0}')" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= Convert(datetime,'{0}')"},
-            {"gt"," > Convert(datetime,'{0}')"},
-            {"lte"," <= Convert(datetime,'{0}')"},
-            { "lt", " < Convert(datetime,'{0}')" },
+            { "eq", "Convert(date , {1} , 105) = Convert(date,'{0}',105)" },
+            { "neq", "Convert(date , {1} , 105) <> Convert(date,'{0}',105)" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte","Convert(date , {1} , 105) >= Convert(date,'{0}',105)"},
+            {"gt","Convert(date , {1} , 105) > Convert(date,'{0}',105)"},
+            {"lte","Convert(date , {1} , 105) <= Convert(date,'{0}',105)"},
+            { "lt", "Convert(date , {1} , 105) < Convert(date,'{0}',105)" },
                 }
             }
 
@@ -124,38 +124,37 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 "oracle"
             ,
                 new Dictionary<string, string> {
-            { "eq", " = to_date('{0}', 'dd-MM-yyyy')" },
-            { "neq", " <> to_date('{0}', 'dd-MM-yyyy')" },
-            { "isnull", "IS NULL" },
-            { "isnotnull", "IS NOT NULL" },
-            {"gte"," >= to_date('{0}', 'dd-MM-yyyy')"},
-            {"gt"," > to_date('{0}', 'dd-MM-yyyy')"},
-            {"lte"," <= to_date('{0}', 'dd-MM-yyyy')"},
-            { "lt", " < to_date('{0}', 'dd-MM-yyyy')" },
+            { "eq", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },
+            { "neq", "TRUNC({1}) <> to_date('{0}', 'dd-MM-yyyy')" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte","TRUNC({1}) >= to_date('{0}', 'dd-MM-yyyy')"},
+            {"gt","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
+            {"lte","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
+            { "lt", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
             }
             }
         };
 
-        private static readonly StringBuilder _sb = new();
         public static T ToObject<T>(this JsonElement element)
         {
 
             string json = element.GetRawText();
             return JsonSerializer.Deserialize<T>(json);
         }
-        private static void constructQuery(this Filter Filters, string dbtype)
+        public static string GetFiltersString(this Filter Filters, string dbtype, IEnumerable<ColumnsDto> columns)
         {
             if (Filters is null)
             {
-                return;
+                return string.Empty;
             }
 
             string? logic = Filters.logic;
-            _ = _sb.Append("( ");
             if (logic is null)
             {
-                return;
+                return string.Empty;
             }
+            StringBuilder _sb = new();
 
             foreach (object? item in Filters.filters)
             {
@@ -164,30 +163,36 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
-                    constructQuery(filter, dbtype);
+                    _ = _sb.Append(GetFiltersString(filter, dbtype, columns));
 
                 }
                 else
                 {
                     string v = "";
-                    try
+
+
+                    ColumnsDto? column = columns.FirstOrDefault(x => x.name == i.field);
+
+                    if (column.type.ToLower() == "number".ToLower())
                     {
                         v = i.value is not null
-                            ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString())
+                            ? string.Format(NumberOp[i.@operator], ((JsonElement)i.value).ToObject<int>().ToString(), i.field)
                             : NumberOp[i.@operator];
                     }
-                    catch (Exception)
+                    else if (column.type.ToLower() == "date".ToLower())
+                    {
+                        DateTime dt = ((JsonElement)i.value).ToObject<DateTime>().ToLocalTime();
+                        v = string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"), i.field);
+                    }
+                    else if (column.type.ToLower() == "string".ToLower())
                     {
                         string value = ((JsonElement)i.value).ToObject<string>();
-                        v = DateTime.TryParse(value, out DateTime dt)
-                            ? string.Format(DateOp[dbtype][i.@operator], dt.Date.ToString("dd-MM-yyyy"))
-                            : string.Format(StringOp[i.@operator], value);
+                        DateTime.TryParse(value, out DateTime dt);
+                        v = string.Format(StringOp[i.@operator], value, i.field);
 
                     }
-                    finally
-                    {
-                        _ = _sb.Append($"{i.field} {v}");
-                    }
+                    _ = _sb.Append($"{v}");
+
                 }
                 if (Filters.filters.IndexOf(item) != Filters.filters.Count - 1)
                 {
@@ -195,30 +200,30 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 }
             }
 
-            _ = _sb.Append(" )");
+            return "(" + _sb.ToString() + ")";
         }
-        public static string GetFiltersString(this Filter Filters, string dbtype)
-        {
-            _ = _sb.Clear();
-            Filters.constructQuery(dbtype);
-            return _sb.ToString();
-        }
+        //public static string GetFiltersString(this Filter Filters, string dbtype, IEnumerable<ColumnsDto> columns)
+        //{
+        //    _ = _sb.Clear();
+        //    Filters.constructQuery(dbtype, columns);
+        //    return _sb.ToString();
+        //}
 
 
-        private static void GetFiltersString<T>(this Filter Filters)
+        private static string GetFiltersString<T>(this Filter Filters)
         {
             if (Filters == null || Filters.filters.Count == 0)
             {
-                return;
+                return string.Empty;
             }
 
             string? logic = Filters.logic;
-            _ = _sb.Append("( ");
+
             if (logic is null)
             {
-                return;
+                return string.Empty;
             }
-
+            StringBuilder _sb = new();
             foreach (object? item in Filters.filters)
             {
                 JsonElement t = (JsonElement)item;
@@ -226,7 +231,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
-                    GetFiltersString<T>(filter);
+                    _sb.Append(GetFiltersString<T>(filter));
 
                 }
                 else
@@ -354,7 +359,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             }
 
-            _ = _sb.Append(" )");
+            return "(" + _sb.ToString() + ")";
         }
 
 
@@ -584,19 +589,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
         {
-            string filter = string.Empty;
-            try
-            {
-                obj.Filter.GetFiltersString<T>();
-                filter = _sb.ToString();
-            }
-            catch (Exception e)
-            {
-            }
-            finally
-            {
-                _ = _sb.Clear();
-            }
+            string filter = obj.Filter.GetFiltersString<T>();
+
+
+
 
 
             if (!string.IsNullOrEmpty(filter))
@@ -608,6 +604,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
             if (sortString is not null)
             {
                 data = data.OrderBy(sortString).AsQueryable();
+            }
+            else
+            {
+                string sort = typeof(T).GetProperties().First().Name;
+                data = data.OrderBy(sort).AsQueryable();
             }
 
             List<ColumnsDto> columns = null;
@@ -884,11 +885,12 @@ namespace ART_PACKAGE.Helpers.CustomReport
             }
 
 
-            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
-                Encoding = new UTF8Encoding(false),
+                Encoding = Encoding.UTF8,
                 IgnoreBlankLines = true,
                 AllowComments = true,
+
             };
             int batch = 100000;
             int skip = 0;
@@ -904,6 +906,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
+
                         _ = cw.Context.RegisterClassMap<T1>();
                         foreach (List<object> item in filterCells)
                         {
@@ -970,10 +973,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 return null;
             }
 
-            string sort = string.Join(",", opt.Select(x =>
+            string sort = string.Join(" , ", opt.Select(x =>
             {
-                string dir = x.dir == "desc" ? " " + x.dir : "";
-                return $"{x.field}{dir}";
+                //string dir = x.dir == "desc" ? " " + x.dir : "";
+                return $"{x.field} {x.dir}";
             }));
             return sort;
         }
