@@ -298,12 +298,14 @@ namespace ART_PACKAGE.Hubs
             List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            string filter = exportDto.Req.Filter.GetFiltersString(dbtype);
-            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
-                name = x.Column
+                name = x.Column,
+                type = x.JsType,
+                isNullable = x.IsNullable,
             }).ToArray();
+            string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
+            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
 
             List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
 

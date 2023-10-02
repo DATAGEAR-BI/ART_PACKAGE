@@ -58,17 +58,14 @@ namespace ART_PACKAGE.Controllers
         {
 
             string dbtype = db.Database.IsOracle() ? "oracle" : db.Database.IsSqlServer() ? "sqlServer" : "";
-            string filter = obj.Filter.GetFiltersString(dbtype);
+
             string orderBy = obj.Sort is null ? null : string.Join(" , ", obj.Sort.Select(x => $"{x.field} {x.dir}"));
             ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == obj.Id);
             string schema = Report.Schema.ToString();
             dbInstance = dBFactory.GetDbInstance(schema);
             List<ArtSavedReportsChart>? charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == obj.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             List<ChartData<dynamic>> chartsdata = null;
-            if (charts is not null && charts.Count != 0)
-            {
-                chartsdata = dbInstance.GetChartData(charts, filter);
-            }
+
 
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
@@ -77,6 +74,11 @@ namespace ART_PACKAGE.Controllers
                 type = x.JsType
 
             }).ToArray();
+            string filter = obj.Filter.GetFiltersString(dbtype, columns);
+            if (charts is not null && charts.Count != 0)
+            {
+                chartsdata = dbInstance.GetChartData(charts, filter);
+            }
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, obj.Take, obj.Skip, orderBy);
             return Content(JsonConvert.SerializeObject(new
             {
@@ -239,12 +241,14 @@ namespace ART_PACKAGE.Controllers
             List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            string filter = exportDto.Req.Filter.GetFiltersString(dbtype);
-            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
-                name = x.Column
+                name = x.Column,
+                isNullable = x.IsNullable,
+                type = x.JsType,
             }).ToArray();
+            string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
+            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
             List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
 
             DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
@@ -281,13 +285,15 @@ namespace ART_PACKAGE.Controllers
             List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            string filter = req.Filter.GetFiltersString(dbtype);
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
-                name = x.Column
+                name = x.Column,
+                type = x.JsType,
+                isNullable = x.IsNullable
             }).ToArray();
-            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
+            string filter = req.Filter.GetFiltersString(dbtype, columns);
             ViewData["title"] = Report.Name;
+            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
             ViewData["desc"] = Report.Description;
             ViewData["filters"] = req.Filter.GetFilterTextForCsv();
             byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data.Data, ViewData, ControllerContext, 5
