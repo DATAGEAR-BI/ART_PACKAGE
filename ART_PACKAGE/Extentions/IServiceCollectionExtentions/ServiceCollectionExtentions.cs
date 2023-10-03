@@ -23,7 +23,6 @@ using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions

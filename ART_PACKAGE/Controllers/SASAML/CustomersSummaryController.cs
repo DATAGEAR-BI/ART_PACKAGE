@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    [Authorize(Roles = "CustomersSummary")]
+    ////[Authorize(Roles = "CustomersSummary")]
     public class CustomersSummaryController : Controller
     {
 
@@ -51,9 +51,9 @@ namespace ART_PACKAGE.Controllers.SASAML
 
             if (dbType == DbTypes.Oracle)
             {
-                chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
-                chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
-                chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
+                chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CUST_PER_TYPE, chart1Params.ToArray());
+                chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CUST_PER_RISK, chart2Params.ToArray());
+                chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CUST_PER_BRANCH, chart3Params.ToArray());
 
             }
 

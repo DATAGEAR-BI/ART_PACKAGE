@@ -9,7 +9,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    [Authorize(Roles = "CasesDetails")]
+    ////[Authorize(Roles = "CasesDetails")]
     public class CasesDetailsController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

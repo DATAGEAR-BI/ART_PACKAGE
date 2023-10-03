@@ -12,7 +12,7 @@ using System.Collections;
 namespace ART_PACKAGE.Controllers.SASAML
 {
 
-    [Authorize(Roles = "RiskSummary")]
+    ////[Authorize(Roles = "RiskSummary")]
     public class RiskSummaryController : Controller
     {
         private readonly SasAmlContext dbfcfcore;

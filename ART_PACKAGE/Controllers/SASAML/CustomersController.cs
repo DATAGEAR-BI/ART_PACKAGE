@@ -10,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    [Authorize(Roles = "Customers")]
+    ////[Authorize(Roles = "Customers")]
     public class CustomersController : Controller
     {
         //dbfcfcore.ModelContext db = new dbfcfcore.ModelContext();

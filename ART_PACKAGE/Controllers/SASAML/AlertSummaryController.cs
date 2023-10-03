@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    [Authorize(Roles = "AlertSummary")]
+    ////[Authorize(Roles = "AlertSummary")]
     public class AlertSummaryController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

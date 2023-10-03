@@ -9,7 +9,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    //[Authorize(Policy = "Licensed" , Roles = "PeriodicCHRGs")]
+    //////[Authorize(Policy = "Licensed" , Roles = "PeriodicCHRGs")]
 
 
     public class PeriodicCHRGsController : Controller

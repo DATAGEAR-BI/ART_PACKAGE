@@ -280,7 +280,7 @@ as select * from ""DGCMGMT"".""ART_ALERTED_ENTITY""
                                     WHEN Null THEN 'Unknown' 
                                     ELSE A.TRANSACTION_DIRECTION END)
                                     ;
-                                    END ART_ST_SYSTEM_PERF_PER_DIRECTION;");
+                                    END ART_ST_SYSTEM_PERF_PER_DIR;");
             //ART_ST_SYSTEM_PERF_PER_STATUS
             migrationBuilder.Sql($@"
                                       CREATE OR REPLACE EDITIONABLE PROCEDURE ""ART"".""ART_ST_SYSTEM_PERF_PER_STATUS"" 
