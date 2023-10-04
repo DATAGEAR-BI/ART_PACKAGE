@@ -132,8 +132,10 @@ export const Handlers = {
     clientPdExport: async (e, controller, url) => {
         var paramsArr = url.split("?");
         var params = "";
-        if (paramsArr[1])
-            paramsArr = [1];
+        if (paramsArr[1]) {
+            params = paramsArr[1];
+        }
+       
         kendo.ui.progress($('#grid'), true);
         var ds = $("#grid").data("kendoGrid");
         var total = ds.dataSource.total();

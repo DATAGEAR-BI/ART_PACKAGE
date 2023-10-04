@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Audit
+namespace Data.Audit.DGMGMT
 {
     public partial class GroupDg
     {

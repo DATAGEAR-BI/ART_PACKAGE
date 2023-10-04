@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Audit
+namespace Data.Audit.DGMGMT
 {
-    public partial class GroupDgAud
+    public partial class RoleDg
     {
         public int Id { get; set; }
-        public int Rev { get; set; }
-        public short? Revtype { get; set; }
         public string? Description { get; set; }
         public string? DisplayName { get; set; }
-        public string? GroupType { get; set; }
-        public string? Name { get; set; }
-        public string? Status { get; set; }
+        public string Name { get; set; } = null!;
+        public string RoleType { get; set; } = null!;
+        public string Status { get; set; } = null!;
         public string? DataUpdate { get; set; }
         public string? CreatedBy { get; set; }
         public string? CreatedDate { get; set; }

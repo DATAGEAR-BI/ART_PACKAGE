@@ -78,10 +78,7 @@ namespace Data.ModelCreatingStrategies
             _strategy.OnDGECMModelCreating(modelBuilder);
         }
 
-        public void OnDgAuditModelCreating(ModelBuilder modelBuilder)
-        {
-            _strategy.OnDgAuditModelCreating(modelBuilder);
-        }
+
 
         public void OnDgAMLModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +98,16 @@ namespace Data.ModelCreatingStrategies
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnTiZoneModelCreating(modelBuilder);
+        }
+
+        public void OnDGMGMGModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGMGMGModelCreating(modelBuilder);
+        }
+
+        public void OnDGMGMGMAUDodelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGMGMGMAUDodelCreating(modelBuilder);
         }
     }
 }

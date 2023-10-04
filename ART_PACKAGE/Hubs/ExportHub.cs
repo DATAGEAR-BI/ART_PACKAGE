@@ -97,7 +97,7 @@ namespace ART_PACKAGE.Hubs
                 _dbAd = auditcontext;
 
             }
-            if (modules.Contains("DGAUDIT"))
+            if (modules.Contains("SEG"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();

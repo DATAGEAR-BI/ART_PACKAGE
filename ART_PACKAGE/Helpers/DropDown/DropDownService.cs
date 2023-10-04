@@ -369,7 +369,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetGroupTypeDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.GroupType)).Select(x => x.GroupType).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.GroupType)).Select(x => x.GroupType).Distinct().ToList();
             return distinct_value;
         }
 
@@ -448,78 +448,78 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetGroupAudNameDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.GroupDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.GroupDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetUserAudNameDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetRoleAudNameDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.RoleDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.RoleDgAuds.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
         public List<string> GetGroupNameDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.GroupDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetUserNameDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetRoleNameDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetUserAudTypeDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.UserDgAuds.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetMemberUsersDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.AccountAuds.Where(x => !string.IsNullOrEmpty(x.AuthenticationDomain)).Select(x => x.AuthenticationDomain).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.AccountAuds.Where(x => !string.IsNullOrEmpty(x.AuthenticationDomain)).Select(x => x.AuthenticationDomain).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetAppNameDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.AppName)).Select(x => x.AppName).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.AppName)).Select(x => x.AppName).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDeviceNameDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceName)).Select(x => x.DeviceName).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceName)).Select(x => x.DeviceName).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetDeviceTypeDropDown()
         {
-            List<string?> distinct_value = _dbSrv.AUDIT.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceType)).Select(x => x.DeviceType).Distinct().ToList();
+            List<string?> distinct_value = _dbSrv.DGMGMTAUD.LoggedUserAuds.Where(x => !string.IsNullOrEmpty(x.DeviceType)).Select(x => x.DeviceType).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetUserTypeDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.UserDgs.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.UserType)).Select(x => x.UserType).Distinct().ToList();
             return distinct_value;
         }
 
         public List<string> GetRoleTypeDropDown()
         {
-            List<string> distinct_value = _dbSrv.AUDIT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.RoleType)).Select(x => x.RoleType).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.DGMGMT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.RoleType)).Select(x => x.RoleType).Distinct().ToList();
             return distinct_value;
         }
 

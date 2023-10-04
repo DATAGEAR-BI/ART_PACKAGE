@@ -4,7 +4,8 @@ using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Security;
-using Data.Audit;
+using Data.Audit.DGMGMT;
+using Data.Audit.DGMGMT_AUD;
 using Data.Constants;
 using Data.Constants.db;
 using Data.Data.AmlAnalysis;
@@ -97,8 +98,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("DGAUDIT"))
             {
 
-                string DGUSERMANAGMENTContextConnection = config.GetConnectionString("DGUSERMANAGMENTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGUSERMANAGMENTContextConnection' not found.");
-                _ = services.AddDbContext<AuditContext>(opt => contextBuilder(opt, DGUSERMANAGMENTContextConnection));
+                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
+                string DGMGMTAUDContextConnection = config.GetConnectionString("DGMGMTAUDContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTAUDContextConnection' not found.");
+                _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
+                _ = services.AddDbContext<DGMGMTAUDContext>(opt => contextBuilder(opt, DGMGMTAUDContextConnection));
                 _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
             }
 
