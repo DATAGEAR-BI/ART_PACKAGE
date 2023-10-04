@@ -27,14 +27,22 @@ export const Handlers = {
         var selectedrecords = [];
 
         var all = !localStorage.getItem("selectedidz") || [...Object.values(JSON.parse(localStorage.getItem("selectedidz")))].every(x => x.length == 0) || localStorage.getItem("isAllSelected") === "true";
-        if (!all)
-            selectedrecords = await Select(prop)
+        if (!all) {
+            selectedrecords = await Select(prop);
+        }
+        console.log(all);
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
         if (total > 100000) {
             toastObj.hideAfter = false;
             toastObj.icon = 'warning';
             toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
+        }else {
+            toastObj.hideAfter = false;
+            toastObj.icon = 'warning';
+            toastObj.text = "Note That this operation might take some time you will be notified when it's done"
             toastObj.heading = "Export Status";
             $.toast(toastObj);
         }

@@ -29,7 +29,7 @@ namespace Data.Data.FTI
         public DateTime? LastModTime { get; set; }
         public string? TimeDifference { get; set; }
         public string? LastModUser { get; set; }
-        public string? FirstLinePart { get; set; }
+        public string? FirstLineParty { get; set; }
         public decimal? TradeInstructions { get; set; }
         public decimal? FirstLineInstructions { get; set; }
         public decimal? CaseComments { get; set; }

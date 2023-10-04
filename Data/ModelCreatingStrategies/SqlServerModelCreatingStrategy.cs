@@ -4630,10 +4630,10 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("LAST_MOD_USER")
                     .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.FirstLinePart)
+                entity.Property(e => e.FirstLineParty)
                     .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("FIRST_LINE_PART")
+                    .HasColumnName("FIRST_LINE_PARTY")
                     .UseCollation("Arabic_100_CI_AI");
                 entity.Property(e => e.TradeInstructions)
                     .HasMaxLength(4000)

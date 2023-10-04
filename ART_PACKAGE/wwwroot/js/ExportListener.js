@@ -97,19 +97,6 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
         localStorage.setItem(guid, JSON.stringify([...recivedFiles, i]));
     else
         localStorage.setItem(guid, JSON.stringify([i]));
-    //var lastItem = JSON.stringify(localStorage.getItem(guid));
-    //if (!lastItem)
-    //    localStorage.setItem(guid, { lastItem: i, lostRanges: []});
-    //else {
-    //    if (parseInt(i) - parseInt(lastItem.lastItem) != 1)
-    //        exportConnection.invoke("ExportLost", guid, [...lastItem.lostRanges, { From: parseInt(lastItem.lastItem) + 1, To: i }])
-
-    //    localStorage.setItem(guid, { lastItem: i, lostRanges: [...lastItem.lostRanges, { From: parseInt(lastItem.lastItem) + 1,To: i}]});
-    //}
-    // Assuming you have a byte array called 'byteArray' containing the bytes
-    // You can also get the 'byteArray' from a server response, FileReader, or other sources.
-
-    // Convert bytes to a Uint8Array (assuming the byteArray is Uint8Array)
     downloadfile(file, fileName);
 
     toastObj.icon = 'success';
@@ -119,27 +106,20 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
 })
 
 function downloadfile(file, fileName) {
-    console.log(file);
+ 
     const uint8Array = atob(file);
-    console.log(uint8Array);
 
     var bytes = new Uint8Array(uint8Array.length);
     for (var i = 0; i < uint8Array.length; i++) {
         bytes[i] = uint8Array.charCodeAt(i);
     }
-    // Create a Blob from the Uint8Array data
-    console.log(String.fromCharCode(...new Uint16Array(bytes.buffer)));
-    const csvBlob = new Blob([bytes], { type: 'text/csv; charset=utf-8' });
-    // Create an object URL from the Blob
-    const objectURL = URL.createObjectURL(csvBlob);
+       
+    const csvBlob = new Blob(["\ufeff", bytes], { type: 'text/csv; charset=utf-8' });
+        const objectURL = URL.createObjectURL(csvBlob);
 
-    // Now you can use the 'objectURL' to create a downloadable link or perform other operations
-    // For example, creating a download link:
-    const downloadLink = document.createElement('a');
-    downloadLink.href = objectURL;
-    downloadLink.download = fileName;
-    downloadLink.click(); // Simulate a click on the link to trigger the download
-
-    // Don't forget to revoke the object URL to free up memory after the download is initiated.
-    URL.revokeObjectURL(objectURL);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = objectURL;
+        downloadLink.download = fileName;
+        downloadLink.click();
+        URL.revokeObjectURL(objectURL);
 }
