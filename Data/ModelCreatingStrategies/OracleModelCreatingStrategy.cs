@@ -13,6 +13,7 @@ using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
+using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 
@@ -1526,7 +1527,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_GOAML_REPORTS_DETAILS", "ART_DB");
+                entity.ToView("ART_GOAML_REPORTS_DETAILS", "ART");
 
                 entity.Property(e => e.Action)
                     .HasColumnName("ACTION")
@@ -1639,7 +1640,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_GOAML_REPORTS_INDICATORS", "ART_DB");
+                entity.ToView("ART_GOAML_REPORTS_INDICATORS", "ART");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
@@ -1658,7 +1659,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_GOAML_REPORTS_SUSBECT_PARTIES", "ART_DB");
+                entity.ToView("ART_GOAML_REPORTS_SUSBECT_PARTIES", "ART");
 
                 entity.Property(e => e.Account)
                     .HasMaxLength(255)
@@ -13729,7 +13730,260 @@ namespace Data.ModelCreatingStrategies
 
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.HasDefaultSchema("TARGET")
+                .UseCollation("USING_NLS_COMP");
+
+            modelBuilder.Entity<Report>(entity =>
+            {
+                entity.ToTable("REPORT");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("NUMBER(38)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Action)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION");
+
+                entity.Property(e => e.CurrencyCodeLocal)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CURRENCYCODELOCAL");
+
+                entity.Property(e => e.EntityReference)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITYREFERENCE");
+
+                entity.Property(e => e.FiuRefNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FIUREFNUMBER");
+
+                entity.Property(e => e.IsValid)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ISVALID");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LOCATION");
+
+                entity.Property(e => e.Priority)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIORITY");
+
+                entity.Property(e => e.Reason)
+                    .IsUnicode(false)
+                    .HasColumnName("REASON");
+
+                entity.Property(e => e.RentityBranch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RENTITYBRANCH");
+
+                entity.Property(e => e.RentityId)
+                    .HasPrecision(10)
+                    .HasColumnName("RENTITYID");
+
+                entity.Property(e => e.ReportClosedDate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTCLOSEDDATE");
+
+                entity.Property(e => e.ReportCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTCODE");
+
+                entity.Property(e => e.ReportCreatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTCREATEDBY");
+
+                entity.Property(e => e.ReportCreatedDate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTCREATEDDATE");
+
+                entity.Property(e => e.ReportingPersonType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTINGPERSONTYPE");
+
+                entity.Property(e => e.ReportRiskSignificance)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTRISKSIGNIFICANCE");
+
+                entity.Property(e => e.ReportStatusCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTSTATUSCODE");
+
+                entity.Property(e => e.ReportUserLockId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTUSERLOCKID");
+
+                entity.Property(e => e.ReportXml)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORTXML");
+
+                entity.Property(e => e.SubmissionCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SUBMISSIONCODE");
+
+                entity.Property(e => e.SubmissionDate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SUBMISSIONDATE");
+
+                entity.Property(e => e.Version)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("VERSION");
+            });
+
+            modelBuilder.Entity<Taccount>(entity =>
+            {
+                entity.ToTable("TACCOUNT");
+
+                entity.Property(e => e.Id)
+                    .HasPrecision(10)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Account)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNT");
+
+                entity.Property(e => e.AccountName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTNAME");
+
+                entity.Property(e => e.Balance)
+                    .HasColumnType("NUMBER(19,2)")
+                    .HasColumnName("BALANCE");
+
+                entity.Property(e => e.Beneficiary)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BENEFICIARY");
+
+                entity.Property(e => e.BeneficiaryComment)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BENEFICIARYCOMMENT");
+
+                entity.Property(e => e.Branch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENTNUMBER");
+
+                entity.Property(e => e.Closed)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLOSED");
+
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMENTS");
+
+                entity.Property(e => e.CurrencyCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CURRENCYCODE");
+
+                entity.Property(e => e.DateBalance)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DATEBALANCE");
+
+                entity.Property(e => e.Iban)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("IBAN");
+
+                entity.Property(e => e.InstitutionCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INSTITUTIONCODE");
+
+                entity.Property(e => e.InstitutionName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INSTITUTIONNAME");
+
+                entity.Property(e => e.IsReviewed)
+                    .HasPrecision(1)
+                    .HasColumnName("IS_REVIEWED");
+
+                entity.Property(e => e.IsEntity)
+                    .HasPrecision(1)
+                    .HasColumnName("ISENTITY");
+
+                entity.Property(e => e.NonBankInstitution)
+                    .HasPrecision(1)
+                    .HasColumnName("NONBANKINSTITUTION");
+
+                entity.Property(e => e.Opened)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OPENED");
+
+                entity.Property(e => e.PersonalAccountType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PERSONALACCOUNTTYPE");
+
+                entity.Property(e => e.ReportPartyTypeId)
+                    .HasPrecision(10)
+                    .HasColumnName("REPORTPARTYTYPE_ID");
+
+                entity.Property(e => e.StatusCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUSCODE");
+
+                entity.Property(e => e.Swift)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SWIFT");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATED_BY");
+            });
+            modelBuilder.Entity<ReportIndicatorType>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("REPORTINDICATORTYPE");
+
+                entity.Property(e => e.Indicator)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INDICATOR");
+
+                entity.Property(e => e.ReportId)
+                    .HasPrecision(10)
+                    .HasColumnName("REPORT_ID");
+            });
+
         }
 
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder)

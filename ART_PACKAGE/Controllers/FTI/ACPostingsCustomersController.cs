@@ -33,20 +33,20 @@ namespace ART_PACKAGE.Controllers.FTI
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(ACPostingsCustomersController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
-            {
-               {"MasterRef".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"AcctNo".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.AcctNo).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"AccountType".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.AccountType).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"Shortname".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Shortname).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"DrCrFlg".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.DrCrFlg).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"Ccy".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"CusMnm".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.CusMnm).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"Spsk".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Spsk).Distinct().Where(x=> x != null ).ToDynamicList() },
-               {"Mainbanking".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Mainbanking).Distinct().Where(x=> x != null ).ToDynamicList() },
-               { "BranchName".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.BranchName).Distinct().Where(x=> x != null ).ToDynamicList() },
+                {
+                    {"MasterRef".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"AcctNo".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.AcctNo).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"AccountType".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.AccountType).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"Shortname".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Shortname).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"DrCrFlg".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.DrCrFlg).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"Ccy".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"CusMnm".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.CusMnm).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"Spsk".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Spsk).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    {"Mainbanking".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.Mainbanking).Distinct().Where(x=> x != null ).ToDynamicList() },
+                    { "BranchName".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.BranchName).Distinct().Where(x=> x != null ).ToDynamicList() },
 
-               { "EventRef".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.EventRef).Distinct().Where(x=> x != null ).ToDynamicList() },
-            };
+                    { "EventRef".ToLower(), fti.ArtTiAcpostingsCustReports.Select(x=>x.EventRef).Distinct().Where(x=> x != null ).ToDynamicList() },
+                };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ACPostingsCustomersController).ToLower()].SkipList;
             }
             KendoDataDesc<ArtTiAcpostingsCustReport> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
