@@ -15,7 +15,7 @@ namespace Data.Data.FTI
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? Name { get; set; }
-        public decimal? Amount { get; set; }
+        public double? Amount { get; set; }
         public string? Currency { get; set; }
         public string? PrimaryOwner { get; set; }
         public string? FtiReference { get; set; }
@@ -30,9 +30,9 @@ namespace Data.Data.FTI
         public string? TimeDifference { get; set; }
         public string? LastModUser { get; set; }
         public string? FirstLineParty { get; set; }
-        public decimal? TradeInstructions { get; set; }
-        public decimal? FirstLineInstructions { get; set; }
-        public decimal? CaseComments { get; set; }
+        public string? TradeInstructions { get; set; }
+        public string? FirstLineInstructions { get; set; }
+        public string? CaseComments { get; set; }
 
     }
 }
