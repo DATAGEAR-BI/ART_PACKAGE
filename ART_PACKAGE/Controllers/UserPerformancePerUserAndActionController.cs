@@ -35,12 +35,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-
-
-            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerUserAndAction> data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
 
             KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req);
 
@@ -71,10 +69,10 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerUserAndAction> data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
 
 
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
@@ -83,11 +81,11 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerUserAndAction> data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

@@ -34,11 +34,10 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-
-            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformancePerActionUser> data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
 
 
             KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req);
@@ -66,10 +65,10 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformancePerActionUser> data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }

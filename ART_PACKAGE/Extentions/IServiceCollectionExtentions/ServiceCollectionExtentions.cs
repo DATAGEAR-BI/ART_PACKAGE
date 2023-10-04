@@ -43,11 +43,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
-                        x => { x.MigrationsAssembly("SqlServerMigrations"); x.CommandTimeout(timeout); }
+                        x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(timeout); }
                         ),
                     DbTypes.Oracle => options.UseOracle(
                         conn,
-                        x => { x.MigrationsAssembly("OracleMigrations"); x.CommandTimeout(timeout); }
+                        x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(timeout); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
