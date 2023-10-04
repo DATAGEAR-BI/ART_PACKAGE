@@ -4568,7 +4568,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ProductType)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
-                    .HasColumnName("PRODUCTTYPE")
+                    .HasColumnName("PRODUCT_TYPE")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Name)
