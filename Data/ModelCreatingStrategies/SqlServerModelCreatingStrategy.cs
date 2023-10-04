@@ -4125,10 +4125,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
 
-                entity.Property(e => e.BranchId)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
-                    .HasColumnName("BRANCH_ID")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.CaseCreationDate)
@@ -4165,9 +4165,9 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EVENT_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.LastActionTokenBy)
+                entity.Property(e => e.LastActionTakenBy)
                     .HasMaxLength(60)
-                    .HasColumnName("LAST_ACTION_TOKEN_BY")
+                    .HasColumnName("LAST_ACTION_TAKEN_BY")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.PrimaryOwner)
@@ -4214,10 +4214,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PARENT_CASE_ID")
                     .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.BranchId)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
-                    .HasColumnName("BRANCH_ID")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.CaseComments)
@@ -4281,10 +4281,10 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_ECM_FTI_FULL_CYCLE", "ART_DB");
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
-                entity.Property(e => e.BranchId)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
-                    .HasColumnName("BRANCH_ID")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.LstModUser)
@@ -4356,10 +4356,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CASE_STATUS")
                     .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.LastActionTokenBy)
+                entity.Property(e => e.LastActionTakenBy)
                     .HasMaxLength(60)
                     .IsUnicode(false)
-                    .HasColumnName("LAST_ACTION_TOKEN_BY")
+                    .HasColumnName("LAST_ACTION_TAKEN_BY")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.FtiReference)
@@ -4523,7 +4523,134 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("FIRST_LINE_PARTY")
                     .UseCollation("Arabic_100_CI_AI");
             });
+            modelBuilder.Entity<ArtFtiEndToEnd>(entity =>
+            {
+                entity.HasNoKey();
 
+                entity.ToView("ART_FTI_END_TO_END", "ART_DB");
+                entity.Property(e => e.EcmReference)
+                   .HasMaxLength(64)
+                   .HasColumnName("ECM_REFERENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+                
+                
+                entity.Property(e => e.Amount).HasColumnName("AMOUNT");
+                entity.Property(e => e.CaseCreationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CASE_CREATION_DATE");
+                entity.Property(e => e.EventCreationDate)
+                    .HasColumnType("date")
+                    .HasColumnName("EVENT_CREATION_DATE");
+                entity.Property(e => e.StartedTime)
+                   .HasColumnType("datetime2")
+                   .HasColumnName("STARTED_TIME");
+                entity.Property(e => e.LastModTime)
+                   .HasColumnType("datetime2")
+                   .HasColumnName("LAST_MOD_TIME");
+                entity.Property(e => e.BranchName)
+                  .HasMaxLength(4000)
+                  .IsUnicode(false)
+                  .HasColumnName("BRANCH_NAME")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerName)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("CUSTOMER_NAME")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Product)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("Product")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCTTYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Name)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("NAME")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PrimaryOwner)
+                   .HasMaxLength(255)
+                   .IsUnicode(false)
+                   .HasColumnName("PRIMARY_OWNER")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FtiReference)
+                  .HasMaxLength(20)
+                  .IsUnicode(false)
+                  .HasColumnName("FTI_REFERENCE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Currency)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EventName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("Event_Name")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.EventStatus)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("Event_Status")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.MasterAssignedTo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Master_Assigned_To")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.EventSteps)
+                    .HasMaxLength(21)
+                    .IsUnicode(false)
+                    .HasColumnName("Event_Steps")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.StepStatus)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("STEP_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.TimeDifference)
+                    .HasMaxLength(96)
+                    .IsUnicode(false)
+                    .HasColumnName("TIMEDIFFERENCE")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.LastModUser)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_MOD_USER")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.FirstLinePart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FIRST_LINE_PART")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.TradeInstructions)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRADE_INSTRUCTIONS")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.FirstLineInstructions)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("FIRST_LINE_INSTRUCTIONS")
+                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.CaseComments)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_COMMENTS")
+                    .UseCollation("Arabic_100_CI_AI");
+            });
         }
 
         public void OnKYCModelCreating(ModelBuilder modelBuilder)

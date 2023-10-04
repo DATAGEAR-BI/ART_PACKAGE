@@ -54,7 +54,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetBranchNameDropDown()
         {
-            throw new NotImplementedException();
+            return _dbSrv.ECM.RefTableVals.Where(x => x.ValDesc != null && x.RefTableName == "RT_BRANCH_CODE").Select(x => x.ValDesc).Distinct().ToList();
         }
 
         public List<string> GetCapabilityGroupDropDown()

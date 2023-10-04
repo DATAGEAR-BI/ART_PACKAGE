@@ -7,21 +7,20 @@ using Data.Data.FTI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtDgecmActivity")]
+    [Authorize(Roles = "ArtFtiEndToEnd")]
 
-    public class ArtDgecmActivityController : Controller
+    public class ArtFtiEndToEndController : Controller
     {
         private readonly FTIContext dbfcfkc;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtFtiEndToEndController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc;
+            this.dbfcfkc = dbfcfkc; ;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
@@ -31,7 +30,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.AsQueryable();
+            IQueryable<ArtFtiEndToEnd> data = dbfcfkc.ArtFtiEndToEnds.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -39,21 +38,22 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].DisplayNames;
+                List<string> evensteps = new()
+                {
+                };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
-                    {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
-                    {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
-                    {"CaseStatus".ToLower(),dropDownService.GetCaseStatusDropDown().ToDynamicList() },
-                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
-                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
+                    //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
+                    //{"FtiReference".ToLower(),dbfcfkc.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
+
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtFtiEndToEnd> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -87,18 +87,18 @@ namespace ART_PACKAGE.Controllers
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.AsQueryable();
-        //    await _csvSrv.ExportAllCsv<ArtDgecmActivity, ArtDgecmActivityController, int>(data, User.Identity.Name, para);
+        //    IQueryable<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.AsQueryable();
+        //    await _csvSrv.ExportAllCsv<ArtFtiActivity, ArtFtiActivityController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
-            List<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.CallData(req).Data.ToList();
-            ViewData["title"] = "DGECM-Activities";
-            ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].SkipList;
+            List<ArtFtiEndToEnd> data = dbfcfkc.ArtFtiEndToEnds.CallData(req).Data.ToList();
+            ViewData["title"] = "End to end report";
+            ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

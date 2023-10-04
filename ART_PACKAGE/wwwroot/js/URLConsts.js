@@ -4,6 +4,7 @@
   ArtEcmFtiFullCycle: "/ArtEcmFtiFullCycle/GetData",
   ArtFtiActivity: "/ArtFtiActivity/GetData",
   ArtFtiEcmTransaction: "/ArtFtiEcmTransaction/GetData",
+  ArtFtiEndToEnd: "/ArtFtiEndToEnd/GetData",
   License: "/License/GetData",
   CustomReport: "/report/GetGridData/",
   MyReports: "/report/GetMyReportsData/",

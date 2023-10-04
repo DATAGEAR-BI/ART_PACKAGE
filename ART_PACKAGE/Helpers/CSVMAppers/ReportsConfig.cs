@@ -61,14 +61,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
                             {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
-                            {"BranchId",new DisplayNameAndFormat { DisplayName ="Branch Id"}},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
                             {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
                             {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
                             {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
                             {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
                             {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
-                            {"LastActionTokenBy",new DisplayNameAndFormat { DisplayName ="Last Action Token By"}},
+                            {"LastActionTakenBy",new DisplayNameAndFormat { DisplayName ="Last Action Taken By"}},
                             {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                             {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
                             {"ApplicantId",new DisplayNameAndFormat { DisplayName ="Applicant Id"}},
@@ -88,7 +88,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
                             {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
-                            {"BranchId",new DisplayNameAndFormat { DisplayName ="Branch Id"}},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
                             {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
                             {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
@@ -113,14 +113,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
                             {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
-                            {"BranchId",new DisplayNameAndFormat { DisplayName ="Branch Id"}},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
                             {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
                             {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
                             {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
                             {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
                             {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
-                            {"LastActionTokenBy",new DisplayNameAndFormat { DisplayName ="Last Action Token By"}},
+                            {"LastActionTakenBy",new DisplayNameAndFormat { DisplayName ="Last Action Taken By"}},
                             {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                             {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
                             {"FtiReference",new DisplayNameAndFormat { DisplayName ="Fti Reference"}},
@@ -188,6 +188,44 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                     }
             }
+                    },
+            {
+                        nameof(ArtFtiEndToEndController).ToLower(),new ReportConfig
+                        {
+
+                              DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                            {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                            {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
+                            {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                            {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
+                            {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
+                            {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                            {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                            {"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
+                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                            {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                            {"FtiReference",new DisplayNameAndFormat { DisplayName ="Fti Reference"}},
+                            {"EventStatus",new DisplayNameAndFormat { DisplayName ="Event Status"}},
+                            {"EventCreationDate",new DisplayNameAndFormat { DisplayName ="Event Creation Date"}},
+                            {"MasterAssignedTo",new DisplayNameAndFormat { DisplayName ="Master Assigned To"}},
+                            {"EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
+                            {"StepStatus",new DisplayNameAndFormat { DisplayName ="Step Status"}},
+                            {"StartedTime",new DisplayNameAndFormat { DisplayName ="Started Time"}},
+                            {"LastModTime",new DisplayNameAndFormat { DisplayName ="Last Mod Time"}},
+                            {"TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"}},
+                            {"LastModUser",new DisplayNameAndFormat { DisplayName ="Last Mod User"}},
+                            {"FirstLinePart",new DisplayNameAndFormat { DisplayName ="First Line Part"}},
+                            {"TradeInstructions",new DisplayNameAndFormat { DisplayName ="Trade Instructions"}},
+                            {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
+                            {"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
+
+                    },
+                           SkipList =  new List<string>()
+                            {
+                            }
+                        }
                     },
             ////        {
             ////            nameof(AlertedEntitiesController).ToLower(),new ReportConfig

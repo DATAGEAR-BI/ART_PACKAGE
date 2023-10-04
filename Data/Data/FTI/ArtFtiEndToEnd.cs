@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Data.FTI
 {
-    public class ArtEcmFtiFullCycle
+    public class ArtFtiEndToEnd
     {
         public string EcmReference { get; set; } = null!;
         public DateTime CaseCreationDate { get; set; }
@@ -15,11 +15,9 @@ namespace Data.Data.FTI
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? Name { get; set; }
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         public string? Currency { get; set; }
         public string? PrimaryOwner { get; set; }
-        public string? CaseStatus { get; set; }
-        public string? LastActionTakenBy { get; set; }
         public string? FtiReference { get; set; }
         public string? EventName { get; set; }
         public string? EventStatus { get; set; }
@@ -27,8 +25,14 @@ namespace Data.Data.FTI
         public string? MasterAssignedTo { get; set; }
         public string? EventSteps { get; set; }
         public string? StepStatus { get; set; }
-        public DateTime? StartdTime { get; set; }
-        public DateTime? LstModTime { get; set; }
-        public string? LstModUser { get; set; }
+        public DateTime? StartedTime { get; set; }
+        public DateTime? LastModTime { get; set; }
+        public string? TimeDifference { get; set; }
+        public string? LastModUser { get; set; }
+        public string? FirstLinePart { get; set; }
+        public decimal? TradeInstructions { get; set; }
+        public decimal? FirstLineInstructions { get; set; }
+        public decimal? CaseComments { get; set; }
+
     }
 }

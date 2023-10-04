@@ -42,7 +42,7 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"EcmReference".ToLower(),dropDownService   .GetECMREFERNCEDropDown()   .ToDynamicList() },
-                    {"BranchId".ToLower(),dropDownService       .GetBranchIDDropDown()      .ToDynamicList() },
+                    {"BranchName".ToLower(),dropDownService       .GetBranchNameDropDown()      .ToDynamicList() },
                     {"CustomerName".ToLower(),dropDownService   .GetCustomerNameDropDown()  .ToDynamicList() },
                     {"Product".ToLower(),dropDownService        .GetProductDropDown()       .ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService    .GetProductTypeDropDown()   .ToDynamicList() },

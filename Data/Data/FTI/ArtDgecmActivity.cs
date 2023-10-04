@@ -6,7 +6,7 @@ namespace Data.Data.FTI
     public partial class ArtDgecmActivity
     {
         public string EcmReference { get; set; } = null!;
-        public string? BranchId { get; set; }
+        public string? BranchName { get; set; }
         public DateTime CaseCreationDate { get; set; }
         public string? CustomerName { get; set; }
         public double? Amount { get; set; }

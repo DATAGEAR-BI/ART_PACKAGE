@@ -42,6 +42,7 @@ namespace Data.Data.FTI
         public virtual DbSet<ArtEcmFtiFullCycle> ArtEcmFtiFullCycles { get; set; } = null!;
         public virtual DbSet<ArtFtiActivity> ArtFtiActivities { get; set; } = null!;
         public virtual DbSet<ArtFtiEcmTransaction> ArtFtiEcmTransactions { get; set; } = null!;
+        public virtual DbSet<ArtFtiEndToEnd> ArtFtiEndToEnds { get; set; } = null!;
 
         public FTIContext(DbContextOptions<FTIContext> options) : base(options)
         {

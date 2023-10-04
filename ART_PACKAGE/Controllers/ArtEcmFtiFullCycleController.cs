@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
                     {"FtiReference".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
                     {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
-                    {"BranchId".ToLower(),dropDownService.GetBranchIDDropDown().ToDynamicList() },
+                    {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
                     {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
