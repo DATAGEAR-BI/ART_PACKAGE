@@ -68,9 +68,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("FTI"))
             {
+                string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 string TIZONEContextConnection = config.GetConnectionString("TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
                 _ = services.AddDbContext<TIZONE2Context>(opt => contextBuilder(opt, TIZONEContextConnection));
                 _ = services.AddDbContext<FTIContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+
             }
 
             if (modulesToApply.Contains("DGAML"))
