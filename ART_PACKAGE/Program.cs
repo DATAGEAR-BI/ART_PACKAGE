@@ -4,6 +4,7 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddScoped<IDgUserManager, DgUserManager>();
+builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
