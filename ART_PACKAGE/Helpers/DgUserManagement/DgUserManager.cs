@@ -15,7 +15,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
         {
             apiUrl = config.GetSection("DgUserManagementAuth:apiUrl").Value;
             endPoint = config.GetSection("DgUserManagementAuth:endPoint").Value;
-
+            _httpClient = httpClient;
             _logger = logger;
         }
 
@@ -37,7 +37,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PostAsync(apiUrl + endPoint, content);
+                HttpResponseMessage response = await _httpClient.PostAsync("http://192.168.1.20:9999/dg-userManagement-console/security/signIn", content);
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                     {
                         DgResponse dgResponse = new()
                         {
-                            StatusCode = int.Parse(response.StatusCode.ToString()),
+                            StatusCode = 200,
                             UserLoginInfo = new UserLoginInfo("DGUM", uid, "DGUM"),
                             DgUserManagementResponse = userManagementResponse
                         };
@@ -55,7 +55,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                     }
                     return new()
                     {
-                        StatusCode = int.Parse(response.StatusCode.ToString()),
+                        StatusCode = 500,
 
                     };
                 }
