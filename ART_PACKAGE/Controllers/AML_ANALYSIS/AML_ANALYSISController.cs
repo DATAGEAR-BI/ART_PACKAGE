@@ -2,6 +2,7 @@
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Models;
 using Data.Data.AmlAnalysis;
@@ -25,8 +26,9 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
         private readonly AmlAnalysisContext _context;
         private readonly AmlAnalysisUpdateTableIndecator _updateInd;
         private readonly UsersConnectionIds connections;
+        private readonly IPdfService _pdfSrv;
 
-        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd, UsersConnectionIds connections = null)
+        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd, IPdfService _pdfSrv, UsersConnectionIds connections = null)
         {
             this.logger = logger;
             _config = config;
@@ -35,6 +37,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             _context = context;
             _updateInd = updateInd;
             this.connections = connections;
+            this._pdfSrv = _pdfSrv;
         }
 
 
@@ -188,7 +191,73 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 
             };
         }
-
+        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        {
+            string controllerName = GetType().Name.Replace("Controller", "");
+            List<string> temp = new()
+            {
+                "PartyNumber",
+                "SegmentSorted",
+                "AlertsCount",
+                "AlertsCnt",
+                "ClosedAlertsCount",
+                "TotalWireCAmt"         ,
+                "MaxMls",
+                "PartyName",
+                "PartyTypeDesc",
+                "OccupationDesc",
+                "TotalWireDAmt"           ,
+                "EmployeeInd"          ,
+                "OwnerUserId"          ,
+                "BranchName"          ,
+                "IndustryDesc"          ,
+                "TotalCreditAmount"          ,
+                "TotalDebitAmount"          ,
+                "TotalCreditCnt"         ,
+                "TotalDebitCnt"           ,
+                "TotalAmount"          ,
+                "TotalCnt"          ,
+                "AvgWireCAmt"          ,
+                "MaxWireCAmt"          ,
+                "TotalWireDCnt"           ,
+                "MinWireDAmt"          ,
+                "AvgWireDAmt"          ,
+                "TotalCashCAmt"           ,
+                "TotalCashCCnt"           ,
+                "MinCashCAmt"          ,
+                "AvgCashCAmt"          ,
+                "MaxCashCAmt"          ,
+                "AvgCashDAmt"          ,
+                "TotalCashDAmt"           ,
+                "TotalCashDCnt"           ,
+                "MinCashDAmt"          ,
+                "MaxCashDAmt"          ,
+                "TotalCheckDCnt"          ,
+                "AvgCheckDAmt"          ,
+                "MaxCheckDAmt"          ,
+                "TotalCheckDAmt"          ,
+                "MinCheckDAmt"          ,
+                "MaxClearingcheckCAmt"    ,
+                "MinClearingcheckCAmt"    ,
+                "AvgClearingcheckCAmt"    ,
+                "TotalClearingcheckCAmt"   ,
+                "TotalClearingcheckCCnt"   ,
+                "MaxClearingcheckDAmt"    ,
+                "AvgClearingcheckDAmt"    ,
+                "TotalClearingcheckDAmt"   ,
+                "TotalClearingcheckDCnt"   ,
+                "MinClearingcheckDAmt",
+                "IndustryCode"
+            };
+            List<string> skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
+            Dictionary<string, DisplayNameAndFormat>? displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+            List<ArtAmlAnalysisViewTb> data = _context.ArtAmlAnalysisViewTbs.CallData(req).Data.ToList();
+            ViewData["title"] = "AML Analysis";
+            ViewData["desc"] = "";
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+                                                    , User.Identity.Name, skipList, displayNameAndFormat);
+            return File(pdfBytes, "application/pdf");
+        }
         public async Task<IActionResult> Close([FromBody] CloseRequest closeRequest)
         {
             if (closeRequest == null)

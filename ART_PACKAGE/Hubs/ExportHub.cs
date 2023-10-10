@@ -1,6 +1,7 @@
 
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.AML_ANALYSIS;
 using ART_PACKAGE.Controllers.Audit;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.ECM;
@@ -13,6 +14,7 @@ using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using CsvHelper;
+using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -50,6 +52,7 @@ namespace ART_PACKAGE.Hubs
         private readonly KYCContext _kyc;
         private readonly DBFactory dBFactory;
         private DbContext dbInstance;
+        private readonly AmlAnalysisContext _amlanalysis;
 
         public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
         {
@@ -112,6 +115,12 @@ namespace ART_PACKAGE.Hubs
                 KYCContext kyc = scope.ServiceProvider.GetRequiredService<KYCContext>();
                 _kyc = kyc;
             }
+            if (modules.Contains("AMLANALYSIS"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                AmlAnalysisContext amlanalysis = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
+                _amlanalysis = amlanalysis;
+            }
             this.db = db;
             this.dBFactory = dBFactory;
         }
@@ -161,7 +170,7 @@ namespace ART_PACKAGE.Hubs
             #endregion
 
             #region DGAML
-            if (nameof(DGAMLAlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlCaseDetailView, DGAMLAlertDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLAlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlAlertDetailView, DGAMLAlertDetailsController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtExternalCustomerDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtScenarioAdminController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioAdminView, DGAMLArtScenarioAdminController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtScenarioHistoryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioHistoryView, DGAMLArtScenarioHistoryController>(_dgaml, Context.User.Identity.Name, para);
@@ -246,6 +255,8 @@ namespace ART_PACKAGE.Hubs
             if (nameof(ArtKycSummaryByRiskController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycSummaryByRisk, ArtKycSummaryByRiskController>(_kyc, Context.User.Identity.Name, para);
 
             #endregion
+            if (nameof(AML_ANALYSISController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAnalysisViewTb, AML_ANALYSISController>(_amlanalysis, Context.User.Identity.Name, para);
+
 
         }
 
