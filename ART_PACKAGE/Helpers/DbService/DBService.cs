@@ -1,4 +1,5 @@
-﻿using Data.Audit;
+﻿using Data.Audit.DGMGMT;
+using Data.Audit.DGMGMT_AUD;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCFCORE;
@@ -47,8 +48,10 @@ namespace ART_PACKAGE.Helpers.DBService
             if (modules.Contains("DGAUDIT"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
-                AuditContext audit = scope.ServiceProvider.GetRequiredService<AuditContext>();
-                AUDIT = audit;
+                DGMGMTContext dgmgmt = scope.ServiceProvider.GetRequiredService<DGMGMTContext>();
+                DGMGMTAUDContext dgmgmtAud = scope.ServiceProvider.GetRequiredService<DGMGMTAUDContext>();
+                DGMGMT = dgmgmt;
+                DGMGMTAUD = dgmgmtAud;
             }
             if (modules.Contains("FTI"))
             {
@@ -64,9 +67,12 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public GoAmlContext GOAML { get; }
 
-        public AuditContext AUDIT { get; }
         public DGAMLContext DGAML { get; }
 
         public TIZONE2Context TI { get; }
+
+        public DGMGMTContext DGMGMT { get; }
+
+        public DGMGMTAUDContext DGMGMTAUD { get; }
     }
 }
