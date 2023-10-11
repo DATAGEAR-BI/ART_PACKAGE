@@ -38,8 +38,10 @@ builder.Services.AddDefaultIdentity<AppUser>()
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+     string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
+     if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+     else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
-     opt.LoginPath = new PathString("/Account/Ldapauth/login");
  });
 
 // Add services to the container.
