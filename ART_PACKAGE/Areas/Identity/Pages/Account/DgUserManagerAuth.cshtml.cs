@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.DgUserManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {
@@ -85,6 +86,26 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                     if (result.Succeeded)
                     {
+                        AppUser currentUser = await _userManager.FindByEmailAsync(email);
+
+                        var userRoles = await _userManager.GetRolesAsync(currentUser);
+
+                        // Remove each role from the user
+                        foreach (var role in userRoles)
+                        {
+                            // Remove the role from the user
+                            var roleResult = await _userManager.RemoveFromRoleAsync(currentUser, role);
+
+                            // Check the result if needed
+                            if (roleResult.Succeeded)
+                            {
+                                // Role successfully removed
+                            }
+                            else
+                            {
+                                // Handle the error if removal fails
+                            }
+                        }
                         foreach (Role role in info.DgUserManagementResponse.Roles)
                         {
                             bool roleExists = await _roleManager.RoleExistsAsync(role.Name);
@@ -128,6 +149,26 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 {
                                     ModelState.AddModelError("", $"There is an error while creating an email for you");
                                     return Page();
+                                }
+                            }
+                            AppUser currentUser = await _userManager.FindByEmailAsync(email);
+
+                            var userRoles = await _userManager.GetRolesAsync(currentUser);
+
+                            // Remove each role from the user
+                            foreach (var role in userRoles)
+                            {
+                                // Remove the role from the user
+                                var roleResult = await _userManager.RemoveFromRoleAsync(currentUser, role);
+
+                                // Check the result if needed
+                                if (roleResult.Succeeded)
+                                {
+                                    // Role successfully removed
+                                }
+                                else
+                                {
+                                    // Handle the error if removal fails
                                 }
                             }
                             _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
