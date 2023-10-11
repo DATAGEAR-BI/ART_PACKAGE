@@ -119,9 +119,12 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
 function downloadfile(file, fileName) {
     const uint8Array = atob(file);
 
+    var bytes = new Uint8Array(uint8Array.length);
+    for (var i = 0; i < uint8Array.length; i++) {
+        bytes[i] = uint8Array.charCodeAt(i);
+    }
     // Create a Blob from the Uint8Array data
-    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
-
+    const csvBlob = new Blob(["\ufeff", bytes], { type: 'text/csv; charset=utf-8' });
     // Create an object URL from the Blob
     const objectURL = URL.createObjectURL(csvBlob);
 
