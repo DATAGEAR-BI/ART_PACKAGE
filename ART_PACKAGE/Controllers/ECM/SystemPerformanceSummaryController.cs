@@ -13,7 +13,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    ////[Authorize(Roles = "SystemPerformanceSummary")]
+    [Authorize(Roles = "SystemPerformanceSummary")]
     public class SystemPerformanceSummaryController : Controller
     {
         private readonly EcmContext context;
