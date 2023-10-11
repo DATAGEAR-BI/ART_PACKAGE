@@ -63,7 +63,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             {
                 DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
 
-                if (info.StatusCode != 200)
+                if (info == null || info.StatusCode != 200)
                 {
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
                     return Page();
