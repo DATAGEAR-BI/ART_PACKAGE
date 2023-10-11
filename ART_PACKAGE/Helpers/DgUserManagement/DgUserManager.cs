@@ -8,13 +8,11 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
     {
         private readonly HttpClient _httpClient;
 
-        private readonly string apiUrl;
-        private readonly string endPoint;
+        private readonly string authUrl;
         private readonly ILogger<DgUserManager> _logger;
         public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient)
         {
-            apiUrl = config.GetSection("DgUserManagementAuth:apiUrl").Value;
-            endPoint = config.GetSection("DgUserManagementAuth:endPoint").Value;
+            authUrl = config.GetSection("DgUserManagementAuth:authUrl").Value;
             _httpClient = httpClient;
             _logger = logger;
         }
@@ -37,7 +35,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PostAsync("http://192.168.1.20:9999/dg-userManagement-console/security/signIn", content);
+                HttpResponseMessage response = await _httpClient.PostAsync(authUrl, content);
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
