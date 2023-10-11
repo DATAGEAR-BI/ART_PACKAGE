@@ -110,7 +110,7 @@ namespace ART_PACKAGE.Hubs
             #endregion
 
             #region DGAML
-            if (nameof(DGAMLAlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlCaseDetailView, DGAMLAlertDetailsController>(_dgaml, Context.User.Identity.Name, para);
+            if (nameof(DGAMLAlertDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtDgAmlAlertDetailView, DGAMLAlertDetailsController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtExternalCustomerDetailsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtExternalCustomerDetailView, DGAMLArtExternalCustomerDetailsController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtScenarioAdminController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioAdminView, DGAMLArtScenarioAdminController>(_dgaml, Context.User.Identity.Name, para);
             if (nameof(DGAMLArtScenarioHistoryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtScenarioHistoryView, DGAMLArtScenarioHistoryController>(_dgaml, Context.User.Identity.Name, para);
