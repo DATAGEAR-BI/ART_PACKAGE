@@ -28,6 +28,8 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddScoped<IDgUserManager, DgUserManager>();
+builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
@@ -48,9 +50,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddSingleton<UsersConnectionIds>();
-builder.Services.AddScoped<LDapUserManager>();
-builder.Services.AddScoped<IDgUserManager, DgUserManager>();
-builder.Services.AddSingleton<HttpClient>();
+
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
 
