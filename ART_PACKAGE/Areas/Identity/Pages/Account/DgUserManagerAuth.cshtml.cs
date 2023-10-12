@@ -115,13 +115,10 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                             {
                                 _ = await _roleManager.CreateAsync(new IdentityRole(role.Name));
                             }
-                            // Find the user by username
-                            AppUser user = await _userManager.FindByNameAsync(email);
-
                             // If the user exists, add the role to the user
-                            if (user != null)
+                            if (currentUser != null)
                             {
-                                _ = await _userManager.AddToRoleAsync(user, role.Name);
+                                _ = await _userManager.AddToRoleAsync(currentUser, role.Name);
                                 Console.WriteLine($"Role '{role.Name}' added to user '{email}'.");
                             }
                             else
@@ -151,15 +148,14 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                     return Page();
                                 }
                             }
-                            AppUser currentUser = await _userManager.FindByEmailAsync(email);
 
-                            IList<string> userRoles = await _userManager.GetRolesAsync(currentUser);
+                            IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
                             // Remove each role from the user
                             foreach (string? role in userRoles)
                             {
                                 // Remove the role from the user
-                                IdentityResult roleResult = await _userManager.RemoveFromRoleAsync(currentUser, role);
+                                IdentityResult roleResult = await _userManager.RemoveFromRoleAsync(user, role);
 
                                 // Check the result if needed
                                 if (roleResult.Succeeded)
