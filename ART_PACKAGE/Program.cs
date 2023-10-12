@@ -5,6 +5,7 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
@@ -34,10 +35,12 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddEntityFrameworkStores<AuthContext>();
 
 builder.Services.ConfigureApplicationCookie(opt =>
- {
+{
+    string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
+    if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+    else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
-     opt.LoginPath = new PathString("/Ldapauth/login");
- });
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -45,6 +48,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddSingleton<UsersConnectionIds>();
+builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddScoped<IDgUserManager, DgUserManager>();
+builder.Services.AddSingleton<HttpClient>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
 

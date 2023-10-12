@@ -12,10 +12,10 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            if (authContext.Database.GetPendingMigrations().Any())
-            {
-                authContext.Database.Migrate();
-            }
+            //if (authContext.Database.GetPendingMigrations().Any())
+            //{
+            //    authContext.Database.Migrate();
+            //}
 
             //if (modules.Contains("ECM"))
             //{
