@@ -9,7 +9,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    //////[Authorize(Policy = "Licensed", Roles = "Amortization")]
+    ////////[Authorize(Policy = "Licensed", Roles = "Amortization")]
     public class AmortizationController : Controller
     {
         private readonly FTIContext fti;

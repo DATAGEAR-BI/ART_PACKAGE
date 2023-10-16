@@ -1,10 +1,12 @@
 
-using System.ComponentModel.DataAnnotations;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using Role = ART_PACKAGE.Helpers.DgUserManagement.Role;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {
@@ -29,41 +31,42 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel? Input { get; set; }
 
 
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
 
         public class InputModel
         {
             [Required]
 
-            public string Email { get; set; }
+            public string? Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
-            public string Password { get; set; }
+            public string? Password { get; set; }
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
 
-        public IActionResult OnGet(string ReturnUrl)
+        public IActionResult OnGet(string? ReturnUrl)
         {
             this.ReturnUrl = ReturnUrl;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
                 DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
-
+                IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
+                IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
                 if (info == null || info.StatusCode != 200)
                 {
                     ModelState.AddModelError("", "something wrong happened while checking your account on the server");
@@ -72,62 +75,13 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 else
                 {
                     string? email = info.UserLoginInfo.ProviderKey;
-                    //if (email is not null )
-                    //{
-                    //    user = await uM.FindByEmailAsync(email);
-                    //    if (user is not null && user.EmailConfirmed is not true)
-                    //    {
-                    //        ModelState.AddModelError("", $"Email not confirmed");
-                    //        return View("login", model);
-                    //    }
-                    //}
                     Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
 
                     if (result.Succeeded)
                     {
                         AppUser currentUser = await _userManager.FindByEmailAsync(email);
-
-                        IList<string> userRoles = await _userManager.GetRolesAsync(currentUser);
-
-                        // Remove each role from the user
-                        foreach (string? role in userRoles)
-                        {
-                            // Remove the role from the user
-                            IdentityResult roleResult = await _userManager.RemoveFromRoleAsync(currentUser, role);
-
-                            // Check the result if needed
-                            if (roleResult.Succeeded)
-                            {
-                                // Role successfully removed
-                            }
-                            else
-                            {
-                                // Handle the error if removal fails
-                            }
-                        }
-                        foreach (Role role in info.DgUserManagementResponse.Roles)
-                        {
-                            bool roleExists = await _roleManager.RoleExistsAsync(role.Name);
-
-                            // If the role doesn't exist, create it
-                            if (!roleExists)
-                            {
-                                _ = await _roleManager.CreateAsync(new IdentityRole(role.Name));
-                            }
-                            // Find the user by username
-                            AppUser user = await _userManager.FindByNameAsync(email);
-
-                            // If the user exists, add the role to the user
-                            if (user != null)
-                            {
-                                _ = await _userManager.AddToRoleAsync(user, role.Name);
-                                Console.WriteLine($"Role '{role.Name}' added to user '{email}'.");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"User '{email}' not found.");
-                            }
-                        }
+                        await dgUM.ConfigureGroupsAndRoles();
+                        await AddRolesAndGroupsToUser(currentUser, artRoles, artGroups);
                         return LocalRedirect(ReturnUrl);
                     }
                     else
@@ -151,48 +105,9 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 }
                             }
                             AppUser currentUser = await _userManager.FindByEmailAsync(email);
-
-                            IList<string> userRoles = await _userManager.GetRolesAsync(currentUser);
-
-                            // Remove each role from the user
-                            foreach (string? role in userRoles)
-                            {
-                                // Remove the role from the user
-                                IdentityResult roleResult = await _userManager.RemoveFromRoleAsync(currentUser, role);
-
-                                // Check the result if needed
-                                if (roleResult.Succeeded)
-                                {
-                                    // Role successfully removed
-                                }
-                                else
-                                {
-                                    // Handle the error if removal fails
-                                }
-                            }
                             _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
-                            foreach (Role role in info.DgUserManagementResponse.Roles)
-                            {
-                                bool roleExists = await _roleManager.RoleExistsAsync(role.Name);
-
-                                // If the role doesn't exist, create it
-                                if (!roleExists)
-                                {
-                                    _ = await _roleManager.CreateAsync(new IdentityRole(role.Name));
-                                }
-                                // Find the user by username
-
-                                // If the user exists, add the role to the user
-                                if (user != null)
-                                {
-                                    _ = await _userManager.AddToRoleAsync(user, role.Name);
-                                    Console.WriteLine($"Role '{role.Name}' added to user '{email}'.");
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"User '{email}' not found.");
-                                }
-                            }
+                            await dgUM.ConfigureGroupsAndRoles();
+                            await AddRolesAndGroupsToUser(currentUser, artRoles, artGroups);
                             await _signInManager.SignInAsync(user, true);
 
                         }
@@ -205,5 +120,43 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             }
             return Page();
         }
+
+
+
+
+        private async Task AddRolesAndGroupsToUser(AppUser currentUser, IEnumerable<Role> userRoles, IEnumerable<Group> userGroups)
+        {
+            IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
+            _ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
+            foreach (Group group in userGroups)
+            {
+                _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
+            }
+            foreach (Role role in userRoles)
+            {
+                bool roleExists = await _roleManager.RoleExistsAsync(role.Name.ToLower());
+
+                // If the role doesn't exist, create it
+                if (!roleExists)
+                {
+                    _ = await _roleManager.CreateAsync(new IdentityRole(role.Name.ToLower()));
+                    _ = await _userManager.AddToRoleAsync(currentUser, role.Name.ToLower());
+                }
+                else
+                {
+                    if (!await _userManager.IsInRoleAsync(currentUser, role.Name.ToLower()))
+                        _ = await _userManager.AddToRoleAsync(currentUser, role.Name.ToLower());
+
+                }
+
+            }
+        }
     }
+
+
+
+
+
+
+
 }

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    [Authorize(Roles = "UserPerformancePerUserAndAction")]
+    //[Authorize(Roles = "UserPerformancePerUserAndAction")]
     public class UserPerformancePerUserAndActionController : Controller
     {
         private readonly IMemoryCache _cache;

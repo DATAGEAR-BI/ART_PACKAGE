@@ -3,7 +3,8 @@ using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.License;
-using ART_PACKAGE.Security;
+using ART_PACKAGE.Middlewares.License;
+using ART_PACKAGE.Middlewares.Security;
 using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Constants;
@@ -146,7 +147,23 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             return services;
         }
 
+        public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
+        {
+            _ = services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("CustomAuthorization", p =>
+                {
+                    CustomAuthorizationRequirment req = new();
 
+
+                    _ = p.AddRequirements(req);
+
+                }
+                );
+            });
+            _ = services.AddScoped<IAuthorizationHandler, CustomAuthorizationRequirmentHandler>();
+            return services;
+        }
         public static IServiceCollection AddAmlAnalysis(this IServiceCollection services)
         {
             _ = services.AddScoped<IAmlAnalysis, AmlAnalysis>();

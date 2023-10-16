@@ -7,17 +7,19 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
-using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Middlewares.Logging;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
+using System.Text.Json.Serialization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
 
-    EnvironmentName = "UAT",
+    EnvironmentName = "Development",
 });
 
 builder.Services.AddDbs(builder.Configuration);
@@ -45,10 +47,14 @@ builder.Services.ConfigureApplicationCookie(opt =>
  });
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
+builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -66,7 +72,10 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
+
 app.ApplyModulesMigrations();
+
+app.SeedModuleRoles();
 
 
 // Configure the HTTP request pipeline.
@@ -80,8 +89,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
+app.UseCustomAuthorization();
+app.UseMiddleware<LogUserNameMiddleware>();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");

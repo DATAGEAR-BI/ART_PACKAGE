@@ -10,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    ////[Authorize(Roles = "Triage")]
+    //////[Authorize(Roles = "Triage")]
     public class TriageController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

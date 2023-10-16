@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    //////[Authorize(Policy = "Licensed" , Roles = "InterfaceDetails")]
+    ////////[Authorize(Policy = "Licensed" , Roles = "InterfaceDetails")]
 
 
     public class InterfaceDetailsController : Controller

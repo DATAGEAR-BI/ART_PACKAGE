@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace ART_PACKAGE.Helpers.DgUserManagement
+﻿namespace ART_PACKAGE.Helpers.DgUserManagement
 {
     public class DgUserManagementResponse
     {
-        public List<object> Groups { get; set; }
+        public List<Group> Groups { get; set; }
         public List<Role> Roles { get; set; }
         public List<object> GroupsIds { get; set; }
         public List<object> RolesIds { get; set; }
@@ -24,17 +22,5 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
         public object LastUpdatedDate { get; set; }
         public bool Active { get; set; }
         public bool Enable { get; set; }
-    }
-
-    public class Role
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-    public class DgResponse
-    {
-        public int StatusCode { get; set; }
-        public DgUserManagementResponse? DgUserManagementResponse { get; set; }
-        public UserLoginInfo? UserLoginInfo { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Serilog.Context;
 
-namespace ART_PACKAGE.Helpers.Logging
+namespace ART_PACKAGE.Middlewares.Logging
 {
     public class LogUserNameMiddleware
     {

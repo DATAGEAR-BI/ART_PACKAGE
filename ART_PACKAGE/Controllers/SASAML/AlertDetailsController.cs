@@ -13,7 +13,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    ////[Authorize(Roles = "AlertDetails")]
+    //////[Authorize(Roles = "AlertDetails")]
     public class AlertDetailsController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

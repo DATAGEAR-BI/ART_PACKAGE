@@ -3,5 +3,6 @@
     public interface IDgUserManager
     {
         public Task<DgResponse?> Authnticate(string uid, string password);
+        public Task ConfigureGroupsAndRoles();
     }
 }
