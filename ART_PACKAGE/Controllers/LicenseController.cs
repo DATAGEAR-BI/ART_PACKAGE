@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Models;
-using ART_PACKAGE.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -33,7 +32,7 @@ namespace ART_PACKAGE.Controllers
                 .Get<List<string>>()?.Select(x => x.ToLower());
             using StreamReader reader = new(lic.License.OpenReadStream());
             string licText = reader.ReadToEnd();
-            License license = _licReader.ReadFromText(licText);
+            Middlewares.License.License license = _licReader.ReadFromText(licText);
 
             if (lic.Module == "base" && client != license.Client.ToLower())
             {
@@ -89,8 +88,8 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<License> licenses = _licReader.ReadAllAppLicenses().AsQueryable();
-            KendoDataDesc<License> Data = licenses.CallData(request);
+            IQueryable<Middlewares.License.License> licenses = _licReader.ReadAllAppLicenses().AsQueryable();
+            KendoDataDesc<Middlewares.License.License> Data = licenses.CallData(request);
             var result = new
             {
                 data = Data.Data,

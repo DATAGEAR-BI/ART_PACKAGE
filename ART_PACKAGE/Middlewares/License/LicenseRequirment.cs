@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Middlewares.License
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ART_PACKAGE.Middlewares.License
 {
     public class LicenseRequirment : IAuthorizationRequirement
     {

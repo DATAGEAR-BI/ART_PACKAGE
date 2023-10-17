@@ -12,7 +12,7 @@ using System.Collections;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.ECM
 {
     [Authorize(Roles = "SystemPerformanceSummary")]
     public class SystemPerformanceSummaryController : Controller

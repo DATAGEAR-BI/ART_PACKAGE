@@ -1,6 +1,6 @@
-﻿using ART_PACKAGE.Helpers.License;
-using ART_PACKAGE.Hubs;
+﻿using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using License = ART_PACKAGE.Middlewares.License.License;
 
 namespace ART_PACKAGE.BackGroundServices
 {
@@ -29,9 +29,9 @@ namespace ART_PACKAGE.BackGroundServices
                 {
                     _logger.LogInformation("Timed Hosted Service running.");
                     List<string> messages = new();
-                    IEnumerable<Security.License> licenses = _licReader.ReadAllAppLicenses();
+                    IEnumerable<License> licenses = _licReader.ReadAllAppLicenses();
 
-                    foreach (Security.License lic in licenses)
+                    foreach (License lic in licenses)
                     {
                         if (lic.RemainingDays <= 7)
                         {

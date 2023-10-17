@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.License;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ART_PACKAGE.Middlewares.License
 {

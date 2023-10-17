@@ -6,6 +6,7 @@ using System.Text;
 
 namespace ART_PACKAGE.Helpers.License
 {
+
     public class LicenseReader : ILicenseReader
     {
         private readonly Cipher _cipher;
@@ -21,7 +22,7 @@ namespace ART_PACKAGE.Helpers.License
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
         }
-        public Security.License ReadFromPath(string path)
+        public Middlewares.License.License ReadFromPath(string path)
         {
             string appPath = _webHostEnvironment.ContentRootPath;
             string licPath = Path.Combine(appPath, Path.Combine("Licenses", path));
@@ -39,7 +40,7 @@ namespace ART_PACKAGE.Helpers.License
 
         }
 
-        public Security.License ReadFromText(string encodedtext)
+        public Middlewares.License.License ReadFromText(string encodedtext)
         {
             return Parse(DycreptLicense(encodedtext));
         }
@@ -49,9 +50,9 @@ namespace ART_PACKAGE.Helpers.License
             byte[] original = _cipher.doFinal(encrypted);
             return original;
         }
-        private Security.License Parse(byte[] data)
+        private Middlewares.License.License Parse(byte[] data)
         {
-            Security.License license = new();
+            Middlewares.License.License license = new();
 
             byte[] timeBytes = data[..8];
             long timeValue = 0L;
@@ -80,12 +81,12 @@ namespace ART_PACKAGE.Helpers.License
             }
         }
 
-        public IEnumerable<Security.License> ReadAllAppLicenses()
+        public IEnumerable<Middlewares.License.License> ReadAllAppLicenses()
         {
             string[] licensesFiles = Directory
               .GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses"));
             IEnumerable<string> licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
-            IEnumerable<Security.License> licenses = licenseFilesNames.Select(x => ReadFromPath(x));
+            IEnumerable<Middlewares.License.License> licenses = licenseFilesNames.Select(x => ReadFromPath(x));
             return licenses;
         }
     }

@@ -3,7 +3,7 @@ using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.License;
-using ART_PACKAGE.Security;
+using ART_PACKAGE.Middlewares.License;
 using Data.Audit;
 using Data.Constants;
 using Data.Constants.db;

@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.ECM;
 
 namespace ART_PACKAGE.Helpers.License
 {
@@ -8,7 +9,6 @@ namespace ART_PACKAGE.Helpers.License
         {
             nameof(AlertDetailsController).ToLower() ,
             nameof(AlertSummaryController).ToLower() ,
-
             nameof(TriageController).ToLower() ,
             nameof(HighRiskController).ToLower() ,
             nameof(CustomersController).ToLower() ,

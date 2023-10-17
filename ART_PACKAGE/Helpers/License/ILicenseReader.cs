@@ -1,11 +1,10 @@
-﻿namespace ART_PACKAGE.Helpers.License
+﻿using License = ART_PACKAGE.Middlewares.License.License;
+
+public interface ILicenseReader
 {
-    public interface ILicenseReader
-    {
-        public Security.License ReadFromText(string encodedtext);
+    public License ReadFromText(string encodedtext);
 
-        public Security.License ReadFromPath(string path);
+    public License ReadFromPath(string path);
 
-        public IEnumerable<Security.License> ReadAllAppLicenses();
-    }
+    public IEnumerable<License> ReadAllAppLicenses();
 }

@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Middlewares.Security
