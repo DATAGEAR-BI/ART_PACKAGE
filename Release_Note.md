@@ -1,6 +1,8 @@
-# Release Notes - NCBA V1.0.3
+# Release Notes - NCBA V1.0.4
 
 this is the first release for ncba from art package 
+## Bug Fix
+- add custom authorization policy
 ## New Features
 
 - user managment integrations
