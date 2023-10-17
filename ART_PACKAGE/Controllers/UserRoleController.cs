@@ -37,37 +37,11 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-        public async Task<IActionResult> Test()
-        {
-            IEnumerable<string> claims = User.Claims.Where(c => c.Type == "GROUP").Select(x => x.Value).Distinct();
-            AppUser user = await _um.GetUserAsync(User);
-
-            //_ = await _um.AddClaimAsync(user, new Claim("GROUP", "ART_ECM"));
-            //_ = await _um.AddClaimAsync(user, new Claim("GROUP", "ART_SASAML"));
-            //IList<string> userRoles = await _um.GetRolesAsync(user);
-            //List<Claim> claims = new();
-
-            //IEnumerable<Task> tasks = userRoles.Select(async roleName =>
-            //{
-            //    IdentityRole role = await _rm.FindByNameAsync(roleName);
-            //    if (role != null)
-            //    {
-            //        IList<Claim> roleClaims = await _rm.GetClaimsAsync(role);
-            //        claims.AddRange(roleClaims);
-            //    }
-            //});
-
-            //await Task.WhenAll(tasks);
-
-            //IEnumerable<Claim> userClaims = claims.Union(await _um.GetClaimsAsync(user));
-
-            return Ok(claims);
-        }
 
         public async Task<ContentResult> GetUsersRolesData()
         {
 
-            List<IdentityRole> RolesData = _rm.Roles.OrderBy(ur => ur.Id).ToList();
+            List<IdentityRole> RolesData = _rm.Roles.Where(x => x.Name.ToLower() != "art_superadmin".ToLower()).OrderBy(ur => ur.Id).ToList();
             List<AppUser> UsersData = _um.Users.OrderBy(ur => ur.UserName).ToList();
             List<Dictionary<string, dynamic>> data = new();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Middlewares.Security
 {
@@ -6,13 +7,15 @@ namespace ART_PACKAGE.Middlewares.Security
     {
 
         private readonly RoleManager<IdentityRole> _roleManger;
+        private readonly UserManager<AppUser> _userManger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor)
+        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger)
         {
 
             _roleManger = roleManger;
             _httpContextAccessor = httpContextAccessor;
+            _userManger = userManger;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirment requirement)
@@ -26,26 +29,18 @@ namespace ART_PACKAGE.Middlewares.Security
                 context.Succeed(requirement);
                 return;
             }
-
-            string roleName = string.Empty;
-            roleName = controller.ToLower() == "userrole".ToLower()
-                ? "art_admin".ToLower()
-                : controller.ToLower() == "report".ToLower()
-                ? "art_customreport".ToLower()
-                : controller.ToLower() == "License".ToLower() ? "art_superadmin".ToLower() : $"art_{controller}".ToLower();
-
-            IdentityRole? routeRole = _roleManger.Roles.FirstOrDefault(x => x.Name == roleName);
-
-            if (routeRole == null)
-            {
-                context.Fail();
-                return;
-            }
-
-            IEnumerable<string> groups = (await _roleManger.GetClaimsAsync(routeRole)).Where(c => c.Type == "GROUP").Select(x => x.Value);
+            string roleName = controller.ToLower() == "userrole".ToLower()
+                                ? "art_admin".ToLower()
+                                : controller.ToLower() == "report".ToLower()
+                                ? "art_customreport".ToLower()
+                                : controller.ToLower() == "License".ToLower() ? "art_superadmin".ToLower() : $"art_{controller}".ToLower();
 
 
-            if (!context.User.IsInRole(routeRole.Name) && context.User.Claims.Where(c => c.Type == "GROUP").Select(x => x.Value).Distinct().All(x => !groups.Contains(x)))
+
+            //IEnumerable<string> groups = (await _roleManger.GetClaimsAsync(routeRole)).Where(c => c.Type == "GROUP").Select(x => x.Value);
+            //&& context.User.Claims.Where(c => c.Type == "GROUP").Select(x => x.Value).Distinct().All(x => !groups.Contains(x))
+            AppUser user = await _userManger.GetUserAsync(context.User);
+            if (!await _userManger.IsInRoleAsync(user, roleName))
             {
                 context.Fail();
                 return;

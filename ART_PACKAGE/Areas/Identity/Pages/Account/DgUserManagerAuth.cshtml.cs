@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
                 if (info == null || info.StatusCode != 200)
                 {
-                    ModelState.AddModelError("", "something wrong happened while checking your account on the server");
+                    ModelState.AddModelError("", "something wrong happened while checking for your account");
                     return Page();
                 }
                 else
@@ -80,8 +80,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         AppUser currentUser = await _userManager.FindByEmailAsync(email);
-                        await dgUM.ConfigureGroupsAndRoles();
-                        await AddRolesAndGroupsToUser(currentUser, artRoles, artGroups);
+                        //await dgUM.ConfigureGroupsAndRoles();
+                        await AddRolesAndGroupsToUser(currentUser, artRoles);
                         return LocalRedirect(ReturnUrl);
                     }
                     else
@@ -106,8 +106,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                             }
                             AppUser currentUser = await _userManager.FindByEmailAsync(email);
                             _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
-                            await dgUM.ConfigureGroupsAndRoles();
-                            await AddRolesAndGroupsToUser(currentUser, artRoles, artGroups);
+                            //await dgUM.ConfigureGroupsAndRoles();
+                            await AddRolesAndGroupsToUser(currentUser, artRoles);
                             await _signInManager.SignInAsync(user, true);
 
                         }
@@ -124,14 +124,17 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
 
 
-        private async Task AddRolesAndGroupsToUser(AppUser currentUser, IEnumerable<Role> userRoles, IEnumerable<Group> userGroups)
+        private async Task AddRolesAndGroupsToUser(AppUser currentUser, IEnumerable<Role> userRoles)
         {
-            IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
-            _ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
-            foreach (Group group in userGroups)
-            {
-                _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
-            }
+            //IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
+            //_ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
+            //foreach (Group group in userGroups)
+            //{
+            //    _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
+            //}
+            IList<string> userroles = await _userManager.GetRolesAsync(currentUser);
+            _ = await _userManager.RemoveFromRolesAsync(currentUser, userroles);
+
             foreach (Role role in userRoles)
             {
                 bool roleExists = await _roleManager.RoleExistsAsync(role.Name.ToLower());

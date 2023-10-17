@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Text;
 using AuthContext = ART_PACKAGE.Areas.Identity.Data.AuthContext;
 
@@ -73,81 +71,81 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
             }
             catch (Exception ex)
             {
-                _logger.LogError($"LDap Search Error --------- {ex.Message}");
+                _logger.LogError("User Managment Search Error --------- {Message}", ex.Message);
                 return null;
             }
 
         }
-        public async Task ConfigureGroupsAndRoles()
-        {
+        //public async Task ConfigureGroupsAndRoles()
+        //{
 
-            var model = new
-            {
-                name = "um_admin@dgpw",
-                password = "um_admin1"
-            };
-
-
-
-            // Serialize the model to JSON
-            string jsonModel = JsonConvert.SerializeObject(model);
-
-            // Create StringContent from JSON
-            StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
-            HttpResponseMessage authRes = await _httpClient.PostAsync(authUrl + "/dg-userManagement-console/security/authenticate", content);
-            string token = string.Empty;
-            if (authRes.IsSuccessStatusCode)
-            {
-                string responseBody = await authRes.Content.ReadAsStringAsync();
-                AuthRes? userManagementResponse = JsonConvert.DeserializeObject<AuthRes>(responseBody);
-                token = userManagementResponse.Token;
-            }
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", token);
-            string resString = string.Empty;
-            HttpResponseMessage res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Group/findGroups");
-            if (!res.IsSuccessStatusCode)
-                return;
-            resString = await res.Content.ReadAsStringAsync();
+        //    var model = new
+        //    {
+        //        name = "um_admin@dgpw",
+        //        password = "um_admin1"
+        //    };
 
 
-            IEnumerable<GroupsRes>? groupsRes = JsonConvert.DeserializeObject<List<GroupsRes>>(resString).Where(x => x.Name.ToLower().StartsWith("art_"));
 
-            res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Role/UsersGroupsOfRole");
-            if (!res.IsSuccessStatusCode)
-                return;
-            resString = await res.Content.ReadAsStringAsync();
-            IEnumerable<RoleRes>? rolesRes = JsonConvert.DeserializeObject<List<RoleRes>>(resString).Where(x => x.Name.ToLower().StartsWith("art_"));
+        //    // Serialize the model to JSON
+        //    string jsonModel = JsonConvert.SerializeObject(model);
 
-            List<string> ExistingRoles = _roleManager.Roles.Select(x => x.Name).ToList();
+        //    // Create StringContent from JSON
+        //    StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
+        //    HttpResponseMessage authRes = await _httpClient.PostAsync(authUrl + "/dg-userManagement-console/security/authenticate", content);
+        //    string token = string.Empty;
+        //    if (authRes.IsSuccessStatusCode)
+        //    {
+        //        string responseBody = await authRes.Content.ReadAsStringAsync();
+        //        AuthRes? userManagementResponse = JsonConvert.DeserializeObject<AuthRes>(responseBody);
+        //        token = userManagementResponse.Token;
+        //    }
+        //    _httpClient.DefaultRequestHeaders.Authorization =
+        //        new AuthenticationHeaderValue("Bearer", token);
+        //    string resString = string.Empty;
+        //    HttpResponseMessage res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Group/findGroups");
+        //    if (!res.IsSuccessStatusCode)
+        //        return;
+        //    resString = await res.Content.ReadAsStringAsync();
 
-            foreach (string role in ExistingRoles)
-            {
-                RoleRes? umRole = rolesRes.FirstOrDefault(x => x.Name.ToLower() == role.ToLower());
-                if (umRole == null)
-                {
-                    continue;
-                }
 
-                res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Role/UserGroups/" + umRole.Id);
-                resString = await res.Content.ReadAsStringAsync();
-                IEnumerable<string> roleGroups = groupsRes.Where(x => JsonConvert.DeserializeObject<RoleGroupsRes>(resString).Groups.Contains(x.Id)).Select(x => x.Name.ToUpper());
+        //    IEnumerable<GroupsRes>? groupsRes = JsonConvert.DeserializeObject<List<GroupsRes>>(resString).Where(x => x.Name.ToLower().StartsWith("art_"));
 
-                if (await _roleManager.RoleExistsAsync(role))
-                {
-                    IdentityRole roundRole = await _roleManager.FindByNameAsync(role);
-                    _ = await _roleManager.DeleteAsync(roundRole);
-                }
+        //    res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Role/UsersGroupsOfRole");
+        //    if (!res.IsSuccessStatusCode)
+        //        return;
+        //    resString = await res.Content.ReadAsStringAsync();
+        //    IEnumerable<RoleRes>? rolesRes = JsonConvert.DeserializeObject<List<RoleRes>>(resString).Where(x => x.Name.ToLower().StartsWith("art_"));
 
-                IdentityRole roleToAdd = new(role);
-                _ = await _roleManager.CreateAsync(roleToAdd);
-                foreach (string? group in roleGroups)
-                {
-                    _ = await _roleManager.AddClaimAsync(roleToAdd, new Claim("GROUP", group));
-                }
-            }
+        //    List<string> ExistingRoles = _roleManager.Roles.Select(x => x.Name).ToList();
 
-        }
+        //    foreach (string role in ExistingRoles)
+        //    {
+        //        RoleRes? umRole = rolesRes.FirstOrDefault(x => x.Name.ToLower() == role.ToLower());
+        //        if (umRole == null)
+        //        {
+        //            continue;
+        //        }
+
+        //        res = await _httpClient.GetAsync(authUrl + "/dg-userManagement-console/Role/UserGroups/" + umRole.Id);
+        //        resString = await res.Content.ReadAsStringAsync();
+        //        IEnumerable<string> roleGroups = groupsRes.Where(x => JsonConvert.DeserializeObject<RoleGroupsRes>(resString).Groups.Contains(x.Id)).Select(x => x.Name.ToUpper());
+
+        //        if (await _roleManager.RoleExistsAsync(role))
+        //        {
+        //            IdentityRole roundRole = await _roleManager.FindByNameAsync(role);
+        //            _ = await _roleManager.DeleteAsync(roundRole);
+        //        }
+
+        //        IdentityRole roleToAdd = new(role);
+        //        _ = await _roleManager.CreateAsync(roleToAdd);
+        //        foreach (string? group in roleGroups)
+        //        {
+        //            _ = await _roleManager.AddClaimAsync(roleToAdd, new Claim("GROUP", group));
+        //        }
+        //    }
+
+        //}
 
     }
 }
