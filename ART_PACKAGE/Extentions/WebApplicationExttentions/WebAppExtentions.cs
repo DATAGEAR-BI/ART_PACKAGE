@@ -1,4 +1,16 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.Data.AmlAnalysis;
+using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
+using Data.Data.Audit;
+using Data.Data.ECM;
+using Data.Data.FTI;
+using Data.Data.KYC;
+using Data.Data.SASAml;
+using Data.Data.Segmentation;
+using FakeItEasy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -100,5 +112,36 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //    }
             //}
         }
+
+        public static async void SeedModuleRoles(this WebApplication app)
+        {
+
+            IEnumerable<Type> types = AppDomain.CurrentDomain
+                        .GetAssemblies()
+                        .SelectMany(a => a.GetTypes())
+                        .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
+            RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+            foreach (string module in modules)
+            {
+                IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
+                foreach (string role in moduleRoles)
+                {
+                    if (!await rm.RoleExistsAsync(role))
+                    {
+                        IdentityRole roleToadd = new(role);
+                        _ = await rm.CreateAsync(roleToadd);
+                    }
+
+                }
+            }
+
+        }
+
+
     }
+
+
+
 }

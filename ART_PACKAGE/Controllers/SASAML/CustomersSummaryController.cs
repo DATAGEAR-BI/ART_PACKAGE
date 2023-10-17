@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    ////[Authorize(Roles = "CustomersSummary")]
+    //////[Authorize(Roles = "CustomersSummary")]
     public class CustomersSummaryController : Controller
     {
 

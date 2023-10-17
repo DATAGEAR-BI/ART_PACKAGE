@@ -4,19 +4,22 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
-using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Middlewares.Logging;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
+using System.Text.Json.Serialization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
 
-    EnvironmentName = "UAT",
+    EnvironmentName = "Development",
 });
 
 builder.Services.AddDbs(builder.Configuration);
@@ -27,6 +30,8 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddScoped<IDgUserManager, DgUserManager>();
+builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
@@ -35,15 +40,21 @@ builder.Services.AddDefaultIdentity<AppUser>()
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+     string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
+     if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+     else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
-     opt.LoginPath = new PathString("/Account/Ldapauth/login");
  });
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
+builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -61,7 +72,10 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
+
 app.ApplyModulesMigrations();
+
+app.SeedModuleRoles();
 
 
 // Configure the HTTP request pipeline.
@@ -75,8 +89,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
+app.UseCustomAuthorization();
+app.UseMiddleware<LogUserNameMiddleware>();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");

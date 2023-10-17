@@ -9,7 +9,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    //////[Authorize(Policy = "Licensed" , Roles = "OurChargesByCustomer")]
+    ////////[Authorize(Policy = "Licensed" , Roles = "OurChargesByCustomer")]
 
 
     public class OurChargesByCustomerController : Controller

@@ -1,10 +1,10 @@
 
-using System.ComponentModel.DataAnnotations;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.LDap;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {
@@ -27,36 +27,37 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel? Input { get; set; }
 
 
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
 
         public class InputModel
         {
             [Required]
 
-            public string Email { get; set; }
+            public string? Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
-            public string Password { get; set; }
+            public string? Password { get; set; }
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
 
-        public IActionResult OnGet(string ReturnUrl)
+        public IActionResult OnGet(string? ReturnUrl)
         {
             this.ReturnUrl = ReturnUrl;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            ReturnUrl = ReturnUrl;
             if (ModelState.IsValid)
             {
                 UserLoginInfo? info = ldapUM.Authnticate(Input.Email, Input.Password);

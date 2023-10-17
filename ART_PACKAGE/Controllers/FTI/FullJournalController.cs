@@ -10,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    //////[Authorize(Policy = "Licensed" , Roles = "FullJournal")]
+    ////////[Authorize(Policy = "Licensed" , Roles = "FullJournal")]
 
 
     public class FullJournalController : Controller

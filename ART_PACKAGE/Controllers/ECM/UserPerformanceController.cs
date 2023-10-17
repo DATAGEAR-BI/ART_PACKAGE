@@ -10,7 +10,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    ////[Authorize(Roles = "UserPerformance")]
+    //[Authorize(Roles = "UserPerformance")]
     public class UserPerformanceController : Controller
     {
 

@@ -220,9 +220,10 @@ namespace SqlServerMigrations.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "83393df2-1bfa-471d-9a8a-8bf7c4b3f112", "fdd11011-3aec-4181-813b-24b08849fa67", "CutomReport", "CUTOMREPORT" },
-                    { "ae3a9d7a-5adf-4cd9-85c4-517e59d08513", "47f62125-0e90-4978-84fa-90987ab4dce6", "Admin", "ADMIN" },
-                    { "e60411ee-1127-4f5e-8f03-367ef13017a6", "b3d5236f-7003-4e01-93d8-bbb61fe06dac", "Home", "HOME" }
+                    { "83393df2-1bfa-471d-9a8a-8bf7c4b3f112", "5a7f54de-0438-489b-8890-4200b7bc54f1", "art_customreport", "art_cutomreport".ToUpper() },
+                    { "ae3a9d7a-5adf-4cd9-85c4-517e59d08513", "81999050-63d2-4f85-9479-e71e117e5c0e", "art_admin", "art_admin".ToUpper()  },
+                    { "f96288d4-8936-4fb1-8427-d5b45dd66023", "981989d9-a0ba-43cb-920a-45e6ac157e2b", "art_superadmin", "art_superadmin".ToUpper()  },
+                    { "e60411ee-1127-4f5e-8f03-367ef13017a6", "716d9c6a-bad1-40ee-a900-05ce1973368a", "art_home", "art_home".ToUpper()  }
                 });
 
             migrationBuilder.InsertData(
@@ -244,6 +245,11 @@ namespace SqlServerMigrations.Migrations
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { "e60411ee-1127-4f5e-8f03-367ef13017a6", "8e445865-a24d-4543-a6c6-9443d048cdb9" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "f96288d4-8936-4fb1-8427-d5b45dd66023", "8e445865-a24d-4543-a6c6-9443d048cdb9" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArtSavedCustomReport_UserId",

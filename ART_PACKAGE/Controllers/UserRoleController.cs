@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 
-
-
 namespace ART_PACKAGE.Controllers
 {
 
@@ -40,12 +38,10 @@ namespace ART_PACKAGE.Controllers
 
 
 
-
-
         public async Task<ContentResult> GetUsersRolesData()
         {
 
-            List<IdentityRole> RolesData = _rm.Roles.OrderBy(ur => ur.Id).ToList();
+            List<IdentityRole> RolesData = _rm.Roles.Where(x => x.Name.ToLower() != "art_superadmin".ToLower()).OrderBy(ur => ur.Id).ToList();
             List<AppUser> UsersData = _um.Users.OrderBy(ur => ur.UserName).ToList();
             List<Dictionary<string, dynamic>> data = new();
 

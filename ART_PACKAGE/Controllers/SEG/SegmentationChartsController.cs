@@ -6,7 +6,7 @@ using System.Data;
 
 namespace ART_PACKAGE.Controllers.SEG
 {
-    //////[Authorize(Roles = "SegmentationCharts", Policy = "Licensed")]
+    ////////[Authorize(Roles = "SegmentationCharts", Policy = "Licensed")]
     public class SegmentationChartsController : Controller
     {
 

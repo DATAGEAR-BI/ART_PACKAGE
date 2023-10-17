@@ -1,6 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.License;
 
-namespace ART_PACKAGE.Security
+namespace ART_PACKAGE.Middlewares.License
 {
     public class LicenseHandler : AuthorizationHandler<LicenseRequirment>
     {

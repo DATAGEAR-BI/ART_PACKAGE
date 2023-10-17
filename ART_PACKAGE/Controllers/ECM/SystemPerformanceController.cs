@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    ////[Authorize(Roles = "SystemPerformance")]
+    //[Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : Controller
     {
         private readonly EcmContext context;
