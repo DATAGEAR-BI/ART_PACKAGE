@@ -8,9 +8,9 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
-using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares.Logging;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -67,8 +67,9 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
-app.ApplyModulesMigrations();
+//app.ApplyModulesMigrations();
 
+app.SeedModuleRoles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

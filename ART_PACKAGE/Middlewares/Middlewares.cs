@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Security;
+﻿using ART_PACKAGE.Middlewares.License;
+using ART_PACKAGE.Middlewares.Security;
 
 namespace ART_PACKAGE.Middlewares
 {
@@ -8,5 +9,11 @@ namespace ART_PACKAGE.Middlewares
         {
             return app.UseMiddleware<LicenseMiddleWare>();
         }
+
+        public static IApplicationBuilder UseCustomAuthorization(this WebApplication app)
+        {
+            return app.UseMiddleware<CustomAuthorizationMiddleware>();
+        }
     }
 }
+
