@@ -1,16 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.Data.AmlAnalysis;
-using Data.Data.ARTDGAML;
-using Data.Data.ARTGOAML;
-using Data.Data.Audit;
-using Data.Data.ECM;
-using Data.Data.FTI;
-using Data.Data.KYC;
-using Data.Data.SASAml;
-using Data.Data.Segmentation;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
