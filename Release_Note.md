@@ -3,8 +3,7 @@
 this is the first release for ncba from art package 
 ## New Features
 
-- Home Sanction
-- Two reports (system performance - alerted entities) 
+- user managment integrations
 
 
 ## Release Date 
