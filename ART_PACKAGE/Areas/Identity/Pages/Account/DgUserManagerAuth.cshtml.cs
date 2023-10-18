@@ -86,7 +86,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                             _logger.LogInformation($"Success {email}");
                             AppUser currentUser = await _userManager.FindByEmailAsync(email);
                             //await dgUM.ConfigureGroupsAndRoles();
-                            await AddRolesAndGroupsToUser(currentUser, artRoles);
+                            await AddRolesAndGroupsToUser(currentUser.Email, artRoles);
                             return LocalRedirect(ReturnUrl);
                         }
                         else
@@ -112,7 +112,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 //AppUser currentUser = await _userManager.FindByEmailAsync(email);
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 //await dgUM.ConfigureGroupsAndRoles();
-                                await AddRolesAndGroupsToUser(user, artRoles);
+                                await AddRolesAndGroupsToUser(user.Email, artRoles);
                                 await _signInManager.SignInAsync(user, true);
 
                             }
@@ -136,7 +136,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
 
 
-        private async Task AddRolesAndGroupsToUser(AppUser currentUser, IEnumerable<Role> userRoles)
+        private async Task AddRolesAndGroupsToUser(string currentUserEmail, IEnumerable<Role> userRoles)
         {
             //IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
             //_ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
@@ -144,6 +144,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             //{
             //    _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
             //}
+            AppUser currentUser = await _userManager.FindByEmailAsync(currentUserEmail);
             IList<string> userroles = await _userManager.GetRolesAsync(currentUser);
             _ = await _userManager.RemoveFromRolesAsync(currentUser, userroles);
 
