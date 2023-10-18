@@ -63,8 +63,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
-            try
-            {
+            try {
                 if (ModelState.IsValid)
                 {
                     DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
@@ -72,6 +71,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
                     if (info == null || info.StatusCode != 200)
                     {
+                        _logger.LogInformation(info.StatusCode.ToString());
                         ModelState.AddModelError("", "something wrong happened while checking for your account");
                         return Page();
                     }
@@ -82,6 +82,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                         if (result.Succeeded)
                         {
+                            _logger.LogInformation($"Success {email}");
                             AppUser currentUser = await _userManager.FindByEmailAsync(email);
                             //await dgUM.ConfigureGroupsAndRoles();
                             await AddRolesAndGroupsToUser(currentUser, artRoles);
@@ -107,10 +108,10 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         return Page();
                                     }
                                 }
-                                AppUser currentUser = await _userManager.FindByEmailAsync(email);
+                                //AppUser currentUser = await _userManager.FindByEmailAsync(email);
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 //await dgUM.ConfigureGroupsAndRoles();
-                                await AddRolesAndGroupsToUser(currentUser, artRoles);
+                                await AddRolesAndGroupsToUser(user, artRoles);
                                 await _signInManager.SignInAsync(user, true);
 
                             }
@@ -120,13 +121,12 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     }
 
                 }
-            }
-            catch (Exception ex)
+            } catch(Exception ex)
             {
-                Console.WriteLine("Error");
-                Console.WriteLine(ReturnUrl);
-                Console.WriteLine(ex.ToString());
-                Console.WriteLine(ex.Message);
+                _logger.LogInformation("Error");
+                _logger.LogInformation(ReturnUrl);
+                _logger.LogInformation(ex.ToString());
+                _logger.LogInformation(ex.Message);
             }
             return Page();
         }
