@@ -63,7 +63,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
-            try {
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
@@ -121,7 +122,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     }
 
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogInformation("Error");
                 _logger.LogInformation(ReturnUrl);
