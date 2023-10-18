@@ -62,61 +62,72 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
-            if (ModelState.IsValid)
+            try
             {
-                DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
-                IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
-                IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
-                if (info == null || info.StatusCode != 200)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "something wrong happened while checking for your account");
-                    return Page();
-                }
-                else
-                {
-                    string? email = info.UserLoginInfo.ProviderKey;
-                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
-
-                    if (result.Succeeded)
+                    DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
+                    IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
+                    IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
+                    if (info == null || info.StatusCode != 200)
                     {
-                        AppUser currentUser = await _userManager.FindByEmailAsync(email);
-                        //await dgUM.ConfigureGroupsAndRoles();
-                        await AddRolesAndGroupsToUser(currentUser, artRoles);
-                        return LocalRedirect(ReturnUrl);
+                        _logger.LogInformation(info.StatusCode.ToString());
+                        ModelState.AddModelError("", "something wrong happened while checking for your account");
+                        return Page();
                     }
                     else
                     {
+                        string? email = info.UserLoginInfo.ProviderKey;
+                        Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
 
-                        if (email is not null)
+                        if (result.Succeeded)
                         {
-                            AppUser user = await _userManager.FindByEmailAsync(email);
-                            if (user is null)
-                            {
-                                user = new AppUser()
-                                {
-                                    Email = email,
-                                    UserName = email
-                                };
-                                IdentityResult createresult = await _userManager.CreateAsync(user);
-                                if (!createresult.Succeeded)
-                                {
-                                    ModelState.AddModelError("", $"There is an error while creating an email for you");
-                                    return Page();
-                                }
-                            }
+                            _logger.LogInformation($"Success {email}");
                             AppUser currentUser = await _userManager.FindByEmailAsync(email);
-                            _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                             //await dgUM.ConfigureGroupsAndRoles();
-                            await AddRolesAndGroupsToUser(currentUser, artRoles);
-                            await _signInManager.SignInAsync(user, true);
-
+                            await AddRolesAndGroupsToUser(currentUser.Email, artRoles);
+                            return LocalRedirect(ReturnUrl);
                         }
-                        return LocalRedirect(returnUrl);
+                        else
+                        {
+
+                            if (email is not null)
+                            {
+                                AppUser user = await _userManager.FindByEmailAsync(email);
+                                if (user is null)
+                                {
+                                    user = new AppUser()
+                                    {
+                                        Email = email,
+                                        UserName = email
+                                    };
+                                    IdentityResult createresult = await _userManager.CreateAsync(user);
+                                    if (!createresult.Succeeded)
+                                    {
+                                        ModelState.AddModelError("", $"There is an error while creating an email for you");
+                                        return Page();
+                                    }
+                                }
+                                //AppUser currentUser = await _userManager.FindByEmailAsync(email);
+                                _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
+                                //await dgUM.ConfigureGroupsAndRoles();
+                                await AddRolesAndGroupsToUser(user.Email, artRoles);
+                                await _signInManager.SignInAsync(user, true);
+
+                            }
+                            return LocalRedirect(returnUrl);
+                        }
+
                     }
 
                 }
-
-
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error");
+                _logger.LogInformation(ReturnUrl);
+                _logger.LogInformation(ex.ToString());
+                _logger.LogInformation(ex.Message);
             }
             return Page();
         }
@@ -124,7 +135,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
 
 
-        private async Task AddRolesAndGroupsToUser(AppUser currentUser, IEnumerable<Role> userRoles)
+        private async Task AddRolesAndGroupsToUser(string currentUserEmail, IEnumerable<Role> userRoles)
         {
             //IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
             //_ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
@@ -132,6 +143,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
             //{
             //    _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
             //}
+            AppUser currentUser = await _userManager.FindByEmailAsync(currentUserEmail);
             IList<string> userroles = await _userManager.GetRolesAsync(currentUser);
             _ = await _userManager.RemoveFromRolesAsync(currentUser, userroles);
 
