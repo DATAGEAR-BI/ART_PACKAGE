@@ -62,6 +62,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
+            _logger.LogWarning("user {email} tring to login at {time}", Input.Email, DateTime.Now.ToShortTimeString());
             try
             {
                 if (ModelState.IsValid)
@@ -80,14 +81,15 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                         IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
 
                         string? email = info.UserLoginInfo.ProviderKey;
+                        _logger.LogWarning("checking for user External Login");
+                        _logger.LogWarning("User Roles : ({roles})", string.Join(",", artRoles.Select(x => x.Name)));
                         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
 
                         if (result.Succeeded)
                         {
                             _logger.LogInformation($"Success {email}");
-                            AppUser currentUser = await _userManager.FindByEmailAsync(email);
-                            //await dgUM.ConfigureGroupsAndRoles();
-                            await AddRolesAndGroupsToUser(currentUser.Email, artRoles);
+                            _logger.LogWarning($"Adding roles to user");
+                            await AddRolesAndGroupsToUser(email, artRoles);
                             return LocalRedirect(ReturnUrl);
                         }
                         else
@@ -110,9 +112,9 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         return Page();
                                     }
                                 }
-                                //AppUser currentUser = await _userManager.FindByEmailAsync(email);
+
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
-                                //await dgUM.ConfigureGroupsAndRoles();
+                                _logger.LogWarning($"Adding roles to user");
                                 await AddRolesAndGroupsToUser(user.Email, artRoles);
                                 await _signInManager.SignInAsync(user, true);
 
