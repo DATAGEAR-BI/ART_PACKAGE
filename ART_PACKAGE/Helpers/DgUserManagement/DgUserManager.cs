@@ -23,14 +23,14 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
             this.authContext = authContext;
         }
 
-        public async Task<DgResponse?> Authnticate(string uid, string password)
+        public async Task<DgResponse?> Authnticate(string name, string password)
         {
             try
             {
 
                 var model = new
                 {
-                    name = uid,
+                    name,
                     password
                 };
 
@@ -40,11 +40,13 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
 
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
-
+                _logger.LogWarning("sending req to DGUM with body  : {ReqBody}", await content.ReadAsStringAsync());
                 HttpResponseMessage response = await _httpClient.PostAsync(authUrl + "/dg-userManagement-console/security/signIn", content);
                 if (response.IsSuccessStatusCode)
                 {
+
                     string responseBody = await response.Content.ReadAsStringAsync();
+                    _logger.LogWarning("res received from DGUM with body  : {ReqBody}", responseBody);
                     DgUserManagementResponse? userManagementResponse = JsonConvert.DeserializeObject<DgUserManagementResponse>(responseBody);
 
                     if (userManagementResponse != null)
@@ -52,7 +54,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                         DgResponse dgResponse = new()
                         {
                             StatusCode = 200,
-                            UserLoginInfo = new UserLoginInfo("DGUM", uid, "DGUM"),
+                            UserLoginInfo = new UserLoginInfo("DGUM", name, "DGUM"),
                             DgUserManagementResponse = userManagementResponse
                         };
                         return dgResponse;
@@ -65,6 +67,8 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 }
                 else
                 {
+                    _logger.LogWarning("res received from DGUM with Status Code : {StatusCode} , Error  : {Error}", response.StatusCode, await response.Content.ReadAsStringAsync());
+
                     return null;
                 }
 
