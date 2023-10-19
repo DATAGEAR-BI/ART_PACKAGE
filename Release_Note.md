@@ -1,4 +1,4 @@
-# Release Notes - NCBA V1.0.7
+# Release Notes - NCBA V1.0.8
 
 this is the first release for ncba from art package 
 ## Bug Fix
