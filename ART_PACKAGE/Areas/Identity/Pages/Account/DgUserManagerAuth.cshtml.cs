@@ -116,7 +116,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 _logger.LogWarning($"Adding roles to user");
-                                await AddRolesAndGroupsToUser(user.Email, artRoles);
+                                string mail = user.Email;
+                                await AddRolesAndGroupsToUser(mail, artRoles);
                                 await _signInManager.SignInAsync(user, true);
 
                             }
