@@ -65,14 +65,22 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 }
                 else
                 {
-                    return null;
+                    return new()
+                    {
+                        StatusCode = 500,
+
+                    };
                 }
 
             }
             catch (Exception ex)
             {
                 _logger.LogError("User Managment Search Error --------- {Message}", ex.Message);
-                return null;
+                return new()
+                {
+                    StatusCode = 500,
+
+                };
             }
 
         }

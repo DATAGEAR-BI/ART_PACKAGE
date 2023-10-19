@@ -67,16 +67,18 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 if (ModelState.IsValid)
                 {
                     DgResponse? info = await dgUM.Authnticate(Input.Email, Input.Password);
-                    IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
-                    IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
                     if (info == null || info.StatusCode != 200)
                     {
+
                         _logger.LogInformation(info.StatusCode.ToString());
                         ModelState.AddModelError("", "something wrong happened while checking for your account");
                         return Page();
                     }
                     else
                     {
+                        IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
+                        IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
+
                         string? email = info.UserLoginInfo.ProviderKey;
                         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
 
@@ -137,33 +139,38 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
 
         private async Task AddRolesAndGroupsToUser(string currentUserEmail, IEnumerable<Role> userRoles)
         {
-            //IEnumerable<System.Security.Claims.Claim> userGroupsClaims = (await _userManager.GetClaimsAsync(currentUser)).Where(x => x.Type == "GROUP");
-            //_ = await _userManager.RemoveClaimsAsync(currentUser, userGroupsClaims);
-            //foreach (Group group in userGroups)
-            //{
-            //    _ = await _userManager.AddClaimAsync(currentUser, new("GROUP", group.Name.ToUpper()));
-            //}
             AppUser currentUser = await _userManager.FindByEmailAsync(currentUserEmail);
-            IList<string> userroles = await _userManager.GetRolesAsync(currentUser);
-            _ = await _userManager.RemoveFromRolesAsync(currentUser, userroles);
+
+            if (currentUser == null)
+            {
+                // Handle the case where the user doesn't exist
+                return;
+            }
+
+            // Remove all existing roles from the user
+            IList<string> userRolesToRemove = await _userManager.GetRolesAsync(currentUser);
+            if (userRolesToRemove.Any())
+            {
+                _ = await _userManager.RemoveFromRolesAsync(currentUser, userRolesToRemove);
+            }
 
             foreach (Role role in userRoles)
             {
-                bool roleExists = await _roleManager.RoleExistsAsync(role.Name.ToLower());
+                string normalizedRoleName = role.Name.ToLower();
+
+                bool roleExists = await _roleManager.RoleExistsAsync(normalizedRoleName);
 
                 // If the role doesn't exist, create it
                 if (!roleExists)
                 {
-                    _ = await _roleManager.CreateAsync(new IdentityRole(role.Name.ToLower()));
-                    _ = await _userManager.AddToRoleAsync(currentUser, role.Name.ToLower());
+                    _ = await _roleManager.CreateAsync(new IdentityRole(normalizedRoleName));
                 }
-                else
+
+                // Add the user to the role
+                if (!await _userManager.IsInRoleAsync(currentUser, normalizedRoleName))
                 {
-                    if (!await _userManager.IsInRoleAsync(currentUser, role.Name.ToLower()))
-                        _ = await _userManager.AddToRoleAsync(currentUser, role.Name.ToLower());
-
+                    _ = await _userManager.AddToRoleAsync(currentUser, normalizedRoleName);
                 }
-
             }
         }
     }
