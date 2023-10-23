@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using FakeItEasy;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
@@ -127,6 +128,15 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 }
             }
 
+        }
+
+
+
+
+        public static void StartTasks(this WebApplication app)
+        {
+            IRecurringJobManager ruccrunibJ = app.Services.GetRequiredService<IRecurringJobManager>();
+            ruccrunibJ.AddOrUpdate("log", () => Console.WriteLine("Test Log"), Cron.Minutely);
         }
 
 

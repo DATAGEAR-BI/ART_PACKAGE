@@ -9,8 +9,8 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
-using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -27,7 +27,14 @@ builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+builder.Services.AddHangfire(
+configuration => configuration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(builder.Configuration.GetConnectionString("AuthContextConnection")));
 
+builder.Services.AddHangfireServer();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
@@ -73,10 +80,13 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 WebApplication app = builder.Build();
 
+
+
 app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();
 
+app.StartTasks();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -91,7 +101,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
-app.UseCustomAuthorization();
+//app.UseCustomAuthorization();
+app.UseHangfireDashboard("/TasksDashBoard");
+
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
@@ -102,6 +114,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
 
 
 
