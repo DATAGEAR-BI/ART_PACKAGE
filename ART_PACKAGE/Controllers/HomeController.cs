@@ -4,6 +4,7 @@ using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
