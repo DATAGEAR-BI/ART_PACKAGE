@@ -4,7 +4,6 @@ using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -100,6 +99,15 @@ namespace ART_PACKAGE.Controllers
                     value = m.Sum(x => x.NumberOfCases)
                 })
             });
+            var monthData = _db.ArtHomeMainCasesMonths.ToList().GroupBy(x => x.Year).Select(x => new
+            {
+                year = x.Key.ToString(),
+                monthData = x.GroupBy(m => m.Month).Select(m => new
+                {
+                    Month = m.Key.ToString(),
+                    value = m.Sum(x => x.NumberOfCases)
+                })
+            });
             var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", x.NumberOfCases, year = x.YEAR });
             var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR }); ;
 
@@ -109,7 +117,8 @@ namespace ART_PACKAGE.Controllers
             {
                 dates = dateData,
                 status = statusData,
-                types = typesData
+                types = typesData,
+                monthCaseData = monthData
             });
 
         }

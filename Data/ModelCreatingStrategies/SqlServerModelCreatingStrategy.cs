@@ -1700,7 +1700,29 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("int")
                     .HasColumnName("YEAR");
             });
+            modelBuilder.Entity<ArtHomeMainCasesMonth>(entity =>
+            {
+                entity.HasNoKey();
 
+                entity.ToView("ART_HOME_MAIN_CASES_MONTH", "ART_DB");
+
+                entity.Property(e => e.Day)
+                    .HasColumnType("int")
+                    .HasColumnName("DAY");
+
+                entity.Property(e => e.Month)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("decimal")
+                    .HasColumnName("NUMBER_OF_CASES");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int")
+                    .HasColumnName("YEAR");
+            });
             modelBuilder.Entity<ArtHomeCasesStatus>(entity =>
             {
                 entity.HasNoKey();
@@ -4532,8 +4554,8 @@ namespace Data.ModelCreatingStrategies
                    .HasMaxLength(64)
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
-                
-                
+
+
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
                 entity.Property(e => e.CaseCreationDate)
                     .HasColumnType("datetime")
@@ -4659,3 +4681,17 @@ namespace Data.ModelCreatingStrategies
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

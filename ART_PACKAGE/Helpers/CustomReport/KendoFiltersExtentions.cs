@@ -187,7 +187,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     else if (column.type.ToLower() == "string".ToLower())
                     {
                         string value = ((JsonElement)i.value).ToObject<string>();
-                        DateTime.TryParse(value, out DateTime dt);
+                        _ = DateTime.TryParse(value, out DateTime dt);
                         v = string.Format(StringOp[i.@operator], value, i.field);
 
                     }
@@ -231,7 +231,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
-                    _sb.Append(GetFiltersString<T>(filter));
+                    _ = _sb.Append(GetFiltersString<T>(filter));
 
                 }
                 else

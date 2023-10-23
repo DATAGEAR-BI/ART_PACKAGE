@@ -1,6 +1,5 @@
-# Release Notes - ABK v1.0.0
+# Release Notes - ABK v1.0.1
 
-this is the first Art package Released for ABK
 
 ## New Features
 

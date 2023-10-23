@@ -2,6 +2,7 @@
 var dateData = [];
 var typeData = [];
 var statusData = [];
+var monthCaseData = [];
 getData().then(x => {
 
 
@@ -28,15 +29,17 @@ getData().then(x => {
     }
 
     makeDatesChart(dateData, "date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month", (di) => {
-        console.log(di.year);
-        console.log(typeData);
+   
         var year = di.year;
         var yearedTypeData = typeData.filter(x => x.year == year);
         var yearedStatuseData = statusData.filter(x => x.year == year);
+        var _monthCaseData = monthCaseData.find(x => x.year == year);
+        console.log(_monthCaseData);
+        makedynamicChart(0, _monthCaseData.monthData, "Cases Per Month", "month", "value", "month", true);
         makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", true);
         makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
     });
-   
+
 
 
 })
@@ -47,12 +50,6 @@ async function getData() {
     dateData = data.dates;
     typeData = data.types;
     statusData = data.status;
+    monthCaseData = data.monthCaseData;
+
 }
-
-
-
-
-
-
-
-
