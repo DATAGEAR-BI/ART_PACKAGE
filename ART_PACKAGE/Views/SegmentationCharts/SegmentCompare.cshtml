@@ -6,7 +6,6 @@
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-    <script src="~/js/segmentcompare.js" asp-append-version="true"></script>
 
 
 <section class="content ">
@@ -56,8 +55,17 @@
     </div>
 
     <hr style="border:3px ;border-top: 3px solid #013459 ">
-    
+    <div style="margin:0 auto;width:400px;">
+        <select name="series-id" id="seriesId" onchange="OnChangeSeries(this)"
+                class="selectpicker form-control form-control targeted-search-input ng-pristine ng-valid ng-touched" multiple>
+            <option value="select-all">-- Select All --</option>
+        </select>
+    </div>
     <div class="row">
         <div id="SegmentsComparisonChart" class="col-md-12" style="height:1000px;padding-bottom:50px;"></div>
     </div>
 </section>
+@section scripts{
+    <script src="~/js/segmentcompare.js" asp-append-version="true"></script>
+
+}
