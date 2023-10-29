@@ -7,6 +7,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
+using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
@@ -40,10 +41,21 @@ builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
+
+
+
+
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
+
+
+
+builder.Services.AddScoped<IMailSender, MailSender>();
+builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection(MailConfiguration.OptionName));
+
+
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {

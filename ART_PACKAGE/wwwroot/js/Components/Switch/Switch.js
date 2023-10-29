@@ -1,11 +1,12 @@
 class Switch extends HTMLElement {
+
     constructor() {
         super();
         var switchStyle = document.createElement("link");
         switchStyle.rel = "stylesheet";
         switchStyle.href = "/js/Components/Switch/Switch.css";
 
-        
+
         var isChecked = this.dataset.checked;
         var switchLable = document.createElement("label");
         switchLable.className = "switch col-6-xs";
@@ -22,6 +23,10 @@ class Switch extends HTMLElement {
         switchLable.appendChild(switchInput);
         switchLable.appendChild(switchSpan);
         this.appendChild(switchLable);
+    }
+
+    set onswitchchanged(onchange) {
+        document.getElementById(`${this.id}-art-switch`).onchange = (e) => onchange(e);
     }
 
     check() {

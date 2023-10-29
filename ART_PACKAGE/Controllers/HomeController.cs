@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.DBService;
+using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
@@ -6,6 +7,7 @@ using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
@@ -23,7 +25,9 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        private readonly MailConfiguration mailConfig;
+        private readonly IMailSender _mailSender;
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, IMailSender mailSender)
         {
 
             _logger = logger;
@@ -49,11 +53,21 @@ namespace ART_PACKAGE.Controllers
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
+
+            this.mailConfig = mailConfig.Value;
+            _mailSender = mailSender;
         }
 
 
 
+        public IActionResult SendTestMail()
+        {
+            Message message = new(new List<string> { "islam.khalil@datagearbi.com", "hossam.eldin@datagearbi.com" }, "Test email", "This a test mail sent from art package.");
 
+
+            bool sent = _mailSender.SendEmail(message);
+            return Ok(sent);
+        }
 
 
 

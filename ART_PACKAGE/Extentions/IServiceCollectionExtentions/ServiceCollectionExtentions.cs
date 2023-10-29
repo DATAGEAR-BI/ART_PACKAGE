@@ -14,6 +14,7 @@ using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.ExportSchedular;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
@@ -119,6 +120,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("KYC"))
             {
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("EXPORT_SCHEDULAR"))
+            {
+                _ = services.AddDbContext<ExportSchedularContext>(opt => contextBuilder(opt, connectionString));
             }
             _ = services.AddScoped<IDbService, DBService>();
             return services;

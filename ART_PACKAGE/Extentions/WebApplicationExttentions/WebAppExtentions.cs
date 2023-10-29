@@ -1,7 +1,9 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.Data.ExportSchedular;
 using FakeItEasy;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -135,8 +137,15 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
         public static void StartTasks(this WebApplication app)
         {
+            ExportSchedularContext TasksContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<ExportSchedularContext>();
+            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<ExportTask, ICollection<TaskMails>> jobs = TasksContext.ExportsTasks.Include(x => x.Parameters).Include(x => x.Mails);
             IRecurringJobManager ruccrunibJ = app.Services.GetRequiredService<IRecurringJobManager>();
-            ruccrunibJ.AddOrUpdate("log", () => Console.WriteLine("Test Log"), Cron.Minutely);
+
+            foreach (ExportTask job in jobs)
+            {
+
+                ruccrunibJ.AddOrUpdate(job.Name, () => Console.WriteLine($"Desc : {job.Description} , Paramters : {{  {string.Join(",", job.Parameters.Select(x => $"{x.ParameterName} : {x.ParameterValue}"))}}}"), Cron.Minutely);
+            }
         }
 
 

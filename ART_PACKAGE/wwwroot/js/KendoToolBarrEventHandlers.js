@@ -135,7 +135,7 @@ export const Handlers = {
         if (paramsArr[1]) {
             params = paramsArr[1];
         }
-       
+
         kendo.ui.progress($('#grid'), true);
         var ds = $("#grid").data("kendoGrid");
         var total = ds.dataSource.total();
@@ -1033,6 +1033,11 @@ export const Handlers = {
                 }
 
             }
+        }
+    },
+    TaskSchedular: {
+        addTask: () => {
+            window.location = `/Tasks/AddTask`;
         }
     }
 }

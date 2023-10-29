@@ -1770,6 +1770,7 @@
 		<None Include="wwwroot\js\HubUtils.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
+		<None Include="wwwroot\lib\EmailInput\emails-input.js" />
 	</ItemGroup>
 
 
@@ -1790,6 +1791,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+		<PackageReference Include="NETCore.MailKit" Version="2.1.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Novell.Directory.Ldap" Version="2.2.1" />
 		<PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.90" />
@@ -1817,6 +1819,8 @@
 	<ItemGroup>
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\js\Components\EmailInput\" />
+		<Folder Include="wwwroot\js\Components\QueryBuilder\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 

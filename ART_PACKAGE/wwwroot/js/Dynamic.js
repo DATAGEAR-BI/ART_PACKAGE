@@ -2,6 +2,7 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Actions } from "./GridActions.js"
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -848,24 +849,18 @@ function generateColumns(response) {
     });
 
     if (contiansActions) {
+        var actions = response["actions"];
+        var actionsBtns = [...actions].map(x => ({
+
+            name: x.text,
+            iconClass: `k-icon ${x.icon}`,
+            click: (e) => Actions[x.action](e)
+        }));
         cols = [
             ...cols,
             {
-                command: [
-                    {
-                        name: "details",
-                        iconClass: "k-icon k-i-info-circle",
-                        click: function (e) {
-                            e.preventDefault();
-
-                            var tr = $(e.target).closest("tr");
-
-                            var data = this.dataItem(tr);
-
-                            window.location = `/report/showreport/${data.Id}`;
-                        },
-                    },
-                ],
+                title: "Actions",
+                command: actionsBtns,
             },
         ];
     }

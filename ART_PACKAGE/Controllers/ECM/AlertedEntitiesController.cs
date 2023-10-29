@@ -39,8 +39,8 @@ namespace ART_PACKAGE.Controllers.ECM
                 {
 
                 };
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
             }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
 
             KendoDataDesc<ArtAlertedEntity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
 
