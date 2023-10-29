@@ -14,6 +14,7 @@ namespace Data.ModelCreatingStrategies
         void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder);
         public void OnFTIModelCreating(ModelBuilder modelBuilder);
         public void OnKYCModelCreating(ModelBuilder modelBuilder);
+        public void OnCRPModelCreating(ModelBuilder modelBuilder);
 
     }
 }

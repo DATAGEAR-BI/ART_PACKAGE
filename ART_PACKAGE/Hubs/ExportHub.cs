@@ -2,7 +2,7 @@
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.AML_ANALYSIS;
-
+using ART_PACKAGE.Controllers.CRP;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
@@ -19,6 +19,7 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
@@ -51,6 +52,7 @@ namespace ART_PACKAGE.Hubs
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
         private readonly KYCContext _kyc;
+        private readonly CRPContext _crp;
         private readonly DBFactory dBFactory;
         private DbContext dbInstance;
         private readonly AmlAnalysisContext _amlanalysis;
@@ -121,6 +123,13 @@ namespace ART_PACKAGE.Hubs
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 AmlAnalysisContext amlanalysis = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
                 _amlanalysis = amlanalysis;
+            }
+
+            if (modules.Contains("CRP"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                CRPContext crp = scope.ServiceProvider.GetRequiredService<CRPContext>();
+                _crp = crp;
             }
             this.db = db;
             this.dBFactory = dBFactory;
@@ -257,6 +266,9 @@ namespace ART_PACKAGE.Hubs
 
             #endregion
             if (nameof(AML_ANALYSISController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAnalysisViewTb, AML_ANALYSISController>(_amlanalysis, Context.User.Identity.Name, para);
+
+
+            if (nameof(CrpCasesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpCase, CrpCasesController>(_crp, Context.User.Identity.Name, para);
 
 
         }

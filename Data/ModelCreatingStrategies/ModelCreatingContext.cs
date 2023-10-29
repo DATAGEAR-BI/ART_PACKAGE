@@ -109,5 +109,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGMGMGMAUDodelCreating(modelBuilder);
         }
+
+        public void OnCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnCRPModelCreating(modelBuilder);
+        }
     }
 }

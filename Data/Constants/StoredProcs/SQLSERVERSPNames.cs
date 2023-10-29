@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Constants.StoredProcs
+﻿namespace Data.Constants.StoredProcs
 {
     public static class SQLSERVERSPNames
     {
@@ -47,5 +41,13 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_DGAML_CASES_PER_CATEGORY]";
         public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]";
         public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "[ART_DB].[ART_ST_DGAML_CASES_PER_STATUS]";
+
+
+
+
+        //crp
+        public static readonly string ART_ST_CRP_PER_RISK = "[ART_DB].[ART_ST_CRP_PER_RISK]";
+        public static readonly string ART_ST_CRP_PER_STATUS = "[ART_DB].[ART_ST_CRP_PER_STATUS]";
+
     }
 }

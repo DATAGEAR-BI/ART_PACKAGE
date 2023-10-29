@@ -28,5 +28,10 @@
         public static readonly string ART_ST_GOAML_REPORTS_PER_INDICATOR = "ART.ART_ST_GOAML_REPORTS_PER_INDICATOR";
         public static readonly string ART_ST_GOAML_REPORTS_PER_CREATOR = "ART.ART_ST_GOAML_REPORTS_PER_CREATOR";
 
+
+        //crp
+        public static readonly string ART_ST_CRP_PER_RISK = "";
+        public static readonly string ART_ST_CRP_PER_STATUS = "";
+
     }
 }

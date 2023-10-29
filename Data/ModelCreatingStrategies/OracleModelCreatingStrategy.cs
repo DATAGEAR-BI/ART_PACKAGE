@@ -12876,6 +12876,11 @@ namespace Data.ModelCreatingStrategies
             throw new NotImplementedException();
         }
 
+        public void OnCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("FCFCORE");

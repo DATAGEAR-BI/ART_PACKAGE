@@ -13,6 +13,7 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
@@ -119,6 +120,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("KYC"))
             {
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
+
+            if (modulesToApply.Contains("CRP"))
+            {
+                _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
             }
             _ = services.AddScoped<IDbService, DBService>();
             return services;

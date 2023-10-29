@@ -4,6 +4,7 @@ using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
@@ -7256,6 +7257,64 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("status");
+            });
+        }
+
+        public void OnCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtCrpCase>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_CASES", "ART_DB");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("case_id")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseRk)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("case_rk");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("Case_Status")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Close_Date");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.LastRiskAssessmentDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("last_risk_assessment_date");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("party_name")
+                    .UseCollation("Arabic_CI_AI");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(100)
+                    .HasColumnName("Party_Number")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("party_type_desc")
+                    .UseCollation("Arabic_CI_AI");
+
+                entity.Property(e => e.RiskClassification)
+                    .HasMaxLength(100)
+                    .HasColumnName("risk_classification")
+                    .UseCollation("Arabic_CI_AI");
             });
         }
     }
