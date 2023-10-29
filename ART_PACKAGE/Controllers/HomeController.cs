@@ -62,7 +62,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult SendTestMail()
         {
-            Message message = new(new List<string> { "islam.khalil@datagearbi.com", "hossam.eldin@datagearbi.com" }, "Test email", "This a test mail sent from art package.");
+            Message message = new(new List<string> { "khalilizzlam@gmail.com" }, "Test email", "This a test mail sent from art package.");
 
 
             bool sent = _mailSender.SendEmail(message);

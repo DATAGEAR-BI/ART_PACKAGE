@@ -40,8 +40,12 @@ namespace ART_PACKAGE.Helpers.Mail
             emailMessage.From.Add(new MailboxAddress(_emailConfig.From, _emailConfig.From));
             emailMessage.To.AddRange(message.To.Select(x => new MailboxAddress(x, x)));
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            BodyBuilder bodyBuilder = new() { HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
 
+            byte[] filebyte = File.ReadAllBytes("test.txt");
+            bodyBuilder.Attachments.Add("test.txt", filebyte, ContentType.Parse("text/plain"));
+
+            emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
 
