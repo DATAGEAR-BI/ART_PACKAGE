@@ -324,8 +324,8 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     }];
 
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.renderer.labels.template.fontSize = 14;
-    categoryAxis.renderer.labels.template.maxWidth = 100;
+    categoryAxis.renderer.labels.template.fontSize = 20;
+    categoryAxis.renderer.labels.template.maxWidth = 250;
     categoryAxis.renderer.labels.template.minWidth = 100;
     categoryAxis.renderer.labels.template.wrap = true;
     categoryAxis.dataFields.category = chartCategory;
