@@ -36,7 +36,7 @@ getData().then(x => {
         var _monthCaseData = monthCaseData.find(x => x.year == year);
         console.log(_monthCaseData);
         makedynamicChart(0, _monthCaseData.monthData, "Cases Per Month", "month", "value", "month", true);
-        makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", true);
+        makedynamicChart(0, yearedTypeData, "Volume Distribution", "type", "numberOfCases", "caseType", true);
         makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
     });
 
