@@ -15,13 +15,13 @@ namespace ART_PACKAGE.Controllers
 
     public class ArtFtiActivityController : Controller
     {
-        private readonly FTIContext dbfcfkc;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtFtiActivityController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc; ;
+            this.fti = fti; ;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.AsQueryable();
+            IQueryable<ArtFtiActivity> data = fti.ArtFtiActivities.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
-                    {"FtiReference".ToLower(),dbfcfkc.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    {"FtiReference".ToLower(),fti.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
                     {"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
@@ -112,13 +112,13 @@ namespace ART_PACKAGE.Controllers
 
         /*public IActionResult Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            var data = fti.AmlCaseDetailViews.AsQueryable();
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.AsQueryable();
+        //    IQueryable<ArtFtiActivity> data = fti.ArtFtiActivities.AsQueryable();
         //    await _csvSrv.ExportAllCsv<ArtFtiActivity, ArtFtiActivityController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
@@ -127,7 +127,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
-            List<ArtFtiActivity> data = dbfcfkc.ArtFtiActivities.CallData(req).Data.ToList();
+            List<ArtFtiActivity> data = fti.ArtFtiActivities.CallData(req).Data.ToList();
             ViewData["title"] = "FTI-Activities";
             ViewData["desc"] = "DGECM Activity Report showing what cases have been created and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

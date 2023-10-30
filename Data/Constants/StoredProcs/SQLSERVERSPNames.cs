@@ -47,5 +47,12 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_DGAML_CASES_PER_CATEGORY]";
         public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]";
         public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "[ART_DB].[ART_ST_DGAML_CASES_PER_STATUS]";
+
+        //FTI
+        public static readonly string ART_ST_CASES_YEAR_TO_YEAR = "[ART_DB].[ART_ST_CASES_YEAR_TO_YEAR]";
+        public static readonly string ART_ST_CASES_PER_PRODUCT = "[ART_DB].[ART_ST_CASES_PER_PRODUCT]";
+        public static readonly string ART_ST_CASES_PER_TYPE = "[ART_DB].[ART_ST_CASES_PER_TYPE]";
+        
+
     }
 }

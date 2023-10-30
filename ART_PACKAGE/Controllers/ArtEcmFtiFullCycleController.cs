@@ -14,14 +14,14 @@ namespace ART_PACKAGE.Controllers
     [Authorize(Roles = "ArtEcmFtiFullCycle")]
     public class ArtEcmFtiFullCycleController : Controller
     {
-        private readonly FTIContext dbfcfkc;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
 
-        public ArtEcmFtiFullCycleController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtEcmFtiFullCycleController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc;
+            this.fti = fti;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtEcmFtiFullCycle> data = dbfcfkc.ArtEcmFtiFullCycles.AsQueryable();
+            IQueryable<ArtEcmFtiFullCycle> data = fti.ArtEcmFtiFullCycles.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
-                    {"FtiReference".ToLower(),dbfcfkc.ArtEcmFtiFullCycles.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    {"FtiReference".ToLower(),fti.ArtEcmFtiFullCycles.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
                     {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
@@ -80,13 +80,13 @@ namespace ART_PACKAGE.Controllers
 
         /*public IActionResult Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            var data = fti.AmlCaseDetailViews.AsQueryable();
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtEcmFtiFullCycle> data = dbfcfkc.ArtEcmFtiFullCycles.AsQueryable();
+        //    IQueryable<ArtEcmFtiFullCycle> data = fti.ArtEcmFtiFullCycles.AsQueryable();
         //    await _csvSrv.ExportAllCsv<ArtEcmFtiFullCycle, ArtEcmFtiFullCycleController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
@@ -95,7 +95,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
-            List<ArtEcmFtiFullCycle> data = dbfcfkc.ArtEcmFtiFullCycles.CallData(req).Data.ToList();
+            List<ArtEcmFtiFullCycle> data = fti.ArtEcmFtiFullCycles.CallData(req).Data.ToList();
             ViewData["title"] = "ECM-FTI Full cycle";
             ViewData["desc"] = "The full cycle between DGECM and FTI, DGECM case main details, Request and response on comment section, FTI main details, Action/ Feedback requested from FTI to DGECM first line, FTI Notes";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

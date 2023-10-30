@@ -53,6 +53,11 @@ function yesterday() {
     var d = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     return d.toISOString().slice(0, 10);
 }
+function lastYear() {
+    var today = new Date();
+    var d = new Date(today.getFullYear()-1,today.getMonth()-1,30);
+    return d.toISOString().slice(0, 10);
+}
 export const Filters = {
     UserPerformanceSummary: {
         filters: [],
@@ -275,6 +280,24 @@ export const Filters = {
         rules: [
 
             { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+
+    //ECM
+    Summary: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: lastYear() },
             { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
 
         ]

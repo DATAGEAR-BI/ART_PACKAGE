@@ -14,13 +14,13 @@ namespace ART_PACKAGE.Controllers
     [Authorize(Roles = "ArtCasesInitiatedFromBranch")]
     public class ArtCasesInitiatedFromBranchController : Controller
     {
-        private readonly FTIContext dbfcfkc;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtCasesInitiatedFromBranchController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtCasesInitiatedFromBranchController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc;
+            this.fti = fti;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
@@ -30,7 +30,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
+            IQueryable<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -78,13 +78,13 @@ namespace ART_PACKAGE.Controllers
 
         /*public IActionResult Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            var data = fti.AmlCaseDetailViews.AsQueryable();
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.AsQueryable();
+        //    IQueryable<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.AsQueryable();
         //    await _csvSrv.ExportAllCsv<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
@@ -93,7 +93,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].SkipList;
-            List<ArtCasesInitiatedFromBranch> data = dbfcfkc.ArtCasesInitiatedFromBranches.CallData(req).Data.ToList();
+            List<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.CallData(req).Data.ToList();
             ViewData["title"] = "Cases Initiated from Branch";
             ViewData["desc"] = "Transaction initiated from branch, Include DGECM cases main details, created and processed to FTI";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

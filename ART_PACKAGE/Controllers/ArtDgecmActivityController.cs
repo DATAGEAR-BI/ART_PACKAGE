@@ -15,13 +15,13 @@ namespace ART_PACKAGE.Controllers
 
     public class ArtDgecmActivityController : Controller
     {
-        private readonly FTIContext dbfcfkc;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtDgecmActivityController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtDgecmActivityController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc;
+            this.fti = fti;
             _pdfSrv = pdfSrv;
             this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.AsQueryable();
+            IQueryable<ArtDgecmActivity> data = fti.ArtDgecmActivities.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -81,13 +81,13 @@ namespace ART_PACKAGE.Controllers
 
         /*public IActionResult Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            var data = fti.AmlCaseDetailViews.AsQueryable();
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.AsQueryable();
+        //    IQueryable<ArtDgecmActivity> data = fti.ArtDgecmActivities.AsQueryable();
         //    await _csvSrv.ExportAllCsv<ArtDgecmActivity, ArtDgecmActivityController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
@@ -96,7 +96,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
-            List<ArtDgecmActivity> data = dbfcfkc.ArtDgecmActivities.CallData(req).Data.ToList();
+            List<ArtDgecmActivity> data = fti.ArtDgecmActivities.CallData(req).Data.ToList();
             ViewData["title"] = "DGECM-Activities";
             ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

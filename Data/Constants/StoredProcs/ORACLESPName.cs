@@ -34,5 +34,10 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_GOAML_REPORTS_PER_INDICATOR = "ART.ART_ST_GOAML_REPORTS_PER_INDICATOR";
         public static readonly string ART_ST_GOAML_REPORTS_PER_CREATOR = "ART.ART_ST_GOAML_REPORTS_PER_CREATOR";
 
+        //FTI
+        public static readonly string ART_ST_CASES_YEAR_TO_YEAR = "ART.ART_ST_CASES_YEAR_TO_YEAR";
+        public static readonly string ART_ST_CASES_PER_PRODUCT = "ART.ART_ST_CASES_PER_PRODUCT";
+        public static readonly string ART_ST_CASES_PER_TYPE = "ART.ART_ST_CASES_PER_TYPE";
+
     }
 }
