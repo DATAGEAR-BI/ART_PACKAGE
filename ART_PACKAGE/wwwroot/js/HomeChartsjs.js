@@ -53,6 +53,6 @@ async function getData() {
     typeData = data.types;
     statusData = data.status;
     monthCaseData = data.monthCaseData;
-    productsData = data.productsData;
+    productsData = data.products;
 
 }

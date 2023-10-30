@@ -119,6 +119,7 @@ namespace ART_PACKAGE.Controllers
                 dates = dateData,
                 status = statusData,
                 types = typesData,
+                products = productsData,
                 monthCaseData = monthData
             });
 
