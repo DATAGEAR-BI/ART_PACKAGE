@@ -10758,7 +10758,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10798,7 +10798,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10838,7 +10838,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10878,7 +10878,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10914,7 +10914,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10954,7 +10954,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -10994,7 +10994,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11034,7 +11034,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11070,7 +11070,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11110,7 +11110,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11150,7 +11150,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11190,7 +11190,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11336,7 +11336,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11376,7 +11376,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11416,7 +11416,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11456,7 +11456,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11492,7 +11492,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11532,7 +11532,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11572,7 +11572,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11612,7 +11612,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11648,7 +11648,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11688,7 +11688,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11728,7 +11728,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -11768,7 +11768,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskClassIndustry)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("RISK_CLASS");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)

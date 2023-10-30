@@ -380,7 +380,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_HIGH_EXPIRED
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -389,7 +389,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'H'
             and 
@@ -406,7 +406,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'H'
             and 
@@ -419,7 +419,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_HIGH_ONE_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -428,7 +428,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'H'
@@ -444,7 +444,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'H'
@@ -458,7 +458,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_HIGH_THREE_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -467,7 +467,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'H'
@@ -483,7 +483,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'H'
@@ -497,7 +497,7 @@ namespace OracleMigrations.Migrations.KYC
              --  DDL for View ART_KYC_HIGH_TWO_MONTH
              --------------------------------------------------------
 
-                  CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+                  CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_HIGH_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
                   select 
                 a.CLIENT_NUMBER,
                 (case 
@@ -506,7 +506,7 @@ namespace OracleMigrations.Migrations.KYC
                 when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
                 'Individual' Type,
                 trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-                when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+                when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
                 ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
                 from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
                 where a.AML_RISK_CD = 'H'
@@ -522,7 +522,7 @@ namespace OracleMigrations.Migrations.KYC
                 when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
                 'Corporate' Type,
                 trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-                when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+                when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
                 ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
                 from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
                 where a.AML_RISK_CD = 'H'
@@ -536,7 +536,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_LOW_EXPIRED
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -545,7 +545,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'L'
             and 
@@ -562,7 +562,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'L'
             and 
@@ -575,7 +575,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_LOW_ONE_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -584,7 +584,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'L'
@@ -600,7 +600,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'L'
@@ -614,7 +614,7 @@ namespace OracleMigrations.Migrations.KYC
              --  DDL for View ART_KYC_LOW_THREE_MONTH
              --------------------------------------------------------
 
-                  CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+                  CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
                   select 
                 a.CLIENT_NUMBER,
                 (case 
@@ -623,7 +623,7 @@ namespace OracleMigrations.Migrations.KYC
                 when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
                 'Individual' Type,
                 trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-                when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+                when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
                 ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
                 from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
                 where a.AML_RISK_CD = 'L'
@@ -639,7 +639,7 @@ namespace OracleMigrations.Migrations.KYC
                 when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
                 'Corporate' Type,
                 trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-                when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+                when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
                 ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
                 from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
                 where a.AML_RISK_CD = 'L'
@@ -653,7 +653,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_LOW_TWO_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_LOW_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -662,7 +662,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'L'
@@ -678,7 +678,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'L'
@@ -692,7 +692,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_MEDIUM_EXPIRED
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_EXPIRED"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -701,7 +701,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'M'
             and 
@@ -718,7 +718,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.','')) as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'M'
             and 
@@ -731,7 +731,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_MEDIUM_ONE_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_ONE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -740,7 +740,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'M'
@@ -756,7 +756,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'M'
@@ -770,7 +770,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_MEDIUM_TWO_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_TWO_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -779,7 +779,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'M'
@@ -795,7 +795,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'M'
@@ -809,7 +809,7 @@ namespace OracleMigrations.Migrations.KYC
             --  DDL for View ART_KYC_MEDIUM_THREE_MONTH
             --------------------------------------------------------
 
-              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS/INDUSTRY"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
+              CREATE OR REPLACE FORCE EDITIONABLE VIEW ""ART"".""ART_KYC_MEDIUM_THREE_MONTH"" (""CLIENT_NUMBER"", ""AML_RISK"", ""TYPE"", ""ENTITY_NAME"", ""RISK_CLASS"", ""NEXT_UPDATE_DATE"", ""MONTH"") AS 
               select 
             a.CLIENT_NUMBER,
             (case 
@@ -818,7 +818,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Individual' Type,
             trim(replace((case when full_name_ar like '/%' then substr(full_name_ar,2) 
-            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when full_name_ar like '%/' then substr(full_name_ar,1,length(full_name_ar)-1) else full_name_ar end),'.','')) as Entity_Name, RISK_CLASS_VALUE ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month
             from DGKYC.PERSONAL_INFO@DGKYC_LINK a 
             where a.AML_RISK_CD = 'M'
@@ -834,7 +834,7 @@ namespace OracleMigrations.Migrations.KYC
             when AML_RISK_CD = 'L' then 'Low' end)AML_Risk,
             'Corporate' Type,
             trim(replace((case when CORPORATE_NAME like '/%' then substr(CORPORATE_NAME,2) 
-            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS/INDUSTRY"", NEXT_UPDATE_DATE,
+            when CORPORATE_NAME like '%/' then substr(CORPORATE_NAME,1,length(CORPORATE_NAME)-1) else CORPORATE_NAME end),'.',''))  as Entity_Name, INDUSTRY ""RISK_CLASS"", NEXT_UPDATE_DATE,
             ROUND(MONTHS_BETWEEN(NEXT_UPDATE_DATE,SYSDATE),2)month 
             from DGKYC.CORPORATE_BASIC_INFO@DGKYC_LINK a
             where a.AML_RISK_CD = 'M'

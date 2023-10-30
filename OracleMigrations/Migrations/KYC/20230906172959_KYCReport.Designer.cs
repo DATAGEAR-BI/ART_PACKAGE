@@ -1318,7 +1318,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1362,7 +1362,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1406,7 +1406,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1450,7 +1450,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1490,7 +1490,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1534,7 +1534,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1578,7 +1578,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1622,7 +1622,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1662,7 +1662,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1706,7 +1706,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1750,7 +1750,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
@@ -1794,7 +1794,7 @@ namespace OracleMigrations.Migrations.KYC
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("RISK_CLASS/INDUSTRY");
+                        .HasColumnName("RISK_CLASS");
 
                     b.Property<string>("Type")
                         .HasMaxLength(10)
