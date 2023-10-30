@@ -219,6 +219,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"FirstLinePart",new DisplayNameAndFormat { DisplayName ="First Line Part"}},
                             {"TradeInstructions",new DisplayNameAndFormat { DisplayName ="Trade Instructions"}},
                             {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
+                            {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
 
                     },
                            SkipList =  new List<string>()

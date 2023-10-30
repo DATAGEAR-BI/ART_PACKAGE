@@ -4672,6 +4672,11 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CASE_COMMENTS")
                     .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.ParentCaseId)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("PARENT_CASE_ID")
+                   .UseCollation("Arabic_100_CI_AI");
             });
         }
 
