@@ -43,10 +43,10 @@ namespace ART_PACKAGE.Controllers.KYC
             {
                 chart1Data = dbfcfkc.ExecuteProc<StCustomersRenewalPerMonthU3>(ORACLESPName.ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U3, chart1Params.ToArray());
             }
-            List<Dictionary<string, object>> chartDictList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> chartDictList = new();
             foreach (IGrouping<string?, StCustomersRenewalPerMonthU3>? chartResult in chart1Data.GroupBy(x => x.party_type).ToList())
             {
-                Dictionary<string, object> result = new Dictionary<string, object>
+                Dictionary<string, object> result = new()
                 {
                     { "PARTY_TYPE", chartResult.Key }
                 };
