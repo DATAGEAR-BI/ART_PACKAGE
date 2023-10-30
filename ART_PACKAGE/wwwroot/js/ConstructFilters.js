@@ -29,6 +29,10 @@ class ExternalFilter extends HTMLElement {
         filtercontrol.classList.add("col-xs-8", "col-md-8", "col-sm-8");
         btn.classList.add("col-xs-2", "col-md-2", "col-sm-2", "btn", "btn-primary");
         filtercontrol.id = "filters";
+        var allowEmpty = false;
+        if (key == "GeographicalDistributionU2" || key == "GeographicalDistributionU3") {                    // this especially report can execute without filter
+            allowEmpty = true;
+        }
         $(filtercontrol).queryBuilder({
             filters: [...filters],
             rules: [...rules],
@@ -37,6 +41,7 @@ class ExternalFilter extends HTMLElement {
             },
             conditions: ["AND"],
             allow_groups: false,
+            allow_empty: allowEmpty,
             operators: ['equal', 'in']
         });
 

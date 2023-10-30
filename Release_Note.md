@@ -1,13 +1,10 @@
-# Release Notes - NCBA V1.0.9
+# Release Notes - NCBA V2.0.0
 
-this is the first release for ncba from art package 
+this is the second release for ncba from art package 
 ## Bug Fix
-- add custom authorization policy
-- fix rolename in sidebar and in userrole controller
-- fixed user instence concurrent tracking issue
 ## New Features
 
-- user managment integrations
+- add some report (Renewal Reports,Daily Quality Reports,Customers distribution Reports)
 
 
 

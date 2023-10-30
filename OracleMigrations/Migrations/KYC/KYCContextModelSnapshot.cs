@@ -1287,7 +1287,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_EXPIRED_ID");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycHighExpired", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycHighExpiredU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1327,7 +1327,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_HIGH_EXPIRED");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycHighOneMonth", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycHighOneMonthU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1371,7 +1371,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_HIGH_ONE_MONTH");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycHighThreeMonth", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycHighThreeMonthU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1415,7 +1415,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_HIGH_THREE_MONTH");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycHighTwoMonth", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycHighTwoMonthU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1459,7 +1459,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_HIGH_TWO_MONTH");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycLowExpired", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycLowExpiredU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1499,7 +1499,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_LOW_EXPIRED");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycLowOneMonth", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycLowOneMonthU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1543,7 +1543,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_LOW_ONE_MONTH");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycLowThreeMonth", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycLowThreeMonthU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)
@@ -1631,7 +1631,7 @@ namespace OracleMigrations.Migrations.KYC
                     b.ToView("ART_KYC_LOW_TWO_MONTH");
                 });
 
-            modelBuilder.Entity("Data.Data.KYC.ArtKycMediumExpired", b =>
+            modelBuilder.Entity("Data.Data.KYC.ArtKycMediumExpiredU2", b =>
                 {
                     b.Property<string>("AmlRisk")
                         .HasMaxLength(6)

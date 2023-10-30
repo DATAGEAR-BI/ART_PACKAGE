@@ -547,57 +547,84 @@
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
+                                 <li class="treeview">
+                                     <a href="#">
+                                       <i class="glyphicon glyphicon-user"></i> <span>Renewal Reports</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                     </a>
+                                     <ul class="treeview-menu">
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycHighExpiredU2")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk expired customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycHighOneMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 1 month customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycHighTwoMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 2 months customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycHighThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 3 months customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycLowExpiredU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk expired customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycLowOneMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 1 month customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycLowTwoMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 2 months customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycLowThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 3 months customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycMediumExpiredU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk expired customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycMediumOneMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 1 month customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycMediumTwoMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 2 months customers Report</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ArtKycMediumThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 3 months customers Report</span></a>
+                                    </li>
+                                </ul>
+                                 </li>
+                                 <li class="treeview">
+                                      <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Daily Quality Reports</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                       </a>
                                 <ul class="treeview-menu">
                                     <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtAuditCorporate")"><i class="glyphicon glyphicon-tasks"></i> <span>Audit For Corporates Report</span></a>
+                                        <a href="@Url.Action("Index", "CustomersWithExpiredDocumentU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers with expired documents U2</span></a>
                                     </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtAuditIndividuals")"><i class="glyphicon glyphicon-tasks"></i> <span>Audit For Individuals Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycExpiredId")"><i class="glyphicon glyphicon-tasks"></i> <span>Expired ID customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycHighExpired")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk expired customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycHighOneMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 1 month customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycHighTwoMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 2 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycHighThreeMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>High risk within 3 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycLowExpired")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk expired customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycLowOneMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 1 month customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycLowTwoMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 2 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycLowThreeMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Low risk within 3 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycMediumExpired")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk expired customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycMediumOneMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 1 month customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycMediumTwoMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 2 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycMediumThreeMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Medium risk within 3 months customers Report</span></a>
-                                    </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ArtKycSummaryByRisk")"><i class="glyphicon glyphicon-tasks"></i> <span>KYC Summary By Risk Report</span></a>
-                                    </li>
-
                                 </ul>
+                            </li>
+                                 <li class="treeview">
+                                            <a href="#">
+                                                <i class="glyphicon glyphicon-user"></i> <span>Customers distribution Reports</span>
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li class="active ">
+                                                    <a href="@Url.Action("Index", "GeographicalDistributionU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Geographical distribution Report U2</span></a>
+                                                </li>
+                                                <li class="active ">
+                                                    <a href="@Url.Action("Index", "CustomersRenewalPerMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers renewal per month Report U2</span></a>
+                                                </li>
+                                                <li class="active ">
+                                                    <a href="@Url.Action("Index", "CustomersRenewalU2")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers renewal detail Report U2</span></a>
+                                                </li>
+                                            </ul>
+                                </li>
                             </li>
                         }
                     </ul>

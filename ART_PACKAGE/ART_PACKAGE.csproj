@@ -28,6 +28,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="Views\CustomersRenewalPerMonthU3\Index.cshtml" />
+		<Content Remove="Views\CustomersRenewalPerMonthU2\Index.cshtml" />
+		<Content Remove="Views\GeographicalDistributionU3\Index.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -984,6 +987,22 @@
 		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
 		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
+		<None Include="Views\ArtKycHighExpiredU3\Index.cshtml" />
+		<None Include="Views\ArtKycHighOneMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycHighThreeMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycHighTwoMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycLowExpiredU3\Index.cshtml" />
+		<None Include="Views\ArtKycLowOneMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycLowThreeMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycLowTwoMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycMediumExpiredU3\Index.cshtml" />
+		<None Include="Views\ArtKycMediumOneMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycMediumThreeMonthU3\Index.cshtml" />
+		<None Include="Views\ArtKycMediumTwoMonthU3\Index.cshtml" />
+		<None Include="Views\CustomersRenewalPerMonthU3\Index.cshtml" />
+		<None Include="Views\CustomersRenewalPerMonthU2\Index.cshtml" />
+		<None Include="Views\GeographicalDistributionU3\Index.cshtml" />
+		<None Include="Views\GeographicalDistributionU2\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />

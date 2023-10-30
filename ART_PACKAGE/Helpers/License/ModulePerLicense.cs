@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.ECM;
+using ART_PACKAGE.Controllers.KYC;
 
 namespace ART_PACKAGE.Helpers.License
 {
@@ -8,7 +9,7 @@ namespace ART_PACKAGE.Helpers.License
         private static readonly List<string> SASAMLControllers = new()
         {
             nameof(AlertDetailsController).ToLower() ,
-            nameof(AlertSummaryController).ToLower() ,
+            nameof(GeographicalDistributionU2Controller).ToLower() ,
             nameof(TriageController).ToLower() ,
             nameof(HighRiskController).ToLower() ,
             nameof(CustomersController).ToLower() ,
