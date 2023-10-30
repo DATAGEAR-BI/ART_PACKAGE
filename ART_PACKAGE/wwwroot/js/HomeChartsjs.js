@@ -3,6 +3,8 @@ var dateData = [];
 var typeData = [];
 var statusData = [];
 var monthCaseData = [];
+var productsData = [];
+
 getData().then(x => {
 
 
