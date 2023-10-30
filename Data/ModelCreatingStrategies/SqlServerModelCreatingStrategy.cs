@@ -1755,7 +1755,22 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("int")
                     .HasColumnName("NUMBER_OF_CASES");
             });
+            modelBuilder.Entity<ArtHomeCasesProduct>(entity =>
+            {
 
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_CASES_PRODUCTS", "ART_DB");
+
+                entity.Property(e => e.Product)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("int")
+                    .HasColumnName("NUMBER_OF_CASES");
+            });
 
 
             modelBuilder.Entity<ArtSystemPreformance>(entity =>

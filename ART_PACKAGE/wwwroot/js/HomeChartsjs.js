@@ -32,11 +32,13 @@ getData().then(x => {
    
         var year = di.year;
         var yearedTypeData = typeData.filter(x => x.year == year);
+        var yearedProductData = productsData.filter(x => x.year == year);
         var yearedStatuseData = statusData.filter(x => x.year == year);
         var _monthCaseData = monthCaseData.find(x => x.year == year);
         console.log(_monthCaseData);
         makedynamicChart(0, _monthCaseData.monthData, "Cases Per Month", "month", "value", "month", true);
         makedynamicChart(0, yearedTypeData, "Volume Distribution", "type", "numberOfCases", "caseType", true);
+        makedynamicChart(0, yearedProductData, "Case product", "product", "numberOfCases", "Product", true);
         makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
     });
 
@@ -51,5 +53,6 @@ async function getData() {
     typeData = data.types;
     statusData = data.status;
     monthCaseData = data.monthCaseData;
+    productsData = data.productsData;
 
 }
