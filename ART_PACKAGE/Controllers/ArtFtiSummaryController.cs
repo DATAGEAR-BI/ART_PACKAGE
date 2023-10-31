@@ -12,13 +12,13 @@ using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class SummaryController : Controller
+    public class ArtFtiSummaryController : Controller
     {
         private readonly FTIContext fti;
         private readonly IConfiguration _config;
         private readonly string dbType;
 
-        public SummaryController(FTIContext fti, IMemoryCache cache, IConfiguration config)
+        public ArtFtiSummaryController(FTIContext fti, IMemoryCache cache, IConfiguration config)
         {
             this.fti = fti;
             _config = config;

@@ -35,7 +35,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
-		<Content Remove="Views\Summary\Index.cshtml" />
+		<Content Remove="Views\ArtFtiSummary\Index.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -1110,7 +1110,7 @@
 		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
-		<None Include="Views\Summary\Index.cshtml" />
+		<None Include="Views\ArtFtiSummary\Index.cshtml" />
 		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
 
