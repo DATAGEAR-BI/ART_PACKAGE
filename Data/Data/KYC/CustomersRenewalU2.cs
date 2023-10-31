@@ -7,7 +7,7 @@
         public string Type { get; set; } = null!;
         public string? Occupation { get; set; }
         public DateTime? ExpiredDate { get; set; }
-        public DateTime? DateField { get; set; }
+        public string? DateField { get; set; }
         public string? ActionRequired{get; set; }
         public DateTime? LastContactDate { get; set; }
         public DateTime? ChangeBeginDate { get; set; }

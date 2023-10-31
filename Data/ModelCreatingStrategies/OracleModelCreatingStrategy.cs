@@ -11280,7 +11280,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("DATE")
                     .HasColumnName("EXPIRED_DATE");
                 entity.Property(e => e.DateField)
-                    .HasColumnType("DATE")
+                    .HasMaxLength(50)
+                   .IsUnicode(false)
                     .HasColumnName("DATE_FIELD");
                 entity.Property(e => e.LastContactDate)
                     .HasColumnType("DATE")
@@ -11825,7 +11826,8 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("EXPIRED_DATE");
                 entity.Property(e => e.DateField)
-                    .HasPrecision(6)
+                    .HasMaxLength(100)
+                   .IsUnicode(false)
                     .HasColumnName("DATE_FIELD");
                 entity.Property(e => e.LastContactDate)
                     .HasPrecision(6)
