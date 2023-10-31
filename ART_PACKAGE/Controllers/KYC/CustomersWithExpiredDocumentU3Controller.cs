@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CustomersWithExpiredDocumentU3Controller).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersWithExpiredDocumentU3Controller).ToLower()].SkipList;
             List<CustomersWithExpiredDocumentU3> data = dbfcfkc.CustomersWithExpiredDocumentU3s.CallData(req).Data.ToList();
-            ViewData["title"] = "Customers with expired documents";
+            ViewData["title"] = "Customers with expired documents U3 Report";
             ViewData["desc"] = "Presents all customers with expired documents with the related information as below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

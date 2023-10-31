@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Controllers.KYC
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumTwoMonthU3Controller).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumTwoMonthU3Controller).ToLower()].SkipList;
             List<ArtKycMediumTwoMonthU3> data = dbfcfkc.ArtKycMediumTwoMonthU3s.CallData(req).Data.ToList();
-            ViewData["title"] = "Medium risk within 2 months customers Report";
+            ViewData["title"] = "Medium risk within 2 months customers U3 Report";
             ViewData["desc"] = "Presents all individual customers with the related information as below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

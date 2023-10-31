@@ -11263,7 +11263,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CustomerNumber)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.CustomerName)
@@ -11272,27 +11271,25 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PARTY_NAME");
                 entity.Property(e => e.Type)
                    .HasMaxLength(20)
-                   .IsUnicode(false)
                    .HasColumnName("PARTY_TYPE");
                 entity.Property(e => e.Occupation)
                    .HasMaxLength(100)
                    .IsUnicode(false)
                    .HasColumnName("PARTY_OCCUPATION");
                 entity.Property(e => e.ExpiredDate)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("EXPIRED_DATE");
                 entity.Property(e => e.DateField)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("DATE_FIELD");
                 entity.Property(e => e.LastContactDate)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("LAST_CONTACT_DATE");
                 entity.Property(e => e.ChangeBeginDate)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("CHANGE_BEGIN_DATE");
                 entity.Property(e => e.ChangeCurrentIND)
                    .HasMaxLength(1)
-                   .IsUnicode(false)
                    .HasColumnName("CHANGE_CURRENT_IND");
                 entity.Property(e => e.KYCExpiryIND)
                    .HasMaxLength(1)
@@ -11811,7 +11808,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CustomerNumber)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.CustomerName)
@@ -11820,7 +11816,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PARTY_NAME");
                 entity.Property(e => e.Type)
                    .HasMaxLength(20)
-                   .IsUnicode(false)
                    .HasColumnName("PARTY_TYPE");
                 entity.Property(e => e.Occupation)
                    .HasMaxLength(100)
@@ -11840,7 +11835,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CHANGE_BEGIN_DATE");
                 entity.Property(e => e.ChangeCurrentIND)
                    .HasMaxLength(1)
-                   .IsUnicode(false)
                    .HasColumnName("CHANGE_CURRENT_IND");
                 entity.Property(e => e.KYCExpiryIND)
                    .HasMaxLength(1)

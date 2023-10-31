@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredU2Controller).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredU2Controller).ToLower()].SkipList;
             List<ArtKycLowExpiredU2> data = dbfcfkc.ArtKycLowExpiredU2s.CallData(req).Data.ToList();
-            ViewData["title"] = "Low risk expired customers Report";
+            ViewData["title"] = "Low risk expired customers U2 Report";
             ViewData["desc"] = "presents all low-risk customers need to be update their expired KYCs with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

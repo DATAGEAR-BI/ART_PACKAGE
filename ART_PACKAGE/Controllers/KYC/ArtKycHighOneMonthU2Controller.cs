@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighOneMonthU2Controller).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighOneMonthU2Controller).ToLower()].SkipList;
             List<ArtKycHighOneMonthU2> data = dbfcfkc.ArtKycHighOneMonthU2s.CallData(req).Data.ToList();
-            ViewData["title"] = "High risk within 1 month customers Report";
+            ViewData["title"] = "High risk within 1 month customers U2 Report";
             ViewData["desc"] = "presents all high-risk customers need to be update their KYCs within 1 month with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

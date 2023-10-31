@@ -1,5 +1,6 @@
 ﻿using Data.Constants.db;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Data.Common;

@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CustomersRenewalU3Controller).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersRenewalU3Controller).ToLower()].SkipList;
             List<CustomersRenewalU3> data = dbfcfkc.CustomersRenewalU3s.CallData(req).Data.ToList();
-            ViewData["title"] = "Customers renewal U3 detail";
+            ViewData["title"] = "Customers renewal detail U3 Report";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
