@@ -7,6 +7,7 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using org.bouncycastle.math.raw;
 using System.Collections;
 
 namespace ART_PACKAGE.Controllers
@@ -28,12 +29,14 @@ namespace ART_PACKAGE.Controllers
         {
 
 
+            IEnumerable<ArtStCasesPerDate> chartCasesPerDate = Enumerable.Empty<ArtStCasesPerDate>().AsQueryable();
             IEnumerable<ArtStCasesYearToYear> chartCasesYearToYearData = Enumerable.Empty<ArtStCasesYearToYear>().AsQueryable();
             IEnumerable<ArtStCasesPerType> chartCasesPerTypeData = Enumerable.Empty<ArtStCasesPerType>().AsQueryable();
             IEnumerable<ArtStCasesPerStatus> chartCasesPerStatusData = Enumerable.Empty<ArtStCasesPerStatus>().AsQueryable();
             IEnumerable<ArtStCasesPerProduct> chartCasesPerProductData = Enumerable.Empty<ArtStCasesPerProduct>().AsQueryable();
 
 
+            IEnumerable<System.Data.Common.DbParameter> chart0Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
@@ -41,6 +44,7 @@ namespace ART_PACKAGE.Controllers
 
             if (dbType == DbTypes.SqlServer)
             {
+                chartCasesPerDate = fti.ExecuteProc<ArtStCasesPerDate>(SQLSERVERSPNames.ART_ST_CASES_PER_DATE, chart0Params.ToArray());
 
                 chartCasesYearToYearData = fti.ExecuteProc<ArtStCasesYearToYear>(SQLSERVERSPNames.ART_ST_CASES_YEAR_TO_YEAR, chart1Params.ToArray());
                 chartCasesPerTypeData = fti.ExecuteProc<ArtStCasesPerType>(SQLSERVERSPNames.ART_ST_CASES_PER_TYPE, chart2Params.ToArray());
@@ -50,13 +54,15 @@ namespace ART_PACKAGE.Controllers
 
             if (dbType == DbTypes.Oracle)
             {
+                chartCasesPerDate = fti.ExecuteProc<ArtStCasesPerDate>(ORACLESPName.ART_ST_CASES_PER_DATE, chart0Params.ToArray());
+
                 chartCasesYearToYearData = fti.ExecuteProc<ArtStCasesYearToYear>(ORACLESPName.ART_ST_CASES_YEAR_TO_YEAR, chart1Params.ToArray());
                 chartCasesPerTypeData = fti.ExecuteProc<ArtStCasesPerType>(ORACLESPName.ART_ST_CASES_PER_TYPE, chart2Params.ToArray());
                 chartCasesPerStatusData = fti.ExecuteProc<ArtStCasesPerStatus>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart3Params.ToArray());
                 chartCasesPerProductData = fti.ExecuteProc<ArtStCasesPerProduct>(ORACLESPName.ART_ST_CASES_PER_PRODUCT, chart4Params.ToArray());
             }
 
-            ArrayList chartData = new()
+            List<object> chartData = new()
             {
                 new ChartData<ArtStCasesYearToYear>
                 {
@@ -92,8 +98,17 @@ namespace ART_PACKAGE.Controllers
                     Title = "Volume Distribution",
                     Cat = "CASE_TYPE",
                     Val = "NUMBER_OF_CASES"
-
                 },
+                new{//"date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month"
+                data=chartCasesPerDate,
+                divId="StCasesPerDate",
+                cat="year",
+                val="value",
+                subcat="month",
+                subval="value",
+                subListKey = "monthData",
+                ctitle = "Cases Per Year & Month"
+                }
 
             };
 

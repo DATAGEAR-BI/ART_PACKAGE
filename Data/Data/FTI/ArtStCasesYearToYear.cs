@@ -8,10 +8,7 @@ namespace Data.Data.FTI
 {
     public class ArtStCasesYearToYear
     {
-        public int year { get; set; }
-        public string? Month { get; set; }
-        public string? YEAR_IND { get; set; }
-
+        public string? Year { get; set; }
         public decimal? NUMBER_OF_CASES { get; set; }
     }
 }

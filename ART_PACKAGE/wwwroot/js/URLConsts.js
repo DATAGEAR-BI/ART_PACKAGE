@@ -109,6 +109,7 @@
   FullJournal: "/FullJournal/GetData",
   EcmWorkflowProg: "/EcmWorkflowProg/GetData",
   EcmAuditTrial: "/EcmAuditTrial/GetData",
+    Summary: "/Summary/GetData",
   //DGAML
   DGAMLCasesDetails: "/DGAMLCasesDetails/GetData",
   DGAMLTriage: "/DGAMLTriage/GetData",

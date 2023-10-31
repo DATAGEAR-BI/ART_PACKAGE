@@ -38,6 +38,7 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_CASES_YEAR_TO_YEAR = "ART.ART_ST_CASES_YEAR_TO_YEAR";
         public static readonly string ART_ST_CASES_PER_PRODUCT = "ART.ART_ST_CASES_PER_PRODUCT";
         public static readonly string ART_ST_CASES_PER_TYPE = "ART.ART_ST_CASES_PER_TYPE";
+        public static readonly string ART_ST_CASES_PER_DATE = "ART.ART_ST_CASES_PER_DATE";
 
     }
 }

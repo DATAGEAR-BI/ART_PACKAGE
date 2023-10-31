@@ -57,6 +57,7 @@ namespace Data.Data.FTI
             modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerType>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerProduct>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerDate>().HasNoKey().ToView(null);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnFTIModelCreating(modelBuilder);
         }
