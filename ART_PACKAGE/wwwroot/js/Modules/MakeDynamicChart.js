@@ -342,7 +342,14 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     series.sequencedInterpolationDelay = 100;
     series.columns.template.strokeOpacity = 0;
     series.tooltip.fontSize = 17;
-
+    series.columns.template.adapter.add("dx", function (dx, target) {
+        // Change width based on the value
+        var value = target.dataItem.valueX;
+        if (value < 10) {
+            return 10; // Set a specific width for small values
+        }
+        return dx; // Use the default width for other values
+    });
     // Set cell size in pixels
     //var cellSize = 30;
     //chart.events.on("datavalidated", function (ev) {
