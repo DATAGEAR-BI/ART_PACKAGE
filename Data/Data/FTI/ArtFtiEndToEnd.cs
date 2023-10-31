@@ -34,6 +34,7 @@ namespace Data.Data.FTI
         public string? FirstLineInstructions { get; set; }
         public string? CaseComments { get; set; }
         public string? ParentCaseId { get; set; }
+        public string? EcmAssignedTo { get; set; }
 
     }
 }

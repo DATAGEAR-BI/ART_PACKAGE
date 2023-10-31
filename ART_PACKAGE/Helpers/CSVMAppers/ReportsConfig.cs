@@ -220,6 +220,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"TradeInstructions",new DisplayNameAndFormat { DisplayName ="Trade Instructions"}},
                             {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
                             {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
+                            {"EcmAssignedTo",new DisplayNameAndFormat { DisplayName ="Ecm Assigned To"}},
 
                     },
                            SkipList =  new List<string>()
