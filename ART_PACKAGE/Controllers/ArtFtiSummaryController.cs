@@ -4,12 +4,15 @@ using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.FTI;
 using Data.Data.SASAml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers
 {
+    [Authorize(Roles = "ArtFtiSummary")]
+
     public class ArtFtiSummaryController : Controller
     {
         private readonly FTIContext fti;

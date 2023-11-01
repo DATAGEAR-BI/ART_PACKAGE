@@ -308,6 +308,8 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
 function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
 
     am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_kelly);
+
 
     // Create chart instance
     var chart = am4core.create(divId, am4charts.XYChart);
@@ -342,20 +344,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     series.sequencedInterpolationDelay = 100;
     series.columns.template.strokeOpacity = 0;
     series.tooltip.fontSize = 17;
-
-
-    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-    valueLabel.label.text = "{value}";
-    valueLabel.label.fontSize = 20;
-    valueLabel.label.horizontalCenter = "left";
-    valueLabel.label.hideOversized = false;
-    valueLabel.label.truncate = false;
-    valueLabel.label.dx = 10;
-    chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = "zoomX";
-    var scrollbar = new am4charts.XYChartScrollbar();
-
-    chart.scrollbarX = scrollbar;
+    series.columns.template.strokeWidth = 0;
 
     /*series.columns.template.adapter.add("dx", function (dx, target) {
         // Change width based on the value
@@ -382,16 +371,36 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     chart.cursor.behavior = "zoomY";
 
     //set values on the bar without hover
-    var labelBullet = series.bullets.push(new am4charts.LabelBullet())
+    /*var labelBullet = series.bullets.push(new am4charts.LabelBullet())
     labelBullet.label.horizontalCenter = "right";
-    labelBullet.label.dx = -5;
-    labelBullet.label.text = "{valueX}";
+    labelBullet.label.dx = 20;
+    labelBullet.label.text = "{valueX}";*/
     var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-    valueLabel.label.text = "{value}";
+    valueLabel.label.text = "{valueX}";
+    valueLabel.label.hideOversized = false;
+    valueLabel.label.truncate = false;
     valueLabel.label.fontSize = 20;
-    valueLabel.label.horizontalCenter = "left";
+    valueLabel.label.dx = 5;
+    valueLabel.label.adapter.add("horizontalCenter", function (X, target) {
+        if (target.dataItem) {
+            return X;
+        }
+        console.log(target.dataItem);
+        // Change width based on the value
+        var width = target.dataItem.itemWidth;
+        if (width >= 800) {
+            return 'right'; // Set a specific width for small values
+        } else {
+            return 'left'; // Use the default width for other values
+
+        }
+    });
+    valueLabel.label.horizontalCenter = "right";
+    /*valueLabel.label.text = "{value}";
+    valueLabel.label.fontSize = 20;
+    valueLabel.label.horizontalCenter = "right";
     valueLabel.label.dx = 10;
-    valueLabel.locationX = 1;
+    valueLabel.locationX = 1;*/
     var title = chart.titles.create();
     title.text = hbartitle;
     title.fontSize = 25;
