@@ -502,13 +502,13 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
         series.sequencedInterpolation = true;
         series.tooltip.fontSize = 17;
 
-        var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-        valueLabel.label.text = "{valueX}";
-        //valueLabel.label.horizontalCenter = "left";
-        //valueLabel.label.dx = 10;
-        valueLabel.label.hideOversized = false;
-        valueLabel.label.truncate = false;
-        valueLabel.label.fontSize = 20;
+        //var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+        //valueLabel.label.text = "{valueX}";
+        ////valueLabel.label.horizontalCenter = "left";
+        ////valueLabel.label.dx = 10;
+        //valueLabel.label.hideOversized = false;
+        //valueLabel.label.truncate = false;
+        //valueLabel.label.fontSize = 20;
 
         var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
         categoryLabel.label.text = "{name}";
