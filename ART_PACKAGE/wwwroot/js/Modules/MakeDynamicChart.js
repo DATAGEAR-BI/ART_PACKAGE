@@ -478,7 +478,7 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
     }];
 
     // Create axes
-    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = chartCategory;
     //categoryAxis.numberFormatter.numberFormat = "#";
     // categoryAxis.renderer.inversed = true;
@@ -487,15 +487,15 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
     categoryAxis.renderer.cellEndLocation = 0.9;
     categoryAxis.renderer.labels.template.fontSize = 20;
 
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     //valueAxis.renderer.opposite = true;
     valueAxis.renderer.labels.template.fontSize = 20;
     console.log(data);
     // Create series
     function createSeries(field) {
         var series = chart.series.push(new am4charts.ColumnSeries());
-        series.dataFields.valueY = field;
-        series.dataFields.categoryX = chartCategory;
+        series.dataFields.valueX = field;
+        series.dataFields.categoryY = chartCategory;
         series.name = field;
         series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
         series.columns.template.height = am4core.percent(100);
@@ -543,7 +543,7 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
     //// Add scrollbar
     var scrollbar = new am4charts.XYChartScrollbar();
 
-    chart.scrollbarX = scrollbar;
+    chart.scrollbarY = scrollbar;
 
 
     chart.events.on("ready", function () {
