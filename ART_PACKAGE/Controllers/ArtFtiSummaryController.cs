@@ -7,8 +7,6 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using org.bouncycastle.math.raw;
-using System.Collections;
 
 namespace ART_PACKAGE.Controllers
 {
