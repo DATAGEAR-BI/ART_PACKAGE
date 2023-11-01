@@ -358,16 +358,25 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     chart.cursor.behavior = "zoomY";
 
     //set values on the bar without hover
-    var labelBullet = series.bullets.push(new am4charts.LabelBullet())
-    labelBullet.label.horizontalCenter = "right";
-    labelBullet.label.dx = -5;
-    labelBullet.label.text = "{valueX}";
     var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-    valueLabel.label.text = "{value}";
+    valueLabel.label.text = "{valueX}";
+    valueLabel.label.hideOversized = false;
+    valueLabel.label.truncate = false;
     valueLabel.label.fontSize = 20;
-    valueLabel.label.horizontalCenter = "left";
-    valueLabel.label.dx = 10;
-    valueLabel.locationX = 1;
+    valueLabel.label.dx = 20; // Adjust label position
+    valueLabel.label.adapter.add('horizontalCenter', function (x, target) {
+        if (!target.dataItem) {
+            return x;
+        }
+        var width = target.dataItem.itemWidth;
+        //console.log(width);
+        if (width >= 800) { // display number inside graph
+            return 'right';
+        } else {
+            //console.log('left');
+            return 'left';
+        }
+    });
     var title = chart.titles.create();
     title.text = hbartitle;
     title.fontSize = 25;
