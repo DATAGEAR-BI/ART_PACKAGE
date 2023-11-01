@@ -39,7 +39,7 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"BranchName".ToLower(), _dropDown.GetDGTriageBranchName().ToDynamicList() },
-                    {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
+                    {"RiskScore".ToLower(),_dropDown.GetDGTriageRiskClassificationDropDown().ToDynamicList() },
                     {"OwnerUserid".ToLower(),_dropDown.GetDGOwnerDropDown().ToDynamicList() }
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLTriageController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : new();
