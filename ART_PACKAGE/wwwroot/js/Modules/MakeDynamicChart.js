@@ -1101,6 +1101,7 @@ export function makedynamicChart(
             callBarChart(data, title, divId, chartValue, chartCategory, dontRotateCat, columnsColorFunc);
             break;
         case types.hbar:
+            chart.style.height = "800px";
             callHBar(data, title, divId, chartValue, chartCategory);
             break;
         case types.dragdrop:
