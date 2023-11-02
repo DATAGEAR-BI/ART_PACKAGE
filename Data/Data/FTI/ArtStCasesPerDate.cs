@@ -8,9 +8,9 @@ namespace Data.Data.FTI
 {
     public class ArtStCasesPerDate
     {
-        public decimal? Year { get; set; }
+        public int? Year { get; set; }
         public string Month { get; set; } = null!;
-        public decimal? Day { get; set; }
-        public decimal? NumberOfCases { get; set; }
+        public int? Day { get; set; }
+        public int? NUMBER_OF_CASES { get; set; }
     }
 }
