@@ -1,9 +1,12 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
@@ -12,12 +15,14 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         private readonly ExportSchedularContext _context;
         private readonly IRecurringJobManager jobsManger;
         private readonly ILogger<TasksController> _logger;
+        private readonly ITaskPerformer _taskPerformer;
 
-        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger)
+        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer)
         {
             _context = context;
             this.jobsManger = jobsManger;
             _logger = logger;
+            _taskPerformer = taskPerformer;
         }
 
         public IActionResult Index()
@@ -31,12 +36,43 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             return View();
         }
 
+
+        [HttpGet("[controller]/[action]/{taskId}")]
+        public IActionResult EditTask(int taskId)
+        {
+            ExportTask? task = _context.ExportsTasks.Include(x => x.Mails).Include(x => x.Parameters).FirstOrDefault(x => x.Id == taskId);
+
+            ExportTaskDto taskDto = new()
+            {
+                Day = task?.Day,
+                DayOfWeek = task?.DayOfWeek,
+                Description = task?.Description,
+                Hour = task?.Hour,
+                IsMailed = task.IsMailed,
+                IsSavedOnServer = task.IsSavedOnServer,
+                Mails = task.Mails.Select(x => x.Mail).ToList(),
+                Minute = task.Minute,
+                Month = task.Month,
+                Name = task.Name,
+                Parameters = task.Parameters.GroupBy(x => new { x.ParameterName, x.Operator }).Select(x => new Parameter { Name = x.Key.ParameterName, Operator = x.Key.Operator, Value = x.Select(v => v.ParameterValue).ToList() }).ToList(),
+                Period = task.Period,
+                ReportName = task.ReportName
+            };
+            return View(taskDto);
+        }
+
+
+
         [HttpPost]
-        public IActionResult AddTask([FromBody] AddTaskDto task)
+        public IActionResult AddTask([FromBody] ExportTaskDto task)
         {
             if (task is null)
                 return BadRequest();
+
+
             bool isExists = _context.ExportsTasks.FirstOrDefault(x => x.Name == task.Name) != null;
+
+
             if (isExists)
                 return BadRequest();
 
@@ -57,37 +93,39 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Period = task.Period,
 
             };
+
             _ = _context.ExportsTasks.Add(taskToAdd);
             int res = _context.SaveChanges();
             if (res <= 0)
                 return BadRequest();
 
 
-            jobsManger.AddOrUpdate(taskToAdd.Name, () => Console.WriteLine($"Task Running : {taskToAdd.Name} At : {DateTime.Now}"), Cron.Minutely);
+
+
+            Func<string> period = _taskPerformer.GetPeriod(taskToAdd);
+
+            jobsManger.AddOrUpdate(taskToAdd.Name, () => _taskPerformer.PerformTask(taskToAdd), period);
 
             return Ok();
         }
 
         public async Task<IActionResult> GetData([FromBody] KendoRequest request)
         {
-            Microsoft.EntityFrameworkCore.DbSet<ExportTask> data = _context.ExportsTasks;
+            DbSet<ExportTask> data = _context.ExportsTasks;
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
             if (request.IsIntialize)
             {
-                DisplayNames = new();
-
+                DisplayNames = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-
+                   {nameof(ExportTask.Period).ToLower(),Enum.GetNames(typeof(TaskPeriod)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
+                   {nameof(ExportTask.DayOfWeek).ToLower(),Enum.GetNames(typeof(DayOfWeek)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
+                   {nameof(ExportTask.Month).ToLower(),Enum.GetNames(typeof(MonthsOfYear)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
                 };
-                ColumnsToSkip = new List<string>()
-                {
-                    nameof(ExportTask.Parameters),
-                    nameof(ExportTask.Mails)
-                };
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].SkipList;
             }
 
             KendoDataDesc<ExportTask> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
@@ -133,7 +171,6 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         [HttpGet("[controller]/[action]/{name}")]
         public IActionResult IsTaskExists(string name)
         {
-
             bool isExists = _context.ExportsTasks.FirstOrDefault(x => x.Name == name) != null;
             return !isExists ? Ok() : BadRequest();
         }

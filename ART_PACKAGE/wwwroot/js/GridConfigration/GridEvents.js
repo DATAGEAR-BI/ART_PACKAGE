@@ -1,5 +1,5 @@
 ﻿
-import { invokeExport, start, exportConnection } from './ExportListener.js'
+import { invokeExport, start, exportConnection } from '../ExportListener.js'
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {

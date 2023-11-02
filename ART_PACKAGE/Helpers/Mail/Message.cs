@@ -5,11 +5,14 @@
         public List<string> To { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
-        public Message(IEnumerable<string> to, string subject, string content)
+
+        public List<DataFile> Attachments { get; set; }
+        public Message(IEnumerable<string> to, string subject, string content, List<DataFile> attachments)
         {
             To = to.ToList();
             Subject = subject;
             Content = content;
+            Attachments = attachments;
         }
     }
 }

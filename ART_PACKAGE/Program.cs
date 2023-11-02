@@ -2,10 +2,12 @@
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.ContextPerReport;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Helpers.Pdf;
@@ -13,6 +15,7 @@ using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
@@ -24,16 +27,25 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 
 builder.Services.AddDbs(builder.Configuration);
+
+builder.Services.AddSingleton<ContextPerReportFactory>();
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+
+
+
+builder.Services.AddScoped<ITaskPerformer, TaskPerformer>();
+
+
 builder.Services.AddHangfire(
 configuration => configuration
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
-            .UseSqlServerStorage(builder.Configuration.GetConnectionString("AuthContextConnection")));
+            .UseSqlServerStorage(builder.Configuration.GetConnectionString("AuthContextConnection"))
+            .UseSerializerSettings(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
 builder.Services.AddHangfireServer();
 builder.Services.AddScoped<DBFactory>();

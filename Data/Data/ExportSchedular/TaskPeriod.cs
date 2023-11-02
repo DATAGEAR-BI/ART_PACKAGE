@@ -2,13 +2,13 @@
 {
     public enum TaskPeriod
     {
+        Never,
         Minutely,
         Hourly,
         Daily,
         Weekly,
         Monthly,
         Yearly,
-        Never
 
     }
 }

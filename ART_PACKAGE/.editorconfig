@@ -23,6 +23,9 @@ csharp_style_expression_bodied_local_functions = false:silent
 csharp_space_around_binary_operators = before_and_after
 dotnet_diagnostic.IDE0011.severity = silent
 dotnet_diagnostic.IDE0072.severity = silent
+csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+dotnet_diagnostic.IDE0046.severity = silent
 
 
 
@@ -83,3 +86,4 @@ dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggesti
 dotnet_style_prefer_auto_properties = true:silent
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
+dotnet_code_quality_unused_parameters = all:suggestion

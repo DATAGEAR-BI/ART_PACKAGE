@@ -1,4 +1,6 @@
-﻿namespace Data.Data.ExportSchedular
+﻿using System.Text.Json.Serialization;
+
+namespace Data.Data.ExportSchedular
 {
     public class TaskParameters
     {
@@ -7,7 +9,7 @@
         public string ParameterName { get; set; } = null!;
         public string? ParameterValue { get; set; }
         public string Operator { get; set; } = null!;
-
+        [JsonIgnore]
         public ExportTask Task { get; set; } = null!;
     }
 }

@@ -34,13 +34,13 @@ namespace ART_PACKAGE.Middlewares.License
             string controller = string.IsNullOrWhiteSpace(controllerName) ? string.Empty : controllerName;
 
             //checking if empty route or controller is basemodule like home or custom report
-            if (string.IsNullOrEmpty(controller) || ModulePerLicense.isBaseModule(controller))
+            if (string.IsNullOrEmpty(controller) || ReportPerModule.isBaseModule(controller))
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;
             }
             //getting the module the route is in
-            string module = ModulePerLicense.GetModule(controller);
+            string module = ReportPerModule.GetModule(controller);
             //checking if the app configuration supports that module
             if (!requirement.Modules.Contains(module))
             {

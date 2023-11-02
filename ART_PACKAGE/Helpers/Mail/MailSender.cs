@@ -42,8 +42,11 @@ namespace ART_PACKAGE.Helpers.Mail
             emailMessage.Subject = message.Subject;
             BodyBuilder bodyBuilder = new() { HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
 
-            byte[] filebyte = File.ReadAllBytes("test.txt");
-            bodyBuilder.Attachments.Add("test.txt", filebyte, ContentType.Parse("text/plain"));
+
+            foreach (DataFile attachment in message.Attachments)
+            {
+                _ = bodyBuilder.Attachments.Add(attachment.Name, attachment.Bytes, ContentType.Parse(attachment.MimeType));
+            }
 
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;

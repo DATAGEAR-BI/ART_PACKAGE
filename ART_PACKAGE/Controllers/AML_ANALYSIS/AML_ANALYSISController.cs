@@ -137,7 +137,8 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
                 "TotalClearingcheckDAmt"   ,
                 "TotalClearingcheckDCnt"   ,
                 "MinClearingcheckDAmt",
-                "IndustryCode"
+                "IndustryCode",
+                "Prediction"
             };
 
 

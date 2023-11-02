@@ -1,8 +1,10 @@
 ﻿import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
 import { URLS } from "./URLConsts.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./GridConfigration/GridEvents.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 import { Actions } from "./GridActions.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+import { columnFilters } from "./GridConfigration/ColumnsFilters.js"
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -776,31 +778,17 @@ function generateColumns(response) {
     };
     var cols = columnNames.map(function (column) {
         var filter = {};
-        if (column.isDropDown) {
-            var ops = {};
-            var equal = { eq: "is equal to" };
-            if (column.type === "string") ops = { string: { ...equal, isnull: "is null" } };
-            else if (column.type === "date") ops = { date: equal };
-            else if (column.type === "number") ops = { number: equal };
-            else ops = { boolean: equal };
-            filter = {
-                ui: (e) => createMultiSelect(e, column.menu, column.name),
-                extra: false,
-                operators: ops,
-            };
-        }
+        if (column.isDropDown)
+            filter = columnFilters.multiSelectFilter(column);
 
-        if (isDateField[column.name]) {
-            filter = {
-                ui: function (element) {
-                    element.kendoDatePicker({
-                        format: "dd/MM/yyyy",
-                    }); // initialize a Kendo UI DateTimePicker
-                },
-            };
-        }
+        if (isDateField[column.name])
+            filter = columnFilters.dateFilter();
 
+
+
+        var template = column.template;
         var isCollection = column.isCollection;
+        var hasTemplate = template && template != ""
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {
@@ -830,6 +818,9 @@ function generateColumns(response) {
             }
         }
 
+
+
+
         return {
             field: column.name,
             format: column.format ?
@@ -837,6 +828,7 @@ function generateColumns(response) {
                 isDateField[column.name]
                     ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                     : "",
+
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
@@ -844,7 +836,7 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? Templates[template] : null,
         };
     });
 
@@ -866,96 +858,6 @@ function generateColumns(response) {
     }
     if (response.selectable) cols = [selectCol, ...cols];
     return cols;
-}
-
-function createMultiSelect(element, data, field) {
-    //console.log(element);
-    element.removeAttr("data-bind");
-    element[0].dataset.field = field;
-    element.kendoMultiSelect({
-        dataSource: data,
-        filter: "contains"
-        //change: function (e) {
-        //    var opSelect = document.querySelector(`select[title = "Operator"]`);
-        //    var dateops = ["gt", "lt", "lte", "gte"];
-        //    var filter = { logic: "or", filters: [] };
-        //    var values = this.value();
-        //    $.each(values, function (i, v) {
-        //        filter.filters.push({
-        //            field: field,
-        //            operator: dateops.includes(opSelect.value) ? "eq" : opSelect.value,
-        //            value: v,
-        //        });
-        //    });
-
-        //    var currentFilters = $("#grid").data("kendoGrid").dataSource.filter();
-
-        //    if (!currentFilters) {
-        //        var parentFilter = {
-        //            logic: "and",
-        //            filters: [filter],
-        //        };
-        //        $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-        //        return;
-        //    }
-
-        //    var remainingFilters = currentFilters.filters.filter((x) => {
-        //        if (x.field && x.field != field) return true;
-
-        //        if (x.filters && x.filters.some((x) => x.field != field)) return true;
-        //    });
-
-        //    var newFilter = [];
-
-        //    if (filter.filters.length == 0) {
-        //        newFilter = [...remainingFilters];
-        //    } else {
-        //        newFilter = [...remainingFilters, filter];
-        //    }
-        //    var parentFilter = {
-        //        logic: "and",
-        //        filters: [...newFilter],
-        //    };
-
-        //    $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-
-        //    //if (currentFilters) {
-
-        //    //    var hasSubFilters = currentFilters.filters.filter(x => x.filters);
-        //    //    console.log(currentFilters);
-        //    //    if (hasSubFilters.length != 0) {
-        //    //        var newFilters = currentFilters.filters.filter(x => {
-        //    //            var hasfiltersAtt = x.filters
-        //    //            if (!hasfiltersAtt)
-        //    //                if (x.field == field)
-        //    //                    return false;
-        //    //                else
-        //    //                    return true;
-        //    //            else
-        //    //                if (x.filters.some(y => y.field == field))
-        //    //                    return false;
-        //    //                else
-        //    //                    return true;
-        //    //        });
-
-        //    //        console.log(newFilters);
-        //    //        if (newFilters.filters)
-        //    //            newFilters.filters.push(filter);
-        //    //        else
-        //    //            newFilters.filters = filter;
-
-        //    //        $("#grid").data("kendoGrid").dataSource.filter(newFilters);
-        //    //    }
-        //    //    else {
-        //    //        currentFilters.filters.push(filter);
-        //    //        $("#grid").data("kendoGrid").dataSource.filter(currentFilters);
-        //    //    }
-
-        //    //} else {
-        //    //    $("#grid").data("kendoGrid").dataSource.filter(filter);
-        //    //}
-        //},
-    });
 }
 
 function generateModel(response) {

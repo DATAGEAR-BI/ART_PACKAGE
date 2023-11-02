@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.DBService;
+using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Models;
 using Data.Data;
@@ -27,7 +28,9 @@ namespace ART_PACKAGE.Controllers
         private readonly List<string>? modules;
         private readonly MailConfiguration mailConfig;
         private readonly IMailSender _mailSender;
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, IMailSender mailSender)
+        private readonly ITaskPerformer taskPerformer;
+
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, IMailSender mailSender, ITaskPerformer taskPerformer)
         {
 
             _logger = logger;
@@ -56,17 +59,20 @@ namespace ART_PACKAGE.Controllers
 
             this.mailConfig = mailConfig.Value;
             _mailSender = mailSender;
+            this.taskPerformer = taskPerformer;
         }
 
 
 
         public IActionResult SendTestMail()
         {
-            Message message = new(new List<string> { "khalilizzlam@gmail.com" }, "Test email", "This a test mail sent from art package.");
+            //Message message = new(new List<string> { "khalilizzlam@gmail.com" }, "Test email", "This a test mail sent from art package.");
 
 
-            bool sent = _mailSender.SendEmail(message);
-            return Ok(sent);
+            //bool sent = _mailSender.SendEmail(message);
+
+            //taskPerformer.PerformTask();
+            return Ok();
         }
 
 

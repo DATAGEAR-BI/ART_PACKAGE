@@ -14,7 +14,7 @@ export const parametersConfig = [
                 "isMulti": true,
                 "type": "string",
                 "values": {
-                    "static": ["ACT", "CLS"],
+                    "static": ["Closed"],
                     "url": null
                 }
             },

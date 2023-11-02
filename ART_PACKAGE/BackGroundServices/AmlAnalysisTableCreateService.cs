@@ -22,9 +22,6 @@ namespace ART_PACKAGE.BackGroundServices
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 TimeOnly time = TimeOnly.FromDateTime(DateTime.Now);
-                Console.Out.WriteLine(time);
-                Console.Out.WriteLine(startTime);
-                Console.Out.WriteLine(endTime);
                 if (time.IsBetween(startTime, endTime))
                 {
                     try

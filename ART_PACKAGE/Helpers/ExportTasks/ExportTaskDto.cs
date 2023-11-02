@@ -2,7 +2,7 @@
 
 namespace ART_PACKAGE.Helpers.ExportTasks
 {
-    public class AddTaskDto
+    public class ExportTaskDto
     {
         public string Name { get; set; } = null!;
         public string? Description { get; set; }

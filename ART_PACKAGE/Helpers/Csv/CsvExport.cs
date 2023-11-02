@@ -1,15 +1,101 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Data.Data.ExportSchedular;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Globalization;
 using System.Linq.Expressions;
+using System.Text;
 using System.Text.Json;
+using Expression = System.Linq.Expressions.Expression;
+using Type = System.Type;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
     public class CsvExport : ICsvExport
     {
+
+        private static readonly Dictionary<string, string> StringOp = new()
+        {
+            { "equal"              , "{1} = '{0}'" },
+            { "not_equal"             , "{1} <> '{0}'" },
+            { "is_null"          , "{1} IS NULL" },
+            { "is_not_null"       , "{1} IS NOT NULL" },
+            { "is_empty"         , $@"{{1}} = ''" },
+            { "is_not_empty"      , $@"{{1}} <> ''" },
+            { "begins_with"      , "{1} LIKE '{0}%'" },
+            { "not_begins_with", "{1} NOT LIKE '{0}%'" },
+            { "contains"        , "{1} LIKE '%{0}%'" },
+            { "not_contains"  , "{1} NOT LIKE '%{0}%'" },
+            { "ends_with"        , "{1} LIKE '%{0}'" },
+            { "not_ends_with"  , "{1} NOT LIKE '%{0}'" },
+            { "in"  , "{1} IN ({0})" },
+            { "not_in"  , "{1} NOT IN ({0})" },
+        };
+
+        private static readonly Dictionary<string, string> NumberOp = new()
+        {
+            { "equal", "{1} = {0}" },
+            { "not_equal", "{1} <> {0}" },
+            { "is_null", "{1} IS NULL" },
+            { "is_not_null", "{1} IS NOT NULL" },
+            {"greater_or_equal"  ,"{1} >= {0}"},
+            {"greater"   ,"{1} > {0}"},
+            {"less_or_equal"  ,"{1} <= {0}"},
+            { "less"  , "{1} < {0}" },
+              { "in"  , "{1} IN ({0})" },
+              { "not_in"  , "{1} NOT IN ({0})" },
+        };
+        private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
+        {
+            {
+
+                "sqlServer"
+            ,
+            new Dictionary<string, string> {
+            { "equal", "Convert(date , {1} , 105) = Convert(date,'{0}',105)" },
+            { "not_equal", "Convert(date , {1} , 105) <> Convert(date,'{0}',105)" },
+            { "is_null", "{1} IS NULL" },
+            { "is_not_null", "{1} IS NOT NULL" },
+            {"greater_or_equal","Convert(date , {1} , 105) >= Convert(date,'{0}',105)"},
+            {"greater","Convert(date , {1} , 105) > Convert(date,'{0}',105)"},
+            {"less_or_equal","Convert(date , {1} , 105) <= Convert(date,'{0}',105)"},
+            { "less", "Convert(date , {1} , 105) < Convert(date,'{0}',105)" },
+              { "in"  , "Convert(date , {1} , 105) IN ({0})" },
+              { "not_in"  , "Convert(date , {1} , 105) NOT IN ({0})" },
+                }
+            }
+
+            ,
+
+            {
+
+                "oracle"
+            ,
+                new Dictionary<string, string> {
+            { "equal", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },
+            { "not_equal", "TRUNC({1}) <> to_date('{0}', 'dd-MM-yyyy')" },
+            { "is_null", "{1} IS NULL" },
+            { "is_not_null", "{1} IS NOT NULL" },
+            {"greater_or_equal","TRUNC({1}) >= to_date('{0}', 'dd-MM-yyyy')"},
+            {"greater","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
+            {"less_or_equal","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
+            { "less", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
+              { "in"  , "TRUNC({1}) IN ({0})" },
+              { "not_in"  , "TRUNC({1}) NOT IN ({0})" },
+            }
+            }
+        };
+
+
+
+
+
+
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -27,7 +113,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
         public async Task Export<TModel, TController, TColumn>(DbContext _db, string userName, ExportDto<object> obj, string idColumn = null) where TModel : class
         {
-            Microsoft.EntityFrameworkCore.Metadata.IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
+            IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
             string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
             IQueryable<TModel> data = null;
             if (idColumn is not null && obj.SelectedIdz is not null && obj.SelectedIdz.Count() > 0)
@@ -176,6 +262,129 @@ namespace ART_PACKAGE.Helpers.Csv
             Directory.Delete(folderPath, true);
         }
 
+        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, IEnumerable<TaskParameters> parameters) where TModel : class
+        {
+            IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
+            string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
+            string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
+            string where = GenerateWhereClause<TModel>(db, parameters, tableData, dbtype);
+            IQueryable<TModel> data = db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchemaQualifiedViewName()}
+                                                       {where}");
+            byte[][] bytes = await Task.WhenAll(ExportDataToCsv<TModel, TController>(data));
+            string currentDate = DateTime.UtcNow.ToShortDateString();
+            IEnumerable<DataFile> files = bytes.Select((b, i) => new DataFile(i + 1 + "." + typeof(TController).Name.Replace("Controller", "") + "_" + currentDate + ".csv"
+                , "text/csv", b));
 
+            return files;
+        }
+
+        private IEnumerable<Task<byte[]>> ExportDataToCsv<TModel, TController>(IQueryable<TModel> data)
+        {
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                Encoding = Encoding.UTF8,
+                IgnoreBlankLines = true,
+                AllowComments = true,
+
+            };
+            int total = data.Count();
+            int batch = 1_048_576;
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            while (total > 0)
+            {
+                IQueryable<TModel> tempData = data.Skip(skip).Take(batch);
+
+                yield return Task.Run(() =>
+                {
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
+                    using (CsvWriter cw = new(sw, config))
+                    {
+
+                        //_ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TController, TModel>>();
+                        //if (filterCells is not null && filterCells.Count != 0)
+                        //{
+                        //    foreach (List<object> item in filterCells)
+                        //    {
+                        //        cw.WriteComment(string.Join(",", item));
+                        //    }
+                        //    cw.NextRecord();
+                        //}
+
+
+
+                        cw.WriteHeader<TModel>();
+                        cw.NextRecord();
+                        foreach (TModel? elm in tempData)
+                        {
+                            cw.WriteRecord(elm);
+                            cw.NextRecord();
+                        }
+                    }
+                    byte[] b = stream.ToArray();
+                    return b;
+                });
+                //tasks.Add(task);
+                total -= batch;
+                skip += batch;
+            }
+
+
+        }
+
+
+        private string GenerateWhereClause<TModel>(DbContext db, IEnumerable<TaskParameters> parameters, IEntityType? tableData, string dbtype)
+        {
+            //Dictionary<string, string> opMap = new()
+            //{
+            //        { "equal", "=" },
+            //        { "not_equal", "<>" },
+            //        { "in", "IN" },
+            //        { "not_in", "NOT IN" },
+            //        { "less", "<" },
+            //        { "less_or_equal", "<=" },
+            //        { "greater", ">" },
+            //        { "greater_or_equal", ">=" },
+            //        { "begins_with", "LIKE" },
+            //        { "not_begins_with", "NOT LIKE" },
+            //        { "contains", "LIKE" },
+            //        { "not_contains", "NOT LIKE" },
+            //        { "ends_with", "LIKE" },
+            //        { "not_ends_with", "NOT LIKE" },
+            //        { "is_empty", "=" }, // Customize this as per your database's definition of empty
+            //        { "is_not_empty", "<>" },
+            //        { "is_null", "IS NULL" },
+            //        { "is_not_null", "IS NOT NULL" }
+            //};
+
+            List<string> whereClause = new();
+            var groupedParams = parameters.GroupBy(x => new { x.ParameterName, x.Operator });
+            foreach (var paramGroup in groupedParams)
+            {
+                IProperty prop = tableData.GetProperty(paramGroup.Key.ParameterName);
+                Type paramType = prop.GetType();
+                bool isNumber = paramType.IsNumericType();
+                bool isDate = paramType.Name == nameof(DateTime);
+                string values = string.Empty;
+                if (paramGroup.Key.Operator.Contains("in", StringComparison.OrdinalIgnoreCase))
+                {
+                    values = string.Join(",", groupedParams.SelectMany(x => x.Select(p => isNumber ? p.ParameterValue : $"'{p.ParameterValue}'")));
+                }
+                values = groupedParams.FirstOrDefault().FirstOrDefault().ParameterValue;
+                string columnName = prop.GetColumnName();
+                if (isNumber)
+                    whereClause.Add(string.Format(NumberOp[paramGroup.Key.Operator], values, columnName));
+                else if (isDate)
+                {
+                    string sql = DateOp[dbtype][paramGroup.Key.Operator];
+                    whereClause.Add(string.Format(sql, values, columnName));
+                }
+                else
+                    whereClause.Add(string.Format(StringOp[paramGroup.Key.Operator], values, columnName));
+            }
+
+            return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
+        }
     }
 }

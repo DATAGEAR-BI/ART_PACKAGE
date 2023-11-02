@@ -31,10 +31,7 @@ namespace ART_PACKAGE.Controllers.ECM
             _csvSrv = csvSrv;
         }
 
-        public IActionResult Test()
-        {
-            return Ok(context.ArtSystemPerformances.Select(x => x.DurationsInDays).Take(100));
-        }
+
 
 
 

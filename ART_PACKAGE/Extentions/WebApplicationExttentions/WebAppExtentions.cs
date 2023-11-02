@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using FakeItEasy;
 using Hangfire;
@@ -137,14 +138,34 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
         public static void StartTasks(this WebApplication app)
         {
-            ExportSchedularContext TasksContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<ExportSchedularContext>();
-            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<ExportTask, ICollection<TaskMails>> jobs = TasksContext.ExportsTasks.Include(x => x.Parameters).Include(x => x.Mails);
+            IServiceScope scope = app.Services.CreateScope();
+            ExportSchedularContext TasksContext = scope.ServiceProvider.GetRequiredService<ExportSchedularContext>();
+            ITaskPerformer taskPerformer = scope.ServiceProvider.GetRequiredService<ITaskPerformer>();
+            IQueryable<ExportTask> jobs = TasksContext.ExportsTasks.Where(x => !x.Deleted).Include(x => x.Parameters).Include(x => x.Mails);//.Select(x => new ExportTaskDto
+            //{
+            //    Name = x.Name,
+            //    Day = x.Day,
+            //    DayOfWeek = x.DayOfWeek,
+            //    Description = x.Description,
+            //    Hour = x.Hour,
+            //    IsMailed = x.IsMailed,
+            //    IsSavedOnServer = x.IsSavedOnServer,
+            //    Minute = x.Minute,
+            //    Month = x.Month,ي
+            //    Period = x.Period,
+            //    ReportName = x.ReportName,
+            //    Mails = x.Mails.Select(x => x.Mail).ToList(),
+            //    Parameters = x.Parameters.Select(x => new Parameter { Name = x.ParameterName, Operator = x.Operator, Value = new List<string> { x.ParameterValue } }).ToList()
+
+
+            //});
             IRecurringJobManager ruccrunibJ = app.Services.GetRequiredService<IRecurringJobManager>();
 
             foreach (ExportTask job in jobs)
             {
 
-                ruccrunibJ.AddOrUpdate(job.Name, () => Console.WriteLine($"Desc : {job.Description} , Paramters : {{  {string.Join(",", job.Parameters.Select(x => $"{x.ParameterName} : {x.ParameterValue}"))}}}"), Cron.Minutely);
+                ruccrunibJ.RemoveIfExists(job.Name);
+                //ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job), taskPerformer.GetPeriod(job));
             }
         }
 

@@ -4,12 +4,14 @@ using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
+using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.Audit;
+using Data.Data.ExportSchedular;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -18,6 +20,19 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
 
+
+               { nameof(TasksController).ToLower(), new ReportConfig {
+               SkipList = new List<string>()
+                {
+                    nameof(ExportTask.Parameters),
+                    nameof(ExportTask.Mails)
+                },
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {nameof(ExportTask.Period),new DisplayNameAndFormat { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
+            }
+               }
+            },
 
             { nameof(AlertDetailsController).ToLower(), new ReportConfig {
                SkipList =  new List<string>

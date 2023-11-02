@@ -1,39 +1,14 @@
 import { parametersConfig } from "./TaskParametersSettings.js"
-
-const dateSetting = {
-    plugin: 'datepicker',
-    plugin_config: {
-        format: 'yyyy-mm-dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-    }
-};
-const multiSetting = {
-    multiple: true,
-    input: 'select',
-    validation: false,
-    //operators: ['in'],
-    value_separator: ",",
-    plugin: 'selectpicker',
-    plugin_config: {
-        actionsBox: true,
-        liveSearch: true,
-        width: 'auto',
-        selectedTextFormat: 'count',
-        liveSearchStyle: 'contains',
-    },
-}
+import { dateSetting, multiSetting } from "../Components/QueryBuilder/QueryBuilderPlugins.js"
 const period = {
 
-    0: "minutely",
-    1: "hourly",
-    2: "daily",
-    3: "weekly",
-    4: "monthly",
-    5: "yearly",
-    6: "never",
-
+    0: "never",
+    1: "minutely",
+    2: "hourly",
+    3: "daily",
+    4: "weekly",
+    5: "monthly",
+    6: "yearly",
 
 }
 
@@ -145,7 +120,7 @@ form.onsubmit = async (e) => {
     }
     var weekDay = parseInt(weekDayDropDown.value);
 
-    if (period === 3 && weekDay === -1) {
+    if (period === 4 && weekDay === -1) {
         toastObj.icon = 'error';
         toastObj.text = "You should select a valid week day";
         toastObj.heading = "Add new Task Status";
@@ -154,7 +129,7 @@ form.onsubmit = async (e) => {
     }
     var month = parseInt(monthDropDown.value);
 
-    if (period === 5 && month === -1) {
+    if (period === 6 && month === -1) {
         toastObj.icon = 'error';
         toastObj.text = "You should select a valid month";
         toastObj.heading = "Add new Task Status";
@@ -182,8 +157,8 @@ form.onsubmit = async (e) => {
         Mails: mailSwitch.status ? mailsInput.getMails() : [],
         IsSavedOnServer: serverSwitch.status
     };
-
-    console.log(reqBody);
+    //console.log(paramtersBuilder.getSql());
+    //console.log(reqBody);
 
     var addTaskRes = await fetch("/Tasks/AddTask", {
         headers: {

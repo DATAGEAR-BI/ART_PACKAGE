@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
+using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.Csv
@@ -12,5 +13,8 @@ namespace ART_PACKAGE.Helpers.Csv
         public Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true);
         public Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true);
         public void ClearExportFolder(string reqId);
+
+
+        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, IEnumerable<TaskParameters> parameters) where TModel : class;
     }
 }
