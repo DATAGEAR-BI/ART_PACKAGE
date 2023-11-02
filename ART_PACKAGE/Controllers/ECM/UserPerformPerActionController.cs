@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.ECM
 {
-    //[Authorize(Roles = "UserPerformancePerActionUser")]
-    public class UserPerformancePerActionUserController : Controller
+    //[Authorize(Roles = "UserPerformPerAction")]
+    public class UserPerformPerActionController : Controller
     {
         private readonly IMemoryCache _cache;
         private readonly EcmContext context;
@@ -21,7 +21,8 @@ namespace ART_PACKAGE.Controllers
         private readonly string dbType;
 
 
-        public UserPerformancePerActionUserController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
@@ -33,13 +34,13 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-            _ = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
+            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            IEnumerable<ArtUserPerformancePerActionUser> data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
 
 
-            KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
 
 
             var result = new
@@ -47,7 +48,7 @@ namespace ART_PACKAGE.Controllers
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                reportname = "UserPerformancePerActionUser"
+                reportname = "UserPerformPerAction"
             };
             return new ContentResult
             {
@@ -61,41 +62,33 @@ namespace ART_PACKAGE.Controllers
             };
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            _ = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
-
+            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            IEnumerable<ArtUserPerformancePerActionUser> data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
 
-
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
-
-            string startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value?.Replace("/", "-") ?? "";
-            string endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "endDate".ToLower())?.value?.Replace("/", "-") ?? "";
-
+            _ = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
-            data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
-            ViewData["title"] = "User Performance Per Action User Report";
+            IEnumerable<ArtUserPerformPerAction> data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+
+            ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "application/pdf");
-        }
-
-
-
-
-
-        public IActionResult Index()
-        {
-            return View();
         }
     }
 }

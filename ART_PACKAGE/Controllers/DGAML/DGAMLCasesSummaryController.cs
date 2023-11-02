@@ -9,7 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.DGAML
 {
     //[Authorize(Roles = "CasesSummary")]
 

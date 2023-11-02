@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.DGAML
 {
     // [Authorize(Roles = "AlertSummary")]
     public class DGAMLAlertSummaryController : Controller
