@@ -5,11 +5,13 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -27,6 +29,9 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
+builder.Services.AddScoped<IDgUserManager, DgUserManager>();
+builder.Services.AddSingleton<HttpClient>();
+builder.Services.AddCustomAuthorization();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
@@ -34,10 +39,12 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddEntityFrameworkStores<AuthContext>();
 
 builder.Services.ConfigureApplicationCookie(opt =>
- {
+{
+    string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
+    if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+    else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
-     opt.LoginPath = new PathString("/Ldapauth/login");
- });
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -61,8 +68,8 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
-app.ApplyModulesMigrations();
-
+//app.ApplyModulesMigrations();
+app.SeedModuleRoles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -77,6 +84,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
+app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");

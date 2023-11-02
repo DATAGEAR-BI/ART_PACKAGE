@@ -4,14 +4,13 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.StoredProcs;
 using Data.Data.ECM;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "UserPerformancePerUserAndAction")]
+    //[Authorize(Roles = "UserPerformancePerUserAndAction")]
     public class UserPerformancePerUserAndActionController : Controller
     {
         private readonly IMemoryCache _cache;

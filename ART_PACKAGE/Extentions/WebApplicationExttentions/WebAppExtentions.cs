@@ -1,5 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -12,10 +12,10 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            if (authContext.Database.GetPendingMigrations().Any())
-            {
-                authContext.Database.Migrate();
-            }
+            //if (authContext.Database.GetPendingMigrations().Any())
+            //{
+            //    authContext.Database.Migrate();
+            //}
 
             //if (modules.Contains("ECM"))
             //{
@@ -100,6 +100,31 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //        kyc.Database.Migrate();
             //    }
             //}
+        }
+        public static async void SeedModuleRoles(this WebApplication app)
+        {
+
+            IEnumerable<Type> types = AppDomain.CurrentDomain
+                        .GetAssemblies()
+                        .SelectMany(a => a.GetTypes())
+                        .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
+            RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+            foreach (string module in modules)
+            {
+                IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
+                foreach (string role in moduleRoles)
+                {
+                    if (!await rm.RoleExistsAsync(role))
+                    {
+                        IdentityRole roleToadd = new(role);
+                        _ = await rm.CreateAsync(roleToadd);
+                    }
+
+                }
+            }
+
         }
     }
 }

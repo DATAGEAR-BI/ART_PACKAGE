@@ -1,7 +1,7 @@
 ﻿using ART_PACKAGE.Helpers.License;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ART_PACKAGE.Security
+namespace ART_PACKAGE.Middlewares.License
 {
     public class LicenseHandler : AuthorizationHandler<LicenseRequirment>
     {

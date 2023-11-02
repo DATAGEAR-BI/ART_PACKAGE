@@ -4,7 +4,6 @@ using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -13,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "Home")]
+    //[Authorize(Roles = "Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

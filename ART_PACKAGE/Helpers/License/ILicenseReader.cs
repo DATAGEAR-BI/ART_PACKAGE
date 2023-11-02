@@ -2,10 +2,10 @@
 {
     public interface ILicenseReader
     {
-        public Security.License ReadFromText(string encodedtext);
+        public Middlewares.License.License ReadFromText(string encodedtext);
 
-        public Security.License ReadFromPath(string path);
+        public Middlewares.License.License ReadFromPath(string path);
 
-        public IEnumerable<Security.License> ReadAllAppLicenses();
+        public IEnumerable<Middlewares.License.License> ReadAllAppLicenses();
     }
 }

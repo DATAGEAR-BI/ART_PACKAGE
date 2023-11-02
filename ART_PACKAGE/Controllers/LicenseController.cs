@@ -1,14 +1,13 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.License;
+using ART_PACKAGE.Middlewares.License;
 using ART_PACKAGE.Models;
-using ART_PACKAGE.Security;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize]
+
     public class LicenseController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
