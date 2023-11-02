@@ -308,7 +308,7 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
 function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
 
     am4core.useTheme(am4themes_animated);
-    am4core.useTheme(am4themes_kelly);
+    //am4core.useTheme(am4themes_kelly);
 
 
     // Create chart instance
@@ -380,7 +380,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     valueLabel.label.hideOversized = false;
     valueLabel.label.truncate = false;
     valueLabel.label.fontSize = 20;
-    valueLabel.label.dx = 5;
+    //valueLabel.label.dx = 5;
     valueLabel.label.adapter.add("horizontalCenter", function (X, target) {
         if (target.dataItem) {
             return X;
@@ -395,7 +395,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
 
         }
     });
-    valueLabel.label.horizontalCenter = "right";
+    //valueLabel.label.horizontalCenter = "right";
     /*valueLabel.label.text = "{value}";
     valueLabel.label.fontSize = 20;
     valueLabel.label.horizontalCenter = "right";

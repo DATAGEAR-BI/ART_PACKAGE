@@ -9,6 +9,6 @@ namespace Data.Data.FTI
     public class ArtStCasesPerProduct
     {
         public string? PRODUCT { get; set; }
-        public int? NUMBER_OF_CASES { get; set; }
+        public decimal? NUMBER_OF_CASES { get; set; }
     }
 }

@@ -71,8 +71,17 @@ namespace Data.Data.FTI
 
         private IEnumerable<T> SqlServerExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
         {
-            string sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
-            return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
+            try
+            {
+                string sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
+                return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(SPName+" - "+e.ToString());
+                throw ;
+            }
+            
         }
 
         private IEnumerable<T> OracleExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class

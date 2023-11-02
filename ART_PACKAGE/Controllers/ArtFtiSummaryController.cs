@@ -45,7 +45,9 @@ namespace ART_PACKAGE.Controllers
 
             if (dbType == DbTypes.SqlServer)
             {
+
                 chartCasesPerDate = fti.ExecuteProc<ArtStCasesPerDate>(SQLSERVERSPNames.ART_ST_CASES_PER_DATE, chart0Params.ToArray());
+
 
                 chartCasesYearToYearData = fti.ExecuteProc<ArtStCasesYearToYear>(SQLSERVERSPNames.ART_ST_CASES_YEAR_TO_YEAR, chart1Params.ToArray());
                 chartCasesPerTypeData = fti.ExecuteProc<ArtStCasesPerType>(SQLSERVERSPNames.ART_ST_CASES_PER_TYPE, chart2Params.ToArray());
@@ -62,7 +64,16 @@ namespace ART_PACKAGE.Controllers
                 chartCasesPerStatusData = fti.ExecuteProc<ArtStCasesPerStatus>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart3Params.ToArray());
                 chartCasesPerProductData = fti.ExecuteProc<ArtStCasesPerProduct>(ORACLESPName.ART_ST_CASES_PER_PRODUCT, chart4Params.ToArray());
             }
-
+            var dateData = chartCasesPerDate.ToList().GroupBy(x => x.Year).Select(x => new
+            {
+                year = x.Key.ToString(),
+                value = x.Sum(x => x.NUMBER_OF_CASES),
+                monthData = x.GroupBy(m => m.Month).Select(m => new
+                {
+                    Month = m.Key.ToString(),
+                    value = m.Sum(x => x.NUMBER_OF_CASES)
+                })
+            });
             List<object> chartData = new()
             {
                 new ChartData<ArtStCasesYearToYear>
@@ -101,7 +112,7 @@ namespace ART_PACKAGE.Controllers
                     Val = "NUMBER_OF_CASES"
                 },
                 new{//"date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month"
-                data=chartCasesPerDate,
+                data=dateData,
                 divId="StCasesPerDate",
                 cat="year",
                 val="value",

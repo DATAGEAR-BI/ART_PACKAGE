@@ -11,6 +11,6 @@ namespace Data.Data.FTI
         public int? Year { get; set; }
         public string Month { get; set; } = null!;
         public int? Day { get; set; }
-        public int? NUMBER_OF_CASES { get; set; }
+        public decimal? NUMBER_OF_CASES { get; set; }
     }
 }
