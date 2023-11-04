@@ -1,5 +1,5 @@
 ﻿import { Filters, GoToDeatailsUrls } from "./Modules/ExternalFilters.js"
-import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
+import { makedynamicChart, makeDatesChart } from "./Modules/MakeDynamicChart.js"
 import { URLS as Urls } from "./URLConsts.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 
@@ -223,7 +223,7 @@ function callDefinedCharts(url) {
         [...data].forEach(x => {
             var charttype = document.getElementById(x.ChartId).dataset.type;
             if (parseInt(charttype) === -1) {
-                makeDatesChart(x.Data, x.divId, x.cat, x.val, x.subcat, x.subval, x.subListKey, x.ctitle, (di)=> { })
+                makeDatesChart(x.data, x.divId, x.cat, x.val, x.subcat, x.subval, x.subListKey, x.ctitle, (di)=> { })
 
             } else {
                 makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)

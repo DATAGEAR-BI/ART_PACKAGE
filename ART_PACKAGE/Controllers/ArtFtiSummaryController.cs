@@ -74,14 +74,14 @@ namespace ART_PACKAGE.Controllers
                     value = m.Sum(x => x.NUMBER_OF_CASES)
                 })
             });
-            List<object> chartData = new()
+            List<object> chartData = new()//
             {
                 new ChartData<ArtStCasesYearToYear>
                 {
                     ChartId = "StCasesYearToYear",
                     Data = chartCasesYearToYearData.ToList(),
                     Title = "Cases Per Year",
-                    Cat = "Month",
+                    Cat = "Year",
                     Val = "NUMBER_OF_CASES"
 
                 },
@@ -116,7 +116,7 @@ namespace ART_PACKAGE.Controllers
                 divId="StCasesPerDate",
                 cat="year",
                 val="value",
-                subcat="month",
+                subcat="Month",
                 subval="value",
                 subListKey = "monthData",
                 ctitle = "Cases Per Year & Month"
