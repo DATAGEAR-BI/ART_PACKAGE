@@ -27,12 +27,10 @@
                 <select id="Shcema" name="Shecma" style="width:100%"  asp-items="Html.GetEnumValuesWithDisplayName<DbSchema>()" class="text-infol selectpicker" data-live-search="true">
                     <option value="-1">Select A Schema</option>
                 </select>
-                    
+                
             </div>
-            <div class="form-group col-md-4">
-                    <select id="TableName" name="TableName" style="width:100%" class="text-infol selectpicker" data-live-search="true">
-                    </select>
-                    
+            <div class="col-md-4">
+                <m-select id="TableName" data-searchable data-title="Table"></m-select>
             </div>
 
              <div class="form-group col-md-4">
@@ -98,5 +96,6 @@
 </div>
 
 @section scripts {
+    <script src="~/js/components/multiselect/select.js"></script>
     <script src="~/js/ReportScripts.js" ></script>
 }

@@ -11,26 +11,24 @@ var addedCharts = [];
 var form = document.getElementById("CustomReportForm");
 var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
-
+TableSelect.intialize([document.createElement("option")]);
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
         Fetch(`/Report/GetViews/${value}`, null, "GET").then(d => {
-            TableSelect.innerHTML = "";
+            console.log(TableSelect);
+            TableSelect.reset();
             var opt = document.createElement("option");
-            opt.innerText = "Select a Table";
-            opt.value = "";
-            opt.selected = true;
             TableSelect.appendChild(opt);
-            d.forEach(elm => {
+            var options = d.map(elm => {
                 var opt = document.createElement("option");
                 opt.innerText = elm.vieW_NAME.toString().split(".")[1];
                 opt.dataset.type = elm.type;
                 opt.value = elm.vieW_NAME;
-                TableSelect.appendChild(opt);
-            })
+                return opt;
+            });
+            TableSelect.intialize(options);
 
-            $('#TableName').selectpicker('refresh');
         });
     }
 
@@ -182,7 +180,7 @@ form.onsubmit = async (e) => {
     var tableType = TableSelect.options[TableSelect.selectedIndex].dataset.type;
     var columns = [...ColumnsSelect.options].filter(x => x.selected && x.value != "").map(x => ({
         Name: x.value,
-        SqlDataType: x.dataset.type ,
+        SqlDataType: x.dataset.type,
         IsNullable: x.dataset.isnullable,
     }));
     var reportTitle = document.getElementById("title").value;

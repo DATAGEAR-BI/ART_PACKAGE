@@ -1,105 +1,83 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        DataGear-ART
-    </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
-    <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css">
-    <link href="~/css/site.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link href="~/dist/css/AdminLTE.css" rel="stylesheet" />
-    <link href="~/dist/css/skins/skin-blue.css" rel="stylesheet" />
-    <!-- jQuery 3 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-   <environment names="UAT,Staging,Production">
-    <script  src="~/js/prodscript.js"></script>
-    </environment>
+<meta name="docsearch:language" content="en">
+<meta name="docsearch:version" content="3.1">
+<meta name="theme-color" content="#6f42c1">
+<meta property="og:type" content="website">
+    <meta property="og:title" content="Data Gear - ART">
+<meta property="og:description" content="Restyle Bootstrap with Material Style - A Material Design UI Library based on Bootstrap">
 
 
+<title>Data Gear - ART</title>
 
 
+<link href="/materialstyle/3.1/dist/css/materialstyle.min.css" rel="stylesheet">
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T3YPJV7LJD');
+</script>
+
+ 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @RenderSection("KendoScripts", required: false)
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
 
-    <div @*class="wrapper"*@>
-        <!-- Main Header -->
 
-        <partial name="_Header" />
-        <!-- Left side column. contains the logo and sidebar -->
-        <partial name="_Sidebar" />
-        <!-- Content Wrapper. Contains page content -->
+<body >
 
-        <div class="content-wrapper container-fluid" id="main-page" style="padding-top:5%">
-            <!-- Content Header (Page header) -->
+    <partial name="_Header" />
+    <partial name="_Sidebar" />
+    <div class="offcanvas-pushed-content d-flex" >
+        <div class="container-fluid p-2">
             @RenderBody()
-            <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <!--<footer class="main-footer">-->
-        <!-- Default to the left -->
-        <!--<strong>Copyright © @DateTime.Now.Year <a href="http://Datagearbi.com">By DataGear Teams</a>.</strong> All rights reserved.
-        </footer>-->
+
     </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+  
 
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
-    <script>
-        $(document).ready(function () {
+    @*<script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@@material/ripple@14.0.0/dist/mdc.ripple.min.js" integrity="sha384-9QANVmWxL3S8VRs8x1Q+bF1Zzogpy7P/Qw1+y5qHLdC1ig0EuoHg9VbB1SXyecdZ" crossorigin="anonymous"></script>
+*@
+    <!-- Popper JS -->
+    <script src="~/popperjs/core/dist/umd/popper.min.js"></script>
 
-            window.sessionStorage.setItem('sidebarShown', true);
-        });
+    <!-- MDC Ripple JS (Only for Ripple effects) -->
+    <script src="~/lib/material/ripple/dist/mdc.ripple.min.js"></script>
 
-        $(document).on('expanded.pushMenu', function () {
+    <!-- Material Style JS -->
+    
 
-            window.sessionStorage.setItem('sidebarShown', true);
-
-        });
-        $(document).on('collapsed.pushMenu', function () {
-            window.sessionStorage.setItem('sidebarShown', false);
-
-        });
-    </script>
+    @*<script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@docsearch/js@3"></script>*@
     <link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
     <script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
+
+
+    <script src="~/materialstyle/3.1/dist/js/materialstyle.min.js"></script>
+    
+  
+    @RenderSection("scripts", required: false)
+
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script type="module" defer src="~/js/ExportListener.js"></script>
     <partial name="aml_analysisScript" />
-    <script src="~/js/activelink.js"></script>
     <script src="~/js/emitters/modelemitter.js"></script>
-    @RenderSection("scripts", required: false)
-   
-    <script>
-        $(document).ready(function () {
 
-            if (window.sessionStorage.getItem('sidebarShown')) {
-               
-                $('[data-toggle="push-menu"]').pushMenu('toggle');
 
-            }
-        });
-    </script>
 </body>
+
+
+
+
+
 </html>
-@*<a class="k-button" href="\#" onclick="return toolbar_click()"><span class="k-icon k-i-excel"></span>Export To CSV</a>*@
-
-
-@*hiiiiiiiiiii*@

@@ -1,58 +1,20 @@
 ﻿
 
-<header id="headingArea" class="main-header" style="position: fixed;width:100%; ">
-    @* BEGIN Logo *@
-    <a class="logo"
-       style="background: linear-gradient(#cccccc,#013459),#000000; box-shadow:5px 5px 5px #013459;transition:all 0.8s ease;">
-        @* Mini logo for sidebar 50x50 pixels *@
-        <span class="logo-mini"><b>A</b>RT</span>
-        @* Logo for regular state and mobile devices *@
-        <span class="logo-lg">
-            <small>Analytics.Reporting.Tool</small>
-        </span>
-    </a>
-  
-    @* END Logo *@
-    @* BEGIN Header *@
-
-    <nav class="navbar navbar-static-top" role="navigation" style="background: linear-gradient(#cccccc,#013459),#000000; box-shadow: 5px 5px 5px #013459; transition: all 0.8s ease;">
-        <a href="#" class="" style="color:white;" data-toggle="push-menu" role="button">
-            <span class="glyphicon glyphicon-align-justify togela"></span>
-        </a>
-     
+<nav class="navbar bg-primary navbar-dark">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#drawer">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand d-flex align-items-center" href="javascript:">
+                <img src="~/imgs/iconwhite.png" alt="ART logo" width="40" height="40" />A.R.T
+            </a>
+        </div>
         <partial name="_LoginPartial" />
-    </nav>
-</header>
+    </div>
+
+</nav>
 
 
 
-<style>
-
-    .main-header .togela {
-        float: left;
-        background-color: transparent;
-        background-image: none;
-        padding: 15px 15px;
-        font-family: fontAwesome;
-    }
-
-
-
-        .main-header .togela:before {
-            content: "\f0c9";
-        }
-
-        .main-header .togela:hover {
-            color: #fff;
-        }
-
-        .main-header .togela:focus,
-        .main-header .togela:active {
-            background: transparent;
-        }
-
-        .main-header .togela .icon-bar {
-            display: none;
-        }
-</style>
 

@@ -1,21 +1,24 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
-<script src="~/js/site.js"></script>
-<link href="~/css/site.css" rel="stylesheet" />
+
+
+@section KendoScripts{
+    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+    <script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+    <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+}
+
 
 
 <section class="content-header">
     <h1>
         Alert Details
-        <small>Presents the alerts details</small>
+        <small class="h6">Presents the alerts details</small>
         <br />
     </h1>
 </section>
@@ -23,7 +26,5 @@
 
 <div id="grid"></div>
 @section Scripts{
-
-
     <script src="~/js/Dynamic.js" id="script" defer type="module" data-prop="AlertId" data-urlkey="AlertDetails" data-handlerkey="AlertDetails"></script>
 }

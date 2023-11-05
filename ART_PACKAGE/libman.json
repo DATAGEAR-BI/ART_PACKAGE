@@ -56,6 +56,23 @@
         "js/bootstrap.min.js",
         "js/bootstrap.min.js.map"
       ]
+    },
+    {
+      "library": "@popperjs/core@2.11.8",
+      "destination": "wwwroot/popperjs/core/"
+    },
+    {
+      "library": "@material/ripple@14.0.0",
+      "destination": "wwwroot/lib/material/ripple/",
+      "files": [
+        "dist/mdc.ripple.css",
+        "dist/mdc.ripple.css.map",
+        "dist/mdc.ripple.js",
+        "dist/mdc.ripple.js.map",
+        "dist/mdc.ripple.min.css",
+        "dist/mdc.ripple.min.css.map",
+        "dist/mdc.ripple.min.js"
+      ]
     }
   ]
 }
