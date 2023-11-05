@@ -119,7 +119,10 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-
+        public IActionResult Queues()
+        {
+            return View();
+        }
 
         public IActionResult GetAmlChartsData()
         {
