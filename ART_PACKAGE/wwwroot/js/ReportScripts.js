@@ -1,4 +1,5 @@
-﻿var TableSelect = document.getElementById("TableName");
+﻿var SchemaSelect = document.getElementById("Shcema");
+var TableSelect = document.getElementById("TableName");
 var ColumnsSelect = document.getElementById("ColumnNames");
 var ChartColumnSelect = document.getElementById("chartColumn");
 var ChartColumnTypeSelect = document.getElementById("chartType");
@@ -12,14 +13,22 @@ var form = document.getElementById("CustomReportForm");
 var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
 TableSelect.intialize([document.createElement("option")]);
+ColumnsSelect.intialize([document.createElement("option")]);
+fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
+    var options = [...data].map(o => {
+        var opt = document.createElement("option");
+        opt.value = o.value;
+        opt.innerText = o.text;
+        return opt;
+    });
+    SchemaSelect.intialize(options);
+
+});
+
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
         Fetch(`/Report/GetViews/${value}`, null, "GET").then(d => {
-            console.log(TableSelect);
-            TableSelect.reset();
-            var opt = document.createElement("option");
-            TableSelect.appendChild(opt);
             var options = d.map(elm => {
                 var opt = document.createElement("option");
                 opt.innerText = elm.vieW_NAME.toString().split(".")[1];
@@ -27,7 +36,7 @@ ShcemaSelect.onchange = (e) => {
                 opt.value = elm.vieW_NAME;
                 return opt;
             });
-            TableSelect.intialize(options);
+            TableSelect.update(options);
 
         });
     }
@@ -37,36 +46,26 @@ ShcemaSelect.onchange = (e) => {
 
 
 
-TableSelect.onchange = async (e) => {
-    var selected = e.target.options[e.target.selectedIndex];
+TableSelect.onSelectChange = async (e) => {
+    var selected = TableSelect.value;
     var type = selected.dataset.type;
     var view = selected.value;
     var schemaVal = parseInt(ShcemaSelect.value);
     var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}/${type}`, null, "GET");
 
-    ColumnsSelect.innerHTML = "";
-    ChartColumnSelect.innerHTML = "";
-    var opt = document.createElement("option");
-    opt.innerText = "Select some columns";
-    opt.value = "";
-    opt.selected = true;
-    var opt2 = opt.cloneNode(true);
-    opt2.innerText = "Select a column";
-    ColumnsSelect.appendChild(opt);
-    ChartColumnSelect.appendChild(opt2);
-    columns.forEach(elm => {
+    var options = columns.map(elm => {
         var opt = document.createElement("option");
         opt.innerText = elm.name;
         opt.value = elm.name;
         opt.dataset.isnullable = elm.isNullable;
         opt.dataset.type = elm.sqlDataType;
-        var opt2 = opt.cloneNode(true);
-        ColumnsSelect.appendChild(opt);
-        ChartColumnSelect.appendChild(opt2);
-    })
+        return opt;
+    });
 
-    $('#ColumnNames').selectpicker('refresh');
-    $('#chartColumn').selectpicker('refresh');
+    var clonedOptions = [...options].map( x => x.cloneNode(true));
+
+    ColumnsSelect.update(options);
+    ChartColumnSelect.update(clonedOptions);
 
 }
 

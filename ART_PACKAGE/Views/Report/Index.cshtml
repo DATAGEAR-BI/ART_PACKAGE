@@ -16,27 +16,22 @@
     </div>
     <form id="CustomReportForm" method="post" asp-action="SaveReport"> 
         <div class="row">
-        <h4 class="col-md-10">Select the table and columns you want.</h4>
+        <h4 class="col-10">Select the table and columns you want.</h4>
 
-        <div class="col-md-2">
+        <div class="col-2">
                 <button type="submit" class="btn btn-primary ">Save Report</button>
             </div>
             </div>
-            <div class="row"style="margin-top:1%">
-             <div class="form-group col-md-4">
-                <select id="Shcema" name="Shecma" style="width:100%"  asp-items="Html.GetEnumValuesWithDisplayName<DbSchema>()" class="text-infol selectpicker" data-live-search="true">
-                    <option value="-1">Select A Schema</option>
-                </select>
-                
+            <div class="row">
+             <div class="col-4">
+                <m-select id="Shcema" data-searchable data-title="Table" style="width:100%"></m-select>
             </div>
-            <div class="col-md-4">
-                <m-select id="TableName" data-searchable data-title="Table"></m-select>
+            <div class="col-4">
+                <m-select id="TableName" data-searchable data-title="Table" style="width:100%"></m-select>
             </div>
 
-             <div class="form-group col-md-4">
-                    <select id="ColumnNames" name="ColumnNames" style="width:100%"  class=" text-infol selectpicker" data-live-search="true" multiple>
-                        <option selected value="" >Select some columns</option>
-                    </select>
+             <div class="col-4">
+                    <m-select id="ColumnNames" data-searchable data-title="Column" style="width:100%" data-multiple></m-select>
             </div>
         </div>
         <div class="row" style="margin-top:2%"> 
@@ -68,9 +63,8 @@
                       </select> 
                       </div>
                        <div class="col-xs-6">
-                     <select id="chartColumn" name="chartColumn"  class=" text-infol selectpicker" data-live-search="true">
-                        <option selected value="" >Select a Column</option>
-                      </select> 
+                              <m-select id="chartColumn" data-searchable data-title="Column" style="width:100%"></m-select>
+                  
                       </div>
                        <button id="addChart" class="btn btn-primary col-md-1" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
                             <i class="glyphicon glyphicon-plus"></i>

@@ -1,6 +1,7 @@
 class Select extends HTMLElement {
     select = document.createElement("select");
     label = document.createElement("label");
+    isMulti;
     constructor() {
         super();
 
@@ -17,6 +18,7 @@ class Select extends HTMLElement {
         var isMulti = attrs.includes("multiple");
 
         if (isMulti) {
+            this.isMulti = isMulti;
             this.classList.add("multi-select");
             this.select.multiple = true;
         } else {
@@ -52,6 +54,30 @@ class Select extends HTMLElement {
 
     reset() {
         this.select.innerHTML = '';
+    }
+
+    update(options) {
+        this.reset();
+        options.forEach(x => {
+            this.select.appendChild(x);
+        })
+        var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
+        for (const [, value] of Object.entries(selectnodelist)) {
+            var selectFieldInstance = materialstyle.SelectField.getOrCreateInstance(value)
+            selectFieldInstance.rebuild()
+        }
+    }
+
+    set onSelectChange(callBack) {
+        this.select.onchange = (e) => callBack(e);
+    }
+
+
+    get value() {
+        if (!this.isMulti)
+            return this.select.options[this.select.selectedIndex];
+
+        return this.select.options.filter(x => x.selected && x.value != "");
     }
 }
 

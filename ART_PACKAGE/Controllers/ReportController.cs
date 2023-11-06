@@ -1,6 +1,7 @@
 ﻿
 
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
@@ -9,10 +10,12 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
@@ -97,8 +100,27 @@ namespace ART_PACKAGE.Controllers
 
 
 
+        [HttpGet("[controller]/[action]")]
+        public IActionResult GetDbSchemas()
+        {
+            IEnumerable<SelectListItem> result = typeof(DbSchema).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(DbSchema), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
 
-
+            });
+            return Ok(result);
+        }
 
 
 
