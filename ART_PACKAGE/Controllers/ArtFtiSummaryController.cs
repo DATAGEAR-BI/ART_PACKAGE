@@ -80,7 +80,7 @@ namespace ART_PACKAGE.Controllers
                 {
                     ChartId = "StCasesYearToYear",
                     Data = chartCasesYearToYearData.ToList(),
-                    Title = "Cases Per Year",
+                    Title = "Year to Year Comparison",
                     Cat = "Year",
                     Val = "NUMBER_OF_CASES"
 
