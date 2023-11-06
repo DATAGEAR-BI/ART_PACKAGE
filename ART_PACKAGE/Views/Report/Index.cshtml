@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/css/customreport.css" rel="stylesheet" />
+
 <h2>Customize your report</h2>
 
 
@@ -24,7 +24,7 @@
             </div>
             <div class="row">
              <div class="col-4">
-                <m-select id="Shcema" data-searchable data-title="Table" style="width:100%"></m-select>
+                <m-select id="Shcema" data-searchable data-title="Shcema" style="width:100%"></m-select>
             </div>
             <div class="col-4">
                 <m-select id="TableName" data-searchable data-title="Table" style="width:100%"></m-select>
@@ -35,7 +35,8 @@
             </div>
         </div>
         <div class="row" style="margin-top:2%"> 
-            <input type="text" placeholder="Report Title" class="form-control col-md-10" id="title"/>
+
+            <m-input id="title"  data-title="Report Title"></m-input>
         </div>
         <div class="row"style="margin-top:2%" >
             <textarea class="form-control col-md-12" rows="4" id="desc" placeholder="Report Description"></textarea>
@@ -90,6 +91,7 @@
 </div>
 
 @section scripts {
+    <script src="~/js/components/textinput/textinput.js"></script>
     <script src="~/js/components/multiselect/select.js"></script>
     <script src="~/js/ReportScripts.js" ></script>
 }

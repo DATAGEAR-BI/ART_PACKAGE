@@ -5,6 +5,7 @@ var ChartColumnSelect = document.getElementById("chartColumn");
 var ChartColumnTypeSelect = document.getElementById("chartType");
 var addChartBtn = document.getElementById("addChart");
 var chartTitle = document.getElementById("chartTitle");
+var reportTitle = document.getElementById("title");
 var chartCardsDiv = document.getElementById("addedCharts");
 var openAddChartBtn = document.getElementById("openAddChart");
 var dltBtns = document.getElementsByClassName("chart-delete");
@@ -14,6 +15,7 @@ var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
 TableSelect.intialize([document.createElement("option")]);
 ColumnsSelect.intialize([document.createElement("option")]);
+reportTitle.intialize("test");
 fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
         var opt = document.createElement("option");
