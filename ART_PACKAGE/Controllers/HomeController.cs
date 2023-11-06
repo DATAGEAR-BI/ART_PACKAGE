@@ -110,8 +110,8 @@ namespace ART_PACKAGE.Controllers
                 })
             });
             var statusData = _db.ArtHomeCasesStatuses.Select(x => new { CaseStatus = x.CaseStatus ?? "Unkown", x.NumberOfCases, year = x.YEAR });
-            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR }); ;
-
+            var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR });
+            var productsData = _db.ArtHomeCasesProducts.Select(x => new { Product = x.Product ?? "Unkown", x.NumberOfCases, year = x.YEAR });
 
 
             return Ok(new
@@ -119,6 +119,7 @@ namespace ART_PACKAGE.Controllers
                 dates = dateData,
                 status = statusData,
                 types = typesData,
+                products = productsData,
                 monthCaseData = monthData
             });
 

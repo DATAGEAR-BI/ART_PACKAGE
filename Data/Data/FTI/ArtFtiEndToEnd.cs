@@ -33,6 +33,8 @@ namespace Data.Data.FTI
         public string? TradeInstructions { get; set; }
         public string? FirstLineInstructions { get; set; }
         public string? CaseComments { get; set; }
+        public string? ParentCaseId { get; set; }
+        public string? EcmAssignedTo { get; set; }
 
     }
 }

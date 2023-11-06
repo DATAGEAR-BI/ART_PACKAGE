@@ -15,13 +15,13 @@ namespace ART_PACKAGE.Controllers
 
     public class ArtFtiEcmTransactionController : Controller
     {
-        private readonly FTIContext dbfcfkc;
+        private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _drpSrv;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiEcmTransactionController(FTIContext dbfcfkc, IPdfService pdfSrv, IDropDownService drpSrv, ICsvExport csvSrv)
+        public ArtFtiEcmTransactionController(FTIContext fti, IPdfService pdfSrv, IDropDownService drpSrv, ICsvExport csvSrv)
         {
-            this.dbfcfkc = dbfcfkc;
+            this.fti = fti;
             _pdfSrv = pdfSrv;
             _drpSrv = drpSrv;
             _csvSrv = csvSrv;
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtFtiEcmTransaction> data = dbfcfkc.ArtFtiEcmTransactions.AsQueryable();
+            IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -44,8 +44,8 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"Product".ToLower(),_drpSrv.GetProductDropDown().ToDynamicList() },
-                    {"FtiReference".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    {"FirstLineParty".ToLower(),dbfcfkc.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
+                    {"FtiReference".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    {"FirstLineParty".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
                     {"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
 
                 };
@@ -80,13 +80,13 @@ namespace ART_PACKAGE.Controllers
 
         /*public IActionResult Export([FromBody] ExportDto<decimal> req)
         {
-            var data = dbfcfkc.AmlCaseDetailViews.AsQueryable();
+            var data = fti.AmlCaseDetailViews.AsQueryable();
             var bytes = data.ExportToCSV<AmlCaseDetailView>(req.Req);
             return File(bytes, "test/csv");
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtFtiEcmTransaction> data = dbfcfkc.ArtFtiEcmTransactions.AsQueryable();
+        //    IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
         //    await _csvSrv.ExportAllCsv<ArtFtiEcmTransaction, ArtFtiEcmTransactionController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
@@ -95,7 +95,7 @@ namespace ART_PACKAGE.Controllers
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransactionController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransactionController).ToLower()].SkipList;
-            List<ArtFtiEcmTransaction> data = dbfcfkc.ArtFtiEcmTransactions.CallData(req).Data.ToList();
+            List<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.CallData(req).Data.ToList();
             ViewData["title"] = "FTI-ECM Transaction";
             ViewData["desc"] = "FTI Activity report showing what transaction have been created from DGECM or from FTI and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

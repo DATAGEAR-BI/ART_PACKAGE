@@ -10,6 +10,7 @@ namespace Data.Data.ECM
         public virtual DbSet<ArtHomeMainCasesMonth> ArtHomeMainCasesMonths { get; set; } = null!;
         public virtual DbSet<ArtHomeCasesStatus> ArtHomeCasesStatuses { get; set; } = null!;
         public virtual DbSet<ArtHomeCasesType> ArtHomeCasesTypes { get; set; } = null!;
+        public virtual DbSet<ArtHomeCasesProduct> ArtHomeCasesProducts { get; set; } = null!;
         public virtual DbSet<ArtSystemPrefPerDirection> ArtSystemPrefPerDirections { get; set; } = null!;
         public virtual DbSet<ArtSystemPerfPerType> ArtSystemPerfPerTypes { get; set; } = null!;
         public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;

@@ -1755,7 +1755,22 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("int")
                     .HasColumnName("NUMBER_OF_CASES");
             });
+            modelBuilder.Entity<ArtHomeCasesProduct>(entity =>
+            {
 
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_CASES_PRODUCTS", "ART_DB");
+
+                entity.Property(e => e.Product)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("int")
+                    .HasColumnName("NUMBER_OF_CASES");
+            });
 
 
             modelBuilder.Entity<ArtSystemPreformance>(entity =>
@@ -4672,6 +4687,16 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CASE_COMMENTS")
                     .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.ParentCaseId)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("PARENT_CASE_ID")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.EcmAssignedTo)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("ECM_ASSIGNED_TO")
+                   .UseCollation("Arabic_100_CI_AI");
             });
         }
 

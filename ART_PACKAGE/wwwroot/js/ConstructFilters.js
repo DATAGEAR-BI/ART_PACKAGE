@@ -1,10 +1,11 @@
 ﻿import { Filters, GoToDeatailsUrls } from "./Modules/ExternalFilters.js"
-import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
+import { makedynamicChart, makeDatesChart } from "./Modules/MakeDynamicChart.js"
 import { URLS as Urls } from "./URLConsts.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 
 
 var exRules = [];
+var onChangeChartFunction;
 class ExternalFilter extends HTMLElement {
     f = [];
     filterRulesObject = [];
@@ -221,8 +222,13 @@ function callDefinedCharts(url) {
     }).then(x => x.json()).then(data => {
         [...data].forEach(x => {
             var charttype = document.getElementById(x.ChartId).dataset.type;
+            if (parseInt(charttype) === -1) {
+                makeDatesChart(x.data, x.divId, x.cat, x.val, x.subcat, x.subval, x.subListKey, x.ctitle, (di)=> { })
 
-            makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)
+            } else {
+                makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)
+
+            }
 
         });
         $(".spinner").remove();

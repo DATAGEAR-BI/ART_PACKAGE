@@ -1,5 +1,8 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data.SASAml;
+using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
+using System.Data;
 
 namespace Data.Data.FTI
 {
@@ -49,9 +52,77 @@ namespace Data.Data.FTI
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {//[ART_DB].[ART_ST_CASES_YEAR_TO_YEAR]
+            modelBuilder.Entity<ArtStCasesYearToYear>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerProduct>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerDate>().HasNoKey().ToView(null);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnFTIModelCreating(modelBuilder);
+        }
+
+        public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
+        {
+            return this.Database.IsSqlServer()
+                ? this.SqlServerExecuteProc<T>(SPName, parameters)
+                : this.Database.IsOracle() ? this.OracleExecuteProc<T>(SPName, parameters) : Enumerable.Empty<T>();
+        }
+
+        private IEnumerable<T> SqlServerExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
+        {
+            try
+            {
+                string sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
+                return this.Set<T>().FromSqlRaw(sql, parameters).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(SPName+" - "+e.ToString());
+                throw ;
+            }
+            
+        }
+
+        private IEnumerable<T> OracleExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class
+        {
+            DbParameter? output = parameters.FirstOrDefault(x => x.Direction == ParameterDirection.Output) ?? throw new NullReferenceException("there is no output parameter");
+            DbCommand command = this.Database.GetDbConnection().CreateCommand();
+            command.CommandText = SPName;
+            command.CommandType = CommandType.StoredProcedure;
+
+            _ = command.Parameters.Add(output);
+            foreach (DbParameter param in parameters)
+            {
+                if (param.ParameterName == output.ParameterName)
+                {
+                    continue;
+                }
+
+                _ = command.Parameters.Add(param);
+            }
+            this.Database.OpenConnection();
+
+
+            using DbDataReader reader = command.ExecuteReader();
+            List<T> result = new();
+            System.Reflection.PropertyInfo[] properties = typeof(T).GetProperties();
+            while (reader.Read())
+            {
+                T item = Activator.CreateInstance<T>();
+                foreach (System.Reflection.PropertyInfo property in properties)
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
+                    {
+                        object value = reader[property.Name];
+                        property.SetValue(item, value);
+                    }
+                }
+                result.Add(item);
+            }
+            this.Database.CloseConnection();
+            return result;
+
         }
     }
 }
