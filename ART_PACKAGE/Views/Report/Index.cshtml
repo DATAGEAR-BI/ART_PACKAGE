@@ -7,10 +7,11 @@
 }
 
 
-<h2>Customize your report</h2>
 
 
 <div class="container">
+
+    <h2>Customize your report</h2>
     <div id="errors" hidden class="alert alert-danger alert-dismissible" style="padding:2%" role="alert">
          <button type="button" style="margin-right:2%;" id="closeEroors" onclick="hideErrors()" class="close"><span aria-hidden="true">&times;</span></button>
     </div>
@@ -35,54 +36,67 @@
             </div>
         </div>
         <div class="row" style="margin-top:2%"> 
-
-            <m-input id="title"  data-title="Report Title"></m-input>
+            <m-input id="title"  dat-palceholder="Report Title" data-title="Report Title"></m-input>
         </div>
-        <div class="row"style="margin-top:2%" >
-            <textarea class="form-control col-md-12" rows="4" id="desc" placeholder="Report Description"></textarea>
+        <div class="row" style="margin-top:2%" >
+            <m-areainput id="desc" dat-palceholder="Report Description" data-title="Report Description"></m-areainput>
+         
         </div>
         
 
-         <h4>Add the charts you want.</h4>
-        <div class="row">
-           
-            <div class="col-md-10"></div>
-            <div class="col-md-2">
-               <button  id="openAddChart" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
-                    Add a Chart
-               </button>
-            </div>  
-               
-                <div class="collapse row" style="margin-top:4%" id="chartCollapse">
-                  <div class="card card-body text-center">
-                      <div class=" col-xs-12">
-                          <input type="text" id="chartTitle" name="chartTitle" placeholder="Chart Title" class="form-control" />
-                      </div>
-                      <div class="col-xs-6 ">
-                     <select id="chartType" name="chartType" asp-items="Html.GetEnumSelectList<ChartType>()" class=" text-infol selectpicker" data-live-search="true">
-                        <option selected value="" >Select a Type</option>
-                      </select> 
-                      </div>
-                       <div class="col-xs-6">
-                              <m-select id="chartColumn" data-searchable data-title="Column" style="width:100%"></m-select>
-                  
-                      </div>
-                       <button id="addChart" class="btn btn-primary col-md-1" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
-                            <i class="glyphicon glyphicon-plus"></i>
-                       </button>
-                   
-                   </div>
-                   
-                      
+      
+
+
+
+        <div class="accordion mt-4" id="addchartsAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="addchartsHeader">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#addchartsCollapse" aria-controls="addchartsCollapse">
+                        Add Charts
+                    </button>
+                </h2>
+                <div id="addchartsCollapse" class="accordion-collapse collapse show" aria-labelledby="addchartsHeader" data-bs-parent="#addchartsAccordion">
+                    <div class="accordion-body">
+                      @*  <m-card data-imgsrc="/imgs/LOGO.png" data-title="islam" data-content="Test Content"></m-card>*@
+                        <div class="row">
+                            <div class="col-3">
+                                <m-input id="chartTitle"  data-palceholder="Chart Title" data-title="Chart Title"></m-input>
+                            </div>
+
+                            <div class="col-3">
+                                <m-select id="ChartColumnSelect" data-searchable data-title="Chart Column" style="width:100%"></m-select>
+                            </div>
+                            <div class="col-3">
+                                <m-select id="chartType" data-searchable data-title="Chart Type" style="width:100%"></m-select>
+                            </div>  
+                            <div class="col-3">
+                                <button id="addChart" type="button" class="btn btn-outline-primary btn-lg m-1">add</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                
+            </div>
         </div>
 
-        <div id="addedCharts" class="row">
-
+        <div class="accordion mt-4" id="chartsAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="chartsHeader">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chartsCollapse" aria-controls="chartsCollapse">
+                        Charts
+                    </button>
+                </h2>
+                <div id="chartsCollapse" class="accordion-collapse collapse show" aria-labelledby="addchartsHeader" data-bs-parent="#chartsAccordion">
+                    <div class="accordion-body row"  id="cardContainer">
+                       
+                    </div>
+                </div>
+            </div>
         </div>
 
+
+
+
+       
 
 
     </form>
@@ -91,7 +105,9 @@
 </div>
 
 @section scripts {
-    <script src="~/js/components/textinput/textinput.js"></script>
+    <script src="~/js/components/card/card.js"></script>
+    <script src="~/js/components/textareainput/textareainput.js"></script>
     <script src="~/js/components/multiselect/select.js"></script>
+    <script src="~/js/components/textinput/textinput.js"></script>
     <script src="~/js/ReportScripts.js" ></script>
 }

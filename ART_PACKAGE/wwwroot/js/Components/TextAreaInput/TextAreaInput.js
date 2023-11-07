@@ -1,19 +1,19 @@
-class TextInput extends HTMLElement {
-    input = document.createElement("input");
+class TextAreaInput extends HTMLElement {
+    input = document.createElement("textarea");
     label = document.createElement("label");
     constructor() {
         super();
 
-        this.classList.add("form-floating","form-floating-outlined");
+        this.classList.add("form-floating", "form-floating-outlined");
         this.input.classList.add("form-control");
-        this.input.id = this.id + "-input";
+        this.input.id = this.id + "-Areainput";
         this.input.autocomplete = "off";
         if (this.dataset.value)
             this.input.value = this.dataset.value;
         this.input.placeholder = this.dataset.palceholder;
 
         this.label.innerText = this.dataset.title;
-        this.label.for = this.id + "-input";
+        this.label.for = this.id + "-Areainput";
 
 
         this.appendChild(this.input);
@@ -22,8 +22,8 @@ class TextInput extends HTMLElement {
 
 
     intialize(value) {
-        var inputs = this.querySelectorAll(`#${this.id}-input`);
-        if(value)
+        var inputs = this.querySelectorAll(`#${this.id}-Areainput`);
+        if (value)
             inputs.forEach(x => x.value = value);
         var textFieldList = [].slice.call(inputs)
         var textFields = textFieldList.map(function (textField) {
@@ -38,4 +38,4 @@ class TextInput extends HTMLElement {
 }
 
 
-customElements.define("m-input", TextInput);
+customElements.define("m-areainput", TextAreaInput);

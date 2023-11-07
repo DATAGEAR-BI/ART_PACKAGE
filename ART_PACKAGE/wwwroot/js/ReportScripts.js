@@ -1,21 +1,26 @@
 ﻿var SchemaSelect = document.getElementById("Shcema");
 var TableSelect = document.getElementById("TableName");
 var ColumnsSelect = document.getElementById("ColumnNames");
-var ChartColumnSelect = document.getElementById("chartColumn");
+var ChartColumnSelect = document.getElementById("ChartColumnSelect");
 var ChartColumnTypeSelect = document.getElementById("chartType");
 var addChartBtn = document.getElementById("addChart");
 var chartTitle = document.getElementById("chartTitle");
 var reportTitle = document.getElementById("title");
-var chartCardsDiv = document.getElementById("addedCharts");
-var openAddChartBtn = document.getElementById("openAddChart");
+var reportDesc = document.getElementById("desc");
+var cardContainer = document.getElementById("cardContainer");
 var dltBtns = document.getElementsByClassName("chart-delete");
 var addedCharts = [];
 var form = document.getElementById("CustomReportForm");
 var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
+
+
 TableSelect.intialize([document.createElement("option")]);
 ColumnsSelect.intialize([document.createElement("option")]);
-reportTitle.intialize("test");
+ChartColumnSelect.intialize([document.createElement("option")]);
+reportTitle.intialize();
+chartTitle.intialize();
+reportDesc.intialize();
 fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
         var opt = document.createElement("option");
@@ -24,6 +29,16 @@ fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
         return opt;
     });
     SchemaSelect.intialize(options);
+
+});
+fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
+    var options = [...data].map(o => {
+        var opt = document.createElement("option");
+        opt.value = o.value;
+        opt.innerText = o.text;
+        return opt;
+    });
+    ChartColumnTypeSelect.intialize(options);
 
 });
 
@@ -64,10 +79,10 @@ TableSelect.onSelectChange = async (e) => {
         return opt;
     });
 
-    var clonedOptions = [...options].map( x => x.cloneNode(true));
+    var clonedOptions = [...options].map(x => x.cloneNode(true));
 
     ColumnsSelect.update(options);
-    ChartColumnSelect.update(clonedOptions);
+    ChartColumnSelect.update([document.createElement("option"),...clonedOptions]);
 
 }
 
@@ -81,86 +96,55 @@ function deleteCard(event) {
 
 addChartBtn.onclick = (e) => {
 
-    var selectedChartType = ChartColumnTypeSelect.options[ChartColumnTypeSelect.selectedIndex].value;
-    var selectedChartTypeString = ChartColumnTypeSelect.options[ChartColumnTypeSelect.selectedIndex].innerText;
-    var selectedChartColumn = ChartColumnSelect.options[ChartColumnSelect.selectedIndex].value;
-    var addedChartTitle = chartTitle.value;
-    var errors = [];
-
-
-
-    if (!addedChartTitle || addedChartTitle.length == 0) {
-        errors.push("you must type a chart title");
-    }
-
-    if (!selectedChartColumn || selectedChartColumn.length == 0) {
-        errors.push("you must select a column for the chart");
-    }
-
-    if (!selectedChartType) {
-        errors.push("you must select a type for the chart");
-    }
-
-    if (errors && errors.length > 0) {
-        var oldErrs = errosDiv.getElementsByClassName("err");
-        [...oldErrs].forEach(errDiv => {
-            errosDiv.removeChild(errDiv);
-        })
-        errors.forEach(err => {
-            var errorDiv = document.createElement("div");
-            errorDiv.className = "err";
-            errorDiv.innerHTML = `<i class="glyphicon glyphicon-remove-sign"></i> ${err}`
-            errosDiv.appendChild(errorDiv);
-        });
-        errosDiv.hidden = false;
+    var title = chartTitle.value;
+    var column = ChartColumnSelect.value;
+    var type = ChartColumnTypeSelect.value;
+    if (!title || title == "") {
+        toastObj.icon = 'error';
+        toastObj.text = "there is no chart title";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
         return;
+
+    }
+    if (!column.value || column.value == "") {
+        toastObj.icon = 'error';
+        toastObj.text = "you didn't select a column";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
+        return;
+
+    }
+    if (!type.value || type.value == "") {
+        toastObj.icon = 'error';
+        toastObj.text = "you didn't select a type for the chart";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
+        return;
+
     }
 
 
-    if (!errors || errors.length == 0)
-        if (!errosDiv.hidden)
-            errosDiv.hidden = true;
+    var chart = { title, column: column.value, type: type.value }
+    addedCharts.push(chart);
+    var srcMap = {
+        0: "Bar.png",
+        1: "pie.png",
+        2: "donut.png",
+        3: "dragdrop.png",
+        4: "clynder.png",
+        5: "curved.png",
+        6: "curvedline.png",
+    }
+    var card = new Card();
+    card.title = title
+    card.content = type.innerText + " Chart On " + column.innerText;
+    card.imgsrc = "/imgs/ChartsImgs/" + srcMap[parseInt(type.value)];
+    card.classList.add("col-3");
+
+    cardContainer.appendChild(card);
 
 
-    var cardId = GUID();
-    var chartInfo = {
-        id: cardId,
-        title: addedChartTitle,
-        type: parseInt(selectedChartType),
-        column: selectedChartColumn
-    };
-    addedCharts.push(chartInfo);
-
-
-    var card = document.createElement("div");
-    card.id = cardId
-    card.className = "card mb-3 row col-md-4";
-    card.style = "max-width: 540px; max-hieght:540px;"
-    card.innerHTML = `<div class="row no-gutters">
-  
-    <div class="col-md-12">
-      <div class="card-body">
-        <h5 class="card-title">${addedChartTitle}</h5>
-        <p class="card-text">Chart Type  :  ${selectedChartTypeString}</p>
-        <p class="card-text">Column : ${selectedChartColumn}</p>
-        <p class="card-text"><small class="text-muted">Added at ${new Date().toLocaleString()}</small></p>
-        <button onclick="deleteCard(this)" type="button" data-id="${cardId}" class="btn btn-danger chart-delete">Delete chart</button>
-      </div>
-       
-        
-        
-    </div>
-  </div>`;
-
-
-    chartCardsDiv.appendChild(card);
-
-
-    ChartColumnTypeSelect.options[ChartColumnTypeSelect.selectedIndex].selected = false;
-    ChartColumnSelect.options[ChartColumnSelect.selectedIndex].selected = false;
-    chartTitle.value = "";
-    $('#chartType').selectpicker('refresh');
-    $('#chartColumn').selectpicker('refresh');
 
 }
 
@@ -172,52 +156,41 @@ function hideErrors() {
 form.onsubmit = async (e) => {
     e.preventDefault();
 
-
-
-
-
-    var errors = [];
-    var table = TableSelect.options[TableSelect.selectedIndex].value;
-    var tableType = TableSelect.options[TableSelect.selectedIndex].dataset.type;
-    var columns = [...ColumnsSelect.options].filter(x => x.selected && x.value != "").map(x => ({
-        Name: x.value,
-        SqlDataType: x.dataset.type,
-        IsNullable: x.dataset.isnullable,
-    }));
-    var reportTitle = document.getElementById("title").value;
-    var reportDesc = document.getElementById("desc").value;
-
-    if (!table || table == undefined || table == "" || table.length == 0) {
-        errors.push("you must select a table");
-    }
-
-    if (!columns || columns.length == 0) {
-        errors.push("you must select at least one column");
-    }
-
-    if (!reportTitle || reportTitle.length == 0) {
-        errors.push("you type a title for this report");
-    }
-
-    if (errors && errors.length > 0) {
-        var oldErrs = errosDiv.getElementsByClassName("err");
-        [...oldErrs].forEach(errDiv => {
-            errosDiv.removeChild(errDiv);
-        })
-        errors.forEach(err => {
-            var errorDiv = document.createElement("div");
-            errorDiv.className = "err";
-            errorDiv.innerHTML = `<i class="glyphicon glyphicon-remove-sign"></i> ${err}`
-            errosDiv.appendChild(errorDiv);
-        });
-        errosDiv.hidden = false;
+    var table = TableSelect.value;
+    console.log(table);
+    if (!table.value || table.value == "") {
+        toastObj.icon = 'error';
+        toastObj.text = "you didn't select a Table";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
         return;
+
+    }
+    var columns = ColumnsSelect.value;
+    console.log(columns);
+    if (!columns || columns.length <= 0) {
+        toastObj.icon = 'error';
+        toastObj.text = "you must select at least one column";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
+        return;
+
     }
 
+    var Title = reportTitle.value;
 
-    if (!errors || errors.length == 0)
-        if (!errosDiv.hidden)
-            errosDiv.hidden = true;
+
+    if (!Title || Title == "") {
+        toastObj.icon = 'error';
+        toastObj.text = "you must give the report a title";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
+        return;
+
+    }
+
+    var Desc = reportDesc.value;
+
 
     var charts = addedCharts.map(x => ({
 
@@ -229,13 +202,13 @@ form.onsubmit = async (e) => {
 
 
     var model = {
-        Table: table,
-        ObjectType: tableType,
-        Columns: columns,
+        Table: table.value,
+        ObjectType: table.dataset.type,
+        Columns: columns.map(x=>x.value),
         Charts: charts,
-        Description: reportDesc,
-        Title: reportTitle,
-        Schema: parseInt(ShcemaSelect.value)
+        Description: Desc,
+        Title: Title,
+        Schema: parseInt(ShcemaSelect.value.value)
     }
 
     var d = await Fetch("/report/SaveReport", model, "POST").then(x => {
@@ -243,6 +216,13 @@ form.onsubmit = async (e) => {
         window.location = "/report/myreports";
 
 
+    })
+    .catch(err => {
+        toastObj.icon = 'error';
+        toastObj.text = "something wrong happend while creating the report please try again or call support";
+        toastObj.heading = "Custom Report Status";
+        $.toast(toastObj);
+        return;
     });
 
 

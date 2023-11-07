@@ -1,4 +1,4 @@
-class Select extends HTMLElement {
+﻿class Select extends HTMLElement {
     select = document.createElement("select");
     label = document.createElement("label");
     isMulti;
@@ -77,7 +77,7 @@ class Select extends HTMLElement {
         if (!this.isMulti)
             return this.select.options[this.select.selectedIndex];
 
-        return this.select.options.filter(x => x.selected && x.value != "");
+        return [...this.select.options].filter(x => x.selected && x.value != "");
     }
 }
 

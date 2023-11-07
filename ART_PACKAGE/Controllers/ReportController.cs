@@ -122,7 +122,27 @@ namespace ART_PACKAGE.Controllers
             return Ok(result);
         }
 
+        [HttpGet("[controller]/[action]")]
+        public IActionResult GetChartsTypes()
+        {
+            IEnumerable<SelectListItem> result = typeof(ChartType).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(ChartType), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
 
+            });
+            return Ok(result);
+        }
 
 
 
