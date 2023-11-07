@@ -7,8 +7,8 @@ namespace Data.Data.Segmentation
     {
         public string? MonthKey { get; set; }
         public string? SegmentSorted { get; set; }
+        public string PartyTypeDesc { get; set; } = null!;
         public string? SegmentDescription { get; set; }
-        public string? PartyTypeDesc { get; set; }
         public double? AvgTotalAmt { get; set; }
         public double? TotalAmount { get; set; }
         public double? MinTotalAmt { get; set; }
@@ -24,16 +24,6 @@ namespace Data.Data.Segmentation
         public double? AvgTotalDtAmt { get; set; }
         public double? MaxTotalDtAmt { get; set; }
         public double? MinTotalDtAmt { get; set; }
-        public double? AvgWireCAmt { get; set; }
-        public double? MaxWireCAmt { get; set; }
-        public double? TotalWireCAmt { get; set; }
-        public double? MinWireCAmt { get; set; }
-        public double? TotalWireCCnt { get; set; }
-        public double? AvgWireDAmt { get; set; }
-        public double? MaxWireDAmt { get; set; }
-        public double? TotalWireDAmt { get; set; }
-        public double? MinWireDAmt { get; set; }
-        public double? TotalWireDCnt { get; set; }
         public double? TotalCashCAmt { get; set; }
         public double? TotalCashCCnt { get; set; }
         public double? MinCashCAmt { get; set; }
@@ -44,11 +34,37 @@ namespace Data.Data.Segmentation
         public double? AvgCashDAmt { get; set; }
         public double? MinCashDAmt { get; set; }
         public double? MaxCashDAmt { get; set; }
+        public double? AvgWireCAmt { get; set; }
+        public double? MaxWireCAmt { get; set; }
+        public double? TotalWireCAmt { get; set; }
+        public double? MinWireCAmt { get; set; }
+        public double? TotalWireCCnt { get; set; }
+        public double? AvgWireDAmt { get; set; }
+        public double? MaxWireDAmt { get; set; }
+        public double? TotalWireDAmt { get; set; }
+        public double? MinWireDAmt { get; set; }
+        public double? TotalWireDCnt { get; set; }
+        
+        public double? TotalCheckCAmt { get; set; }
+        public double? TotalCheckCCnt { get; set; }
+        public double? MinCheckCAmt { get; set; }
+        public double? AvgCheckCAmt { get; set; }
+        public double? MaxCheckCAmt { get; set; }
         public double? TotalCheckDCnt { get; set; }
         public double? AvgCheckDAmt { get; set; }
         public double? MaxCheckDAmt { get; set; }
         public double? TotalCheckDAmt { get; set; }
         public double? MinCheckDAmt { get; set; }
+        public double? TotalMiscCCnt { get; set; }
+        public double? AvgMiscCAmt { get; set; }
+        public double? TotalMiscCAmt { get; set; }
+        public double? MinMiscCAmt { get; set; }
+        public double? MaxMiscCAmt { get; set; }
+        public double? TotalMiscDCnt { get; set; }
+        public double? AvgMiscDAmt { get; set; }
+        public double? MaxMiscDAmt { get; set; }
+        public double? TotalMiscDAmt { get; set; }
+        public double? MinMiscDAmt { get; set; }
         public double? MaxInternaltransferCAmt { get; set; }
         public double? MinInternaltransferCAmt { get; set; }
         public double? TotalInternaltransferCCnt { get; set; }
@@ -59,20 +75,16 @@ namespace Data.Data.Segmentation
         public double? AvgInternaltransferDAmt { get; set; }
         public double? TotalInternaltransferDAmt { get; set; }
         public double? MaxInternaltransferDAmt { get; set; }
-        public double? TotalMiscCCnt { get; set; }
-        public double? AvgMiscCAmt { get; set; }
-        public double? TotalMiscCAmt { get; set; }
-        public double? MinMiscCAmt { get; set; }
-        public double? MaxMiscCAmt { get; set; }
-        public double? TotalWithdrawalDCnt { get; set; }
-        public double? AvgWithdrawalDAmt { get; set; }
-        public double? TotalWithdrawalDAmt { get; set; }
-        public double? MinWithdrawalDAmt { get; set; }
-        public double? MaxWithdrawalDAmt { get; set; }
-        public double? TotalFeesDCnt { get; set; }
-        public double? AvgFeesDAmt { get; set; }
-        public double? TotalFeesDAmt { get; set; }
-        public double? MinFeesDAmt { get; set; }
-        public double? MaxFeesDAmt { get; set; }
+        
+        public double? TotalLcBlClcnCCnt { get; set; }
+        public double? AvgLcBlClcnCAmt { get; set; }
+        public double? TotalLcBlClcnCAmt { get; set; }
+        public double? MinLcBlClcnCAmt { get; set; }
+        public double? MaxLcBlClcnCAmt { get; set; }
+        public double? TotalLcBlClcnDCnt { get; set; }
+        public double? AvgLcBlClcnDAmt { get; set; }
+        public double? MaxLcBlClcnDAmt { get; set; }
+        public double? TotalLcBlClcnDAmt { get; set; }
+        public double? MinLcBlClcnDAmt { get; set; }
     }
 }

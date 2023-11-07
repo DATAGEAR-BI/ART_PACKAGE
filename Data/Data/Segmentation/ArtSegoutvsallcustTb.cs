@@ -7,8 +7,8 @@ namespace Data.Data.Segmentation
     {
         public string? MonthKey { get; set; }
         public string? SegmentSorted { get; set; }
-        public string? PartyTypeDesc { get; set; }
-        public int? NumberOfCustomers { get; set; }
-        public int? NumberOfOutliers { get; set; }
+        public string PartyTypeDesc { get; set; } = null!;
+        public decimal? NumberOfCustomers { get; set; }
+        public decimal? NumberOfOutliers { get; set; }
     }
 }

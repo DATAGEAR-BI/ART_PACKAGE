@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers.AML_ANALYSIS
+namespace ART_PACKAGE.Controllers.AMLANALYSIS
 {
 
     public class AML_ANALYSISController : Controller
@@ -86,6 +86,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             string controllerName = GetType().Name.Replace("Controller", "");
             List<string> temp = new()
             {
+                 "Prediction",
                 "PartyNumber",
                 "SegmentSorted",
                 "AlertsCount",
@@ -148,7 +149,9 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             if (obj.IsIntialize)
             {
                 skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+                displayNameAndFormat = new Dictionary<string, DisplayNameAndFormat> {
+                    {nameof(ArtAmlAnalysisViewTb.Prediction) , new DisplayNameAndFormat { DisplayName = "Pred %"  , Template = "amlanalysisPred" } },
+                };
                 dropdown = new Dictionary<string, List<dynamic>>{
                     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
                     };

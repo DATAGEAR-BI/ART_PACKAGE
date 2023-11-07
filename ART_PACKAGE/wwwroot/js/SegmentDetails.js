@@ -17,8 +17,13 @@ async function makeDropDown(url, dropdown) {
     dropdown.appendChild(fopt);
     items.forEach(q => {
         var opt = document.createElement('option');
-        opt.value = q;
-        opt.innerHTML = q;
+        if (q.SegmentDescription != null) {
+            opt.innerHTML = q.SegmentSorted + " , " + q.SegmentDescription;
+            opt.value = q.SegmentSorted;
+        } else {
+            opt.innerHTML = q;
+            opt.value = q;
+        }
         dropdown.appendChild(opt);
     })
 }

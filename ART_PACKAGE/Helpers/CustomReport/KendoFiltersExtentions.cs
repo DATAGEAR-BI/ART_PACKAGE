@@ -565,11 +565,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     displayName = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].DisplayName : name : null,
                     format = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].Format : null : null,
                     isCollection = isCollection,
-                    CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null
-                                        ,
+                    CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null,
                     isNullable = isnullabe,
                     type = Type,
-
+                    template = propDisplayExists ? DisplayNamesAndFormat[name].Template : null,
                     AggType = agg,
                     AggTitle = aggText,
                 };

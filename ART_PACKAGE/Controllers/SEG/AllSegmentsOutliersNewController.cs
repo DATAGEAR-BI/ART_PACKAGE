@@ -150,19 +150,19 @@ namespace ART_PACKAGE.Controllers.SEG
         [HttpGet]
         public ContentResult GetMonthKies()
         {
-            IQueryable<string?> keys = _context.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).Distinct();
+            IQueryable<string?> keys = _context.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).OrderByDescending(x => x).Distinct();
             return Content(JsonConvert.SerializeObject(keys), "application/json");
         }
         [HttpGet("[controller]/[action]/{monthkey}")]
         public ContentResult SegTypesPerKey(int? monthkey)
         {
-            IQueryable<string?> types = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).Distinct();
+            IQueryable<string?> types = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).OrderByDescending(x => x).Distinct();
             return Content(JsonConvert.SerializeObject(types), "application/json");
         }
         [HttpGet("[controller]/[action]/{monthkey}/{Type}")]
         public ContentResult Segment(int? monthkey, string Type)
         {
-            IQueryable<string?> segs = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => s.SegmentSorted).Distinct();
+            var segs = _context.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => new { SegmentSorted = Convert.ToInt32(s.SegmentSorted), s.SegmentDescription }).OrderByDescending(x => x.SegmentSorted).Distinct().ToList();
 
             return Content(JsonConvert.SerializeObject(segs), "application/json");
         }

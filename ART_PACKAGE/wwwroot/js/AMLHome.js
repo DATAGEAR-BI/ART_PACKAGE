@@ -19,10 +19,11 @@ fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
         var changeChart = (di) => {
             var year = di.year;
             var yearedStatuseData = statusData.filter(x => x.year == year);
-            makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
+            console.log(yearedStatuseData);
+            makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "numberofalerts", "alertStatus", true);
 
         }
         makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month", changeChart);
-        makedynamicChart(0, x.statuses, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
+        makedynamicChart(0, x.statuses, "Alerts Per Status", "alertPerStatus", "numberofalerts", "alertStatus", true);
     }
 );

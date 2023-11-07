@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.Data.Segmentation
+﻿namespace ART_PACKAGE.SEGMODEL
 {
-    public partial class ArtMebSegmentsV3Tb
+    public partial class ArtAllSegsFeatrsStatcsTb
     {
         public string? MonthKey { get; set; }
-        public string PartyNumber { get; set; } = null!;
-        public bool? RiskClassification { get; set; }
-        public string PartyTypeDesc { get; set; } = null!;
-        public string? IndustryCode { get; set; }
-        public string? IndustryDesc { get; set; }
-        public string? OccupationDesc { get; set; }
         public string? SegmentSorted { get; set; }
+        public string PartyTypeDesc { get; set; } = null!;
+        public string? SegmentDescription { get; set; }
         public decimal? AvgTotalAmt { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? MinTotalAmt { get; set; }
@@ -28,17 +21,16 @@ namespace Data.Data.Segmentation
         public decimal? AvgTotalDtAmt { get; set; }
         public decimal? MaxTotalDtAmt { get; set; }
         public decimal? MinTotalDtAmt { get; set; }
-        public decimal? NumberOfLocations { get; set; }
         public decimal? AvgWireCAmt { get; set; }
         public decimal? MaxWireCAmt { get; set; }
         public decimal? TotalWireCAmt { get; set; }
         public decimal? MinWireCAmt { get; set; }
         public decimal? TotalWireCCnt { get; set; }
+        public decimal? AvgWireDAmt { get; set; }
         public decimal? MaxWireDAmt { get; set; }
         public decimal? TotalWireDAmt { get; set; }
-        public decimal? TotalWireDCnt { get; set; }
         public decimal? MinWireDAmt { get; set; }
-        public decimal? AvgWireDAmt { get; set; }
+        public decimal? TotalWireDCnt { get; set; }
         public decimal? TotalCashCAmt { get; set; }
         public decimal? TotalCashCCnt { get; set; }
         public decimal? MinCashCAmt { get; set; }
@@ -49,16 +41,16 @@ namespace Data.Data.Segmentation
         public decimal? AvgCashDAmt { get; set; }
         public decimal? MinCashDAmt { get; set; }
         public decimal? MaxCashDAmt { get; set; }
+        public decimal? TotalCheckCAmt { get; set; }
+        public decimal? TotalCheckCCnt { get; set; }
+        public decimal? MinCheckCAmt { get; set; }
+        public decimal? AvgCheckCAmt { get; set; }
+        public decimal? MaxCheckCAmt { get; set; }
         public decimal? TotalCheckDCnt { get; set; }
         public decimal? AvgCheckDAmt { get; set; }
         public decimal? MaxCheckDAmt { get; set; }
         public decimal? TotalCheckDAmt { get; set; }
         public decimal? MinCheckDAmt { get; set; }
-        public decimal? MaxCheckCAmt { get; set; }
-        public decimal? MinCheckCAmt { get; set; }
-        public decimal? AvgCheckCAmt { get; set; }
-        public decimal? TotalCheckCAmt { get; set; }
-        public decimal? TotalCheckCCnt { get; set; }
         public decimal? MaxInternaltransferCAmt { get; set; }
         public decimal? MinInternaltransferCAmt { get; set; }
         public decimal? TotalInternaltransferCCnt { get; set; }
@@ -69,27 +61,25 @@ namespace Data.Data.Segmentation
         public decimal? AvgInternaltransferDAmt { get; set; }
         public decimal? TotalInternaltransferDAmt { get; set; }
         public decimal? MaxInternaltransferDAmt { get; set; }
-        public decimal? MaxLcBlClcnCAmt { get; set; }
-        public decimal? MinLcBlClcnCAmt { get; set; }
-        public decimal? TotalLcBlClcnCCnt { get; set; }
-        public decimal? AvgLcBlClcnCAmt { get; set; }
-        public decimal? TotalLcBlClcnCAmt { get; set; }
-        public decimal? TotalLcBlClcnDAmt { get; set; }
-        public decimal? MaxLcBlClcnDAmt { get; set; }
-        public decimal? MinLcBlClcnDAmt { get; set; }
-        public decimal? AvgLcBlClcnDAmt { get; set; }
-        public decimal? TotalLcBlClcnDCnt { get; set; }
         public decimal? TotalMiscCCnt { get; set; }
         public decimal? AvgMiscCAmt { get; set; }
         public decimal? TotalMiscCAmt { get; set; }
         public decimal? MinMiscCAmt { get; set; }
         public decimal? MaxMiscCAmt { get; set; }
-        public decimal? TotalMiscDAmt { get; set; }
+        public decimal? TotalMiscDCnt { get; set; }
         public decimal? AvgMiscDAmt { get; set; }
         public decimal? MaxMiscDAmt { get; set; }
+        public decimal? TotalMiscDAmt { get; set; }
         public decimal? MinMiscDAmt { get; set; }
-        public decimal? TotalMiscDCnt { get; set; }
-        public decimal? MaxMls { get; set; }
-        public decimal? AlertsCnt { get; set; }
+        public decimal? TotalLcBlClcnCCnt { get; set; }
+        public decimal? AvgLcBlClcnCAmt { get; set; }
+        public decimal? TotalLcBlClcnCAmt { get; set; }
+        public decimal? MinLcBlClcnCAmt { get; set; }
+        public decimal? MaxLcBlClcnCAmt { get; set; }
+        public decimal? TotalLcBlClcnDCnt { get; set; }
+        public decimal? AvgLcBlClcnDAmt { get; set; }
+        public decimal? MaxLcBlClcnDAmt { get; set; }
+        public decimal? TotalLcBlClcnDAmt { get; set; }
+        public decimal? MinLcBlClcnDAmt { get; set; }
     }
 }

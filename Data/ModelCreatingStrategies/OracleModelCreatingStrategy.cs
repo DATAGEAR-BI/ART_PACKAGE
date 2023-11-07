@@ -599,7 +599,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_ALERTS_PER_SEGMENT_TB");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -608,17 +608,17 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_ALERTS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentDescription)
-                    .HasMaxLength(128)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
@@ -630,7 +630,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_ALL_SEGMENT_CUST_COUNT_TB");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -639,17 +639,17 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentDescription)
-                    .HasMaxLength(128)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
@@ -665,7 +665,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("AMOUNT");
 
                 entity.Property(e => e.BranchName)
-                    .HasMaxLength(100)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("BRANCH_NAME");
 
@@ -680,7 +680,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("FEATURE");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -690,17 +690,17 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PARTY_NAME");
 
                 entity.Property(e => e.PartyNumber)
-                    .HasMaxLength(40)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
@@ -723,13 +723,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_D_AMT");
 
+                entity.Property(e => e.AvgCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CHECK_C_AMT");
+
                 entity.Property(e => e.AvgCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CHECK_D_AMT");
-
-                entity.Property(e => e.AvgFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("AVG_FEES_D_AMT");
 
                 entity.Property(e => e.AvgInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -739,13 +739,24 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.AvgLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.AvgMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_MISC_C_AMT");
 
+                entity.Property(e => e.AvgMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_D_AMT");
+
                 entity.Property(e => e.AvgTotalAmt)
-                    .HasMaxLength(128)
-                    .IsUnicode(false)
+                    .HasColumnType("NUMBER")
                     .HasColumnName("AVG_TOTAL_AMT");
 
                 entity.Property(e => e.AvgTotalCtAmt)
@@ -764,10 +775,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_D_AMT");
 
-                entity.Property(e => e.AvgWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("AVG_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.MaxCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_C_AMT");
@@ -776,13 +783,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_D_AMT");
 
+                entity.Property(e => e.MaxCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CHECK_C_AMT");
+
                 entity.Property(e => e.MaxCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CHECK_D_AMT");
-
-                entity.Property(e => e.MaxFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MAX_FEES_D_AMT");
 
                 entity.Property(e => e.MaxInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -792,9 +799,21 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.MaxLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.MaxMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_D_AMT");
 
                 entity.Property(e => e.MaxTotalAmt)
                     .HasColumnType("NUMBER")
@@ -816,10 +835,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_D_AMT");
 
-                entity.Property(e => e.MaxWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MAX_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.MinCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_C_AMT");
@@ -828,13 +843,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_D_AMT");
 
+                entity.Property(e => e.MinCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CHECK_C_AMT");
+
                 entity.Property(e => e.MinCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CHECK_D_AMT");
-
-                entity.Property(e => e.MinFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MIN_FEES_D_AMT");
 
                 entity.Property(e => e.MinInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -844,9 +859,21 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.MinLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.MinMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_D_AMT");
 
                 entity.Property(e => e.MinTotalAmt)
                     .HasColumnType("NUMBER")
@@ -868,25 +895,23 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_D_AMT");
 
-                entity.Property(e => e.MinWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MIN_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
                     .HasColumnName("SEGMENT_DESCRIPTION");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
@@ -909,6 +934,14 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalCashDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_C_AMT");
+
+                entity.Property(e => e.TotalCheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_C_CNT");
 
                 entity.Property(e => e.TotalCheckDAmt)
                     .HasColumnType("NUMBER")
@@ -938,14 +971,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_CNT");
 
-                entity.Property(e => e.TotalFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_FEES_D_AMT");
-
-                entity.Property(e => e.TotalFeesDCnt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_FEES_D_CNT");
-
                 entity.Property(e => e.TotalInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
@@ -962,6 +987,22 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
 
+                entity.Property(e => e.TotalLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
                 entity.Property(e => e.TotalMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_AMT");
@@ -969,6 +1010,14 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalMiscCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_CNT");
 
                 entity.Property(e => e.TotalWireCAmt)
                     .HasColumnType("NUMBER")
@@ -985,14 +1034,6 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalWireDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_CNT");
-
-                entity.Property(e => e.TotalWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_WITHDRAWAL_D_AMT");
-
-                entity.Property(e => e.TotalWithdrawalDCnt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_WITHDRAWAL_D_CNT");
             });
 
             modelBuilder.Entity<ArtAllSegsOutliersLimitTb>(entity =>
@@ -1007,74 +1048,23 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("FEATURE");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
                 entity.Property(e => e.UpperOutlierLimit)
                     .HasColumnType("NUMBER")
                     .HasColumnName("UPPER_OUTLIER_LIMIT");
-            });
-
-            modelBuilder.Entity<ArtChangedSegmentTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_CHANGED_SEGMENT_TB");
-
-                entity.Property(e => e.CreationDate)
-                    .HasColumnType("DATE")
-                    .HasColumnName("CREATION_DATE");
-
-                entity.Property(e => e.IndustryCode)
-                    .HasMaxLength(26)
-                    .IsUnicode(false)
-                    .HasColumnName("INDUSTRY_CODE");
-
-                entity.Property(e => e.IndustryDesc)
-                    .HasMaxLength(128)
-                    .IsUnicode(false)
-                    .HasColumnName("INDUSTRY_DESC");
-
-                entity.Property(e => e.LastSegmentId)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("LAST_SEGMENT_ID");
-
-                entity.Property(e => e.MonthKey)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("MONTH_KEY");
-
-                entity.Property(e => e.OccupationDesc)
-                    .HasMaxLength(128)
-                    .IsUnicode(false)
-                    .HasColumnName("OCCUPATION_DESC");
-
-                entity.Property(e => e.PartyNumber)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("PARTY_NUMBER");
-
-                entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
-                    .IsUnicode(false)
-                    .HasColumnName("PARTY_TYPE_DESC");
-
-                entity.Property(e => e.RiskClassification)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("RISK_CLASSIFICATION");
-
-                entity.Property(e => e.SegmentSorted)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("SEGMENT_SORTED");
             });
 
             modelBuilder.Entity<ArtCustsPerTypeTb>(entity =>
@@ -1084,7 +1074,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_CUSTS_PER_TYPE_TB");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -1093,12 +1083,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
@@ -1110,12 +1100,12 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_INDUSTRY_SEGMENT_TB");
 
                 entity.Property(e => e.IndustryDesc)
-                    .HasMaxLength(128)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_DESC");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -1124,12 +1114,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_CUSTOMERS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
@@ -1164,13 +1154,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CASH_D_AMT");
 
+                entity.Property(e => e.AvgCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_CHECK_C_AMT");
+
                 entity.Property(e => e.AvgCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_CHECK_D_AMT");
-
-                entity.Property(e => e.AvgFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("AVG_FEES_D_AMT");
 
                 entity.Property(e => e.AvgInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -1180,9 +1170,21 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.AvgLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.AvgMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_MISC_C_AMT");
+
+                entity.Property(e => e.AvgMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AVG_MISC_D_AMT");
 
                 entity.Property(e => e.AvgTotalAmt)
                     .HasColumnType("NUMBER")
@@ -1204,17 +1206,14 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("AVG_WIRE_D_AMT");
 
-                entity.Property(e => e.AvgWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("AVG_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.IndustryCode)
-                    .HasMaxLength(26)
+                    .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("INDUSTRY_CODE");
+                    .HasColumnName("INDUSTRY_CODE")
+                    .IsFixedLength();
 
                 entity.Property(e => e.IndustryDesc)
-                    .HasMaxLength(128)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("INDUSTRY_DESC");
 
@@ -1226,13 +1225,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CASH_D_AMT");
 
+                entity.Property(e => e.MaxCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_CHECK_C_AMT");
+
                 entity.Property(e => e.MaxCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_CHECK_D_AMT");
-
-                entity.Property(e => e.MaxFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MAX_FEES_D_AMT");
 
                 entity.Property(e => e.MaxInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -1242,9 +1241,21 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.MaxLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.MaxMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MAX_MISC_D_AMT");
 
                 entity.Property(e => e.MaxMls)
                     .HasColumnType("NUMBER")
@@ -1270,10 +1281,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MAX_WIRE_D_AMT");
 
-                entity.Property(e => e.MaxWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MAX_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.MinCashCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_C_AMT");
@@ -1282,13 +1289,13 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CASH_D_AMT");
 
+                entity.Property(e => e.MinCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_CHECK_C_AMT");
+
                 entity.Property(e => e.MinCheckDAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_CHECK_D_AMT");
-
-                entity.Property(e => e.MinFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MIN_FEES_D_AMT");
 
                 entity.Property(e => e.MinInternaltransferCAmt)
                     .HasColumnType("NUMBER")
@@ -1298,9 +1305,21 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
 
+                entity.Property(e => e.MinLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
                 entity.Property(e => e.MinMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MIN_MISC_D_AMT");
 
                 entity.Property(e => e.MinTotalAmt)
                     .HasColumnType("NUMBER")
@@ -1322,35 +1341,36 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("MIN_WIRE_D_AMT");
 
-                entity.Property(e => e.MinWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("MIN_WITHDRAWAL_D_AMT");
-
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
+                entity.Property(e => e.NumberOfLocations)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_LOCATIONS");
+
                 entity.Property(e => e.OccupationDesc)
-                    .HasMaxLength(128)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("OCCUPATION_DESC");
 
                 entity.Property(e => e.PartyNumber)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.RiskClassification)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(1)
                     .HasColumnName("RISK_CLASSIFICATION");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
@@ -1373,6 +1393,14 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalCashDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_C_AMT");
+
+                entity.Property(e => e.TotalCheckCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_CHECK_C_CNT");
 
                 entity.Property(e => e.TotalCheckDAmt)
                     .HasColumnType("NUMBER")
@@ -1402,14 +1430,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_DEBIT_CNT");
 
-                entity.Property(e => e.TotalFeesDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_FEES_D_AMT");
-
-                entity.Property(e => e.TotalFeesDCnt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_FEES_D_CNT");
-
                 entity.Property(e => e.TotalInternaltransferCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
@@ -1426,6 +1446,22 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
 
+                entity.Property(e => e.TotalLcBlClcnCAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
                 entity.Property(e => e.TotalMiscCAmt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_AMT");
@@ -1433,6 +1469,14 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalMiscCCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_MISC_D_CNT");
 
                 entity.Property(e => e.TotalWireCAmt)
                     .HasColumnType("NUMBER")
@@ -1449,14 +1493,6 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TotalWireDCnt)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TOTAL_WIRE_D_CNT");
-
-                entity.Property(e => e.TotalWithdrawalDAmt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_WITHDRAWAL_D_AMT");
-
-                entity.Property(e => e.TotalWithdrawalDCnt)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("TOTAL_WITHDRAWAL_D_CNT");
             });
 
             modelBuilder.Entity<ArtSegoutvsallcustTb>(entity =>
@@ -1466,7 +1502,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_SEGOUTVSALLCUST_TB");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -1479,12 +1515,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_OUTLIERS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
             });
@@ -1496,7 +1532,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToTable("ART_SEGOUTVSALLOUT_TB");
 
                 entity.Property(e => e.MonthKey)
-                    .HasMaxLength(40)
+                    .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("MONTH_KEY");
 
@@ -1505,12 +1541,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_OUTLIERS");
 
                 entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(26)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_TYPE_DESC");
 
                 entity.Property(e => e.SegmentSorted)
-                    .HasMaxLength(40)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("SEGMENT_SORTED");
 
@@ -2150,7 +2186,8 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(100)
                     .HasColumnName("ALERT_STATUS");
 
-                entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count".ToUpper());
+                entity.Property(e => e.NUMBEROFALERTS).HasColumnName("NUMBER_OF_ALERTS".ToUpper());
+                entity.Property(e => e.YEAR).HasColumnName("YEAR".ToUpper());
             });
 
             modelBuilder.Entity<ArtHomeNumberOfAccount>(entity =>

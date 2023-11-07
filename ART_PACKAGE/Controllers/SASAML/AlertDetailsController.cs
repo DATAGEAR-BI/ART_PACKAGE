@@ -69,8 +69,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                containsActions = false,
-                selectable = true
+                containsActions = false
             };
 
             return new ContentResult

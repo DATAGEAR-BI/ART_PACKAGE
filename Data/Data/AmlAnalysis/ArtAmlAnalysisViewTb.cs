@@ -2,6 +2,7 @@
 {
     public partial class ArtAmlAnalysisViewTb
     {
+        public decimal? Prediction { get; set; }
         public string? MonthKey { get; set; }
         public string PartyNumber { get; set; } = null!;
         public bool? RiskClassification { get; set; }
@@ -220,7 +221,6 @@
         public int? MaxMls { get; set; }
         public decimal? AlertsCnt { get; set; }
         public string? PartyName { get; set; }
-        public decimal? Prediction { get; set; }
         public int? AlertsCount { get; set; }
         public decimal? ClosedAlertsCount { get; set; }
     }

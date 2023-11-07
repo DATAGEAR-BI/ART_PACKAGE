@@ -57,19 +57,19 @@ namespace ART_PACKAGE.Controllers.SEG
 
         public ContentResult MonthKeys()
         {
-            IQueryable<string?> keys = db.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).Distinct();
+            IQueryable<string?> keys = db.ArtAllSegsFeatrsStatcsTbs.Select(s => s.MonthKey).Distinct().OrderByDescending(x => x);
             return Content(JsonConvert.SerializeObject(keys), "application/json");
         }
 
         public ContentResult SegTypesPerKey(int? monthkey)
         {
-            IQueryable<string?> types = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).Distinct();
+            IQueryable<string?> types = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString()).Select(s => s.PartyTypeDesc).Distinct().OrderByDescending(x => x);
             return Content(JsonConvert.SerializeObject(types), "application/json");
         }
 
         public ContentResult Segs(int? monthkey, string Type)
         {
-            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => new { s.SegmentSorted, s.SegmentDescription }).Distinct();
+            var segs = db.ArtAllSegsFeatrsStatcsTbs.Where(s => s.MonthKey == monthkey.ToString() && s.PartyTypeDesc == Type).Select(s => new { SegmentSorted = Convert.ToInt32(s.SegmentSorted), s.SegmentDescription }).OrderByDescending(x => x.SegmentSorted).ToList();
             return Content(JsonConvert.SerializeObject(segs), "application/json");
         }
 
@@ -151,9 +151,16 @@ namespace ART_PACKAGE.Controllers.SEG
                         CntObj[item[..3]] = itemVal;
                     }
                 }
+                string name = t;
+                if (t == "Check")
+                    name = "Cheque";
+                else if (t == "Internaltransfer")
+                    name = "Internal Transfer";
+                else if (t == "LcBlClcn")
+                    name = "LC & Bill Collection";
                 debitObj["Amt"] = AmtObj;
                 debitObj["Cnt"] = CntObj;
-                typeObj["name"] = t;
+                typeObj["name"] = name;
                 typeObj["credit"] = creditObj;
                 typeObj["debit"] = debitObj;
                 typsArrayObj.Add(typeObj);

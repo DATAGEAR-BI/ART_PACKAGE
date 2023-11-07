@@ -197,6 +197,8 @@ function renderTabsCounter() {
             ChartDataCount = [];
             
             typesLength = data["Types"].length;
+            console.log('Hello');
+            console.log(data["Types"]);
             data["Types"].forEach((obj) => {
                 allTypesNames.push(obj["name"]);
                 createTap(obj);
@@ -363,41 +365,6 @@ function draw_Stacked_Col_Chart() {
     valueAxis.renderer.minWidth = 30;
     valueAxis.renderer.labels.template.fontSize = 17;
     valueAxis.renderer.labels.template.disabled = true;
-    //function create3dSeries(v) {
-    //    var firstChar = v.split("_")[0];
-    //    var secondChar = v.split("_")[1];
-    //    var thirdChar = v.split("_")[2];
-    //    var seriesName = "";
-    //    if (firstChar==="T") {
-    //        seriesName += "Total ";
-    //    } else if (firstChar === "L") {
-    //        seriesName += "Lowest ";
-    //    } else if (firstChar === "M") {
-    //        seriesName += "Highest ";
-    //    } else if (firstChar === "A") {
-    //        seriesName += "Average ";
-    //    }
-
-    //    if (thirdChar === "C") {
-    //        seriesName += "Credit ";
-    //    } else if (thirdChar === "D") {
-    //        seriesName += "Debit ";
-    //    } 
-    //    seriesName += "Amount";
-
-    //    var series = chart.series.push(new am4charts.ColumnSeries3D());
-    //    series.columns.template.width = am4core.percent(80);
-    //    series.columns.template.tooltipText = "{name}: {valueY.value}";
-    //    series.name = seriesName;
-    //    series.dataFields.categoryX = "category";
-    //    series.dataFields.valueY = v;
-    //    series.tooltip.fontSize = 17;
-    //}
-    //Object.entries(ChartData[0]).forEach((x) => {
-    //    if (x[0] !=="category") {
-    //        create3dSeries(x[0]);
-    //    }
-    //});
     chart.scrollbarY = new am4core.Scrollbar();
     chart.legend.fontSize = 17;
     return chart;
@@ -625,8 +592,8 @@ $(window).resize(function () {
 function InitalMultiSelectValues() {   // Inital MultiSelect For Series Segment Type Amount
         var newOptionsHTML = `<option value="select-all">-- Select All --</option>`;
         $("#seriesIdAmount").empty();
-        var select = $("#seriesIdAmount");
-
+    var select = $("#seriesIdAmount");
+    console.log(ChartData);
         Object.entries(ChartData[0]).forEach((x) => {
             if (x[0] !== "category") {
                 fillSeriesMultiSelect(x[0]);

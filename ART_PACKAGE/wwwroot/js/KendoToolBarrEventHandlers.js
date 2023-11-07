@@ -119,7 +119,8 @@ export const Handlers = {
         a.href = window.URL.createObjectURL(blob);
         a.click();
         kendo.ui.progress($('#grid'), false);
-    }, clrfil: (e) => {
+    },
+    clrfil: (e) => {
         var ds = $("#grid").data("kendoGrid");
         var multiSelects = document.querySelectorAll("[data-role=multiselect]");
         [...multiSelects].forEach(x => {

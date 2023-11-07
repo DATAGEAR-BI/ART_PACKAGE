@@ -19,7 +19,7 @@
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <link href="~/css/segmentreport.css" rel="stylesheet" />
-    <script src="~/js/singlesegmentreport.js"></script>
+    <script src="~/js/singlesegmentreport.js" asp-append-version="true"></script>
 
 
 <div id="report-header" style="text-align:center">
@@ -45,10 +45,41 @@
 <div id="charts-container" class="text-center">
     <div class="row top-buffer">
         <div>
+		 <div style="display:inline-block; text-align:center;width:400px;">
+                <select name="series-amount" id="seriesIdAmount" 
+                        class="selectpicker form-control  targeted-search-input ng-pristine ng-valid ng-touched" multiple>
+			        <option value="select-all">--  Select All --</option>
+                    <option value="T_A_C">Total Credit Amount</option>
+                    <option value="T_A_D">Total Debit Amount</option>
+                    <option value="L_A_C">Lowest Credit Amount</option>
+                    <option value="L_A_D">Lowest Debit Amount</option>
+                    <option value="M_A_C">Highest Credit Amount</option>
+                    <option value="M_A_D">Highest Debit Amount</option>
+                    <option value="A_A_C">Average Credit Amount</option>
+                    <option value="A_A_D">Average Debit Amount</option>
+                </select>
+            </div>
             <div id="chartdiv" style="height:600px" hidden></div>
             <hr>
+			 <div style="display:inline-block; text-align:center;width:400px;">
+                <select name="series-count" id="seriesIdCount" onchange="OnChangeSeriesTransactionTypeCount(this)"
+                        class="selectpicker form-control form-control targeted-search-input ng-pristine ng-valid ng-touched" multiple>
+                    <option value="select-all">-- Select All --</option>
+                    <option value="T_C_C">Total Credit Count</option>
+                    <option value="T_D_C">Total Debit Count</option>
+                </select>
+            </div>
             <div id="chartCountdiv" style="height:500px" hidden></div>
             <hr>
+			<div style="display:inline-block; text-align:center;width:400px;">
+                <select name="series-industry" id="seriesIdIndustry" onchange="OnChangeSeriesIndustry(this)"
+                        class="selectpicker form-control form-control targeted-search-input ng-pristine ng-valid ng-touched" multiple>
+                    <option value="select-all">-- Select All --</option>
+                    <option value="TotalAmount">Total Amount</option>
+                    <option value="TotalCreditAmount">Total Credit Amount</option>
+                    <option value="TotalDebitAmount">Total Debit Amount</option>
+                </select>
+            </div>
             <div id="IndustrySegmentChart" style="height:700px" hidden></div>
         </div>
         <br>

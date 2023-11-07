@@ -25,7 +25,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetPartyTypeDropDown()
         {
-            List<string> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyTypeDesc == null || string.IsNullOrEmpty(x.PartyTypeDesc.Trim()) ? "UNKNOWN" : x.PartyTypeDesc.ToUpper()).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => (x.PartyTypeDesc == null || string.IsNullOrEmpty(x.PartyTypeDesc.Trim()) || x.PartyTypeDesc == " ") ? "UNKNOWN" : x.PartyTypeDesc.ToUpper()).Distinct().ToList();
             return distinct_value;
         }
 
@@ -34,7 +34,7 @@ namespace ART_PACKAGE.Helpers.DropDown
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
 
-            List<string> distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) ? "UNKNOWN" : x.ScenarioName).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => (x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) || x.ScenarioName == " ") ? "UNKNOWN" : x.ScenarioName).Distinct().ToList();
             return distinct_value;
         }
 

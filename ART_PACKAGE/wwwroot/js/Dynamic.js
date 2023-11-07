@@ -2,6 +2,8 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Actions } from "./GridActions.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -798,8 +800,9 @@ function generateColumns(response) {
                 },
             };
         }
-
+        var template = column.template;
         var isCollection = column.isCollection;
+        var hasTemplate = template && template != ""
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {
@@ -829,6 +832,9 @@ function generateColumns(response) {
             }
         }
 
+
+
+
         return {
             field: column.name,
             format: column.format ?
@@ -836,6 +842,7 @@ function generateColumns(response) {
                 isDateField[column.name]
                     ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                     : "",
+
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
@@ -843,29 +850,23 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? Templates[template] : null,
         };
     });
 
     if (contiansActions) {
+        var actions = response["actions"];
+        var actionsBtns = [...actions].map(x => ({
+
+            name: x.text,
+            iconClass: `k-icon ${x.icon}`,
+            click: (e) => Actions[x.action](e)
+        }));
         cols = [
             ...cols,
             {
-                command: [
-                    {
-                        name: "details",
-                        iconClass: "k-icon k-i-info-circle",
-                        click: function (e) {
-                            e.preventDefault();
-
-                            var tr = $(e.target).closest("tr");
-
-                            var data = this.dataItem(tr);
-
-                            window.location = `/report/showreport/${data.Id}`;
-                        },
-                    },
-                ],
+                title: "Actions",
+                command: actionsBtns,
             },
         ];
     }

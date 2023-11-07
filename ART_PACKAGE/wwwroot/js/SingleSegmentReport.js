@@ -1,11 +1,96 @@
 var allTypesNames = [];
 var typesLength = 0;
+$(document).ready(function () {
+    $('#seriesIdIndustry').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        setTimeout(function () {
+            if (!isSelected) {
+                // This code runs when an option is deselected
+                console.log('Option deselected');
+                var unselected = $('#seriesIdIndustry option').eq(clickedIndex).val();
+                if (unselected === 'select-all') {
+                    ToggleSelectAll("#seriesIdIndustry");
+                    OnChangeSeriesIndustry(this);
+                }
+                else {
+                    $(`#seriesIdIndustry option[value="select-all"]`).prop('selected', false);
+
+                    // Refresh the SelectPicker to reflect the changes
+                    $("#seriesIdIndustry").selectpicker('refresh');
+                    OnChangeSeriesIndustry(this);
+                }
+            }
+            else {
+                if (e.target.value === 'select-all') {
+                    ToggleSelectAll("#seriesIdIndustry");
+                }
+                OnChangeSeriesIndustry(this);
+
+            }
+        }, 0);
+
+    });
+    $('#seriesIdCount').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        setTimeout(function () {
+            if (!isSelected) {
+                // This code runs when an option is deselected
+                console.log('Option deselected');
+                var unselected = $('#seriesIdCount option').eq(clickedIndex).val();
+                if (unselected === 'select-all') {
+                    ToggleSelectAll("#seriesIdCount");
+                    OnChangeSeriesTransactionTypeCount(this);
+                }
+                else {
+                    $(`#seriesIdCount option[value="select-all"]`).prop('selected', false);
+
+                    // Refresh the SelectPicker to reflect the changes
+                    $("#seriesIdCount").selectpicker('refresh');
+                    OnChangeSeriesTransactionTypeCount(this);
+                }
+            }
+            else {
+                if (e.target.value === 'select-all') {
+                    ToggleSelectAll("#seriesIdCount");
+                }
+                OnChangeSeriesTransactionTypeCount(this);
+
+            }
+        }, 0);
+
+    });
+    $('#seriesIdAmount').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        console.log("Hello select change");
+        setTimeout(function () {
+            if (!isSelected) {
+                // This code runs when an option is deselected
+                var unselected = $('#seriesIdAmount option').eq(clickedIndex).val();
+                if (unselected === 'select-all') {
+                    ToggleSelectAll("#seriesIdAmount");
+                    OnChangeSeriesTransactionTypeAmount(this);
+                }
+                else {
+                    $(`#seriesIdAmount option[value="select-all"]`).prop('selected', false);
+
+                    // Refresh the SelectPicker to reflect the changes
+                    $("#seriesIdAmount").selectpicker('refresh');
+                    OnChangeSeriesTransactionTypeAmount(this);
+                }
+            }
+            else {
+                if (e.target.value === 'select-all') {
+                    ToggleSelectAll("#seriesIdAmount");
+                }
+                OnChangeSeriesTransactionTypeAmount(this);
+            }
+        }, 0);
+
+    });
+});
 
 function draw_Stacked_Col_Chart() {
 
     am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
-    var chart = am4core.create("chartdiv", am4charts.XYChart3D);
+    var chart = am4core.create("chartdiv", am4charts.XYChart);
     var title = chart.titles.create();
     title.text = "Transaction Type Amounts Comparison";
     title.fontSize = 25;
@@ -23,7 +108,7 @@ function draw_Stacked_Col_Chart() {
 
     chart.colors.step = 2;
 
-    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "category";
     categoryAxis.renderer.minGridDistance = 35;
     categoryAxis.renderer.grid.template.location = 0;
@@ -31,7 +116,7 @@ function draw_Stacked_Col_Chart() {
     categoryAxis.renderer.labels.template.fontSize = 17;
     categoryAxis.renderer.labels.template.fontSize = 17;
 
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;
     valueAxis.renderer.grid.template.strokeOpacity = 0.05;
     valueAxis.renderer.minGridDistance = 40;
@@ -39,88 +124,17 @@ function draw_Stacked_Col_Chart() {
     valueAxis.min = 0;
     valueAxis.renderer.minWidth = 30;
     valueAxis.renderer.labels.template.fontSize = 17;
-
-    var series1 = chart.series.push(new am4charts.ColumnSeries3D());
-    series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText = "{name}: {valueY.value}";
-    series1.name = "Total Credit Amount";
-    series1.dataFields.categoryX = "category";
-    series1.dataFields.valueY = "T_A_C";
-    series1.tooltip.fontSize = 17;
-    //series1.stacked = true;
-
-    var series5 = chart.series.push(new am4charts.ColumnSeries3D());
-    series5.columns.template.width = am4core.percent(80);
-    series5.columns.template.tooltipText = "{name}: {valueY.value}";
-    series5.name = "Total Debit Amount";
-    series5.dataFields.categoryX = "category";
-    series5.dataFields.valueY = "T_A_D";
-    series5.tooltip.fontSize = 17;
-    //series5.stacked = true;
-
-    var series2 = chart.series.push(new am4charts.ColumnSeries3D());
-    series2.columns.template.width = am4core.percent(80);
-    series2.columns.template.tooltipText = "{name}: {valueY.value}";
-    series2.name = "Lowest Credit Amount";
-    series2.dataFields.categoryX = "category";
-    series2.dataFields.valueY = "L_A_C";
-    series2.tooltip.fontSize = 17;
-    // series2.stacked = true;
-
-    var series6 = chart.series.push(new am4charts.ColumnSeries3D());
-    series6.columns.template.width = am4core.percent(80);
-    series6.columns.template.tooltipText = "{name}: {valueY.value}";
-    series6.name = "Lowest Debit Amount";
-    series6.dataFields.categoryX = "category";
-    series6.dataFields.valueY = "L_A_D";
-    series6.tooltip.fontSize = 17;
-    // series6.stacked = true;
-
-    var series3 = chart.series.push(new am4charts.ColumnSeries3D());
-    series3.columns.template.width = am4core.percent(80);
-    series3.columns.template.tooltipText = "{name}: {valueY.value}";
-    series3.name = "Highest Credit Amount";
-    series3.dataFields.categoryX = "category";
-    series3.dataFields.valueY = "M_A_C";
-    series3.tooltip.fontSize = 17;
-    //series3.stacked = true;
-
-    var series7 = chart.series.push(new am4charts.ColumnSeries3D());
-    series7.columns.template.width = am4core.percent(80);
-    series7.columns.template.tooltipText = "{name}: {valueY.value}";
-    series7.name = "Highest Debit Amount";
-    series7.dataFields.categoryX = "category";
-    series7.dataFields.valueY = "M_A_D";
-    series7.tooltip.fontSize = 17;
-    //series7.stacked = true;
-
-    var series4 = chart.series.push(new am4charts.ColumnSeries3D());
-    series4.columns.template.width = am4core.percent(80);
-    series4.columns.template.tooltipText = "{name}: {valueY.value}";
-    series4.name = "Average Credit Amount";
-    series4.dataFields.categoryX = "category";
-    series4.dataFields.valueY = "A_A_C";
-    series4.tooltip.fontSize = 17;
-    //series4.stacked = true;
-
-    var series8 = chart.series.push(new am4charts.ColumnSeries3D());
-    series8.columns.template.width = am4core.percent(80);
-    series8.columns.template.tooltipText = "{name}: {valueY.value}";
-    series8.name = "Average Debit Amount";
-    series8.dataFields.categoryX = "category";
-    series8.dataFields.valueY = "A_A_D";
-    series8.tooltip.fontSize = 17;
-    // series8.stacked = true;
-
-    chart.scrollbarX = new am4core.Scrollbar();
+    valueAxis.renderer.labels.template.disabled = true;
+    chart.scrollbarY = new am4core.Scrollbar();
     chart.legend.fontSize = 17;
+    return chart;
 };
 
 function draw_Stacked_Col_Chart_Count() {
 
     am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
-    var chart = am4core.create("chartCountdiv", am4charts.XYChart3D);
+    var chart = am4core.create("chartCountdiv", am4charts.XYChart);
     var title = chart.titles.create();
     title.text = "Transaction Type Counts Comparison";
     title.fontSize = 25;
@@ -138,14 +152,14 @@ function draw_Stacked_Col_Chart_Count() {
 
     chart.colors.step = 2;
 
-    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "category";
     categoryAxis.renderer.minGridDistance = 30;
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.interactionsEnabled = false;
     categoryAxis.renderer.labels.template.fontSize = 17;
 
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;
     valueAxis.renderer.grid.template.strokeOpacity = 0.05;
     valueAxis.renderer.minGridDistance = 30;
@@ -153,34 +167,71 @@ function draw_Stacked_Col_Chart_Count() {
     valueAxis.min = 0;
     valueAxis.renderer.minWidth = 35;
     valueAxis.renderer.labels.template.fontSize = 17;
-
-    var series1 = chart.series.push(new am4charts.ColumnSeries3D());
-    series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText = "{name}: {valueY.value}";
-    series1.name = "Total Credit Count";
-    series1.dataFields.categoryX = "category";
-    series1.dataFields.valueY = "T_C_C";
-    series1.tooltip.fontSize = 17;
-    //series1.stacked = true;
-
-    var series2 = chart.series.push(new am4charts.ColumnSeries3D());
-    series2.columns.template.width = am4core.percent(80);
-    series2.columns.template.tooltipText = "{name}: {valueY.value}";
-    series2.name = "Total Debit Count";
-    series2.dataFields.categoryX = "category";
-    series2.dataFields.valueY = "T_D_C";
-    series2.tooltip.fontSize = 17;
-    // series2.stacked = true;
-
-    chart.scrollbarX = new am4core.Scrollbar();
+    valueAxis.renderer.labels.template.disabled = true;
+    chart.scrollbarY = new am4core.Scrollbar();
 
     chart.legend.fontSize = 17;
+    return chart;
 
 
 };
+function drawIndustryAndOccuipation() {
+    am4core.useTheme(am4themes_animated);
+    am4core.addLicense("ch-custom-attribution");
+    var chart = am4core.create("IndustrySegmentChart", am4charts.XYChart);
+    var title = chart.titles.create();
+    var type = segType;
+    if (type.toUpperCase() == "INDIVIDUAL".toUpperCase()) {
+        title.text = " Occupation Statistics";
+    }
+    else {
+        title.text = " Industry Statistics";
+    }
 
+    title.fontSize = 25;
+    title.marginBottom = 30;
+    chart.data = ChartIndustryAndOccuipation;
+    chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.menu.items = [{
+        "label": "...",
+        "menu": [
+            { "type": "svg", "label": "Save" },
+        ]
+    }];
+    chart.padding(30, 30, 10, 30);
+    chart.legend = new am4charts.Legend();
+
+    chart.colors.step = 2;
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "IndustryDesc";
+    categoryAxis.renderer.minGridDistance = 10;
+    categoryAxis.renderer.grid.template.location = 1;
+    categoryAxis.interactionsEnabled = false;
+    // categoryAxis.renderer.labels.template.rotation = 45;
+    categoryAxis.renderer.labels.template.horizontalCenter = "right";
+    categoryAxis.renderer.labels.template.verticalCenter = "middle";
+    categoryAxis.renderer.labels.template.fontSize = 17;
+
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.tooltip.disabled = true;
+    valueAxis.renderer.grid.template.strokeOpacity = 0.05;
+    valueAxis.renderer.minGridDistance = 15;
+    valueAxis.interactionsEnabled = true;
+    valueAxis.min = 5;
+    valueAxis.renderer.minWidth = 35;
+    valueAxis.renderer.labels.template.fontSize = 17;
+
+    valueAxis.renderer.labels.template.disabled = true;
+
+
+    chart.scrollbarY = new am4core.Scrollbar();
+
+
+    return chart;
+}
 var ChartData = [];
 var ChartDataCount = [];
+var ChartIndustryAndOccuipation = [];
 var allTypesNames = [];
 function callCounters() {
     // DOM Element's
@@ -405,77 +456,7 @@ function RenderDataForCharts() {
         },
         success: function (data) {
 
-            am4core.useTheme(am4themes_animated);
-            am4core.addLicense("ch-custom-attribution");
-            var chart = am4core.create("IndustrySegmentChart", am4charts.XYChart3D);
-            var title = chart.titles.create();
-            if (segType.toUpperCase() == "INDIVIDUAL".toUpperCase()) {
-                title.text = " Occupation Statistics";
-            }
-            else {
-                title.text = " Industry Statistics";
-            }
-
-            title.fontSize = 25;
-            title.marginBottom = 30;
-            chart.data = data;
-            chart.exporting.menu = new am4core.ExportMenu();
-            chart.exporting.menu.items = [{
-                "label": "...",
-                "menu": [
-                    { "type": "svg", "label": "Save" },
-                ]
-            }];
-            chart.padding(30, 30, 10, 30);
-            chart.legend = new am4charts.Legend();
-
-            chart.colors.step = 2;
-
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "IndustryDesc";
-            categoryAxis.renderer.minGridDistance = 10;
-            categoryAxis.renderer.grid.template.location = 1;
-            categoryAxis.interactionsEnabled = false;
-            categoryAxis.renderer.labels.template.rotation = -45;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.renderer.labels.template.fontSize = 17;
-
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.tooltip.disabled = true;
-            valueAxis.renderer.grid.template.strokeOpacity = 0.05;
-            valueAxis.renderer.minGridDistance = 15;
-            valueAxis.interactionsEnabled = true;
-            valueAxis.min = 5;
-            valueAxis.renderer.minWidth = 35;
-            valueAxis.renderer.labels.template.fontSize = 17;
-
-            var series1 = chart.series.push(new am4charts.ColumnSeries3D());
-            series1.columns.template.width = am4core.percent(80);
-            series1.columns.template.tooltipText = "{name}: {valueY.value}";
-            series1.name = "Total Amount";
-            series1.dataFields.categoryX = "IndustryDesc";
-            series1.dataFields.valueY = "TotalAmount";
-            series1.tooltip.fontSize = 17;
-
-            var series2 = chart.series.push(new am4charts.ColumnSeries3D());
-            series2.columns.template.width = am4core.percent(80);
-            series2.columns.template.tooltipText = "{name}: {valueY.value}";
-            series2.name = "Total Credit Amount";
-            series2.dataFields.categoryX = "IndustryDesc";
-            series2.dataFields.valueY = "TotalCreditAmount";
-            series2.tooltip.fontSize = 17;
-
-            var series3 = chart.series.push(new am4charts.ColumnSeries3D());
-            series3.columns.template.width = am4core.percent(80);
-            series3.columns.template.tooltipText = "{name}: {valueY.value}";
-            series3.name = "Total Debit Amount";
-            series3.dataFields.categoryX = "IndustryDesc";
-            series3.dataFields.valueY = "TotalDebitAmount";
-            series3.tooltip.fontSize = 17;
-
-            chart.scrollbarX = new am4core.Scrollbar();
-            chart.legend.fontSize = 17;
+            ChartIndustryAndOccuipation = data;
 
         }
     });
@@ -483,14 +464,125 @@ function RenderDataForCharts() {
 setTimeout(function () {
     document.getElementById("TabsID").style.display = "block";
     renderTabsCounter();
-
+    RenderDataForCharts();
     setTimeout(function () {
         $("#chartdiv").show()
         $("#chartCountdiv").show()
         $("#IndustrySegmentChart").show()
-        draw_Stacked_Col_Chart();
-        draw_Stacked_Col_Chart_Count();
-        RenderDataForCharts();
+        RunAllSeriesMultiSelect();
     }, 1500);
 
 }, 500);
+
+// Multi Select Series---------------------------------------------------------//
+
+function InitalMultiSelect() {
+    SelectAll("#seriesIdIndustry");
+    SelectAll("#seriesIdAmount");
+    SelectAll("#seriesIdCount");
+}
+function HiddenMultiSelect() {
+    $("#seriesIdCount").selectpicker("hide");
+    $("#seriesIdAmount").selectpicker("hide");
+    $("#seriesIdIndustry").selectpicker("hide");
+}
+function ShowMultiSelect() {
+    $("#seriesIdCount").selectpicker("show");
+    $("#seriesIdAmount").selectpicker("show");
+    $("#seriesIdIndustry").selectpicker("show");
+}
+function ToggleSelectAll(selectId) {
+    var selectAllSelected = $(`${selectId} option[value="select-all"]`).prop('selected');
+
+    // Set the selected state of all other options accordingly
+    $(`${selectId} option[value!="select-all"]`).prop('selected', selectAllSelected);
+
+    // Refresh the SelectPicker to reflect the changes
+    $(selectId).selectpicker('refresh');
+}
+function SelectAll(selectId) {
+    // Set selected for all option
+    $(`${selectId} option`).prop('selected', true);
+
+    // Refresh the SelectPicker to reflect the changes
+    $(selectId).selectpicker('refresh');
+}
+
+//-----------------------------------------------------------------//
+
+function drawLabelBulletHorizontal(series) {
+    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+    valueLabel.label.text = "{valueX}";
+    valueLabel.label.hideOversized = false;
+    valueLabel.label.truncate = false;
+    valueLabel.label.fontSize = 17;
+    valueLabel.label.adapter.add('horizontalCenter', function (x, target) {
+        if (!target.dataItem) {
+            return x;
+        }
+        var width = target.dataItem.itemWidth;
+        //console.log(width);
+        if (width >= 800) { // display number inside graph
+            return 'right';
+        } else {
+            //console.log('left');
+            return 'left';
+        }
+    });
+}
+function AddSeries(chart, name, value, category) {
+    var series = new am4charts.ColumnSeries();
+    series.columns.template.width = am4core.percent(80);
+    series.columns.template.tooltipText = "{name}: {valueX}";
+    series.name = name;//"Total Debit Count";
+    series.dataFields.categoryY = category;
+    series.dataFields.valueX = value;//"T_D_C";
+    series.tooltip.fontSize = 17;
+    series.events.on("datavalidated", function (event) {
+        var dataItems = event.target.dataItems;
+        dataItems.each(function (dataItem) {
+            if (dataItem.values.valueX.value == 0)
+                dataItem.values.valueX.value = undefined;  // hidden zero values 
+        });
+    });
+    console.log(series);
+    chart.series.push(series);
+
+    // series2.stacked = true;
+
+    drawLabelBulletHorizontal(series);
+}
+function AddMultipleSeries(chart, selectId, category) {
+    var selectedValues = $("#" + selectId).val(); // Get All option selected
+    var select = document.getElementById(selectId);
+    for (var i = 0; i < select.options.length; i++) {
+        if (selectedValues != null && selectedValues.indexOf(select.options[i].value) != -1) {
+            var value = select.options[i].value;
+            var name = select.options[i].text;    // get text for each option
+            if (value != 'select-all') {
+                AddSeries(chart, name, value, category);
+            }
+        }
+    }
+}
+function OnChangeSeriesTransactionTypeCount(e) {
+    var chart = draw_Stacked_Col_Chart_Count();
+    AddMultipleSeries(chart, "seriesIdCount", "category");
+
+}
+function OnChangeSeriesTransactionTypeAmount(e) {
+    var chart = draw_Stacked_Col_Chart();
+    console.log(chart);
+    AddMultipleSeries(chart, "seriesIdAmount", "category");
+}
+function OnChangeSeriesIndustry(e) {
+    var chart = drawIndustryAndOccuipation();
+    AddMultipleSeries(chart, "seriesIdIndustry", "IndustryDesc");
+
+}
+function RunAllSeriesMultiSelect() {
+    InitalMultiSelect();
+    OnChangeSeriesTransactionTypeCount(this);
+    OnChangeSeriesTransactionTypeAmount(this);
+    OnChangeSeriesIndustry(this);
+}
