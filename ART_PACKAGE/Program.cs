@@ -108,9 +108,9 @@ WebApplication app = builder.Build();
 
 app.ApplyModulesMigrations();
 
-app.SeedModuleRoles();
+//app.SeedModuleRoles();
 
-app.StartTasks();
+//app.StartTasks();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

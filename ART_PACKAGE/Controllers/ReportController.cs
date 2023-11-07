@@ -237,7 +237,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("[controller]/[action]")]
         public async Task<IActionResult> SaveReport([FromBody] CustumReportViewmodel model)
         {
             ArtSavedCustomReport report = new()

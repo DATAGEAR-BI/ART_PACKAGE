@@ -56,6 +56,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            if (modulesToApply is null)
+            {
+                _ = services.AddScoped<IDbService, DBService>();
+                return services;
+            }
             if (modulesToApply.Contains("SEG"))
             {
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));

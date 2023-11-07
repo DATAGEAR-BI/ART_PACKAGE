@@ -73,6 +73,11 @@
         "dist/mdc.ripple.min.css.map",
         "dist/mdc.ripple.min.js"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap-icons@1.11.1",
+      "destination": "wwwroot/lib/bootstrap-icons"
     }
   ]
 }

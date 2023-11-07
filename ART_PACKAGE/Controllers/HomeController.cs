@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Helpers.DBService;
-using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Models;
 using Data.Data;
@@ -27,10 +26,8 @@ namespace ART_PACKAGE.Controllers
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
         private readonly MailConfiguration mailConfig;
-        private readonly IMailSender _mailSender;
-        private readonly ITaskPerformer taskPerformer;
 
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, IMailSender mailSender, ITaskPerformer taskPerformer)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig)
         {
 
             _logger = logger;
@@ -58,8 +55,7 @@ namespace ART_PACKAGE.Controllers
             }
 
             this.mailConfig = mailConfig.Value;
-            _mailSender = mailSender;
-            this.taskPerformer = taskPerformer;
+
         }
 
 

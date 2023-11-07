@@ -116,7 +116,11 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                         .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
             List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
             RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            if (modules is null)
+            {
 
+                return;
+            }
             foreach (string module in modules)
             {
                 IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());

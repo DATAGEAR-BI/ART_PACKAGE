@@ -9,80 +9,113 @@
 <h1>Add Task</h1>
 
 <form id="AddTaskForm">
-    <div class="row" style="margin-bottom:2%">
-        <div class="col-xs-6 col-md-6 col-sm-6">
-            <label for="taskName">Task Name (must be unique)</label>
-            <input id="taskName" type="text" class="form-control" placeholder="Task Name" required>
-        </div>
-        <div class="col-xs-6 col-md-6 col-sm-6">
-            <label for="reportsDropDown">Report Name</label>
-            <select id="reportsDropDown" class="selectpicker" style="width:100%" data-live-search="true" required>
-       
-            </select>
-        </div>
-        
-    </div>
-    <div class="row" style="margin-bottom:2%">
-        <div class="col-xs-12 col-md-12 col-sm-12">
-            <label for="taskDesc">Task Descripition</label>
-            <textarea id="taskDesc" type="text" class="form-control" placeholder="Task Description"></textarea>
-        </div>
-    </div> 
-    <div class="row" style="margin-bottom:2%" >
-        <div class="col-xs-12 col-md-12 col-sm-12">
-            <art-qbuilder id="paraBuilder"></art-qbuilder>
-        </div>
-    </div>  
-    
-    <div class="row" style="margin-bottom:2%">
-        <div class="col-xs-2 col-md-2 col-sm-2">
-            <label for="periodDropDown">Task Period</label>
-            <select id="periodDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<TaskPeriod>()" required>
-                <option value="-1">Select A Period</option>
-            </select>
-        </div> 
-        <div id="monthDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-            <label for="monthDropDown">Month</label>
-            <select id="monthDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<MonthsOfYear>()">
-                <option value="-1">Select A Month of Year</option>
-            </select>
-        </div>
 
-        <div id="weekDayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-            <label for="weekDayDropDown">Week Day</label>
-            <select id="weekDayDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<DayOfWeek>()">
-                <option value="-1">Select A Day of Week</option>
-            </select>
-        </div> 
-        <div id="dayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-            <label for="dayInput">Day</label>
-            <input id="dayInput" type="number" max="31" min="1" class="form-control">
-        </div>
-        <div id="hourDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-            <label for="hourInput">Hour</label>
-            <input id="hourInput"  type="number" max="23" min="0" class="form-control">
-        </div>
-        <div id="minuteDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-            <label for="minutInput">Minute</label>
-            <input id="minutInput"  type="number" max="59" min="0" class="form-control">
-        </div>
-    </div>
-    <div class="row" style="display:flex;align-items:center">
-        <div class="col-xs-2 col-md-2 col-sm-2">
-            <div style="display:flex;justify-content:space-between">
-                <label for="emailSwitch-art-switch">Send To Mails</label>
-                <art-switch id="emailSwitch"></art-switch>
-            </div>  
-            <div style ="display:flex;justify-content:space-between">
-                <label for="serverSwitch-art-switch">Save on Server</label>
-                <art-switch id="serverSwitch"></art-switch>
+    <ul class="icon-top nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#movies">
+                <i class="bi bi-info-circle"></i> Task Info
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#music">
+                <i class="bi bi-alarm"></i> Task Time
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button type="button"  class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#pictures">
+                <i class="bi bi-gear"></i> Task Configuration
+            </button>
+        </li> 
+    </ul>
+    <!-- Tab Panes -->
+    <div class="tab-content">
+        <div class="tab-pane container-fluid fade" role="tabpanel" id="movies">
+              <div class="row" style="margin-bottom:2%">
+                <div class="col-xs-6 col-md-6 col-sm-6">
+                    <label for="taskName">Task Name (must be unique)</label>
+                    <input id="taskName" type="text" class="form-control" placeholder="Task Name" required>
+                </div>
+                <div class="col-xs-6 col-md-6 col-sm-6">
+                    <label for="reportsDropDown">Report Name</label>
+                    <select id="reportsDropDown" class="selectpicker" style="width:100%" data-live-search="true" required>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row" style="margin-bottom:2%">
+                <div class="col-xs-12 col-md-12 col-sm-12">
+                    <label for="taskDesc">Task Descripition</label>
+                    <textarea id="taskDesc" type="text" class="form-control" placeholder="Task Description"></textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:2%">
+                <div class="col-xs-12 col-md-12 col-sm-12">
+                    <art-qbuilder id="paraBuilder"></art-qbuilder>
+                </div>
             </div>
         </div>
-        <div class="col-xs-10 col-md-10 col-sm-10 disabledDiv" id="mailsDiv">
-            <email-input id="mailsInput"></email-input>
+        <div class="tab-pane container-fluid active" role="tabpanel" id="music">
+            <div class="row" style="margin-bottom:2%">
+                <div class="col-xs-2 col-md-2 col-sm-2">
+                    <label for="periodDropDown">Task Period</label>
+                    <select id="periodDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<TaskPeriod>()" required>
+                        <option value="-1">Select A Period</option>
+                    </select>
+                </div>
+                <div id="monthDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
+                    <label for="monthDropDown">Month</label>
+                    <select id="monthDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<MonthsOfYear>()">
+                        <option value="-1">Select A Month of Year</option>
+                    </select>
+                </div>
+
+                <div id="weekDayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
+                    <label for="weekDayDropDown">Week Day</label>
+                    <select id="weekDayDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<DayOfWeek>()">
+                        <option value="-1">Select A Day of Week</option>
+                    </select>
+                </div>
+                <div id="dayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
+                    <label for="dayInput">Day</label>
+                    <input id="dayInput" type="number" max="31" min="1" class="form-control">
+                </div>
+                <div id="hourDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
+                    <label for="hourInput">Hour</label>
+                    <input id="hourInput" type="number" max="23" min="0" class="form-control">
+                </div>
+                <div id="minuteDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
+                    <label for="minutInput">Minute</label>
+                    <input id="minutInput" type="number" max="59" min="0" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container-fluid fade" role="tabpanel" id="pictures">
+            <div class="row" style="display:flex;align-items:center">
+                <div class="col-xs-2 col-md-2 col-sm-2">
+                    <div style="display:flex;justify-content:space-between">
+                        <label for="emailSwitch-art-switch">Send To Mails</label>
+                        <art-switch id="emailSwitch"></art-switch>
+                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <label for="serverSwitch-art-switch">Save on Server</label>
+                        <art-switch id="serverSwitch"></art-switch>
+                    </div>
+                </div>
+                <div class="col-xs-10 col-md-10 col-sm-10 disabledDiv" id="mailsDiv">
+                    <email-input id="mailsInput"></email-input>
+                </div>
+            </div>
         </div>
     </div>
 
+
+
+
+
+  
+   
+    
+ 
 
     <div class="row" style="margin-top:2%">
         <a class="btn btn-link col-xs-2 col-md-2 col-sm-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span> &#160; &#160; back</a>

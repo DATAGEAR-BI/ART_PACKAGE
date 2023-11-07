@@ -195,7 +195,7 @@ form.onsubmit = async (e) => {
     var charts = addedCharts.map(x => ({
 
         Title: x.title,
-        Type: x.type,
+        Type: parseInt(x.type),
         Column: x.column
 
     }));
@@ -204,13 +204,17 @@ form.onsubmit = async (e) => {
     var model = {
         Table: table.value,
         ObjectType: table.dataset.type,
-        Columns: columns.map(x=>x.value),
+        Columns: columns.map(x => ({
+            Name: x.value,
+            SqlDataType: x.dataset.type,
+            IsNullable: x.dataset.isnullable,
+        })),
         Charts: charts,
         Description: Desc,
         Title: Title,
         Schema: parseInt(ShcemaSelect.value.value)
     }
-
+    console.log(model);
     var d = await Fetch("/report/SaveReport", model, "POST").then(x => {
 
         window.location = "/report/myreports";

@@ -1,5 +1,11 @@
 import { parametersConfig } from "./TaskParametersSettings.js"
 import { dateSetting, multiSetting } from "../Components/QueryBuilder/QueryBuilderPlugins.js"
+
+var tabs = document.querySelectorAll('.nav-tabs');
+for (const [, value] of Object.entries(tabs)) {
+    var tabInstance = materialstyle.MaterialTab.getOrCreateInstance(value)
+    tabInstance.redraw();
+}
 const period = {
 
     0: "never",
