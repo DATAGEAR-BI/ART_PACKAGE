@@ -1,43 +1,42 @@
+
 class Switch extends HTMLElement {
 
+    switchInput = document.createElement("input")
+    switchLable = document.createElement("label")
     constructor() {
         super();
-        var switchStyle = document.createElement("link");
-        switchStyle.rel = "stylesheet";
-        switchStyle.href = "/js/Components/Switch/Switch.css";
-
-
+        this.classList.add("form-check", "form-switch");
+     
         var isChecked = this.dataset.checked;
-        var switchLable = document.createElement("label");
-        switchLable.className = "switch col-6-xs";
 
-        var switchInput = document.createElement("input");
-        switchInput.type = "checkbox";
-        switchInput.checked = isChecked;
-        switchInput.id = this.id + "-" + "art-switch";
+        this.switchLable.classList.add("form-check-label");
+        this.switchLable.for = this.id + "-" + "art-switch";
+
+       
+        this.switchInput.type = "checkbox";
+        this.switchInput.classList.add("form-check-input");
+        this.switchInput.checked = isChecked;
+        this.switchInput.id = this.id + "-" + "art-switch";
 
 
-        var switchSpan = document.createElement("span");
-        switchSpan.className = "slider round";
-        document.head.appendChild(switchStyle);
-        switchLable.appendChild(switchInput);
-        switchLable.appendChild(switchSpan);
-        this.appendChild(switchLable);
+  
+        this.appendChild(this.switchInput);
+        this.appendChild(this.switchLable);
     }
 
     set onswitchchanged(onchange) {
-        document.getElementById(`${this.id}-art-switch`).onchange = (e) => onchange(e);
+        this.switchInput.onchange = (e) => onchange(e);
     }
 
     check() {
-        document.getElementById(`${this.id}-art-switch`).checked = true;
+        this.switchInput.checked = true;
     }
     unCheck() {
-        document.getElementById(`${this.id}-art-switch`).checked = false;
+        this.switchInput.checked = false;
     }
 
     toggle() {
-        var isChecked = document.getElementById(`${this.id}-art-switch`).checked;
+        var isChecked = this.switchInput.checked;
         if (isChecked)
             this.unCheck();
         else
@@ -45,8 +44,9 @@ class Switch extends HTMLElement {
     }
 
     get status() {
-        return document.getElementById(`${this.id}-art-switch`).checked;
+        return this.switchInput.checked;
     }
 }
+
 
 customElements.define("art-switch", Switch);

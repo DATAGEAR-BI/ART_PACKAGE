@@ -3,7 +3,7 @@ class TextInput extends HTMLElement {
     label = document.createElement("label");
     constructor() {
         super();
-
+        var attrs = Object.keys(this.dataset);
         this.classList.add("form-floating","form-floating-outlined");
         this.input.classList.add("form-control");
         this.input.id = this.id + "-input";
@@ -15,6 +15,8 @@ class TextInput extends HTMLElement {
         this.label.innerText = this.dataset.title;
         this.label.for = this.id + "-input";
 
+        if (attrs.includes("disabled"))
+            this.input.disabled = true;
 
         this.appendChild(this.input);
         this.appendChild(this.label);
@@ -34,6 +36,35 @@ class TextInput extends HTMLElement {
 
     get value() {
         return this.input.value;
+    }
+
+
+    enable() {
+        this.input.disabled = false;
+        this.refresh()
+    }
+
+    disable() {
+        this.input.disabled = true;
+        this.refresh()
+    }
+
+    refresh() {
+
+        var textFields = this.querySelectorAll(`#${this.id}-input`);
+        for (const [, value] of Object.entries(textFields)) {
+            var textFieldInstance = materialstyle.TextField.getOrCreateInstance(value)
+            textFieldInstance.redraw();
+        }
+    }
+
+    toggleDisable() {
+        if (this.input.disabled)
+            this.enable()
+        else
+            this.disable()
+
+        this.refresh()
     }
 }
 

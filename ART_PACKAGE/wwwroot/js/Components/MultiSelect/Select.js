@@ -29,6 +29,8 @@
         this.select.id = id + "-Select";
         this.select.classList.add("form-select");
 
+        if (attrs.includes("disabled"))
+            this.select.disabled = true;
 
         this.label.innerText = this.dataset.title;
 
@@ -78,6 +80,40 @@
             return this.select.options[this.select.selectedIndex];
 
         return [...this.select.options].filter(x => x.selected && x.value != "");
+    }
+
+    enable() {
+        this.select.disabled = false;
+        this.querySelector('button[role=combobox]').disabled = false;
+        this.refresh()
+    }
+
+    disable() {
+        this.select.disabled = true;
+        this.querySelector('button[role=combobox]').disabled = true;
+        this.refresh()
+    }
+
+    refresh() {
+ 
+        var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
+        for (const [, value] of Object.entries(selectnodelist)) {
+            var selectFieldInstance = materialstyle.SelectField.getOrCreateInstance(value)
+            selectFieldInstance.redraw()
+        }
+    }
+
+    toggleDisable() {
+        if (this.select.disabled)
+            this.enable()
+        else
+            this.disable()
+
+        this.refresh()
+    }
+
+    delect() {
+        [...this.select.options].forEach(x => x.selected = false);
     }
 }
 

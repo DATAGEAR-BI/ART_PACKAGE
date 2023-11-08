@@ -19,6 +19,16 @@ export const parametersConfig = [
                 }
             },
             {
+                "paraName": "Test",
+                "paraDisplayName": "Test Drop Url",
+                "isMulti": true,
+                "type": "string",
+                "values": {
+                    "static": null,
+                    "url": "/home/TestDrop"
+                }
+            },
+            {
                 "paraName": "CreateDate",
                 "paraDisplayName": "Create Date",
                 "type": "date",

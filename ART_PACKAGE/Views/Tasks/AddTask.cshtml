@@ -3,106 +3,114 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/css/customreport.css" rel="stylesheet" />
+<style>
+    .disabledDiv {
+        pointer-events: none;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+</style>
 
-@*<link href="~/lib/mdb5/css/mdb.min.css" rel="stylesheet" />*@
+
 <h1>Add Task</h1>
 
 <form id="AddTaskForm">
 
+
+
+    <div class="row m-2" >
+        <a class="btn btn-link col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
+        <div class="col-8"></div>
+        <button type="submit" class="btn btn-primary col-2">Add</button>
+    </div>
+
+   
     <ul class="icon-top nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item" role="presentation">
-            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#movies">
+            <button type="button" class="nav-link " data-bs-toggle="tab" role="tab" data-bs-target="#TaskName">
                 <i class="bi bi-info-circle"></i> Task Info
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button type="button" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#music">
+            <button type="button" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#TaskTime">
                 <i class="bi bi-alarm"></i> Task Time
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button type="button"  class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#pictures">
+            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#TaskConfiguratio">
                 <i class="bi bi-gear"></i> Task Configuration
             </button>
         </li> 
+       
     </ul>
     <!-- Tab Panes -->
     <div class="tab-content">
-        <div class="tab-pane container-fluid fade" role="tabpanel" id="movies">
-              <div class="row" style="margin-bottom:2%">
-                <div class="col-xs-6 col-md-6 col-sm-6">
-                    <label for="taskName">Task Name (must be unique)</label>
-                    <input id="taskName" type="text" class="form-control" placeholder="Task Name" required>
-                </div>
-                <div class="col-xs-6 col-md-6 col-sm-6">
-                    <label for="reportsDropDown">Report Name</label>
-                    <select id="reportsDropDown" class="selectpicker" style="width:100%" data-live-search="true" required>
-                    </select>
-                </div>
+        <div class="tab-pane container-fluid " role="tabpanel" id="TaskName">
+              <div class="row mt-5">
 
-            </div>
-            <div class="row" style="margin-bottom:2%">
-                <div class="col-xs-12 col-md-12 col-sm-12">
-                    <label for="taskDesc">Task Descripition</label>
-                    <textarea id="taskDesc" type="text" class="form-control" placeholder="Task Description"></textarea>
+                <div class="col-6">
+                    <m-input id="taskName"  data-palceholder="Task Name" data-title="Task Name"></m-input>
+                </div> 
+                <div class="col-6">
+                    <m-select id="reportsDropDown"  data-searchable data-title="Report" style="width:100%"></m-select>
                 </div>
             </div>
-            <div class="row" style="margin-bottom:2%">
-                <div class="col-xs-12 col-md-12 col-sm-12">
-                    <art-qbuilder id="paraBuilder"></art-qbuilder>
-                </div>
+            <div class="row mt-2 ">
+                <m-areainput id="taskDesc" dat-palceholder="Task Description" data-title="Task Description"></m-areainput>
+            </div>
+           
+            <div class="row mt-2" >
+                <smart-query-builder id="querybuilder"></smart-query-builder>
             </div>
         </div>
-        <div class="tab-pane container-fluid active" role="tabpanel" id="music">
-            <div class="row" style="margin-bottom:2%">
-                <div class="col-xs-2 col-md-2 col-sm-2">
-                    <label for="periodDropDown">Task Period</label>
-                    <select id="periodDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<TaskPeriod>()" required>
-                        <option value="-1">Select A Period</option>
-                    </select>
-                </div>
-                <div id="monthDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-                    <label for="monthDropDown">Month</label>
-                    <select id="monthDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<MonthsOfYear>()">
-                        <option value="-1">Select A Month of Year</option>
-                    </select>
-                </div>
+        <div class="tab-pane container-fluid active" role="tabpanel" id="TaskTime">
 
-                <div id="weekDayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-                    <label for="weekDayDropDown">Week Day</label>
-                    <select id="weekDayDropDown" class="selectpicker" style="width:100%" data-live-search="true" asp-items="Html.GetEnumValuesWithDisplayName<DayOfWeek>()">
-                        <option value="-1">Select A Day of Week</option>
-                    </select>
-                </div>
-                <div id="dayDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-                    <label for="dayInput">Day</label>
-                    <input id="dayInput" type="number" max="31" min="1" class="form-control">
-                </div>
-                <div id="hourDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-                    <label for="hourInput">Hour</label>
-                    <input id="hourInput" type="number" max="23" min="0" class="form-control">
-                </div>
-                <div id="minuteDiv" class="col-xs-2 col-md-2 col-sm-2 disabledDiv">
-                    <label for="minutInput">Minute</label>
-                    <input id="minutInput" type="number" max="59" min="0" class="form-control">
+
+            <div class="row mt-5">
+                <div class="col-4">
+                    <m-select id="periodDropDown" data-searchable data-title="Period" style="width:100%"></m-select>
+                </div> 
+                <div class="col-4">
+                    <m-select id="monthDropDown" data-searchable data-title="Month" style="width:100%" data-disabled></m-select>
+                </div> 
+                <div class="col-4">
+                    <m-select id="weekDayDropDown" data-searchable data-title="Week Day" style="width:100%" data-disabled></m-select>
                 </div>
             </div>
+
+
+
+            <div class="row mt-5">
+                <div class="col-6 d-flex justify-content-center">
+                    <smart-calendar id="calendar" disabled></smart-calendar>
+                </div>
+                <div class="col-6">
+                    <smart-time-picker id="timepicker" view="landscape" disabled></smart-time-picker>
+                </div>
+            </div>
+    
         </div>
-        <div class="tab-pane container-fluid fade" role="tabpanel" id="pictures">
-            <div class="row" style="display:flex;align-items:center">
-                <div class="col-xs-2 col-md-2 col-sm-2">
+        <div class="tab-pane container-fluid fade" role="tabpanel" id="TaskConfiguratio">
+            <div class="row mt-5" style="display:flex;align-items:center">
+                <div class="col-2">
                     <div style="display:flex;justify-content:space-between">
                         <label for="emailSwitch-art-switch">Send To Mails</label>
                         <art-switch id="emailSwitch"></art-switch>
                     </div>
+                </div>
+                <div class="col-10 disabledDiv" id="mailsDiv">
+                    <email-input id="mailsInput"></email-input>
+                </div>
+            </div>
+            <div class="row mt-5" style="display:flex;align-items:center">
+                <div class="col-2">
                     <div style="display:flex;justify-content:space-between">
                         <label for="serverSwitch-art-switch">Save on Server</label>
                         <art-switch id="serverSwitch"></art-switch>
                     </div>
                 </div>
-                <div class="col-xs-10 col-md-10 col-sm-10 disabledDiv" id="mailsDiv">
-                    <email-input id="mailsInput"></email-input>
+                <div class="col-10 d-flex">
+                    <m-input id="filePath" data-palceholder="Path" data-title="Path" data-disabled></m-input>
                 </div>
             </div>
         </div>
@@ -117,34 +125,22 @@
     
  
 
-    <div class="row" style="margin-top:2%">
-        <a class="btn btn-link col-xs-2 col-md-2 col-sm-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span> &#160; &#160; back</a>
-        <div class="col-xs-8 col-md-8 col-sm-8"></div>
-        <button type="submit" class="btn btn-primary col-xs-1 col-md-1 col-sm-1">Add</button>
-    </div>
     
 
    
 </form>
 
 @section scripts {
-    
-    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
-    <link href="~/lib/jquery-querybuilder/css/query-builder.dark.css" rel="stylesheet" />
-    <link href="~/lib/jquery-querybuilder/css/query-builder.dark.min.css" rel="stylesheet" />
-    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
-    <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
-    <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
-    <script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
-    <script src="~/js/components/querybuilder/querybuilder.js"></script>
+
+    <script src="~/lib/smartcomponents/source/modules/smart.timepicker.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.calendar.js"></script>
     <script src="~/lib/emailinput/emails-input.js"></script>
     <script src="~/js/components/switch/switch.js"></script>
-    <script type="module" defer src="~/js/components/emailinput/emailinput.js"></script>
+    <script src="~/js/components/multiselect/select.js"></script>
+    <script src="~/js/components/textinput/textinput.js"></script>
+    <script src="~/js/components/textareainput/textareainput.js"></script>
+    <script type="module"  src="~/js/components/emailinput/emailinput.js"></script>
     <script type="module" defer src="~/js/taskschedularscripts/addtask.js"></script>
 
 }

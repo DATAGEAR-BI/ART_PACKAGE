@@ -1,11 +1,7 @@
 import { parametersConfig } from "./TaskParametersSettings.js"
 import { dateSetting, multiSetting } from "../Components/QueryBuilder/QueryBuilderPlugins.js"
 
-var tabs = document.querySelectorAll('.nav-tabs');
-for (const [, value] of Object.entries(tabs)) {
-    var tabInstance = materialstyle.MaterialTab.getOrCreateInstance(value)
-    tabInstance.redraw();
-}
+
 const period = {
 
     0: "never",
@@ -18,68 +14,62 @@ const period = {
 
 }
 
-function multiSelectSetting(url) {
-    var vals = [];
 
 
-    $.ajax({
-        url: url,
-        type: "GET",
-        async: false,
-        dataType: "json",
-        success: function (data) {
-            vals = data;
-        }
-    });
-
-    return vals;
+var tabs = document.querySelectorAll('.nav-tabs');
+for (const [, value] of Object.entries(tabs)) {
+    var tabInstance = materialstyle.MaterialTab.getOrCreateInstance(value)
+    tabInstance.redraw();
 }
 
+
+
 var taskNameInput = document.getElementById("taskName");
+var filePath = document.getElementById("filePath");
 var taskDescInput = document.getElementById("taskDesc");
 var reportsDropDown = document.getElementById("reportsDropDown");
-var paramtersBuilder = document.getElementById('paraBuilder');
 var periodDorpDown = document.getElementById("periodDropDown");
 var monthDropDown = document.getElementById("monthDropDown");
 var weekDayDropDown = document.getElementById("weekDayDropDown");
-var dayInput = document.getElementById("dayInput");
-var hourInput = document.getElementById("hourInput");
-var minutInput = document.getElementById("minutInput");
-var mailsInput = document.getElementById("mailsInput");
+var calender = document.querySelector("#calendar");
+var timePicker = document.querySelector("#timepicker");
 var mailSwitch = document.getElementById("emailSwitch");
 var serverSwitch = document.getElementById("serverSwitch");
 
-//period Genration divs
-var monthDiv = document.getElementById("monthDiv");
-var weekDayDiv = document.getElementById("weekDayDiv");
-var dayDiv = document.getElementById("dayDiv");
-var hourDiv = document.getElementById("hourDiv");
-var minuteDiv = document.getElementById("minuteDiv");
-var mailsDiv = document.getElementById("mailsDiv");
+Smart('#querybuilder', class {
+    get properties() {
+        return {
+            allowDrag: true,
+            fields: [
+            ]
+        }
+    }
+});
+Smart('#calendar', class {
+    get properties() {
+        return {}
+    }
+});
+Smart('#timepicker', class {
+    get properties() {
+        return { value : "12:00"}
+    }
+});
+Smart('#fileupload', class {
+    get properties() {
+        return {}
+    }
+});
+
+const querybuilder = document.querySelector('#querybuilder');
 
 
 
 
 
-var form = document.getElementById("AddTaskForm");
 
 
 
-var disablIinputsDict = {
-    hourly: [minuteDiv],
-    daily: [minuteDiv, hourDiv],
-    weekly: [minuteDiv, hourDiv, weekDayDiv],
-    monthly: [minuteDiv, hourDiv, dayDiv],
-    yearly: [minuteDiv, hourDiv, dayDiv, monthDiv]
-}
-
-
-
-//add options
-reportsDropDown.innerHTML = '';
-var selectOpt = document.createElement('option');
-selectOpt.text = "Select A Report";
-selectOpt.value = "-1";
 
 var opt = document.createElement('option');
 opt.text = "Alert Details";
@@ -87,14 +77,63 @@ opt.value = "AlertDetails";
 var Topt = document.createElement('option');
 Topt.text = "Alert Details Test";
 Topt.value = "AlertDetailsTest";
-reportsDropDown.appendChild(selectOpt);
-reportsDropDown.appendChild(opt);
-reportsDropDown.appendChild(Topt);
-$(reportsDropDown).selectpicker('refresh');
+
+reportsDropDown.intialize([document.createElement("option"), opt, Topt]);
+
+fetch("/Tasks/GetTaskPeriods").then(x => x.json()).then(data => {
+    var options = [...data].map(o => {
+        var opt = document.createElement("option");
+        opt.value = o.value;
+        opt.innerText = o.text;
+        return opt;
+    });
+    periodDorpDown.intialize([...options]);
+
+});
+fetch("/Tasks/GetMonthes").then(x => x.json()).then(data => {
+    var options = [...data].map(o => {
+        var opt = document.createElement("option");
+        opt.value = o.value;
+        opt.innerText = o.text;
+        return opt;
+    });
+    monthDropDown.intialize([...options]);
+
+});
+fetch("/Tasks/GetDays").then(x => x.json()).then(data => {
+    var options = [...data].map(o => {
+        var opt = document.createElement("option");
+        opt.value = o.value;
+        opt.innerText = o.text;
+        return opt;
+    });
+    weekDayDropDown.intialize([...options]);
+
+});
+taskNameInput.intialize();
+taskDescInput.intialize();
+filePath.intialize();
 
 
+var mailsDiv = document.getElementById("mailsDiv");
+
+
+
+
+
+var form = document.getElementById("AddTaskForm");
 form.onsubmit = async (e) => {
     e.preventDefault();
+
+    console.log(calender.selectedDates);
+
+
+
+
+
+
+    return;
+
     var report = reportsDropDown.value;
     if (report == "-1") {
         toastObj.icon = 'error';
@@ -192,43 +231,61 @@ form.onsubmit = async (e) => {
 
 }
 
-reportsDropDown.onchange = (e) => {
-    if (e.target.value === "-1") {
-        paramtersBuilder.style.display = "none";
-        paramtersBuilder.reset();
-        return;
-    }
+reportsDropDown.onSelectChange = (e) => {
 
-    paramtersBuilder.style.display = "block";
-    var parametrs = parametersConfig.find(x => x.reportName == e.target.value).parameters;
+    var report = reportsDropDown.value.value;
+    var parametrs = parametersConfig.find(x => x.reportName == report).parameters;
     var filters = mapParamtersToFilters(parametrs);
-    if (!paramtersBuilder.isIntialzed) {
-        paramtersBuilder.filtersInit(filters);
-        console.log(paramtersBuilder.isIntialzed);
-    }
-    else
-        paramtersBuilder.updateFilters(filters);
+    querybuilder.fields = filters;
 
 
 }
 
+monthDropDown.onSelectChange = (e) => {
+    var date = new Date();
+    date.setMonth(parseInt(monthDropDown.value.value) - 1);
+    calender.selectedDates = [date];
+}
+
 periodDorpDown.onchange = (e) => {
 
-    var val = parseInt(e.target.value);
+    var period = periodDorpDown.value.value;
 
-    if (!monthDiv.classList.contains("disabledDiv"))
-        monthDiv.classList.add("disabledDiv");
-    if (!weekDayDiv.classList.contains("disabledDiv"))
-        weekDayDiv.classList.add("disabledDiv");
-    if (!dayDiv.classList.contains("disabledDiv"))
-        dayDiv.classList.add("disabledDiv");
-    if (!hourDiv.classList.contains("disabledDiv"))
-        hourDiv.classList.add("disabledDiv");
-    if (!minuteDiv.classList.contains("disabledDiv"))
-        minuteDiv.classList.add("disabledDiv");
+    var val = parseInt(period);
 
-    if (val !== -1)
-        disablIinputsDict[period[val]].forEach(x => x.classList.remove("disabledDiv"));
+    timePicker.disabled = true;
+    calender.disabled = true;
+    weekDayDropDown.disable();
+    weekDayDropDown.deelect();
+    monthDropDown.disable();
+    monthDropDown.delect();
+  
+
+    if (val == 2 || val == 3) {
+        timePicker.disabled = false;
+        timepicker.selection = val == 2 ? 'minute' : 'hour';
+    }
+
+    if (val == 4) {
+        timePicker.disabled = false;
+        weekDayDropDown.enable();
+    }
+
+    if (val == 5) {
+        timePicker.disabled = false;
+        calender.disabled = false;
+        calender.selectedDates = [new Date()]
+    }
+
+    if (val == 6) {
+        timePicker.disabled = false;
+        calender.disabled = false;
+        monthDropDown.enable();
+        calender.selectedDates = [new Date()];
+    }
+
+    //if (val !== -1)
+    //    disablIinputsDict[period[val]].forEach(x => x.classList.remove("disabledDiv"));
 }
 
 mailSwitch.onswitchchanged = (e) => {
@@ -239,26 +296,44 @@ mailSwitch.onswitchchanged = (e) => {
         if (!mailsDiv.classList.contains("disabledDiv"))
             mailsDiv.classList.add("disabledDiv")
     }
-};
+}
+
+serverSwitch.onswitchchanged = (e) => {
+    if (serverSwitch.status) {
+        filePath.enable();
+    } else {
+        filePath.disable();
+    }
+}
 
 function mapParamtersToFilters(paramters) {
 
     var filters = [...paramters].map(p => {
-        var filter = { id: p.paraName, field: p.paraName, label: p.paraDisplayName, type: p.type };
-        if (p.type === "date")
-            filter = { ...filter, ...dateSetting };
-
+        var field = { label: p.paraDisplayName, dataField: p.paraName, dataType: p.type }
 
         if (p.isMulti) {
-            filter = { ...filter, ...multiSetting };
-            if (p.values.static)
-                filter.values = p.values.static;
+            var vals = [];
+            if (p.values.url) {
+                $.ajax({
+                    url: p.values.url,
+                    type: "GET",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        vals = data;
+                    }
+                });
+            }
             else
-                filter.values = multiSelectSetting(p.values.url);
-        }
+                vals = p.values.static;
 
-        return filter
+            field.lookup = {
+                dataSource: vals,
+            }
+        }
+        return field;
     });
+    console.log(filters);
     return filters;
 }
 

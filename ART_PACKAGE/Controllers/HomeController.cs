@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        public IActionResult SendTestMail()
+        public IActionResult TestDrop()
         {
             //Message message = new(new List<string> { "khalilizzlam@gmail.com" }, "Test email", "This a test mail sent from art package.");
 
@@ -68,7 +68,7 @@ namespace ART_PACKAGE.Controllers
             //bool sent = _mailSender.SendEmail(message);
 
             //taskPerformer.PerformTask();
-            return Ok();
+            return Ok(new List<string> { "islam", "khalil" });
         }
 
 

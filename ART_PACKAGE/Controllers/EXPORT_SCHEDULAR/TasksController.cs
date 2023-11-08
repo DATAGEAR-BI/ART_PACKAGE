@@ -1,12 +1,15 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Data.Attributes;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
@@ -35,6 +38,79 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         {
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult GetMonthes()
+        {
+            IEnumerable<SelectListItem> result = typeof(MonthsOfYear).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(MonthsOfYear), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
+
+            });
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetDays()
+        {
+            IEnumerable<SelectListItem> result = typeof(DayOfWeek).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(DayOfWeek), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
+
+            });
+            return Ok(result);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult GetTaskPeriods()
+        {
+            IEnumerable<SelectListItem> result = typeof(TaskPeriod).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(TaskPeriod), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
+
+            });
+            return Ok(result);
+
+
+        }
+
+
+
 
 
         [HttpGet("[controller]/[action]/{taskId}")]
