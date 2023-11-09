@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
@@ -116,7 +118,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         [HttpGet("[controller]/[action]/{taskId}")]
         public IActionResult EditTask(int taskId)
         {
-            ExportTask? task = _context.ExportsTasks.Include(x => x.Mails).Include(x => x.Parameters).FirstOrDefault(x => x.Id == taskId);
+            ExportTask? task = _context.ExportsTasks.Include(x => x.Mails).FirstOrDefault(x => x.Id == taskId);
 
             ExportTaskDto taskDto = new()
             {
@@ -130,12 +132,72 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Minute = task.Minute,
                 Month = task.Month,
                 Name = task.Name,
-                Parameters = task.Parameters.GroupBy(x => new { x.ParameterName, x.Operator }).Select(x => new Parameter { Name = x.Key.ParameterName, Operator = x.Key.Operator, Value = x.Select(v => v.ParameterValue).ToList() }).ToList(),
+                //Parameters = task.Parameters.GroupBy(x => new { x.ParameterName, x.Operator }).Select(x => new Parameter { Name = x.Key.ParameterName, Operator = x.Key.Operator, Value = x.Select(v => v.ParameterValue).ToList() }).ToList(),
                 Period = task.Period,
                 ReportName = task.ReportName
             };
             return View(taskDto);
         }
+
+
+        [HttpPost]
+        public IActionResult TestFilter([FromBody] List<object> filters)
+        {
+
+            string str = GetFilter(filters);
+            return Ok();
+        }
+
+
+
+        private string GetFilter(List<object> filters)
+        {
+            StringBuilder sb = new();
+            foreach (object filter in filters)
+            {
+                try
+                {
+                    List<string> filterarr = ((JsonElement)filter).ToObject<List<string>>();
+                    sb.AppendJoin(" ", filterarr);
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        string op = ((JsonElement)filter).ToObject<string>();
+                        sb.Append(" " + op + " ");
+                    }
+                    catch (Exception)
+                    {
+
+                        sb.Append("(" + GetFilter(((JsonElement)filter).ToObject<List<object>>()) + ")");
+
+                    }
+
+
+                }
+
+            }
+
+            return sb.ToString();
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult IsValidPath([FromBody] string path)
+        {
+
+            if (!Path.IsPathRooted(path))
+                return BadRequest();
+
+            if (!Directory.Exists(path))
+                return BadRequest();
+
+            return Ok();
+        }
+
 
 
 
@@ -156,7 +218,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             {
                 Name = task.Name,
                 ReportName = task.ReportName,
-                Parameters = task.Parameters.SelectMany(x => x.Value.Select(v => new TaskParameters { Operator = x.Operator, ParameterName = x.Name, ParameterValue = v })).ToList(),
+                ParametersJson = task.Parameters,
                 IsMailed = task.IsMailed,
                 Mails = task.Mails.Select(x => new TaskMails { Mail = x }).ToList(),
                 Month = task.Month,

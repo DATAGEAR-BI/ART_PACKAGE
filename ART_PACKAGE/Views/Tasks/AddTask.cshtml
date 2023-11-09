@@ -54,14 +54,15 @@
                 <div class="col-6">
                     <m-select id="reportsDropDown"  data-searchable data-title="Report" style="width:100%"></m-select>
                 </div>
-            </div>
-            <div class="row mt-2 ">
-                <m-areainput id="taskDesc" dat-palceholder="Task Description" data-title="Task Description"></m-areainput>
+                <div class="col-12 mt-2 ">
+                    <m-areainput id="taskDesc" dat-palceholder="Task Description" data-title="Task Description"></m-areainput>
+                </div>
+
+                <div class="col-12 mt-2">
+                    <smart-query-builder id="querybuilder"></smart-query-builder>
+                </div>
             </div>
            
-            <div class="row mt-2" >
-                <smart-query-builder id="querybuilder"></smart-query-builder>
-            </div>
         </div>
         <div class="tab-pane container-fluid active" role="tabpanel" id="TaskTime">
 
@@ -82,7 +83,7 @@
 
             <div class="row mt-5">
                 <div class="col-6 d-flex justify-content-center">
-                    <smart-calendar id="calendar" disabled></smart-calendar>
+                    <smart-calendar id="calendar" selection-mode='one' disabled></smart-calendar>
                 </div>
                 <div class="col-6">
                     <smart-time-picker id="timepicker" view="landscape" disabled></smart-time-picker>

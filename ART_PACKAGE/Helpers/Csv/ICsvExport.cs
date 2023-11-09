@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.Csv
@@ -15,6 +14,6 @@ namespace ART_PACKAGE.Helpers.Csv
         public void ClearExportFolder(string reqId);
 
 
-        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, IEnumerable<TaskParameters> parameters) where TModel : class;
+        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db) where TModel : class;
     }
 }

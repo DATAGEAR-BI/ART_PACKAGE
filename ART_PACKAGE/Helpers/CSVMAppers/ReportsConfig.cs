@@ -24,7 +24,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                { nameof(TasksController).ToLower(), new ReportConfig {
                SkipList = new List<string>()
                 {
-                    nameof(ExportTask.Parameters),
                     nameof(ExportTask.Mails)
                 },
                DisplayNames = new Dictionary<string, DisplayNameAndFormat>

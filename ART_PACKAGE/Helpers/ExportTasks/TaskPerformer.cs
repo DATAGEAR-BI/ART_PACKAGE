@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Helpers.ExportTasks
             DbContext context = contextFactory.GetContextOf(task.ReportName);
 
 
-            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { context, task.Parameters });
+            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { context });
             List<DataFile> files = new();
             if (res is not null)
                 files.AddRange(await res);

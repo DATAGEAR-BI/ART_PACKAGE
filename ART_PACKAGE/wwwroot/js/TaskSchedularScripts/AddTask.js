@@ -35,16 +35,19 @@ var calender = document.querySelector("#calendar");
 var timePicker = document.querySelector("#timepicker");
 var mailSwitch = document.getElementById("emailSwitch");
 var serverSwitch = document.getElementById("serverSwitch");
+const querybuilder = document.querySelector('#querybuilder');
 
 Smart('#querybuilder', class {
     get properties() {
         return {
             allowDrag: true,
             fields: [
-            ]
-        }
+            ]}
     }
 });
+
+
+
 Smart('#calendar', class {
     get properties() {
         return {}
@@ -52,16 +55,11 @@ Smart('#calendar', class {
 });
 Smart('#timepicker', class {
     get properties() {
-        return { value : "12:00"}
-    }
-});
-Smart('#fileupload', class {
-    get properties() {
-        return {}
+        return { value: "12:00" }
     }
 });
 
-const querybuilder = document.querySelector('#querybuilder');
+
 
 
 
@@ -125,17 +123,8 @@ var form = document.getElementById("AddTaskForm");
 form.onsubmit = async (e) => {
     e.preventDefault();
 
-    console.log(calender.selectedDates);
-
-
-
-
-
-
-    return;
-
-    var report = reportsDropDown.value;
-    if (report == "-1") {
+    var report = reportsDropDown.value.value;
+    if (!report || report == "") {
         toastObj.icon = 'error';
         toastObj.text = "You should select a report first, select and try again";
         toastObj.heading = "Add new Task Status";
@@ -144,18 +133,26 @@ form.onsubmit = async (e) => {
     }
     var taskName = taskNameInput.value;
     var taskDesc = taskDescInput.value;
-    var paramters = paramtersBuilder.getRules().map(x => ({ Value: Array.isArray(x.value) ? x.value : [x.value], Name: x.id, Operator: x.operator }));
 
-    var taskExistsRes = await fetch(`/Tasks/IsTaskExists/${taskName}`);
-    if (!taskExistsRes.ok) {
+
+    if (!taskName || report == "") {
         toastObj.icon = 'error';
-        toastObj.text = "Task Name must be unique";
+        toastObj.text = "Give the task a name";
+        toastObj.heading = "Add new Task Status";
+        $.toast(toastObj);
+        return;
+    }
+
+    if (!querybuilder.value || querybuilder.value.length == 0) {
+        toastObj.icon = 'error';
+        toastObj.text = "you should select some filters";
         toastObj.heading = "Add new Task Status";
         $.toast(toastObj);
         return;
     }
 
     var period = parseInt(periodDorpDown.value);
+
     if (period === -1) {
         toastObj.icon = 'error';
         toastObj.text = "You should select a period for the task to be fired after";
@@ -163,68 +160,145 @@ form.onsubmit = async (e) => {
         $.toast(toastObj);
         return;
     }
-    var weekDay = parseInt(weekDayDropDown.value);
 
-    if (period === 4 && weekDay === -1) {
+
+    var taskTime = {
+        DayOfWeek: null,
+        Month: null,
+        Day: null,
+        Hour: null,
+        Minute: null,
+    };
+
+
+
+
+    var period = parseInt(periodDorpDown.value.value);
+
+    if (isNaN(period)) {
         toastObj.icon = 'error';
-        toastObj.text = "You should select a valid week day";
+        toastObj.text = "select a period";
         toastObj.heading = "Add new Task Status";
         $.toast(toastObj);
         return;
     }
-    var month = parseInt(monthDropDown.value);
+  
+   // var weekDay = parseInt(weekDayDropDown.value);
 
-    if (period === 6 && month === -1) {
+    if (period >= 2 ) {
+        var minute = timePicker.value.getMinutes();
+        taskTime.Minute = minute;
+        
+    }
+
+    if (period > 2) {
+        var hour = timePicker.value.getHours();
+        taskTime.Hour = hour;
+    }
+
+    if (period == 4) {
+        var weekDay = parseInt(weekDayDropDown.value.value);
+        if (isNaN(weekDay)) {
+            toastObj.icon = 'error';
+            toastObj.text = "select a week day";
+            toastObj.heading = "Add new Task Status";
+            $.toast(toastObj);
+            return;
+        }
+        taskTime.DayOfWeek = weekDay;
+    }
+
+    if (period >= 5) {
+        var day = calender.selectedDates[0].getDate();
+        taskTime.Day = day;
+    }
+
+
+    if (period == 6) {
+        var month = parseInt(monthDropDown.value.value);
+        if (isNaN(month)) {
+            toastObj.icon = 'error';
+            toastObj.text = "select a month";
+            toastObj.heading = "Add new Task Status";
+            $.toast(toastObj);
+            return;
+        }
+        taskTime.Month = month;
+    }
+    var mails = mailsInput.getMails();
+   
+    if (mailSwitch.status && (!mails || mails.length == 0)) {
         toastObj.icon = 'error';
-        toastObj.text = "You should select a valid month";
+        toastObj.text = "type at least one mail to send files to";
+        toastObj.heading = "Add new Task Status";
+        $.toast(toastObj);
+        return;
+    }
+    var path = filePath.value;
+    
+    if (serverSwitch.status && (!path || path == "")) {
+        toastObj.icon = 'error';
+        toastObj.text = "type the path you like the files to be at";
         toastObj.heading = "Add new Task Status";
         $.toast(toastObj);
         return;
     }
 
-    var day = parseInt(dayInput.value);
-    var hour = parseInt(hourInput.value);
-    var minute = parseInt(minutInput.value);
+    var validPathRes = await fetch("/Tasks/IsValidPath", {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify(path),
 
+    });
+
+
+    if (!validPathRes.ok) {
+        toastObj.icon = 'error';
+        toastObj.text = "the path you provided is not correct make sure you provide a valid path on the server";
+        toastObj.heading = "Add new Task Status";
+        $.toast(toastObj);
+        return;
+    }
 
     var reqBody = {
         Name: taskName,
         Description: taskDesc,
         ReportName: report,
         Period: period,
-        Month: month == -1 ? null : month,
-        Parameters: paramters,
-        DayOfWeek: weekDay == -1 ? null : weekDay,
-        Day: isNaN(day) ? null : day,
-        Hour: isNaN(hour) ? null : hour,
-        Minute: isNaN(minute) ? null : minute,
+        Parameters: JSON.stringify(querybuilder.value),
+        ...taskTime,
         IsMailed: mailSwitch.status,
-        Mails: mailSwitch.status ? mailsInput.getMails() : [],
-        IsSavedOnServer: serverSwitch.status
+        Mails: mailSwitch.status ? mails : [],
+        IsSavedOnServer: serverSwitch.status,
+        Path: serverSwitch.status ? path : null
     };
-    //console.log(paramtersBuilder.getSql());
-    //console.log(reqBody);
-
-    var addTaskRes = await fetch("/Tasks/AddTask", {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(reqBody),
-
-    });
-
-    if (!addTaskRes.ok) {
-        toastObj.icon = 'error';
-        toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
-        toastObj.heading = "Add new Task Status";
-        $.toast(toastObj);
-        return;
-    }
 
 
-    window.location.href = "/Tasks";
+    console.log(reqBody);
+
+    //var addTaskRes = await fetch("/Tasks/AddTask", {
+    //    headers: {
+    //        "Content-Type": "application/json",
+    //        "Accept": "application/json"
+    //    },
+    //    method: "POST",
+    //    body: JSON.stringify(reqBody),
+
+    //});
+
+    //if (!addTaskRes.ok) {
+    //    toastObj.icon = 'error';
+    //    toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
+    //    toastObj.heading = "Add new Task Status";
+    //    $.toast(toastObj);
+    //    return;
+    //}
+
+
+    //window.location.href = "/Tasks";
 
 
 
@@ -256,10 +330,10 @@ periodDorpDown.onchange = (e) => {
     timePicker.disabled = true;
     calender.disabled = true;
     weekDayDropDown.disable();
-    weekDayDropDown.deelect();
+    weekDayDropDown.delect();
     monthDropDown.disable();
     monthDropDown.delect();
-  
+
 
     if (val == 2 || val == 3) {
         timePicker.disabled = false;
@@ -333,7 +407,7 @@ function mapParamtersToFilters(paramters) {
         }
         return field;
     });
-    console.log(filters);
+ 
     return filters;
 }
 

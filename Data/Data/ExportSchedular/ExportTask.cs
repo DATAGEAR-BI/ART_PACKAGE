@@ -19,10 +19,11 @@
 
         public bool IsSavedOnServer { get; set; }
 
+        public string ParametersJson { get; set; } = null!;
 
         public bool Deleted { get; set; }
 
         public ICollection<TaskMails> Mails { get; set; } = null!;
-        public ICollection<TaskParameters> Parameters { get; set; } = null!;
+
     }
 }

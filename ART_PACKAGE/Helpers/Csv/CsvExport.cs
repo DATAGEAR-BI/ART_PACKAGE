@@ -3,7 +3,6 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Data.Data.ExportSchedular;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -262,12 +261,12 @@ namespace ART_PACKAGE.Helpers.Csv
             Directory.Delete(folderPath, true);
         }
 
-        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, IEnumerable<TaskParameters> parameters) where TModel : class
+        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db) where TModel : class
         {
             IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
             string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
             string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
-            string where = GenerateWhereClause<TModel>(db, parameters, tableData, dbtype);
+            string where = GenerateWhereClause<TModel>(db, tableData, dbtype);
             IQueryable<TModel> data = db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchemaQualifiedViewName()}
                                                        {where}");
             byte[][] bytes = await Task.WhenAll(ExportDataToCsv<TModel, TController>(data));
@@ -334,8 +333,9 @@ namespace ART_PACKAGE.Helpers.Csv
         }
 
 
-        private string GenerateWhereClause<TModel>(DbContext db, IEnumerable<TaskParameters> parameters, IEntityType? tableData, string dbtype)
+        private string GenerateWhereClause<TModel>(DbContext db, IEntityType? tableData, string dbtype)
         {
+            return string.Empty;
             //Dictionary<string, string> opMap = new()
             //{
             //        { "equal", "=" },
@@ -359,32 +359,32 @@ namespace ART_PACKAGE.Helpers.Csv
             //};
 
             List<string> whereClause = new();
-            var groupedParams = parameters.GroupBy(x => new { x.ParameterName, x.Operator });
-            foreach (var paramGroup in groupedParams)
-            {
-                IProperty prop = tableData.GetProperty(paramGroup.Key.ParameterName);
-                Type paramType = prop.GetType();
-                bool isNumber = paramType.IsNumericType();
-                bool isDate = paramType.Name == nameof(DateTime);
-                string values = string.Empty;
-                if (paramGroup.Key.Operator.Contains("in", StringComparison.OrdinalIgnoreCase))
-                {
-                    values = string.Join(",", groupedParams.SelectMany(x => x.Select(p => isNumber ? p.ParameterValue : $"'{p.ParameterValue}'")));
-                }
-                values = groupedParams.FirstOrDefault().FirstOrDefault().ParameterValue;
-                string columnName = prop.GetColumnName();
-                if (isNumber)
-                    whereClause.Add(string.Format(NumberOp[paramGroup.Key.Operator], values, columnName));
-                else if (isDate)
-                {
-                    string sql = DateOp[dbtype][paramGroup.Key.Operator];
-                    whereClause.Add(string.Format(sql, values, columnName));
-                }
-                else
-                    whereClause.Add(string.Format(StringOp[paramGroup.Key.Operator], values, columnName));
-            }
+            //var groupedParams = parameters.GroupBy(x => new { x.ParameterName, x.Operator });
+            //foreach (var paramGroup in groupedParams)
+            //{
+            //    IProperty prop = tableData.GetProperty(paramGroup.Key.ParameterName);
+            //    Type paramType = prop.GetType();
+            //    bool isNumber = paramType.IsNumericType();
+            //    bool isDate = paramType.Name == nameof(DateTime);
+            //    string values = string.Empty;
+            //    if (paramGroup.Key.Operator.Contains("in", StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        values = string.Join(",", groupedParams.SelectMany(x => x.Select(p => isNumber ? p.ParameterValue : $"'{p.ParameterValue}'")));
+            //    }
+            //    values = groupedParams.FirstOrDefault().FirstOrDefault().ParameterValue;
+            //    string columnName = prop.GetColumnName();
+            //    if (isNumber)
+            //        whereClause.Add(string.Format(NumberOp[paramGroup.Key.Operator], values, columnName));
+            //    else if (isDate)
+            //    {
+            //        string sql = DateOp[dbtype][paramGroup.Key.Operator];
+            //        whereClause.Add(string.Format(sql, values, columnName));
+            //    }
+            //    else
+            //        whereClause.Add(string.Format(StringOp[paramGroup.Key.Operator], values, columnName));
+            //}
 
-            return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
+            //return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
         }
     }
 }

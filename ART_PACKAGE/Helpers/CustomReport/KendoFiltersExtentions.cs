@@ -140,6 +140,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
 
             string json = element.GetRawText();
+
             return JsonSerializer.Deserialize<T>(json);
         }
         public static string GetFiltersString(this Filter Filters, string dbtype, IEnumerable<ColumnsDto> columns)

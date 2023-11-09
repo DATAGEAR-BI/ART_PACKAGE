@@ -17,7 +17,7 @@ namespace ART_PACKAGE.Helpers.ExportTasks
         public int? Minute { get; set; }
 
         public List<string> Mails { get; set; } = null!;
-        public List<Parameter> Parameters { get; set; } = null!;
+        public string Parameters { get; set; } = null!;
         public bool IsMailed { get; set; }
 
         public bool IsSavedOnServer { get; set; }

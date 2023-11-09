@@ -4,6 +4,7 @@ using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SqlServerMigrations.Migrations.ExportSchedular
 {
     [DbContext(typeof(ExportSchedularContext))]
-    partial class ExportSchedularContextModelSnapshot : ModelSnapshot
+    [Migration("20231109013624_makeParamterJson")]
+    partial class makeParamterJson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,10 +65,6 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ParametersJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Period")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -98,6 +96,28 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                     b.ToTable("TaskMails");
                 });
 
+            modelBuilder.Entity("Data.Data.ExportSchedular.TaskParameters", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ParametersJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskParameters");
+                });
+
             modelBuilder.Entity("Data.Data.ExportSchedular.TaskMails", b =>
                 {
                     b.HasOne("Data.Data.ExportSchedular.ExportTask", "Task")
@@ -109,9 +129,22 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                     b.Navigation("Task");
                 });
 
+            modelBuilder.Entity("Data.Data.ExportSchedular.TaskParameters", b =>
+                {
+                    b.HasOne("Data.Data.ExportSchedular.ExportTask", "Task")
+                        .WithMany("Parameters")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("Data.Data.ExportSchedular.ExportTask", b =>
                 {
                     b.Navigation("Mails");
+
+                    b.Navigation("Parameters");
                 });
 #pragma warning restore 612, 618
         }

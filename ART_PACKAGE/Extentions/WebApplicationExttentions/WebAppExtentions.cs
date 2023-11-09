@@ -145,7 +145,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             IServiceScope scope = app.Services.CreateScope();
             ExportSchedularContext TasksContext = scope.ServiceProvider.GetRequiredService<ExportSchedularContext>();
             ITaskPerformer taskPerformer = scope.ServiceProvider.GetRequiredService<ITaskPerformer>();
-            IQueryable<ExportTask> jobs = TasksContext.ExportsTasks.Where(x => !x.Deleted).Include(x => x.Parameters).Include(x => x.Mails);//.Select(x => new ExportTaskDto
+            IQueryable<ExportTask> jobs = TasksContext.ExportsTasks.Where(x => !x.Deleted).Include(x => x.Mails);//.Select(x => new ExportTaskDto
             //{
             //    Name = x.Name,
             //    Day = x.Day,
