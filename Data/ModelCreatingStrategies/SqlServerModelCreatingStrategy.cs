@@ -1198,11 +1198,12 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_DGAML_TRIAGE_VIEW", "ART_DB");
 
-                entity.Property(e => e.AgeOldestAlert).HasColumnName("AGE_OLDEST_ALERT");
+                entity.Property(e => e.AlertsCount).HasColumnName("ALERTS_COUNT");
 
-                entity.Property(e => e.AggregateAmt)
-                    .HasColumnType("numeric(15, 3)")
-                    .HasColumnName("AGGREGATE_AMT");
+                entity.Property(e => e.AlertStatus)
+                   .HasMaxLength(4000)
+                   .HasColumnName("ALERT_STATUS");
+                entity.Property(e => e.InvestigationDays).HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.AlertedEntityLevel)
                     .HasMaxLength(4000)
@@ -1216,7 +1217,6 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
-                entity.Property(e => e.AlertsCntSum).HasColumnName("ALERTS_CNT_SUM");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(50)
