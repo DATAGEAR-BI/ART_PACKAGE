@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Helpers.ExportTasks
             DbContext context = contextFactory.GetContextOf(task.ReportName);
 
 
-            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { context });
+            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { context, task.ParametersJson });
             List<DataFile> files = new();
             if (res is not null)
                 files.AddRange(await res);
@@ -60,12 +60,17 @@ namespace ART_PACKAGE.Helpers.ExportTasks
 
             if (task.IsMailed)
             {
-                bool mailRes = _mailSender.SendEmail(new Message(task.Mails.Select(x => x.Mail), "TEST JOB", "TEST Maail", files));
+                bool mailRes = _mailSender.SendEmail(new Message(task.Mails.Select(x => x.Mail), task.DisplayName, task.MailContent, files));
             }
 
             if (task.IsSavedOnServer)
             {
-
+                if (!Directory.Exists(Path.Combine(task.Path, task.DisplayName)))
+                    _ = Directory.CreateDirectory(Path.Combine(task.Path, task.DisplayName));
+                foreach (DataFile file in files)
+                {
+                    File.WriteAllBytes(Path.Combine(Path.Combine(task.Path, task.DisplayName), file.Name), file.Bytes);
+                }
             }
 
 

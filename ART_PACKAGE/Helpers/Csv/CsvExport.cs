@@ -6,6 +6,8 @@ using CsvHelper.Configuration;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
@@ -20,17 +22,17 @@ namespace ART_PACKAGE.Helpers.Csv
 
         private static readonly Dictionary<string, string> StringOp = new()
         {
-            { "equal"              , "{1} = '{0}'" },
-            { "not_equal"             , "{1} <> '{0}'" },
-            { "is_null"          , "{1} IS NULL" },
-            { "is_not_null"       , "{1} IS NOT NULL" },
+            { "="              , "{1} = '{0}'" },
+            { "<>"             , "{1} <> '{0}'" },
+            { "isblank"          , "{1} IS NULL" },
+            { "isnotblank"       , "{1} IS NOT NULL" },
             { "is_empty"         , $@"{{1}} = ''" },
             { "is_not_empty"      , $@"{{1}} <> ''" },
-            { "begins_with"      , "{1} LIKE '{0}%'" },
+            { "startswith"      , "{1} LIKE '{0}%'" },
             { "not_begins_with", "{1} NOT LIKE '{0}%'" },
             { "contains"        , "{1} LIKE '%{0}%'" },
-            { "not_contains"  , "{1} NOT LIKE '%{0}%'" },
-            { "ends_with"        , "{1} LIKE '%{0}'" },
+            { "notcontains"  , "{1} NOT LIKE '%{0}%'" },
+            { "endswith"        , "{1} LIKE '%{0}'" },
             { "not_ends_with"  , "{1} NOT LIKE '%{0}'" },
             { "in"  , "{1} IN ({0})" },
             { "not_in"  , "{1} NOT IN ({0})" },
@@ -38,17 +40,18 @@ namespace ART_PACKAGE.Helpers.Csv
 
         private static readonly Dictionary<string, string> NumberOp = new()
         {
-            { "equal", "{1} = {0}" },
-            { "not_equal", "{1} <> {0}" },
-            { "is_null", "{1} IS NULL" },
-            { "is_not_null", "{1} IS NOT NULL" },
-            {"greater_or_equal"  ,"{1} >= {0}"},
-            {"greater"   ,"{1} > {0}"},
-            {"less_or_equal"  ,"{1} <= {0}"},
-            { "less"  , "{1} < {0}" },
+            { "=", "{1} = {0}" },
+            { "<>", "{1} <> {0}" },
+            { "isblank", "{1} IS NULL" },
+            { "isnotblank", "{1} IS NOT NULL" },
+            {">="  ,"{1} >= {0}"},
+            {">"   ,"{1} > {0}"},
+            {"<="  ,"{1} <= {0}"},
+            { "<"  , "{1} < {0}" },
               { "in"  , "{1} IN ({0})" },
               { "not_in"  , "{1} NOT IN ({0})" },
         };
+
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
         {
             {
@@ -56,14 +59,14 @@ namespace ART_PACKAGE.Helpers.Csv
                 "sqlServer"
             ,
             new Dictionary<string, string> {
-            { "equal", "Convert(date , {1} , 105) = Convert(date,'{0}',105)" },
-            { "not_equal", "Convert(date , {1} , 105) <> Convert(date,'{0}',105)" },
-            { "is_null", "{1} IS NULL" },
-            { "is_not_null", "{1} IS NOT NULL" },
-            {"greater_or_equal","Convert(date , {1} , 105) >= Convert(date,'{0}',105)"},
-            {"greater","Convert(date , {1} , 105) > Convert(date,'{0}',105)"},
-            {"less_or_equal","Convert(date , {1} , 105) <= Convert(date,'{0}',105)"},
-            { "less", "Convert(date , {1} , 105) < Convert(date,'{0}',105)" },
+            { "=", "Convert(date , {1} , 105) = Convert(date,'{0}',105)" },
+            { "<>", "Convert(date , {1} , 105) <> Convert(date,'{0}',105)" },
+            { "isblank", "{1} IS NULL" },
+            { "isnotblank", "{1} IS NOT NULL" },
+            {">=","Convert(date , {1} , 105) >= Convert(date,'{0}',105)"},
+            {">","Convert(date , {1} , 105) > Convert(date,'{0}',105)"},
+            {"<=","Convert(date , {1} , 105) <= Convert(date,'{0}',105)"},
+            { "<", "Convert(date , {1} , 105) < Convert(date,'{0}',105)" },
               { "in"  , "Convert(date , {1} , 105) IN ({0})" },
               { "not_in"  , "Convert(date , {1} , 105) NOT IN ({0})" },
                 }
@@ -76,14 +79,14 @@ namespace ART_PACKAGE.Helpers.Csv
                 "oracle"
             ,
                 new Dictionary<string, string> {
-            { "equal", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },
-            { "not_equal", "TRUNC({1}) <> to_date('{0}', 'dd-MM-yyyy')" },
-            { "is_null", "{1} IS NULL" },
-            { "is_not_null", "{1} IS NOT NULL" },
-            {"greater_or_equal","TRUNC({1}) >= to_date('{0}', 'dd-MM-yyyy')"},
-            {"greater","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
-            {"less_or_equal","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
-            { "less", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
+            { "=", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },
+            { "<>", "TRUNC({1}) <> to_date('{0}', 'dd-MM-yyyy')" },
+            { "isblank", "{1} IS NULL" },
+            { "isnotblank", "{1} IS NOT NULL" },
+            {">=","TRUNC({1}) >= to_date('{0}', 'dd-MM-yyyy')"},
+            {">","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
+            {"<=","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
+            { "<", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
               { "in"  , "TRUNC({1}) IN ({0})" },
               { "not_in"  , "TRUNC({1}) NOT IN ({0})" },
             }
@@ -261,16 +264,18 @@ namespace ART_PACKAGE.Helpers.Csv
             Directory.Delete(folderPath, true);
         }
 
-        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db) where TModel : class
+        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, string parameterJson) where TModel : class
         {
             IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
             string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
             string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
-            string where = GenerateWhereClause<TModel>(db, tableData, dbtype);
+            List<object>? param = JsonConvert.DeserializeObject<List<object>>(parameterJson);
+            string clause = GenerateWhereClause<TModel>(db, tableData, dbtype, param);
+            string where = string.IsNullOrEmpty(clause) ? "" : "Where " + clause;
             IQueryable<TModel> data = db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchemaQualifiedViewName()}
                                                        {where}");
             byte[][] bytes = await Task.WhenAll(ExportDataToCsv<TModel, TController>(data));
-            string currentDate = DateTime.UtcNow.ToShortDateString();
+            string currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
             IEnumerable<DataFile> files = bytes.Select((b, i) => new DataFile(i + 1 + "." + typeof(TController).Name.Replace("Controller", "") + "_" + currentDate + ".csv"
                 , "text/csv", b));
 
@@ -331,34 +336,77 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
         }
-
-
-        private string GenerateWhereClause<TModel>(DbContext db, IEntityType? tableData, string dbtype)
+        private bool IsPropertyOfType<T>(Type type)
         {
-            return string.Empty;
-            //Dictionary<string, string> opMap = new()
-            //{
-            //        { "equal", "=" },
-            //        { "not_equal", "<>" },
-            //        { "in", "IN" },
-            //        { "not_in", "NOT IN" },
-            //        { "less", "<" },
-            //        { "less_or_equal", "<=" },
-            //        { "greater", ">" },
-            //        { "greater_or_equal", ">=" },
-            //        { "begins_with", "LIKE" },
-            //        { "not_begins_with", "NOT LIKE" },
-            //        { "contains", "LIKE" },
-            //        { "not_contains", "NOT LIKE" },
-            //        { "ends_with", "LIKE" },
-            //        { "not_ends_with", "NOT LIKE" },
-            //        { "is_empty", "=" }, // Customize this as per your database's definition of empty
-            //        { "is_not_empty", "<>" },
-            //        { "is_null", "IS NULL" },
-            //        { "is_not_null", "IS NOT NULL" }
-            //};
+            Type? underlyingType = Nullable.GetUnderlyingType(type);
+            return type.Name == typeof(T).Name || underlyingType?.Name == typeof(T).Name;
+        }
 
-            List<string> whereClause = new();
+        private string GenerateWhereClause<TModel>(DbContext db, IEntityType? tableData, string dbtype, List<object> param)
+        {
+
+
+            StringBuilder sb = new();
+
+
+
+
+
+            foreach (object filter in param)
+            {
+
+                try
+                {
+                    List<string>? filterarr = filter as List<string> ?? (filter as JArray)?.ToObject<List<string>>();
+                    if (filterarr is not null)
+                    {
+                        IProperty prop = tableData.GetProperty(filterarr[0]);
+                        Type paramType = typeof(TModel).GetProperty(filterarr[0]).PropertyType;
+                        bool isNumber = paramType.IsNumericType();
+                        bool isDate = IsPropertyOfType<DateTime>(paramType);
+                        string columnName = prop.GetColumnName();
+                        string clause = string.Empty;
+                        clause = isNumber
+                            ? string.Format(NumberOp[filterarr[1]], filterarr[2], columnName)
+                            : isDate
+                            ? string.Format(DateOp[dbtype][filterarr[1]], filterarr[2], columnName)
+                            : string.Format(StringOp[filterarr[1]], filterarr[2], columnName);
+                        _ = sb.Append(clause);
+                    }
+                    else
+                    {
+                        string? op = filter as string ?? (filter as JArray)?.ToObject<string>();
+                        _ = sb.Append(" " + op + " ");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        string? op = filter as string ?? (filter as JArray)?.ToObject<string>();
+
+                        _ = sb.Append(" " + op + " ");
+                    }
+                    catch (Exception opex)
+                    {
+                        try
+                        {
+                            List<object>? para = filter as List<object> ?? (filter as JArray)?.ToObject<List<object>>();
+                            _ = sb.Append("(" + GenerateWhereClause<TModel>(db, tableData, dbtype, para) + ")");
+                        }
+                        catch (Exception pex)
+                        {
+
+                            throw;
+                        }
+
+                    }
+                }
+
+            }
+            string returnClause = sb.ToString();
+            return returnClause;
+
             //var groupedParams = parameters.GroupBy(x => new { x.ParameterName, x.Operator });
             //foreach (var paramGroup in groupedParams)
             //{

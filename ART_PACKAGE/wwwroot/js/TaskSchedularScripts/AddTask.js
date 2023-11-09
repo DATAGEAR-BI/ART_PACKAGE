@@ -27,6 +27,7 @@ for (const [, value] of Object.entries(tabs)) {
 var taskNameInput = document.getElementById("taskName");
 var filePath = document.getElementById("filePath");
 var taskDescInput = document.getElementById("taskDesc");
+var mailContent = document.getElementById("mailContent");
 var reportsDropDown = document.getElementById("reportsDropDown");
 var periodDorpDown = document.getElementById("periodDropDown");
 var monthDropDown = document.getElementById("monthDropDown");
@@ -42,7 +43,8 @@ Smart('#querybuilder', class {
         return {
             allowDrag: true,
             fields: [
-            ]}
+            ]
+        }
     }
 });
 
@@ -111,6 +113,7 @@ fetch("/Tasks/GetDays").then(x => x.json()).then(data => {
 taskNameInput.intialize();
 taskDescInput.intialize();
 filePath.intialize();
+mailContent.intialize();
 
 
 var mailsDiv = document.getElementById("mailsDiv");
@@ -121,6 +124,7 @@ var mailsDiv = document.getElementById("mailsDiv");
 
 var form = document.getElementById("AddTaskForm");
 form.onsubmit = async (e) => {
+    console.log("test");
     e.preventDefault();
 
     var report = reportsDropDown.value.value;
@@ -182,13 +186,13 @@ form.onsubmit = async (e) => {
         $.toast(toastObj);
         return;
     }
-  
-   // var weekDay = parseInt(weekDayDropDown.value);
 
-    if (period >= 2 ) {
+    // var weekDay = parseInt(weekDayDropDown.value);
+
+    if (period >= 2) {
         var minute = timePicker.value.getMinutes();
         taskTime.Minute = minute;
-        
+
     }
 
     if (period > 2) {
@@ -226,7 +230,7 @@ form.onsubmit = async (e) => {
         taskTime.Month = month;
     }
     var mails = mailsInput.getMails();
-   
+
     if (mailSwitch.status && (!mails || mails.length == 0)) {
         toastObj.icon = 'error';
         toastObj.text = "type at least one mail to send files to";
@@ -235,7 +239,7 @@ form.onsubmit = async (e) => {
         return;
     }
     var path = filePath.value;
-    
+
     if (serverSwitch.status && (!path || path == "")) {
         toastObj.icon = 'error';
         toastObj.text = "type the path you like the files to be at";
@@ -243,25 +247,27 @@ form.onsubmit = async (e) => {
         $.toast(toastObj);
         return;
     }
+    if (serverSwitch.status) {
+        var validPathRes = await fetch("/Tasks/IsValidPath", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(path),
 
-    var validPathRes = await fetch("/Tasks/IsValidPath", {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(path),
-
-    });
+        });
 
 
-    if (!validPathRes.ok) {
-        toastObj.icon = 'error';
-        toastObj.text = "the path you provided is not correct make sure you provide a valid path on the server";
-        toastObj.heading = "Add new Task Status";
-        $.toast(toastObj);
-        return;
+        if (!validPathRes.ok) {
+            toastObj.icon = 'error';
+            toastObj.text = "the path you provided is not correct make sure you provide a valid path on the server";
+            toastObj.heading = "Add new Task Status";
+            $.toast(toastObj);
+            return;
+        }
     }
+
 
     var reqBody = {
         Name: taskName,
@@ -270,6 +276,7 @@ form.onsubmit = async (e) => {
         Period: period,
         Parameters: JSON.stringify(querybuilder.value),
         ...taskTime,
+        MailContent: mailContent.value,
         IsMailed: mailSwitch.status,
         Mails: mailSwitch.status ? mails : [],
         IsSavedOnServer: serverSwitch.status,
@@ -279,26 +286,26 @@ form.onsubmit = async (e) => {
 
     console.log(reqBody);
 
-    //var addTaskRes = await fetch("/Tasks/AddTask", {
-    //    headers: {
-    //        "Content-Type": "application/json",
-    //        "Accept": "application/json"
-    //    },
-    //    method: "POST",
-    //    body: JSON.stringify(reqBody),
+    var addTaskRes = await fetch("/Tasks/AddTask", {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify(reqBody),
 
-    //});
+    });
 
-    //if (!addTaskRes.ok) {
-    //    toastObj.icon = 'error';
-    //    toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
-    //    toastObj.heading = "Add new Task Status";
-    //    $.toast(toastObj);
-    //    return;
-    //}
+    if (!addTaskRes.ok) {
+        toastObj.icon = 'error';
+        toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
+        toastObj.heading = "Add new Task Status";
+        $.toast(toastObj);
+        return;
+    }
 
 
-    //window.location.href = "/Tasks";
+    window.location.href = "/Tasks";
 
 
 
@@ -407,7 +414,7 @@ function mapParamtersToFilters(paramters) {
         }
         return field;
     });
- 
+
     return filters;
 }
 

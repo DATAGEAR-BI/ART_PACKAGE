@@ -24,11 +24,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                { nameof(TasksController).ToLower(), new ReportConfig {
                SkipList = new List<string>()
                 {
-                    nameof(ExportTask.Mails)
+                    nameof(ExportTask.Mails),
+                    nameof(ExportTask.Name)
                 },
                DisplayNames = new Dictionary<string, DisplayNameAndFormat>
             {
                     {nameof(ExportTask.Period),new DisplayNameAndFormat { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
+                    {nameof(ExportTask.DisplayName),new DisplayNameAndFormat { DisplayName ="Name" }},
             }
                }
             },

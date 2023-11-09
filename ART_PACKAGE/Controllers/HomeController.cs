@@ -1,4 +1,6 @@
-﻿using ART_PACKAGE.Helpers.DBService;
+﻿using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Models;
 using Data.Data;
@@ -26,8 +28,9 @@ namespace ART_PACKAGE.Controllers
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
         private readonly MailConfiguration mailConfig;
+        private readonly ICsvExport _csv;
 
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, ICsvExport csv)
         {
 
             _logger = logger;
@@ -55,19 +58,14 @@ namespace ART_PACKAGE.Controllers
             }
 
             this.mailConfig = mailConfig.Value;
-
+            _csv = csv;
         }
 
 
 
-        public IActionResult TestDrop()
+        public async Task<IActionResult> TestDrop()
         {
-            //Message message = new(new List<string> { "khalilizzlam@gmail.com" }, "Test email", "This a test mail sent from art package.");
-
-
-            //bool sent = _mailSender.SendEmail(message);
-
-            //taskPerformer.PerformTask();
+            _ = _csv.ExportForSchedulaedTask<ArtAmlAlertDetailView, AlertDetailsController>(_dbAml, "[[[\"AlertStatus\",\"<>\",\"Closed\"],\"and\",[\"AlertedEntityNumber\",\"<>\",\"dsgdsg\"],\"and\",[\"CreateDate\",\"<\",\"2023-11-05T11:48:11.117Z\"]],\"or\",[[\"AlertStatus\",\"contains\",\"Closed\"],\"or\",[\"AlertedEntityNumber\",\"isblank\",\"\"]]]");
             return Ok(new List<string> { "islam", "khalil" });
         }
 

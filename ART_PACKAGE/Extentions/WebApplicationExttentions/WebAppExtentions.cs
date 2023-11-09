@@ -168,8 +168,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             foreach (ExportTask job in jobs)
             {
 
-                ruccrunibJ.RemoveIfExists(job.Name);
-                //ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job), taskPerformer.GetPeriod(job));
+                //ruccrunibJ.RemoveIfExists(job.Name);
+                ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job), taskPerformer.GetPeriod(job));
             }
         }
 

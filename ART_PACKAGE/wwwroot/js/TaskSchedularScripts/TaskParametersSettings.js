@@ -24,14 +24,18 @@ export const parametersConfig = [
                 "isMulti": true,
                 "type": "string",
                 "values": {
-                    "static": null,
-                    "url": "/home/TestDrop"
+                    "static": ["zobry", "manga"],
+                    "url": null
                 }
             },
             {
                 "paraName": "CreateDate",
                 "paraDisplayName": "Create Date",
                 "type": "date",
+            } ,{
+                "paraName": "number",
+                "paraDisplayName": "number",
+                "type": "number",
             }
         ]
     },

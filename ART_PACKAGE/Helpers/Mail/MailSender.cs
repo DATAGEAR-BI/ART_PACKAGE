@@ -40,7 +40,7 @@ namespace ART_PACKAGE.Helpers.Mail
             emailMessage.From.Add(new MailboxAddress(_emailConfig.From, _emailConfig.From));
             emailMessage.To.AddRange(message.To.Select(x => new MailboxAddress(x, x)));
             emailMessage.Subject = message.Subject;
-            BodyBuilder bodyBuilder = new() { HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
+            BodyBuilder bodyBuilder = new() { TextBody = message.Content };
 
 
             foreach (DataFile attachment in message.Attachments)
@@ -58,10 +58,10 @@ namespace ART_PACKAGE.Helpers.Mail
             try
             {
                 client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.StartTls);
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                _ = client.AuthenticationMechanisms.Remove("XOAUTH2");
                 client.Authenticate(_emailConfig.Username, _emailConfig.Password);
 
-                client.Send(mailMessage);
+                _ = client.Send(mailMessage);
             }
             catch (Exception ex)
             {

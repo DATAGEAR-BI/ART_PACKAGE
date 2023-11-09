@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
@@ -140,47 +138,10 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         }
 
 
-        [HttpPost]
-        public IActionResult TestFilter([FromBody] List<object> filters)
-        {
-
-            string str = GetFilter(filters);
-            return Ok();
-        }
 
 
 
-        private string GetFilter(List<object> filters)
-        {
-            StringBuilder sb = new();
-            foreach (object filter in filters)
-            {
-                try
-                {
-                    List<string> filterarr = ((JsonElement)filter).ToObject<List<string>>();
-                    sb.AppendJoin(" ", filterarr);
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        string op = ((JsonElement)filter).ToObject<string>();
-                        sb.Append(" " + op + " ");
-                    }
-                    catch (Exception)
-                    {
 
-                        sb.Append("(" + GetFilter(((JsonElement)filter).ToObject<List<object>>()) + ")");
-
-                    }
-
-
-                }
-
-            }
-
-            return sb.ToString();
-        }
 
 
 
@@ -216,7 +177,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 
             ExportTask taskToAdd = new()
             {
-                Name = task.Name,
+                Name = task.Name + "##" + Guid.NewGuid().ToString(),
                 ReportName = task.ReportName,
                 ParametersJson = task.Parameters,
                 IsMailed = task.IsMailed,
@@ -229,6 +190,8 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Description = task.Description,
                 IsSavedOnServer = task.IsSavedOnServer,
                 Period = task.Period,
+                MailContent = task.MailContent,
+                Path = task.Path
 
             };
 

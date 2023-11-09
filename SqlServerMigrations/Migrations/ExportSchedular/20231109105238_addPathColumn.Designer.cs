@@ -4,6 +4,7 @@ using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SqlServerMigrations.Migrations.ExportSchedular
 {
     [DbContext(typeof(ExportSchedularContext))]
-    partial class ExportSchedularContextModelSnapshot : ModelSnapshot
+    [Migration("20231109105238_addPathColumn")]
+    partial class addPathColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
 
                     b.Property<bool>("IsSavedOnServer")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MailContent")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Minute")
                         .HasColumnType("int");

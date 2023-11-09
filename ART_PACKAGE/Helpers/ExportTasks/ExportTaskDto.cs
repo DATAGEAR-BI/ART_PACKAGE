@@ -19,6 +19,8 @@ namespace ART_PACKAGE.Helpers.ExportTasks
         public List<string> Mails { get; set; } = null!;
         public string Parameters { get; set; } = null!;
         public bool IsMailed { get; set; }
+        public string? MailContent { get; set; }
+        public string? Path { get; set; }
 
         public bool IsSavedOnServer { get; set; }
 

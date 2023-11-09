@@ -14,6 +14,6 @@ namespace ART_PACKAGE.Helpers.Csv
         public void ClearExportFolder(string reqId);
 
 
-        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db) where TModel : class;
+        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, string parameterJson) where TModel : class;
     }
 }
