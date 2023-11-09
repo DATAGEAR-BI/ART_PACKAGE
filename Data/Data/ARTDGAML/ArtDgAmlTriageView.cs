@@ -15,5 +15,10 @@ namespace Data.Data.ARTDGAML
         public decimal? AggregateAmt { get; set; }
         public int? AgeOldestAlert { get; set; }
         public int? AlertsCntSum { get; set; }
+        public string? LastComment { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? NumberOfComments { get; set; }
+        public int? NumberOfAttachments { get; set; }
     }
 }

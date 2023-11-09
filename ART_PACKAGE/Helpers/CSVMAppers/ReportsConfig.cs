@@ -652,6 +652,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CustIdentTypeDesc",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}},
                         {  "OccupDesc",new DisplayNameAndFormat { DisplayName ="Occupation Description"}},
                         {  "CustSinceDate",new DisplayNameAndFormat { DisplayName ="Customer Since Date"}},
+                         { "LastComment", new DisplayNameAndFormat { DisplayName = "Last Comment"}},
+                     { "UpdatedDate", new DisplayNameAndFormat { DisplayName = "Update Date"}},
+                     { "CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                     { "NumberOfComments", new DisplayNameAndFormat { DisplayName = "Number Of Comments"}},
+                     { "NumberOfAttachments", new DisplayNameAndFormat { DisplayName = "Number Of Attachments"}},
                     }
                 }
             },
@@ -668,6 +673,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "AggregateAmt",new DisplayNameAndFormat { DisplayName ="Aggregate Amount"}},
                         {  "AgeOldestAlert",new DisplayNameAndFormat { DisplayName ="Age Oldest Alert"}},
                         {  "AlertsCntSum",new DisplayNameAndFormat { DisplayName ="Alerts Count Sum"}},
+                        { "LastComment", new DisplayNameAndFormat { DisplayName = "Last Comment"}},
+                     { "UpdatedDate", new DisplayNameAndFormat { DisplayName = "Update Date"}},
+                     { "CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                     { "NumberOfComments", new DisplayNameAndFormat { DisplayName = "Number Of Comments"}},
+                     { "NumberOfAttachments", new DisplayNameAndFormat { DisplayName = "Number Of Attachments"}},
                     }
                 }
             },

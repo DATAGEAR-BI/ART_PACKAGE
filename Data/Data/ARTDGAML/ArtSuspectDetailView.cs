@@ -24,5 +24,10 @@ namespace Data.Data.ARTDGAML
         public string? OccupDesc { get; set; }
         public string? TelNo1 { get; set; }
         public DateTime? CustSinceDate { get; set; }
+        public string? LastComment { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? NumberOfComments { get; set; }
+        public int? NumberOfAttachments { get; set; }
     }
 }

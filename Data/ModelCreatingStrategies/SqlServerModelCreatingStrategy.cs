@@ -1233,6 +1233,23 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskScore)
                     .HasMaxLength(32)
                     .HasColumnName("RISK_SCORE");
+                entity.Property(e => e.LastComment)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.UpdatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPDATED_DATE");
+                entity.Property(e => e.CreatedBy)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CREATED_BY")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.NumberOfComments)
+                  .HasColumnName("NUMBER_OF_COMMENTS");
+                entity.Property(e => e.NumberOfAttachments)
+                  .HasColumnName("NUMBER_OF_ATTACHMENTS");
             });
 
             modelBuilder.Entity<ArtDgAmlCaseDetailView>(entity =>
@@ -1601,6 +1618,23 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TelNo1)
                     .HasMaxLength(25)
                     .HasColumnName("Tel_No_1");
+                entity.Property(e => e.LastComment)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.UpdatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPDATED_DATE");
+                entity.Property(e => e.CreatedBy)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CREATED_BY")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.NumberOfComments)
+                  .HasColumnName("NUMBER_OF_COMMENTS");
+                entity.Property(e => e.NumberOfAttachments)
+                  .HasColumnName("NUMBER_OF_ATTACHMENTS");
             });
             //DGAML HOME
             modelBuilder.Entity<ArtHomeDgamlAlertsPerDate>(entity =>
