@@ -221,9 +221,11 @@ function callDefinedCharts(url) {
         body: JSON.stringify({ req: null, procFilters: exRules }),
     }).then(x => x.json()).then(data => {
         [...data].forEach(x => {
-            var charttype = document.getElementById(x.ChartId).dataset.type;
+            var charttype = -1;
+            if (x.ChartId != null)
+                charttype = document.getElementById(x.ChartId).dataset.type;
             if (parseInt(charttype) === -1) {
-                makeDatesChart(x.data, x.divId, x.cat, x.val, x.subcat, x.subval, x.subListKey, x.ctitle, (di)=> { })
+                makeDatesChart(x.data, x.divId, x.cat, x.val, x.subcat, x.subval, x.subListKey, x.ctitle, (di) => { })
 
             } else {
                 makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)

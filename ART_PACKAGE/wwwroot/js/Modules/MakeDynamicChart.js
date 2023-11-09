@@ -214,7 +214,7 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
 
     chart.scrollbarX = new am4core.Scrollbar();
 
-    
+
     //chart.exporting.menu = new am4core.ExportMenu();
 }
 
@@ -326,15 +326,15 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     }];
 
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.renderer.labels.template.fontSize = 20;
-    categoryAxis.renderer.labels.template.maxWidth = 250;
-    categoryAxis.renderer.labels.template.minWidth = 100;
-    categoryAxis.renderer.labels.template.wrap = true;
+    categoryAxis.renderer.labels.template.fontSize = 15;
+    //categoryAxis.renderer.labels.template.maxWidth = 250;
+    //categoryAxis.renderer.labels.template.minWidth = 100;
+    //categoryAxis.renderer.labels.template.wrap = true;
     categoryAxis.dataFields.category = chartCategory;
     categoryAxis.renderer.grid.template.location = 0;
 
     var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-    valueAxis.renderer.labels.template.fontSize = 20;
+    valueAxis.renderer.labels.template.fontSize = 15;
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueX = chartValue;
     series.dataFields.categoryY = chartCategory;
@@ -343,7 +343,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     series.defaultState.transitionDuration = 1000;
     series.sequencedInterpolationDelay = 100;
     series.columns.template.strokeOpacity = 0;
-    series.tooltip.fontSize = 17;
+    series.tooltip.fontSize = 15;
     series.columns.template.strokeWidth = 0;
 
     /*series.columns.template.adapter.add("dx", function (dx, target) {
@@ -379,7 +379,7 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     valueLabel.label.text = "{valueX}";
     valueLabel.label.hideOversized = false;
     valueLabel.label.truncate = false;
-    valueLabel.label.fontSize = 20;
+    valueLabel.label.fontSize = 15;
     //valueLabel.label.dx = 5;
     valueLabel.label.adapter.add("horizontalCenter", function (X, target) {
         if (target.dataItem) {
@@ -411,9 +411,9 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     chart.scrollbarY = scrollbar;
 
 
-    chart.events.on("ready", function () {
-        categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
-    });
+    //chart.events.on("ready", function () {
+    //  categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
+    //});
 
 }
 function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRototate, columnsColorFunc) {
@@ -1033,6 +1033,7 @@ export function makedynamicChart(
             callBarChart(data, title, divId, chartValue, chartCategory, dontRotateCat, columnsColorFunc);
             break;
         case types.hbar:
+            chart.style.height = "1000px";
             callHBar(data, title, divId, chartValue, chartCategory);
             break;
         case types.dragdrop:
