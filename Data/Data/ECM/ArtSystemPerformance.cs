@@ -30,5 +30,10 @@ namespace Data.Data.ECM
         public decimal? DurationsInMinutes { get; set; }
         public decimal? DurationsInHours { get; set; }
         public decimal? DurationsInDays { get; set; }
+        public string? LastComment { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? NumberOfComments { get; set; }
+        public int? NumberOfAttachments { get; set; }
     }
 }

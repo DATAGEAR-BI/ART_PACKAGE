@@ -93,7 +93,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}},
+                     { "LastComment", new DisplayNameAndFormat { DisplayName = "Last Comment"}},
+                     { "UpdatedDate", new DisplayNameAndFormat { DisplayName = "Update Date"}},
+                     { "CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
+                     { "NumberOfComments", new DisplayNameAndFormat { DisplayName = "Number Of Comments"}},
+                     { "NumberOfAttachments", new DisplayNameAndFormat { DisplayName = "Number Of Attachments"}},
             },
                 SkipList = new List<string>
             {

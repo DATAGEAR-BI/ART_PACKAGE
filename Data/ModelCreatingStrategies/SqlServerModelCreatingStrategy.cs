@@ -1948,6 +1948,23 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ValidFromDate)
                     .HasColumnType("datetime")
                     .HasColumnName("VALID_FROM_DATE");
+                entity.Property(e => e.LastComment)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.UpdatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPDATED_DATE");
+                entity.Property(e => e.CreatedBy)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CREATED_BY")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.NumberOfComments)
+                  .HasColumnName("NUMBER_OF_COMMENTS");
+                entity.Property(e => e.NumberOfAttachments)
+                  .HasColumnName("NUMBER_OF_ATTACHMENTS");
             });
         }
 
