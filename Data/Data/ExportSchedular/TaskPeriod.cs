@@ -8,6 +8,7 @@
         Daily,
         Weekly,
         Monthly,
+        Quarterly,
         Yearly,
 
     }

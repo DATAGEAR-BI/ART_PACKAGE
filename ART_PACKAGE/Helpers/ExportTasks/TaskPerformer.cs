@@ -35,6 +35,21 @@ namespace ART_PACKAGE.Helpers.ExportTasks
                 return () => Cron.Monthly(task.Day ?? 0, task.Hour ?? 0, task.Minute ?? 0);
             else if (task.Period == TaskPeriod.Yearly)
                 return () => Cron.Yearly(task.Month ?? 1, task.Day ?? 0, task.Hour ?? 0, task.Minute ?? 0);
+            else if (task.Period == TaskPeriod.Quarterly)
+            {
+                int? month = task.Month;
+                List<int?> quarters = new();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    int? qmonth = month % 12;
+                    if (qmonth == 0)
+                        quarters.Add(12);
+                    else
+                        quarters.Add(qmonth);
+                }
+                return () => $"{task.Minute} {task.Hour} {task.Day} {string.Join(",", quarters)} *";
+            }
             else return () => Cron.Never();
 
 

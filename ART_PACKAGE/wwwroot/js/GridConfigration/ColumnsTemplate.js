@@ -5,7 +5,8 @@ const TaskPeriod = {
     3: "Daily",
     4: "Weekly",
     5: "Monthly",
-    6: "Yearly",
+    6: "Quarterly",
+    7: "Yearly",
 }
 
 const DayOfWeek = {

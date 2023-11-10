@@ -2,7 +2,7 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./GridConfigration/GridEvents.js"
 import { Spinner } from "../lib/spin.js/spin.js"
-import { Actions } from "./GridActions.js"
+import { Actions } from "./GridConfigration/GridActions.js"
 import { Templates } from "./GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "./GridConfigration/ColumnsFilters.js"
 var spinnerOpts = {

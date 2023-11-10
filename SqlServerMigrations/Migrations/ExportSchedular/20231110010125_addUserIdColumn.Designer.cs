@@ -4,6 +4,7 @@ using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SqlServerMigrations.Migrations.ExportSchedular
 {
     [DbContext(typeof(ExportSchedularContext))]
-    partial class ExportSchedularContextModelSnapshot : ModelSnapshot
+    [Migration("20231110010125_addUserIdColumn")]
+    partial class addUserIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

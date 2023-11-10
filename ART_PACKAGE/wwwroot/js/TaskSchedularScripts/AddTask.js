@@ -218,7 +218,7 @@ form.onsubmit = async (e) => {
     }
 
 
-    if (period == 6) {
+    if (period == 6 || period == 7) {
         var month = parseInt(monthDropDown.value.value);
         if (isNaN(month)) {
             toastObj.icon = 'error';
@@ -358,7 +358,7 @@ periodDorpDown.onchange = (e) => {
         calender.selectedDates = [new Date()]
     }
 
-    if (val == 6) {
+    if (val == 6 || val == 7) {
         timePicker.disabled = false;
         calender.disabled = false;
         monthDropDown.enable();

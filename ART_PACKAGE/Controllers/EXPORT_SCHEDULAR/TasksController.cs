@@ -1,9 +1,11 @@
-﻿using ART_PACKAGE.Data.Attributes;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using Hangfire;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +21,15 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         private readonly IRecurringJobManager jobsManger;
         private readonly ILogger<TasksController> _logger;
         private readonly ITaskPerformer _taskPerformer;
+        private readonly UserManager<AppUser> _userManager;
 
-        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer)
+        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager)
         {
             _context = context;
             this.jobsManger = jobsManger;
             _logger = logger;
             _taskPerformer = taskPerformer;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -191,7 +195,8 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 IsSavedOnServer = task.IsSavedOnServer,
                 Period = task.Period,
                 MailContent = task.MailContent,
-                Path = task.Path
+                Path = task.Path,
+                UserId = _userManager.GetUserId(User)
 
             };
 
@@ -212,7 +217,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 
         public async Task<IActionResult> GetData([FromBody] KendoRequest request)
         {
-            DbSet<ExportTask> data = _context.ExportsTasks;
+            IQueryable<ExportTask> data = _context.ExportsTasks.Where(x => x.UserId == _userManager.GetUserId(User));
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
@@ -250,6 +255,12 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                         text = "Delete",
                         action = "deleteTask",
                         icon = "k-i-trash"
+                    },
+                    new
+                    {
+                        text = "Run Now",
+                        action = "runNow",
+                        icon = "k-i-video-external"
                     }
                 },
                 toolbar = new List<dynamic>
@@ -289,6 +300,19 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             if (change <= 0)
                 return BadRequest();
             jobsManger.RemoveIfExists(task.Name);
+            return Ok();
+        }
+
+
+
+        [HttpPost("[controller]/[action]/{id}")]
+        public IActionResult RunNow(int id)
+        {
+            ExportTask task = _context.ExportsTasks.Find(id);
+            if (task == null)
+                return BadRequest();
+
+            jobsManger.Trigger(task.Name);
             return Ok();
         }
 
