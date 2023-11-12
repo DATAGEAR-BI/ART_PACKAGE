@@ -19,6 +19,8 @@
         public string? LockedBy { get; set; }
         public DateTime? EcmLastStatusDate { get; set; }
         public decimal? HitsCount { get; set; }
+        public string? LastComment { get; set; }
+        public string? LastCommentSubject { get; set; }
         public decimal? DurationsInSeconds { get; set; }
         public decimal? DurationsInMinutes { get; set; }
         public decimal? DurationsInHours { get; set; }

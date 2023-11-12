@@ -65,7 +65,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             {
 
 
-            }
+            },
+                   DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                    { "PartName", new DisplayNameAndFormat { DisplayName = "Part Name"}},
+                    { "PartNumber", new DisplayNameAndFormat { DisplayName = "Part Number"}},
+                    { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                    { "PepInd", new DisplayNameAndFormat { DisplayName = "Pep Ind"}},
+                    { "EcmLastStatusDate", new DisplayNameAndFormat { DisplayName = "Ecm Last Status Date"}},
+          }
     }
             },
             { nameof(SystemPerformanceController).ToLower() , new ReportConfig
@@ -93,7 +102,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}},
+                    { "LastComment", new DisplayNameAndFormat { DisplayName = "Last Comment"}},
+                    { "LastCommentSubject", new DisplayNameAndFormat { DisplayName = "Last Comment Subject"}},
             },
                 SkipList = new List<string>
             {

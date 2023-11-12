@@ -1815,7 +1815,7 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("CREATE_DATE");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.PartName)
                     .HasColumnType("CLOB")
                     .HasColumnName("NAME");
 

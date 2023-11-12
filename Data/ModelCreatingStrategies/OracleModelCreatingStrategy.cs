@@ -1922,9 +1922,18 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CreateDate)
                     .HasColumnName("CREATE_DATE");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.EcmLastStatusDate)
+                    .HasColumnName("ECM_LAST_STATUS_DATE");
+
+                entity.Property(e => e.PartName)
                     .HasMaxLength(4000)
-                    .HasColumnName("NAME");
+                     .IsUnicode(false)
+                    .HasColumnName("PART_NAME");
+
+                entity.Property(e => e.PartNumber)
+                    .HasMaxLength(4000)
+                     .IsUnicode(false)
+                    .HasColumnName("PART_NUMBER");
 
                 entity.Property(e => e.PepInd)
                     .HasMaxLength(5)
@@ -2023,6 +2032,12 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CaseStatus)
                     .HasColumnType("VARCHAR2(12000)")
                     .HasColumnName("CASE_STATUS");
+                entity.Property(e => e.LastComment)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT");
+                entity.Property(e => e.LastCommentSubject)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT_SUBJECT");
 
                 entity.Property(e => e.CaseTtpe)
                     .HasColumnType("VARCHAR2(12000)")
