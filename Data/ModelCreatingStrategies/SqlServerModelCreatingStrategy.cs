@@ -7316,6 +7316,146 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("risk_classification")
                     .UseCollation("Arabic_CI_AI");
             });
+            modelBuilder.Entity<ArtCrpSystemPerformance>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_SYSTEM_PERFORMANCE", "ART_DB");
+
+                entity.Property(e => e.CaseCurrentRate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CURRENT_RATE");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("CASE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(4000)
+                    .HasColumnName("Case_Type")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Casetargetrate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CASETARGETRATE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATE_USER_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CUSTOMER_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_In_days");
+
+                entity.Property(e => e.DurationsInHours).HasColumnName("DURATIONS_In_hours");
+
+                entity.Property(e => e.DurationsInMinutes).HasColumnName("DURATIONS_In_minutes");
+
+                entity.Property(e => e.DurationsInSeconds).HasColumnName("DURATIONS_In_Seconds");
+
+                entity.Property(e => e.EcmLastStatusDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ECM_LAST_STATUS_DATE");
+            });
+            modelBuilder.Entity<ArtCrpUserPerformance>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_USER_PERFORMANCE", "ART_DB");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .HasColumnName("ACTION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ActionUser)
+                    .HasMaxLength(60)
+                    .HasColumnName("ACTION_USER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AsssignedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ASSSIGNED_TIME");
+
+                entity.Property(e => e.CaseCurrentRate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CURRENT_RATE");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("CASE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Casetargetrate)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CASETARGETRATE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATE_USER_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("CUSTOMER_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_In_days");
+
+                entity.Property(e => e.DurationsInHours).HasColumnName("DURATIONS_In_hours");
+
+                entity.Property(e => e.DurationsInMinutes).HasColumnName("DURATIONS_In_minutes");
+
+                entity.Property(e => e.DurationsInSeconds).HasColumnName("DURATIONS_In_Seconds");
+
+                entity.Property(e => e.ReleasedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("RELEASED_DATE");
+            });
         }
     }
 }
