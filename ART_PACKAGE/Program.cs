@@ -51,6 +51,14 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+
+
+
+
+
+
+
+
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
@@ -70,6 +78,11 @@ builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
 
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    // replace "*" with "host" ,"request from website"
+    _ = builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+}));
 
 WebApplication app = builder.Build();
 
@@ -88,6 +101,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors("corsapp");
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
