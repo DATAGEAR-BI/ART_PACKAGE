@@ -30,8 +30,9 @@
 
 
         //crp
-        public static readonly string ART_ST_CRP_PER_RISK = "";
-        public static readonly string ART_ST_CRP_PER_STATUS = "";
+        public static readonly string ART_ST_CRP_CUST_PER_RISK = "";
+        public static readonly string ART_ST_CRP_CASES_PER_STATUS = "";
+        public static readonly string ART_ST_CRP_CASES_PER_RATE = "";
 
     }
 }

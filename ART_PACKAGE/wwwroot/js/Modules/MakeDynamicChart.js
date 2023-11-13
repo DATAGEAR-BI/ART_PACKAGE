@@ -10,7 +10,8 @@ var types = {
     curvedline: 6,
     clusteredbar: 7,
     hbar: 8,
-    line: 10
+    line: 10,
+    clusteredbarchart: 9
 }
 
 const exportMenu = [{
@@ -966,7 +967,93 @@ function callClusterd(data, clusterdtitle, chartId,) {
 
 
 }
+function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategory) {
 
+    am4core.useTheme(am4themes_animated);
+
+    // Create chart instance
+    var chart = am4core.create(divId, am4charts.XYChart);
+    am4core.addLicense("ch-custom-attribution");
+
+    // Add data
+    chart.data = data;
+    chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.menu.items = [{
+        "label": "...",
+        "menu": [
+            { "type": "svg", "label": "Save" },
+        ]
+    }];
+
+    // Create axes
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = chartCategory;
+    //categoryAxis.numberFormatter.numberFormat = "#";
+    // categoryAxis.renderer.inversed = true;
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.cellStartLocation = 0.1;
+    categoryAxis.renderer.cellEndLocation = 0.9;
+    categoryAxis.renderer.labels.template.fontSize = 20;
+
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    //valueAxis.renderer.opposite = true;
+    valueAxis.renderer.labels.template.fontSize = 20;
+    console.log(data);
+    // Create series
+    function createSeries(field) {
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = field;
+        series.dataFields.categoryX = chartCategory;
+        series.name = field;
+        series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
+        series.columns.template.height = am4core.percent(100);
+        series.sequencedInterpolation = true;
+        series.tooltip.fontSize = 17;
+
+        var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{valueX}";
+        //valueLabel.label.horizontalCenter = "left";
+        //valueLabel.label.dx = 10;
+        valueLabel.label.hideOversized = false;
+        valueLabel.label.truncate = false;
+        valueLabel.label.fontSize = 20;
+
+        var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
+        categoryLabel.label.text = "{name}";
+        //categoryLabel.label.horizontalCenter = "right";
+        //categoryLabel.label.dx = -10;
+        //categoryLabel.label.fill = am4core.color("#fff");
+        categoryLabel.label.hideOversized = false;
+        categoryLabel.label.truncate = false;
+        categoryLabel.label.fontSize = 20;
+    }
+
+    var keys = [];
+    data.forEach(x => {
+        keys = [...keys, ...Object.keys(x)];
+    });
+
+    var ukeys = Array.from(new Set(keys)).filter(x => x != chartCategory);
+    ukeys.forEach(k => {
+        createSeries(k, k);
+    })
+
+
+
+    chart.cursor = new am4charts.XYCursor();
+    chart.cursor.behavior = "zoomY";
+
+
+    var title = chart.titles.create();
+    title.text = hbartitle;
+    title.fontSize = 25;
+    title.marginBottom = 30;
+    //// Add scrollbar
+    var scrollbar = new am4charts.XYChartScrollbar();
+
+    chart.scrollbarX = scrollbar;
+
+}
 export function makedynamicChart(
     chartType,
     data,
@@ -1008,6 +1095,9 @@ export function makedynamicChart(
         case types.line:
             chart.style.height = "800px";
             callLineChart(data, title, divId, chartValue, chartCategory);
+            break;
+        case types.clusteredbarchart:
+            callClusteredBarChart(data, title, divId, chartValue, chartCategory);
             break;
         default:
             console.log("eror");

@@ -36,24 +36,41 @@ namespace ART_PACKAGE.Controllers.CRP
 
             IEnumerable<ART_ST_CRP_PER_RISK> chart1Data = Enumerable.Empty<ART_ST_CRP_PER_RISK>().AsQueryable();
             IEnumerable<ART_ST_CRP_PER_STATUS> chart2data = Enumerable.Empty<ART_ST_CRP_PER_STATUS>().AsQueryable();
+            IEnumerable<ART_ST_CRP_CASES_PER_RATE> chart3data = Enumerable.Empty<ART_ST_CRP_CASES_PER_RATE>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(SQLSERVERSPNames.ART_ST_CRP_PER_RISK, chart1Params.ToArray());
-                chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(SQLSERVERSPNames.ART_ST_CRP_PER_STATUS, chart2Params.ToArray());
+                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(SQLSERVERSPNames.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
+                chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
             }
 
             if (dbType == DbTypes.Oracle)
             {
-                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(ORACLESPName.ART_ST_CRP_PER_RISK, chart1Params.ToArray());
-                chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(ORACLESPName.ART_ST_CRP_PER_STATUS, chart2Params.ToArray());
+                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(ORACLESPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
+                chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(ORACLESPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(ORACLESPName.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
+
 
             }
-
+            List<Dictionary<string, object>> chartDictList = new();
+            foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())
+            {
+                Dictionary<string, object> result = new()
+                {
+                    { "RATE", chartResult.Key }
+                };
+                foreach (ART_ST_CRP_CASES_PER_RATE? list in chartResult)
+                {
+                    result.Add(list.CASE_CURRENT_RATE.ToString(), list.CASE_TARGET_RATE);
+                }
+                chartDictList.Add(result);
+            };
             ArrayList chartData = new()
             {
                 new ChartData<ART_ST_CRP_PER_RISK>
@@ -61,8 +78,8 @@ namespace ART_PACKAGE.Controllers.CRP
                     ChartId = "ART_ST_CRP_PER_RISK",
                     Data = chart1Data.ToList(),
                     Title = "Number OF CRP Cases Per Risk Classification",
-                    Cat = "risk_classification",
-                    Val = "Number_Of_Cases"
+                    Cat = "RISK_CLASSIFICATION",
+                    Val = "NUMBER_OF_CUSTOMERS"
 
                 },
                 new ChartData<ART_ST_CRP_PER_STATUS>
@@ -70,9 +87,16 @@ namespace ART_PACKAGE.Controllers.CRP
                     ChartId = "ART_ST_CRP_PER_STATUS",
                     Data = chart2data.ToList(),
                     Title = "Number OF CRP Cases Per Status",
-                    Cat = "Case_Status",
-                    Val = "Number_Of_Cases"
-                }
+                    Cat = "case_status",
+                    Val = "TOTAL_NUMBER_OF_CASES"
+                },
+                new ChartData<Dictionary<string,object>>
+                {
+                    ChartId = "ART_ST_CRP_CASES_PER_RATE",
+                    Data =chartDictList,
+                    Title = "Total Number of Case Per Current Rate & Target Rate",
+                    Cat = "RATE"
+                },
             };
 
 
