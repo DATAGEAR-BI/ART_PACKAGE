@@ -984,6 +984,7 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
             { "type": "svg", "label": "Save" },
         ]
     }];
+    chart.legend = new am4charts.Legend();
 
     // Create axes
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -999,35 +1000,30 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
     //valueAxis.renderer.opposite = true;
     valueAxis.renderer.labels.template.fontSize = 20;
     console.log(data);
-    // Create series
     function createSeries(field) {
         var series = chart.series.push(new am4charts.ColumnSeries());
         series.dataFields.valueY = field;
         series.dataFields.categoryX = chartCategory;
         series.name = field;
-        series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
+        series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
         series.columns.template.height = am4core.percent(100);
         series.sequencedInterpolation = true;
-        series.tooltip.fontSize = 17;
 
         var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-        valueLabel.label.text = "{valueX}";
-        //valueLabel.label.horizontalCenter = "left";
-        //valueLabel.label.dx = 10;
+        valueLabel.label.text = "{valueY}";
+        valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.dy = 10;
         valueLabel.label.hideOversized = false;
         valueLabel.label.truncate = false;
-        valueLabel.label.fontSize = 20;
 
-        var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
-        categoryLabel.label.text = "{name}";
+        //var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
+        //categoryLabel.label.text = "{name}";
         //categoryLabel.label.horizontalCenter = "right";
-        //categoryLabel.label.dx = -10;
-        //categoryLabel.label.fill = am4core.color("#fff");
-        categoryLabel.label.hideOversized = false;
-        categoryLabel.label.truncate = false;
-        categoryLabel.label.fontSize = 20;
+        //categoryLabel.label.dy = -10;
+        ////categoryLabel.label.fill = am4core.color("#fff");
+        //categoryLabel.label.hideOversized = false;
+        //categoryLabel.label.truncate = false;
     }
-
     var keys = [];
     data.forEach(x => {
         keys = [...keys, ...Object.keys(x)];
@@ -1035,7 +1031,7 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
 
     var ukeys = Array.from(new Set(keys)).filter(x => x != chartCategory);
     ukeys.forEach(k => {
-        createSeries(k, k);
+        createSeries(k);
     })
 
 

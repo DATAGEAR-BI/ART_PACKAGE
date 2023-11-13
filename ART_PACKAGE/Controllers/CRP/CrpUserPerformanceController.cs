@@ -8,6 +8,7 @@ using Data.Data.CRP;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.CRP
 {
@@ -46,20 +47,16 @@ namespace ART_PACKAGE.Controllers.CRP
             if (request.IsIntialize)
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(CrpUserPerformanceController).ToLower()].DisplayNames;
-                //List<dynamic> PEPlist = new()
-                //    {
-                //        "Y","N"
-                //    };
-                //DropDownColumn = new Dictionary<string, List<dynamic>>
-                //{
-                //    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                //    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                //    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                //    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                //    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                //    {"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                //    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
-                //};
+                DropDownColumn = new Dictionary<string, List<dynamic>>
+                {
+                    {"CaseType".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.CaseType).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"CaseStatus".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.CaseStatus).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"CreateUserId".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.CreateUserId).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"CaseCurrentRate".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.CaseCurrentRate).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"Casetargetrate".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.Casetargetrate).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"ActionUser".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.ActionUser).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                    {"Action".ToLower(),_crp.ArtCrpUserPerformances.Select(x=>x.Action).Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToDynamicList() },
+                };
 
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpUserPerformanceController).ToLower()].SkipList;
             }

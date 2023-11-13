@@ -58,26 +58,26 @@ namespace ART_PACKAGE.Controllers.CRP
 
 
             }
-            List<Dictionary<string, object>> chartDictList = new();
-            foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())
-            {
-                Dictionary<string, object> result = new()
-                {
-                    { "RATE", chartResult.Key }
-                };
-                foreach (ART_ST_CRP_CASES_PER_RATE? list in chartResult)
-                {
-                    result.Add(list.CASE_CURRENT_RATE.ToString(), list.CASE_TARGET_RATE);
-                }
-                chartDictList.Add(result);
-            };
+            //List<Dictionary<string, object>> chartDictList = new();
+            //foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())
+            //{
+            //    Dictionary<string, object> result = new()
+            //    {
+            //        { "RATE", chartResult.Key }
+            //    };
+            //    foreach (ART_ST_CRP_CASES_PER_RATE? list in chartResult)
+            //    {
+            //        result.Add(list.CASE_CURRENT_RATE.ToString(), list.CASE_TARGET_RATE);
+            //    }
+            //    chartDictList.Add(result);
+            //};
             ArrayList chartData = new()
             {
                 new ChartData<ART_ST_CRP_PER_RISK>
                 {
                     ChartId = "ART_ST_CRP_PER_RISK",
                     Data = chart1Data.ToList(),
-                    Title = "Number OF CRP Cases Per Risk Classification",
+                    Title = "Number OF Customers Per Risk Classification",
                     Cat = "RISK_CLASSIFICATION",
                     Val = "NUMBER_OF_CUSTOMERS"
 
@@ -90,11 +90,11 @@ namespace ART_PACKAGE.Controllers.CRP
                     Cat = "case_status",
                     Val = "TOTAL_NUMBER_OF_CASES"
                 },
-                new ChartData<Dictionary<string,object>>
+                new ChartData<ART_ST_CRP_CASES_PER_RATE>
                 {
                     ChartId = "ART_ST_CRP_CASES_PER_RATE",
-                    Data =chartDictList,
-                    Title = "Total Number of Case Per Current Rate & Target Rate",
+                    Data =chart3data.ToList(),
+                    Title = "Number of CRP Cases Per Current Rate & Target Rate",
                     Cat = "RATE"
                 },
             };
