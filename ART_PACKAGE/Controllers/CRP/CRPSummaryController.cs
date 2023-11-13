@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.CRP
                 {
                     ChartId = "ART_ST_CRP_PER_RISK",
                     Data = chart1Data.ToList(),
-                    Title = "Number OF Customers Per Risk Classification",
+                    Title = "CUSTOMERS PER RISK CLASSIFICATION",
                     Cat = "RISK_CLASSIFICATION",
                     Val = "NUMBER_OF_CUSTOMERS"
 
@@ -86,13 +86,13 @@ namespace ART_PACKAGE.Controllers.CRP
                 {
                     ChartId = "ART_ST_CRP_PER_STATUS",
                     Data = chart2data.ToList(),
-                    Title = "Number OF CRP Cases Per Status",
+                    Title = "CRP CASES PER STATUS",
                     Cat = "case_status",
                     Val = "TOTAL_NUMBER_OF_CASES"
                 },
                 new ChartData<ART_ST_CRP_CASES_PER_RATE>
                 {
-                    ChartId = "ART_ST_CRP_CASES_PER_RATE",
+                    ChartId = "CRP CASES CURRENT VS TARGET RATE",
                     Data =chart3data.ToList(),
                     Title = "Number of CRP Cases Per Current Rate & Target Rate",
                     Cat = "RATE"
