@@ -92,9 +92,9 @@ namespace ART_PACKAGE.Controllers.CRP
                 },
                 new ChartData<ART_ST_CRP_CASES_PER_RATE>
                 {
-                    ChartId = "CRP CASES CURRENT VS TARGET RATE",
+                    ChartId = "ART_ST_CRP_CASES_PER_RATE",
                     Data =chart3data.ToList(),
-                    Title = "Number of CRP Cases Per Current Rate & Target Rate",
+                    Title = "CRP CASES CURRENT VS TARGET RATE",
                     Cat = "RATE"
                 },
             };
