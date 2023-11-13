@@ -121,5 +121,7 @@
 
     //crp
     CRPCases: "/CrpCases/GetData",
+    CrpSystemPerformance: "/CrpSystemPerformance/GetData",
+    CrpUserPerformance: "/CrpUserPerformance/GetData",
     CRPSummary: "/CRPSummary/GetData"
 };

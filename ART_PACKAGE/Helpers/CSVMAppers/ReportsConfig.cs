@@ -1,6 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
-
+using ART_PACKAGE.Controllers.CRP;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
@@ -2647,7 +2647,51 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
              },
-
+             { nameof(CrpSystemPerformanceController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                    { "CaseType", new DisplayNameAndFormat { DisplayName = "Case Type"}},
+                    { "CaseStatus", new DisplayNameAndFormat { DisplayName = "Case Status"}},
+                    { "CreateUserId", new DisplayNameAndFormat { DisplayName = "Create User ID"}},
+                    { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                    { "CustomerName", new DisplayNameAndFormat { DisplayName = "Customer Name"}},
+                    { "CustomerNumber", new DisplayNameAndFormat { DisplayName = "Customer Number"}},
+                    { "CaseCurrentRate", new DisplayNameAndFormat { DisplayName = "Case Current Rate"}},
+                    { "Casetargetrate", new DisplayNameAndFormat { DisplayName = "Case Target Rate"}},
+                    { "EcmLastStatusDate", new DisplayNameAndFormat { DisplayName = "Ecm Last Status Date"}},
+                    { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
+                    { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
+                    { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+            }
+             }
+            },
+              { nameof(CrpUserPerformanceController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                    { "CaseType", new DisplayNameAndFormat { DisplayName = "Case Type"}},
+                    { "CaseStatus", new DisplayNameAndFormat { DisplayName = "Case Status"}},
+                    { "CreateUserId", new DisplayNameAndFormat { DisplayName = "Create User ID"}},
+                    { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                    { "AsssignedTime", new DisplayNameAndFormat { DisplayName = "Assigned Time"}},
+                    { "ActionUser", new DisplayNameAndFormat { DisplayName = "Action User"}},
+                    { "CustomerName", new DisplayNameAndFormat { DisplayName = "Customer Name"}},
+                    { "CustomerNumber", new DisplayNameAndFormat { DisplayName = "Customer Number"}},
+                    { "CaseCurrentRate", new DisplayNameAndFormat { DisplayName = "Case Current Rate"}},
+                    { "Casetargetrate", new DisplayNameAndFormat { DisplayName = "Case Target Rate"}},
+                    { "Action", new DisplayNameAndFormat { DisplayName = "Action"}},
+                    { "ReleasedDate", new DisplayNameAndFormat { DisplayName = "Released Date"}},
+                    { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
+                    { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
+                    { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+            }
+             }
+            }
 
         };
 

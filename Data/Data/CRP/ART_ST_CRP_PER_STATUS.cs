@@ -2,7 +2,7 @@
 {
     public class ART_ST_CRP_PER_STATUS
     {
-        public string Case_Status { get; set; }
-        public decimal Number_Of_Cases { get; set; }
+        public string case_status { get; set; }
+        public decimal TOTAL_NUMBER_OF_CASES { get; set; }
     }
 }

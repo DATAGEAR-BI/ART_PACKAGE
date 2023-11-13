@@ -269,6 +269,8 @@ namespace ART_PACKAGE.Hubs
 
 
             if (nameof(CrpCasesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpCase, CrpCasesController>(_crp, Context.User.Identity.Name, para);
+            if (nameof(CrpSystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpSystemPerformance, CrpSystemPerformanceController>(_crp, Context.User.Identity.Name, para);
+            if (nameof(CrpUserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpUserPerformance, CrpUserPerformanceController>(_crp, Context.User.Identity.Name, para);
 
 
         }

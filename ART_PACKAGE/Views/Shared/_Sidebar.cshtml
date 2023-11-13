@@ -640,7 +640,7 @@
                                 <ul class="treeview-menu">
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>CRP Cases</span>
+                                            <i class="glyphicon glyphicon-user"></i> <span>CRP Sys Perf</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -650,10 +650,24 @@
                                                 <a href="@Url.Action("Index", "CRPSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
                                             </li>
                                             <li class="active ">
-                                                <a href="@Url.Action("Index", "CRPCases")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                                <a href="@Url.Action("Index", "CrpSystemPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
                                             </li>
                                         </ul>
                                     </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>CRP User Perf</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "CrpUserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
                                 </ul>
                             </li>
 
