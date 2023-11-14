@@ -589,6 +589,22 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
         {
+            List<ColumnsDto> columns = null;
+            if (obj.IsIntialize)
+            {
+                columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
+                return new KendoDataDesc<T>
+                {
+                    Data = null,
+                    Columns = columns,
+                    Total = data.Count(),
+                };
+            }
+
+
+
+
+
             string filter = obj.Filter.GetFiltersString<T>();
 
 
@@ -611,11 +627,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 data = data.OrderBy(sort).AsQueryable();
             }
 
-            List<ColumnsDto> columns = null;
-            if (obj.IsIntialize)
-            {
-                columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
-            }
+
+
 
             int Count = 0;
             if (!obj.IsIntialize)

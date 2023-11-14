@@ -118,7 +118,7 @@
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
 
-
+    Grid: "/Grid/GetData",
     //TaskSchedular
     TaskSchedularUrl: "/Tasks/GetData",
 };

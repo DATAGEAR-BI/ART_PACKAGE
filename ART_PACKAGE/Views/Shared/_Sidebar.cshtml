@@ -1,4 +1,10 @@
-﻿<aside class="offcanvas offcanvas-start offcanvas-light" data-bs-scroll="true" tabindex="-1" id="drawer">
+﻿@using Data.Constants;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    var Modules = Configuration.GetSection("Modules")
+                        .Get<List<string>>();
+}
+<aside class="offcanvas offcanvas-start offcanvas-light" data-bs-scroll="true" tabindex="-1" id="drawer">
     <div class="offcanvas-header bg-primary">
         <a class="offcanvas-title text-white" href="javascript:">
             <img src="~/imgs/LOGOWhite.png" alt="ART logo" width="100" height="35" /> Analytics Reporting Tool
@@ -8,10 +14,158 @@
     <div class="offcanvas-body bg-primary bg-opacity-10">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" asp-action="Index" asp-controller="Home">
+                <a class="nav-link rounded-pill active" asp-action="Index" asp-controller="Home">
                     <i class="bi bi-clipboard2-data-fill"></i> Dashboard
                 </a>
             </li>
+
+
+
+            @if (Modules is not null)
+            {
+                @if (Modules.Contains("ECM"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#sunction" role="button" aria-expanded="false" aria-controls="sunction">
+                            <i class="bi bi-list-columns-reverse"></i> SANCTION REPORTS
+                        </a>
+                        <div class="collapse" id="sunction">
+                            <ul class="nav flex-column">
+                                <li class="nav-item ps-4">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#sysperformance" role="button" aria-expanded="false" aria-controls="sysperformance">
+                                        <i class="bi bi-pc-display-horizontal"></i> System Performance
+                                    </a>
+                                    <div class="collapse" id="sysperformance">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="SystemPerformance">
+                                                    Details
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="SystemPerformanceSummary">
+                                                    Summary
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item ps-4">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#userperformance" role="button" aria-expanded="false" aria-controls="userperformance">
+                                        <i class="bi bi-people-fill"></i> User Performance
+                                    </a>
+                                    <div class="collapse" id="userperformance">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="UserPerformance">
+                                                    Details
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="UserPerformPerAction">
+                                                    User Perf Per Action
+                                                </a>
+                                            </li>        
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="UserPerformancePerActionUser">
+                                                    User Perf Per Action User
+                                                </a>
+                                            </li>        
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="UserPerformancePerUserAndAction">
+                                                    User Perf Per User And Action
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+
+
+                @if (Modules.Contains("SASAML"))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#sasaml" role="button" aria-expanded="false" aria-controls="sasaml">
+                            AML REPORTS
+                        </a>
+                        <div class="collapse" id="sasaml">
+                            <ul class="nav flex-column">
+                                <li class="nav-item ps-4">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#alerts" role="button" aria-expanded="false" aria-controls="alerts">
+                                        Alerts
+                                    </a>
+                                    <div class="collapse" id="alerts">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="AlertDetails">
+                                                    Details
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="Triage">
+                                                    Triage
+                                                </a>
+                                            </li>  
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="AlertSummary">
+                                                    Summary
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li> 
+                                <li class="nav-item ps-4">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#cases" role="button" aria-expanded="false" aria-controls="cases">
+                                        Alerts
+                                    </a>
+                                    <div class="collapse" id="cases">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="CasesDetails">
+                                                    Details
+                                                </a>
+                                            </li> 
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="CasesSummary">
+                                                    Summary
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>  
+                                <li class="nav-item ps-4">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#custs" role="button" aria-expanded="false" aria-controls="custs">
+                                        Alerts
+                                    </a>
+                                    <div class="collapse" id="custs">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="Customers">
+                                                    Details
+                                                </a>
+                                            </li> 
+                                            <li class="nav-item">
+                                                <a class="nav-link ps-4" asp-action="Index" asp-controller="CustomersSummary">
+                                                    Summary
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                }
+
+            }
+
+
+
             <li class="nav-item">
                 <a class="nav-link" href="javascript:">
                     Link

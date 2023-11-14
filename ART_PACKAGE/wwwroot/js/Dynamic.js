@@ -25,6 +25,7 @@ var spinnerOpts = {
     className: 'spinner', // The CSS class to assign to the spinner
     position: 'absolute', // Element positioning
 };
+
 var spinnerStyle = document.createElement("link");
 spinnerStyle.rel = "stylesheet";
 spinnerStyle.href = "/lib/spin.js/spin.css";
@@ -789,6 +790,13 @@ function generateColumns(response) {
         var template = column.template;
         var isCollection = column.isCollection;
         var hasTemplate = template && template != ""
+
+
+        var columnF = column.filter;
+        var hasFilters = columnF && columnF != ""
+
+        if (hasFilters)
+            filter = columnFilters[columnF]();
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {

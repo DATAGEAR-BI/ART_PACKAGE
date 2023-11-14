@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using Hangfire;
+using Hangfire.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,7 +23,6 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         private readonly ILogger<TasksController> _logger;
         private readonly ITaskPerformer _taskPerformer;
         private readonly UserManager<AppUser> _userManager;
-
         public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager)
         {
             _context = context;
@@ -227,9 +227,9 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 DisplayNames = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                   {nameof(ExportTask.Period).ToLower(),Enum.GetNames(typeof(TaskPeriod)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
-                   {nameof(ExportTask.DayOfWeek).ToLower(),Enum.GetNames(typeof(DayOfWeek)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
-                   {nameof(ExportTask.Month).ToLower(),Enum.GetNames(typeof(MonthsOfYear)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
+                   {nameof(ExportTaskDto.Period).ToLower(),Enum.GetNames(typeof(TaskPeriod)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
+                   {nameof(ExportTaskDto.DayOfWeek).ToLower(),Enum.GetNames(typeof(DayOfWeek)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
+                   {nameof(ExportTaskDto.Month).ToLower(),Enum.GetNames(typeof(MonthsOfYear)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].SkipList;
             }
@@ -238,7 +238,27 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 
             var result = new
             {
-                data = Data.Data,
+                data = Data.Data.Select(x => new ExportTaskDto
+                {
+                    Id = x.Id,
+                    Day = x.Day,
+                    Month = x.Month,
+                    DayOfWeek = x.DayOfWeek,
+                    Description = x.Description,
+                    Hour = x.Hour,
+                    IsMailed = x.IsMailed,
+                    IsSavedOnServer = x.IsSavedOnServer,
+                    MailContent = x.MailContent,
+                    Minute = x.Minute,
+                    Name = x.Name,
+                    Parameters = x.ParametersJson,
+                    Path = x.Path,
+                    Period = x.Period,
+                    ReportName = x.ReportName,
+                    LastExceutionDate = GetExecutionDateTimes(x.Name).lastDate,
+                    NextExceutionDate = GetExecutionDateTimes(x.Name).nextDate,
+
+                }),
                 columns = Data.Columns,
                 total = Data.Total,
                 containsActions = true,
@@ -280,6 +300,23 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Content = JsonConvert.SerializeObject(result)
             };
         }
+
+
+        private static (DateTime? lastDate, DateTime? nextDate) GetExecutionDateTimes(string jobName)
+        {
+            DateTime? lastExecutionDateTime = null;
+            DateTime? nextExecutionDateTime = null;
+            using (IStorageConnection connection = JobStorage.Current.GetConnection())
+            {
+                RecurringJobDto? job = connection.GetRecurringJobs().FirstOrDefault(p => p.Id == jobName);
+                if (job != null && job.LastExecution.HasValue)
+                    lastExecutionDateTime = job.LastExecution;
+                if (job != null && job.NextExecution.HasValue)
+                    nextExecutionDateTime = job.NextExecution;
+            }
+            return (lastExecutionDateTime, nextExecutionDateTime);
+        }
+
         [HttpGet("[controller]/[action]/{name}")]
         public IActionResult IsTaskExists(string name)
         {

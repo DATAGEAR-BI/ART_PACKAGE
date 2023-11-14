@@ -10,6 +10,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.Audit;
 using Data.Data.ExportSchedular;
 
@@ -24,13 +25,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                { nameof(TasksController).ToLower(), new ReportConfig {
                SkipList = new List<string>()
                 {
-                    nameof(ExportTask.Mails),
-                    nameof(ExportTask.Name)
+                    nameof(ExportTaskDto.Mails),
+                    nameof(ExportTaskDto.Name),
+                    nameof(ExportTask.UserId),
+                    nameof(ExportTask.Deleted),
+                    nameof(ExportTask.ParametersJson),
+
                 },
                DisplayNames = new Dictionary<string, DisplayNameAndFormat>
             {
-                    {nameof(ExportTask.Period),new DisplayNameAndFormat { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
-                    {nameof(ExportTask.DisplayName),new DisplayNameAndFormat { DisplayName ="Name" }},
+                    {nameof(ExportTaskDto.Period),new DisplayNameAndFormat { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
+                    {nameof(ExportTaskDto.DisplayName),new DisplayNameAndFormat { DisplayName ="Name" }},
             }
                }
             },

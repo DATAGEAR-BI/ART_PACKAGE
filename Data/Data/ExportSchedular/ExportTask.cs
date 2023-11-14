@@ -30,6 +30,10 @@
 
         public string? UserId { get; set; }
 
+
+        public DateTime? LastExceutionDate { get; set; }
+        public DateTime? NextExceutionDate { get; set; }
+
         public ICollection<TaskMails> Mails { get; set; } = null!;
 
     }

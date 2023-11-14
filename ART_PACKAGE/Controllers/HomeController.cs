@@ -1,7 +1,4 @@
-﻿using ART_PACKAGE.Controllers.SASAML;
-using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.DBService;
-using ART_PACKAGE.Helpers.Mail;
+﻿using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
@@ -9,7 +6,6 @@ using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
@@ -27,10 +23,8 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        private readonly MailConfiguration mailConfig;
-        private readonly ICsvExport _csv;
 
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IOptions<MailConfiguration> mailConfig, ICsvExport csv)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
 
             _logger = logger;
@@ -56,17 +50,21 @@ namespace ART_PACKAGE.Controllers
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
-
-            this.mailConfig = mailConfig.Value;
-            _csv = csv;
         }
 
 
 
         public async Task<IActionResult> TestDrop()
         {
-            _ = _csv.ExportForSchedulaedTask<ArtAmlAlertDetailView, AlertDetailsController>(_dbAml, "[[[\"AlertStatus\",\"<>\",\"Closed\"],\"and\",[\"AlertedEntityNumber\",\"<>\",\"dsgdsg\"],\"and\",[\"CreateDate\",\"<\",\"2023-11-05T11:48:11.117Z\"]],\"or\",[[\"AlertStatus\",\"contains\",\"Closed\"],\"or\",[\"AlertedEntityNumber\",\"isblank\",\"\"]]]");
-            return Ok(new List<string> { "islam", "khalil" });
+
+            DateTime? lastExecutionDateTime = null;
+            DateTime? nextExecutionDateTime = null;
+
+
+
+
+
+            return Ok(new { lastExecutionDateTime, nextExecutionDateTime });
         }
 
 

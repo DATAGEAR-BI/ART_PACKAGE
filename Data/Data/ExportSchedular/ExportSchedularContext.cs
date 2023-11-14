@@ -19,6 +19,9 @@ namespace Data.Data.ExportSchedular
 
                 e.HasMany(e => e.Mails).WithOne(p => p.Task).HasForeignKey(p => p.TaskId);
                 e.Property(p => p.Deleted).HasDefaultValue(false);
+                e.Ignore(p => p.LastExceutionDate);
+                e.Ignore(p => p.NextExceutionDate);
+
                 e.HasIndex(p => p.Name).IsUnique();
             });
 
