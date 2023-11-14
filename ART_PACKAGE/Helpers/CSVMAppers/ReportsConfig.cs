@@ -74,6 +74,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
                     { "PepInd", new DisplayNameAndFormat { DisplayName = "Pep Ind"}},
                     { "EcmLastStatusDate", new DisplayNameAndFormat { DisplayName = "Ecm Last Status Date"}},
+                    { "LastComment", new DisplayNameAndFormat { DisplayName = "Last Comment"}},
+                    { "LastCommentSubject", new DisplayNameAndFormat { DisplayName = "Last Comment Subject"}},
           }
     }
             },

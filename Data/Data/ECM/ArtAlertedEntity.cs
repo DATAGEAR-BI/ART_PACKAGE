@@ -8,6 +8,8 @@
         public string? PartNumber { get; set; }
         public string? PepInd { get; set; }
         public DateTime? EcmLastStatusDate { get; set; }
+        public string? LastComment { get; set; }
+        public string? LastCommentSubject { get; set; }
 
     }
 }

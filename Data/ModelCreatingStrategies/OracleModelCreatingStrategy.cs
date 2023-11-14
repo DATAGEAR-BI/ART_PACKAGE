@@ -1928,16 +1928,22 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.PartName)
                     .HasMaxLength(4000)
                      .IsUnicode(false)
-                    .HasColumnName("PART_NAME");
+                    .HasColumnName("PARTY_NAME");
 
                 entity.Property(e => e.PartNumber)
                     .HasMaxLength(4000)
                      .IsUnicode(false)
-                    .HasColumnName("PART_NUMBER");
+                    .HasColumnName("PARTY_NUMBER");
 
                 entity.Property(e => e.PepInd)
                     .HasMaxLength(5)
                     .HasColumnName("PEP_IND");
+                entity.Property(e => e.LastComment)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT");
+                entity.Property(e => e.LastCommentSubject)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT_SUBJECT");
             });
 
             modelBuilder.Entity<ArtUserPerformance>(entity =>
