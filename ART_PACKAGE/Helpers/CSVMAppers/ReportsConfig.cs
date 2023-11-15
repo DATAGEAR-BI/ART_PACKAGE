@@ -220,7 +220,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"TradeInstructions",new DisplayNameAndFormat { DisplayName ="Trade Instructions"}},
                             {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
                             {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
-                            {"EcmAssignedTo",new DisplayNameAndFormat { DisplayName ="Ecm Assigned To"}},
                             {"Assignee",new DisplayNameAndFormat { DisplayName ="Assignee"}},
                             {"AssignedBy",new DisplayNameAndFormat { DisplayName ="Assigned By"}},
                             {"AssignedTime",new DisplayNameAndFormat { DisplayName ="Assigned Time"}},
