@@ -221,6 +221,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
                             {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
                             {"EcmAssignedTo",new DisplayNameAndFormat { DisplayName ="Ecm Assigned To"}},
+                            {"Assignee",new DisplayNameAndFormat { DisplayName ="Assignee"}},
+                            {"AssignedBy",new DisplayNameAndFormat { DisplayName ="Assigned By"}},
+                            {"AssignedTime",new DisplayNameAndFormat { DisplayName ="Assigned Time"}},
+                            {"UnAssignee",new DisplayNameAndFormat { DisplayName ="UnAssignee"}},
+                            {"UnAssignedBy",new DisplayNameAndFormat { DisplayName ="UnAssigned By"}},
+                            {"UnAssignedTime",new DisplayNameAndFormat { DisplayName ="UnAssigned Time"}},
 
                     },
                            SkipList =  new List<string>()

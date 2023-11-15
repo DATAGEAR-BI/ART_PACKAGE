@@ -35,6 +35,12 @@ namespace Data.Data.FTI
         public string? CaseComments { get; set; }
         public string? ParentCaseId { get; set; }
         public string? EcmAssignedTo { get; set; }
+        public string? Assignee { get; set; }
+        public string? AssignedBy { get; set; }
+        public DateTime? AssignedTime { get; set; }
+        public string? UnAssignee { get; set; }
+        public string? UnAssignedBy { get; set; }
+        public DateTime? UnAssignedTime { get; set; }
 
     }
 }

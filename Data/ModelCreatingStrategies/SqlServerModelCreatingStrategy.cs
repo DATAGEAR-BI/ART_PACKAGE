@@ -4570,6 +4570,38 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
+                entity.Property(e => e.Assignee)
+                  .HasMaxLength(60)
+                  .IsUnicode(false)
+                  .HasColumnName("ASSIGNEE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("ASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ASSIGNED_TIME");
+
+                entity.Property(e => e.UnAssignee)
+                  .HasMaxLength(60)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNEE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("UNASSIGNED_TIME");
+
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
                 entity.Property(e => e.CaseCreationDate)
@@ -4589,7 +4621,7 @@ namespace Data.ModelCreatingStrategies
                   .IsUnicode(false)
                   .HasColumnName("BRANCH_NAME")
                   .UseCollation("Arabic_100_CI_AI");
-
+                
                 entity.Property(e => e.CustomerName)
                   .HasMaxLength(1000)
                   .IsUnicode(false)
