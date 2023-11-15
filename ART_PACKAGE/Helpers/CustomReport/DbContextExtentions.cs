@@ -243,7 +243,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     Data = result.Read().ToList(),
                     Title = chart.Title,
                     Cat = "CAT",
-                    Val = "AGG"
+                    Val = "AGG",
+                    Type = chart.Type,
 
                 };
                 data.Add(d);

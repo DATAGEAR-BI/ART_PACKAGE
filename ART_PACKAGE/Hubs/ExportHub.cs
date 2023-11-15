@@ -30,7 +30,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
 using System.Text;
-using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
 {
@@ -52,7 +51,7 @@ namespace ART_PACKAGE.Hubs
         private readonly TIZONE2Context ti;
         private readonly KYCContext _kyc;
         private readonly DBFactory dBFactory;
-        private DbContext dbInstance;
+        private readonly DbContext dbInstance;
         private readonly AmlAnalysisContext _amlanalysis;
 
         public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
@@ -332,27 +331,27 @@ namespace ART_PACKAGE.Hubs
 
         private async Task ExportCustomReport(ExportDto<object> exportDto)
         {
-            string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
-            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
-            dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
-            string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
-            {
-                name = x.Column,
-                type = x.JsType,
-                isNullable = x.IsNullable,
-            }).ToArray();
-            string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
-            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
+            //string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
+            //ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
+            //List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+            //dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
+            //string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+            //ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+            //{
+            //    name = x.Column,
+            //    type = x.JsType,
+            //    isNullable = x.IsNullable,
+            //}).ToArray();
+            //string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
+            //List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
 
-            List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
+            //List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
 
-            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
-            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
-            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-            await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
-                                .SendAsync("csvRecevied", bytes, FileName);
+            //DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
+            //byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
+            //string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+            //await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
+            //                    .SendAsync("csvRecevied", bytes, FileName);
         }
 
         private async Task ExportForWorkflowProg(ExportDto<object> para)

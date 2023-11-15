@@ -2,6 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
+import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -20,11 +21,12 @@ class Grid extends HTMLElement {
     defaultAggs = undefined;
     defaultGroup = undefined;
     handlerkey = "";
+    isCustom = false;
     constructor() {
         super();
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
-
+        this.isCustom = Object.keys(this.dataset).includes("custom");
         if (this.dataset.handlerkey) {
             this.handlerkey = this.dataset.handlerkey;
         }
@@ -38,7 +40,19 @@ class Grid extends HTMLElement {
             this.defaultGroup = JSON.parse(this.dataset.defaultgroup);
         }
         this.ToggleSelectAll = this.ToggleSelectAll.bind(this);
-        this.url = URLS[this.dataset.urlkey];
+        if (this.isCustom) {
+            this.url = URLS.CustomReport + parseInt(this.dataset.reportid)
+            var title = document.createElement("h2");
+            title.id = this.id + "-title";
+            var desc = document.createElement("p");
+            desc.id = this.id + "-desc";
+            this.appendChild(title)
+            this.appendChild(desc)
+        } else {
+
+            this.url = URLS[this.dataset.urlkey];
+        }
+        console.log(this.url);
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
         this.intializeColumns();
@@ -51,7 +65,7 @@ class Grid extends HTMLElement {
 
         var para = { IsIntialize: true };
 
-         fetch(this.url, {
+        fetch(this.url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -59,38 +73,55 @@ class Grid extends HTMLElement {
             },
             body: JSON.stringify(para),
         })
-        .then((d) => d.json())
-        .then((d) => {
-            this.total = d.total;
-            this.reportName = d.reportname;
-            //if (isHierarchy == "true") {
-            //    groupList = d.grouplist;
-            //    valList = d.vallist;
-            //}
-            this.model = this.generateModel(d.columns);
-            this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable);
-            this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun);
+            .then((d) => d.json())
+            .then((d) => {
+                this.total = d.total;
+                this.reportName = d.reportname;
+                //if (isHierarchy == "true") {
+                //    groupList = d.grouplist;
+                //    valList = d.vallist;
+                //}
+                this.model = this.generateModel(d.columns);
+                this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable);
+                this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun);
 
 
-            //var title = document.getElementById("title");
-            //var desc = document.getElementById("desc");
 
-            //if (title && desc) {
-            //    title.innerText = d.title;
-            //    desc.innerText = d.desc;
-            //}
-            //$(".spinner").remove();
-            this.generateGrid();
+                if (this.isCustom) {
+                    document.getElementById(this.id + "-title").innerText = d.title;
+                    document.getElementById(this.id + "-desc").innerText = d.desc;
 
-        })
-        .catch(err => {
-            console.error(err);
-            toastObj.icon = 'error';
-            toastObj.text = "something wrong happend while intializing the Grid please try again";
-            toastObj.heading = "Grid Intialization Status";
-            $.toast(toastObj);
-            return;
-        });
+
+                    if (d.chartsids) {
+                        var chartsContainer = document.createElement("div");
+                        chartsContainer.classList.add("row");
+                        [...d.chartsids].forEach(x => {
+                            var chart = document.createElement("div");
+                            chart.id = x
+                            chart.classList.add("col-12");
+                            chartsContainer.appendChild(chart);
+                        })
+
+
+
+
+                        this.appendChild(chartsContainer);
+
+                    }
+
+                }
+                //$(".spinner").remove();
+                this.generateGrid();
+
+            })
+            .catch(err => {
+                console.error(err);
+                toastObj.icon = 'error';
+                toastObj.text = "something wrong happend while intializing the Grid please try again";
+                toastObj.heading = "Grid Intialization Status";
+                $.toast(toastObj);
+                return;
+            });
     }
     generateModel(columns) {
         var sampleDataItem = columns;
@@ -283,10 +314,10 @@ class Grid extends HTMLElement {
             toolbar: this.toolbar,
             dataSource: {
                 transport: {
-                    read:  (options) => {
+                    read: (options) => {
 
                         const readdata = () => {
-                        
+
                             fetch(this.url, {
                                 method: "POST",
                                 headers: {
@@ -311,10 +342,10 @@ class Grid extends HTMLElement {
                                         tpcountSpan.innerText = `${options.data.skip + 1} - ${options.data.skip + 100} of ${d.total} items`
 
                                     }
-                                    
+
                                     options.success([...d.data]);
                                     /*   }*/
-                                    
+
                                     if (this.isAllSelected) {
                                         var select = [];
                                         [...Array(100).keys()].forEach((x) => {
@@ -327,12 +358,12 @@ class Grid extends HTMLElement {
                                         var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
                                         if (selectedInCurrentPage) {
                                             selectedInCurrentPage.forEach((x) => {
-                                            
+
                                                 var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
                                                 if (item && item.length > 0) {
                                                     var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
                                                     grid.select(row);
-                                                 };
+                                                };
                                             });
                                             setTimeout(() => {
                                                 var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
@@ -367,25 +398,25 @@ class Grid extends HTMLElement {
                                     //    fDiv.appendChild(frag);
 
                                     //}
-                                    //if (chartsDiv) {
-                                    //    var chartdata = [];
-                                    //    if (d.chartdata)
-                                    //        chartdata = [...d.chartdata];
-                                    //    chartdata.forEach((x) => {
-                                    //        var div = document.getElementById(x.ChartId);
+                                    if (this.isCustom) {
+                                        var chartdata = [];
+                                        if (d.chartdata)
+                                            chartdata = [...d.chartdata];
+                                        chartdata.forEach((x) => {
+                                            var div = document.getElementById(x.ChartId);
 
-                                    //        var type = div.dataset.type;
+                                            
 
-                                    //        makedynamicChart(
-                                    //            parseInt(type),
-                                    //            x.Data,
-                                    //            x.Title,
-                                    //            x.ChartId,
-                                    //            x.Val,
-                                    //            x.Cat
-                                    //        );
-                                    //    });
-                                    //}
+                                            makedynamicChart(
+                                                x.Type,
+                                                x.Data,
+                                                x.Title,
+                                                x.ChartId,
+                                                x.Val,
+                                                x.Cat
+                                            );
+                                        });
+                                    }
                                 }).catch(err => {
                                     console.error(err);
                                     toastObj.icon = 'error';
@@ -418,7 +449,7 @@ class Grid extends HTMLElement {
 
                         } else {
 
-                           // para.Id = id;
+                            // para.Id = id;
                             para.Take = options.data.take;
                             para.Skip = options.data.skip;
                             para.Sort = options.data.sort;
@@ -432,7 +463,7 @@ class Grid extends HTMLElement {
 
 
 
-                        
+
                     },
                 },
 
@@ -458,7 +489,7 @@ class Grid extends HTMLElement {
             persistSelection: true,
             pageable: true,
             sortable: true,
-            change:  (e) => {
+            change: (e) => {
                 if ([...grid.select()].length > 0) {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
                         var dataItem = grid.dataItem(x);
@@ -479,7 +510,7 @@ class Grid extends HTMLElement {
             height: 550,
             groupable: true,
             dataBound: (e) => {
-                
+
                 for (var i = 0; i < this.columns.length; i++) {
                     grid.autoFitColumn(i);
                 }
@@ -494,15 +525,15 @@ class Grid extends HTMLElement {
                 //    }
                 //}
 
-               
-                grid.tbody.find("tr").dblclick( (e) => {
-                 
+
+                grid.tbody.find("tr").dblclick((e) => {
+
                     var dataItem = grid.dataItem(e.target.parentElement);
                     if (this.handlerkey && this.handlerkey != "") {
                         var dbclickhandler = dbClickHandlers[this.handlerkey];
                         dbclickhandler(dataItem).then(console.log("done"));
                     }
-                   
+
                 });
             },
             //...(isHierarchy == "true" && {
@@ -526,62 +557,62 @@ class Grid extends HTMLElement {
         grid.bind("filterMenuInit", (e) => {
             if (this.isMultiSelect.includes(e.field)) {
                 e.container.find("[type='submit']").click((ev) => {
-                            ev.preventDefault();
-                           var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
-                           var op = e.container.find("select[title='Operator']")[0].value
-                            var values = $(multiselects).data("kendoMultiSelect").value();
-                       
-                           var filter = { logic: "or", filters: [] };
-             
-                           if (values && values.length > 0) {
-                             
-                               values.forEach(x => {
-                                   var f = {
-                                       field: e.field,
-                                       operator: op,
-                                       value: x,
-                                   };
-                                   filter.filters.push(f);
-                               });
-                        
-                           } else {
-                               filter.filters.push({
-                                   field: e.field,
-                                   operator: op,
-                                   value: "",
-                               });
-                           }
-                         
-                           var filters = grid.dataSource.filter();
-                           if (filters) {
-                              
-                               var remainingFilters = filters.filters.filter((x) => {
-                                   if (x.field && x.field != e.field) return true;
-                                   if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
-                               });
+                    ev.preventDefault();
+                    var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
+                    var op = e.container.find("select[title='Operator']")[0].value
+                    var values = $(multiselects).data("kendoMultiSelect").value();
 
-                               var newFilter = [];
+                    var filter = { logic: "or", filters: [] };
 
-                               if (filter.filters.length == 0) {
-                                   newFilter = [...remainingFilters];
-                               } else {
-                                   newFilter = [...remainingFilters, filter];
-                               }
-                               var parentFilter = {
-                                   logic: "and",
-                                   filters: [...newFilter],
-                               };
-                               grid.dataSource.filter(parentFilter);
-                           }
-                           else {
-                           
+                    if (values && values.length > 0) {
 
-                               var parentFilter = {
-                                   logic: "and",
-                                   filters: [filter],
-                               };
-                               grid.dataSource.filter(parentFilter);
-                    } 
+                        values.forEach(x => {
+                            var f = {
+                                field: e.field,
+                                operator: op,
+                                value: x,
+                            };
+                            filter.filters.push(f);
+                        });
+
+                    } else {
+                        filter.filters.push({
+                            field: e.field,
+                            operator: op,
+                            value: "",
+                        });
+                    }
+
+                    var filters = grid.dataSource.filter();
+                    if (filters) {
+
+                        var remainingFilters = filters.filters.filter((x) => {
+                            if (x.field && x.field != e.field) return true;
+                            if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                        });
+
+                        var newFilter = [];
+
+                        if (filter.filters.length == 0) {
+                            newFilter = [...remainingFilters];
+                        } else {
+                            newFilter = [...remainingFilters, filter];
+                        }
+                        var parentFilter = {
+                            logic: "and",
+                            filters: [...newFilter],
+                        };
+                        grid.dataSource.filter(parentFilter);
+                    }
+                    else {
+
+
+                        var parentFilter = {
+                            logic: "and",
+                            filters: [filter],
+                        };
+                        grid.dataSource.filter(parentFilter);
+                    }
                     $(e.container).data("kendoPopup").close();
                 });
             }
@@ -600,7 +631,7 @@ class Grid extends HTMLElement {
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
-               setTimeout(() => {
+                setTimeout(() => {
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');
@@ -608,8 +639,8 @@ class Grid extends HTMLElement {
                     selectall.ariaChecked = false;
 
                 }, 0);
-            
-    
+
+
             }
         });
 
@@ -660,13 +691,13 @@ class Grid extends HTMLElement {
     }
 
     ToggleSelectAll(e) {
-        
-            if (!this.isAllSelected) {
-                this.isAllSelected = true;
-            } else {
-                this.isAllSelected = false;
-            }
-       
+
+        if (!this.isAllSelected) {
+            this.isAllSelected = true;
+        } else {
+            this.isAllSelected = false;
+        }
+
     }
 
     cleanDataItem(dataItem) {

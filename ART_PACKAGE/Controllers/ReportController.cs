@@ -54,19 +54,14 @@ namespace ART_PACKAGE.Controllers
             return View();
         }
 
-        [HttpPost()]
-        public IActionResult GetGridData([FromBody] KendoRequest obj)
+        [HttpPost("[controller]/[action]/{id}")]
+        public IActionResult GetGridData([FromRoute] int id, [FromBody] KendoRequest obj)
         {
 
-            string dbtype = db.Database.IsOracle() ? "oracle" : db.Database.IsSqlServer() ? "sqlServer" : "";
 
-            string orderBy = obj.Sort is null ? null : string.Join(" , ", obj.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == obj.Id);
-            string schema = Report.Schema.ToString();
-            dbInstance = dBFactory.GetDbInstance(schema);
-            List<ArtSavedReportsChart>? charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == obj.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
-            List<ChartData<dynamic>> chartsdata = null;
 
+
+            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
 
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
             {
@@ -75,6 +70,30 @@ namespace ART_PACKAGE.Controllers
                 type = x.JsType
 
             }).ToArray();
+            List<ArtSavedReportsChart>? charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+
+            if (obj.IsIntialize)
+            {
+                return Content(JsonConvert.SerializeObject(new
+                {
+                    columns,
+                    title = Report.Name,
+                    desc = Report.Description,
+                    chartsids = charts.Select((x, i) => $"chart-{i}")
+
+                }
+         ), "application/json"
+         );
+            }
+            string schema = Report.Schema.ToString();
+            dbInstance = dBFactory.GetDbInstance(schema);
+            string dbtype = db.Database.IsOracle() ? "oracle" : db.Database.IsSqlServer() ? "sqlServer" : "";
+
+            string orderBy = obj.Sort is null ? null : string.Join(" , ", obj.Sort.Select(x => $"{x.field} {x.dir}"));
+
+            List<ChartData<dynamic>> chartsdata = null;
+
+
             string filter = obj.Filter.GetFiltersString(dbtype, columns);
             if (charts is not null && charts.Count != 0)
             {
@@ -84,7 +103,6 @@ namespace ART_PACKAGE.Controllers
             return Content(JsonConvert.SerializeObject(new
             {
                 data = data.Data,
-                columns,
                 total = data.DataCount,
                 chartdata = chartsdata,
                 title = Report.Name,
@@ -279,11 +297,12 @@ namespace ART_PACKAGE.Controllers
 
             return Ok(reportAfter);
         }
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> exportDto)
+        [HttpPost("[controller]/[action]/{id}")]
+        public async Task<IActionResult> Export([FromRoute] int id, [FromBody] ExportDto<decimal> exportDto)
         {
             string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
-            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
+            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
@@ -322,12 +341,12 @@ namespace ART_PACKAGE.Controllers
                                                     , User.Identity.Name, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames);
             return File(pdfBytes, "application/pdf");
         }
-
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        [HttpPost("[controller]/[action]/{id}")]
+        public async Task<IActionResult> ExportPdf([FromRoute] int id, [FromBody] KendoRequest req)
         {
             string orderBy = req.Sort is null ? null : string.Join(" , ", req.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == req.Id);
-            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
+            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
             dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
             string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
             ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
