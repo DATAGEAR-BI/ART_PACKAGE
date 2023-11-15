@@ -15187,5 +15187,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_TYPE");
             });
         }
+
+        public void OnSegFcfkcModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

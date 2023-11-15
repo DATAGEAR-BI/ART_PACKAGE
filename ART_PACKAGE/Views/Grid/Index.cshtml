@@ -2,7 +2,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<m-grid data-urlkey="Grid"></m-grid>
+<smart-tabs style="width:100%;height:600px" tab-position="bottom">
+    <smart-tab-item label="Tab 1" selected>
+        <m-grid id="Test1" data-urlkey="Grid" data-handlerkey="Grid"></m-grid>
+    </smart-tab-item>
+    <smart-tab-item label="Tab 2">
+        <m-grid id="Test2" data-urlkey="Grid" data-handlerkey="Grid"></m-grid>
+    </smart-tab-item>
+    <smart-tab-item label="Tab 3">
+        <m-grid id="Test3" data-urlkey="Grid" data-handlerkey="Grid"></m-grid>
+    </smart-tab-item>
+</smart-tabs>
+
+
 
 @section KendoScripts{
     <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
@@ -15,5 +27,6 @@
 }
 
 @section scripts{
-    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.tabs.js"></script>
+    <script type="module"  src="~/js/components/grid/grid.js"></script>
 }

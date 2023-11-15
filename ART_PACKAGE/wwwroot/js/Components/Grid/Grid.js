@@ -1,6 +1,7 @@
 import { URLS } from "../../URLConsts.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -10,14 +11,32 @@ class Grid extends HTMLElement {
     toolbar = [];
     isDateField = [];
     isNumberField = [];
+    isMultiSelect = [];
     gridDiv = document.createElement("div");
     isStoredProc = false;
     isAllSelected = false;
     selectedRows = {};
+    defaultfilters = undefined;
+    defaultAggs = undefined;
+    defaultGroup = undefined;
+    handlerkey = "";
     constructor() {
         super();
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
+
+        if (this.dataset.handlerkey) {
+            this.handlerkey = this.dataset.handlerkey;
+        }
+        if (this.dataset.defaultfilters) {
+            this.defaultfilters = JSON.parse(this.dataset.defaultfilters);
+        }
+        if (this.dataset.aggregates) {
+            this.defaultAggs = JSON.parse(this.dataset.aggregates);
+        }
+        if (this.dataset.defaultgroup) {
+            this.defaultGroup = JSON.parse(this.dataset.defaultgroup);
+        }
         this.ToggleSelectAll = this.ToggleSelectAll.bind(this);
         this.url = URLS[this.dataset.urlkey];
         this.gridDiv.id = this.id + "-Grid";
@@ -126,8 +145,10 @@ class Grid extends HTMLElement {
         };
         var cols = columnNames.map((column) => {
             var filter = {};
-            if (column.isDropDown)
+            if (column.isDropDown) {
                 filter = columnFilters.multiSelectFilter(column);
+                this.isMultiSelect.push(column.name);
+            }
 
 
 
@@ -304,46 +325,22 @@ class Grid extends HTMLElement {
                                     }
                                     else {
                                         var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
-                                    
                                         if (selectedInCurrentPage) {
-                                       
-
                                             selectedInCurrentPage.forEach((x) => {
-                                                console.log(x);
+                                            
                                                 var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
-
-                                                 console.log(item);
-                                                 if (item && item > 0) {
-                                                     grid.select(`tr[data-uid="${item.uid}"]`);
+                                                if (item && item.length > 0) {
+                                                    var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
+                                                    grid.select(row);
                                                  };
-
                                             });
-
-
-                                            //selectedInCurrentPage.forEach((x) => {
-
-
-                                                
-
-                                            //    //var res = $.grep(, function (d) {
-                                                  
-                                            //    //    var eq = areObjectEqual(d, x, ["uid", "dirtyFields", "parent", "dirty"]);
-                                            //    //    console.log(eq);
-                                            //    //    return eq;
-                                            //    //});
-
-                                            //    //console.log(x);
-
-                                               
-                                            //});
-
-                                            //setTimeout(() => {
-                                            //    var selectall = document.querySelector("th > input.k-checkbox");
-                                            //    selectall.classList.remove("k-checkbox:checked");
-                                            //    selectall.setAttribute("aria-checked", 'false');
-                                            //    selectall.checked = false;
-                                            //    selectall.ariaChecked = false;
-                                            //}, 5);
+                                            setTimeout(() => {
+                                                var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
+                                                selectall.classList.remove("k-checkbox:checked");
+                                                selectall.setAttribute("aria-checked", 'false');
+                                                selectall.checked = false;
+                                                selectall.ariaChecked = false;
+                                            }, 0);
                                         }
                                     }
                                     //var filter = options.data.filter;
@@ -447,69 +444,15 @@ class Grid extends HTMLElement {
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                //...(defaultfilters && { filter: JSON.parse(defaultfilters) }),
-                //...(defaultGroup && { group: JSON.parse(defaultGroup) }),
-                //...(defaultAggs && { aggregate: JSON.parse(defaultAggs) }),
+                ...(this.defaultfilters && { filter: this.defaultfilters }),
+                ...(this.defaultGroup && { group: this.defaultGroup }),
+                ...(this.defaultAggs && { aggregate: this.defaultAggs }),
                 serverSorting: true,
                 pageSize: 100 /*isHierarchy ? 1000 : 100,*/
 
             },
             resizable: true,
             filterable: true,
-            filter: (e) => {
-
-                //var multiselects = document.querySelector(`[data-role=multiselect][data-field=${e.field}]`);
-                //if (multiselects) {
-                //    e.preventDefault();
-                //    var filter = { logic: "or", filters: [] };
-                //    var values = $(multiselects).data("kendoMultiSelect").value();
-                //    var op = multiselects.parentElement.parentElement.querySelector("select[title='Operator']").value
-                //    if (values && values.length > 0) {
-                //        $.each(values, function (i, v) {
-                //            filter.filters.push({
-                //                field: e.field,
-                //                operator: op,
-                //                value: v,
-                //            });
-                //        });
-                //    } else {
-                //        filter.filters.push({
-                //            field: e.field,
-                //            operator: op,
-                //            value: "",
-                //        });
-                //    }
-
-                //    var filters = $("#grid").data("kendoGrid").dataSource.filter();
-                //    if (filters) {
-                //        var remainingFilters = filters.filters.filter((x) => {
-                //            if (x.field && x.field != e.field) return true;
-                //            if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
-                //        });
-
-                //        var newFilter = [];
-
-                //        if (filter.filters.length == 0) {
-                //            newFilter = [...remainingFilters];
-                //        } else {
-                //            newFilter = [...remainingFilters, filter];
-                //        }
-                //        var parentFilter = {
-                //            logic: "and",
-                //            filters: [...newFilter],
-                //        };
-                //        $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-                //    } else {
-                //        var parentFilter = {
-                //            logic: "and",
-                //            filters: [filter],
-                //        };
-                //        $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-                //    }
-                //}
-
-
-            },
             columns: this.columns,
             noRecords: true,
             persistSelection: true,
@@ -520,7 +463,7 @@ class Grid extends HTMLElement {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
                         var dataItem = grid.dataItem(x);
                         // Store relevant information dynamically
-                        this.cleanDataItem(dataItem);
+                        return this.cleanDataItem(dataItem);
                     });
                 } else {
                     delete this.selectedRows[grid.dataSource.page()];
@@ -535,9 +478,10 @@ class Grid extends HTMLElement {
             },
             height: 550,
             groupable: true,
-            dataBound: function (e) {
+            dataBound: (e) => {
+                
                 for (var i = 0; i < this.columns.length; i++) {
-                    this.autoFitColumn(i);
+                    grid.autoFitColumn(i);
                 }
 
                 //if (isColoredRows) {
@@ -550,36 +494,16 @@ class Grid extends HTMLElement {
                 //    }
                 //}
 
-                //$("[type='reset']").click(function (e) {
-
-                //    // Your custom logic to handle the clear button event
-                //    var multi = e.target.parentElement.parentElement.querySelector(`[data-role=multiselect][data-field]`);
-
-                //    if (multi) {
-                //        var field = multi.dataset.field;
-                //        e.preventDefault();
-
-                //        $(multi).data("kendoMultiSelect").value(null);
-                //        var filters = $("#grid").data("kendoGrid").dataSource.filter();
-
-                //        var filtersExceptThis = filters.filters.filter((x) => {
-                //            if (x.field && x.field != field) return true;
-                //            if (x.filters && x.filters.some((x) => x.field != field)) return true;
-                //        });
-                //        $("#grid").data("kendoGrid").dataSource.filter({
-                //            logic: "and",
-                //            filters: [...filtersExceptThis],
-                //        });
-
-                //        return;
-
-                //    }
-                //});
-                //this.tbody.find("tr").dblclick(function (e) {
-                //    var dataItem = grid.dataItem(this);
-                //    var dbclickhandler = dbClickHandlers[handlerkey];
-                //    dbclickhandler(dataItem).then(console.log("done"));
-                //});
+               
+                grid.tbody.find("tr").dblclick( (e) => {
+                 
+                    var dataItem = grid.dataItem(e.target.parentElement);
+                    if (this.handlerkey && this.handlerkey != "") {
+                        var dbclickhandler = dbClickHandlers[this.handlerkey];
+                        dbclickhandler(dataItem).then(console.log("done"));
+                    }
+                   
+                });
             },
             //...(isHierarchy == "true" && {
             //    detailInit: (e) => {
@@ -597,47 +521,96 @@ class Grid extends HTMLElement {
 
         var grid = $(this.gridDiv).data("kendoGrid");
 
+
+        // event for constructing the filters for multi select columns
+        grid.bind("filterMenuInit", (e) => {
+            if (this.isMultiSelect.includes(e.field)) {
+                e.container.find("[type='submit']").click((ev) => {
+                            ev.preventDefault();
+                           var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
+                           var op = e.container.find("select[title='Operator']")[0].value
+                            var values = $(multiselects).data("kendoMultiSelect").value();
+                       
+                           var filter = { logic: "or", filters: [] };
+             
+                           if (values && values.length > 0) {
+                             
+                               values.forEach(x => {
+                                   var f = {
+                                       field: e.field,
+                                       operator: op,
+                                       value: x,
+                                   };
+                                   filter.filters.push(f);
+                               });
+                        
+                           } else {
+                               filter.filters.push({
+                                   field: e.field,
+                                   operator: op,
+                                   value: "",
+                               });
+                           }
+                         
+                           var filters = grid.dataSource.filter();
+                           if (filters) {
+                              
+                               var remainingFilters = filters.filters.filter((x) => {
+                                   if (x.field && x.field != e.field) return true;
+                                   if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                               });
+
+                               var newFilter = [];
+
+                               if (filter.filters.length == 0) {
+                                   newFilter = [...remainingFilters];
+                               } else {
+                                   newFilter = [...remainingFilters, filter];
+                               }
+                               var parentFilter = {
+                                   logic: "and",
+                                   filters: [...newFilter],
+                               };
+                               grid.dataSource.filter(parentFilter);
+                           }
+                           else {
+                           
+
+                               var parentFilter = {
+                                   logic: "and",
+                                   filters: [filter],
+                               };
+                               grid.dataSource.filter(parentFilter);
+                    } 
+                    $(e.container).data("kendoPopup").close();
+                });
+            }
+        });
+
+
+
         grid.thead.on("click", ".k-checkbox", this.ToggleSelectAll);
 
         grid.tbody.on("click", ".k-checkbox", (e) => {
+            var page = grid.dataSource.page();
+            if (this.isAllSelected) {
+                this.isAllSelected = false;
+                var pages = Object.keys(this.selectedRows);
 
-            //console.log(e);
-            //console.log(this);
+                pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
+            }
+            else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
+               setTimeout(() => {
+                    var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
+                    selectall.classList.remove("k-checkbox:checked");
+                    selectall.setAttribute("aria-checked", 'false');
+                    selectall.checked = false;
+                    selectall.ariaChecked = false;
 
-
-
-            //selected = Object.entries(selected).reduce((acc, [key, value]) => {
-            //    if (grid.dataSource.page() == key) {
-
-            //        acc[key] = value;
-            //    }
-            //    return acc;
-            //}, {});
-
-            //localStorage.setItem("selectedidz", JSON.stringify(selected));
-            //if (isAllSelected) {
-            //    isAllSelected = false;
-            //    localStorage.setItem("isAllSelected", false);
-            //}
-            //else {
-
-            //    //console.log();
-
-            //    setTimeout(() => {
-            //        var selectall = document.querySelector("th > input.k-checkbox");
-            //        selectall.classList.remove("k-checkbox:checked");
-            //        selectall.setAttribute("aria-checked", 'false');
-            //        selectall.checked = false;
-            //        selectall.ariaChecked = false;
-            //    }, 5);
-
-
-
-            //    //if () {
-            //    //    console.log("all");
-            //    //}
-            //}
-
+                }, 0);
+            
+    
+            }
         });
 
         $(".k-grid-custom").click(function (e) {
@@ -709,6 +682,10 @@ class Grid extends HTMLElement {
         return cleanDataItem;
     }
 
+
+    reload() {
+        this.intializeColumns();
+    }
 }
 
 
@@ -716,16 +693,29 @@ customElements.define("m-grid", Grid);
 
 
 function areObjectEqual(obj1, obj2, leftedKeys) {
-    console.log(obj1, obj2);
     const obj1Keys = Object.keys(obj1);
     const obj2Keys = Object.keys(obj2);
+
     if (obj1Keys.length !== obj2Keys.length) {
         return false;
     }
 
     // Check if all properties have the same values
     for (let key of obj1Keys) {
-        if (obj1[key] !== obj2[key]) {
+        // Check if the property is in the leftedKeys array
+        if (leftedKeys && leftedKeys.includes(key)) {
+            continue;
+        }
+
+        const value1 = obj1[key];
+        const value2 = obj2[key];
+
+        // Compare dates by converting them to timestamps
+        if (value1 instanceof Date && value2 instanceof Date) {
+            if (value1.getTime() !== value2.getTime()) {
+                return false;
+            }
+        } else if (value1 !== value2) {
             return false;
         }
     }
@@ -733,6 +723,7 @@ function areObjectEqual(obj1, obj2, leftedKeys) {
     // If all checks pass, the objects are equal
     return true;
 }
+
 //console.log(   areObjectEqual(
 //{
 //    "AlertedEntityNumber": "10112",

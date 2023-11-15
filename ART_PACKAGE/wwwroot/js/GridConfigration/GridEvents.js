@@ -1215,6 +1215,9 @@ export const dbClickHandlers = {
         });
         $("#messagesModal").modal("show");
         kendo.ui.progress($('#grid'), false);
+    },
+    Grid: async (item) => {
+        console.log(item);
     }
 }
 export const changeRowColorHandlers = {

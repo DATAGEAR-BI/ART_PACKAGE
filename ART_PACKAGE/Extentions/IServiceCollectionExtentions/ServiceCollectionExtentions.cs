@@ -24,6 +24,7 @@ using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
+using Data.FCFKC.SEG;
 using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
             if (modulesToApply.Contains("SEG"))
             {
+                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                _ = services.AddDbContext<SEGFCFKCContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
             }
 

@@ -109,5 +109,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGMGMGMAUDodelCreating(modelBuilder);
         }
+
+        public void OnSegFcfkcModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnSegFcfkcModelCreating(modelBuilder);
+        }
     }
 }

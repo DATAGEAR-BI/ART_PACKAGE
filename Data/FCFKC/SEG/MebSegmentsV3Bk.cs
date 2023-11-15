@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Data.FCFKC.SEG
+{
+    public partial class MebSegmentsV3Bk
+    {
+        public string? MonthKey { get; set; }
+        public string? PartyNumber { get; set; }
+        public string? RiskClassification { get; set; }
+        public string? PartyTypeDesc { get; set; }
+        public string? IndustryCode { get; set; }
+        public string? IndustryDesc { get; set; }
+        public string? OccupationDesc { get; set; }
+        public string? PartyDateOfBirth { get; set; }
+        public string? PartyFirstName { get; set; }
+        public string? CustomerSinceDate { get; set; }
+        public string? PoliticallyExposedPersonInd { get; set; }
+        public string? NonProfitOrgInd { get; set; }
+        public string? GoverOrgInd { get; set; }
+        public double? TotCreditAmount { get; set; }
+        public double? TotDebitAmount { get; set; }
+        public double? TotCreditCnt { get; set; }
+        public double? TotDebitCnt { get; set; }
+        public double? TotAmount { get; set; }
+        public double? TotCnt { get; set; }
+        public double? AvgTotAmt { get; set; }
+        public double? MaxTotAmt { get; set; }
+        public double? MinTotAmt { get; set; }
+        public double? AvgTotCAmt { get; set; }
+        public double? MaxTotCAmt { get; set; }
+        public double? MinTotCAmt { get; set; }
+        public double? AvgTotDAmt { get; set; }
+        public double? MaxTotDAmt { get; set; }
+        public double? MinTotDAmt { get; set; }
+        public double? TotCashCCnt { get; set; }
+        public double? TotCashDCnt { get; set; }
+        public double? TotCheckDCnt { get; set; }
+        public double? TotDebitCardDCnt { get; set; }
+        public double? TotFeeDCnt { get; set; }
+        public double? TotInternalTransferCCnt { get; set; }
+        public double? TotInternalTransferDCnt { get; set; }
+        public double? TotMiscCCnt { get; set; }
+        public double? TotWireCCnt { get; set; }
+        public double? TotWireDCnt { get; set; }
+        public double? MaxCashCAmt { get; set; }
+        public double? MaxCashDAmt { get; set; }
+        public double? MaxCheckDAmt { get; set; }
+        public double? MaxDebitCardDAmt { get; set; }
+        public double? MaxFeeDAmt { get; set; }
+        public double? MaxInternalTransferCAmt { get; set; }
+        public double? MaxInternalTransferDAmt { get; set; }
+        public double? MaxMiscCAmt { get; set; }
+        public double? MaxWireCAmt { get; set; }
+        public double? MaxWireDAmt { get; set; }
+        public double? MinCashCAmt { get; set; }
+        public double? MinCashDAmt { get; set; }
+        public double? MinCheckDAmt { get; set; }
+        public double? MinDebitCardDAmt { get; set; }
+        public double? MinFeeDAmt { get; set; }
+        public double? MinInternalTransferCAmt { get; set; }
+        public double? MinInternalTransferDAmt { get; set; }
+        public double? MinMiscCAmt { get; set; }
+        public double? MinWireCAmt { get; set; }
+        public double? MinWireDAmt { get; set; }
+        public double? AvgCashCAmt { get; set; }
+        public double? AvgCashDAmt { get; set; }
+        public double? AvgCheckDAmt { get; set; }
+        public double? AvgDebitCardDAmt { get; set; }
+        public double? AvgFeeDAmt { get; set; }
+        public double? AvgInternalTransferCAmt { get; set; }
+        public double? AvgInternalTransferDAmt { get; set; }
+        public double? AvgMiscCAmt { get; set; }
+        public double? AvgWireCAmt { get; set; }
+        public double? AvgWireDAmt { get; set; }
+        public double? TotCashCAmt { get; set; }
+        public double? TotCashDAmt { get; set; }
+        public double? TotCheckDAmt { get; set; }
+        public double? TotDebitCardDAmt { get; set; }
+        public double? TotFeeDAmt { get; set; }
+        public double? TotInternalTransferCAmt { get; set; }
+        public double? TotInternalTransferDAmt { get; set; }
+        public double? TotMiscCAmt { get; set; }
+        public double? TotWireCAmt { get; set; }
+        public double? TotWireDAmt { get; set; }
+        public double? MaxMls { get; set; }
+        public double? AlertsCnt { get; set; }
+        public double? Labels { get; set; }
+        public double? CustomerCode { get; set; }
+        public string? CustomerName { get; set; }
+        public double? Target { get; set; }
+        public string? TargetDescription { get; set; }
+        public string? SegmentSorted { get; set; }
+        public string? CreationDate { get; set; }
+    }
+}
