@@ -14,12 +14,11 @@ namespace Data.Data.FTI
         public string? CustomerName { get; set; }
         public string? Product { get; set; }
         public string? ProductType { get; set; }
-        public string? Name { get; set; }
+        public string? EventName { get; set; }
         public double? Amount { get; set; }
         public string? Currency { get; set; }
         public string? PrimaryOwner { get; set; }
         public string? FtiReference { get; set; }
-        public string? EventName { get; set; }
         public string? EventStatus { get; set; }
         public DateTime? EventCreationDate { get; set; }
         public string? MasterAssignedTo { get; set; }

@@ -4640,11 +4640,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PRODUCT_TYPE")
                     .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.Name)
-                   .HasMaxLength(4000)
-                   .IsUnicode(false)
-                   .HasColumnName("NAME")
-                   .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.PrimaryOwner)
                    .HasMaxLength(255)
@@ -4665,7 +4660,7 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EventName)
-                    .HasMaxLength(60)
+                    .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("Event_Name")
                     .UseCollation("Arabic_100_CI_AI");
