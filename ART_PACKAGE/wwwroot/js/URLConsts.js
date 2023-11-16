@@ -98,6 +98,23 @@
     GeographicalDistributionU3: "/GeographicalDistributionU3/GetData",
     CustomersRenewalU3: "/CustomersRenewalU3/GetData",
     CustomersRenewalPerMonthU3: "/CustomersRenewalPerMonthU3/GetData",
+    //--------------------------------------------------//
+    ArtKycHighExpiredU1: "/ArtKycHighExpiredU1/GetData",
+    ArtKycHighOneMonthU1: "/ArtKycHighOneMonthU1/GetData",
+    ArtKycHighThreeMonthU1: "/ArtKycHighThreeMonthU1/GetData",
+    ArtKycHighTwoMonthU1: "/ArtKycHighTwoMonthU1/GetData",
+    ArtKycLowExpiredU1: "/ArtKycLowExpiredU1/GetData",
+    ArtKycLowOneMonthU1: "/ArtKycLowOneMonthU1/GetData",
+    ArtKycLowThreeMonthU1: "/ArtKycLowThreeMonthU1/GetData",
+    ArtKycLowTwoMonthU1: "/ArtKycLowTwoMonthU1/GetData",
+    ArtKycMediumExpiredU1: "/ArtKycMediumExpiredU1/GetData",
+    ArtKycMediumOneMonthU1: "/ArtKycMediumOneMonthU1/GetData",
+    ArtKycMediumThreeMonthU1: "/ArtKycMediumThreeMonthU1/GetData",
+    ArtKycMediumTwoMonthU1: "/ArtKycMediumTwoMonthU1/GetData",
+    CustomersWithExpiredDocumentU1: "/CustomersWithExpiredDocumentU1/GetData",
+    GeographicalDistributionU1: "/GeographicalDistributionU1/GetData",
+    CustomersRenewalU1: "/CustomersRenewalU1/GetData",
+    CustomersRenewalPerMonthU1: "/CustomersRenewalPerMonthU1/GetData",
 
   //FTI
   ACPostingsAccount: "/ACPostingsAccount/GetData",

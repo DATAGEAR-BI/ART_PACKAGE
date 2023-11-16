@@ -8,12 +8,12 @@ using ART_PACKAGE.Helpers.CustomReport;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtKycHighThreeMonthU2Controller : Controller
+    public class ArtKycLowThreeMonthU1Controller : Controller
     {
         private readonly KYCContext dbfcfkc;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
-        public ArtKycHighThreeMonthU2Controller(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtKycLowThreeMonthU1Controller(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
         {
             this.dbfcfkc = dbfcfkc;
             _dropDown = dropDown;
@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Controllers.KYC
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtKycHighThreeMonthU2> data = dbfcfkc.ArtKycHighThreeMonthU2s.AsQueryable();
+            IQueryable<ArtKycLowThreeMonthU1> data = dbfcfkc.ArtKycLowThreeMonthU1s.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -32,23 +32,23 @@ namespace ART_PACKAGE.Controllers.KYC
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighThreeMonthU2Controller).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycLowThreeMonthU1Controller).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
                     //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() }
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighThreeMonthU2Controller).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycLowThreeMonthU1Controller).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtKycHighThreeMonthU2> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtKycLowThreeMonthU1> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                containsActions = false,
+                containsActions = false
             };
 
             return new ContentResult
@@ -57,21 +57,20 @@ namespace ART_PACKAGE.Controllers.KYC
                 Content = JsonConvert.SerializeObject(result)
             };
         }
-
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
-            IQueryable<ArtKycHighThreeMonthU2> data = dbfcfkc.ArtKycHighThreeMonthU2s.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtKycHighThreeMonthU2, GenericCsvClassMapper<ArtKycHighThreeMonthU2, ArtKycHighThreeMonthU2Controller>>(para.Req);
+            IQueryable<ArtKycLowThreeMonthU1> data = dbfcfkc.ArtKycLowThreeMonthU1s.AsQueryable();
+            byte[] bytes = await data.ExportToCSV<ArtKycLowThreeMonthU1, GenericCsvClassMapper<ArtKycLowThreeMonthU1, ArtKycLowThreeMonthU1Controller>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycHighThreeMonthU2Controller).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighThreeMonthU2Controller).ToLower()].SkipList;
-            List<ArtKycHighThreeMonthU2> data = dbfcfkc.ArtKycHighThreeMonthU2s.CallData(req).Data.ToList();
-            ViewData["title"] = "High risk within 3 months customers U2 Report";
-            ViewData["desc"] = "presents all high-risk customers need to be update their KYCs within 3 months with the related information below";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycLowThreeMonthU1Controller).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycLowThreeMonthU1Controller).ToLower()].SkipList;
+            List<ArtKycLowThreeMonthU1> data = dbfcfkc.ArtKycLowThreeMonthU1s.CallData(req).Data.ToList();
+            ViewData["title"] = "Low risk within 3 months customers U1 Report";
+            ViewData["desc"] = "presents all low-risk customers need to be update their KYCs within 3 months with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

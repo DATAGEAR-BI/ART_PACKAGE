@@ -550,7 +550,7 @@
                                 <ul class="treeview-menu">
                                     <li class="treeview ">
                                         <a href="#">
-                                            <i class="glyphicon glyphicon-book"></i> <span>Tanzania</span>
+                                            <i class="glyphicon glyphicon-book"></i> <span>Kenyia</span>
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </span>
@@ -566,6 +566,50 @@
                                                 <ul class="treeview-menu">
                                                     <li class="treeview">
                                                         <a href="#">
+                                                            <i class="glyphicon glyphicon-user"></i> <span>Low Risk</span>
+                                                            <span class="pull-right-container">
+                                                                <i class="fa fa-angle-left pull-right"></i>
+                                                            </span>
+                                                        </a>
+                                                        <ul class="treeview-menu">
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycLowExpiredU1")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycLowOneMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycLowTwoMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycLowThreeMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="treeview">
+                                                        <a href="#">
+                                                            <i class="glyphicon glyphicon-user"></i> <span>Medium Risk</span>
+                                                            <span class="pull-right-container">
+                                                                <i class="fa fa-angle-left pull-right"></i>
+                                                            </span>
+                                                        </a>
+                                                        <ul class="treeview-menu">
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycMediumExpiredU1")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycMediumOneMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycMediumTwoMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycMediumThreeMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="treeview">
+                                                        <a href="#">
                                                             <i class="glyphicon glyphicon-user"></i> <span>High Risk</span>
                                                             <span class="pull-right-container">
                                                                 <i class="fa fa-angle-left pull-right"></i>
@@ -573,19 +617,71 @@
                                                         </a>
                                                         <ul class="treeview-menu">
                                                             <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighExpiredU2")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
+                                                                <a href="@Url.Action("Index", "ArtKycHighExpiredU1")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
                                                             </li>
                                                             <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighOneMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers </span></a>
+                                                                <a href="@Url.Action("Index", "ArtKycHighOneMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers </span></a>
                                                             </li>
                                                             <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighTwoMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers </span></a>
+                                                                <a href="@Url.Action("Index", "ArtKycHighTwoMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers </span></a>
                                                             </li>
                                                             <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers </span></a>
+                                                                <a href="@Url.Action("Index", "ArtKycHighThreeMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers </span></a>
                                                             </li>
                                                         </ul>
                                                     </li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="glyphicon glyphicon-user"></i> <span>Daily Quality Reports</span>
+                                                    <span class="pull-right-container">
+                                                        <i class="fa fa-angle-left pull-right"></i>
+                                                    </span>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li class="active ">
+                                                        <a href="@Url.Action("Index", "CustomersWithExpiredDocumentU1")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers with expired documents</span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="glyphicon glyphicon-user"></i> <span>Cust Distrib Reports</span>
+                                                    <span class="pull-right-container">
+                                                        <i class="fa fa-angle-left pull-right"></i>
+                                                    </span>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li class="active ">
+                                                        <a href="@Url.Action("Index", "GeographicalDistributionU1")"><i class="glyphicon glyphicon-tasks"></i> <span>Geographical distribution</span></a>
+                                                    </li>
+                                                    <li class="active ">
+                                                        <a href="@Url.Action("Index", "CustomersRenewalPerMonthU1")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers renewal per month </span></a>
+                                                    </li>
+                                                    <li class="active ">
+                                                        <a href="@Url.Action("Index", "CustomersRenewalU1")"><i class="glyphicon glyphicon-tasks"></i> <span>Customers renewal detail </span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview ">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-book"></i> <span>Tanzania</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="glyphicon glyphicon-user"></i> <span>Renewal Reports</span>
+                                                    <span class="pull-right-container">
+                                                        <i class="fa fa-angle-left pull-right"></i>
+                                                    </span>
+                                                </a>
+                                                <ul class="treeview-menu">
                                                     <li class="treeview">
                                                         <a href="#">
                                                             <i class="glyphicon glyphicon-user"></i> <span>Low Risk</span>
@@ -627,6 +723,28 @@
                                                             </li>
                                                             <li class="active ">
                                                                 <a href="@Url.Action("Index", "ArtKycMediumThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="treeview">
+                                                        <a href="#">
+                                                            <i class="glyphicon glyphicon-user"></i> <span>High Risk</span>
+                                                            <span class="pull-right-container">
+                                                                <i class="fa fa-angle-left pull-right"></i>
+                                                            </span>
+                                                        </a>
+                                                        <ul class="treeview-menu">
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighExpiredU2")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighOneMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers </span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighTwoMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers </span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighThreeMonthU2")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers </span></a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -684,28 +802,6 @@
                                                 <ul class="treeview-menu">
                                                     <li class="treeview">
                                                         <a href="#">
-                                                            <i class="glyphicon glyphicon-user"></i> <span>High Risk</span>
-                                                            <span class="pull-right-container">
-                                                                <i class="fa fa-angle-left pull-right"></i>
-                                                            </span>
-                                                        </a>
-                                                        <ul class="treeview-menu">
-                                                            <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighExpiredU3")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
-                                                            </li>
-                                                            <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighOneMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers </span></a>
-                                                            </li>
-                                                            <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighTwoMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers </span></a>
-                                                            </li>
-                                                            <li class="active ">
-                                                                <a href="@Url.Action("Index", "ArtKycHighThreeMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers </span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="treeview">
-                                                        <a href="#">
                                                             <i class="glyphicon glyphicon-user"></i> <span>Low Risk</span>
                                                             <span class="pull-right-container">
                                                                 <i class="fa fa-angle-left pull-right"></i>
@@ -745,6 +841,28 @@
                                                             </li>
                                                             <li class="active ">
                                                                 <a href="@Url.Action("Index", "ArtKycMediumThreeMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="treeview">
+                                                        <a href="#">
+                                                            <i class="glyphicon glyphicon-user"></i> <span>High Risk</span>
+                                                            <span class="pull-right-container">
+                                                                <i class="fa fa-angle-left pull-right"></i>
+                                                            </span>
+                                                        </a>
+                                                        <ul class="treeview-menu">
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighExpiredU3")"><i class="glyphicon glyphicon-tasks"></i> <span>expired customers</span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighOneMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>1 month customers </span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighTwoMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>2 months customers </span></a>
+                                                            </li>
+                                                            <li class="active ">
+                                                                <a href="@Url.Action("Index", "ArtKycHighThreeMonthU3")"><i class="glyphicon glyphicon-tasks"></i> <span>3 months customers </span></a>
                                                             </li>
                                                         </ul>
                                                     </li>
