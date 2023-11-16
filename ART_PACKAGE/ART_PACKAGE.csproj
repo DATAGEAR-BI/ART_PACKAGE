@@ -28,7 +28,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
-		<Content Remove="Views\GeographicalDistributionU1\Index.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -997,8 +996,6 @@
 		<None Include="Views\ArtKycMediumOneMonthU3\Index.cshtml" />
 		<None Include="Views\ArtKycMediumThreeMonthU3\Index.cshtml" />
 		<None Include="Views\ArtKycMediumTwoMonthU3\Index.cshtml" />
-		<None Include="Views\GeographicalDistributionU1\Index.cshtml" />
-		<None Include="Views\GeographicalDistributionU2\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
