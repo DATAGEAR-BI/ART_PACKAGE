@@ -24,6 +24,7 @@ export const Handlers = {
             selectedrecords = await Select(prop)
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
+        var sort = ds.dataSource.sort();
         if (total > 100000) {
             toastObj.hideAfter = false;
             toastObj.icon = 'warning';
@@ -39,6 +40,7 @@ export const Handlers = {
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
+        para.Sort = sort;
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
         var res;
         if (exportConnection.state !== "Connected")

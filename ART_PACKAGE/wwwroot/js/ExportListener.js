@@ -20,10 +20,10 @@ export const invokeExport = (para, controller, method, params) => exportConnecti
 await start();
 
 exportConnection.onreconnecting(err => {
-    toastObj.icon = 'error';
-    toastObj.text = "connection with server lost trying to reconnect this might cause losing some files";
-    toastObj.heading = "Export Status";
-    $.toast(toastObj);
+    //toastObj.icon = 'error';
+    //toastObj.text = "connection with server lost trying to reconnect this might cause losing some files";
+    //toastObj.heading = "Export Status";
+    //$.toast(toastObj);
 })
 
 exportConnection.on("iAmAlive", () => {
