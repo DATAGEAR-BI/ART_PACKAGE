@@ -4,7 +4,7 @@
 }
 
 
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+@*<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
@@ -13,9 +13,9 @@
 <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
 <link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
 <link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />*@
 @*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+@*<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
 <script src="~/lib/Plugins/Kendo/jszip.js"></script>
 <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
 <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
@@ -26,7 +26,7 @@
 <script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
 <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
 <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>*@
 
 <section class="content-header">
     <h1>
@@ -35,13 +35,35 @@
         <br />
     </h1>
 </section>
-<filters-control data-key="UserPerformancePerActionUser"></filters-control>
-<div id="grid"></div>
 
+<div class="row d-flex align-items-center">
+    <smart-query-builder class="col-10" id="querybuilder" data-applybtn="applyBtn" data-params="UserPerformancePerActionUser"></smart-query-builder>
+    <div class="col-2 d-flex justify-content-center">
+        <button id="applyBtn" class="btn btn-primary">Apply</button>
+    </div>
+</div>
+<m-grid id="userperaction" data-stored="querybuilder"  data-urlkey="UserPerformancePerActionUser"></m-grid>
 
+@*<filters-control data-key="UserPerformancePerActionUser"></filters-control>
+<div id="grid"></div>*@
+
+@section KendoScripts{
+    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+    <script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+    <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+}
 @section Scripts {
 
-
+    <script src="~/lib/smartcomponents/source/modules/smart.multicomboinput.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+@*
     <script src="~/js/constructfilters.js" defer type="module"></script>
     <script src="~/js/dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="UserPerformancePerActionUser" data-handlerkey="UserPerformancePerActionUser"></script>
+
+*@
 }

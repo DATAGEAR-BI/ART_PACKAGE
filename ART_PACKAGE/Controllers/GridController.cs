@@ -3,6 +3,7 @@ using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Data.SASAml;
@@ -36,7 +37,7 @@ namespace ART_PACKAGE.Controllers
             this.connections = connections;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
+        public IActionResult GetData([FromBody] GridRequest request)
         {
             IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
 
@@ -65,13 +66,19 @@ namespace ART_PACKAGE.Controllers
             }
 
 
+            IQueryable<ArtAmlAlertDetailView>? Data = null;
+            if (!request.IsIntialize)
+            {
 
-            KendoDataDesc<ArtAmlAlertDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+                //KendoDataDesc<ArtAmlAlertDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+                System.Linq.Expressions.Expression<Func<ArtAmlAlertDetailView, bool>> ex = request.Filter.ToExpression<ArtAmlAlertDetailView>();
+                Data = data.Where(ex).Take(100);
+            }
             var result = new
             {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
+                data = Data,
+                columns = KendoFiltersExtentions.GetColumns<ArtAmlAlertDetailView>(DropDownColumn, DisplayNames, ColumnsToSkip),
+                total = 7400,
                 containsActions = false,
                 selectable = true
             };

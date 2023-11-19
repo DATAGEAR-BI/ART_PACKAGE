@@ -32,11 +32,11 @@ namespace ART_PACKAGE.Controllers.ECM
             dbType = _config.GetValue<string>("dbType").ToUpper();
         }
 
-        public IActionResult GetData([FromBody] StoredReq para)
+        public IActionResult GetData([FromBody] StoredProcGridReq para)
         {
             IEnumerable<ArtUserPerformancePerActionUser> data = Enumerable.Empty<ArtUserPerformancePerActionUser>().AsQueryable();
 
-            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> summaryParams = para.Filters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
@@ -45,7 +45,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
-            KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.Req);
 
 
             var result = new

@@ -347,11 +347,6 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
             StringBuilder sb = new();
-
-
-
-
-
             foreach (object filter in param)
             {
 

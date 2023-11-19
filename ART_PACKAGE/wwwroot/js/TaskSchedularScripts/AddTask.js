@@ -1,5 +1,5 @@
 import { parametersConfig } from "./TaskParametersSettings.js"
-import { dateSetting, multiSetting } from "../Components/QueryBuilder/QueryBuilderPlugins.js"
+import { mapParamtersToFilters, multiSelectOperation } from "../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 
 
 const period = {
@@ -316,6 +316,28 @@ reportsDropDown.onSelectChange = (e) => {
 
     var report = reportsDropDown.value.value;
     var parametrs = parametersConfig.find(x => x.reportName == report).parameters;
+    var customOps = [];
+    var multifields = parametrs.filter(x => x.isMulti);
+    multifields.forEach(p => {
+        var vals = [];
+        if (p.values.url) {
+            $.ajax({
+                url: p.values.url,
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    vals = data;
+                }
+            });
+        }
+        else
+            vals = p.values.static;
+
+        customOps.push(multiSelectOperation(p.paraName, vals));
+    })
+
+    querybuilder.customOperations = customOps;
     var filters = mapParamtersToFilters(parametrs);
     querybuilder.fields = filters;
 
@@ -387,34 +409,5 @@ serverSwitch.onswitchchanged = (e) => {
     }
 }
 
-function mapParamtersToFilters(paramters) {
 
-    var filters = [...paramters].map(p => {
-        var field = { label: p.paraDisplayName, dataField: p.paraName, dataType: p.type }
-
-        if (p.isMulti) {
-            var vals = [];
-            if (p.values.url) {
-                $.ajax({
-                    url: p.values.url,
-                    type: "GET",
-                    async: false,
-                    dataType: "json",
-                    success: function (data) {
-                        vals = data;
-                    }
-                });
-            }
-            else
-                vals = p.values.static;
-
-            field.lookup = {
-                dataSource: vals,
-            }
-        }
-        return field;
-    });
-
-    return filters;
-}
 

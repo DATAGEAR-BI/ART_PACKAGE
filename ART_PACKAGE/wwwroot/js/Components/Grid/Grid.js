@@ -3,6 +3,9 @@ import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
+
+import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
+import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -14,7 +17,6 @@ class Grid extends HTMLElement {
     isNumberField = [];
     isMultiSelect = [];
     gridDiv = document.createElement("div");
-    isStoredProc = false;
     isAllSelected = false;
     selectedRows = {};
     defaultfilters = undefined;
@@ -22,6 +24,12 @@ class Grid extends HTMLElement {
     defaultGroup = undefined;
     handlerkey = "";
     isCustom = false;
+    storedConfig = {
+        isStoredProc: false,
+        builder: undefined,
+        applyBtn: undefined
+    }
+
     constructor() {
         super();
         if (Object.keys(this.dataset).includes("stored"))
@@ -52,7 +60,62 @@ class Grid extends HTMLElement {
 
             this.url = URLS[this.dataset.urlkey];
         }
-        console.log(this.url);
+
+
+        if (this.dataset.stored) {
+
+
+            this.storedConfig.isStoredProc = true;
+            this.storedConfig.builder = document.getElementById(this.dataset.stored);
+            this.storedConfig.builder.dateFormat = 'yyyy-MM-dd'
+            this.storedConfig.applyBtn = document.getElementById(this.storedConfig.builder.dataset.applybtn);
+            var rep = parametersConfig.find(x => x.reportName == this.storedConfig.builder.dataset.params);
+            var customOps = [];
+            var multifields = rep.parameters.filter(x => x.isMulti);
+            multifields.forEach(p => {
+                var vals = [];
+                if (p.values.url) {
+                    $.ajax({
+                        url: p.values.url,
+                        type: "GET",
+                        async: false,
+                        dataType: "json",
+                        success: function (data) {
+                            vals = data;
+                        }
+                    });
+                }
+                else
+                    vals = p.values.static;
+
+                customOps.push(multiSelectOperation(p.paraName, vals));
+            })
+
+
+            this.storedConfig.builder.customOperations = customOps;
+            var filters = mapParamtersToFilters(rep.parameters);
+            this.storedConfig.builder.fields = filters;
+            if (rep.defaultFilter) {
+                this.storedConfig.builder.value = rep.defaultFilter;
+            }
+
+            this.storedConfig.builder.addEventListener('propertySelected', (ev) => {
+                console.log(ev.detail.value);
+                //this.storedBuilder.fields = fields.filter(x => x.dataField != ev.detail.value);
+            });
+            this.storedConfig.builder.addEventListener('change', () => {
+                console.log(this.storedConfig.builder.value);
+                console.log("hi");
+            });
+            this.storedConfig.builder.addEventListener('itemClick', function (event) {
+                console.log(event);
+            })
+
+            this.storedConfig.applyBtn.onclick = () => {
+                var grid = $(this.gridDiv).data("kendoGrid");
+                grid.dataSource.read();
+            }
+        }
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
         this.intializeColumns();
@@ -63,8 +126,28 @@ class Grid extends HTMLElement {
 
     intializeColumns() {
 
-        var para = { IsIntialize: true };
+        var para = {};
+        if (this.isStoredProc) {
+            var flatted = this.storedConfig.builder.value.flat();
+            var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
+                var val = x[2];
+                return {
+                    Field: x[0],
+                    Operator: x[1],
+                    Value: val
+                }
 
+            });
+            console.log(val);
+            para = {
+                Req: { IsIntialize: true },
+                Filters: val
+            }
+
+        } else {
+            para = { IsIntialize: true };
+        }
+        console.log(para);
         fetch(this.url, {
             method: "POST",
             headers: {
@@ -278,6 +361,7 @@ class Grid extends HTMLElement {
                     name: "custom",
                     template: `<span id="tbdataCount"></span>`,
                 },
+                "excel",
                 {
                     name: "custom",
                     template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
@@ -311,11 +395,19 @@ class Grid extends HTMLElement {
     generateGrid() {
         var para = {};
         var grid = $(this.gridDiv).kendoGrid({
+            excel: {
+                allPages: true, // Export all pages
+                fileName: "KendoGridExport.xlsx",
+                filterable: true,
+                // You can set other Excel export options here
+            },
+
+
             toolbar: this.toolbar,
             dataSource: {
                 transport: {
                     read: (options) => {
-
+                        console.log("read");
                         const readdata = () => {
 
                             fetch(this.url, {
@@ -405,7 +497,7 @@ class Grid extends HTMLElement {
                                         chartdata.forEach((x) => {
                                             var div = document.getElementById(x.ChartId);
 
-                                            
+
 
                                             makedynamicChart(
                                                 x.Type,
@@ -423,47 +515,48 @@ class Grid extends HTMLElement {
                                     toastObj.text = "something wrong happend while getting data please try again";
                                     toastObj.heading = "Grid Intialization Status";
                                     $.toast(toastObj);
+                                    kendo.ui.progress($(this.gridDiv), false);
                                     return;
                                 });;
                         }
 
                         if (this.isStoredProc) {
-                            //getExRules();
+                            console.log(this.storedConfig.builder.value);
+                            var flatted = this.storedConfig.builder.value.flat();
+                            if (flatted.includes("or")) {
+                                toastObj.icon = 'error';
+                                toastObj.text = "only and logic operators are allowed";
+                                toastObj.heading = "Filters Status";
+                                $.toast(toastObj);
+                                kendo.ui.progress($(this.gridDiv), false);
+                                return;
+                            }
+                            var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
+                                var val = x[2];
+                                return {
+                                    Field: x[0],
+                                    Operator: x[1],
+                                    Value: val
+                                }
 
-                            //para.req.Id = id;
-                            //para.req.IsIntialize = false;
-                            //para.req.Take = options.data.take;
-                            //para.req.Skip = options.data.skip;
-                            //para.req.Sort = options.data.sort;
-                            //para.req.Filter = options.data.filter;
-
-                            //var intializeParaInterval = setInterval(() => {
-                            //    if (isextractRulesFinished) {
-                            //        para.procFilters = exRules;
-                            //        readdata();
-                            //        isextractRulesFinished = false;
-                            //        clearInterval(intializeParaInterval);
-                            //    }
-                            //}, 1000);
-
-
+                            });
+                            para = {
+                                Req: {
+                                    IsIntialize: false,
+                                    Take: options.data.take,
+                                    Skip: options.data.skip,
+                                    Sort: options.data.sort,
+                                },
+                                Filters: val
+                            }
                         } else {
-
-                            // para.Id = id;
                             para.Take = options.data.take;
                             para.Skip = options.data.skip;
                             para.Sort = options.data.sort;
                             para.IsIntialize = false;
                             para.Filter = options.data.filter;
-                            readdata();
                         }
-
-
-
-
-
-
-
+                        readdata();
                     },
                 },
 
@@ -555,11 +648,13 @@ class Grid extends HTMLElement {
 
         // event for constructing the filters for multi select columns
         grid.bind("filterMenuInit", (e) => {
+            console.log(e);
             if (this.isMultiSelect.includes(e.field)) {
+                console.log(e.field);
                 e.container.find("[type='submit']").click((ev) => {
                     ev.preventDefault();
                     var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
-                    var op = e.container.find("select[title='Operator']")[0].value
+                    var op = e.container.find("select[title='Operator']")[0].value;
                     var values = $(multiselects).data("kendoMultiSelect").value();
 
                     var filter = { logic: "or", filters: [] };
@@ -582,7 +677,7 @@ class Grid extends HTMLElement {
                             value: "",
                         });
                     }
-
+                    console.log(filter);
                     var filters = grid.dataSource.filter();
                     if (filters) {
 
@@ -612,7 +707,9 @@ class Grid extends HTMLElement {
                             filters: [filter],
                         };
                         grid.dataSource.filter(parentFilter);
+                        console.log(parentFilter);
                     }
+
                     $(e.container).data("kendoPopup").close();
                 });
             }

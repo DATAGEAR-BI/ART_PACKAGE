@@ -54,7 +54,6 @@ exportConnection.on("csvErrorRecevied", async (batch) => {
 });
 
 exportConnection.on("missedFilesRecived", async (files, reqId) => {
-    console.log("tttttttttt", reqId, files);
     files.forEach(f => {
         console.log(f.fileName);
         downloadfile(f.file, f.fileName);
@@ -74,7 +73,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
     console.log(reqId, len, recivedFiles.length);
     if (len === recivedFiles.length) {
         console.log("clr");
-        //exportConnection.invoke("ClearExportFolder", reqId);
+        exportConnection.invoke("ClearExportFolder", reqId);
     }
 
     else {
