@@ -30,5 +30,14 @@ namespace Data.Data.FTI
         public DateTime? StartdTime { get; set; }
         public DateTime? LstModTime { get; set; }
         public string? LstModUser { get; set; }
+        public string? EcmEventStep { get; set; }
+        public string? EcmEventCreatedBy { get; set; }
+        public DateTime? EcmEventCreatedDate { get; set; }
+        public string? Assignee { get; set; }
+        public string? AssignedBy { get; set; }
+        public DateTime? AssignedTime { get; set; }
+        public string? UnAssignee { get; set; }
+        public string? UnAssignedBy { get; set; }
+        public DateTime? UnAssignedTime { get; set; }
     }
 }

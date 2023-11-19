@@ -19,6 +19,15 @@ namespace Data.Data.FTI
         public string? EventName { get; set; }
         public string? ParentCaseId { get; set; }
         public string? Reference { get; set; }
+        public string? EcmEventStep { get; set; }
+        public string? EcmEventCreatedBy { get; set; }
+        public DateTime? EcmEventCreatedDate { get; set; }
+        public string? Assignee { get; set; }
+        public string? AssignedBy { get; set; }
+        public DateTime? AssignedTime { get; set; }
+        public string? UnAssignee { get; set; }
+        public string? UnAssignedBy { get; set; }
+        public DateTime? UnAssignedTime { get; set; }
 
     }
 }

@@ -100,6 +100,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
                             {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
                             {"ExpiryDate",new DisplayNameAndFormat { DisplayName ="Expiry Date"}},
+                            {"Assignee",new DisplayNameAndFormat { DisplayName ="Assignee"}},
+                            {"AssignedBy",new DisplayNameAndFormat { DisplayName ="Assigned By"}},
+                            {"AssignedTime",new DisplayNameAndFormat { DisplayName ="Assigned Time"}},
+                            {"UnAssignee",new DisplayNameAndFormat { DisplayName ="UnAssignee"}},
+                            {"UnAssignedBy",new DisplayNameAndFormat { DisplayName ="UnAssigned By"}},
+                            {"UnAssignedTime",new DisplayNameAndFormat { DisplayName ="UnAssigned Time"}},
+                            {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
+                            {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
+                            {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
 
                     },
                            SkipList =  new List<string>()
@@ -133,6 +142,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"StartdTime",new DisplayNameAndFormat { DisplayName ="Started Time"}},
                             {"LstModTime",new DisplayNameAndFormat { DisplayName ="Last Mod Time"}},
                             {"LstModUser",new DisplayNameAndFormat { DisplayName ="Last Mod User"}},
+                            {"Assignee",new DisplayNameAndFormat { DisplayName ="Assignee"}},
+                            {"AssignedBy",new DisplayNameAndFormat { DisplayName ="Assigned By"}},
+                            {"AssignedTime",new DisplayNameAndFormat { DisplayName ="Assigned Time"}},
+                            {"UnAssignee",new DisplayNameAndFormat { DisplayName ="UnAssignee"}},
+                            {"UnAssignedBy",new DisplayNameAndFormat { DisplayName ="UnAssigned By"}},
+                            {"UnAssignedTime",new DisplayNameAndFormat { DisplayName ="UnAssigned Time"}},
+                            {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
+                            {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
+                            {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
 
                     },
                             SkipList =  new List<string>()
@@ -226,6 +244,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"UnAssignee",new DisplayNameAndFormat { DisplayName ="UnAssignee"}},
                             {"UnAssignedBy",new DisplayNameAndFormat { DisplayName ="UnAssigned By"}},
                             {"UnAssignedTime",new DisplayNameAndFormat { DisplayName ="UnAssigned Time"}},
+                            {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
+                            {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
+                            {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
 
                     },
                            SkipList =  new List<string>()

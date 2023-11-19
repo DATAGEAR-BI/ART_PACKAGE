@@ -33,6 +33,9 @@ namespace Data.Data.FTI
         public string? FirstLineInstructions { get; set; }
         public string? CaseComments { get; set; }
         public string? ParentCaseId { get; set; }
+        public string? EcmEventStep { get; set; }
+        public string? EcmEventCreatedBy { get; set; }
+        public DateTime? EcmEventCreatedDate { get; set; }
         public string? Assignee { get; set; }
         public string? AssignedBy { get; set; }
         public DateTime? AssignedTime { get; set; }

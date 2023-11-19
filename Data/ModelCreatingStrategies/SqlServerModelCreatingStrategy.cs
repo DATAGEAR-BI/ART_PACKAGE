@@ -4245,6 +4245,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("REFERENCE")
                     .UseCollation("Arabic_100_CI_AI");
+
                 entity.Property(e => e.ParentCaseId)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
@@ -4310,6 +4311,52 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .HasColumnName("PRODUCT_TYPE")
                     .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.Assignee)
+                  .HasMaxLength(60)
+                  .IsUnicode(false)
+                  .HasColumnName("ASSIGNEE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("ASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ASSIGNED_TIME");
+
+                entity.Property(e => e.UnAssignee)
+                  .HasMaxLength(60)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNEE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("UNASSIGNED_TIME");
+                entity.Property(e => e.EcmEventStep)
+                  .HasMaxLength(256)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_STEP")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedBy)
+                  .HasMaxLength(255)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_CREATED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedDate)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ECM_EVENT_CREATED_DATE");
             });
             modelBuilder.Entity<ArtEcmFtiFullCycle>(entity =>
             {
@@ -4433,6 +4480,53 @@ namespace Data.ModelCreatingStrategies
                    .IsUnicode(false)
                    .HasColumnName("STEP_STATUS")
                    .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.Assignee)
+                 .HasMaxLength(60)
+                 .IsUnicode(false)
+                 .HasColumnName("ASSIGNEE")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("ASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ASSIGNED_TIME");
+
+                entity.Property(e => e.UnAssignee)
+                  .HasMaxLength(60)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNEE")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedBy)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("UNASSIGNED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedTime)
+                   .HasColumnType("datetime")
+                  .HasColumnName("UNASSIGNED_TIME");
+
+                entity.Property(e => e.EcmEventStep)
+                  .HasMaxLength(256)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_STEP")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedBy)
+                  .HasMaxLength(255)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_CREATED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedDate)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ECM_EVENT_CREATED_DATE");
             });
             modelBuilder.Entity<ArtFtiActivity>(entity =>
             {
@@ -4602,6 +4696,21 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnType("datetime")
                   .HasColumnName("UNASSIGNED_TIME");
 
+                entity.Property(e => e.EcmEventStep)
+                  .HasMaxLength(256)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_STEP")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedBy)
+                  .HasMaxLength(255)
+                  .IsUnicode(false)
+                  .HasColumnName("ECM_EVENT_CREATED_BY")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedDate)
+                   .HasColumnType("datetime")
+                  .HasColumnName("ECM_EVENT_CREATED_DATE");
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
                 entity.Property(e => e.CaseCreationDate)
