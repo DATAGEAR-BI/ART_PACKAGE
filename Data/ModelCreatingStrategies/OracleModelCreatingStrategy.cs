@@ -12418,6 +12418,552 @@ namespace Data.ModelCreatingStrategies
                    .IsUnicode(false)
                    .HasColumnName("ACTION_REQUIRED");
             });
+            //------------------------------------------------------------------//
+            modelBuilder.Entity<ArtKycHighExpiredU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_EXPIRED_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighOneMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_ONE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighThreeMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_THREE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighTwoMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_TWO_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowExpiredU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_EXPIRED_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowOneMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_ONE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowThreeMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_THREE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowTwoMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_TWO_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumExpiredU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_EXPIRED_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumOneMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_ONE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumThreeMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_THREE_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumTwoMonthU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_TWO_MONTH_U4");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(765)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.Month)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+            modelBuilder.Entity<CustomersWithExpiredDocumentU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_Customers_with_expired_documents_U4".ToUpper()); // 
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CUST_NO");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("CUST_NAME");
+                entity.Property(e => e.NationalIDExpirationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("NAT_ID_EXPIRY_DATE");
+                entity.Property(e => e.PassportExpirationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("PASSPORT_EXPIRY_DATE");
+                entity.Property(e => e.BusinessLicenseExpirationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("BUSINESS_LICENSE_EXPIRY_DATE");
+                entity.Property(e => e.WorkPermitExpirationDate)
+                    .HasPrecision(6)
+                    .HasColumnName("WORK_PERMIT_EXPIRY_DATE");
+            });
+            modelBuilder.Entity<CustomersRenewalU4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CUTOMERS_RENEWAL_DETAILS_U4"); // 
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+                entity.Property(e => e.Type)
+                   .HasMaxLength(20)
+                   .HasColumnName("PARTY_TYPE");
+                entity.Property(e => e.Occupation)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("PARTY_OCCUPATION");
+                entity.Property(e => e.ExpiredDate)
+                    .HasPrecision(6)
+                    .HasColumnName("EXPIRED_DATE");
+                entity.Property(e => e.DateField)
+                    .HasMaxLength(100)
+                   .IsUnicode(false)
+                    .HasColumnName("DATE_FIELD");
+                entity.Property(e => e.LastContactDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LAST_CONTACT_DATE");
+                entity.Property(e => e.ChangeBeginDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CHANGE_BEGIN_DATE");
+                entity.Property(e => e.ChangeCurrentIND)
+                   .HasMaxLength(1)
+                   .HasColumnName("CHANGE_CURRENT_IND");
+                entity.Property(e => e.KYCExpiryIND)
+                   .HasMaxLength(1)
+                   .IsUnicode(false)
+                   .HasColumnName("KYC_EXPIRY_IND");
+                entity.Property(e => e.RiskClassification)
+                   .HasMaxLength(20)
+                   .IsUnicode(false)
+                   .HasColumnName("RISK_CLASSIFICATION");
+                entity.Property(e => e.ActionRequired)
+                   .HasMaxLength(200)
+                   .IsUnicode(false)
+                   .HasColumnName("ACTION_REQUIRED");
+            });
 
 
         }

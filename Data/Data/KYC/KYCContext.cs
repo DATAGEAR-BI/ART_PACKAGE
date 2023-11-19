@@ -62,6 +62,21 @@ namespace Data.Data.KYC
         public virtual DbSet<ArtKycMediumTwoMonthU3> ArtKycMediumTwoMonthU3s { get; set; } = null!;
         public virtual DbSet<CustomersRenewalU3> CustomersRenewalU3s { get; set; } = null!;
         public virtual DbSet<CustomersWithExpiredDocumentU3> CustomersWithExpiredDocumentU3s { get; set; } = null!;
+        //--------------------------------------------------------------------------------------------------//
+        public virtual DbSet<ArtKycHighExpiredU4> ArtKycHighExpiredU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycHighOneMonthU4> ArtKycHighOneMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycHighThreeMonthU4> ArtKycHighThreeMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycHighTwoMonthU4> ArtKycHighTwoMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycLowExpiredU4> ArtKycLowExpiredU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycLowOneMonthU4> ArtKycLowOneMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycLowThreeMonthU4> ArtKycLowThreeMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycLowTwoMonthU4> ArtKycLowTwoMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycMediumExpiredU4> ArtKycMediumExpiredU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycMediumOneMonthU4> ArtKycMediumOneMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycMediumThreeMonthU4> ArtKycMediumThreeMonthU4s { get; set; } = null!;
+        public virtual DbSet<ArtKycMediumTwoMonthU4> ArtKycMediumTwoMonthU4s { get; set; } = null!;
+        public virtual DbSet<CustomersRenewalU4> CustomersRenewalU4s { get; set; } = null!;
+        public virtual DbSet<CustomersWithExpiredDocumentU4> CustomersWithExpiredDocumentU4s { get; set; } = null!;
 
 
         public KYCContext(DbContextOptions<KYCContext> options) : base(options)
@@ -72,9 +87,11 @@ namespace Data.Data.KYC
             modelBuilder.Entity<StCustomersPerCityU1>().HasNoKey().ToView(null);
             modelBuilder.Entity<StCustomersPerCityU2>().HasNoKey().ToView(null);
             modelBuilder.Entity<StCustomersPerCityU3>().HasNoKey().ToView(null);
+            modelBuilder.Entity<StCustomersPerCityU4>().HasNoKey().ToView(null);
             modelBuilder.Entity<StCustomersRenewalPerMonthU1>().HasNoKey().ToView(null);
             modelBuilder.Entity<StCustomersRenewalPerMonthU2>().HasNoKey().ToView(null);
             modelBuilder.Entity<StCustomersRenewalPerMonthU3>().HasNoKey().ToView(null);
+            modelBuilder.Entity<StCustomersRenewalPerMonthU4>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnKYCModelCreating(modelBuilder);
