@@ -28,18 +28,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
-		<Content Remove="Views\ArtKycHighExpiredU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycHighOneMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycHighThreeMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycHighTwoMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycLowExpiredU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycLowOneMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycLowThreeMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycLowTwoMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycMediumExpiredU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycMediumOneMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycMediumThreeMonthU4\Index.cshtml" />
-		<Content Remove="Views\ArtKycMediumTwoMonthU4\Index.cshtml" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -996,29 +984,17 @@
 		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
 		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
-		<None Include="Views\ArtKycHighExpiredU4\Index.cshtml" />
 		<None Include="Views\ArtKycHighExpiredU3\Index.cshtml" />
-		<None Include="Views\ArtKycHighOneMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycHighOneMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycHighThreeMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycHighThreeMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycHighTwoMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycHighTwoMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycLowExpiredU4\Index.cshtml" />
 		<None Include="Views\ArtKycLowExpiredU3\Index.cshtml" />
-		<None Include="Views\ArtKycLowOneMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycLowOneMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycLowThreeMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycLowThreeMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycLowTwoMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycLowTwoMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycMediumExpiredU4\Index.cshtml" />
 		<None Include="Views\ArtKycMediumExpiredU3\Index.cshtml" />
-		<None Include="Views\ArtKycMediumOneMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycMediumOneMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycMediumThreeMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycMediumThreeMonthU3\Index.cshtml" />
-		<None Include="Views\ArtKycMediumTwoMonthU4\Index.cshtml" />
 		<None Include="Views\ArtKycMediumTwoMonthU3\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />

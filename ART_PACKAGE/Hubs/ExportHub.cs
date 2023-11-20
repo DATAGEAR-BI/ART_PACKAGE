@@ -165,7 +165,21 @@ namespace ART_PACKAGE.Hubs
             if (nameof(ArtKycMediumOneMonthU1Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumOneMonthU1, ArtKycMediumOneMonthU1Controller>(_kyc, Context.User.Identity.Name, para);
             if (nameof(ArtKycMediumThreeMonthU1Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumThreeMonthU1, ArtKycMediumThreeMonthU1Controller>(_kyc, Context.User.Identity.Name, para);
             if (nameof(ArtKycMediumTwoMonthU1Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumTwoMonthU1, ArtKycMediumTwoMonthU1Controller>(_kyc, Context.User.Identity.Name, para);
-
+            //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+            if (nameof(CustomersWithExpiredDocumentU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<CustomersWithExpiredDocumentU4, CustomersWithExpiredDocumentU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(CustomersRenewalU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<CustomersRenewalU4, CustomersRenewalU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycHighExpiredU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycHighExpiredU4, ArtKycHighExpiredU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycHighOneMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycHighOneMonthU4, ArtKycHighOneMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycHighThreeMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycHighThreeMonthU4, ArtKycHighThreeMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycHighTwoMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycHighTwoMonthU4, ArtKycHighTwoMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycLowExpiredU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycLowExpiredU4, ArtKycLowExpiredU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycLowOneMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycLowOneMonthU4, ArtKycLowOneMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycLowThreeMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycLowThreeMonthU4, ArtKycLowThreeMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycLowTwoMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycLowTwoMonthU4, ArtKycLowTwoMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycMediumExpiredU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumExpiredU4, ArtKycMediumExpiredU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycMediumOneMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumOneMonthU4, ArtKycMediumOneMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycMediumThreeMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumThreeMonthU4, ArtKycMediumThreeMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
+            if (nameof(ArtKycMediumTwoMonthU4Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtKycMediumTwoMonthU4, ArtKycMediumTwoMonthU4Controller>(_kyc, Context.User.Identity.Name, para);
             #endregion
         }
 
