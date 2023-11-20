@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
@@ -877,28 +878,24 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 KendoDataDesc<T> calldata = data.CallData(obj);
                 data = calldata.Data;
                 total = calldata.Total;
-
             }
             else
             {
                 total = data.Count();
             }
 
-
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
                 Encoding = Encoding.UTF8,
                 IgnoreBlankLines = true,
                 AllowComments = true,
-
             };
+
             int batch = 100000;
             int skip = 0;
-            List<Task<byte[]>> tasks = new() { };
             while (total > 0)
             {
                 IQueryable<T> tempDData = data.Skip(skip).Take(batch);
-                string sql = tempDData.ToQueryString();
                 List<T> tempData = tempDData.ToList();
                 yield return Task.Run(() =>
                 {
@@ -906,8 +903,9 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
-
+                        // Register custom class map
                         _ = cw.Context.RegisterClassMap<T1>();
+
                         if (filterCells is not null && filterCells.Count != 0)
                         {
                             foreach (List<object> item in filterCells)
@@ -917,10 +915,22 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             cw.NextRecord();
                         }
 
+                        // Manually configure headers
+                        ClassMap<T>? headerMap = cw.Context.Maps.Find<T>();
+                        foreach (MemberMap? memberMap in headerMap.MemberMaps)
+                        {
+                            MemberInfo? property = memberMap.Data.Member;
+                            // Add custom type converters for specific properties
+                            if (property.GetType() == typeof(double))
+                            {
+                                memberMap.TypeConverter<CurrencyTypeConverter>();
+                            }
 
-
-                        cw.WriteHeader<T>();
+                            cw.WriteField(property.Name); // Write custom headers if needed
+                        }
                         cw.NextRecord();
+
+                        // Write records
                         foreach (T? elm in tempData)
                         {
                             cw.WriteRecord(elm);
@@ -930,12 +940,24 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     byte[] b = stream.ToArray();
                     return b;
                 });
-                //tasks.Add(task);
+
                 total -= batch;
                 skip += batch;
             }
+        }
 
+        public class CurrencyTypeConverter : DefaultTypeConverter
+        {
+            public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
+            {
+                if (value is double decimalValue)
+                {
+                    // Format the decimal as currency
+                    return string.Format("{0:n2}", decimalValue);
+                }
 
+                return base.ConvertToString(value, row, memberMapData);
+            }
         }
 
 
