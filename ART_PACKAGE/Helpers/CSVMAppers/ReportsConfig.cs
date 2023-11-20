@@ -3140,6 +3140,231 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
              },
+              //-------------------------------//
+              {
+                nameof(ArtKycHighExpiredU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycHighOneMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+                    }
+                }
+            },
+             {
+                nameof(ArtKycHighThreeMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                         "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycHighTwoMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycLowExpiredU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycLowOneMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycLowThreeMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycLowTwoMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+            },
+             {
+                nameof(ArtKycMediumExpiredU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycMediumOneMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycMediumThreeMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(ArtKycMediumTwoMonthU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                        "Month"
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "ClientNumber",new DisplayNameAndFormat { DisplayName ="Client Number"}},
+                        {  "EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                        {  "AmlRisk",new DisplayNameAndFormat { DisplayName ="AML Risk"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
+                        {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                    }
+                }
+             },
+             {
+                nameof(CustomersWithExpiredDocumentU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "NationalIDExpirationDate",new DisplayNameAndFormat { DisplayName ="National ID Expiration Date"}},
+                        {  "PassportExpirationDate",new DisplayNameAndFormat { DisplayName ="Passport Expiration Date"}},
+                        {  "BusinessLicenseExpirationDate",new DisplayNameAndFormat { DisplayName ="Business License Expiration Date"}},
+                        {  "WorkPermitExpirationDate",new DisplayNameAndFormat { DisplayName ="Work Permit Expiration Date"}},
+
+                    }
+                }
+             },
+              {
+                nameof(CustomersRenewalU4Controller).ToLower(),new ReportConfig{
+                    SkipList = new List<string> {
+                            },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                        {  "CustomerNumber",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                        {  "CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                        {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                        {  "Occupation",new DisplayNameAndFormat { DisplayName ="Occupation"}},
+                        {  "ExpiredDate",new DisplayNameAndFormat { DisplayName ="Expired Date"}},
+                        {  "DateField",new DisplayNameAndFormat { DisplayName ="Date Field"}},
+                        {  "ActionRequired",new DisplayNameAndFormat { DisplayName ="Action Required"}},
+                        {  "LastContactDate",new DisplayNameAndFormat { DisplayName ="Last Contact Date"}},
+                        {  "ChangeBeginDate",new DisplayNameAndFormat { DisplayName ="Change Begin Date"}},
+                        {  "ChangeCurrentIND",new DisplayNameAndFormat { DisplayName ="Change Current IND"}},
+                        {  "KYCExpiryIND",new DisplayNameAndFormat { DisplayName ="KYC Expiry IND"}},
+                        {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+
+                    }
+                }
+             },
         };
 
     }

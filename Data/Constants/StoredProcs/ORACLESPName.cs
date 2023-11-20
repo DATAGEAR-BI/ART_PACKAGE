@@ -37,9 +37,11 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_CUSTOMERS_PER_CITY_U2 = "ART.ART_ST_CUSTOMERS_PER_CITY_U2";
         public static readonly string ART_ST_CUSTOMERS_PER_CITY_U1 = "ART.ART_ST_CUSTOMERS_PER_CITY_U1";
         public static readonly string ART_ST_CUSTOMERS_PER_CITY_U3 = "ART.ART_ST_CUSTOMERS_PER_CITY_U3";
+        public static readonly string ART_ST_CUSTOMERS_PER_CITY_U4 = "ART.ART_ST_CUSTOMERS_PER_CITY_U4";
         public static readonly string ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U2 = "ART.ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U2";
         public static readonly string ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U1 = "ART.ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U1";
         public static readonly string ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U3 = "ART.ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U3";
+        public static readonly string ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U4 = "ART.ART_ST_CUSTOMERS_RENEWAL_PER_MONTH_U4";
 
     }
 }
