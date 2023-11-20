@@ -40,7 +40,37 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                }
             },
 
-            { nameof(AlertDetailsController).ToLower(), new ReportConfig {
+            { nameof(GridController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                    "Val",
+                    "AlertsNotesFlag"
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                    {"AlertId",new GridColumnConfiguration { DisplayName ="Alert ID"}},
+                    {"AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
+                    {"AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number"}},
+                    {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
+                    {"PartyTypeDesc",new GridColumnConfiguration { DisplayName ="Party Type"}},
+                    {"PoliticallyExposedPersonInd",new GridColumnConfiguration { DisplayName ="PEP"}},
+                    {"RunDate",new GridColumnConfiguration { DisplayName ="Run Date"}},
+                    {"CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
+                    {"CloseDate",new GridColumnConfiguration { DisplayName ="Closed Date"}},
+                    {"MoneyLaunderingRiskScore",new GridColumnConfiguration { DisplayName ="Money Laundering RiskScore"}},
+                    {"AlertTypeCd",new GridColumnConfiguration { DisplayName ="Alert Type"}},
+                    {"AlertSubCat",new GridColumnConfiguration { DisplayName ="Alert Sub-Category"}},
+                    {"AlertStatus",new GridColumnConfiguration { DisplayName ="Alert Status"}},
+                    {"AlertDescription",new GridColumnConfiguration { DisplayName ="Alert Description"}},
+                    {"ScenarioName",new GridColumnConfiguration { DisplayName ="Scenario Name"}},
+                    {"ReportCloseRsn",new GridColumnConfiguration { DisplayName ="Report Close Reason"}},
+                    {"ActualValuesText",new GridColumnConfiguration { DisplayName ="Scenario Description"}},
+                    {"OwnerUserid",new GridColumnConfiguration { DisplayName ="Owner "}},
+                    {"InvestigationDays",new GridColumnConfiguration { DisplayName ="Investigation Days"}}
+
+            }
+               }
+            },       { nameof(AlertDetailsController).ToLower(), new ReportConfig {
                SkipList =  new List<string>
                 {
                     "Val",

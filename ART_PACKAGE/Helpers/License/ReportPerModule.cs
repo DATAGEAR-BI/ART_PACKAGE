@@ -17,7 +17,7 @@ namespace ART_PACKAGE.Helpers.License
     {
         private static readonly List<string> SASAMLControllers = new()
         {
-            nameof(AlertDetailsController).ToLower() ,
+            nameof(GridController).ToLower() ,
             nameof(AlertSummaryController).ToLower() ,
 
             nameof(TriageController).ToLower() ,

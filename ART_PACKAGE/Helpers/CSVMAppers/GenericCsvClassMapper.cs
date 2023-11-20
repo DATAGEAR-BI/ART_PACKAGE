@@ -1,6 +1,5 @@
 ﻿using CsvHelper.Configuration;
 using System.Linq.Expressions;
-using ART_PACKAGE.Helpers.CustomReport;
 using System.Reflection;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers

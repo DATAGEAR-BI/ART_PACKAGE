@@ -4,7 +4,7 @@ namespace Data.Services.Grid
 {
     public static class GridHelprs
     {
-        public static List<GridColumn> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
+        public static List<GridColumn> GetColumns<T>(Dictionary<string, List<SelectItem>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
 
@@ -55,7 +55,7 @@ namespace Data.Services.Grid
                 List<Type> collectionTypes = new() { typeof(ICollection<>), typeof(IEnumerable<>), typeof(List<>) };
                 bool isCollection = x.PropertyType.IsGenericType && collectionTypes.Contains(x.PropertyType.GetGenericTypeDefinition());
                 bool isDropDown = columnsToDropDownd is not null && columnsToDropDownd.Keys.Contains(x.Name.ToLower());
-                List<dynamic>? dropdownvalues = isDropDown ? columnsToDropDownd[name.ToLower()] : null;
+                List<SelectItem>? dropdownvalues = isDropDown ? columnsToDropDownd[name.ToLower()] : null;
                 bool isnullabe = nullableType != null;
                 string? agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
                 DisplayNamesAndFormat[name].AggType.ToString() : null;

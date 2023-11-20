@@ -581,14 +581,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             return columns;
         }
-        public static bool IsNumericType(this Type o)
-        {
-            return Type.GetTypeCode(o) switch
-            {
-                TypeCode.Byte or TypeCode.SByte or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.Decimal or TypeCode.Double or TypeCode.Single => true,
-                _ => false,
-            };
-        }
+
         public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNames = null, List<string> propertiesToSkip = null)
         {
             List<ColumnsDto> columns = null;

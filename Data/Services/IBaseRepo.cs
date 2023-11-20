@@ -8,6 +8,5 @@ namespace Data.Services
         where TModel : class
     {
         public GridResult<TModel> GetGridData(GridRequest request);
-        public GridResult<TModel> IntializeGrid(GridRequest request);
     }
 }

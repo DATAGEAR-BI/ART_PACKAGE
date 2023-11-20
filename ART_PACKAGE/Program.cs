@@ -7,6 +7,7 @@ using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Mail;
@@ -28,6 +29,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 
 builder.Services.AddDbs(builder.Configuration);
+builder.Services.AddMediatR(m => m.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
 builder.Services.AddSingleton<ContextPerReportFactory>();
 builder.Services.AddSignalR();
@@ -55,7 +57,7 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
-
+builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();

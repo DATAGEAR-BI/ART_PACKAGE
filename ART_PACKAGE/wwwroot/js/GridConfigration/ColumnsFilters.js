@@ -15,11 +15,11 @@ export const columnFilters = {
                 element.kendoMultiSelect({
                     dataSource: column.menu,
 
-                    ...(isEnum && {
-                        dataTextField: "text",
-                        dataValueField: "value",
-                    })
-                    ,
+
+                    dataTextField: "text",
+                    dataValueField: "value",
+
+
                     filter: "contains"
                 });
             },

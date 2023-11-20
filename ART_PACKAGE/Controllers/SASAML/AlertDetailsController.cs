@@ -42,7 +42,7 @@ namespace ART_PACKAGE.Controllers.SASAML
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
                 List<dynamic> PEPlist = new()
                     {
                         "Y","N"
@@ -58,7 +58,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                     {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
                 };
 
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
             }
 
 
@@ -123,8 +123,8 @@ namespace ART_PACKAGE.Controllers.SASAML
         //}
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
             List<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Alert Details";
             ViewData["desc"] = "Presents the alerts details";

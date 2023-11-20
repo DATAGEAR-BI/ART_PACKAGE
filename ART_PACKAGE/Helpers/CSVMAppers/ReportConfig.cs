@@ -1,6 +1,4 @@
-﻿using Data.Services.Grid;
-
-namespace ART_PACKAGE.Helpers.CSVMAppers
+﻿namespace ART_PACKAGE.Helpers.CSVMAppers
 {
     public class ReportConfig
     {
