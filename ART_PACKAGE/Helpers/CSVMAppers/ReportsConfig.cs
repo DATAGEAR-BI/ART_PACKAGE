@@ -247,6 +247,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
                             {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
                             {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
+                            {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
 
                     },
                            SkipList =  new List<string>()

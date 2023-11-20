@@ -12,6 +12,7 @@ namespace Data.Data.FTI
         public DateTime CaseCreationDate { get; set; }
         public string? BranchName { get; set; }
         public string? CustomerName { get; set; }
+        public string? CustomerClassification { get; set; }
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? EventName { get; set; }
@@ -42,6 +43,7 @@ namespace Data.Data.FTI
         public string? UnAssignee { get; set; }
         public string? UnAssignedBy { get; set; }
         public DateTime? UnAssignedTime { get; set; }
+        
 
     }
 }

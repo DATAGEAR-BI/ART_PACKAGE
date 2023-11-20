@@ -4664,6 +4664,11 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("ECM_REFERENCE")
                    .UseCollation("Arabic_100_CI_AI");
 
+                entity.Property(e => e.CustomerClassification)
+                   .HasMaxLength(1000)
+                   .HasColumnName("CUSTOMER_CLASSIFICATION")
+                   .UseCollation("Arabic_100_CI_AI");
+
                 entity.Property(e => e.Assignee)
                   .HasMaxLength(60)
                   .IsUnicode(false)
