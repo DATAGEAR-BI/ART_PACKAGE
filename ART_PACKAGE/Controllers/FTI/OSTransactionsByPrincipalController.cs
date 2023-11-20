@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsTransByPrincipalReport> data = fti.ArtTiOsTransByPrincipalReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -80,7 +80,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByPrincipalController).ToLower()].SkipList;
             List<ArtTiOsTransByPrincipalReport> data = fti.ArtTiOsTransByPrincipalReports.CallData(req).Data.ToList();
             ViewData["title"] = "OS Transactions By Principal Report";

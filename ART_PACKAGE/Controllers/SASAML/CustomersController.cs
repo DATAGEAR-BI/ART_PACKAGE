@@ -30,7 +30,7 @@ namespace ART_PACKAGE.Controllers.SASAML
         {
             IQueryable<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -86,7 +86,7 @@ namespace ART_PACKAGE.Controllers.SASAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CustomersController).ToLower()].SkipList;
             List<ArtAmlCustomersDetailsView> data = dbfcfcore.ArtAmlCustomersDetailsViews.CallData(req).Data.ToList();
             ViewData["title"] = "Customers Details";

@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             string name = typeof(T1).Name.ToLower();
             PropertyInfo[] props = typeof(T).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
-            Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
+            Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
 
             if (skip is null)
             {

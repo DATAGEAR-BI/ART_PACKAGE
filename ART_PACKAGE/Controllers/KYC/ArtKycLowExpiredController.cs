@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtKycLowExpired> data = dbfcfkc.ArtKycLowExpireds.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -67,7 +67,7 @@ namespace ART_PACKAGE.Controllers.KYC
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredController).ToLower()].SkipList;
             List<ArtKycLowExpired> data = dbfcfkc.ArtKycLowExpireds.CallData(req).Data.ToList();
             ViewData["title"] = "Low risk expired customers Report";

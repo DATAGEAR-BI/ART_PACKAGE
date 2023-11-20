@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers.FTI
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -75,7 +75,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(MasterEventHistoryController).ToLower()].SkipList;
             List<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories.CallData(req).Data.ToList();
             ViewData["title"] = "Master Event History Report";

@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtAuditIndividualsView> data = dbfcfkc.ArtAuditIndividualsViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -66,7 +66,7 @@ namespace ART_PACKAGE.Controllers.KYC
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditIndividualsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditIndividualsController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditIndividualsController).ToLower()].SkipList;
             List<ArtAuditIndividualsView> data = dbfcfkc.ArtAuditIndividualsViews.CallData(req).Data.ToList();
             ViewData["title"] = "Audit For Individuals Report";

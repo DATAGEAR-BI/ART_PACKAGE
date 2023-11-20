@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         {
             IQueryable<ArtScenarioHistoryView> data = _context.ArtScenarioHistoryViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -68,7 +68,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].DisplayNames : null;
+            Dictionary<string, GridColumnConfiguration>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].DisplayNames : null;
             List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLArtScenarioHistoryController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLArtScenarioHistoryController).ToLower()].SkipList : null;
             List<ArtScenarioHistoryView> data = _context.ArtScenarioHistoryViews.CallData(req).Data.ToList();
             ViewData["title"] = "Data Gear Aml Art Scenario History";

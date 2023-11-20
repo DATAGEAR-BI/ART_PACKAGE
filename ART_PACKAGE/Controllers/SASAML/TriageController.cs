@@ -29,7 +29,7 @@ namespace ART_PACKAGE.Controllers.SASAML
         {
             IQueryable<ArtAmlTriageView> data = dbfcfkc.ArtAmlTriageViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Controllers.SASAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(TriageController).ToLower()].SkipList;
             List<ArtAmlTriageView> data = dbfcfkc.ArtAmlTriageViews.CallData(req).Data.ToList();
             ViewData["title"] = "Triage";

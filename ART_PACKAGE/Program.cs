@@ -13,6 +13,7 @@ using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
+using Data.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
@@ -53,7 +54,7 @@ builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
-
+builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 
 
 

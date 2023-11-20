@@ -1,1 +1,2 @@
-﻿global using Microsoft.AspNetCore.Authorization;
+﻿global using Data.Services.Grid;
+global using Microsoft.AspNetCore.Authorization;

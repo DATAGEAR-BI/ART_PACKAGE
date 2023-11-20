@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers.FTI
             IQueryable<ArtTiAdvancePaymentUtilizationReport> data = fti.ArtTiAdvancePaymentUtilizationReports.AsQueryable();
 
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["desc"] = "";
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].SkipList;
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(AdvancePaymentUtilizationController).ToLower()].DisplayNames;
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 9
                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

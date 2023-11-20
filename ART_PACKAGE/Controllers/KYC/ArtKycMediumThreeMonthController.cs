@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtKycMediumThreeMonth> data = dbfcfkc.ArtKycMediumThreeMonths.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -66,7 +66,7 @@ namespace ART_PACKAGE.Controllers.KYC
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].SkipList;
             List<ArtKycMediumThreeMonth> data = dbfcfkc.ArtKycMediumThreeMonths.CallData(req).Data.ToList();
             ViewData["title"] = "Medium risk within 3 months customers Report";

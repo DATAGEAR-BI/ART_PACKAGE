@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.GOAML
         {
             IQueryable<ArtGoamlReportsIndicator> data = _context.ArtGoamlReportsIndicators.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -61,7 +61,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportIndicatorDetailsController).ToLower()].SkipList;
             List<ArtGoamlReportsIndicator> data = _context.ArtGoamlReportsIndicators.CallData(req).Data.ToList();
             ViewData["title"] = "GOAML Reports Indicatores";

@@ -546,16 +546,22 @@ class Grid extends HTMLElement {
                                     Take: options.data.take,
                                     Skip: options.data.skip,
                                     Sort: options.data.sort,
+                                    Group: options.data.group,
+                                    Filter: options.data.filter
+
                                 },
                                 Filters: val
                             }
                         } else {
+                            console.log("test");
                             para.Take = options.data.take;
                             para.Skip = options.data.skip;
                             para.Sort = options.data.sort;
                             para.IsIntialize = false;
                             para.Filter = options.data.filter;
+                            para.Group = options.data.group;
                         }
+
                         readdata();
                     },
                 },

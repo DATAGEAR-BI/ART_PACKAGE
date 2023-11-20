@@ -28,7 +28,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         {
             IQueryable<ArtDgAmlCaseDetailView> data = _context.ArtDgAmlCaseDetailViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -83,7 +83,7 @@ namespace ART_PACKAGE.Controllers.DGAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].DisplayNames : null;
+            Dictionary<string, GridColumnConfiguration>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLCasesDetailsController).ToLower()].DisplayNames : null;
             List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLCasesDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList : null;
             List<ArtDgAmlCaseDetailView> data = _context.ArtDgAmlCaseDetailViews.CallData(req).Data.ToList();
             ViewData["title"] = "Cases Details";

@@ -28,7 +28,7 @@ namespace ART_PACKAGE.Controllers.FTI
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtTiPeriodicChrgsPayReport> data = fti.ArtTiPeriodicChrgsPayReports.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -87,7 +87,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "Periodic CHRGs Payment Report";
             ViewData["desc"] = "This report produces all transactions which have a Pay Charges event within a period that you can specify";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(PeriodicCHRGSPaymentController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             { nameof(ArtTiPeriodicChrgsPayReport.MasterRef)
             , nameof(ArtTiPeriodicChrgsPayReport.Sovalue)

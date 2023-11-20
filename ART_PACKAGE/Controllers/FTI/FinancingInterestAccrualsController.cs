@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiFinanInterAccrual> data = fti.ArtTiFinanInterAccruals.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -79,7 +79,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "Financing Interest Accruals Report";
             ViewData["desc"] = "This report produces details of interest accruals to date for financing transactions, showing for each the interest earned to date";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(FinancingInterestAccrualsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(FinancingInterestAccrualsController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             {nameof(ArtTiFinanInterAccrual.MasterRef)
             , nameof(ArtTiFinanInterAccrual.Address1)

@@ -34,7 +34,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -90,7 +90,7 @@ namespace ART_PACKAGE.Controllers.FTI
             List<ArtTiFullJournalReport> data = fti.ArtTiFullJournalReports.CallData(req).Data.ToList();
             ViewData["title"] = " Full Journal Report";
             ViewData["desc"] = "This report produces changes made to Fusion Trade Innovation system tailoring or static data";
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(FullJournalController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(FullJournalController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new() {
                 nameof(ArtTiFullJournalReport.Dataitem)
                ,nameof(ArtTiFullJournalReport.Username)

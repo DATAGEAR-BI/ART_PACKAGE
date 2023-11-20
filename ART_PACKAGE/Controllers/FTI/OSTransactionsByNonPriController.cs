@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsTransByNonpriReport> data = fti.ArtTiOsTransByNonpriReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -79,7 +79,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByNonPriController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByNonPriController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(OSTransactionsByNonPriController).ToLower()].SkipList;
             List<ArtTiOsTransByNonpriReport> data = fti.ArtTiOsTransByNonpriReports.CallData(req).Data.ToList();
             ViewData["title"] = "OS Transactions By Non-Pri Report";

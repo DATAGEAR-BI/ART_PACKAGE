@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
@@ -503,7 +504,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
 
 
-        public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
+        public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
 
@@ -588,7 +589,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 _ => false,
             };
         }
-        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
+        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNames = null, List<string> propertiesToSkip = null)
         {
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)

@@ -144,12 +144,12 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 
 
             List<string> skipList = null;//_config.GetSection($"{controllerName}:skipList").Get<List<string>>();
-            Dictionary<string, DisplayNameAndFormat> displayNameAndFormat = null;
+            Dictionary<string, GridColumnConfiguration> GridColumnConfiguration = null;
             Dictionary<string, List<dynamic>> dropdown = null;
             if (obj.IsIntialize)
             {
                 skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+                GridColumnConfiguration = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, GridColumnConfiguration>>();
                 dropdown = new Dictionary<string, List<dynamic>>{
                     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
                     };
@@ -158,7 +158,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 
 
 
-            KendoDataDesc<ArtAmlAnalysisViewTb> Data = _data.CallData(obj, columnsToDropDownd: dropdown, propertiesToSkip: skipList, DisplayNames: displayNameAndFormat);
+            KendoDataDesc<ArtAmlAnalysisViewTb> Data = _data.CallData(obj, columnsToDropDownd: dropdown, propertiesToSkip: skipList, DisplayNames: GridColumnConfiguration);
 
             var data = new
             {
@@ -251,12 +251,12 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
                 "IndustryCode"
             };
             List<string> skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-            Dictionary<string, DisplayNameAndFormat>? displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+            Dictionary<string, GridColumnConfiguration>? GridColumnConfiguration = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, GridColumnConfiguration>>();
             List<ArtAmlAnalysisViewTb> data = _context.ArtAmlAnalysisViewTbs.CallData(req).Data.ToList();
             ViewData["title"] = "AML Analysis";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, skipList, displayNameAndFormat);
+                                                    , User.Identity.Name, skipList, GridColumnConfiguration);
             return File(pdfBytes, "application/pdf");
         }
         public async Task<IActionResult> Close([FromBody] CloseRequest closeRequest)

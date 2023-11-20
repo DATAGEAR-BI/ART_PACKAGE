@@ -29,7 +29,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         {
             IQueryable<ArtDgAmlTriageView> data = _context.ArtDGAMLTriageViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Controllers.DGAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : null;
+            Dictionary<string, GridColumnConfiguration>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].DisplayNames : null;
             List<string>? ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLTriageController).ToLower()].SkipList : null;
             List<ArtDgAmlTriageView> data = _context.ArtDGAMLTriageViews.CallData(req).Data.ToList();
             ViewData["title"] = "Triage";

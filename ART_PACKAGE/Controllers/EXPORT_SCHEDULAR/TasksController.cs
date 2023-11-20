@@ -218,7 +218,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         public async Task<IActionResult> GetData([FromBody] KendoRequest request)
         {
             IQueryable<ExportTask> data = _context.ExportsTasks.Where(x => x.UserId == _userManager.GetUserId(User));
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 

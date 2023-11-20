@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsActivityReport> data = fti.ArtTiOsActivityReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "OS Activity Report";
             ViewData["desc"] = "This report produces information for master records, showing what events have been initiated for each master record and the status of the current active steps for each event within it";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSActivityController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSActivityController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             { nameof(ArtTiOsActivityReport.MasterRef)
             , nameof(ArtTiOsActivityReport.Product)

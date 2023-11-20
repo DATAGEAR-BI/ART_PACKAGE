@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         {
             IQueryable<ListOfDeletedUser> data = context.ListOfDeletedUsers.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfDeletedUsersController).ToLower()].SkipList;
             List<ListOfDeletedUser> data = context.ListOfDeletedUsers.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Deleted Users";

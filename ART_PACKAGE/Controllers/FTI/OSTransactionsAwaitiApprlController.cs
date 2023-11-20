@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsTransAwaitiApprlReport> data = fti.ArtTiOsTransAwaitiApprlReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "OS Transactions Awaiti Apprl Report";
             ViewData["desc"] = "This report produces information transactions awaiting credit approval only with the related master records and the related events have been initiated with the related status";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsAwaitiApprlController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsAwaitiApprlController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             { nameof(ArtTiOsTransAwaitiApprlReport.MasterRef)
             , nameof(ArtTiOsTransAwaitiApprlReport.EventReference)

@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Controllers.FTI
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtTiEcmTransactionsReport> data = fti.ArtTiEcmTransactionsReports.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmTransactionsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(EcmTransactionsController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = new() { };
             List<ArtTiEcmTransactionsReport> data = fti.ArtTiEcmTransactionsReports.CallData(req).Data.ToList();
             ViewData["title"] = "ECM Transactions Report";

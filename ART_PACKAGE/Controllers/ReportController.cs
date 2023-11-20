@@ -331,7 +331,7 @@ namespace ART_PACKAGE.Controllers
         }
         public async Task<IActionResult> ExportPdfMyReports([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].SkipList;
             List<ArtSavedCustomReport> data = db.ArtSavedCustomReports.CallData(req).Data.ToList();
             ViewData["title"] = $"My Reports ({User.Identity.Name})";

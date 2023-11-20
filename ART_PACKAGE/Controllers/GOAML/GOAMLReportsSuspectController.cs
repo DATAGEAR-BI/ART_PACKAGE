@@ -25,7 +25,7 @@ namespace ART_PACKAGE.Controllers.GOAML
         {
             IQueryable<ArtGoamlReportsSusbectParty> data = _context.ArtGoamlReportsSusbectParties.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
 
             if (request.IsIntialize)
@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GOAMLReportsSuspectController).ToLower()].SkipList;
             List<ArtGoamlReportsSusbectParty> data = _context.ArtGoamlReportsSusbectParties.CallData(req).Data.ToList();
             ViewData["title"] = "GOAML Reports Suspected Partites Details";

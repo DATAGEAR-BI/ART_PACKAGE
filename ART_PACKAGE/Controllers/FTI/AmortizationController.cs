@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Controllers.FTI
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtTiAmortizationReport> data = fti.ArtTiAmortizationReports.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.FTI
             List<ArtTiAmortizationReport> data = fti.ArtTiAmortizationReports.CallData(req).Data.ToList();
             ViewData["title"] = "Amortization Report";
             ViewData["desc"] = "This report produces all postings posted to an account by value date";
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(AmortizationController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             {
                 // nameof(ArtTiAmortizationReport.EventRef)

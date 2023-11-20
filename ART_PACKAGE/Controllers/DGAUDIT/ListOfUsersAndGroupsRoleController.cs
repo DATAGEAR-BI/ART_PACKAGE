@@ -30,7 +30,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         {
             IQueryable<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -71,7 +71,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfUsersAndGroupsRoleController).ToLower()].SkipList;
             List<ListOfUsersAndGroupsRole> data = context.ListOfUsersAndGroupsRoles.CallData(req).Data.ToList();
             ViewData["title"] = "List Of Users Groups Roles";

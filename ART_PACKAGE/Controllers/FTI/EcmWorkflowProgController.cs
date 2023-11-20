@@ -36,7 +36,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiEcmWorkflowProgReport> data = fti.ArtTiEcmWorkflowProgReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -100,7 +100,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].DisplayNames;
 
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmWorkflowProgController).ToLower()].SkipList;
 

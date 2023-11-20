@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiChargesDetailsReport> data = fti.ArtTiChargesDetailsReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -102,7 +102,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "Our Charges Details";
             ViewData["desc"] = "This report produces more detailed analysis of the individual charges for each event";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesDetailsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesDetailsController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new() {
                 nameof(ArtTiChargesDetailsReport.MasterRef)
                ,nameof(ArtTiChargesDetailsReport.EventRef)

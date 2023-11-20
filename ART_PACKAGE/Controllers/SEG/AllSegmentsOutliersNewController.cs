@@ -25,7 +25,7 @@ namespace ART_PACKAGE.Controllers.SEG
         {
             IQueryable<ArtAllSegmentsOutliersTb> data = _context.ArtAllSegmentsOutliersTbs.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
