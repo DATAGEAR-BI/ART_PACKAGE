@@ -29,9 +29,73 @@ class Grid extends HTMLElement {
         builder: undefined,
         applyBtn: undefined
     }
+    customtToolBarBtns = [];
+    filtersModal = document.createElement("div");
+
+    //<div class="modal fade" id="myModalWithForms" tabindex="-1" aria-labelledby="myModalWithFormsLabel" aria-hidden="true">
+    //    <div class="modal-dialog modal-lg">
+    //        <div class="modal-content">
+    //            <div class="modal-header">
+    //                <h4 class="modal-title" id="myModalWithFormsLabel">Modal Heading</h4>
+    //                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    //            </div>
+
+    //            <div class="modal-body">
+    //                <div class="row">
+
+
+
+
+
+
+    //                </div>
+    //            </div>
+
+    //            <div class="modal-footer">
+    //                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+    //            </div>
+    //        </div>
+    //    </div>
+    //</div>
+
 
     constructor() {
         super();
+
+        this.filtersModal.classList.add("modal", "fade");
+        this.filtersModal.id = this.id + "-modal";
+        this.filtersModal.tabIndex = -1;
+        this.filtersModal.ariaHidden = true;
+        this.filtersModal.ariaLabel = this.id + "-modal" + "Label";
+        this.filtersModal.innerHTML = `<div class="modal-dialog modal-lg">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h4 class="modal-title" id="${this.id}-modalLabel">Filters</h4>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+
+               <div class="modal-body">
+                   <div class="row" id="${this.id}-filtersDiv">
+
+
+
+
+
+
+                   </div>
+               </div>
+
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+               </div>
+           </div>
+       </div>`
+
+        this.appendChild(this.filtersModal);
+
+
+
+
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
         this.isCustom = Object.keys(this.dataset).includes("custom");
@@ -356,37 +420,44 @@ class Grid extends HTMLElement {
     genrateToolBar(data, doesnotcontainsll) {
         var toolbar = [];
         if (!doesnotcontainsll) {
+            //{ name: "customButton1",  },
+            //{ name: "customButton2", text: "Custom Button 2" }
+
+
             toolbar = [
-                {
-                    name: "custom",
-                    template: `<span id="tbdataCount"></span>`,
-                },
                 "excel",
                 {
-                    name: "custom",
-                    template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
+                    name: this.gridDiv.id + "csvExport",
+                    text: "Export To CSV"
+                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
                 },
                 {
-                    name: "custom",
-                    template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
+                    name: this.gridDiv.id + "pdfExport",
+                    text: "Export To PDF"
+                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
                 },
                 {
-                    name: "custom",
-                    template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
+                    name: this.gridDiv.id + "sh_filters",
+                    text: "Show Filters"
+                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
                 },
                 {
-                    name: "custom",
-                    template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
+                    name: this.gridDiv.id + "clrfil",
+                    text: "Clear All Filters"
+                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
                 },
             ];
         }
 
         if (data) {
             data.forEach((x) => {
-                toolbar.push({
-                    name: "custom",
-                    template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.id}" href="\\#"">${x.text}</a>`,
-                });
+                var btn = {
+                    name: `${x.action}`,
+                    text: `${x.text}`
+                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
+                }
+                this.customtToolBarBtns.push(btn);
+                toolbar.push(btn);
             });
         }
         return toolbar;
@@ -407,7 +478,6 @@ class Grid extends HTMLElement {
             dataSource: {
                 transport: {
                     read: (options) => {
-                        console.log("read");
                         const readdata = () => {
 
                             fetch(this.url, {
@@ -429,12 +499,6 @@ class Grid extends HTMLElement {
                                     //    options.success(temp);
                                     //}
                                     /*   else {*/
-                                    if (!d.doesNotContainAllFun) {
-                                        var tpcountSpan = document.getElementById("tbdataCount");
-                                        tpcountSpan.innerText = `${options.data.skip + 1} - ${options.data.skip + 100} of ${d.total} items`
-
-                                    }
-
                                     options.success([...d.data]);
                                     /*   }*/
 
@@ -466,30 +530,7 @@ class Grid extends HTMLElement {
                                             }, 0);
                                         }
                                     }
-                                    //var filter = options.data.filter;
-
-                                    //createFiltersDiv(filter);
-
-                                    //if (filter) {
-                                    //    var frag = new DocumentFragment();
-                                    //    filter.filters.forEach(x => {
-                                    //        if (x.field) {
-                                    //            var p = document.createElement("p");
-                                    //            p.innerHTML = `${x.field} ${x.operator} ${x.value}`
-                                    //            frag.appendChild(p);
-                                    //        } else {
-                                    //            x.filters.forEach(x => {
-                                    //                var p = document.createElement("p");
-                                    //                p.innerHTML = `${x.field} ${x.operator} ${x.value}`
-                                    //                frag.appendChild(p);
-                                    //            })
-                                    //        }
-
-                                    //    })
-
-                                    //    fDiv.appendChild(frag);
-
-                                    //}
+                                    
                                     if (this.isCustom) {
                                         var chartdata = [];
                                         if (d.chartdata)
@@ -521,7 +562,6 @@ class Grid extends HTMLElement {
                         }
 
                         if (this.isStoredProc) {
-                            console.log(this.storedConfig.builder.value);
                             var flatted = this.storedConfig.builder.value.flat();
                             if (flatted.includes("or")) {
                                 toastObj.icon = 'error';
@@ -553,7 +593,6 @@ class Grid extends HTMLElement {
                                 Filters: val
                             }
                         } else {
-                            console.log("test");
                             para.Take = options.data.take;
                             para.Skip = options.data.skip;
                             para.Sort = options.data.sort;
@@ -606,7 +645,7 @@ class Grid extends HTMLElement {
             sortable: {
                 mode: "multiple",
             },
-            height: 550,
+            height: 700,
             groupable: true,
             dataBound: (e) => {
 
@@ -654,7 +693,6 @@ class Grid extends HTMLElement {
 
         // event for constructing the filters for multi select columns
         grid.bind("filterMenuInit", (e) => {
-            console.log(e);
             if (this.isMultiSelect.includes(e.field)) {
                 console.log(e.field);
                 e.container.find("[type='submit']").click((ev) => {
@@ -747,44 +785,85 @@ class Grid extends HTMLElement {
             }
         });
 
-        $(".k-grid-custom").click(function (e) {
+
+        $(`.k-grid-${this.gridDiv.id}clrfil`).click((e) => {
+            var clrfilhandler = Handlers["clrfil"];
+            clrfilhandler(e, this.gridDiv);
+        });
+        $(`.k-grid-${this.gridDiv.id}sh_filters`).click((e) => {
+            var sh_filtersHandler = Handlers["sh_filters"];
+            sh_filtersHandler(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
+        });
+        $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
+            var pdfExportHandler = undefined;
+            if (!this.isStoredProc)
+                pdfExportHandler = Handlers["PdExport"];
+            else
+                pdfExportHandler = Handlers["StoredPdExport"];
+
             var orgin = window.location.pathname.split("/");
             var controller = orgin[1];
-            if (e.target.id == "csvExport") {
-                if (isStoredProc) {
-                    var csvhandler = Handlers["csvExportForStored"];
-                    csvhandler(e, controller);
-                } else {
-                    var csvhandler = Handlers["csvExport"];
-                    csvhandler(e, controller, url, prop);
-                }
-
-            }
-
-            else if (e.target.id == "clientPdExport") {
-
-                if (isStoredProc) {
-                    var csvhandler = Handlers["clientStoredPdExport"];
-                    csvhandler(e, controller, reportName);
-                } else {
-                    var csvhandler = Handlers["clientPdExport"];
-                    csvhandler(e, controller, url);
-                }
-            }
-
-            else if (e.target.id == "clrfil") {
-                var clrfilhandler = Handlers["clrfil"];
-                clrfilhandler(e);
-            }
-            else if (e.target.id == "sh_filters") {
-                var sh_filtershandler = Handlers["sh_filters"];
-                sh_filtershandler(e);
-            }
-            else {
-                var handler = Handlers[handlerkey][e.target.id];
-                handler(e);
-            }
+            pdfExportHandler(e, controller, this.url, this.gridDiv);
         });
+        $(`.k-grid-${this.gridDiv.id}csvExport`).click((e) => {
+
+            console.log("clrfil");
+        });
+
+
+        this.customtToolBarBtns.forEach(x => {
+            $(`.k-grid-${x.name}`).click((e) => {
+                if (this.handlerkey) {
+                    var reportHandlers = Handlers[this.handlerkey];
+                    if (reportHandlers)
+                        reportHandlers[x.name]();
+                    else
+                        console.error("there is no Handlers for this report");
+                } else {
+                    console.error("there is no handler key");
+                }
+            });
+        })
+
+
+        //$(".k-grid-custom").click(function (e) {
+        //    var orgin = window.location.pathname.split("/");
+        //    var controller = orgin[1];
+        //    if (e.target.id == "csvExport") {
+        //        if (isStoredProc) {
+        //            var csvhandler = Handlers["csvExportForStored"];
+        //            csvhandler(e, controller);
+        //        } else {
+        //            var csvhandler = Handlers["csvExport"];
+        //            csvhandler(e, controller, url, prop);
+        //        }
+
+        //    }
+
+        //    else if (e.target.id == "clientPdExport") {
+
+        //        if (isStoredProc) {
+        //            var csvhandler = Handlers["clientStoredPdExport"];
+        //            csvhandler(e, controller, reportName);
+        //        } else {
+        //            var csvhandler = Handlers["clientPdExport"];
+        //            csvhandler(e, controller, url);
+        //        }
+        //    }
+
+        //    else if (e.target.id == "clrfil") {
+        //        var clrfilhandler = Handlers["clrfil"];
+        //        clrfilhandler(e);
+        //    }
+        //    else if (e.target.id == "sh_filters") {
+        //        var sh_filtershandler = Handlers["sh_filters"];
+        //        sh_filtershandler(e);
+        //    }
+        //    else {
+        //        var handler = Handlers[handlerkey][e.target.id];
+        //        handler(e);
+        //    }
+        //});
 
         //$(".k-grid-excel").on("click", (e) => {
 

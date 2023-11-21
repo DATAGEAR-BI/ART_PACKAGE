@@ -3,8 +3,29 @@ class TextInput extends HTMLElement {
     label = document.createElement("label");
     constructor() {
         super();
+        //var attrs = Object.keys(this.dataset);
+        //this.classList.add("form-floating", "form-floating-outlined");
+        //this.input.classList.add("form-control");
+        //this.input.id = this.id + "-input";
+        //this.input.autocomplete = "off";
+        //if (this.dataset.value)
+        //    this.input.value = this.dataset.value;
+        //this.input.placeholder = this.dataset.palceholder;
+
+        //this.label.innerText = this.dataset.title;
+        //this.label.for = this.id + "-input";
+
+        //if (attrs.includes("disabled"))
+        //    this.input.disabled = true;
+
+       
+        //this.intialize();
+    }
+
+    
+    connectedCallback() {
         var attrs = Object.keys(this.dataset);
-        this.classList.add("form-floating","form-floating-outlined");
+        this.classList.add("form-floating", "form-floating-outlined");
         this.input.classList.add("form-control");
         this.input.id = this.id + "-input";
         this.input.autocomplete = "off";
@@ -20,12 +41,13 @@ class TextInput extends HTMLElement {
 
         this.appendChild(this.input);
         this.appendChild(this.label);
+        this.intialize();
     }
 
 
     intialize(value) {
         var inputs = this.querySelectorAll(`#${this.id}-input`);
-        if(value)
+        if (value)
             inputs.forEach(x => x.value = value);
         var textFieldList = [].slice.call(inputs)
         var textFields = textFieldList.map(function (textField) {

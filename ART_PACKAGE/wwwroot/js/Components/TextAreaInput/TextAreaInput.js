@@ -18,6 +18,7 @@ class TextAreaInput extends HTMLElement {
 
         this.appendChild(this.input);
         this.appendChild(this.label);
+        this.intialize();
     }
 
 

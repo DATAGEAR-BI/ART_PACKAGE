@@ -9,6 +9,7 @@ using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.ExportTasks;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Helpers.Pdf;
@@ -18,6 +19,7 @@ using Data.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using QuestPDF.Infrastructure;
 using Rotativa.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
@@ -27,9 +29,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 
     EnvironmentName = "Development",
 });
-
+QuestPDF.Settings.License = LicenseType.Community;
 builder.Services.AddDbs(builder.Configuration);
-builder.Services.AddMediatR(m => m.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+builder.Services.AddMediatR(m => m.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(AuthContext).Assembly));
 
 builder.Services.AddSingleton<ContextPerReportFactory>();
 builder.Services.AddSignalR();
@@ -57,6 +59,7 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
+builder.Services.AddTransient(typeof(IGridConstructor<,>), typeof(GridConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 
 

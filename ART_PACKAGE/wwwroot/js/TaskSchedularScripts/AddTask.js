@@ -110,10 +110,7 @@ fetch("/Tasks/GetDays").then(x => x.json()).then(data => {
     weekDayDropDown.intialize([...options]);
 
 });
-taskNameInput.intialize();
-taskDescInput.intialize();
-filePath.intialize();
-mailContent.intialize();
+
 
 
 var mailsDiv = document.getElementById("mailsDiv");

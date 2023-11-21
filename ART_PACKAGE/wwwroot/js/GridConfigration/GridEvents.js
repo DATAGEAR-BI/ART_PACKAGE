@@ -121,13 +121,17 @@ export const Handlers = {
         a.href = window.URL.createObjectURL(blob);
         a.click();
         kendo.ui.progress($('#grid'), false);
-    }, clrfil: (e) => {
-        var ds = $("#grid").data("kendoGrid");
-        var multiSelects = document.querySelectorAll("[data-role=multiselect]");
+    },
+
+    clrfil: (e, gridDiv) => {
+        console.log(gridDiv);
+        var grid = $(gridDiv).data("kendoGrid");
+        var multiSelects = document.querySelectorAll("input[data-role=multiselect]");
+        console.log(multiSelects);
         [...multiSelects].forEach(x => {
             $(x).data("kendoMultiSelect").value(null);
         });
-        ds.dataSource.filter(null);
+        grid.dataSource.filter(null);
     },
 
 
@@ -286,10 +290,227 @@ export const Handlers = {
 
     },
 
+    PdExport: async (e, controller, url, gridDiv) => {
+        var paramsArr = url.split("?");
+        var params = "";
+        if (paramsArr[1]) {
+            params = paramsArr[1];
+        }
+
+        kendo.ui.progress($(gridDiv), true);
+        var ds = $(gridDiv).data("kendoGrid");
+        var total = 1000//ds.dataSource.total();
+        var take = 1000;
+        var skip = 0;
+        //var id = document.getElementById("script").dataset.id;
+
+        var filters = ds.dataSource.filter();
+        var groups = ds.dataSource.group();
+        var promses = [];
+        while (total > 0) {
+            var promise = new Promise(async (resolve, reject) => {
+                var para = {}
+                //if (id) {
+                //    para.Id = id;
+                //}
+                para.Take = take;
+                para.Skip = skip;
+                para.Filter = filters;
+                para.Group = groups;
+
+                var isMyreports = window.location.href.toLowerCase().includes('myreports');
+                var res;
+                if (isMyreports) {
+                    res = await fetch(`/${controller}/ExportPdfMyReports`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(para)
+                    });
+                } else {
+                    var exportUrl = params ? `/${controller}/ExportPdf?${params}` : `/${controller}/ExportPdf`;
+                    res = await fetch(exportUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(para)
+                    });
+                }
+                var r = await res.blob();
+                resolve({
+                    blob: r
+
+                });
+            });
+            promses.push(promise);
+            skip += take;
+            total -= take;
+        }
+
+        var results = await Promise.all(promses);
+        results.forEach((x, i) => {
+            var a = document.createElement("a");
+            var dateNow = new Date();
+
+            a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".pdf");
+            a.href = window.URL.createObjectURL(x.blob);
+            a.click();
+        });
+        kendo.ui.progress($(gridDiv), false);
+    },
+
+    StoredPdExport: async (e, controller) => {
+        kendo.ui.progress($('#grid'), true);
+        var ds = $("#grid").data("kendoGrid");
+        var id = document.getElementById("script").dataset.id;
+        var exRules = [];
+        var rules = $("#filters").queryBuilder('getRules');
+        var g = [...rules.rules].reduce((group, product) => {
+            const { id } = product;
+            group[id] = !group[id] ? [] : group[id];
+            group[id].push(product);
+            return group;
+        }, {});
+        var arr = [];
+        for (var prop in g) {
+            arr.push(g[prop]);
+        }
+        if (arr.some(x => x.length > 1)) {
+            console.log("error");
+        } else {
+            exRules = Array.prototype.concat.apply([], arr);
+            exRules = [...exRules].map(x => {
+                if (Array.isArray(x.value)) {
+                    x.value = [...x.value].join(",");
+                }
+                return x;
+            });
+        }
+        var total = ds.dataSource.total();
+        var take = 20000;
+        var skip = 0;
+        var id = document.getElementById("script").dataset.id;
+
+        var filters = ds.dataSource.filter();
+        var promses = [];
+        while (total > 0) {
+            var promise = new Promise(async (resolve, reject) => {
+                var para = {}
+                if (id) {
+                    para.Id = id;
+                }
+                para.Take = take;
+                para.Skip = skip;
+                para.Filter = filters;
+                var res = await fetch(`/${controller}/ExportPdf`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ req: para, procFilters: exRules })
+                });
+
+                console.log({ req: para, procFilters: exRules });
+                var r = await res.blob();
+                resolve(r);
+            });
+            promses.push(promise);
+            skip += take;
+            total -= take;
+        }
+
+        var results = await Promise.all(promses);
+        results.forEach((x, i) => {
+            console.log(i);
+            var a = document.createElement("a");
+            var dateNow = new Date().toLocaleDateString();
+
+            a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".pdf");
+            a.href = window.URL.createObjectURL(x);
+            a.click();
+        });
+        kendo.ui.progress($('#grid'), false);
 
 
-    sh_filters: (e) => {
-        $('#filtersCollapse').collapse("toggle")
+
+
+    },
+
+
+
+    sh_filters: (e, gridDiv, Modal, filtersDivId, columns) => {
+        console.log(columns);
+        var grid = $(gridDiv).data("kendoGrid");
+        var filters = grid.dataSource.filter();
+        var filterDiv = document.getElementById(filtersDivId);
+        filterDiv.innerHTML = "";
+        function buildInputs(filter) {
+
+            if (!filter) return;
+
+            var ops = {
+                eq: "Is Equal To",
+                neq: "Not Equal To",
+                isnull: "Is Null",
+                isnotnull: "Is Not Null",
+                isempty: "Is Empty",
+                isnotempty: "Is Not Empty",
+                startswith: "Starts With",
+                doesnotstartwith: "Does Not Start With",
+                contains: "Contains",
+                doesnotcontain: "Does Not Contain",
+                endswith: "Ends With",
+                doesnotendwith: "Does Not End With",
+                gte: "Greater Than Or Equal",
+                gt: "Greater Than",
+                lte: "Less Than Or Equal",
+                lt: "Less Than",
+            };
+
+            if (filter.logic) {
+                var logicDiv = document.createElement("div");
+                logicDiv.classList.add("row");
+                var childFilter = [];
+                var res = [];
+                filter.filters.forEach(function (f) {
+                    childFilter.push(buildInputs(f)); // Recursively build inputs for nested filters
+                });
+                for (let i = 0; i < childFilter.length; i++) {
+                    res.push(childFilter[i]); // Add the original element
+                    // Add 'x' after each original element, except after the last one
+                    if (i < childFilter.length - 1) {
+                        var logic = document.createElement("p");
+                        logic.classList.add("m-2");
+                        logic.innerText = filter.logic;
+                        res.push(logic);
+                    }
+                }
+                res.forEach(x => logicDiv.appendChild(x));
+                return logicDiv;
+            } else {
+                var div = document.createElement("div");
+                div.classList.add("col-12");
+                var filterInput = document.createElement("m-input");
+                filterInput.dataset.value = `${ops[filter.operator]} ${filter.value}`;
+                var column = columns.find(x => x.field == filter.field);
+                console.log(column);
+                filterInput.dataset.title = column.title;
+                filterInput.dataset.disabled = true;
+                div.appendChild(filterInput);
+                return div;
+            }
+        }
+
+        if (filters) {
+            filterDiv.appendChild(buildInputs(filters));
+        }
+        //console.log(filters.filters.flat(Infinity));
+        $(Modal).modal("show");
     },
     AlertSearch: {
         test1: (e) => {
