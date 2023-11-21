@@ -387,9 +387,9 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     chart.scrollbarY = scrollbar;
 
 
-    chart.events.on("ready", function () {
-        categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
-    });
+    //chart.events.on("ready", function () {
+    //    categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
+    //});
 
 }
 function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRototate, columnsColorFunc) {
@@ -546,9 +546,9 @@ function callClusteredBarChart(data, hbartitle, divId, chartXValue, chartCategor
     chart.scrollbarY = scrollbar;
 
 
-    chart.events.on("ready", function () {
-        categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
-    });
+    //chart.events.on("ready", function () {
+    //    categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
+    //});
 
 }
 
