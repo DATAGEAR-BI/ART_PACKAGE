@@ -1,8 +1,8 @@
 ﻿using Data.Data.SASAml;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
 using System.Data;
+using System.Data.Common;
 
 namespace Data.Data.FTI
 {
@@ -46,6 +46,10 @@ namespace Data.Data.FTI
         public virtual DbSet<ArtFtiActivity> ArtFtiActivities { get; set; } = null!;
         public virtual DbSet<ArtFtiEcmTransaction> ArtFtiEcmTransactions { get; set; } = null!;
         public virtual DbSet<ArtFtiEndToEnd> ArtFtiEndToEnds { get; set; } = null!;
+        public virtual DbSet<ArtFtiEndToEndNew> ArtFtiEndToEndsNew { get; set; } = null!;
+        public virtual DbSet<ArtFtiEndToEndSubCases> ArtFtiEndToEndSubCasess { get; set; } = null!;
+        public virtual DbSet<ArtFtiEndToEndEcmEventsWorkflow> ArtFtiEndToEndEcmEventsWorkflows { get; set; } = null!;
+        public virtual DbSet<ArtFtiEndToEndFtiEventsWorkflow> ArtFtiEndToEndFtiEventsWorkflows { get; set; } = null!;
 
         public FTIContext(DbContextOptions<FTIContext> options) : base(options)
         {
@@ -78,10 +82,10 @@ namespace Data.Data.FTI
             }
             catch (Exception e)
             {
-                Console.WriteLine(SPName+" - "+e.ToString());
-                throw ;
+                Console.WriteLine(SPName + " - " + e.ToString());
+                throw;
             }
-            
+
         }
 
         private IEnumerable<T> OracleExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class

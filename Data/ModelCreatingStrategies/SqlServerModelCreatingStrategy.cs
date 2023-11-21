@@ -4654,6 +4654,264 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("FIRST_LINE_PARTY")
                     .UseCollation("Arabic_100_CI_AI");
             });
+
+
+
+
+            modelBuilder.Entity<ArtFtiEndToEndSubCases>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FTI_END_TO_END_SUB_CASES", "ART_DB");
+
+
+
+                entity.Property(e => e.CustomerClassification)
+                   .HasColumnName("CUSTOMER_CLASSIFICATION")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SubCaseReference)
+                   .HasColumnName("SUB_CASE_REFERENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FirtsLineInstructions)
+                   .HasColumnName("FIRST_LINE_INSTRUCTIONS")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ParentCaseId)
+                   .HasColumnName("PARENT_CASE_ID")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatus)
+                   .HasColumnName("CASE_STATUS")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TradeInstructions)
+                   .HasColumnName("TRADE_INSTRUCTIONS")
+                   .UseCollation("Arabic_100_CI_AI");
+
+
+
+                //entity.Property(e => e.CaseCreationDate)
+                //    .HasColumnType("datetime")
+                //    .HasColumnName("CASE_CREATION_DATE");
+
+                //entity.Property(e => e.EventCreationDate)
+                //    .HasColumnType("date")
+                //    .HasColumnName("EVENT_CREATION_DATE");
+
+
+
+            });
+            modelBuilder.Entity<ArtFtiEndToEndEcmEventsWorkflow>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FTI_END_TO_END_ECM_EVENTS_WORKFLOW", "ART_DB");
+
+                entity.Property(e => e.AssignedTimeDifference)
+                             .HasColumnName("ASSIGN_TIME_DIFFERENCE")
+                             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignedBy)
+                        .HasColumnName("UNASSIGNED_BY")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnAssignee)
+                        .HasColumnName("UNASSIGNEE")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AssignedBy)
+                        .HasColumnName("ASSIGNED_BY")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Assignee)
+                        .HasColumnName("ASSIGNEE")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventTimeDifference)
+                        .HasColumnName("ECM_EVENT_TIM_EDIFFERENCE")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedBy)
+                        .HasColumnName("ECM_EVENT_CREATED_BY")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventStep)
+                        .HasColumnName("ECM_EVENT_STEP")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmReference)
+                        .HasColumnName("ECM_REFERENCE")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseComments)
+                        .HasColumnName("CASE_COMMENTS")
+                        .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EcmEventCreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ECM_EVENT_CREATED_DATE");
+
+                entity.Property(e => e.AssignedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ASSIGNED_TIME");
+
+                entity.Property(e => e.UnAssignedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UNASSIGNED_TIME");
+
+            });
+
+
+            modelBuilder.Entity<ArtFtiEndToEndFtiEventsWorkflow>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FTI_END_TO_END_FTI_EVENTS_WORKFLOW", "ART_DB");
+
+
+                entity.Property(e => e.LastModUser)
+                           .HasColumnName("LAST_MOD_USER")
+                           .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TimeDifference)
+                         .HasColumnName("TIMEDIFFERENCE")
+                         .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.StepStatus)
+                         .HasColumnName("STEP_STATUS")
+                         .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EventSteps)
+                         .HasColumnName("Event_Steps")
+                         .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FtiReference)
+                         .HasColumnName("FTI_REFERENCE")
+                         .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.StartedTime)
+               .HasColumnType("datetime")
+               .HasColumnName("STARTED_TIME");
+
+
+                entity.Property(e => e.LastModTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LAST_MOD_TIME");
+                // entity.Property(e => e.)
+
+
+
+
+            });
+
+
+            modelBuilder.Entity<ArtFtiEndToEndNew>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FTI_END_TO_END_NEW", "ART_DB");
+
+                entity.Property(e => e.EcmReference)
+                   .HasMaxLength(64)
+                   .HasColumnName("ECM_REFERENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerClassification)
+                   .HasMaxLength(1000)
+                   .HasColumnName("CUSTOMER_CLASSIFICATION")
+                   .UseCollation("Arabic_100_CI_AI");
+
+
+
+                entity.Property(e => e.Amount).HasColumnName("AMOUNT");
+
+                entity.Property(e => e.CaseCreationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CASE_CREATION_DATE");
+
+                entity.Property(e => e.EventCreationDate)
+                    .HasColumnType("date")
+                    .HasColumnName("EVENT_CREATION_DATE");
+
+                entity.Property(e => e.Currency)
+                   .HasMaxLength(1000)
+                   .IsUnicode(false)
+                   .HasColumnName("CURRENCY")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseStatus)
+                   .IsUnicode(false)
+                   .HasColumnName("CASE_STATUS")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LastActionTakenBy)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_ACTION_TAKEN_BY")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.MasterReference)
+                   .IsUnicode(false)
+                   .HasColumnName("MASTER_REFERENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.FtiFirstLineParty)
+                   .IsUnicode(false)
+                   .HasColumnName("FTI_FIRST_LINE_PARTY")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BranchName)
+                  .HasMaxLength(4000)
+                  .IsUnicode(false)
+                  .HasColumnName("BRANCH_NAME")
+                  .UseCollation("Arabic_100_CI_AI");
+
+
+                entity.Property(e => e.CustomerName)
+                  .HasMaxLength(1000)
+                  .IsUnicode(false)
+                  .HasColumnName("CUSTOMER_NAME")
+                  .UseCollation("Arabic_100_CI_AI");
+
+
+                entity.Property(e => e.Product)
+                   .HasMaxLength(4000)
+                   .IsUnicode(false)
+                   .HasColumnName("Product")
+                   .UseCollation("Arabic_100_CI_AI");
+
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+
+
+                entity.Property(e => e.PrimaryOwner)
+                   .HasMaxLength(255)
+                   .IsUnicode(false)
+                   .HasColumnName("PRIMARY_OWNER")
+                   .UseCollation("Arabic_100_CI_AI");
+
+
+
+                entity.Property(e => e.EventStatus)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("Event_Status")
+                    .UseCollation("Arabic_100_CI_AI");
+
+
+                // entity.Property(e => e.)
+
+
+
+
+            });
+
+
+
             modelBuilder.Entity<ArtFtiEndToEnd>(entity =>
             {
                 entity.HasNoKey();
@@ -4735,7 +4993,7 @@ namespace Data.ModelCreatingStrategies
                   .IsUnicode(false)
                   .HasColumnName("BRANCH_NAME")
                   .UseCollation("Arabic_100_CI_AI");
-                
+
                 entity.Property(e => e.CustomerName)
                   .HasMaxLength(1000)
                   .IsUnicode(false)
