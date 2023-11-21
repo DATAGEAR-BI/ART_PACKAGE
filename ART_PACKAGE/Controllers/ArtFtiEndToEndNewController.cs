@@ -11,7 +11,7 @@ namespace ART_PACKAGE.Controllers
 {
     public class ArtFtiEndToEndNewController : Controller
     {
-       {
+
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
