@@ -1100,7 +1100,7 @@ export const Handlers = {
         }
     },
     ArtFtiEndToEndNew: {
-        subCases: () => {
+        subCases: async () => {
             kendo.ui.progress($('#grid'), true);
             var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
             if (selected && [...selected].length > 0) {
@@ -1133,7 +1133,7 @@ export const Handlers = {
                 kendo.ui.progress($('#grid'), false);
             }
         },
-        ftiEventsWorkflow: () => {
+        ftiEventsWorkflow: async () => {
             kendo.ui.progress($('#grid'), true);
             var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
             if (selected && [...selected].length > 0) {
@@ -1167,7 +1167,7 @@ export const Handlers = {
                 kendo.ui.progress($('#grid'), false);
             }
         },
-        ecmEventsWorkflow: () => {
+        ecmEventsWorkflow: async () => {
             kendo.ui.progress($('#grid'), true);
             var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
             if (selected && [...selected].length > 0) {

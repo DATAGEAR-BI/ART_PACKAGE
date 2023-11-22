@@ -63,22 +63,23 @@ namespace ART_PACKAGE.Controllers
                     new
                     {
                         text = "Get Ecm Events Workflow",
-                        id="ecmEventsWorkflow",
+                        id = "ecmEventsWorkflow",
                         //show = User.IsInRole("Delete_Cases")
                     }
-                    ,  new
+                    , new
                     {
                         text = "Get Fti Events Workflow",
-                        id="ftiEventsWorkflow",
+                        id = "ftiEventsWorkflow",
                         //show = User.IsInRole("Delete_Cases")
                     }
-                    ,  new
+                    , new
                     {
                         text = "Get SubCases",
-                        id="subCases",
+                        id = "subCases",
                         //show = User.IsInRole("Delete_Cases")
                     },
                 },
+                selectable = true
 
             };
 
