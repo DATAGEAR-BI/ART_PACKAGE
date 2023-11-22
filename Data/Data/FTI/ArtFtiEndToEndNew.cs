@@ -3,13 +3,14 @@
     public class ArtFtiEndToEndNew
     {
 
-        public string EcmReference { get; set; } = null!;//
+        public string EcmReference { get; set; } = null!;//     
         public DateTime CaseCreationDate { get; set; }//
         public string? BranchName { get; set; }//
         public string? CustomerName { get; set; }//
         public string? CustomerClassification { get; set; }//
         public string? Product { get; set; }//
         public string? ProductType { get; set; }//
+        public string? RequestType { get; set; }//
         public double? Amount { get; set; }//
         public string? Currency { get; set; }//
         public string? PrimaryOwner { get; set; }//

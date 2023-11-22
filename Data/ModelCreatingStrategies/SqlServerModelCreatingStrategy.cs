@@ -4156,6 +4156,7 @@ namespace Data.ModelCreatingStrategies
             //ABK 
             modelBuilder.Entity<ArtCasesInitiatedFromBranch>(entity =>
             {
+
                 entity.HasNoKey();
 
                 entity.ToView("ART_CASES_INITIATED_FROM_BRANCH", "ART_DB");
@@ -4813,6 +4814,29 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_FTI_END_TO_END_NEW", "ART_DB");
 
+
+
+
+
+
+                //                ECM_REFERENCE
+                //CASE_CREATION_DATE
+                //BRANCH_NAME
+                //CUSTOMER_NAME
+                //CUSTOMER_CLASSIFICATION
+                //PRODUCT
+                //PRODUCT_TYPE
+                //Request_Type
+                //AMOUNT
+                //CURRENCY
+                //PRIMARY_OWNER
+                //CASE_STATUS
+                //LAST_ACTION_TAKEN_BY
+                //MASTER_REFERENCE
+                //FTI_FIRST_LINE_PARTY
+                //TI_EVENT_STATUS
+                //FTI_EVENT_CREATION_DATE
+
                 entity.Property(e => e.EcmReference)
                    .HasMaxLength(64)
                    .HasColumnName("ECM_REFERENCE")
@@ -4833,7 +4857,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.EventCreationDate)
                     .HasColumnType("date")
-                    .HasColumnName("EVENT_CREATION_DATE");
+                    .HasColumnName("FTI_EVENT_CREATION_DATE");
 
                 entity.Property(e => e.Currency)
                    .HasMaxLength(1000)
@@ -4844,6 +4868,11 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CaseStatus)
                    .IsUnicode(false)
                    .HasColumnName("CASE_STATUS")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RequestType)
+                   .IsUnicode(false)
+                   .HasColumnName("Request_Type")
                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.LastActionTakenBy)
@@ -4876,7 +4905,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.Product)
                    .HasMaxLength(4000)
                    .IsUnicode(false)
-                   .HasColumnName("Product")
+                   .HasColumnName("PRODUCT")
                    .UseCollation("Arabic_100_CI_AI");
 
 
@@ -4899,7 +4928,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.EventStatus)
                     .HasMaxLength(11)
                     .IsUnicode(false)
-                    .HasColumnName("Event_Status")
+                    .HasColumnName("TI_EVENT_STATUS")
                     .UseCollation("Arabic_100_CI_AI");
 
 
