@@ -1,4 +1,64 @@
 ﻿import { invokeExport, start, exportConnection } from './ExportListener.js'
+function createPopUpTable(gridId, data, message, headers) {
+    var Grid = document.getElementById(gridId);
+    if (data && [...data].length > 0) {
+        var table = document.createElement("table");
+        table.style.whiteSpace = "nowrap";
+        table.style.width = "100%";
+        table.className = "table";
+        var thead = document.createElement("thead");
+        var tr = document.createElement("tr");
+        headers.forEach(x => {
+            var th = document.createElement("th");
+            th.style.textAlign = "center";
+
+            th.setAttribute("scope", "col");
+            th.innerText = x;
+            tr.appendChild(th);
+        });
+
+        thead.style = `position: sticky;
+                                    z-index: 1;
+                                    top: 0;
+                                    background-color: white`;
+        thead.appendChild(tr);
+        var tbody = document.createElement("tbody");
+
+        [...data].forEach((x, index) => {
+            var tr = document.createElement("tr");
+
+
+            var td = document.createElement("th");
+            td.style.textAlign = "center";
+            td.setAttribute("scope", "row");
+            td.innerText = index + 1;
+            tr.appendChild(td);
+            for (const key in x) {
+                if (x.hasOwnProperty(key)) {
+                    var td = document.createElement("th");
+                    td.style.textAlign = "center";
+                    td.setAttribute("scope", "row");
+                    td.innerText = x[key];
+                    tr.appendChild(td);
+                }
+            }
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        Grid.appendChild(table);
+
+    }
+    else {
+        var noCommentsDiv = document.createElement("div");
+        noCommentsDiv.innerText = message;
+        noCommentsDiv.className = "text-center";
+        Grid.appendChild(noCommentsDiv);
+    }
+
+}
 
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
@@ -39,7 +99,7 @@ export const Handlers = {
             toastObj.text = "Note That this operation might take some time and the data will be downloaded each 100K record in a file";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
-        }else {
+        } else {
             toastObj.hideAfter = false;
             toastObj.icon = 'warning';
             toastObj.text = "Note That this operation might take some time you will be notified when it's done"
@@ -61,7 +121,7 @@ export const Handlers = {
 
         console.log(getQueryParameters(url));
         var Method = isMyreports ? "MyReports" : "";
-   
+
         invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method, [...getQueryParameters(url)]);
         localStorage.removeItem("selectedidz");
 
@@ -1036,6 +1096,115 @@ export const Handlers = {
 
                 }
 
+            }
+        }
+    },
+    ArtFtiEndToEndNew: {
+        subCases: () => {
+            kendo.ui.progress($('#grid'), true);
+            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            if (selected && [...selected].length > 0) {
+                if ([...selected].length > 1) {
+                    toastObj.icon = 'warning';
+                    toastObj.text = `you must select only one case`;
+                    toastObj.heading = "SubCases Status";
+                    $.toast(toastObj);
+                    kendo.ui.progress($('#grid'), false);
+                    return;
+                }
+                $('#end-to-endGrid').empty();
+                var headers = ["#", "Case Id",
+                    "SubCase Reference",
+                    "Case Status",
+                    "Customer Classification",
+                    "Trade Instructions",
+                    "Firts Line Instructions"]
+                var subcases = await(await fetch(`/ArtFtiEndToEndNew/GetSubCases/${selected[0]}`)).json();
+                createPopUpTable("end-to-endGrid", subcases, `There is no SubCases for this case: ${selected[0]}`, headers);
+
+                $("#end-to-endModal").modal("show");
+                kendo.ui.progress($('#grid'), false);
+            }
+            else {
+                toastObj.icon = 'warning';
+                toastObj.text = `you must select only one case`;
+                toastObj.heading = "SubCases Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+            }
+        },
+        ftiEventsWorkflow: () => {
+            kendo.ui.progress($('#grid'), true);
+            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            if (selected && [...selected].length > 0) {
+                if ([...selected].length > 1) {
+                    toastObj.icon = 'warning';
+                    toastObj.text = `you must select only one case`;
+                    toastObj.heading = "Fti Events Status";
+                    $.toast(toastObj);
+                    kendo.ui.progress($('#grid'), false);
+                    return;
+                }
+                $('#end-to-endGrid').empty();
+                var headers = ["#", "Fti Reference",
+                    "Event Steps",
+                    "Step Status",
+                    "Started Time",
+                    "Last Mod Time",
+                    "Time Difference",
+                    "Last ModUser"]
+                var events = await(await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${selected[0]}`)).json();
+                createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
+
+                $("#end-to-endModal").modal("show");
+                kendo.ui.progress($('#grid'), false);
+            }
+            else {
+                toastObj.icon = 'warning';
+                toastObj.text = `you must select only one case`;
+                toastObj.heading = "Fti Events Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
+            }
+        },
+        ecmEventsWorkflow: () => {
+            kendo.ui.progress($('#grid'), true);
+            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            if (selected && [...selected].length > 0) {
+                if ([...selected].length > 1) {
+                    toastObj.icon = 'warning';
+                    toastObj.text = `you must select only one case`;
+                    toastObj.heading = "Ecm Events Status";
+                    $.toast(toastObj);
+                    kendo.ui.progress($('#grid'), false);
+                    return;
+                }
+                $('#end-to-endGrid').empty();
+                var headers = ["#", "Ecm Reference",
+                    "Case Comments",
+                    "Ecm Event Step",
+                    "Ecm Event Created By",
+                    "Ecm Event Created Date",
+                    "Ecm Event Time Difference",
+                    "Assignee",
+                    "Assigned By",
+                    "Assigned Time",
+                    "UnAssignee",
+                    "UnAssigned By",
+                    "UnAssigned Time",
+                    "Assigned Time Difference"]
+                var events = await(await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${selected[0]}`)).json();
+                createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
+
+                $("#end-to-endModal").modal("show");
+                kendo.ui.progress($('#grid'), false);
+            }
+            else {
+                toastObj.icon = 'warning';
+                toastObj.text = `you must select only one case`;
+                toastObj.heading = "Ecm Events Status";
+                $.toast(toastObj);
+                kendo.ui.progress($('#grid'), false);
             }
         }
     }

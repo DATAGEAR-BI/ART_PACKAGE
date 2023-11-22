@@ -60,12 +60,24 @@ namespace ART_PACKAGE.Controllers
                 containsActions = false,
                 toolbar = new List<dynamic>
                 {
-                    /*new
+                    new
                     {
-                        text = "Delete Cases",
-                        id="dltCases",
-                        show = User.IsInRole("Delete_Cases")
-                    }*/
+                        text = "Get Ecm Events Workflow",
+                        id="ecmEventsWorkflow",
+                        //show = User.IsInRole("Delete_Cases")
+                    }
+                    ,  new
+                    {
+                        text = "Get Fti Events Workflow",
+                        id="ftiEventsWorkflow",
+                        //show = User.IsInRole("Delete_Cases")
+                    }
+                    ,  new
+                    {
+                        text = "Get SubCases",
+                        id="subCases",
+                        //show = User.IsInRole("Delete_Cases")
+                    },
                 },
 
             };
@@ -105,22 +117,37 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
-
-
-
-        public IActionResult TEST()
+        [HttpGet("[controller]/[action]/{reference}")]
+        public IActionResult GetSubCases(string? reference)
         {
-            var data = new
+            IQueryable<ArtFtiEndToEndSubCases> subCases = fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == reference);
+            return new ContentResult
             {
-
-                a = fti.ArtFtiEndToEndEcmEventsWorkflows.Take(10),
-                b = fti.ArtFtiEndToEndFtiEventsWorkflows.Take(10),
-                c = fti.ArtFtiEndToEndSubCasess.Take(10),
-
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(subCases)
             };
-
-            return Ok(data);
-
         }
+        [HttpGet("[controller]/[action]/{reference}")]
+        public IActionResult GetEcmEvents(string? reference)
+        {
+            IQueryable<ArtFtiEndToEndEcmEventsWorkflow> events = fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == reference);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(events)
+            };
+        }
+        [HttpGet("[controller]/[action]/{reference}")]
+        public IActionResult GetFtiEvents(string? reference)
+        {
+            IQueryable<ArtFtiEndToEndFtiEventsWorkflow> subCases = fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == reference);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(subCases)
+            };
+        }
+
+
     }
 }
