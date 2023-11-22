@@ -1915,6 +1915,28 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("UPDATE_USER_ID");
+
+                entity.Property(e => e.LastComment)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT");
+                entity.Property(e => e.LastCommentSubject)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT_SUBJECT");
+                entity.Property(e => e.UpdatedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("UPDATED_DATE");
+                entity.Property(e => e.CreatedBy)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CREATED_BY");
+                entity.Property(e => e.NumberOfComment)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_COMMENTS");
+                entity.Property(e => e.NumberOfAttachments)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_ATTACHMENTS");
             });
 
             modelBuilder.Entity<ArtAlertedEntity>(entity =>
@@ -1939,6 +1961,27 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.PepInd)
                     .HasColumnType("CLOB")
                     .HasColumnName("PEP_IND");
+                entity.Property(e => e.LastComment)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT");
+                entity.Property(e => e.LastCommentSubject)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_COMMENT_SUBJECT");
+                entity.Property(e => e.UpdatedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("UPDATED_DATE");
+                entity.Property(e => e.CreatedBy)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CREATED_BY");
+                entity.Property(e => e.NumberOfComment)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_COMMENTS");
+                entity.Property(e => e.NumberOfAttachments)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_ATTACHMENTS");
             });
 
             modelBuilder.Entity<ArtUserPerformance>(entity =>
