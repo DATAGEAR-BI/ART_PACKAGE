@@ -2,7 +2,10 @@
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -14,6 +17,8 @@ using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Globalization;
+using System.Text;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
@@ -133,12 +138,204 @@ namespace ART_PACKAGE.Hubs
             if (nameof(ArtFtiActivityController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiActivity, ArtFtiActivityController>(_fti, Context.User.Identity.Name, para);
             if (nameof(ArtFtiEcmTransactionController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiEcmTransaction, ArtFtiEcmTransactionController>(_fti, Context.User.Identity.Name, para);
             if (nameof(ArtFtiEndToEndController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiEndToEnd, ArtFtiEndToEndController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtFtiEndToEndNewController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportEndToEnd(para);
 
             #endregion
 
         }
 
+        public async Task ExportEndToEnd(ExportDto<object> para)
+        {
+            if (para.All)
+            {
+                await _csvSrv.Export<ArtFtiEndToEndNew, ArtFtiEndToEndController>(_fti, Context.User.Identity.Name, para);
+            }
+            else
+            {
 
+
+                if (para.WithExtraData)
+                {
+
+                    string? ecmRef = para.SelectedIdz.Select(x => (string)x).FirstOrDefault();
+
+
+                    var data = new EndToEndWithExtraDataDto
+                    {
+                        Record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef),
+                        EcmEvents = _fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == ecmRef).ToList(),
+                        FtiEvents = _fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == ecmRef).ToList(),
+                        SubCases = _fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == ecmRef).ToList(),
+                    };
+                    var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+                    {
+
+                    };
+                    using var stream = new MemoryStream();
+                    using StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true));
+                    sw.AutoFlush = true;
+
+                    using (CsvWriter cw = new CsvWriter(sw, config))
+                    {
+
+                        var props = typeof(ArtFtiEndToEndNew).GetProperties();
+                        var columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
+                        var Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
+                        foreach (var prop in props)
+                        {
+                            if (columnsToSkip.Contains(prop.Name))
+                                continue;
+                            else
+                            {
+                                if (Displaynames.ContainsKey(prop.Name))
+                                {
+                                    cw.WriteField(Displaynames[prop.Name].DisplayName);
+                                }
+                                else
+                                {
+                                    cw.WriteField(prop.Name);
+                                }
+                            }
+                        }
+
+                        cw.WriteField("Case Comments");
+                        cw.WriteField("Ecm Event Step");
+                        cw.WriteField("Ecm Event Created By");
+                        cw.WriteField("Ecm Event Created Date");
+                        cw.WriteField("Ecm Event Time Difference");
+                        cw.WriteField("Assignee");
+                        cw.WriteField("Assigned By");
+                        cw.WriteField("Assigned Time");
+                        cw.WriteField("UnAssignee");
+                        cw.WriteField("UnAssigned By");
+                        cw.WriteField("UnAssigned Time");
+                        cw.WriteField("Assigned Time Difference ");
+
+
+                        cw.WriteField("Event Steps");
+                        cw.WriteField("Step Status");
+                        cw.WriteField("Started Time");
+                        cw.WriteField("Last Mod Time");
+                        cw.WriteField("Time Difference");
+                        cw.WriteField("Last ModUser");
+
+
+                        cw.WriteField("SubCase Reference");
+                        cw.WriteField("Case Status");
+                        cw.WriteField("Customer Classification");
+                        cw.WriteField("Trade Instructions");
+                        cw.WriteField("Firts Line Instructions");
+
+
+                        cw.NextRecord();
+
+
+                        foreach (var prop in props)
+                        {
+                            if (columnsToSkip.Contains(prop.Name))
+                                continue;
+                            else
+                            {
+                                cw.WriteField(prop.GetValue(data.Record));
+                            }
+                        }
+
+                        var subcasesCount = data.SubCases.Count();
+                        var ftiEventsCount = data.FtiEvents.Count();
+                        var ecmEventsCount = data.EcmEvents.Count();
+                        var maxcount = new List<int>() { subcasesCount, ftiEventsCount, ecmEventsCount }.Max();
+
+
+                        for (int i = 0; i < maxcount; i++)
+                        {
+
+                            if (i < ecmEventsCount)
+                            {
+
+                                cw.WriteField(data.EcmEvents[i].CaseComments);
+                                cw.WriteField(data.EcmEvents[i].EcmEventStep);
+                                cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
+                                cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
+                                cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
+                                cw.WriteField(data.EcmEvents[i].Assignee);
+                                cw.WriteField(data.EcmEvents[i].AssignedBy);
+                                cw.WriteField(data.EcmEvents[i].AssignedTime);
+                                cw.WriteField(data.EcmEvents[i].UnAssignee);
+                                cw.WriteField(data.EcmEvents[i].UnAssignedBy);
+                                cw.WriteField(data.EcmEvents[i].UnAssignedTime);
+                                cw.WriteField(data.EcmEvents[i].AssignedTimeDifference);
+
+
+                            }
+                            else
+                            {
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+
+                            }
+                            if (i < ftiEventsCount)
+                            {
+                                cw.WriteField(data.FtiEvents[i].EventSteps);
+                                cw.WriteField(data.FtiEvents[i].StepStatus);
+                                cw.WriteField(data.FtiEvents[i].StartedTime);
+                                cw.WriteField(data.FtiEvents[i].LastModTime);
+                                cw.WriteField(data.FtiEvents[i].TimeDifference);
+                                cw.WriteField(data.FtiEvents[i].LastModUser);
+                            }
+                            else
+                            {
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                            }
+                            if (i < subcasesCount)
+                            {
+                                cw.WriteField(data.SubCases[i].SubCaseReference);
+                                cw.WriteField(data.SubCases[i].CaseStatus);
+                                cw.WriteField(data.SubCases[i].CustomerClassification);
+                                cw.WriteField(data.SubCases[i].TradeInstructions);
+                                cw.WriteField(data.SubCases[i].FirtsLineInstructions);
+                            }
+                            else
+                            {
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+                                cw.WriteField("");
+
+                            }
+                            cw.NextRecord();
+                        }
+
+
+                        var bytes = stream.ToArray();
+                        string FileName = nameof(ArtFtiEndToEndNewController).Replace("Controller", "") + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                        await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
+                                .SendAsync("csvRecevied", bytes, FileName);
+                    }
+
+
+                }
+                else
+                {
+                    await _csvSrv.Export<ArtFtiEndToEndNew, ArtFtiEndToEndController, string>(_fti, Context.User.Identity.Name, para, nameof(ArtFtiEndToEndNew.EcmReference));
+                }
+            }
+        }
 
         private async Task ExportCustomReport(ExportDto<object> exportDto)
         {
@@ -185,5 +382,15 @@ namespace ART_PACKAGE.Hubs
             public List<string> Note { get; set; }
             public List<DateTime?> NoteCreationTime { get; set; }
         }
+
+
+        class EndToEndWithExtraDataDto
+        {
+            public ArtFtiEndToEndNew Record { get; set; }
+            public List<ArtFtiEndToEndFtiEventsWorkflow> FtiEvents { get; set; }
+            public List<ArtFtiEndToEndEcmEventsWorkflow> EcmEvents { get; set; }
+            public List<ArtFtiEndToEndSubCases> SubCases { get; set; }
+        }
+
     }
 }

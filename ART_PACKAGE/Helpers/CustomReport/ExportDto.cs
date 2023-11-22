@@ -4,7 +4,7 @@
     {
         public List<T> SelectedIdz { get; set; }
         public KendoRequest Req { get; set; }
-
+        public bool WithExtraData { get; set; }
         public bool All { get; set; }
     }
 }

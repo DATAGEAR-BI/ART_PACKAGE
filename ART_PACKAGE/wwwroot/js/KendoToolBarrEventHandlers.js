@@ -81,16 +81,7 @@ function getQueryParameters(urlString) {
 export const Handlers = {
     csvExport: async (e, controller, url, prop) => {
 
-
-        var id = document.getElementById("script").dataset.id;
-        var ds = $("#grid").data("kendoGrid");
-        var selectedrecords = [];
-
-        var all = !localStorage.getItem("selectedidz") || [...Object.values(JSON.parse(localStorage.getItem("selectedidz")))].every(x => x.length == 0) || localStorage.getItem("isAllSelected") === "true";
-        if (!all) {
-            selectedrecords = await Select(prop);
-        }
-        console.log(all);
+        var para = {}
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
         if (total > 100000) {
@@ -107,22 +98,70 @@ export const Handlers = {
             $.toast(toastObj);
         }
 
-        var para = {}
         if (id) {
             para.Id = parseInt(id);
         }
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
+
+        var id = document.getElementById("script").dataset.id;
+        var ds = $("#grid").data("kendoGrid");
+        var selectedrecords = [];
+
+        var all = !localStorage.getItem("selectedidz") || [...Object.values(JSON.parse(localStorage.getItem("selectedidz")))].every(x => x.length == 0) || localStorage.getItem("isAllSelected") === "true";
+        if (!all) {
+            selectedrecords = await Select(prop);
+            if (selectedrecords && [...selectedrecords].length != 0) {
+                if ([...selectedrecords].length == 1) {
+                    $.confirm({
+                        theme: 'supervan',
+                        title: 'Confirm Please!',
+                        content: 'Do You Want to Export This Case Extra Details ?',
+                        buttons: {
+                            btnYes: {
+                                text: 'Yes',
+                                btnClass: 'btn-blue',
+                                keys: ['enter', 'shift'],
+                                action: async function () {
+                                    withDetails = true;
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: true }
+                                }
+                            },
+                            btnNo: {
+                                text: 'No',
+                                btnClass: 'btn-blue',
+                                keys: ['enter', 'shift'],
+                                action: async function () {
+                                    withDetails = false;
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                                }
+                            },
+
+                            cancel: function () {
+                                kendo.ui.progress($('#grid'), false);
+                            }
+
+                        }
+                    });
+                }
+                else {
+                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                }
+            }
+        }
+        else {
+            para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+        }
+
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
-        var res;
+
         if (exportConnection.state !== "Connected")
             await start();
 
-        console.log(getQueryParameters(url));
         var Method = isMyreports ? "MyReports" : "";
 
-        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method, [...getQueryParameters(url)]);
+        invokeExport(para, controller, Method, [...getQueryParameters(url)]);
         localStorage.removeItem("selectedidz");
 
     },
@@ -1119,7 +1158,7 @@ export const Handlers = {
                     "Customer Classification",
                     "Trade Instructions",
                     "Firts Line Instructions"]
-                var subcases = await(await fetch(`/ArtFtiEndToEndNew/GetSubCases/${selected[0]}`)).json();
+                var subcases = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${selected[0]}`)).json();
                 createPopUpTable("end-to-endGrid", subcases, `There is no SubCases for this case: ${selected[0]}`, headers);
 
                 $("#end-to-endModal").modal("show");
@@ -1153,7 +1192,7 @@ export const Handlers = {
                     "Last Mod Time",
                     "Time Difference",
                     "Last ModUser"]
-                var events = await(await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${selected[0]}`)).json();
+                var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${selected[0]}`)).json();
                 createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
 
                 $("#end-to-endModal").modal("show");
@@ -1193,7 +1232,7 @@ export const Handlers = {
                     "UnAssigned By",
                     "UnAssigned Time",
                     "Assigned Time Difference"]
-                var events = await(await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${selected[0]}`)).json();
+                var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${selected[0]}`)).json();
                 createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
 
                 $("#end-to-endModal").modal("show");
