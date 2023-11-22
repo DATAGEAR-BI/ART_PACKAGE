@@ -1224,14 +1224,7 @@ export const Handlers = {
                     "Ecm Event Step",
                     "Ecm Event Created By",
                     "Ecm Event Created Date",
-                    "Ecm Event Time Difference",
-                    "Assignee",
-                    "Assigned By",
-                    "Assigned Time",
-                    "UnAssignee",
-                    "UnAssigned By",
-                    "UnAssigned Time",
-                    "Assigned Time Difference"]
+                    "Ecm Event Time Difference"]
                 var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${selected[0]}`)).json();
                 createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
 

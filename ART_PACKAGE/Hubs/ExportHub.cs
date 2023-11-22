@@ -203,13 +203,7 @@ namespace ART_PACKAGE.Hubs
                         cw.WriteField("Ecm Event Created By");
                         cw.WriteField("Ecm Event Created Date");
                         cw.WriteField("Ecm Event Time Difference");
-                        cw.WriteField("Assignee");
-                        cw.WriteField("Assigned By");
-                        cw.WriteField("Assigned Time");
-                        cw.WriteField("UnAssignee");
-                        cw.WriteField("UnAssigned By");
-                        cw.WriteField("UnAssigned Time");
-                        cw.WriteField("Assigned Time Difference ");
+
 
 
                         cw.WriteField("Event Steps");
@@ -257,13 +251,7 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
                                 cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
                                 cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
-                                cw.WriteField(data.EcmEvents[i].Assignee);
-                                cw.WriteField(data.EcmEvents[i].AssignedBy);
-                                cw.WriteField(data.EcmEvents[i].AssignedTime);
-                                cw.WriteField(data.EcmEvents[i].UnAssignee);
-                                cw.WriteField(data.EcmEvents[i].UnAssignedBy);
-                                cw.WriteField(data.EcmEvents[i].UnAssignedTime);
-                                cw.WriteField(data.EcmEvents[i].AssignedTimeDifference);
+
 
 
                             }
@@ -274,13 +262,7 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField("");
                                 cw.WriteField("");
                                 cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
+
 
                             }
                             if (i < ftiEventsCount)

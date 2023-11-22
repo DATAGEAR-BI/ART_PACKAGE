@@ -4710,25 +4710,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_FTI_END_TO_END_ECM_EVENTS_WORKFLOW", "ART_DB");
 
-                entity.Property(e => e.AssignedTimeDifference)
-                             .HasColumnName("ASSIGN_TIME_DIFFERENCE")
-                             .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.UnAssignedBy)
-                        .HasColumnName("UNASSIGNED_BY")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.UnAssignee)
-                        .HasColumnName("UNASSIGNEE")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.AssignedBy)
-                        .HasColumnName("ASSIGNED_BY")
-                        .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.Assignee)
-                        .HasColumnName("ASSIGNEE")
-                        .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EcmEventTimeDifference)
                         .HasColumnName("ECM_EVENT_TIM_EDIFFERENCE")
@@ -4754,13 +4736,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("ECM_EVENT_CREATED_DATE");
 
-                entity.Property(e => e.AssignedTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ASSIGNED_TIME");
 
-                entity.Property(e => e.UnAssignedTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("UNASSIGNED_TIME");
 
             });
 
