@@ -82,6 +82,9 @@ export const Handlers = {
     csvExport: async (e, controller, url, prop) => {
 
         var para = {}
+
+        var id = document.getElementById("script").dataset.id;
+        var ds = $("#grid").data("kendoGrid");
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
         if (total > 100000) {
@@ -104,9 +107,6 @@ export const Handlers = {
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
-
-        var id = document.getElementById("script").dataset.id;
-        var ds = $("#grid").data("kendoGrid");
         var selectedrecords = [];
 
         var all = !localStorage.getItem("selectedidz") || [...Object.values(JSON.parse(localStorage.getItem("selectedidz")))].every(x => x.length == 0) || localStorage.getItem("isAllSelected") === "true";
@@ -126,6 +126,11 @@ export const Handlers = {
                                 action: async function () {
                                     withDetails = true;
                                     para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: true }
+                                    var Method = isMyreports ? "MyReports" : "";
+
+                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+                                    localStorage.removeItem("selectedidz");
+                                    return;
                                 }
                             },
                             btnNo: {
@@ -135,6 +140,9 @@ export const Handlers = {
                                 action: async function () {
                                     withDetails = false;
                                     para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+                                    localStorage.removeItem("selectedidz");
+                                    return;
                                 }
                             },
 
@@ -1141,7 +1149,7 @@ export const Handlers = {
     ArtFtiEndToEndNew: {
         subCases: async () => {
             kendo.ui.progress($('#grid'), true);
-            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            var selected = await Select("EcmReference");
             if (selected && [...selected].length > 0) {
                 if ([...selected].length > 1) {
                     toastObj.icon = 'warning';
@@ -1174,7 +1182,7 @@ export const Handlers = {
         },
         ftiEventsWorkflow: async () => {
             kendo.ui.progress($('#grid'), true);
-            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            var selected = await Select("EcmReference");
             if (selected && [...selected].length > 0) {
                 if ([...selected].length > 1) {
                     toastObj.icon = 'warning';
@@ -1208,7 +1216,7 @@ export const Handlers = {
         },
         ecmEventsWorkflow: async () => {
             kendo.ui.progress($('#grid'), true);
-            var selected = await Select("/ArtFtiEndToEndNew/GetData", "EcmReference");
+            var selected = await Select("EcmReference");
             if (selected && [...selected].length > 0) {
                 if ([...selected].length > 1) {
                     toastObj.icon = 'warning';
