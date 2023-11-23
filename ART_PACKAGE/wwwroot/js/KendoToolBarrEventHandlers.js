@@ -124,13 +124,13 @@ export const Handlers = {
                                 btnClass: 'btn-blue',
                                 keys: ['enter', 'shift'],
                                 action: async function () {
-                                    withDetails = true;
-                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: true }
-                                    var Method = isMyreports ? "MyReports" : "";
+                                    para.WithExtraData = true;
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
+                                    //var Method = isMyreports ? "MyReports" : "";
 
-                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
-                                    localStorage.removeItem("selectedidz");
-                                    return;
+                                    //invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+                                    //localStorage.removeItem("selectedidz");
+                                    //return;
                                 }
                             },
                             btnNo: {
@@ -138,11 +138,11 @@ export const Handlers = {
                                 btnClass: 'btn-blue',
                                 keys: ['enter', 'shift'],
                                 action: async function () {
-                                    withDetails = false;
-                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
-                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
-                                    localStorage.removeItem("selectedidz");
-                                    return;
+                                    para.WithExtraData = false;
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
+                                    //invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+                                    //localStorage.removeItem("selectedidz");
+                                    //return;
                                 }
                             },
 
@@ -154,12 +154,14 @@ export const Handlers = {
                     });
                 }
                 else {
-                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                    para.WithExtraData = false;
+                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
                 }
             }
         }
         else {
-            para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+            para.WithExtraData = false;
+            para = { Req: para, All: all, SelectedIdz: selectedrecords }
         }
 
         var isMyreports = window.location.href.toLowerCase().includes('myreports');
@@ -1474,7 +1476,7 @@ export const CellDbHandlers = {
                 "Ecm Event Created By",
                 "Ecm Event Created Date",
                 "Ecm Event Time Difference"]
-            var events = await(await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
@@ -1490,7 +1492,7 @@ export const CellDbHandlers = {
                 "Last Mod Time",
                 "Time Difference",
                 "Last ModUser"]
-            var events = await(await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.MasterReference}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
