@@ -311,6 +311,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"Email", new DisplayNameAndFormat { DisplayName = "Email"}},
                                {"MemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
                                {"RoleOfGroup", new DisplayNameAndFormat { DisplayName = "Role Of Group"}},
+                               {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
+                               {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                               {"AccountStatus", new DisplayNameAndFormat { DisplayName = "Account Status"}},
                     }
                 }
             },
