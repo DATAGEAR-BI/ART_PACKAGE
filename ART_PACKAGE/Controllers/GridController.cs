@@ -61,7 +61,7 @@ namespace ART_PACKAGE.Controllers
             System.Reflection.PropertyInfo[] props = typeof(ArtAmlAlertDetailView).GetProperties();
             byte[] bytes = Document.Create(container =>
             {
-                container.Page(page =>
+                _ = container.Page(page =>
                 {
                     page.Size(PageSizes.B1);
                     page.Margin(1, Unit.Centimetre);
@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Controllers
                             {
                                 foreach (System.Reflection.PropertyInfo prop in props)
                                 {
-                                    header.Cell().Row(row).Column(column++).Text(prop.Name).DirectionAuto().Bold();
+                                    _ = header.Cell().Row(row).Column(column++).Text(prop.Name).DirectionAuto().Bold();
                                 }
                             });
                             column = 1;
@@ -95,7 +95,7 @@ namespace ART_PACKAGE.Controllers
                             {
                                 foreach (System.Reflection.PropertyInfo prop in props)
                                 {
-                                    table.Cell().Row(row).Column(column++).Text(prop.GetValue(item));
+                                    _ = table.Cell().Row(row).Column(column++).Text(prop.GetValue(item));
                                 }
                                 column = 1;
                                 row++;

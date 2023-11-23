@@ -785,6 +785,29 @@ class Grid extends HTMLElement {
             }
         });
 
+        // Assuming you have a Kendo Grid initialized with the ID 'myGrid'
+        grid.tbody.on("dblclick", "td", function (e) {
+            
+
+            // Get the current item (row data)
+            var item = grid.dataItem($(e.currentTarget).closest("tr"));
+            console.log(e);
+            // Get the field name associated with the clicked cell
+            var cellIndex = $(e.target).index(); // Get the index of the clicked cell
+            var column = grid.columns[cellIndex]; 
+            console.log(item);
+            console.log(column.field);
+            // Check if the clicked cell is from a specific column
+            //if (fieldName === "yourColumnName") {
+            //    // Perform action specific to the column
+            //    console.log("Double-clicked on column", fieldName, "of", item);
+
+            //    // Example action: display a message, open a modal, etc.
+            //}
+        });
+
+
+
 
         $(`.k-grid-${this.gridDiv.id}clrfil`).click((e) => {
             var clrfilhandler = Handlers["clrfil"];
