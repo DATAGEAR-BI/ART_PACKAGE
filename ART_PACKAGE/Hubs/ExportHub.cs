@@ -160,169 +160,167 @@ namespace ART_PACKAGE.Hubs
                     string? ecmRef = para.SelectedIdz.Select(x => (string)x).FirstOrDefault();
 
 
-                    var data = new EndToEndWithExtraDataDto
+                    EndToEndWithExtraDataDto data = new()
                     {
                         Record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef),
                         EcmEvents = _fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == ecmRef).ToList(),
                         FtiEvents = _fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == ecmRef).ToList(),
                         SubCases = _fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == ecmRef).ToList(),
                     };
-                    var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+                    CsvConfiguration config = new(CultureInfo.CurrentCulture)
                     {
 
                     };
-                    using var stream = new MemoryStream();
-                    using StreamWriter sw = new StreamWriter(stream, new UTF8Encoding(true));
+                    using MemoryStream stream = new();
+                    using StreamWriter sw = new(stream, new UTF8Encoding(true));
                     sw.AutoFlush = true;
 
-                    using (CsvWriter cw = new CsvWriter(sw, config))
+                    using CsvWriter cw = new(sw, config);
+
+                    System.Reflection.PropertyInfo[] props = typeof(ArtFtiEndToEndNew).GetProperties();
+                    List<string> columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
+                    Dictionary<string, DisplayNameAndFormat> Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
+                    foreach (System.Reflection.PropertyInfo prop in props)
+                    {
+                        if (columnsToSkip.Contains(prop.Name))
+                            continue;
+                        else
+                        {
+                            if (Displaynames.ContainsKey(prop.Name))
+                            {
+                                cw.WriteField(Displaynames[prop.Name].DisplayName);
+                            }
+                            else
+                            {
+                                cw.WriteField(prop.Name);
+                            }
+                        }
+                    }
+                    cw.WriteField("");
+
+                    cw.WriteField("Case Comments");
+                    cw.WriteField("Ecm Event Step");
+                    cw.WriteField("Ecm Event Created By");
+                    cw.WriteField("Ecm Event Created Date");
+                    cw.WriteField("Ecm Event Time Difference");
+
+                    cw.WriteField("");
+
+                    cw.WriteField("Event Steps");
+                    cw.WriteField("Step Status");
+                    cw.WriteField("Started Time");
+                    cw.WriteField("Last Mod Time");
+                    cw.WriteField("Time Difference");
+                    cw.WriteField("Last ModUser");
+
+                    cw.WriteField("");
+
+
+                    cw.WriteField("SubCase Reference");
+                    cw.WriteField("Case Status");
+                    cw.WriteField("Customer Classification");
+                    cw.WriteField("Trade Instructions");
+                    cw.WriteField("Firts Line Instructions");
+
+
+                    cw.NextRecord();
+
+
+                    foreach (System.Reflection.PropertyInfo prop in props)
+                    {
+                        if (columnsToSkip.Contains(prop.Name))
+                            continue;
+                        else
+                        {
+                            cw.WriteField(prop.GetValue(data.Record));
+                        }
+                    }
+
+                    int subcasesCount = data.SubCases.Count();
+                    int ftiEventsCount = data.FtiEvents.Count();
+                    int ecmEventsCount = data.EcmEvents.Count();
+                    int maxcount = new List<int>() { subcasesCount, ftiEventsCount, ecmEventsCount }.Max();
+
+                    cw.WriteField("");
+
+                    for (int i = 0; i < maxcount; i++)
                     {
 
-                        var props = typeof(ArtFtiEndToEndNew).GetProperties();
-                        var columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
-                        var Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
-                        foreach (var prop in props)
+                        if (i < ecmEventsCount)
                         {
-                            if (columnsToSkip.Contains(prop.Name))
-                                continue;
-                            else
-                            {
-                                if (Displaynames.ContainsKey(prop.Name))
-                                {
-                                    cw.WriteField(Displaynames[prop.Name].DisplayName);
-                                }
-                                else
-                                {
-                                    cw.WriteField(prop.Name);
-                                }
-                            }
+
+                            cw.WriteField(data.EcmEvents[i].CaseComments);
+                            cw.WriteField(data.EcmEvents[i].EcmEventStep);
+                            cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
+                            cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
+                            cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
+                            cw.WriteField("");
+
+
+
                         }
-                        cw.WriteField("");
-
-                        cw.WriteField("Case Comments");
-                        cw.WriteField("Ecm Event Step");
-                        cw.WriteField("Ecm Event Created By");
-                        cw.WriteField("Ecm Event Created Date");
-                        cw.WriteField("Ecm Event Time Difference");
-
-                        cw.WriteField("");
-
-                        cw.WriteField("Event Steps");
-                        cw.WriteField("Step Status");
-                        cw.WriteField("Started Time");
-                        cw.WriteField("Last Mod Time");
-                        cw.WriteField("Time Difference");
-                        cw.WriteField("Last ModUser");
-
-                        cw.WriteField("");
+                        else
+                        {
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
 
 
-                        cw.WriteField("SubCase Reference");
-                        cw.WriteField("Case Status");
-                        cw.WriteField("Customer Classification");
-                        cw.WriteField("Trade Instructions");
-                        cw.WriteField("Firts Line Instructions");
+                        }
+                        if (i < ftiEventsCount)
+                        {
+                            cw.WriteField(data.FtiEvents[i].EventSteps);
+                            cw.WriteField(data.FtiEvents[i].StepStatus);
+                            cw.WriteField(data.FtiEvents[i].StartedTime);
+                            cw.WriteField(data.FtiEvents[i].LastModTime);
+                            cw.WriteField(data.FtiEvents[i].TimeDifference);
+                            cw.WriteField(data.FtiEvents[i].LastModUser);
+                            cw.WriteField("");
+
+                        }
+                        else
+                        {
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+
+                        }
+                        if (i < subcasesCount)
+                        {
+                            cw.WriteField(data.SubCases[i].SubCaseReference);
+                            cw.WriteField(data.SubCases[i].CaseStatus);
+                            cw.WriteField(data.SubCases[i].CustomerClassification);
+                            cw.WriteField(data.SubCases[i].TradeInstructions);
+                            cw.WriteField(data.SubCases[i].FirtsLineInstructions);
+                            cw.WriteField("");
+
+                        }
+                        else
+                        {
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
+                            cw.WriteField("");
 
 
+                        }
                         cw.NextRecord();
-
-
-                        foreach (var prop in props)
-                        {
-                            if (columnsToSkip.Contains(prop.Name))
-                                continue;
-                            else
-                            {
-                                cw.WriteField(prop.GetValue(data.Record));
-                            }
-                        }
-
-                        var subcasesCount = data.SubCases.Count();
-                        var ftiEventsCount = data.FtiEvents.Count();
-                        var ecmEventsCount = data.EcmEvents.Count();
-                        var maxcount = new List<int>() { subcasesCount, ftiEventsCount, ecmEventsCount }.Max();
-
-                        cw.WriteField("");
-
-                        for (int i = 0; i < maxcount; i++)
-                        {
-
-                            if (i < ecmEventsCount)
-                            {
-
-                                cw.WriteField(data.EcmEvents[i].CaseComments);
-                                cw.WriteField(data.EcmEvents[i].EcmEventStep);
-                                cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
-                                cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
-                                cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
-                                cw.WriteField("");
-
-
-
-                            }
-                            else
-                            {
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-
-
-                            }
-                            if (i < ftiEventsCount)
-                            {
-                                cw.WriteField(data.FtiEvents[i].EventSteps);
-                                cw.WriteField(data.FtiEvents[i].StepStatus);
-                                cw.WriteField(data.FtiEvents[i].StartedTime);
-                                cw.WriteField(data.FtiEvents[i].LastModTime);
-                                cw.WriteField(data.FtiEvents[i].TimeDifference);
-                                cw.WriteField(data.FtiEvents[i].LastModUser);
-                                cw.WriteField("");
-
-                            }
-                            else
-                            {
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-
-                            }
-                            if (i < subcasesCount)
-                            {
-                                cw.WriteField(data.SubCases[i].SubCaseReference);
-                                cw.WriteField(data.SubCases[i].CaseStatus);
-                                cw.WriteField(data.SubCases[i].CustomerClassification);
-                                cw.WriteField(data.SubCases[i].TradeInstructions);
-                                cw.WriteField(data.SubCases[i].FirtsLineInstructions);
-                                cw.WriteField("");
-
-                            }
-                            else
-                            {
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-                                cw.WriteField("");
-
-
-                            }
-                            cw.NextRecord();
-                        }
-
-
-                        var bytes = stream.ToArray();
-                        string FileName = nameof(ArtFtiEndToEndNewController).Replace("Controller", "") + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-                        await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
-                                .SendAsync("csvRecevied", bytes, FileName);
                     }
+
+
+                    byte[] bytes = stream.ToArray();
+                    string FileName = nameof(ArtFtiEndToEndNewController).Replace("Controller", "") + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+                    await Clients.Clients(connections.GetConnections(Context.User.Identity.Name))
+                            .SendAsync("csvRecevied", bytes, FileName);
 
 
                 }
@@ -379,8 +377,7 @@ namespace ART_PACKAGE.Hubs
             public List<DateTime?> NoteCreationTime { get; set; }
         }
 
-
-        class EndToEndWithExtraDataDto
+        private class EndToEndWithExtraDataDto
         {
             public ArtFtiEndToEndNew Record { get; set; }
             public List<ArtFtiEndToEndFtiEventsWorkflow> FtiEvents { get; set; }
