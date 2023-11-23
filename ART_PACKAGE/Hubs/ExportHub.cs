@@ -197,6 +197,7 @@ namespace ART_PACKAGE.Hubs
                                 }
                             }
                         }
+                        cw.WriteField("");
 
                         cw.WriteField("Case Comments");
                         cw.WriteField("Ecm Event Step");
@@ -204,7 +205,7 @@ namespace ART_PACKAGE.Hubs
                         cw.WriteField("Ecm Event Created Date");
                         cw.WriteField("Ecm Event Time Difference");
 
-
+                        cw.WriteField("");
 
                         cw.WriteField("Event Steps");
                         cw.WriteField("Step Status");
@@ -212,6 +213,8 @@ namespace ART_PACKAGE.Hubs
                         cw.WriteField("Last Mod Time");
                         cw.WriteField("Time Difference");
                         cw.WriteField("Last ModUser");
+
+                        cw.WriteField("");
 
 
                         cw.WriteField("SubCase Reference");
@@ -239,6 +242,7 @@ namespace ART_PACKAGE.Hubs
                         var ecmEventsCount = data.EcmEvents.Count();
                         var maxcount = new List<int>() { subcasesCount, ftiEventsCount, ecmEventsCount }.Max();
 
+                        cw.WriteField("");
 
                         for (int i = 0; i < maxcount; i++)
                         {
@@ -251,12 +255,14 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
                                 cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
                                 cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
+                                cw.WriteField("");
 
 
 
                             }
                             else
                             {
+                                cw.WriteField("");
                                 cw.WriteField("");
                                 cw.WriteField("");
                                 cw.WriteField("");
@@ -273,6 +279,8 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField(data.FtiEvents[i].LastModTime);
                                 cw.WriteField(data.FtiEvents[i].TimeDifference);
                                 cw.WriteField(data.FtiEvents[i].LastModUser);
+                                cw.WriteField("");
+
                             }
                             else
                             {
@@ -282,6 +290,8 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField("");
                                 cw.WriteField("");
                                 cw.WriteField("");
+                                cw.WriteField("");
+
                             }
                             if (i < subcasesCount)
                             {
@@ -290,6 +300,8 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField(data.SubCases[i].CustomerClassification);
                                 cw.WriteField(data.SubCases[i].TradeInstructions);
                                 cw.WriteField(data.SubCases[i].FirtsLineInstructions);
+                                cw.WriteField("");
+
                             }
                             else
                             {
@@ -298,6 +310,8 @@ namespace ART_PACKAGE.Hubs
                                 cw.WriteField("");
                                 cw.WriteField("");
                                 cw.WriteField("");
+                                cw.WriteField("");
+
 
                             }
                             cw.NextRecord();

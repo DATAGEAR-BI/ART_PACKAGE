@@ -1459,6 +1459,30 @@ export const changeRowColorHandlers = {
         chngeRowColor(dataItem, row, colorMapping);
     }
 }
+
+
+
+export const CellDbHandlers = {
+    ArtFtiEndToEndNew: {
+        EcmReference: (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+
+            $('#end-to-endGrid').empty();
+            var headers = ["#", "Ecm Reference",
+                "Case Comments",
+                "Ecm Event Step",
+                "Ecm Event Created By",
+                "Ecm Event Created Date",
+                "Ecm Event Time Difference"]
+            var events = await(await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
+            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}}`, headers);
+            $("#end-to-endModal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        }
+
+    }
+}
+
 async function Select(idcolumn) {
 
     var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
