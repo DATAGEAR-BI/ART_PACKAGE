@@ -13,5 +13,8 @@ namespace Data.Data.Audit
         public string? Email { get; set; }
         public string? MemberOfGroup { get; set; }
         public string? RoleOfGroup { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
+        public bool? AccountStatus { get; set; }
     }
 }

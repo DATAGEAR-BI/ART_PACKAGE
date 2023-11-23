@@ -3178,6 +3178,14 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("USER_NAME");
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_date".ToUpper());
+                entity.Property(e => e.LastLoginDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("last_login_date".ToUpper());
+
+                entity.Property(e => e.AccountStatus).HasColumnName("ACCOUNT_STATUS");
             });
             modelBuilder.Entity<ListOfUsersGroup>(entity =>
             {

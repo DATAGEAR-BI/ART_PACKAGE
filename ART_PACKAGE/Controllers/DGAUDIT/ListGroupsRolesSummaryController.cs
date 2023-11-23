@@ -7,15 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.DGAUDIT
 {
-    public class ListGroupsSubGroupsSummaryController : Controller
+    public class ListGroupsRolesSummaryController : Controller
     {
-
         private readonly ArtAuditContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
-        public ListGroupsSubGroupsSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public ListGroupsRolesSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
         {
             this.context = context;
             _pdfSrv = pdfSrv;
@@ -24,7 +23,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.AsQueryable();
+            IQueryable<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -32,18 +31,18 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
-                    {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+                    {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
+                    {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()         , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
 
                 };
             }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
+            ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
 
-            KendoDataDesc<ListGroupsSubGroupsSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ListGroupsRolesSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -61,19 +60,19 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         {
-            Microsoft.EntityFrameworkCore.DbSet<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries;
-            byte[] bytes = await data.ExportToCSV<ListGroupsSubGroupsSummary, GenericCsvClassMapper<ListGroupsSubGroupsSummary, ListGroupsSubGroupsSummaryController>>(para.Req);
+            Microsoft.EntityFrameworkCore.DbSet<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries;
+            byte[] bytes = await data.ExportToCSV<ListGroupsRolesSummary, GenericCsvClassMapper<ListGroupsRolesSummary, ListGroupsRolesSummaryController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
-            List<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.CallData(req).Data.ToList();
-            ViewData["title"] = "List Of Groups Sub Groups Summary";
-            ViewData["desc"] = "This Report presents all groups with their sub-groups";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
+            List<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.CallData(req).Data.ToList();
+            ViewData["title"] = "List Of Groups Roles Summary";
+            ViewData["desc"] = "This Report presents all groups with their roles";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
@@ -82,6 +81,5 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
-
     }
 }
