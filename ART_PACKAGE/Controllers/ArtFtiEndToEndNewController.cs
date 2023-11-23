@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Controllers
                 containsActions = false,
                 toolbar = new List<dynamic>
                 {
-                    new
+                    /*new
                     {
                         text = "Get Ecm Events Workflow",
                         id = "ecmEventsWorkflow",
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers
                         text = "Get SubCases",
                         id = "subCases",
                         //show = User.IsInRole("Delete_Cases")
-                    },
+                    },*/
                 },
                 selectable = true
 

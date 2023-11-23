@@ -1146,7 +1146,7 @@ export const Handlers = {
             }
         }
     },
-    ArtFtiEndToEndNew: {
+    /*ArtFtiEndToEndNew: {
         subCases: async () => {
             kendo.ui.progress($('#grid'), true);
             var selected = await Select("EcmReference");
@@ -1247,7 +1247,7 @@ export const Handlers = {
                 kendo.ui.progress($('#grid'), false);
             }
         }
-    }
+    }*/
 }
 export const dbClickHandlers = {
     EcmWorkflowProg: async (dataItem) => {
@@ -1464,7 +1464,7 @@ export const changeRowColorHandlers = {
 
 export const CellDbHandlers = {
     ArtFtiEndToEndNew: {
-        EcmReference: (dataItem) => {
+        EcmReference: async (dataItem) => {
             kendo.ui.progress($('#grid'), true);
 
             $('#end-to-endGrid').empty();
@@ -1476,6 +1476,37 @@ export const CellDbHandlers = {
                 "Ecm Event Time Difference"]
             var events = await(await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}}`, headers);
+            $("#end-to-endModal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        },
+        MasterReference: async (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+
+            $('#end-to-endGrid').empty();
+            var headers = var headers = ["#", "Fti Reference",
+                "Event Steps",
+                "Step Status",
+                "Started Time",
+                "Last Mod Time",
+                "Time Difference",
+                "Last ModUser"]
+            var events = await(await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
+            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.MasterReference}}`, headers);
+            $("#end-to-endModal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        },
+        FtiFirstLineParty: async (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+
+            $('#end-to-endGrid').empty();
+            var headers = ["#", "Case Id",
+                "SubCase Reference",
+                "Case Status",
+                "Customer Classification",
+                "Trade Instructions",
+                "Firts Line Instructions"]
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.FtiFirstLineParty}`)).json();
+            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.FtiFirstLineParty}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         }
