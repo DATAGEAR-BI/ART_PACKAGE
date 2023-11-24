@@ -208,6 +208,53 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
                     },
             {
+                        nameof(ArtFtiEndToEndNewController).ToLower(),new ReportConfig
+                        {
+
+                              DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                            {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                            {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
+                            {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                            {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"}},
+                            {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
+                            {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
+                            {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                            {"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
+                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                            {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                            {"FtiReference",new DisplayNameAndFormat { DisplayName ="Fti Reference"}},
+                            {"EventStatus",new DisplayNameAndFormat { DisplayName ="Event Status"}},
+                            {"EventCreationDate",new DisplayNameAndFormat { DisplayName ="Event Creation Date"}},
+                            {"MasterAssignedTo",new DisplayNameAndFormat { DisplayName ="Master Assigned To"}},
+                            {"EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
+                            {"StepStatus",new DisplayNameAndFormat { DisplayName ="Step Status"}},
+                            {"StartedTime",new DisplayNameAndFormat { DisplayName ="Started Time"}},
+                            {"LastModTime",new DisplayNameAndFormat { DisplayName ="Last Mod Time"}},
+                            {"TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"}},
+                            {"LastModUser",new DisplayNameAndFormat { DisplayName ="Last Mod User"}},
+                            {"FirstLinePart",new DisplayNameAndFormat { DisplayName ="First Line Part"}},
+                            {"TradeInstructions",new DisplayNameAndFormat { DisplayName ="Trade Instructions"}},
+                            {"FirstLineInstructions",new DisplayNameAndFormat { DisplayName ="First Line Instructions"}},
+                            {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
+                            {"Assignee",new DisplayNameAndFormat { DisplayName ="Assignee"}},
+                            {"AssignedBy",new DisplayNameAndFormat { DisplayName ="Assigned By"}},
+                            {"AssignedTime",new DisplayNameAndFormat { DisplayName ="Assigned Time"}},
+                            {"UnAssignee",new DisplayNameAndFormat { DisplayName ="UnAssignee"}},
+                            {"UnAssignedBy",new DisplayNameAndFormat { DisplayName ="UnAssigned By"}},
+                            {"UnAssignedTime",new DisplayNameAndFormat { DisplayName ="UnAssigned Time"}},
+                            {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
+                            {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
+                            {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
+                            {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
+
+                    },
+                           SkipList =  new List<string>()
+                            {
+                            }
+                        }
+                    },     {
                         nameof(ArtFtiEndToEndController).ToLower(),new ReportConfig
                         {
 
