@@ -186,9 +186,9 @@ namespace ART_PACKAGE.Hubs
 
                     using CsvWriter cw = new(sw, config);
 
-                    System.Reflection.PropertyInfo[] props = typeof(ArtFtiEndToEndNewController).GetProperties();
+                    System.Reflection.PropertyInfo[] props = typeof(ArtFtiEndToEndNew).GetProperties();
                     List<string> columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].SkipList;
-                    Dictionary<string, DisplayNameAndFormat> Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
+                    Dictionary<string, DisplayNameAndFormat> Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].DisplayNames;
                     foreach (System.Reflection.PropertyInfo prop in props)
                     {
                         if (columnsToSkip.Contains(prop.Name))
