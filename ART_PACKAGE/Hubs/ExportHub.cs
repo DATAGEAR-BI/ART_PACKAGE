@@ -244,13 +244,13 @@ namespace ART_PACKAGE.Hubs
                             cw.WriteField(prop.GetValue(data.Record));
                         }
                     }
+                    cw.WriteField("");
 
                     int subcasesCount = data.SubCases.Count();
                     int ftiEventsCount = data.FtiEvents.Count();
                     int ecmEventsCount = data.EcmEvents.Count();
                     int maxcount = new List<int>() { subcasesCount, ftiEventsCount, ecmEventsCount }.Max();
 
-                    cw.WriteField("");
 
                     for (int i = 0; i < maxcount; i++)
                     {
@@ -270,12 +270,12 @@ namespace ART_PACKAGE.Hubs
                         if (i < ecmEventsCount)
                         {
 
+                            cw.WriteField("");
                             cw.WriteField(data.EcmEvents[i].CaseComments);
                             cw.WriteField(data.EcmEvents[i].EcmEventStep);
                             cw.WriteField(data.EcmEvents[i].EcmEventCreatedBy);
                             cw.WriteField(data.EcmEvents[i].EcmEventCreatedDate);
                             cw.WriteField(data.EcmEvents[i].EcmEventTimeDifference);
-                            cw.WriteField("");
 
 
 
@@ -293,13 +293,13 @@ namespace ART_PACKAGE.Hubs
                         }
                         if (i < ftiEventsCount)
                         {
+                            cw.WriteField("");
                             cw.WriteField(data.FtiEvents[i].EventSteps);
                             cw.WriteField(data.FtiEvents[i].StepStatus);
                             cw.WriteField(data.FtiEvents[i].StartedTime);
                             cw.WriteField(data.FtiEvents[i].LastModTime);
                             cw.WriteField(data.FtiEvents[i].TimeDifference);
                             cw.WriteField(data.FtiEvents[i].LastModUser);
-                            cw.WriteField("");
 
                         }
                         else
@@ -315,12 +315,12 @@ namespace ART_PACKAGE.Hubs
                         }
                         if (i < subcasesCount)
                         {
+                            cw.WriteField("");
                             cw.WriteField(data.SubCases[i].SubCaseReference);
                             cw.WriteField(data.SubCases[i].CaseStatus);
                             cw.WriteField(data.SubCases[i].CustomerClassification);
                             cw.WriteField(data.SubCases[i].TradeInstructions);
                             cw.WriteField(data.SubCases[i].FirtsLineInstructions);
-                            cw.WriteField("");
 
                         }
                         else
