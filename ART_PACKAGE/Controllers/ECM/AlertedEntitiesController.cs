@@ -6,6 +6,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -35,11 +36,15 @@ namespace ART_PACKAGE.Controllers.ECM
 
             if (request.IsIntialize)
             {
+                List<dynamic> PEPlist = new()
+                    {
+                        "Y","N"
+                    };
                 DisplayNames = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].DisplayNames;
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-
+                    {"PepInd".ToLower(),PEPlist.ToDynamicList() },
                 };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertedEntitiesController).ToLower()].SkipList;
