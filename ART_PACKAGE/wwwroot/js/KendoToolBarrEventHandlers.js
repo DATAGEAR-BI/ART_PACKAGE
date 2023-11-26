@@ -1525,7 +1525,7 @@ export const CellDbHandlers = {
                 "Customer Classification",
                 "Trade Instructions",
                 "Firts Line Instructions"]
-            var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.FtiFirstLineParty}`)).json();
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.EcmReference}`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.FtiFirstLineParty}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);

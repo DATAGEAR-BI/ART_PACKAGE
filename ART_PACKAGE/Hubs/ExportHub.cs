@@ -168,13 +168,13 @@ namespace ART_PACKAGE.Hubs
 
                     string? ecmRef = para.SelectedIdz.Select(x => ((JsonElement)x).ToObject<string>()).FirstOrDefault();
 
-
+                    var record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef);
                     EndToEndWithExtraDataDto data = new()
                     {
-                        Record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef),
-                        EcmEvents = _fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == ecmRef).ToList(),
-                        FtiEvents = _fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == ecmRef).ToList(),
-                        SubCases = _fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == ecmRef).ToList(),
+                        Record = record,
+                        EcmEvents = _fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == record.EcmReference).ToList(),
+                        FtiEvents = _fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == record.MasterReference).ToList(),
+                        SubCases = _fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == record.EcmReference).ToList(),
                     };
                     CsvConfiguration config = new(CultureInfo.CurrentCulture)
                     {
@@ -254,6 +254,18 @@ namespace ART_PACKAGE.Hubs
 
                     for (int i = 0; i < maxcount; i++)
                     {
+                        if (i != 0)
+                        {
+                            foreach (System.Reflection.PropertyInfo prop in props)
+                            {
+                                if (columnsToSkip.Contains(prop.Name))
+                                    continue;
+                                else
+                                {
+                                    cw.WriteField("");
+                                }
+                            }
+                        }
 
                         if (i < ecmEventsCount)
                         {
