@@ -57,52 +57,83 @@ namespace ART_PACKAGE.Controllers
         {
             //Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
             //List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
-            IQueryable<ArtAmlAlertDetailView> data = _gridConstructor.Repo.GetGridData(req).data;
+            GridResult<ArtAmlAlertDetailView> datGridResult = _gridConstructor.Repo.GetGridData(req);
+            IQueryable<ArtAmlAlertDetailView> data = datGridResult.data;
+            int count = datGridResult.total;
             System.Reflection.PropertyInfo[] props = typeof(ArtAmlAlertDetailView).GetProperties();
             byte[] bytes = Document.Create(container =>
             {
-                _ = container.Page(page =>
+                int round = 1;
+                int batch = 30;
+                while (count > 0)
                 {
-                    page.Size(PageSizes.B1);
-                    page.Margin(1, Unit.Centimetre);
+                    List<ArtAmlAlertDetailView> pageData = data.Skip((round - 1) * batch).Take(batch).ToList();
+                    _ = container.Page(page =>
+                    {
 
-                    page.Content()
-                        .Table(table =>
-                        {
-                            // Define columns
-                            table.ColumnsDefinition(columns =>
+                        page.Size(PageSizes.B1);
+                        page.Margin(1, Unit.Centimetre);
+
+                        page.Content().Border(1)
+                            .Table(table =>
                             {
+                                IContainer DefaultCellStyle(IContainer container, string backgroundColor)
+                                {
+                                    return container
 
-                                foreach (System.Reflection.PropertyInfo prop in props)
+                                        .BorderColor(Colors.Grey.Medium)
+                                        .Background(backgroundColor)
+                                        .PaddingVertical(5)
+                                        .PaddingHorizontal(10)
+                                        .AlignCenter()
+                                        .AlignMiddle();
+                                }
+                                // Define columns
+                                table.ColumnsDefinition(columns =>
                                 {
                                     columns.RelativeColumn();
-                                }
-                            });
+                                    foreach (System.Reflection.PropertyInfo prop in props)
+                                    {
+                                        columns.RelativeColumn();
+                                    }
+                                });
 
-                            // Add header row
-                            uint row = 1, column = 1;
-                            table.Header(header =>
-                            {
-                                foreach (System.Reflection.PropertyInfo prop in props)
+                                // Add header row
+                                uint row = 1, column = 1;
+                                table.Header(header =>
                                 {
-                                    _ = header.Cell().Row(row).Column(column++).Text(prop.Name).DirectionAuto().Bold();
-                                }
-                            });
-                            column = 1;
-                            row++;
-                            // Assume `dataItems` is your data source
-                            foreach (ArtAmlAlertDetailView item in data)
-                            {
-                                foreach (System.Reflection.PropertyInfo prop in props)
-                                {
-                                    _ = table.Cell().Row(row).Column(column++).Text(prop.GetValue(item));
-                                }
+                                    IContainer CellStyle(IContainer container)
+                                    {
+                                        return DefaultCellStyle(container, Colors.White).ShowOnce();
+                                    }
+                                    _ = header.Cell().Row(row).Column(column++).Element(CellStyle).Text("#").Bold();
+                                    foreach (System.Reflection.PropertyInfo prop in props)
+                                    {
+                                        _ = header.Cell().Row(row).Column(column++).Element(CellStyle).Text(prop.Name).Bold();
+                                    }
+                                });
                                 column = 1;
                                 row++;
-                            }
+                                // Assume `dataItems` is your data source
+                                for (int i = 0; i < pageData.Count(); i++)
+                                {
+                                    _ = i % 2 == 0 ? table.Cell().Row(row).Column(column++).Element(c => DefaultCellStyle(c, Colors.White)).Text(row - 1) : table.Cell().Row(row).Column(column++).Element(c => DefaultCellStyle(c, Colors.White)).Element(c => DefaultCellStyle(c, Colors.Grey.Lighten1)).Text(row - 1);
+                                    foreach (System.Reflection.PropertyInfo prop in props)
+                                    {
+                                        _ = i % 2 == 0
+                                            ? table.Cell().Row(row).Column(column++).Element(c => DefaultCellStyle(c, Colors.White)).Text(prop.GetValue(pageData[i]))
+                                            : table.Cell().Row(row).Column(column++).Element(c => DefaultCellStyle(c, Colors.Grey.Lighten1)).Text(prop.GetValue(pageData[i]));
+                                    }
+                                    column = 1;
+                                    row++;
+                                }
 
-                        });
-                });
+                            });
+                    });
+                    round++;
+                    count -= batch;
+                }
+
             }).GeneratePdf();
             //ViewData["title"] = "Alert Details";
             //ViewData["desc"] = "Presents the alerts details";

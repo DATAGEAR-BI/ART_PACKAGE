@@ -34,7 +34,15 @@ namespace Data.Services
                 }
                 data = sortedData;
             }
-            data = data.Skip(request.Skip).Take(request.Take);
+
+            if (request.Skip != 0)
+                data = data.Skip(request.Skip);
+
+
+            if (request.Take < count)
+                data = data.Take(request.Take);
+
+
             return new GridResult<TModel>
             {
                 data = data,
