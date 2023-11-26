@@ -233,7 +233,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 {
                     Filter filter = t.ToObject<Filter>();
                     _ = _sb.Append(GetFiltersString<T>(filter));
-                    _ = _sb.Append(GetFiltersString<T>(filter));
+                    //_ = _sb.Append(GetFiltersString<T>(filter));
 
                 }
                 else
