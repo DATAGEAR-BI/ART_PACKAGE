@@ -478,6 +478,7 @@ class Grid extends HTMLElement {
             dataSource: {
                 transport: {
                     read: (options) => {
+                        console.log(options);
                         const readdata = () => {
 
                             fetch(this.url, {
@@ -530,7 +531,7 @@ class Grid extends HTMLElement {
                                             }, 0);
                                         }
                                     }
-                                    
+
                                     if (this.isCustom) {
                                         var chartdata = [];
                                         if (d.chartdata)
@@ -647,6 +648,16 @@ class Grid extends HTMLElement {
             },
             height: 700,
             groupable: true,
+            //excelExport: function (e) {
+            //    e.preventDefault();
+              
+            //    var options = grid.getOptions();
+            //    console.log(options);
+            //    //options.excel.allPages = true;
+            //    //grid.setOptions(options);
+            //    //grid.saveAsExcel();
+            //    // Handler for the excel export event
+            //},
             dataBound: (e) => {
 
                 for (var i = 0; i < this.columns.length; i++) {
@@ -787,14 +798,14 @@ class Grid extends HTMLElement {
 
         // Assuming you have a Kendo Grid initialized with the ID 'myGrid'
         grid.tbody.on("dblclick", "td", function (e) {
-            
+
 
             // Get the current item (row data)
             var item = grid.dataItem($(e.currentTarget).closest("tr"));
             console.log(e);
             // Get the field name associated with the clicked cell
             var cellIndex = $(e.target).index(); // Get the index of the clicked cell
-            var column = grid.columns[cellIndex]; 
+            var column = grid.columns[cellIndex];
             console.log(item);
             console.log(column.field);
             // Check if the clicked cell is from a specific column

@@ -1,20 +1,26 @@
 ﻿using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Data.Data.SASAml;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Globalization;
+using System.Text;
 
 namespace ART_PACKAGE.Controllers
 {
     public class GridController : Controller
     {
 
-        private readonly IGridConstructor<SasAmlContext, ArtAmlAlertDetailView> _gridConstructor;
+        private readonly IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> _gridConstructor;
         private readonly IPdfService _pdfSrv;
-        public GridController(IGridConstructor<SasAmlContext, ArtAmlAlertDetailView> gridConstructor, IPdfService pdfSrv)
+
+        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, IPdfService pdfSrv)
         {
 
             _gridConstructor = gridConstructor;
@@ -40,7 +46,7 @@ namespace ART_PACKAGE.Controllers
             else
             {
 
-                GridResult<ArtAmlAlertDetailView> res = _gridConstructor.Repo.GetGridData(request, new SortOption { field = nameof(ArtAmlAlertDetailView.CreateDate), dir = "asc" });
+                GridResult<ArtAmlCustomersDetailsView> res = _gridConstructor.Repo.GetGridData(request, new SortOption { field = nameof(ArtAmlCustomersDetailsView.CustomerNumber), dir = "asc" });
                 return new ContentResult
                 {
                     ContentType = "application/json",
@@ -57,8 +63,8 @@ namespace ART_PACKAGE.Controllers
         {
             //Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
             //List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
-            GridResult<ArtAmlAlertDetailView> datGridResult = _gridConstructor.Repo.GetGridData(req);
-            IQueryable<ArtAmlAlertDetailView> data = datGridResult.data;
+            GridResult<ArtAmlCustomersDetailsView> datGridResult = _gridConstructor.Repo.GetGridData(req);
+            IQueryable<ArtAmlCustomersDetailsView> data = datGridResult.data;
             int count = datGridResult.total;
             System.Reflection.PropertyInfo[] props = typeof(ArtAmlAlertDetailView).GetProperties();
             byte[] bytes = Document.Create(container =>
@@ -113,7 +119,7 @@ namespace ART_PACKAGE.Controllers
                               // Assume `dataItems` is your data source
                               //var dataWithIndex = data.Select((x, i) => new { x, i });
 
-                              foreach (ArtAmlAlertDetailView di in data)
+                              foreach (ArtAmlCustomersDetailsView di in data)
                               {
                                   foreach (System.Reflection.PropertyInfo prop in props)
                                   {
@@ -228,6 +234,34 @@ namespace ART_PACKAGE.Controllers
             return File(bytes, "application/pdf");
         }
 
+
+        public async Task<IActionResult> TestExportWithHangfire([FromBody] GridRequest req)
+        {
+            _ = BackgroundJob.Enqueue(() => ExportCsv(req));
+            return Ok();
+        }
+
+
+        private void ExportCsv(GridRequest req)
+        {
+            var data = _gridConstructor.Repo.GetGridData(req);
+
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
+            {
+
+                cw.WriteHeader<ArtAmlCustomersDetailsView>();
+                cw.NextRecord();
+                cw.WriteRecords(data.data);
+            }
+
+            var bytes = stream.ToArray();
+        }
 
     }
 }
