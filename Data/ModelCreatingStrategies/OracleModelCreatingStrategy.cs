@@ -1912,7 +1912,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_ALERTED_ENTITY");
+                entity.ToView("ART_ALERTED_ENTITY_VW");
 
                 entity.Property(e => e.CaseId)
                     .HasMaxLength(64)
