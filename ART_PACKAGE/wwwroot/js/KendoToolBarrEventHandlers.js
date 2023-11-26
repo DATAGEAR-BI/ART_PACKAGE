@@ -1495,7 +1495,7 @@ export const CellDbHandlers = {
                 "Ecm Event Created Date",
                 "Ecm Event Time Difference"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}}`, headers);
+            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1511,7 +1511,7 @@ export const CellDbHandlers = {
                 "Time Difference",
                 "Last ModUser"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no FTI Events for this case: ${dataItem.MasterReference}}`, headers);
+            createPopUpTable("end-to-endGrid", events, `There is no FTI Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1526,7 +1526,7 @@ export const CellDbHandlers = {
                 "Trade Instructions",
                 "Firts Line Instructions"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.EcmReference}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.FtiFirstLineParty}}`, headers);
+            createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         }

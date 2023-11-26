@@ -244,7 +244,7 @@ namespace ART_PACKAGE.Hubs
                             cw.WriteField(prop.GetValue(data.Record));
                         }
                     }
-                    cw.WriteField("");
+
 
                     int subcasesCount = data.SubCases.Count();
                     int ftiEventsCount = data.FtiEvents.Count();
