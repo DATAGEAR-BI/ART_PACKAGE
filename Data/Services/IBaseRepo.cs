@@ -7,6 +7,6 @@ namespace Data.Services
         where TContext : DbContext
         where TModel : class
     {
-        public GridResult<TModel> GetGridData(GridRequest request);
+        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null);
     }
 }
