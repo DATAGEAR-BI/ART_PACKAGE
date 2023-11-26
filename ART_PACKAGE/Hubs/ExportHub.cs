@@ -16,15 +16,19 @@ using Data.Data.Segmentation;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Data;
 using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Hubs
 {
     public class ExportHub : Hub
     {
+        private readonly ILogger<ExportHub> _logger;
+
         private readonly AuthContext db;
         private readonly UsersConnectionIds connections;
         private readonly ICsvExport _csvSrv;
@@ -42,8 +46,9 @@ namespace ART_PACKAGE.Hubs
         private readonly DBFactory dBFactory;
         private DbContext dbInstance;
 
-        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
+        public ExportHub(ILogger<ExportHub> logger, UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, AuthContext db, DBFactory dBFactory)
         {
+            _logger = logger;
             this.connections = connections;
             _csvSrv = csvSrv;
             _configuration = configuration;
@@ -146,6 +151,10 @@ namespace ART_PACKAGE.Hubs
 
         public async Task ExportEndToEnd(ExportDto<object> para)
         {
+            _logger.LogInformation(JsonConvert.SerializeObject(para));
+            _logger.LogInformation(para.SelectedIdz.Select(x => ((JsonElement)x).ToObject<string>()).FirstOrDefault());
+
+
             if (para.All)
             {
                 await _csvSrv.Export<ArtFtiEndToEndNew, ArtFtiEndToEndController>(_fti, Context.User.Identity.Name, para);
@@ -157,7 +166,7 @@ namespace ART_PACKAGE.Hubs
                 if (para.WithExtraData)
                 {
 
-                    string? ecmRef = para.SelectedIdz.Select(x => (string)x).FirstOrDefault();
+                    string? ecmRef = para.SelectedIdz.Select(x => ((JsonElement)x).ToObject<string>()).FirstOrDefault();
 
 
                     EndToEndWithExtraDataDto data = new()
@@ -178,8 +187,8 @@ namespace ART_PACKAGE.Hubs
                     using CsvWriter cw = new(sw, config);
 
                     System.Reflection.PropertyInfo[] props = typeof(ArtFtiEndToEndNew).GetProperties();
-                    List<string> columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
-                    Dictionary<string, DisplayNameAndFormat> Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
+                    List<string> columnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].SkipList;
+                    Dictionary<string, DisplayNameAndFormat> Displaynames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].DisplayNames;
                     foreach (System.Reflection.PropertyInfo prop in props)
                     {
                         if (columnsToSkip.Contains(prop.Name))

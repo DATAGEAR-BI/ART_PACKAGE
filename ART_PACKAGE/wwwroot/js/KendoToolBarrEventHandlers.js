@@ -124,13 +124,17 @@ export const Handlers = {
                                 btnClass: 'btn-blue',
                                 keys: ['enter', 'shift'],
                                 action: async function () {
-                                    para.WithExtraData = true;
-                                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
-                                    //var Method = isMyreports ? "MyReports" : "";
 
-                                    //invokeExport(para, controller, Method, [...getQueryParameters(url)]);
-                                    //localStorage.removeItem("selectedidz");
-                                    //return;
+
+                                    console.log(para);
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: true }
+                                    if (exportConnection.state !== "Connected")
+                                        await start();
+                                    console.log(para);
+                                    var Method = isMyreports ? "MyReports" : "";
+                                    console.log(para, controller, Method, [...getQueryParameters(url)]);
+                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+
                                 }
                             },
                             btnNo: {
@@ -138,11 +142,15 @@ export const Handlers = {
                                 btnClass: 'btn-blue',
                                 keys: ['enter', 'shift'],
                                 action: async function () {
-                                    para.WithExtraData = false;
-                                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
-                                    //invokeExport(para, controller, Method, [...getQueryParameters(url)]);
-                                    //localStorage.removeItem("selectedidz");
-                                    //return;
+
+                                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                                    if (exportConnection.state !== "Connected")
+                                        await start();
+
+                                    var Method = isMyreports ? "MyReports" : "";
+
+                                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+
                                 }
                             },
 
@@ -154,25 +162,35 @@ export const Handlers = {
                     });
                 }
                 else {
-                    para.WithExtraData = false;
-                    para = { Req: para, All: all, SelectedIdz: selectedrecords }
+
+                    para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+                    var isMyreports = window.location.href.toLowerCase().includes('myreports');
+
+                    if (exportConnection.state !== "Connected")
+                        await start();
+
+                    var Method = isMyreports ? "MyReports" : "";
+
+                    invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+                    //localStorage.removeItem("selectedidz");
                 }
             }
         }
         else {
-            para.WithExtraData = false;
-            para = { Req: para, All: all, SelectedIdz: selectedrecords }
+
+
+            para = { Req: para, All: all, SelectedIdz: selectedrecords, WithExtraData: false }
+            var isMyreports = window.location.href.toLowerCase().includes('myreports');
+
+            if (exportConnection.state !== "Connected")
+                await start();
+
+            var Method = isMyreports ? "MyReports" : "";
+
+            invokeExport(para, controller, Method, [...getQueryParameters(url)]);
+            localStorage.removeItem("selectedidz");
         }
 
-        var isMyreports = window.location.href.toLowerCase().includes('myreports');
-
-        if (exportConnection.state !== "Connected")
-            await start();
-
-        var Method = isMyreports ? "MyReports" : "";
-
-        invokeExport(para, controller, Method, [...getQueryParameters(url)]);
-        localStorage.removeItem("selectedidz");
 
     },
     csvExportForStored: async (e, controller) => {
@@ -1485,7 +1503,7 @@ export const CellDbHandlers = {
             kendo.ui.progress($('#grid'), true);
 
             $('#end-to-endGrid').empty();
-            var headers = var headers = ["#", "Fti Reference",
+            var headers = ["#", "Fti Reference",
                 "Event Steps",
                 "Step Status",
                 "Started Time",
@@ -1493,7 +1511,7 @@ export const CellDbHandlers = {
                 "Time Difference",
                 "Last ModUser"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.MasterReference}}`, headers);
+            createPopUpTable("end-to-endGrid", events, `There is no FTI Events for this case: ${dataItem.MasterReference}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1508,7 +1526,7 @@ export const CellDbHandlers = {
                 "Trade Instructions",
                 "Firts Line Instructions"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.FtiFirstLineParty}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.FtiFirstLineParty}}`, headers);
+            createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.FtiFirstLineParty}}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         }
