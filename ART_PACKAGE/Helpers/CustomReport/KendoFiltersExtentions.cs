@@ -934,7 +934,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             MemberInfo? property = memberMap.Data.Member;
 
                             // Add custom type converters for specific properties
-                            if (property.Name == "Amount")
+                            if (property.Name.ToLower().Contains("amount"))
                             {
                                 memberMap.TypeConverter<CurrencyTypeConverter>();
                             }

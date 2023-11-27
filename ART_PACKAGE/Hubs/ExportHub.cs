@@ -241,7 +241,7 @@ namespace ART_PACKAGE.Hubs
                             continue;
                         else
                         {
-                            cw.WriteField(prop.GetValue(data.Record));
+                            cw.WriteField(prop.Name.ToLower().Contains("amount")? string.Format("{0:n2}", prop.GetValue(data.Record)) :prop.GetValue(data.Record));
                         }
                     }
 
