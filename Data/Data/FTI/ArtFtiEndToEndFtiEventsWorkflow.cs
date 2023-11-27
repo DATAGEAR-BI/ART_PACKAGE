@@ -9,5 +9,8 @@
         public DateTime? LastModTime { get; set; }//LAST_MOD_TIME
         public string? TimeDifference { get; set; }//TIMEDIFFERENCE
         public string? LastModUser { get; set; }//LAST_MOD_USER
+        public string? EcmReference { get; set; } //ECM_REFERENCE
+
+
     }
 }

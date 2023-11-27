@@ -1494,7 +1494,7 @@ export const CellDbHandlers = {
                 "Ecm Event Created By",
                 "Ecm Event Created Date",
                 "Ecm Event Time Difference"]
-            var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${dataItem.EcmReference}`)).json();
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${encodeURIComponent(dataItem.EcmReference) }`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
@@ -1509,8 +1509,8 @@ export const CellDbHandlers = {
                 "Started Time",
                 "Last Mod Time",
                 "Time Difference",
-                "Last ModUser"]
-            var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${dataItem.MasterReference}`)).json();
+                "Last ModUser", "Ecm Reference"]
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${encodeURIComponent(dataItem.MasterReference) }`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no FTI Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
@@ -1525,7 +1525,7 @@ export const CellDbHandlers = {
                 "Customer Classification",
                 "Trade Instructions",
                 "Firts Line Instructions"]
-            var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${dataItem.EcmReference}`)).json();
+            var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${encodeURIComponent(dataItem.EcmReference) }`)).json();
             createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);

@@ -4767,6 +4767,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.FtiReference)
                          .HasColumnName("FTI_REFERENCE")
                          .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.EcmReference)
+                         .HasColumnName("ECM_REFERENCE")
+                         .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.StartedTime)
                .HasColumnType("datetime")

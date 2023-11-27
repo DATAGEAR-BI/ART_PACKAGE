@@ -221,6 +221,7 @@ namespace ART_PACKAGE.Hubs
                     cw.WriteField("Last Mod Time");
                     cw.WriteField("Time Difference");
                     cw.WriteField("Last ModUser");
+                    cw.WriteField("Ecm Refrence");
 
                     cw.WriteField("");
 
@@ -300,10 +301,12 @@ namespace ART_PACKAGE.Hubs
                             cw.WriteField(data.FtiEvents[i].LastModTime);
                             cw.WriteField(data.FtiEvents[i].TimeDifference);
                             cw.WriteField(data.FtiEvents[i].LastModUser);
+                            cw.WriteField(data.FtiEvents[i].EcmReference);
 
                         }
                         else
                         {
+                            cw.WriteField("");
                             cw.WriteField("");
                             cw.WriteField("");
                             cw.WriteField("");

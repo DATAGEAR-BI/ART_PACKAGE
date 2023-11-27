@@ -121,7 +121,7 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{reference}")]
         public IActionResult GetSubCases(string? reference)
         {
-            IQueryable<ArtFtiEndToEndSubCases> subCases = fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == reference);
+            IQueryable<ArtFtiEndToEndSubCases> subCases = fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == Uri.UnescapeDataString(reference));
             return new ContentResult
             {
                 ContentType = "application/json",
@@ -131,7 +131,7 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{reference}")]
         public IActionResult GetEcmEvents(string? reference)
         {
-            IQueryable<ArtFtiEndToEndEcmEventsWorkflow> events = fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == reference);
+            IQueryable<ArtFtiEndToEndEcmEventsWorkflow> events = fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == Uri.UnescapeDataString(reference));
             return new ContentResult
             {
                 ContentType = "application/json",
@@ -141,7 +141,7 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{reference}")]
         public IActionResult GetFtiEvents(string? reference)
         {
-            IQueryable<ArtFtiEndToEndFtiEventsWorkflow> subCases = fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == reference);
+            IQueryable<ArtFtiEndToEndFtiEventsWorkflow> subCases = fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == Uri.UnescapeDataString(reference));
             return new ContentResult
             {
                 ContentType = "application/json",
