@@ -168,7 +168,7 @@ namespace ART_PACKAGE.Hubs
 
                     string? ecmRef = para.SelectedIdz.Select(x => ((JsonElement)x).ToObject<string>()).FirstOrDefault();
 
-                    var record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef);
+                    ArtFtiEndToEndNew? record = _fti.ArtFtiEndToEndsNew.FirstOrDefault(x => x.EcmReference == ecmRef);
                     EndToEndWithExtraDataDto data = new()
                     {
                         Record = record,
@@ -242,7 +242,7 @@ namespace ART_PACKAGE.Hubs
                             continue;
                         else
                         {
-                            cw.WriteField(prop.Name.ToLower().Contains("amount")? string.Format("{0:n2}", prop.GetValue(data.Record)) :prop.GetValue(data.Record));
+                            cw.WriteField(prop.Name.ToLower().Contains("amount") ? string.Format("{0:n2}", prop.GetValue(data.Record)) : prop.GetValue(data.Record));
                         }
                     }
 

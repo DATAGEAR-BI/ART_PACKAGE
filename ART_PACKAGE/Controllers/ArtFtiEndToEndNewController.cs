@@ -36,7 +36,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
                 };
@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Controllers
                     //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNewController).ToLower()].SkipList;
             }
 
             KendoDataDesc<ArtFtiEndToEndNew> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
