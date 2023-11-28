@@ -1187,25 +1187,7 @@ export const Handlers = {
     },
     Grid: {
         test: async (e, gridDiv) => {
-            var grid = $(gridDiv).data("kendoGrid");
-            var filters = grid.dataSource.filter();
-            var total = grid.dataSource.total();
-            var sort = grid.dataSource.sort();
-            var para = {}
-
-            para.Take = total;
-            para.Skip = 0;
-            para.Filter = filters;
-            para.Sort = sort;
-
-            await fetch("/Grid/TestExportWithHangfire", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                body: JSON.stringify(para),
-            });
+            console.log("test");
         }
     }
 }

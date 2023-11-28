@@ -6,6 +6,7 @@ import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
+import { exportConnection } from "../../ExportListener.js";
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -183,7 +184,17 @@ class Grid extends HTMLElement {
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
         this.intializeColumns();
+        exportConnection.on("updateExportProgress", (progress) => {
+            var progressBar = document.getElementById(this.id + "Progress");
+            if (progressBar.hidden)
+                progressBar.hidden = false;
 
+
+            progressBar.value = progress;
+            if (progress == 100) {
+
+            }
+        });
 
     }
 
@@ -445,7 +456,7 @@ class Grid extends HTMLElement {
                     name: this.gridDiv.id + "clrfil",
                     text: "Clear All Filters"
                     //template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
-                },
+                }
             ];
         }
 
@@ -460,6 +471,19 @@ class Grid extends HTMLElement {
                 toolbar.push(btn);
             });
         }
+        toolbar.push({
+            name: "bar",
+            //text: "Clear All Filters"
+            template: `
+            <span style="display: inline-block">
+                <span style="display:flex;align-items:center">
+                    <smart-progress-bar id="${this.id + "Progress"}" value="0" style="display: inline-block" hidden></smart-progress-bar>
+                    <a class="k-button k-button-icontext k-grid-custom" id="ExportDownloadBtn" hidden>Download Files</a>
+                </span>
+            </span>
+
+            `,
+        });
         return toolbar;
     }
 
@@ -837,9 +861,8 @@ class Grid extends HTMLElement {
             var controller = orgin[1];
             pdfExportHandler(e, controller, this.url, this.gridDiv);
         });
-        $(`.k-grid-${this.gridDiv.id}csvExport`).click((e) => {
-
-            console.log("clrfil");
+        $(`.k-grid-${this.gridDiv.id}csvExport`).click(async (e) => {
+            await this.ExportCsv(e)
         });
 
 
@@ -1003,6 +1026,38 @@ class Grid extends HTMLElement {
             $(x).data("kendoMultiSelect").value(null);
         });
         grid.dataSource.filter(null);
+    }
+
+
+    async ExportCsv(e) {
+
+        exportConnection.on("updateExportProgress", (progress) => {
+            var progressBar = document.getElementById(this.id + "Progress");
+            if (progressBar.hidden)
+                progressBar.hidden = false;
+            progressBar.value = progress;
+
+            //if (progress == 100)
+        });
+        var grid = $(this.gridDiv).data("kendoGrid");
+        var filters = grid.dataSource.filter();
+        var total = grid.dataSource.total();
+        var sort = grid.dataSource.sort();
+        var para = {}
+
+        para.Take = total;
+        para.Skip = 0;
+        para.Filter = filters;
+        para.Sort = sort;
+
+        await fetch("/Grid/TestExportWithHangfire", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(para),
+        });
     }
 
     reload() {

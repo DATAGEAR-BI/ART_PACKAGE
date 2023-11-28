@@ -261,29 +261,29 @@ namespace ART_PACKAGE.Controllers
                 IgnoreReferences = true,
             };
             using MemoryStream stream = new();
-            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
-            using (CsvWriter cw = new(sw, config))
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+
+            cw.WriteHeader<ArtAmlCustomersDetailsView>();
+            cw.NextRecord();
+            float progress = 0;
+            int total = data.total;
+            int index = 0;
+            foreach (ArtAmlCustomersDetailsView item in data.data)
             {
+                cw.WriteRecord(item);
+                index++; // Increment the index for each item
 
-                cw.WriteHeader<ArtAmlCustomersDetailsView>();
-                cw.NextRecord();
-                int progress = 0;
-                int total = data.total;
-                int index = 0;
-                foreach (ArtAmlCustomersDetailsView item in data.data)
+                if (index % 100 == 0 || index == total) // Also check progress at the last item
                 {
-                    cw.WriteRecord(item);
-                    index++; // Increment the index for each item
-
-                    if (index % 100 == 0 || index == total) // Also check progress at the last item
-                    {
-                        progress = (int)(index / (float)total * 100);
-                        _exportHub.Clients.Clients(connections.GetConnections(user))
-                                       .SendAsync("updateExportProgress", progress);
-                    }
+                    progress = (float)(index / (float)total * 100);
+                    _exportHub.Clients.Clients(connections.GetConnections(user))
+                                   .SendAsync("updateExportProgress", progress);
                 }
-
             }
+
+
 
 
             string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
