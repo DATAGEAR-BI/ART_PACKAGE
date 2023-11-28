@@ -1,7 +1,10 @@
 ﻿import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
 import { URLS } from "./URLConsts.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers, CellDbHandlers } from "./KendoToolBarrEventHandlers.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers, CellDbHandlers } from "./GridConfigration/GridEvents.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Actions } from "./GridConfigration/GridActions.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+import { columnFilters } from "./GridConfigration/ColumnsFilters.js"
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -22,10 +25,27 @@ var spinnerOpts = {
     className: 'spinner', // The CSS class to assign to the spinner
     position: 'absolute', // Element positioning
 };
+
 var spinnerStyle = document.createElement("link");
 spinnerStyle.rel = "stylesheet";
-spinnerStyle.href = "../lib/spin.js/spin.css";
-
+spinnerStyle.href = "/lib/spin.js/spin.css";
+const handleError = (error) => {
+    if (error instanceof Error) {
+        // This is a client-side error (e.g., network issues)
+        console.error('Client-side error:', error.message);
+    } else {
+        // This is a server error (e.g., 500 Internal Server Error)
+        console.error('Server error:', error);
+        if (error.response && error.response.status === 500) {
+            // Handle 500 Internal Server Error here
+            toastObj.hideAfter = false;
+            toastObj.icon = 'error';
+            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
+            toastObj.heading = "Report Status";
+            $.toast(toastObj);
+        }
+    }
+}
 var grid = document.getElementById("grid");
 localStorage.removeItem("selectedidz");
 localStorage.setItem("isAllSelected", false);
@@ -140,13 +160,7 @@ function intializeGrid() {
             $(".spinner").remove();
             generateGrid();
 
-        }).catch(err => {
-            toastObj.hideAfter = false;
-            toastObj.icon = 'error';
-            toastObj.text = "Some thing wrong hannped while intializing the report please reload page or call support";
-            toastObj.heading = "Report Status";
-            $.toast(toastObj);
-        });
+        }).catch(handleError);
 }
 function genrateToolBar(data, doesnotcontainsll) {
     var toolbar = [];
@@ -356,8 +370,9 @@ function generateGrid() {
 
                                 //}
                                 if (chartsDiv) {
-                                    var chartdata = [...d.chartdata];
-                                    console.log(chartdata);
+                                    var chartdata = [];
+                                    if (d.chartdata)
+                                        chartdata = [...d.chartdata];
                                     chartdata.forEach((x) => {
                                         var div = document.getElementById(x.ChartId);
 
@@ -373,13 +388,7 @@ function generateGrid() {
                                         );
                                     });
                                 }
-                            }).catch(err => {
-                                toastObj.hideAfter = false;
-                                toastObj.icon = 'error';
-                                toastObj.text = "Some thing wrong hannped while retreving data for the report please reload page or call support";
-                                toastObj.heading = "Report Status";
-                                $.toast(toastObj);
-                            });;
+                            }).catch(handleError);;
                     }
                 },
             },
@@ -582,8 +591,6 @@ function generateGrid() {
         }
 
     });
-
-
     grid.tbody.on("dblclick", "td", function (e) {
 
 
@@ -604,8 +611,6 @@ function generateGrid() {
         //    // Example action: display a message, open a modal, etc.
         //}
     });
-
-
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
@@ -793,31 +798,24 @@ function generateColumns(response) {
     };
     var cols = columnNames.map(function (column) {
         var filter = {};
-        if (column.isDropDown) {
-            var ops = {};
-            var equal = { eq: "is equal to" };
-            if (column.type === "string") ops = { string: { ...equal, isnull: "is null" } };
-            else if (column.type === "date") ops = { date: equal };
-            else if (column.type === "number") ops = { number: equal };
-            else ops = { boolean: equal };
-            filter = {
-                ui: (e) => createMultiSelect(e, column.menu, column.name),
-                extra: false,
-                operators: ops,
-            };
-        }
+        if (column.isDropDown)
+            filter = columnFilters.multiSelectFilter(column);
 
-        if (isDateField[column.name]) {
-            filter = {
-                ui: function (element) {
-                    element.kendoDatePicker({
-                        format: "dd/MM/yyyy",
-                    }); // initialize a Kendo UI DateTimePicker
-                },
-            };
-        }
+        if (isDateField[column.name])
+            filter = columnFilters.dateFilter();
 
+
+
+        var template = column.template;
         var isCollection = column.isCollection;
+        var hasTemplate = template && template != ""
+
+
+        var columnF = column.filter;
+        var hasFilters = columnF && columnF != ""
+
+        if (hasFilters)
+            filter = columnFilters[columnF]();
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {
@@ -847,6 +845,9 @@ function generateColumns(response) {
             }
         }
 
+
+
+
         return {
             field: column.name,
             format: column.format ?
@@ -854,6 +855,7 @@ function generateColumns(response) {
                 isDateField[column.name]
                     ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                     : "",
+
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
@@ -861,124 +863,28 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? (di) => Templates[template](di, column.name) : null,
         };
     });
 
     if (contiansActions) {
+        var actions = response["actions"];
+        var actionsBtns = [...actions].map(x => ({
+
+            name: x.text,
+            iconClass: `k-icon ${x.icon}`,
+            click: (e) => Actions[x.action](e)
+        }));
         cols = [
             ...cols,
             {
-                command: [
-                    {
-                        name: "details",
-                        iconClass: "k-icon k-i-info-circle",
-                        click: function (e) {
-                            e.preventDefault();
-
-                            var tr = $(e.target).closest("tr");
-
-                            var data = this.dataItem(tr);
-
-                            window.location = `/report/showreport/${data.Id}`;
-                        },
-                    },
-                ],
+                title: "Actions",
+                command: actionsBtns,
             },
         ];
     }
     if (response.selectable) cols = [selectCol, ...cols];
     return cols;
-}
-
-function createMultiSelect(element, data, field) {
-    //console.log(element);
-    element.removeAttr("data-bind");
-    element[0].dataset.field = field;
-    element.kendoMultiSelect({
-        dataSource: data,
-        filter: "contains"
-        //change: function (e) {
-        //    var opSelect = document.querySelector(`select[title = "Operator"]`);
-        //    var dateops = ["gt", "lt", "lte", "gte"];
-        //    var filter = { logic: "or", filters: [] };
-        //    var values = this.value();
-        //    $.each(values, function (i, v) {
-        //        filter.filters.push({
-        //            field: field,
-        //            operator: dateops.includes(opSelect.value) ? "eq" : opSelect.value,
-        //            value: v,
-        //        });
-        //    });
-
-        //    var currentFilters = $("#grid").data("kendoGrid").dataSource.filter();
-
-        //    if (!currentFilters) {
-        //        var parentFilter = {
-        //            logic: "and",
-        //            filters: [filter],
-        //        };
-        //        $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-        //        return;
-        //    }
-
-        //    var remainingFilters = currentFilters.filters.filter((x) => {
-        //        if (x.field && x.field != field) return true;
-
-        //        if (x.filters && x.filters.some((x) => x.field != field)) return true;
-        //    });
-
-        //    var newFilter = [];
-
-        //    if (filter.filters.length == 0) {
-        //        newFilter = [...remainingFilters];
-        //    } else {
-        //        newFilter = [...remainingFilters, filter];
-        //    }
-        //    var parentFilter = {
-        //        logic: "and",
-        //        filters: [...newFilter],
-        //    };
-
-        //    $("#grid").data("kendoGrid").dataSource.filter(parentFilter);
-
-        //    //if (currentFilters) {
-
-        //    //    var hasSubFilters = currentFilters.filters.filter(x => x.filters);
-        //    //    console.log(currentFilters);
-        //    //    if (hasSubFilters.length != 0) {
-        //    //        var newFilters = currentFilters.filters.filter(x => {
-        //    //            var hasfiltersAtt = x.filters
-        //    //            if (!hasfiltersAtt)
-        //    //                if (x.field == field)
-        //    //                    return false;
-        //    //                else
-        //    //                    return true;
-        //    //            else
-        //    //                if (x.filters.some(y => y.field == field))
-        //    //                    return false;
-        //    //                else
-        //    //                    return true;
-        //    //        });
-
-        //    //        console.log(newFilters);
-        //    //        if (newFilters.filters)
-        //    //            newFilters.filters.push(filter);
-        //    //        else
-        //    //            newFilters.filters = filter;
-
-        //    //        $("#grid").data("kendoGrid").dataSource.filter(newFilters);
-        //    //    }
-        //    //    else {
-        //    //        currentFilters.filters.push(filter);
-        //    //        $("#grid").data("kendoGrid").dataSource.filter(currentFilters);
-        //    //    }
-
-        //    //} else {
-        //    //    $("#grid").data("kendoGrid").dataSource.filter(filter);
-        //    //}
-        //},
-    });
 }
 
 function generateModel(response) {
@@ -1025,7 +931,4 @@ function generateModel(response) {
 
     return model;
 }
-
-
-
 

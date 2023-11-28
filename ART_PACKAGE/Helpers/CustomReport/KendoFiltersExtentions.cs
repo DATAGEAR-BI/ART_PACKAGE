@@ -570,7 +570,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                                         ,
                     isNullable = isnullabe,
                     type = Type,
-
+                    template = propDisplayExists ? DisplayNamesAndFormat[name].Template : null,
                     AggType = agg,
                     AggTitle = aggText,
                 };

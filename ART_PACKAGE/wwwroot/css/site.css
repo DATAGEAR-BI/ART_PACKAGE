@@ -42,3 +42,12 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.custom-modal-width {
+    max-width: 90%;
+}
+
+
+.custom-link:hover {
+    cursor: pointer;
+}

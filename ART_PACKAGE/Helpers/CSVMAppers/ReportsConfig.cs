@@ -213,7 +213,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
-                            {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
+                            {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference" , Template="hyperlink"}},
                             {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
                             {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
@@ -249,8 +249,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
                             {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
                             {"LastActionTakenBy",new DisplayNameAndFormat { DisplayName ="Last Action Taken By"}},
-                            {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference"}},
-                            {"FtiFirstLineParty",new DisplayNameAndFormat { DisplayName ="Fti First Line Party"}},
+                            {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference", Template="hyperlink"}},
+                            {"FtiFirstLineParty",new DisplayNameAndFormat { DisplayName ="Fti First Line Party", Template="hyperlink"}},
                             {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
 
                     },

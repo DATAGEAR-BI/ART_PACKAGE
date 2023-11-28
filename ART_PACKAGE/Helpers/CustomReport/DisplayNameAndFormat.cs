@@ -6,6 +6,7 @@
         public string Format { get; set; }
         public bool isLargeText { get; set; }
         public GridAggregateType AggType { get; set; }
+        public string Template { get; set; }
         public string? AggText { get; set; }
     }
 }
