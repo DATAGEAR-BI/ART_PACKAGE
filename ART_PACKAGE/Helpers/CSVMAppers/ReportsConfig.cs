@@ -251,7 +251,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"LastActionTakenBy",new DisplayNameAndFormat { DisplayName ="Last Action Taken By"}},
                             {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference", Template="hyperlink"}},
                             {"FtiFirstLineParty",new DisplayNameAndFormat { DisplayName ="Fti First Line Party", Template="hyperlink"}},
-                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                            {"RequestType",new DisplayNameAndFormat { DisplayName ="Request Type"}},
 
                     },
                            SkipList =  new List<string>()
