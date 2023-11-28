@@ -123,16 +123,6 @@ export const Handlers = {
         kendo.ui.progress($('#grid'), false);
     },
 
-    clrfil: (e, gridDiv) => {
-        console.log(gridDiv);
-        var grid = $(gridDiv).data("kendoGrid");
-        var multiSelects = document.querySelectorAll("input[data-role=multiselect]");
-        console.log(multiSelects);
-        [...multiSelects].forEach(x => {
-            $(x).data("kendoMultiSelect").value(null);
-        });
-        grid.dataSource.filter(null);
-    },
 
 
     clientPdExport: async (e, controller, url) => {
@@ -443,75 +433,7 @@ export const Handlers = {
 
 
 
-    sh_filters: (e, gridDiv, Modal, filtersDivId, columns) => {
-        console.log(columns);
-        var grid = $(gridDiv).data("kendoGrid");
-        var filters = grid.dataSource.filter();
-        var filterDiv = document.getElementById(filtersDivId);
-        filterDiv.innerHTML = "";
-        function buildInputs(filter) {
 
-            if (!filter) return;
-
-            var ops = {
-                eq: "Is Equal To",
-                neq: "Not Equal To",
-                isnull: "Is Null",
-                isnotnull: "Is Not Null",
-                isempty: "Is Empty",
-                isnotempty: "Is Not Empty",
-                startswith: "Starts With",
-                doesnotstartwith: "Does Not Start With",
-                contains: "Contains",
-                doesnotcontain: "Does Not Contain",
-                endswith: "Ends With",
-                doesnotendwith: "Does Not End With",
-                gte: "Greater Than Or Equal",
-                gt: "Greater Than",
-                lte: "Less Than Or Equal",
-                lt: "Less Than",
-            };
-
-            if (filter.logic) {
-                var logicDiv = document.createElement("div");
-                logicDiv.classList.add("row");
-                var childFilter = [];
-                var res = [];
-                filter.filters.forEach(function (f) {
-                    childFilter.push(buildInputs(f)); // Recursively build inputs for nested filters
-                });
-                for (let i = 0; i < childFilter.length; i++) {
-                    res.push(childFilter[i]); // Add the original element
-                    // Add 'x' after each original element, except after the last one
-                    if (i < childFilter.length - 1) {
-                        var logic = document.createElement("p");
-                        logic.classList.add("m-2");
-                        logic.innerText = filter.logic;
-                        res.push(logic);
-                    }
-                }
-                res.forEach(x => logicDiv.appendChild(x));
-                return logicDiv;
-            } else {
-                var div = document.createElement("div");
-                div.classList.add("col-12");
-                var filterInput = document.createElement("m-input");
-                filterInput.dataset.value = `${ops[filter.operator]} ${filter.value}`;
-                var column = columns.find(x => x.field == filter.field);
-                console.log(column);
-                filterInput.dataset.title = column.title;
-                filterInput.dataset.disabled = true;
-                div.appendChild(filterInput);
-                return div;
-            }
-        }
-
-        if (filters) {
-            filterDiv.appendChild(buildInputs(filters));
-        }
-        //console.log(filters.filters.flat(Infinity));
-        $(Modal).modal("show");
-    },
     AlertSearch: {
         test1: (e) => {
 
@@ -1261,6 +1183,29 @@ export const Handlers = {
     TaskSchedular: {
         addTask: () => {
             window.location = `/Tasks/AddTask`;
+        }
+    },
+    Grid: {
+        test: async (e, gridDiv) => {
+            var grid = $(gridDiv).data("kendoGrid");
+            var filters = grid.dataSource.filter();
+            var total = grid.dataSource.total();
+            var sort = grid.dataSource.sort();
+            var para = {}
+
+            para.Take = total;
+            para.Skip = 0;
+            para.Filter = filters;
+            para.Sort = sort;
+
+            await fetch("/Grid/TestExportWithHangfire", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(para),
+            });
         }
     }
 }

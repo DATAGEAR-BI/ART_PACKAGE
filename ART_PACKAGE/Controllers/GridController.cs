@@ -1,10 +1,13 @@
-﻿using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
+using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Data.Data.SASAml;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -19,12 +22,18 @@ namespace ART_PACKAGE.Controllers
 
         private readonly IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> _gridConstructor;
         private readonly IPdfService _pdfSrv;
+        private readonly IHubContext<ExportHub> _exportHub;
+        private readonly UsersConnectionIds connections;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, IPdfService pdfSrv)
+        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
         {
 
             _gridConstructor = gridConstructor;
             _pdfSrv = pdfSrv;
+            _exportHub = exportHub;
+            this.connections = connections;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -233,18 +242,19 @@ namespace ART_PACKAGE.Controllers
             //                                        , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(bytes, "application/pdf");
         }
-
+        [HttpPost]
 
         public async Task<IActionResult> TestExportWithHangfire([FromBody] GridRequest req)
         {
-            _ = BackgroundJob.Enqueue(() => ExportCsv(req));
-            return Ok();
+            string folderGuid = Guid.NewGuid().ToString();
+            _ = BackgroundJob.Enqueue(() => ExportCsv(req, User.Identity.Name, folderGuid));
+            return Ok(folderGuid);
         }
 
 
-        private void ExportCsv(GridRequest req)
+        public void ExportCsv(GridRequest req, string user, string folderGuid)
         {
-            var data = _gridConstructor.Repo.GetGridData(req);
+            GridResult<ArtAmlCustomersDetailsView> data = _gridConstructor.Repo.GetGridData(req);
 
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
@@ -257,11 +267,43 @@ namespace ART_PACKAGE.Controllers
 
                 cw.WriteHeader<ArtAmlCustomersDetailsView>();
                 cw.NextRecord();
-                cw.WriteRecords(data.data);
+                int progress = 0;
+                int total = data.total;
+                int index = 0;
+                foreach (ArtAmlCustomersDetailsView item in data.data)
+                {
+                    cw.WriteRecord(item);
+                    index++; // Increment the index for each item
+
+                    if (index % 100 == 0 || index == total) // Also check progress at the last item
+                    {
+                        progress = (int)(index / (float)total * 100);
+                        _exportHub.Clients.Clients(connections.GetConnections(user))
+                                       .SendAsync("updateExportProgress", progress);
+                    }
+                }
+
             }
 
-            var bytes = stream.ToArray();
-        }
 
+            string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
+            string FileName = 1 + "." + "test" + "_" + Date + ".csv";
+
+
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            // Create a file path within the directory using the provided file name
+            string filePath = Path.Combine(folderPath, FileName);
+
+            using FileStream fstream = new(filePath, FileMode.Create);
+            stream.CopyTo(fstream);
+
+            // Write the byte array to the CSV file
+
+
+
+        }
     }
 }

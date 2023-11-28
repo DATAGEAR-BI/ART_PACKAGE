@@ -232,6 +232,48 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                    {nameof(ExportTaskDto.Month).ToLower(),Enum.GetNames(typeof(MonthsOfYear)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].SkipList;
+                KendoDataDesc<ExportTask> d = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+
+                var res = new
+                {
+                    columns = d.Columns,
+                    containsActions = true,
+                    actions = new List<dynamic>
+                {
+                    new
+                    {
+                        text = "Edit",
+                        action = "editTask",
+                        icon = "k-i-edit"
+                    },
+                    new
+                    {
+                        text = "Delete",
+                        action = "deleteTask",
+                        icon = "k-i-trash"
+                    },
+                    new
+                    {
+                        text = "Run Now",
+                        action = "runNow",
+                        icon = "k-i-video-external"
+                    }
+                },
+                    toolbar = new List<dynamic>
+                {
+                    new
+                    {
+                        text = "Add New Task",
+                        id = "addTask"
+                    }
+                }
+                };
+
+                return new ContentResult
+                {
+                    ContentType = "application/json",
+                    Content = JsonConvert.SerializeObject(res)
+                };
             }
 
             KendoDataDesc<ExportTask> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
@@ -259,38 +301,9 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                     NextExceutionDate = GetExecutionDateTimes(x.Name).nextDate,
 
                 }),
-                columns = Data.Columns,
+
                 total = Data.Total,
-                containsActions = true,
-                actions = new List<dynamic>
-                {
-                    new
-                    {
-                        text = "Edit",
-                        action = "editTask",
-                        icon = "k-i-edit"
-                    },
-                    new
-                    {
-                        text = "Delete",
-                        action = "deleteTask",
-                        icon = "k-i-trash"
-                    },
-                    new
-                    {
-                        text = "Run Now",
-                        action = "runNow",
-                        icon = "k-i-video-external"
-                    }
-                },
-                toolbar = new List<dynamic>
-                {
-                    new
-                    {
-                        text = "Add New Task",
-                        id = "addTask"
-                    }
-                }
+
 
             };
 

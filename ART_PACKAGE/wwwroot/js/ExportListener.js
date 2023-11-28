@@ -89,6 +89,15 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
         exportConnection.invoke("GetMissedFiles", reqId, missedFiles);
     }
 });
+
+exportConnection.on("updateExportProgress", (progress) => {
+    console.log(progress);
+})
+
+
+
+
+
 exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
     console.log(file);
     var recivedFiles = JSON.parse(localStorage.getItem(guid));
