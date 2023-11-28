@@ -43,6 +43,8 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             return View();
         }
 
+        
+
 
         [HttpGet]
         public IActionResult GetMonthes()
@@ -139,6 +141,48 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 ReportName = task.ReportName
             };
             return View(taskDto);
+        }
+        [HttpPut("[controller]/[action]/{taskId}")]
+        public IActionResult EditTask(int taskId,[FromBody] ExportTaskDto task)
+        {
+            ExportTask? oldTask = _context.ExportsTasks.Include(x => x.Mails).FirstOrDefault(x => x.Id == taskId);
+
+            if (oldTask is null)
+                return BadRequest();
+
+            
+            oldTask.Name = task.Name + "##" + Guid.NewGuid().ToString();
+            oldTask.ReportName = task.ReportName;
+            oldTask.ParametersJson = task.Parameters;
+            oldTask.IsMailed = task.IsMailed;
+            oldTask.Mails = task.Mails.Select(x => new TaskMails { Mail = x }).ToList();
+            oldTask.Month = task.Month;
+            oldTask.DayOfWeek = task.DayOfWeek;
+            oldTask.Day = task.Day;
+            oldTask.Hour = task.Hour;
+            oldTask.Minute = task.Minute;
+            oldTask.Description = task.Description;
+            oldTask.IsSavedOnServer = task.IsSavedOnServer;
+            oldTask.Period = task.Period;
+            oldTask.MailContent = task.MailContent;
+            oldTask.Path = task.Path;
+            oldTask.UserId = _userManager.GetUserId(User);
+
+
+            
+            int res = _context.SaveChanges();
+            if (res <= 0)
+                return BadRequest();
+
+
+
+
+            Func<string> period = _taskPerformer.GetPeriod(oldTask);
+
+            jobsManger.AddOrUpdate(oldTask.Name, () => _taskPerformer.PerformTask(oldTask), period);
+
+            return Ok();
+
         }
 
 
@@ -367,4 +411,5 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         }
 
     }
+
 }
