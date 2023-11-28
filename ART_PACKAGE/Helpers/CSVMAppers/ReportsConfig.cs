@@ -220,12 +220,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"}},
                             {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
                             {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
-                            {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                            {"CaseStatus",new DisplayNameAndFormat { DisplayName ="ECM Case Status"}},
                             {"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
                             {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                             {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
                             {"FtiReference",new DisplayNameAndFormat { DisplayName ="Fti Reference"}},
-                            {"EventStatus",new DisplayNameAndFormat { DisplayName ="Event Status"}},
+                            {"EventStatus",new DisplayNameAndFormat { DisplayName ="FTI Event Status"}},
                             {"EventCreationDate",new DisplayNameAndFormat { DisplayName ="Event Creation Date"}},
                             {"MasterAssignedTo",new DisplayNameAndFormat { DisplayName ="Master Assigned To"}},
                             {"EventSteps",new DisplayNameAndFormat { DisplayName ="Event Steps"}},
@@ -251,6 +251,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"LastActionTakenBy",new DisplayNameAndFormat { DisplayName ="Last Action Taken By"}},
                             {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference"}},
                             {"FtiFirstLineParty",new DisplayNameAndFormat { DisplayName ="Fti First Line Party"}},
+                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
 
                     },
                            SkipList =  new List<string>()
