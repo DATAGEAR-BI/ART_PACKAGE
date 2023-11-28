@@ -44,10 +44,16 @@ body {
 }
 
 .custom-modal-width {
-    max-width: 90%;
+    width: 90% !important;
 }
 
 
 .custom-link:hover {
     cursor: pointer;
+}
+
+#end-to-endGrid {
+    max-height: 333px !important;
+    max-width: 2000px !important;
+    overflow: scroll !important
 }

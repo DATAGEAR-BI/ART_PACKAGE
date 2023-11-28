@@ -18,7 +18,7 @@ export const Templates = {
         return TaskPeriod[dataItem.Period]
     },
 
-    hyperlink: (dataItem , column) => {
-        return `<a class="custom-link">${dataItem[column]}</a>`
+    hyperlink: (dataItem, column) => {
+        return dataItem[column] ? `<button class="custom-link" role="gridcell">${dataItem[column]}</button>` : "";
     }
 }
