@@ -15,7 +15,7 @@ export const Actions = {
         var grid = $("#grid").data("kendoGrid");
         var data = grid.dataItem(tr);
         console.log(data);
-        //window.location = `/report/showreport/${data.Id}`;
+        window.location = `/Tasks/EditTask/${data.Id}`;
     },
     runNow: async (e) => {
         e.preventDefault();

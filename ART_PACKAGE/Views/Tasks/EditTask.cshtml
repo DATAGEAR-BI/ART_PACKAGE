@@ -1,7 +1,10 @@
-﻿@using ART_PACKAGE.Helpers.HTMLHelpers;
+﻿@model ART_PACKAGE.Helpers.ExportTasks.ExportTaskDto
+@using ART_PACKAGE.Helpers.HTMLHelpers;
 @using Data.Data.ExportSchedular;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 <style>
     .disabledDiv {
@@ -135,6 +138,7 @@
 </form>
 
 @section scripts {
+    <script>var Model = JSON.parse('@Json.Serialize(Model)')</script>
     <script src="~/lib/smartcomponents/source/modules/smart.multicomboinput.js"></script>
     <script src="~/lib/smartcomponents/source/modules/smart.timepicker.js"></script>
     <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
