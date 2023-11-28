@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using System.Text;
 
 namespace ART_PACKAGE.Controllers.AMLANALYSIS
 {
@@ -27,8 +28,10 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
         private readonly AmlAnalysisUpdateTableIndecator _updateInd;
         private readonly UsersConnectionIds connections;
         private readonly IPdfService _pdfSrv;
+        private readonly HttpClient _httpClient;
+        private readonly string _sasUrl;
 
-        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd, IPdfService _pdfSrv, UsersConnectionIds connections = null)
+        public AML_ANALYSISController(ILogger<AML_ANALYSISController> logger, IConfiguration config, IAmlAnalysis amlSrv, IHubContext<AmlAnalysisHub> amlHub, AmlAnalysisContext context, AmlAnalysisUpdateTableIndecator updateInd, IPdfService _pdfSrv, HttpClient httpClient, UsersConnectionIds connections = null)
         {
             this.logger = logger;
             _config = config;
@@ -38,6 +41,8 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
             _updateInd = updateInd;
             this.connections = connections;
             this._pdfSrv = _pdfSrv;
+            _httpClient = httpClient;
+            _sasUrl = _config.GetValue<string>("SasUrl") + "/SASComplianceSolutionsMid";
         }
 
 
@@ -150,7 +155,7 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
             {
                 skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
                 displayNameAndFormat = new Dictionary<string, DisplayNameAndFormat> {
-                    {nameof(ArtAmlAnalysisViewTb.Prediction) , new DisplayNameAndFormat { DisplayName = "Pred %"  , Template = "amlanalysisPred" } },
+                    {nameof(ArtAmlAnalysisViewTb.Prediction) , new DisplayNameAndFormat { DisplayName = "Pred %"  , Template = "amlanalysisPred" , Filter="AmlPred" } },
                 };
                 dropdown = new Dictionary<string, List<dynamic>>{
                     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
@@ -296,30 +301,72 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
             return Ok();
         }
 
-        public ContentResult GetQueues()
+        public async Task<IActionResult> GetQueues()
         {
-            List<string> result = new() { "TestQ", "TestQ1", "TestQ2" };
-            return Content(JsonConvert.SerializeObject(result), "application/json");
+            string login = "sasinst";
+            string password = "P@ssw0rd";
+
+            string basicAuth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{login}:{password}"));
+
+            try
+            {
+                // Make the HTTP request using the injected HttpClient
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", basicAuth);
+
+                HttpResponseMessage response = await _httpClient.GetAsync(_sasUrl + "/rest/queues");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Handle the error response
+                    return BadRequest("Error");
+                }
+
+                // Process the successful response
+                string data = await response.Content.ReadAsStringAsync();
+                return Ok(JsonConvert.DeserializeObject<Root>(data).Items.Select(x => x.QueueCode));
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                return BadRequest("Error");
+            }
         }
-        public ContentResult GetQueuesUsers([FromBody] string Queue)
+        [HttpGet("[controller]/[action]/{Queue?}")]
+        public async Task<IActionResult> GetQueuesUsers(string? Queue)
         {
-            List<string> Qs = new() { "TestQ", "TestQ1", "TestQ2" };
-            Dictionary<string, List<string>> usersDict = new()
+            string login = "sasinst";
+            string password = "P@ssw0rd";
+            bool allUsers = string.IsNullOrEmpty(Queue);
+            string apiPath = allUsers ? "/rest/users" : "/rest/users?capabilities=FCF.SERVICES.ACCESS.ALL";
+            string basicAuth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{login}:{password}"));
+
+            try
             {
-                { "TestQ" , new List<string> { "TestU1" , "TestU2" } },
-                { "TestQ1" , new List<string> { "TestU3" , "TestU4" } },
-                { "TestQ2" , new List<string> { "TestU5"  } },
-            };
-            if (string.IsNullOrEmpty(Queue))
-            {
-                IEnumerable<string> result = usersDict.Values.SelectMany(x => x);
-                return Content(JsonConvert.SerializeObject(result), "application/json");
+                // Make the HTTP request using the injected HttpClient
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", basicAuth);
+
+                HttpResponseMessage response = await _httpClient.GetAsync(_sasUrl + apiPath);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Handle the error response
+                    return BadRequest();
+                }
+
+                // Process the successful response
+                string data = await response.Content.ReadAsStringAsync();
+                UserQueueRoot? res = JsonConvert.DeserializeObject<UserQueueRoot>(data);
+                List<string> users = allUsers
+                    ? res.items.Select(x => x.userId).ToList()
+                    : res.items.Where(x => x.queues is not null && x.queues.Contains(Queue)).Select(x => x.userId).ToList();
+                return Ok(users);
             }
-            else
+            catch (Exception ex)
             {
-                List<string> result = usersDict[Queue];
-                return Content(JsonConvert.SerializeObject(result), "application/json");
+                // Handle other exceptions
+                return BadRequest();
             }
+
         }
         [HttpPost("[controller]/[action]")]
         public ContentResult GetRulesData([FromBody] KendoRequest req)

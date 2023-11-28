@@ -8,4 +8,5 @@
         public string RouteToUser { get; set; }
         public AmlAnalysisAction Action { get; set; }
     }
+
 }

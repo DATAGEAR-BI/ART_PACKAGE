@@ -1,5 +1,5 @@
 ﻿
-import { invokeExport, start, exportConnection } from './ExportListener.js'
+import { invokeExport, start, exportConnection } from '../ExportListener.js'
 var chngeRowColor = (dataItem, row, colormapinng) => {
 
     Object.keys(colormapinng).forEach(key => {
@@ -423,12 +423,12 @@ export const Handlers = {
             });
             $('#queueSelect').selectpicker('refresh');
             var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-                method: "POST",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
-                },
-                body: JSON.stringify("")
+                }
+                
             })).json();
 
             [...queueUsers].forEach(x => {
@@ -447,13 +447,12 @@ export const Handlers = {
 
             queueSelect.onchange = async (e) => {
 
-                var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-                    method: "POST",
+                var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers/" + e.target.value, {
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
-                    },
-                    body: JSON.stringify(e.target.value)
+                    },      
                 })).json();
                 users.innerHTML = "";
                 var opt = document.createElement("option");

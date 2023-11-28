@@ -5,7 +5,7 @@ var basicAuth = btoa(`${login}:${password}`); // Base64 encode the credentials
 
 var res = fetch("https://sas-webt-test/SASComplianceSolutionsMid/rest/queues", {
     headers: new Headers({
-        "Authorization": `Basic ${ login }:${ password }}`,
+        "Authorization": `Basic ${basicAuth}`,
         credentials: 'include',
 
 

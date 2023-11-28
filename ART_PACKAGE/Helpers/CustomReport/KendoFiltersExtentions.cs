@@ -569,6 +569,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     isNullable = isnullabe,
                     type = Type,
                     template = propDisplayExists ? DisplayNamesAndFormat[name].Template : null,
+                    filter = propDisplayExists ? DisplayNamesAndFormat[name].Filter : null,
                     AggType = agg,
                     AggTitle = aggText,
                 };

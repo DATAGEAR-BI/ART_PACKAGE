@@ -8,5 +8,6 @@
         public GridAggregateType AggType { get; set; }
         public string? AggText { get; set; }
         public string Template { get; set; }
+        public string Filter { get; set; }
     }
 }

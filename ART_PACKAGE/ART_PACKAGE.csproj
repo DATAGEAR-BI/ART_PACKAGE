@@ -47,9 +47,14 @@
 		<Compile Include="Helpers\Aml_Analysis\CloseRequest.cs" />
 		<Compile Include="Helpers\Aml_Analysis\EditRuleDto.cs" />
 		<Compile Include="Helpers\Aml_Analysis\IAmlAnalysis.cs" />
+		<Compile Include="Helpers\Aml_Analysis\Link.cs" />
 		<Compile Include="Helpers\Aml_Analysis\QueryBuilderFilter.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueueItem.cs" />
+		<Compile Include="Helpers\Aml_Analysis\QueueUser.cs" />
+		<Compile Include="Helpers\Aml_Analysis\Root.cs" />
 		<Compile Include="Helpers\Aml_Analysis\RouteRequest.cs" />
 		<Compile Include="Helpers\Aml_Analysis\TestRulesResult.cs" />
+		<Compile Include="Helpers\Aml_Analysis\UserQueueRoot.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
