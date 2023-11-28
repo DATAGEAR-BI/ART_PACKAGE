@@ -51,7 +51,6 @@ class Grid extends HTMLElement {
 
     //                </div>
     //            </div>
-
     //            <div class="modal-footer">
     //                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
     //            </div>
@@ -348,6 +347,7 @@ class Grid extends HTMLElement {
 
 
             var template = column.template;
+           
             var isCollection = column.isCollection;
             var hasTemplate = template && template != ""
 
@@ -404,7 +404,7 @@ class Grid extends HTMLElement {
                 template: isCollection
                     ? (di) =>
                         createCollection(di[column.name], column.CollectionPropertyName)
-                    : hasTemplate ? Templates[template] : null,
+                    : hasTemplate ? (di) => Templates[template](di, column.name) : null,
             };
         });
 

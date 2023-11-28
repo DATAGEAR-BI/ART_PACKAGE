@@ -16,7 +16,9 @@ export const Templates = {
 
     TaskPeriodTemplate: (dataItem) => {
         return TaskPeriod[dataItem.Period]
+    },
+
+    hyperlink: (dataItem , column) => {
+        return `<a class="custom-link">${dataItem[column]}</a>`
     }
-
-
 }

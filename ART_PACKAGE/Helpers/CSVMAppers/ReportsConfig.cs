@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"MoneyLaunderingRiskScore",new GridColumnConfiguration { DisplayName ="Money Laundering RiskScore"}},
                     {"AlertTypeCd",new GridColumnConfiguration { DisplayName ="Alert Type"}},
                     {"AlertSubCat",new GridColumnConfiguration { DisplayName ="Alert Sub-Category"}},
-                    {"AlertStatus",new GridColumnConfiguration { DisplayName ="Alert Status"}},
+                    {"CustomerName",new GridColumnConfiguration { DisplayName ="Customer Name" , Template = "hyperlink"}},
                     {"AlertDescription",new GridColumnConfiguration { DisplayName ="Alert Description"}},
                     {"ScenarioName",new GridColumnConfiguration { DisplayName ="Scenario Name"}},
                     {"ReportCloseRsn",new GridColumnConfiguration { DisplayName ="Report Close Reason"}},
