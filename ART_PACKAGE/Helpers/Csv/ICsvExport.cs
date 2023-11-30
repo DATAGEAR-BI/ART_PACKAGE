@@ -5,6 +5,7 @@ namespace ART_PACKAGE.Helpers.Csv
 {
     public interface ICsvExport
     {
+        public event Action<float> OnProgressChanged;
 
         public Task ExportMissed(string reqId, string UserName, List<int> missedFiles);
         public Task Export<TModel, TController, TColumn>(DbContext _db, string userName, ExportDto<object> obj, string idColumn) where TModel : class;
@@ -12,6 +13,8 @@ namespace ART_PACKAGE.Helpers.Csv
         public Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true);
         public Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true);
         public void ClearExportFolder(string reqId);
+
+        public bool ExportData<TModel>(IEnumerable<TModel> data, int total, string folderPath, string fileName);
 
 
         public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, string parameterJson) where TModel : class;

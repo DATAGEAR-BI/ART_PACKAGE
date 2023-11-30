@@ -8,5 +8,7 @@ namespace Data.Services
         where TModel : class
     {
         public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null);
+
+        public bool BulkInsert(IEnumerable<TModel> data);
     }
 }

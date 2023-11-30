@@ -5,7 +5,6 @@ using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Data.Data.SASAml;
-using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -26,6 +25,7 @@ namespace ART_PACKAGE.Controllers
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
+
         public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
         {
 
@@ -34,6 +34,7 @@ namespace ART_PACKAGE.Controllers
             _exportHub = exportHub;
             this.connections = connections;
             _webHostEnvironment = webHostEnvironment;
+
         }
         public IActionResult Index()
         {
@@ -246,10 +247,12 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> TestExportWithHangfire([FromBody] GridRequest req)
         {
-            string folderGuid = Guid.NewGuid().ToString();
-            _ = BackgroundJob.Enqueue(() => ExportCsv(req, User.Identity.Name, folderGuid));
-            return Ok(folderGuid);
+            //string folderGuid = Guid.NewGuid().ToString();
+            //_ = BackgroundJob.Enqueue(() => ExportCsv(req, User.Identity.Name, folderGuid));
+            string folderGuid = _gridConstructor.ExportGridToCsv(req);
+            return Ok(new { folderGuid });
         }
+
 
 
         public void ExportCsv(GridRequest req, string user, string folderGuid)
@@ -273,18 +276,24 @@ namespace ART_PACKAGE.Controllers
             foreach (ArtAmlCustomersDetailsView item in data.data)
             {
                 cw.WriteRecord(item);
+                cw.NextRecord();
                 index++; // Increment the index for each item
 
                 if (index % 100 == 0 || index == total) // Also check progress at the last item
                 {
                     progress = (float)(index / (float)total * 100);
-                    _exportHub.Clients.Clients(connections.GetConnections(user))
+                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                    .SendAsync("updateExportProgress", progress);
                 }
             }
 
 
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
 
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
 
             string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
             string FileName = 1 + "." + "test" + "_" + Date + ".csv";
@@ -296,14 +305,8 @@ namespace ART_PACKAGE.Controllers
 
             // Create a file path within the directory using the provided file name
             string filePath = Path.Combine(folderPath, FileName);
-
-            using FileStream fstream = new(filePath, FileMode.Create);
-            stream.CopyTo(fstream);
-
+            System.IO.File.WriteAllBytes(filePath, stream.ToArray());
             // Write the byte array to the CSV file
-
-
-
         }
     }
 }

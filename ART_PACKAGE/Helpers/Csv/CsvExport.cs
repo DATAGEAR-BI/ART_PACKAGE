@@ -101,12 +101,18 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ILogger<ICsvExport> _logger;
+        public event Action<float> OnProgressChanged = (p) =>
+        {
+            Console.WriteLine("test :" + p);
+        };
 
-        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment)
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment, ILogger<ICsvExport> logger)
         {
             _exportHub = exportHub;
             this.connections = connections;
             _webHostEnvironment = webHostEnvironment;
+            _logger = logger;
         }
         public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
         {
@@ -428,6 +434,65 @@ namespace ART_PACKAGE.Helpers.Csv
             //}
 
             //return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
+        }
+
+        public bool ExportData<TModel>(IEnumerable<TModel> data, int total, string folderPath, string fileName)
+        {
+            this.OnProgressChanged += OnProgressChanged;
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+
+            cw.WriteHeader<TModel>();
+            cw.NextRecord();
+            float progress = 0;
+            int index = 0;
+            foreach (TModel item in data)
+            {
+                cw.WriteRecord(item);
+                cw.NextRecord();
+                index++; // Increment the index for each item
+
+                if (index % 100 == 0 || index == total) // Also check progress at the last item
+                {
+                    progress = (float)(index / (float)total * 100);
+                    OnProgressChanged?.Invoke(progress);
+                    //_exportHub.Clients.Clients(connections.GetConnections(user))
+                    //               .SendAsync("updateExportProgress", progress);
+                }
+            }
+
+
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
+
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
+
+
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, fileName);
+            try
+            {
+                File.WriteAllBytes(filePath, stream.ToArray());
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                return false;
+
+            }
+
         }
     }
 }

@@ -23,28 +23,26 @@ namespace ART_PACKAGE.Controllers
         [HttpGet]
         public async Task<IActionResult> DownloadCsvFiles(/*string folder*/)
         {
-            string folderGuid = "7674e730-ab98-43b7-8a65-0dbe97043123"; // or get from the parameter
+            string folderGuid = "22fe5e2f-ef9b-428d-9756-90390ccf6298"; // or get from the parameter
             string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "CSV", folderGuid);
             MemoryStream outputStream = new();
 
             using (ZipArchive archive = new(outputStream, ZipArchiveMode.Create, true))
             {
-                // Get all files in the directory
                 string[] files = Directory.GetFiles(folderPath);
                 foreach (string file in files)
                 {
-                    FileInfo fileInfo = new(file);
-                    ZipArchiveEntry entry = archive.CreateEntry(fileInfo.Name, CompressionLevel.Optimal);
 
-                    using FileStream fileStream = fileInfo.OpenRead();
-                    using Stream entryStream = entry.Open();
-                    await fileStream.CopyToAsync(entryStream);
+                    _ = archive.CreateEntryFromFile(file, Path.GetFileName(file));
+
+
                 }
             }
 
             outputStream.Position = 0; // Reset the position to the beginning of the stream
             return File(outputStream, "application/zip", "CSVFiles.zip");
         }
+
 
 
 

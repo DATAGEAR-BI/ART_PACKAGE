@@ -13,9 +13,13 @@
 
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Compile Remove="wwwroot\CSV\817fe11e-db76-4dcc-8694-6b2afa600002\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="wwwroot\CSV\817fe11e-db76-4dcc-8694-6b2afa600002\**" />
 		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="wwwroot\CSV\817fe11e-db76-4dcc-8694-6b2afa600002\**" />
 		<None Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="wwwroot\CSV\817fe11e-db76-4dcc-8694-6b2afa600002\**" />
 	</ItemGroup>
 
 	<ItemGroup>

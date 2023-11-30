@@ -10,5 +10,8 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridIntializationConfiguration IntializeGrid(string controller, bool containsActions = false, bool selectable = false, List<GridButton>? toolbar = null, List<GridButton>? action = null);
 
+
+        public string ExportGridToCsv(GridRequest gridRequest);
+
     }
 }
