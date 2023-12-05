@@ -1261,12 +1261,9 @@ export const CellDbHandlers = {
         CloseReason: async (dataItem) => {
             kendo.ui.progress($('#grid'), true);
             var CloseReasonInfo = document.getElementById("closeReasonInfo");
-            $('#CloseReasonInfo').empty();
             //var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${encodeURIComponent(dataItem.EcmReference)}`)).json();
-            var CommentsDiv = document.createElement("div");
-            CommentsDiv.innerText = "Other Commment";
-            CommentsDiv.className = "text-center";
-            CloseReasonInfo.appendChild(CommentsDiv);
+            CloseReasonInfo.innerText = "Other Commment";
+            CloseReasonInfo.className = "text-center";
             $("#closeReasonModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },

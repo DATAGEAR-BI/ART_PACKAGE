@@ -603,7 +603,6 @@ function generateGrid() {
             if (handler) {
               handler(item);
             }
-            console.log("Hello");
         }
 
         // Check if the clicked cell is from a specific column
