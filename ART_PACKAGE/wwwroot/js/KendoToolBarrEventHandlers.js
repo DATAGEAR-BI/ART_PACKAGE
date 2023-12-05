@@ -1256,6 +1256,24 @@ export const changeRowColorHandlers = {
         chngeRowColor(dataItem, row, colorMapping);
     }
 }
+export const CellDbHandlers = {
+    DGAMLAlertDetails: {
+        CloseReason: async (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+            var CloseReasonInfo = document.getElementById("closeReasonInfo");
+            $('#CloseReasonInfo').empty();
+            //var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${encodeURIComponent(dataItem.EcmReference)}`)).json();
+            var CommentsDiv = document.createElement("div");
+            CommentsDiv.innerText = "Other Commment";
+            CommentsDiv.className = "text-center";
+            CloseReasonInfo.appendChild(CommentsDiv);
+            $("#closeReasonModal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        },
+
+    }
+}
+
 async function Select(idcolumn) {
 
     var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);

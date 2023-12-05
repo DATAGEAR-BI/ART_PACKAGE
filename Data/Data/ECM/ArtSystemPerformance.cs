@@ -24,6 +24,7 @@ namespace Data.Data.ECM
         public string? ClientName { get; set; }
         public string? IdentityNum { get; set; }
         public string? LockedBy { get; set; }
+        public string? LastActionUser { get; set; }
         public DateTime? EcmLastStatusDate { get; set; }
         public string? HitsCount { get; set; }
         public decimal? DurationsInSeconds { get; set; }

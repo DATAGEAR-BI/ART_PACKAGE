@@ -1866,7 +1866,10 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(100)
                     .HasColumnName("CASE_DESC")
                     .UseCollation("Arabic_100_CI_AI");
-
+                entity.Property(e => e.LastActionUser)
+                   .HasMaxLength(60)
+                   .HasColumnName("last_action_user".ToUpper())
+                   .UseCollation("Arabic_100_CI_AI");
                 entity.Property(e => e.CaseId)
                     .HasMaxLength(64)
                     .HasColumnName("CASE_ID")

@@ -100,6 +100,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      { "CreatedBy", new DisplayNameAndFormat { DisplayName = "Created By"}},
                      { "NumberOfComments", new DisplayNameAndFormat { DisplayName = "Number Of Comments"}},
                      { "NumberOfAttachments", new DisplayNameAndFormat { DisplayName = "Number Of Attachments"}},
+                     { "LastActionUser", new DisplayNameAndFormat { DisplayName = "Last Action User"}},
             },
                 SkipList = new List<string>
             {

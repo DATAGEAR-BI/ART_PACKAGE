@@ -1,6 +1,6 @@
 ﻿import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
 import { URLS } from "./URLConsts.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers, CellDbHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 
 const handleError = (error) => {
@@ -531,11 +531,11 @@ function generateGrid() {
 
                 }
             });
-            this.tbody.find("tr").dblclick(function (e) {
-                var dataItem = grid.dataItem(this);
-                var dbclickhandler = dbClickHandlers[handlerkey];
-                dbclickhandler(dataItem).then(console.log("done"));
-            });
+            //this.tbody.find("tr").dblclick(function (e) {
+            //  var dataItem = grid.dataItem(this);
+            // var dbclickhandler = dbClickHandlers[handlerkey];
+            //dbclickhandler(dataItem).then(console.log("done"));
+            //});
         },
         ...(isHierarchy == "true" && {
             detailInit: (e) => {
@@ -590,6 +590,30 @@ function generateGrid() {
 
     });
 
+    grid.tbody.on("dblclick", "td", function (e) {
+
+
+        // Get the current item (row data)
+        var item = grid.dataItem($(e.currentTarget).closest("tr"));
+        // Get the field name associated with the clicked cell
+        var cellIndex = $(e.target).index(); // Get the index of the clicked cell
+        var column = grid.columns[cellIndex];
+        if (column != null && column.field.toLowerCase() == "closereason" && item[column.field].toLowerCase() == 'other') {
+            var handler = CellDbHandlers[handlerkey][column.field];
+            if (handler) {
+              handler(item);
+            }
+            console.log("Hello");
+        }
+
+        // Check if the clicked cell is from a specific column
+        //if (fieldName === "yourColumnName") {
+        //    // Perform action specific to the column
+        //    console.log("Double-clicked on column", fieldName, "of", item);
+
+        //    // Example action: display a message, open a modal, etc.
+        //}
+    });
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
@@ -1009,3 +1033,5 @@ function generateModel(response) {
 
     return model;
 }
+
+
