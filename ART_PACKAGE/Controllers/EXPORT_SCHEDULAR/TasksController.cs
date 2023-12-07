@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             return View();
         }
 
-        
+
 
 
         [HttpGet]
@@ -143,14 +143,14 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             return View(taskDto);
         }
         [HttpPut("[controller]/[action]/{taskId}")]
-        public IActionResult EditTask(int taskId,[FromBody] ExportTaskDto task)
+        public IActionResult EditTask(int taskId, [FromBody] ExportTaskDto task)
         {
             ExportTask? oldTask = _context.ExportsTasks.Include(x => x.Mails).FirstOrDefault(x => x.Id == taskId);
 
             if (oldTask is null)
                 return BadRequest();
 
-            
+
             oldTask.Name = task.Name + "##" + Guid.NewGuid().ToString();
             oldTask.ReportName = task.ReportName;
             oldTask.ParametersJson = task.Parameters;
@@ -169,7 +169,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             oldTask.UserId = _userManager.GetUserId(User);
 
 
-            
+
             int res = _context.SaveChanges();
             if (res <= 0)
                 return BadRequest();

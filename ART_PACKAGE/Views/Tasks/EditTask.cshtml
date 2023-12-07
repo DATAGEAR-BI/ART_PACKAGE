@@ -138,12 +138,12 @@
 </form>
 
 @section scripts {
-    <script>var Model = JSON.parse('@Json.Serialize(Model)')</script>
+    <script>var Model = JSON.parse('@Json.Serialize(Model)');console.log(Model)</script>
     <script src="~/lib/smartcomponents/source/modules/smart.multicomboinput.js"></script>
     <script src="~/lib/smartcomponents/source/modules/smart.timepicker.js"></script>
     <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
     <script src="~/lib/smartcomponents/source/modules/smart.calendar.js"></script>
-    <script src="~/lib/emailinput/emails-input.js"></script>
+   @* <script src="~/lib/emailinput/emails-input.js"></script>*@
     <script src="~/js/components/switch/switch.js"></script>
     <script src="~/js/components/multiselect/select.js"></script>
     <script src="~/js/components/textinput/textinput.js"></script>

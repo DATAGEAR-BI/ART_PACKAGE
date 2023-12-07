@@ -37,7 +37,15 @@ var timePicker = document.querySelector("#timepicker");
 var mailSwitch = document.getElementById("emailSwitch");
 var serverSwitch = document.getElementById("serverSwitch");
 const querybuilder = document.querySelector('#querybuilder');
+init();
+function init() {
+    console.log("init")
+    taskNameInput.intialize(Model.name.split("##")[0]);
+    //reportsDropDown.intialize([Model.reportName]);
+    taskDescInput.intialize([Model.description]);
+    //querybuilder.updateFilters(Model)
 
+};
 Smart('#querybuilder', class {
     get properties() {
         return {
@@ -70,7 +78,13 @@ Smart('#timepicker', class {
 
 
 
-
+function prePareDataToSelectField(options,selectedOption) {
+    options.forEach((option) => {
+        if (option.value===selectedOption) {
+            option
+        }
+    })
+}
 var opt = document.createElement('option');
 opt.text = "Alert Details";
 opt.value = "AlertDetails";
@@ -119,7 +133,7 @@ var mailsDiv = document.getElementById("mailsDiv");
 
 
 
-var form = document.getElementById("AddTaskForm");
+var form = document.getElementById("EditTaskForm");
 form.onsubmit = async (e) => {
     console.log("test");
     e.preventDefault();

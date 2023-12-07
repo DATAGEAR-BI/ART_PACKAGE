@@ -52,6 +52,9 @@
             return new materialstyle.SelectField(s)
         })
     }
+    select(value) {
+
+    }
 
 
     reset() {
