@@ -19,11 +19,11 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        //[HttpGet("[controller]/[action]/{folder}")]
-        [HttpGet]
-        public async Task<IActionResult> DownloadCsvFiles(/*string folder*/)
+        [HttpGet("[controller]/[action]/{folder}")]
+        //[HttpGet]
+        public async Task<IActionResult> DownloadCsvFiles(string folder)
         {
-            string folderGuid = "22fe5e2f-ef9b-428d-9756-90390ccf6298"; // or get from the parameter
+            string folderGuid = folder; // or get from the parameter
             string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "CSV", folderGuid);
             MemoryStream outputStream = new();
 
@@ -40,7 +40,7 @@ namespace ART_PACKAGE.Controllers
             }
 
             outputStream.Position = 0; // Reset the position to the beginning of the stream
-            return File(outputStream, "application/zip", "CSVFiles.zip");
+            return File(outputStream, "application/zip", $"{folder}.zip");
         }
 
 

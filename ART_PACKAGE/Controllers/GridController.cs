@@ -1,71 +1,21 @@
-﻿using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.Grid;
-using ART_PACKAGE.Helpers.Pdf;
-using ART_PACKAGE.Hubs;
-using CsvHelper;
-using CsvHelper.Configuration;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System.Globalization;
-using System.Text;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class GridController : Controller
+    public class GridController : BaseReportController<SasAmlContext, ArtAmlCustomersDetailsView>
     {
-
-        private readonly IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> _gridConstructor;
-        private readonly IPdfService _pdfSrv;
-        private readonly IHubContext<ExportHub> _exportHub;
-        private readonly UsersConnectionIds connections;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-
-        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
+        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor) : base(gridConstructor)
         {
-
-            _gridConstructor = gridConstructor;
-            _pdfSrv = pdfSrv;
-            _exportHub = exportHub;
-            this.connections = connections;
-            _webHostEnvironment = webHostEnvironment;
-
         }
-        public IActionResult Index()
+
+        public override IActionResult Index()
         {
             return View();
-        }
-        public async Task<IActionResult> GetData([FromBody] GridRequest request)
-        {
-
-            if (request.IsIntialize)
-            {
-
-                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(GetType().Name, selectable: true, toolbar: new List<GridButton> { new GridButton { action = "test", text = "TEST" } });
-                return new ContentResult
-                {
-                    ContentType = "application/json",
-                    Content = JsonConvert.SerializeObject(res)
-                };
-            }
-            else
-            {
-
-                GridResult<ArtAmlCustomersDetailsView> res = _gridConstructor.Repo.GetGridData(request, new SortOption { field = nameof(ArtAmlCustomersDetailsView.CustomerNumber), dir = "asc" });
-                return new ContentResult
-                {
-                    ContentType = "application/json",
-                    Content = JsonConvert.SerializeObject(res)
-                };
-            }
-
-
-
         }
 
 
@@ -243,70 +193,9 @@ namespace ART_PACKAGE.Controllers
             //                                        , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(bytes, "application/pdf");
         }
-        [HttpPost]
-
-        public async Task<IActionResult> TestExportWithHangfire([FromBody] GridRequest req)
-        {
-            //string folderGuid = Guid.NewGuid().ToString();
-            //_ = BackgroundJob.Enqueue(() => ExportCsv(req, User.Identity.Name, folderGuid));
-            string folderGuid = _gridConstructor.ExportGridToCsv(req);
-            return Ok(new { folderGuid });
-        }
 
 
 
-        public void ExportCsv(GridRequest req, string user, string folderGuid)
-        {
-            GridResult<ArtAmlCustomersDetailsView> data = _gridConstructor.Repo.GetGridData(req);
 
-            CsvConfiguration config = new(CultureInfo.CurrentCulture)
-            {
-                IgnoreReferences = true,
-            };
-            using MemoryStream stream = new();
-            using StreamWriter sw = new(stream, new UTF8Encoding(true));
-            using CsvWriter cw = new(sw, config);
-
-
-            cw.WriteHeader<ArtAmlCustomersDetailsView>();
-            cw.NextRecord();
-            float progress = 0;
-            int total = data.total;
-            int index = 0;
-            foreach (ArtAmlCustomersDetailsView item in data.data)
-            {
-                cw.WriteRecord(item);
-                cw.NextRecord();
-                index++; // Increment the index for each item
-
-                if (index % 100 == 0 || index == total) // Also check progress at the last item
-                {
-                    progress = (float)(index / (float)total * 100);
-                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
-                                   .SendAsync("updateExportProgress", progress);
-                }
-            }
-
-
-            cw.Flush();
-            sw.Flush();
-            stream.Flush();
-
-            // Reset the position of the MemoryStream to the beginning
-            stream.Position = 0;
-
-            string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
-            string FileName = 1 + "." + "test" + "_" + Date + ".csv";
-
-
-            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-            if (!Directory.Exists(folderPath))
-                _ = Directory.CreateDirectory(folderPath);
-
-            // Create a file path within the directory using the provided file name
-            string filePath = Path.Combine(folderPath, FileName);
-            System.IO.File.WriteAllBytes(filePath, stream.ToArray());
-            // Write the byte array to the CSV file
-        }
     }
 }

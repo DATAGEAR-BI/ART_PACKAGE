@@ -7,6 +7,8 @@ import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
+
+
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -32,36 +34,17 @@ class Grid extends HTMLElement {
     }
     customtToolBarBtns = [];
     filtersModal = document.createElement("div");
-
-    //<div class="modal fade" id="myModalWithForms" tabindex="-1" aria-labelledby="myModalWithFormsLabel" aria-hidden="true">
-    //    <div class="modal-dialog modal-lg">
-    //        <div class="modal-content">
-    //            <div class="modal-header">
-    //                <h4 class="modal-title" id="myModalWithFormsLabel">Modal Heading</h4>
-    //                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    //            </div>
-
-    //            <div class="modal-body">
-    //                <div class="row">
-
-
-
-
-
-
-    //                </div>
-    //            </div>
-    //            <div class="modal-footer">
-    //                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-    //            </div>
-    //        </div>
-    //    </div>
-    //</div>
-
+    csvExportId = "";
+    isExporting = false;
+    isDownloaded = true;
 
     constructor() {
         super();
 
+        
+
+    }
+    connectedCallback() {
         this.filtersModal.classList.add("modal", "fade");
         this.filtersModal.id = this.id + "-modal";
         this.filtersModal.tabIndex = -1;
@@ -183,20 +166,35 @@ class Grid extends HTMLElement {
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
         this.intializeColumns();
-        exportConnection.on("updateExportProgress", (progress) => {
+
+        exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
+            console.log(gridId);
+
+            if (this.id !== gridId)
+                return;
+
+            if (!this.isExporting) {
+                this.csvExportId = folder;
+                this.isExporting = true;
+            }
+
             var progressBar = document.getElementById(this.id + "Progress");
             if (progressBar.hidden)
                 progressBar.hidden = false;
 
 
             progressBar.value = progress;
-            if (progress == 100) {
-
+            if (progress >= 100) {
+                progressBar.hidden = true;
+                var downloadButton = document.getElementById("ExportDownloadBtn");
+                downloadButton.hidden = false;
+                this.isExporting = false;
+                this.isDownloaded = false;
             }
         });
 
-    }
 
+    }
 
     intializeColumns() {
 
@@ -212,7 +210,6 @@ class Grid extends HTMLElement {
                 }
 
             });
-            console.log(val);
             para = {
                 Req: { IsIntialize: true },
                 Filters: val
@@ -221,7 +218,7 @@ class Grid extends HTMLElement {
         } else {
             para = { IsIntialize: true };
         }
-        console.log(para);
+        console.log(this.url);
         fetch(this.url, {
             method: "POST",
             headers: {
@@ -240,7 +237,7 @@ class Grid extends HTMLElement {
                 //}
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable);
-                this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun);
+                this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
 
 
 
@@ -347,7 +344,7 @@ class Grid extends HTMLElement {
 
 
             var template = column.template;
-           
+
             var isCollection = column.isCollection;
             var hasTemplate = template && template != ""
 
@@ -428,36 +425,37 @@ class Grid extends HTMLElement {
         return cols;
     }
 
-    genrateToolBar(data, doesnotcontainsll) {
+    genrateToolBar(data, doesnotcontainsll, showCsvBtn, showPdfBtn) {
         var toolbar = [];
         if (!doesnotcontainsll) {
             //{ name: "customButton1",  },
             //{ name: "customButton2", text: "Custom Button 2" }
 
-
-            toolbar = [
-                "excel",
-                {
+            toolbar = ["excel"];
+            if (showCsvBtn) {
+                toolbar.push({
                     name: this.gridDiv.id + "csvExport",
                     text: "Export To CSV"
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
-                },
-                {
+                });
+            }
+            if (showPdfBtn) {
+                toolbar.push({
                     name: this.gridDiv.id + "pdfExport",
                     text: "Export To PDF"
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
-                },
+                });
+            }
+            toolbar.push(
                 {
                     name: this.gridDiv.id + "sh_filters",
                     text: "Show Filters"
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
                 },
                 {
                     name: this.gridDiv.id + "clrfil",
                     text: "Clear All Filters"
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="clrfil" href="\\#"">clear filters</a>`,
                 }
-            ];
+            );
+
+
         }
 
         if (data) {
@@ -478,7 +476,7 @@ class Grid extends HTMLElement {
             <span style="display: inline-block">
                 <span style="display:flex;align-items:center">
                     <smart-progress-bar id="${this.id + "Progress"}" value="0" style="display: inline-block" hidden></smart-progress-bar>
-                    <a class="k-button k-button-icontext k-grid-custom" id="ExportDownloadBtn" hidden>Download Files</a>
+                    <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" hidden>Download Files</a>
                 </span>
             </span>
 
@@ -501,90 +499,7 @@ class Grid extends HTMLElement {
             toolbar: this.toolbar,
             dataSource: {
                 transport: {
-                    read: (options) => {
-                        console.log(options);
-                        const readdata = () => {
-
-                            fetch(this.url, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    Accept: "application/json",
-                                },
-                                body: JSON.stringify(para),
-                            })
-                                .then((d) => d.json())
-                                .then((d) => {
-                                    this.total = d.total;
-                                    //if (isHierarchy == "true") {
-                                    //    var temp = groupAndSum([...d.data], groupList[0], valList[0]);
-
-                                    //    globaldata = [...d.data];
-
-                                    //    options.success(temp);
-                                    //}
-                                    /*   else {*/
-                                    options.success([...d.data]);
-                                    /*   }*/
-
-                                    if (this.isAllSelected) {
-                                        var select = [];
-                                        [...Array(100).keys()].forEach((x) => {
-                                            select.push(`tr:eq(${x})`);
-                                        });
-                                        var selectstr = select.join(", ");
-                                        grid.select(selectstr);
-                                    }
-                                    else {
-                                        var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
-                                        if (selectedInCurrentPage) {
-                                            selectedInCurrentPage.forEach((x) => {
-
-                                                var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
-                                                if (item && item.length > 0) {
-                                                    var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
-                                                    grid.select(row);
-                                                };
-                                            });
-                                            setTimeout(() => {
-                                                var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
-                                                selectall.classList.remove("k-checkbox:checked");
-                                                selectall.setAttribute("aria-checked", 'false');
-                                                selectall.checked = false;
-                                                selectall.ariaChecked = false;
-                                            }, 0);
-                                        }
-                                    }
-
-                                    if (this.isCustom) {
-                                        var chartdata = [];
-                                        if (d.chartdata)
-                                            chartdata = [...d.chartdata];
-                                        chartdata.forEach((x) => {
-                                            var div = document.getElementById(x.ChartId);
-
-
-
-                                            makedynamicChart(
-                                                x.Type,
-                                                x.Data,
-                                                x.Title,
-                                                x.ChartId,
-                                                x.Val,
-                                                x.Cat
-                                            );
-                                        });
-                                    }
-                                }).catch(err => {
-                                    console.error(err);
-                                    toastObj.icon = 'error';
-                                    toastObj.text = "something wrong happend while getting data please try again";
-                                    toastObj.heading = "Grid Intialization Status";
-                                    $.toast(toastObj);
-                                    kendo.ui.progress($(this.gridDiv), false);
-                                    return;
-                                });;
-                        }
+                    read: async (options) => {
 
                         if (this.isStoredProc) {
                             var flatted = this.storedConfig.builder.value.flat();
@@ -617,16 +532,89 @@ class Grid extends HTMLElement {
                                 },
                                 Filters: val
                             }
-                        } else {
+                        }
+                        else {
                             para.Take = options.data.take;
                             para.Skip = options.data.skip;
                             para.Sort = options.data.sort;
                             para.IsIntialize = false;
                             para.Filter = options.data.filter;
                             para.Group = options.data.group;
+                            para.All = true;
+
                         }
 
-                        readdata();
+                        var d = await this.readdata(para);
+                        if (d) {
+                            this.total = d.total;
+                            //if (isHierarchy == "true") {
+                            //    var temp = groupAndSum([...d.data], groupList[0], valList[0]);
+
+                            //    globaldata = [...d.data];
+
+                            //    options.success(temp);
+                            //}
+                            /*   else {*/
+                            options.success([...d.data]);
+                            /*   }*/
+
+
+                            //To perserve the select status
+                            if (this.isAllSelected) {
+                                var select = [];
+                                [...Array(100).keys()].forEach((x) => {
+                                    select.push(`tr:eq(${x})`);
+                                });
+                                var selectstr = select.join(", ");
+                                grid.select(selectstr);
+                            }
+                            else {
+                                var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
+                                if (selectedInCurrentPage) {
+                                    selectedInCurrentPage.forEach((x) => {
+
+                                        var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
+                                        if (item && item.length > 0) {
+                                            var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
+                                            grid.select(row);
+                                        };
+                                    });
+                                    setTimeout(() => {
+                                        var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
+                                        selectall.classList.remove("k-checkbox:checked");
+                                        selectall.setAttribute("aria-checked", 'false');
+                                        selectall.checked = false;
+                                        selectall.ariaChecked = false;
+                                    }, 0);
+                                }
+                            }
+
+                            if (this.isCustom) {
+                                var chartdata = [];
+                                if (d.chartdata)
+                                    chartdata = [...d.chartdata];
+                                chartdata.forEach((x) => {
+                                    var div = document.getElementById(x.ChartId);
+
+
+
+                                    makedynamicChart(
+                                        x.Type,
+                                        x.Data,
+                                        x.Title,
+                                        x.ChartId,
+                                        x.Val,
+                                        x.Cat
+                                    );
+                                });
+                            }
+                        }
+
+
+
+
+
+
                     },
                 },
 
@@ -850,6 +838,7 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}sh_filters`).click((e) => {
             this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
         });
+
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
             var pdfExportHandler = undefined;
             if (!this.isStoredProc)
@@ -861,8 +850,28 @@ class Grid extends HTMLElement {
             var controller = orgin[1];
             pdfExportHandler(e, controller, this.url, this.gridDiv);
         });
+
+
         $(`.k-grid-${this.gridDiv.id}csvExport`).click(async (e) => {
             await this.ExportCsv(e)
+        });
+
+
+        $(`.k-grid-download`).click(async (e) => {
+
+
+
+            var downloadRes = await fetch("/Files/DownloadCsvFiles/" + this.csvExportId);
+            if (downloadRes.ok) {
+                var blob = await downloadRes.blob();
+                var a = document.createElement("a");
+                a.setAttribute("download", this.csvExportId + ".Zip");
+                a.href = window.URL.createObjectURL(blob);
+                a.click();
+                e.target.hidden = true;
+                this.csvExportId = "";
+                this.isDownloaded = true;
+            }
         });
 
 
@@ -1019,6 +1028,7 @@ class Grid extends HTMLElement {
         $(Modal).modal("show");
     }
     clrfil(e, gridDiv) {
+
         var grid = $(gridDiv).data("kendoGrid");
         var multiSelects = document.querySelectorAll("input[data-role=multiselect]");
         console.log(multiSelects);
@@ -1028,29 +1038,9 @@ class Grid extends HTMLElement {
         grid.dataSource.filter(null);
     }
 
+    async readdata(para) {
 
-    async ExportCsv(e) {
-
-        exportConnection.on("updateExportProgress", (progress) => {
-            var progressBar = document.getElementById(this.id + "Progress");
-            if (progressBar.hidden)
-                progressBar.hidden = false;
-            progressBar.value = progress;
-
-            //if (progress == 100)
-        });
-        var grid = $(this.gridDiv).data("kendoGrid");
-        var filters = grid.dataSource.filter();
-        var total = grid.dataSource.total();
-        var sort = grid.dataSource.sort();
-        var para = {}
-
-        para.Take = total;
-        para.Skip = 0;
-        para.Filter = filters;
-        para.Sort = sort;
-
-        await fetch("/Grid/TestExportWithHangfire", {
+        var res = await fetch(this.url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -1058,6 +1048,73 @@ class Grid extends HTMLElement {
             },
             body: JSON.stringify(para),
         });
+        if (res.ok)
+            return await res.json();
+        else {
+
+            console.error(res.body);
+            toastObj.icon = 'error';
+            toastObj.text = "something wrong happend while getting data please try again";
+            toastObj.heading = "Grid Intialization Status";
+            $.toast(toastObj);
+            kendo.ui.progress($(this.gridDiv), false);
+            return;
+
+        }
+
+    }
+    async ExportCsv(e) {
+        if (!this.isDownloaded) {
+            toastObj.icon = 'error';
+            toastObj.text = "you exported a file and haven't downloaded it yet.";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
+            return;
+        }
+
+        if (this.isExporting) {
+            toastObj.icon = 'error';
+            toastObj.text = "there is another Export Process running wait untill it ends and try again";
+            toastObj.heading = "Export Status";
+            $.toast(toastObj);
+            return;
+        }
+
+        this.isExporting = true;
+        this.isDownloaded = false;
+        var grid = $(this.gridDiv).data("kendoGrid");
+        var filters = grid.dataSource.filter();
+        var total = grid.dataSource.total();
+        var sort = grid.dataSource.sort();
+        var para = {}
+        console.log("bbb");
+        para.Take = total;
+        para.Skip = 0;
+        para.Filter = filters;
+        para.Sort = sort;
+        if (!this.isAllSelected) {
+            var pagesWithSelectedRows = Object.keys(this.selectedRows);
+            if (pagesWithSelectedRows && pagesWithSelectedRows.length > 0)
+                para.All = false;
+            else
+                para.All = true;
+        }
+        para.IdColumn = "CustomerNumber";
+        para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x["CustomerNumber"].toString());
+        console.log(para.SelectedValues);
+        var exportRes = await fetch("/Grid/ExportToCsv/" + this.id, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(para),
+        });
+
+        if (exportRes.ok) {
+            var exportId = (await exportRes.json()).folder;
+            this.csvExportId = exportId;
+        }
     }
 
     reload() {
@@ -1100,57 +1157,3 @@ function areObjectEqual(obj1, obj2, leftedKeys) {
     // If all checks pass, the objects are equal
     return true;
 }
-
-//console.log(   areObjectEqual(
-//{
-//    "AlertedEntityNumber": "10112",
-//        "AlertedEntityName": "Saleh Ali Mohammed Abdulrahman",
-//            "PartyTypeDesc": "INDIVIDUAL",
-//                "BranchName": "UNKNOWN",
-//                    "BranchNumber": null,
-//                        "AlertId": 191005,
-//                            "AlertDescription": "Large Total Cash Transactions",
-//                                "ActualValuesText": "Total Cash Transactions =   15.095; Transaction Day Count = 1",
-//                                    "AlertStatus": null,
-//                                        "AlertSubCat": "Large Total Cash Transactions",
-//                                            "AlertTypeCd": "AMLALT",
-//                                                "ScenarioName": "DG_10006",
-//                                                    "ScenarioId": 12745,
-//                                                        "MoneyLaunderingRiskScore": 870,
-//                                                            "CreateDate": "2020-01-26T09:40:18.167Z",
-//                                                                "RunDate": "2019-01-26T22:00:00.000Z",
-//                                                                    "CloseDate": "2021-11-20T09:57:24.030Z",
-//                                                                        "OwnerUserid": "ooooo@gggg.com",
-//                                                                            "ReportCloseRsn": null,
-//                                                                                "PoliticallyExposedPersonInd": "N",
-//                                                                                    "EmployeeInd": "N",
-//                                                                                        "InvestigationDays": 1028
-//    },
-//    {
-//        "AlertedEntityNumber": "10112",
-//        "AlertedEntityName": "Saleh Ali Mohammed Abdulrahman",
-//        "PartyTypeDesc": "INDIVIDUAL",
-//        "BranchName": "UNKNOWN",
-//        "BranchNumber": null,
-//        "AlertId": 191005,
-//        "AlertDescription": "Large Total Cash Transactions",
-//        "ActualValuesText": "Total Cash Transactions =   15.095; Transaction Day Count = 1",
-//        "AlertStatus": null,
-//        "AlertSubCat": "Large Total Cash Transactions",
-//        "AlertTypeCd": "AMLALT",
-//        "ScenarioName": "DG_10006",
-//        "ScenarioId": 12745,
-//        "MoneyLaunderingRiskScore": 870,
-//        "CreateDate": "2020-01-26T09:40:18.167Z",
-//        "RunDate": "2019-01-26T22:00:00.000Z",
-//        "CloseDate": "2021-11-20T09:57:24.030Z",
-//        "OwnerUserid": "ooooo@gggg.com",
-//        "ReportCloseRsn": null,
-//        "PoliticallyExposedPersonInd": "N",
-//        "EmployeeInd": "N",
-//        "InvestigationDays": 1028
-//    },
-//    ["uid"]
-//    )
-
-//); 

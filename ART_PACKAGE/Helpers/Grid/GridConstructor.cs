@@ -1,9 +1,11 @@
 ﻿using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
+using ART_PACKAGE.Hubs;
 using Data.Services;
-using Hangfire;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -11,38 +13,67 @@ namespace ART_PACKAGE.Helpers.Grid
         where TModel : class
     {
         private readonly IDropDownMapper _dropDownMap;
-        private readonly ICsvExport _csvSrv;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IBackgroundJobClient _backgroundJobClient;
-        public GridConstructor(IBaseRepo<TContext, TModel> repo, IDropDownMapper dropDownMap, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IBackgroundJobClient backgroundJobClient)
+        private readonly ICsvExport _csvSrv;
+        private readonly IHubContext<ExportHub> _exportHub;
+        private readonly UsersConnectionIds connections;
+        private static readonly Dictionary<int, int> fileProgress = new();
+
+
+
+        public GridConstructor(IBaseRepo<TContext, TModel> repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
-            _csvSrv = csvSrv;
             _webHostEnvironment = webHostEnvironment;
-            _backgroundJobClient = backgroundJobClient;
+            _csvSrv = csvSrv;
+            _exportHub = exportHub;
+            this.connections = connections;
         }
         public IBaseRepo<TContext, TModel> Repo { get; private set; }
 
-        public string ExportGridToCsv(GridRequest gridRequest)
+        public string ExportGridToCsv(GridRequest gridRequest, string user, string gridId)
         {
             string folderGuid = Guid.NewGuid().ToString();
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
             GridResult<TModel> dataRes = Repo.GetGridData(gridRequest);
-            var total = dataRes.total;
-            var batch = 500_000;
-            var round = 0;
+            int total = dataRes.total;
+            int totalcopy = total;
+            int batch = 500_000;
+            int round = 0;
+
+            _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
+            {
+                fileProgress[fileNumber] = recordsDone;
+                float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
+                _exportHub.Clients.Clients(connections.GetConnections(user))
+                               .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+            };
             while (total > 0)
             {
-                var roundData = dataRes.data.Skip(round * batch).Take(batch);
+                GridRequest roundReq = new()
+                {
+                    Skip = round * batch,
+                    Take = batch,
+                    Filter = gridRequest.Filter,
+                    Sort = gridRequest.Sort,
+                    Group = gridRequest.Group,
+                    All = gridRequest.All,
+                    IdColumn = gridRequest.IdColumn,
+                    SelectedValues = gridRequest.SelectedValues,
+                };
+
+                int localRound = round + 1;
+
+                Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Test.csv", localRound, user));
+
                 total -= batch;
                 round++;
             }
-            _ = _backgroundJobClient.Enqueue(() => _csvSrv.ExportData(dataRes.data.Take(1000).ToList(), dataRes.total, folderPath, "Test.csv"));
             return folderGuid;
         }
 
-        public GridIntializationConfiguration IntializeGrid(string controller, bool containsActions = false, bool selectable = false, List<GridButton>? toolbar = null, List<GridButton>? action = null)
+        public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
         {
             ReportConfig reportConfig = ReportsConfig.CONFIG[controller.ToLower()];
             Dictionary<string, List<SelectItem>> DropDownColumn = _dropDownMap.GetDorpDownForReport(controller);
@@ -52,10 +83,12 @@ namespace ART_PACKAGE.Helpers.Grid
             return new GridIntializationConfiguration()
             {
                 columns = GridHelprs.GetColumns<TModel>(DropDownColumn, DisplayNames, ColumnsToSkip),
-                selectable = selectable,
-                toolbar = toolbar,
-                actions = action,
-                containsActions = containsActions,
+                selectable = reportConfig.Selectable,
+                toolbar = reportConfig.Toolbar,
+                actions = reportConfig.Actions,
+                containsActions = reportConfig.ContainsActions,
+                showCsvBtn = reportConfig.ShowExportCsv is null || reportConfig.ShowExportCsv(User),
+                showPdfBtn = reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User)
             };
         }
     }

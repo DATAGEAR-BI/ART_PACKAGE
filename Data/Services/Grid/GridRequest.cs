@@ -8,6 +8,9 @@
         public bool IsIntialize { get; set; }
         public List<SortOption> Sort { get; set; }
         public List<GroupOption>? Group { get; set; }
+        public bool All { get; set; }
+        public string? IdColumn { get; set; }
+        public List<string>? SelectedValues { get; set; }
 
     }
 

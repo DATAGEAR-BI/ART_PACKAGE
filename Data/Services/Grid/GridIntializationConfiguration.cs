@@ -7,5 +7,8 @@
         public bool selectable { get; set; }
         public List<GridButton>? actions { get; set; }
         public List<GridButton>? toolbar { get; set; }
+
+        public bool showCsvBtn { get; set; } = true;
+        public bool showPdfBtn { get; set; } = true;
     }
 }

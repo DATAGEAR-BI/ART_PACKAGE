@@ -1,5 +1,6 @@
 ﻿using Data.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -8,10 +9,9 @@ namespace ART_PACKAGE.Helpers.Grid
     {
         public IBaseRepo<TContext, TModel> Repo { get; }
 
-        public GridIntializationConfiguration IntializeGrid(string controller, bool containsActions = false, bool selectable = false, List<GridButton>? toolbar = null, List<GridButton>? action = null);
+        public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User);
 
-
-        public string ExportGridToCsv(GridRequest gridRequest);
+        public string ExportGridToCsv(GridRequest gridRequest, string user, string gridId);
 
     }
 }

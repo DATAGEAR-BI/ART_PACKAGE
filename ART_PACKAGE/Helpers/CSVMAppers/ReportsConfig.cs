@@ -68,15 +68,23 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"OwnerUserid",new GridColumnConfiguration { DisplayName ="Owner "}},
                     {"InvestigationDays",new GridColumnConfiguration { DisplayName ="Investigation Days"}}
 
-            }
-               }
-            },       { nameof(AlertDetailsController).ToLower(), new ReportConfig {
-               SkipList =  new List<string>
+            },
+               Toolbar = new List<GridButton> { new GridButton { action = "test", text = "TEST" } },
+               Selectable = true,
+                ShowExportPdf = (user) =>  user.IsInRole("de7k")
+    }
+
+}
+            ,
+            {
+    nameof(AlertDetailsController).ToLower(), new ReportConfig
+    {
+        SkipList = new List<string>
                 {
                     "Val",
                     "AlertsNotesFlag"
                 },
-               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                     {"AlertId",new GridColumnConfiguration { DisplayName ="Alert ID"}},
                     {"AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
@@ -99,12 +107,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"InvestigationDays",new GridColumnConfiguration { DisplayName ="Investigation Days"}}
 
             }
-               }
+    }
             },
             {
-                nameof(ReportController).ToLower(),new ReportConfig
-                {
-                   SkipList =  new List<string>()
+    nameof(ReportController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
             {
                   nameof(ArtSavedCustomReport.User),
                   nameof(ArtSavedCustomReport.UserId),
@@ -116,18 +124,19 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     }
             },
             {
-                nameof(AlertedEntitiesController).ToLower(),new ReportConfig
-                {
-                   SkipList =  new List<string>()
-            {
+    nameof(AlertedEntitiesController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
+        {
 
 
-            }
+        }
     }
             },
-            { nameof(SystemPerformanceController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(SystemPerformanceController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                     { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
                     { "CaseType", new GridColumnConfiguration { DisplayName = "Case Type"}},
@@ -152,17 +161,19 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
                     { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "CaseRk",
                 "ValidFromDate",
             }
-            }
+    }
             },
-            { nameof(UserPerformanceController).ToLower(),
-                new ReportConfig{
-                                        SkipList = new List<string>(){   "CaseRk","ValidFromDate","CreateUserId" } ,
-                                        DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+    nameof(UserPerformanceController).ToLower(),
+                new ReportConfig
+                {
+                    SkipList = new List<string>() { "CaseRk", "ValidFromDate", "CreateUserId" },
+                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
                                                         {
                                                                 { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
                                                                 { "CaseTypeCd", new GridColumnConfiguration { DisplayName = "Case Type"}},
@@ -181,13 +192,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
                                                                 { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
                                                         }
-                                }
+                }
             }
             ,
             {
-                nameof(GOAMLReportsSuspectController).ToLower(),new ReportConfig{
-                    SkipList=new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(GOAMLReportsSuspectController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                                  {"Id", new GridColumnConfiguration { DisplayName = "Report ID"}},
                                  {"Reportcode", new GridColumnConfiguration { DisplayName = "Report Type"}},
                                  {"Reportstatuscode", new GridColumnConfiguration { DisplayName = "Report Status"}},
@@ -204,11 +216,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                  {"Reportcloseddate", new GridColumnConfiguration { DisplayName = "Close Date"}},
                                  {"Branch", new GridColumnConfiguration { DisplayName = "Branch"}}
                     }
-                }
+    }
             },
             {
-                nameof(GOAMLReportsDetailsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>
+    nameof(GOAMLReportsDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
                     {
                               "Version",
                               "Isvalid",
@@ -219,7 +232,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               "Reportxml",
                               "Submissioncode",
                     },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                  {"Id", new GridColumnConfiguration { DisplayName = "Report ID"}},
                                  {"Reportcode", new GridColumnConfiguration { DisplayName = "Report Type"}},
@@ -238,26 +251,26 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                  {"Reportingpersontype", new GridColumnConfiguration { DisplayName = "Reporting Person Type"}},
                                  {"Reason", new GridColumnConfiguration { DisplayName = "Reason"}}
                     }
-                }
+    }
             },
             {
-                nameof(GOAMLReportIndicatorDetailsController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(GOAMLReportIndicatorDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"ReportId", new GridColumnConfiguration { DisplayName = "Report ID"}},
                                {"Indicator", new GridColumnConfiguration { DisplayName = "Indicator Code"}},
                                {"Description", new GridColumnConfiguration { DisplayName = "Description"}}
                     }
-                }
+    }
             },
 
             {
-                nameof(AuditGroupsController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(AuditGroupsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
 
                                 {"GroupName", new GridColumnConfiguration { DisplayName = "Group Name"}},
@@ -273,13 +286,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"MemberUsers", new GridColumnConfiguration { DisplayName = "Member Users"}},
 
                     }
-                }
+    }
             },
             {
-                nameof(AuditRolesController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(AuditRolesController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
 
                                 {"RoleName", new GridColumnConfiguration { DisplayName = "Role Name"}},
@@ -294,13 +307,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"MemberUsers", new GridColumnConfiguration { DisplayName = "Member Users"}},
 
                     }
-                }
+    }
             },
             {
-                nameof(AuditUsersController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(AuditUsersController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
 
                                 {"UserName", new GridColumnConfiguration { DisplayName = "User Name"}},
@@ -323,39 +336,39 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"DomainAccounts", new GridColumnConfiguration { DisplayName = "Domain Accounts"}}
 
                     }
-                }
+    }
             },
             {
-                nameof(ListOfUsersRolesController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(ListOfUsersRolesController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"UserName", new GridColumnConfiguration { DisplayName = "User Name"}},
                                {"DisplayName", new GridColumnConfiguration { DisplayName = "Display Name"}},
                                {"Email", new GridColumnConfiguration { DisplayName = "Email"}},
                                {"UserRole", new GridColumnConfiguration { DisplayName = "User Role"}},
                     }
-                }
+    }
             },
             {
-                nameof(ListOfUsersGroupController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(ListOfUsersGroupController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"UserName", new GridColumnConfiguration { DisplayName = "User Name"}},
                                {"DisplayName", new GridColumnConfiguration { DisplayName = "Display Name"}},
                                {"Email", new GridColumnConfiguration { DisplayName = "Email"}},
                                {"MemberOfGroup", new GridColumnConfiguration { DisplayName = "Member Of Group"}},
                     }
-                }
+    }
             },
             {
-                nameof(ListOfUsersAndGroupsRoleController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(ListOfUsersAndGroupsRoleController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"UserName", new GridColumnConfiguration { DisplayName = "User Name"}},
                                {"DisplayName", new GridColumnConfiguration { DisplayName = "Display Name"}},
@@ -363,25 +376,31 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"MemberOfGroup", new GridColumnConfiguration { DisplayName = "Member Of Group"}},
                                {"RoleOfGroup", new GridColumnConfiguration { DisplayName = "Role Of Group"}},
                     }
-                }
+    }
             },
-            { nameof(ListGroupsSubGroupsSummaryController).ToLower() , new ReportConfig {
-                DisplayNames = new Dictionary<string , GridColumnConfiguration>
+            {
+    nameof(ListGroupsSubGroupsSummaryController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
                     { nameof(ListGroupsSubGroupsSummary.SubGroupName) , new GridColumnConfiguration { DisplayName =  "Sub Group Name" } },
                     { nameof(ListGroupsRolesSummary.GroupName) , new GridColumnConfiguration { DisplayName =  "Group Name" } }
                         }
-                }
+    }
             },
-            { nameof(ListGroupsRolesSummaryController).ToLower() , new ReportConfig {
-                DisplayNames = new Dictionary<string , GridColumnConfiguration>
+            {
+    nameof(ListGroupsRolesSummaryController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
                     { nameof(ListGroupsRolesSummary.RoleName) , new GridColumnConfiguration { DisplayName =  "Role Name" } },
                     { nameof(ListGroupsRolesSummary.GroupName) , new GridColumnConfiguration { DisplayName =  "Group Name" } }
                         }
-                }
-            },{ nameof(ListOfGroupsController).ToLower() , new ReportConfig {
-                DisplayNames = new Dictionary<string , GridColumnConfiguration>
+    }
+            },{
+    nameof(ListOfGroupsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {   { nameof(ListOfGroup.GroupName) , new GridColumnConfiguration { DisplayName =  "Group Name" } },
                     { nameof(ListOfGroup.GroupType) , new GridColumnConfiguration { DisplayName =  "Group Type" } },
                     { nameof(ListOfGroup.CreatedBy) , new GridColumnConfiguration { DisplayName =  "Created By" } },
@@ -389,10 +408,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { nameof(ListOfGroup.DisplayName) , new GridColumnConfiguration { DisplayName =  "Display Name" } },
                     { nameof(ListOfGroup.LastUpdatedBy) , new GridColumnConfiguration { DisplayName =  "Last Updated By" } },
                     { nameof(ListOfGroup.LastUpdatedDate) , new GridColumnConfiguration { DisplayName =  "Last Updated Date" } }, }
-                }
+    }
             },
-            { nameof(ListOfDeletedUsersController).ToLower() , new ReportConfig {
-                DisplayNames = new Dictionary<string , GridColumnConfiguration>
+            {
+    nameof(ListOfDeletedUsersController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
                     { nameof(ListOfDeletedUser.UserType) , new GridColumnConfiguration { DisplayName =  "User Type" } },
                     { nameof(ListOfDeletedUser.UserName) , new GridColumnConfiguration { DisplayName =  "User Name" } },
@@ -402,10 +423,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { nameof(ListOfDeletedUser.LastFailedLogin) , new GridColumnConfiguration { DisplayName =  "Last Failed Login" } },
                     { nameof(ListOfDeletedUser.LastLoginDate) , new GridColumnConfiguration { DisplayName =  "Last Login Date" } },
                         }
-                }
+    }
             },
-            { nameof(LastLoginPerDayController).ToLower() , new ReportConfig {
-                DisplayNames = new Dictionary<string , GridColumnConfiguration>
+            {
+    nameof(LastLoginPerDayController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
                     { nameof(LastLoginPerDayView.AppName) , new GridColumnConfiguration { DisplayName =  "App Name" } },
                     { nameof(LastLoginPerDayView.UserName) , new GridColumnConfiguration { DisplayName =  "User Name" } },
@@ -413,14 +436,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { nameof(LastLoginPerDayView.DeviceType) , new GridColumnConfiguration { DisplayName =  "Device Type" } },
                     { nameof(LastLoginPerDayView.Logindatetime) , new GridColumnConfiguration { DisplayName =  "Login Date" } }
                         }
-                }
+    }
             },
 
             {
-                nameof(ListOfUserController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(ListOfUserController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"UserName", new GridColumnConfiguration { DisplayName = "User Name"}},
                                {"Address", new GridColumnConfiguration { DisplayName = "Address"}},
@@ -439,13 +462,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"Active", new GridColumnConfiguration { DisplayName = "Active"}},
                                {"Enable", new GridColumnConfiguration { DisplayName = "Enable"}},
                     }
-                }
+    }
             },
             {
-                nameof(ListOfRoleController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+    nameof(ListOfRoleController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                {"RoleName", new GridColumnConfiguration { DisplayName = "Role Name"}},
                                {"Description", new GridColumnConfiguration { DisplayName = "Description"}},
@@ -457,16 +480,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                {"LastUpdatedDate", new GridColumnConfiguration { DisplayName = "Last Updated Date"}},
 
                     }
-                }
+    }
             },
               {
-                nameof(CasesDetailsController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>
+    nameof(CasesDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
                     {
                                "BranchNumber"
                     },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                     {"CaseId",new GridColumnConfiguration { DisplayName ="Case ID"}},
                     {"EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
@@ -482,12 +505,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
                     {"ClosedDate",new GridColumnConfiguration { DisplayName ="Closed Date"}}
                     }
-                }
+    }
             },
                {
-                nameof(CustomersController).ToLower(),new ReportConfig
-                {
-                    SkipList = new List<string>
+    nameof(CustomersController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
                     {
                      "CustomerTaxId",
                      "DoingBusinessAsName",
@@ -513,7 +536,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      "LastRiskAssessmentDate",
                      "ActiveFlg",
                     },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
                     {
                                   {"CustomerName",new GridColumnConfiguration { DisplayName ="Customer Name"}},
                                   {"CustomerNumber",new GridColumnConfiguration { DisplayName ="Customer Number"}},
@@ -536,13 +559,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                   {"CustomerIdentificationId",new GridColumnConfiguration { DisplayName ="Customer Identification ID"}},
                                   {"CustomerIdentificationType",new GridColumnConfiguration { DisplayName ="Customer Identification Type"}}
                     }
-                }
+    }
             },
 
                {
-                nameof(HighRiskController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>(),
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(HighRiskController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>(),
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                                 {"PartyName",new GridColumnConfiguration { DisplayName ="Party Name"}},
                                 {"PartyNumber",new GridColumnConfiguration { DisplayName ="Party Number"}},
                                 {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
@@ -562,17 +586,18 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"RiskClassification",new GridColumnConfiguration { DisplayName ="Risk Classification"}},
                                 {"MailingCityName",new GridColumnConfiguration { DisplayName ="Mailing City Name"}}
                     }
-                  }
+    }
             },
                {
-                nameof(RiskAssessmentController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>{
+    nameof(RiskAssessmentController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>{
                         "RiskAssessmentDuration",
                         "VersionNumber",
                         "AssessmentCategoryCd",
                         "AssessmentSubcategoryCd",
                     },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {"CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
                         {"PartyNumber",new GridColumnConfiguration { DisplayName ="Party Number"}},
                         {"PartyName",new GridColumnConfiguration { DisplayName ="Party Name"}},
@@ -585,15 +610,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {"RiskClass",new GridColumnConfiguration { DisplayName ="Risk Classification"}},
                         {"ProposedRiskClass",new GridColumnConfiguration { DisplayName ="Proposed Risk Classification"}}
                     }
-                }
+    }
             },
                 {
-                nameof(TriageController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(TriageController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                                 "AlertedEntityLevel"
                                 //"Outstamt",
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
                         {  "AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number"}},
                         {  "BranchNumber",new GridColumnConfiguration { DisplayName ="Branch Number"}},
@@ -605,11 +631,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "AlertsCntSum",new GridColumnConfiguration { DisplayName ="Alerts Count"}},
 
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLArtExternalCustomerDetailsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>()
+    nameof(DGAMLArtExternalCustomerDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
                     {
                         "CustomerTaxId",
                         "GovernorateName",
@@ -619,7 +646,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         "PhoneNumber1",
                         "PhoneNumber2"
                     },
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "CustomerName",new GridColumnConfiguration { DisplayName ="Customer Name"}},
                         {  "CustomerNumber",new GridColumnConfiguration { DisplayName ="Customer Number"}},
                         {  "CustomerType",new GridColumnConfiguration { DisplayName ="Customer Type"}},
@@ -634,11 +661,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
 
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLArtScenarioAdminController).ToLower(),new ReportConfig{
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+    nameof(DGAMLArtScenarioAdminController).ToLower(),new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ScenarioName",new GridColumnConfiguration { DisplayName ="Name"}},
                         {  "ScenarioShortDesc",new GridColumnConfiguration { DisplayName ="Short Description"}},
                         {  "ScenarioDesc",new GridColumnConfiguration { DisplayName ="Scenario Description"}},
@@ -666,29 +694,31 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "ScorDependAttribute",new GridColumnConfiguration { DisplayName ="Score Depend Attribute"}},
 
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLArtScenarioHistoryController).ToLower(),new ReportConfig{
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+    nameof(DGAMLArtScenarioHistoryController).ToLower(),new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "RoutineName",new GridColumnConfiguration { DisplayName ="Scenario Name"}},
                         {  "RoutineShortDesc",new GridColumnConfiguration { DisplayName ="Scenario Short Description"}},
                         {  "EventDesc",new GridColumnConfiguration { DisplayName ="Event Description"}},
                         {  "CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
                         {  "CreateUserId",new GridColumnConfiguration { DisplayName ="Create User Id"}},
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLArtSuspectDetailsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>()
+    nameof(DGAMLArtSuspectDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
                     {
                         "CustIdentExpDate",
                         "CustIdentIssDate",
                         "EmprName",
                         "TelNo1"
                     },
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "SuspectNumber",new GridColumnConfiguration { DisplayName ="Suspect Number"}},
                         {  "SuspectName",new GridColumnConfiguration { DisplayName ="Suspect Name"}},
                         {  "BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
@@ -705,11 +735,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "OccupDesc",new GridColumnConfiguration { DisplayName ="Occupation Description"}},
                         {  "CustSinceDate",new GridColumnConfiguration { DisplayName ="Customer Since Date"}},
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLTriageController).ToLower(),new ReportConfig{
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+    nameof(DGAMLTriageController).ToLower(),new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
                         {  "AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number"}},
                         {  "BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
@@ -721,15 +752,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "AgeOldestAlert",new GridColumnConfiguration { DisplayName ="Age Oldest Alert"}},
                         {  "AlertsCntSum",new GridColumnConfiguration { DisplayName ="Alerts Count Sum"}},
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLAlertDetailsController).ToLower(),new ReportConfig{
-                    SkipList=new List<string>()
+    nameof(DGAMLAlertDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
                     {
                         "ActualValuesText"
                     },
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "AlarmId",new GridColumnConfiguration { DisplayName ="Alert ID"}},
                         {  "AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number"}},
                         {  "AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
@@ -751,17 +783,18 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CloseReason",new GridColumnConfiguration { DisplayName ="Close Reason"}},
                         {  "InvestigationDays",new GridColumnConfiguration { DisplayName ="Investigation Days"}},
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLCasesDetailsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>()
+    nameof(DGAMLCasesDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
                     {
                         "CaseStatusCode",
                         "CaseCategoryCode",
                         "CaseSubCategoryCode"
                     },
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "CaseId",new GridColumnConfiguration { DisplayName ="Case ID"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "EntityNumber",new GridColumnConfiguration { DisplayName ="Entity Number"}},
@@ -773,11 +806,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CreatedBy",new GridColumnConfiguration { DisplayName ="Created By"}},
                         {  "CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
                     }
-                }
+    }
             },
             {
-                nameof(DGAMLCustomersDetailsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string>()
+    nameof(DGAMLCustomersDetailsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>()
                     {
                         "CustomerTaxId",
                         "GovernorateName",
@@ -802,7 +836,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         "NetWorthAmount",
                         "LastRiskAssessmentDate"
                     },
-                    DisplayNames =new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "CustomerName",new GridColumnConfiguration { DisplayName ="Customer Name"}},
                         {  "CustomerNumber",new GridColumnConfiguration { DisplayName ="Customer Number"}},
                         {  "CustomerType",new GridColumnConfiguration { DisplayName ="Customer Type"}},
@@ -823,15 +857,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
 
                     }
-                }
+    }
             },
 
 
 
                         {
-                 nameof(ACPostingsAccountController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(ACPostingsAccountController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                     //Customer/System Parameter/Charge Code
                 {"EventRef",            new GridColumnConfiguration { DisplayName = "Event Reference"}},
@@ -849,12 +883,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Mainbanking",         new GridColumnConfiguration { DisplayName = "Main Banking Entity"}},
                 {"BranchName",          new GridColumnConfiguration { DisplayName = "Branch Name"}},
             },
-                SkipList = new List<string>{}
-            }
+        SkipList = new List<string> { }
+    }
             },
-            { nameof(ACPostingsCustomersController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(ACPostingsCustomersController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"EventRef",            new GridColumnConfiguration { DisplayName = "Event Reference"}},
                 {"MasterRef",           new GridColumnConfiguration { DisplayName = "Master Reference"}},
@@ -871,15 +906,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Mainbanking",         new GridColumnConfiguration { DisplayName = "Main Banking Entity"}},
                 {"BranchName",          new GridColumnConfiguration { DisplayName = "Branch Name"}},
             },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-            { nameof(ActivityController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(ActivityController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
                 {"Team",new GridColumnConfiguration { DisplayName ="Team"}},
@@ -922,7 +958,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"BaseStatus",new GridColumnConfiguration { DisplayName ="BaseStatus"}},
                 {"Stepdescr",new GridColumnConfiguration { DisplayName ="Stepdescr"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                 "Product",
                 "Touched",
@@ -948,17 +984,19 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 "Stepdescr",
                 "BaseStatus",
             }
-            }
+    }
             },
-            { nameof(AmortizationController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>(),
-                SkipList = new List<string>()
-            }
+    nameof(AmortizationController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>(),
+        SkipList = new List<string>()
+    }
             },
-            { nameof(OurChargesByCustomerController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(OurChargesByCustomerController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Hvbad1",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Gfcun",new GridColumnConfiguration { DisplayName ="Charge Party" }},
@@ -971,15 +1009,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"TotoalOutstandingChgDue",new GridColumnConfiguration { DisplayName ="Outstanding",Format = "{0:n2}",AggType=GridAggregateType.sum , AggText = "TotalCharges  "}},
                 {"TotoalWaivedChgDue",new GridColumnConfiguration { DisplayName ="Waived",Format = "{0:n2}",AggType=GridAggregateType.sum , AggText = "TotalCharges  "}},
              },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-            { nameof(OurChargesByMasterController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(OurChargesByMasterController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                {"Hvbad1",new GridColumnConfiguration { DisplayName ="Branch"}},
                {"Longname",new GridColumnConfiguration { DisplayName ="Product"}},
@@ -991,15 +1030,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                {"TotoalOutstandingChgDue",new GridColumnConfiguration { DisplayName ="Outstanding",Format = "{0:n2}",AggType=GridAggregateType.sum , AggText = "TotalCharges  "}},
                {"TotoalWaivedChgDue",new GridColumnConfiguration { DisplayName ="Waived",Format = "{0:n2}",AggType=GridAggregateType.sum , AggText = "TotalCharges  "}},
             },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-            { nameof(OurChargesDetailsController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(OurChargesDetailsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Hvbad1",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Longname",new GridColumnConfiguration { DisplayName ="Product"}},
@@ -1039,7 +1079,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"SchCcySpt",new GridColumnConfiguration { DisplayName ="SchCcySpt"}},
                 {"SchCcySei",new GridColumnConfiguration { DisplayName ="SchCcySei"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Gfcun",
                 "CusMnm",
@@ -1061,9 +1101,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(DiaryExceptionsController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(DiaryExceptionsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"MasterRef",new GridColumnConfiguration { DisplayName ="Master Reference"}},
                 {"Sovaluedesc",new GridColumnConfiguration { DisplayName ="Product Name"}},
@@ -1097,7 +1138,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"SwBranch",new GridColumnConfiguration { DisplayName ="SwBranch"}},
                 {"Active",new GridColumnConfiguration { DisplayName ="Active"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Product",
                 "Sovaluecode",
@@ -1121,9 +1162,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(EcmTransactionsController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>{
+    nameof(EcmTransactionsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
 
                 {"CaseId",new GridColumnConfiguration { DisplayName ="EcmReference"}},
                 {"Behalfofbranch",new GridColumnConfiguration { DisplayName ="Branch ID"}},
@@ -1139,15 +1181,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"UpdateUserId",new GridColumnConfiguration { DisplayName ="Last Action taken by"}}
             }
             ,
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
-            }
+        }
+    }
             },
-            { nameof(InterfaceDetailsController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(InterfaceDetailsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"CorrelationId",new GridColumnConfiguration { DisplayName ="Correlation ID"}},
                 {"DrSeq",new GridColumnConfiguration { DisplayName ="Dr Seq"}},
@@ -1169,67 +1212,68 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"FromBranch",new GridColumnConfiguration { DisplayName ="From Branch"}},
                 {"ToBranch",new GridColumnConfiguration { DisplayName ="To Branch"}},
             },
-                SkipList = new List<string>
-            {
-                //    "Gzh97nacc",
-                //"Gzh97nboacc",
-                //"Trfile",
-                //"Gzh97nca2",
-                //"Gzh97nean1",
-                //"Gzh97nactc",
-                //"Gzcus1",
-                //"Gzh97nctp1",
-                //"Gzg461tprd",
-                //"Gzg461pccy",
-                //"Gzg461ext",
-                //"Gzg461tsld",
-                //"Gzg331purd",
-                //"Gzg331pccy",
-                //"Gzg331ext",
-                //"Gzg331sled",
-                //"Gzg331psd1",
-                //"Gzh97nrecn",
-                //"Gzg461psd1",
-                //"Gz361mdt",
-                //"Tretxt",
-                //"Gz361rat",
-                //"Gz361sdt",
-                //"Gzh97nnr1",
-                //"Gzh97nnr2",
-                //"Gzh97nnr3",
-                //"Gzh97nnr4",
-                //"Gz361ncd",
-                //"Gzg891dte",
-                //"Gzg891acc",
-                //"Gzg891ccy",
-                //"Trtype",
-                //"Gzg331sccy",
-                //"Gzg461sccy",
-                //"Gzg461tsam",
-                //"Gzg461sced",
-                //"Gzg331sam",
-                //"Gzg331sced",
-                //"Trseq",
-                //"Trstat",
-                //"Gzh97nuc1",
-                //"Gzh97nuc2",
-                //"Gzh97nsrc",
-                //"Gzh97npc",
-                //"Gz361d1f",
-                //"Gzg361ced",
-                //"Gzg331pam",
-                //"Gzg331pced",
-                //"Gzg891ced",
-                //"Gzh97nced",
-                //"Gzg461tpam",
-                //"Gzg461pced",
-                //"Gzh97nnegp",
-            }
-            }
+        SkipList = new List<string>
+        {
+            //    "Gzh97nacc",
+            //"Gzh97nboacc",
+            //"Trfile",
+            //"Gzh97nca2",
+            //"Gzh97nean1",
+            //"Gzh97nactc",
+            //"Gzcus1",
+            //"Gzh97nctp1",
+            //"Gzg461tprd",
+            //"Gzg461pccy",
+            //"Gzg461ext",
+            //"Gzg461tsld",
+            //"Gzg331purd",
+            //"Gzg331pccy",
+            //"Gzg331ext",
+            //"Gzg331sled",
+            //"Gzg331psd1",
+            //"Gzh97nrecn",
+            //"Gzg461psd1",
+            //"Gz361mdt",
+            //"Tretxt",
+            //"Gz361rat",
+            //"Gz361sdt",
+            //"Gzh97nnr1",
+            //"Gzh97nnr2",
+            //"Gzh97nnr3",
+            //"Gzh97nnr4",
+            //"Gz361ncd",
+            //"Gzg891dte",
+            //"Gzg891acc",
+            //"Gzg891ccy",
+            //"Trtype",
+            //"Gzg331sccy",
+            //"Gzg461sccy",
+            //"Gzg461tsam",
+            //"Gzg461sced",
+            //"Gzg331sam",
+            //"Gzg331sced",
+            //"Trseq",
+            //"Trstat",
+            //"Gzh97nuc1",
+            //"Gzh97nuc2",
+            //"Gzh97nsrc",
+            //"Gzh97npc",
+            //"Gz361d1f",
+            //"Gzg361ced",
+            //"Gzg331pam",
+            //"Gzg331pced",
+            //"Gzg891ced",
+            //"Gzh97nced",
+            //"Gzg461tpam",
+            //"Gzg461pced",
+            //"Gzh97nnegp",
+        }
+    }
             },
-            { nameof(MasterEventHistoryController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(MasterEventHistoryController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                    {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
                 {"MasterRef",new GridColumnConfiguration { DisplayName ="Master Reference"}},
@@ -1267,7 +1311,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Isfinished",new GridColumnConfiguration { DisplayName ="Isfinished"}},
                 {"Stepkey",new GridColumnConfiguration { DisplayName ="Stepkey"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Product",
                 "Outstamt",
@@ -1289,11 +1333,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 "Isfinished",
                 "Stepkey",
             }
-            }
+    }
             },
-             { nameof(OSLiabilityController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(OSLiabilityController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Gfcun",new GridColumnConfiguration { DisplayName ="Customer"}},
                 {"Sovalue",new GridColumnConfiguration { DisplayName ="Product"}},
@@ -1301,15 +1346,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Totliabamt",new GridColumnConfiguration { DisplayName ="Total Per Customer",Format = "{0:n2}"}},
                 {"TotliabamtEgp",new GridColumnConfiguration { DisplayName ="Total Per Customer Egp",Format = "{0:n2}"}},
             },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-             { nameof(OSTransactionsAwaitiApprlController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(OSTransactionsAwaitiApprlController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Fullname",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Descri56",new GridColumnConfiguration { DisplayName ="Team"}},
@@ -1348,7 +1394,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Type",new GridColumnConfiguration { DisplayName ="Type"}},
                 {"Descr",new GridColumnConfiguration { DisplayName ="Descr"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "RefnoPfix",
                 "RefnoSerl",
@@ -1375,9 +1421,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(OSTransactionsByGatewayController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(OSTransactionsByGatewayController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Fullname",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Address1",new GridColumnConfiguration { DisplayName ="Gateway Party"}},
@@ -1411,7 +1458,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"BhalfBrn",new GridColumnConfiguration { DisplayName ="BhalfBrn"}},
                 {"Typeflag",new GridColumnConfiguration { DisplayName ="Typeflag"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Descrip",
                 "Outccysei",
@@ -1431,9 +1478,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-             { nameof(OSTransactionsByNonPriController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(OSTransactionsByNonPriController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"BhalfBrn",new GridColumnConfiguration { DisplayName ="Behalf Of Branch"}},
                 {"Address1",new GridColumnConfiguration { DisplayName ="Non-Principal Party"}},
@@ -1467,7 +1515,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Sovalue1",new GridColumnConfiguration { DisplayName ="Sovalue1"}},
                 {"Typeflag",new GridColumnConfiguration { DisplayName ="Typeflag"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Code79",
                 "Outccysei",
@@ -1484,11 +1532,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 "Sovalue1",
                 "Typeflag",
             }
-            }
+    }
             },
-            { nameof(OSTransactionsByPrincipalController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(OSTransactionsByPrincipalController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                {"BhalfBrn",new GridColumnConfiguration { DisplayName ="Behalf Of Branch"}},
                {"Address1",new GridColumnConfiguration { DisplayName ="Principal Party"}},
@@ -1525,7 +1574,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                {"Sovalue1",new GridColumnConfiguration { DisplayName ="Sovalue1"}},
                {"Typeflag",new GridColumnConfiguration { DisplayName ="Typeflag"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Code79",
                 "Outccyspt",
@@ -1547,9 +1596,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-             { nameof(PeriodicCHRGSPaymentController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(PeriodicCHRGSPaymentController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Fullname",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Sovalue",new GridColumnConfiguration { DisplayName ="Product"}},
@@ -1606,7 +1656,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 { "ChargeCcy",new GridColumnConfiguration { DisplayName ="ChargeCcy",Format = "{0:n2}"}},
                 { "ChargeAmtEgp",new GridColumnConfiguration { DisplayName ="ChargeAmtEgp",Format = "{0:n2}"} }
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "BhalfBrn",
                 "NpcpGfcun",
@@ -1644,9 +1694,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(SystemTailoringController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(SystemTailoringController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                {"Paramsetdescr",new GridColumnConfiguration { DisplayName ="Parameter Set"}},
                {"Prodlongname",new GridColumnConfiguration { DisplayName ="Product"}},
@@ -1750,7 +1801,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                {"Intege18",new GridColumnConfiguration { DisplayName ="Intege18"}},
                {"AccSrc",new GridColumnConfiguration { DisplayName ="AccSrc"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Typeflag",
                 "Operat44",
@@ -1847,9 +1898,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(WatchlistOSCheckController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(WatchlistOSCheckController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Fullname",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Descri56",new GridColumnConfiguration { DisplayName ="Team"}},
@@ -1888,7 +1940,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Type",new GridColumnConfiguration { DisplayName ="Type"}},
                 {"Lstmoduser",new GridColumnConfiguration { DisplayName ="Lstmoduser"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "RefnoPfix",
              "RefnoSerl",
@@ -1916,11 +1968,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
              "Type",
              "Lstmoduser",
             }
-            }
+    }
             },
-             { nameof(OSActivityController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(OSActivityController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"BranchName",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"Team",new GridColumnConfiguration { DisplayName ="Team"}},
@@ -1932,15 +1985,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Ccy",new GridColumnConfiguration { DisplayName ="Currency"}},
                 {"AmountEgp",new GridColumnConfiguration { DisplayName ="Amount Egp",Format = "{0:n2}"}},
             },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-             { nameof(FinancingInterestAccrualsController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(FinancingInterestAccrualsController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
                 {"MasterRef",new GridColumnConfiguration { DisplayName ="Master Reference"}},
@@ -2012,7 +2066,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"Commitamt",new GridColumnConfiguration { DisplayName ="Commitamt"}},
                 {"AmtOrPct",new GridColumnConfiguration { DisplayName ="AmtOrPct"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Inttypeid",
                 "Calcdte",
@@ -2076,9 +2130,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-             { nameof(AdvancePaymentUtilizationController).ToLower() , new ReportConfig
-            {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+             {
+    nameof(AdvancePaymentUtilizationController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Branch",new GridColumnConfiguration { DisplayName ="Branch"}},
                 {"AdvReference",new GridColumnConfiguration { DisplayName ="Advance Reference"}},
@@ -2093,15 +2148,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"UtilizationCurrency",new GridColumnConfiguration { DisplayName ="Utilization Currency"}},
                 {"OutstandingAmount",new GridColumnConfiguration { DisplayName ="Outstanding Amount",Format="{0:n2}"}},
             },
-                SkipList = new List<string>
-            {
+        SkipList = new List<string>
+        {
 
-            }
+        }
     }
             },
-            { nameof(FullJournalController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(FullJournalController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"Dataitem",new GridColumnConfiguration { DisplayName ="Data Item"}},
                 {"Username",new GridColumnConfiguration { DisplayName ="User Name"}},
@@ -2119,7 +2175,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"DataAfter",new GridColumnConfiguration { DisplayName ="Details After" , isLargeText = true}},
                 {"Databefore",new GridColumnConfiguration { DisplayName ="Details Before" , isLargeText = true}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Mcmtcetype",
                 "Mcusername",
@@ -2132,9 +2188,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(EcmWorkflowProgController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(EcmWorkflowProgController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 {"EcmReference",new GridColumnConfiguration { DisplayName ="ECM Reference"}},
                 {"EcmCaseCreationDate",new GridColumnConfiguration { DisplayName ="ECM Case Creation Date"}},
@@ -2177,7 +2234,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"SlaDashboardRed",new GridColumnConfiguration { DisplayName ="SLA Dashboard Red"}},
                 {"SlaRemainingTime",new GridColumnConfiguration { DisplayName ="SLA Remaining TIme"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                 "Comments",
                 "Product",
@@ -2202,9 +2259,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            { nameof(EcmAuditTrialController).ToLower() , new ReportConfig
             {
-                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+    nameof(EcmAuditTrialController).ToLower() , new ReportConfig
+    {
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                  {"EcmReference",new GridColumnConfiguration { DisplayName ="ECM Reference"}},
                 {"BranchId",new GridColumnConfiguration { DisplayName ="Branch ID"}},
@@ -2227,7 +2285,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {"EventSteps",new GridColumnConfiguration { DisplayName ="Event Steps"}},
                 {"StepStatus",new GridColumnConfiguration { DisplayName ="Step Status"}},
             },
-                SkipList = new List<string>
+        SkipList = new List<string>
             {
                     "Product",
                 "Sovaluecode",
@@ -2257,10 +2315,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 //KYC
             {
-                nameof(ArtAuditCorporateController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtAuditCorporateController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "CaseRk",new GridColumnConfiguration { DisplayName ="Case Rk"}},
                         {  "BankingOrCorporate",new GridColumnConfiguration { DisplayName ="Banking Or Corporate"}},
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
@@ -2366,13 +2426,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "HoldingCorporation",new GridColumnConfiguration { DisplayName ="Holding Corporation"}},
                         {  "HoldingCorporationCd",new GridColumnConfiguration { DisplayName ="Holding Corporation CD"}},
                     }
-                }
+    }
             },
             {
-                nameof(ArtAuditIndividualsController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtAuditIndividualsController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "CaseRk",new GridColumnConfiguration { DisplayName ="Case Rk"}},
                         {  "AKA",new GridColumnConfiguration { DisplayName ="AKA"}},
                         {  "OpeningReasonId",new GridColumnConfiguration { DisplayName ="Opening Reason ID"}},
@@ -2481,26 +2543,30 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "WorthLastCalcDate",new GridColumnConfiguration { DisplayName ="Worth Last Calcualte Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycExpiredIdController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtKycExpiredIdController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "IdNumber",new GridColumnConfiguration { DisplayName ="ID Number"}},
                         {  "IdExpireDate",new GridColumnConfiguration { DisplayName ="ID Expire Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycHighExpiredController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtKycHighExpiredController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2509,14 +2575,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycHighOneMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycHighOneMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2524,14 +2591,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new GridColumnConfiguration { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycHighThreeMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycHighThreeMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                          "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2540,14 +2608,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycHighTwoMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycHighTwoMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2556,13 +2625,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycLowExpiredController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtKycLowExpiredController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2571,14 +2642,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycLowOneMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycLowOneMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2587,14 +2659,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycLowThreeMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycLowThreeMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2603,14 +2676,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycLowTwoMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycLowTwoMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2619,13 +2693,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
             },
              {
-                nameof(ArtKycMediumExpiredController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtKycMediumExpiredController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2634,14 +2710,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
              },
              {
-                nameof(ArtKycMediumOneMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycMediumOneMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2650,14 +2727,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
              },
              {
-                nameof(ArtKycMediumThreeMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycMediumThreeMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2666,14 +2744,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
              },
              {
-                nameof(ArtKycMediumTwoMonthController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
+    nameof(ArtKycMediumTwoMonthController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string> {
                         "Month"
                             },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "ClientNumber",new GridColumnConfiguration { DisplayName ="Client Number"}},
                         {  "EntityName",new GridColumnConfiguration { DisplayName ="Entity Name"}},
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
@@ -2682,13 +2761,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "NextUpdateDate",new GridColumnConfiguration { DisplayName ="Next Update Date"}},
 
                     }
-                }
+    }
              },
              {
-                nameof(ArtKycSummaryByRiskController).ToLower(),new ReportConfig{
-                    SkipList = new List<string> {
-                            },
-                    DisplayNames = new Dictionary<string, GridColumnConfiguration>{
+    nameof(ArtKycSummaryByRiskController).ToLower(),new ReportConfig
+    {
+        SkipList = new List<string>
+        {
+        },
+        DisplayNames = new Dictionary<string, GridColumnConfiguration>{
                         {  "AmlRisk",new GridColumnConfiguration { DisplayName ="AML Risk"}},
                         {  "Type",new GridColumnConfiguration { DisplayName ="Type"}},
                         {  "NumberOfUpdatedKyc",new GridColumnConfiguration { DisplayName ="Number Of Updated KYC"}},
@@ -2696,7 +2777,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Total",new GridColumnConfiguration { DisplayName ="Total"}},
 
                     }
-                }
+    }
              },
 
 

@@ -3,6 +3,8 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Data.Services;
+using Hangfire;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -96,23 +98,23 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
 
-
-
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<ICsvExport> _logger;
-        public event Action<float> OnProgressChanged = (p) =>
-        {
-            Console.WriteLine("test :" + p);
-        };
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly object _locker = new();
+        public event Action<int, int> OnProgressChanged;
 
-        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment, ILogger<ICsvExport> logger)
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment, ILogger<ICsvExport> logger, IBackgroundJobClient backgroundJobClient)
         {
             _exportHub = exportHub;
             this.connections = connections;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _serviceScopeFactory = serviceScopeFactory;
+            OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
+
         }
         public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
         {
@@ -436,9 +438,20 @@ namespace ART_PACKAGE.Helpers.Csv
             //return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
         }
 
-        public bool ExportData<TModel>(IEnumerable<TModel> data, int total, string folderPath, string fileName)
+        public bool ExportData<TContext, TModel>(GridRequest gridRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
+         where TContext : DbContext
+            where TModel : class
         {
-            this.OnProgressChanged += OnProgressChanged;
+            IBaseRepo<TContext, TModel> Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IBaseRepo<TContext, TModel>>();
+            GridResult<TModel> dataRes = Repo.GetGridData(gridRequest);
+            IQueryable<TModel>? data = dataRes.data;
+            return ExportToFolder(data, dataRes.total, folderPath, fileName, fileNumber);
+        }
+
+
+
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, int dataCount, string folderPath, string fileName, int fileNumber = 1)
+        {
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
                 IgnoreReferences = true,
@@ -450,20 +463,22 @@ namespace ART_PACKAGE.Helpers.Csv
 
             cw.WriteHeader<TModel>();
             cw.NextRecord();
-            float progress = 0;
             int index = 0;
+            float progress = 0;
             foreach (TModel item in data)
             {
                 cw.WriteRecord(item);
                 cw.NextRecord();
                 index++; // Increment the index for each item
 
-                if (index % 100 == 0 || index == total) // Also check progress at the last item
+                if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
                 {
-                    progress = (float)(index / (float)total * 100);
-                    OnProgressChanged?.Invoke(progress);
-                    //_exportHub.Clients.Clients(connections.GetConnections(user))
-                    //               .SendAsync("updateExportProgress", progress);
+                    //progress = (float)(index / (float)total * 100);
+                    int recordsDone = index + 1;
+                    lock (_locker)
+                    {
+                        OnProgressChanged(recordsDone, fileNumber);
+                    }
                 }
             }
 
@@ -479,7 +494,7 @@ namespace ART_PACKAGE.Helpers.Csv
             if (!Directory.Exists(folderPath))
                 _ = Directory.CreateDirectory(folderPath);
 
-            string filePath = Path.Combine(folderPath, fileName);
+            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
             try
             {
                 File.WriteAllBytes(filePath, stream.ToArray());
@@ -492,7 +507,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 return false;
 
             }
-
         }
+
     }
 }
