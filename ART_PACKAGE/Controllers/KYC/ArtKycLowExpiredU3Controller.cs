@@ -71,7 +71,7 @@ namespace ART_PACKAGE.Controllers.KYC
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycLowExpiredU3Controller).ToLower()].SkipList;
             List<ArtKycLowExpiredU3> data = dbfcfkc.ArtKycLowExpiredU3s.CallData(req).Data.ToList();
             ViewData["title"] = "Low risk expired customers U3 Report";
-            ViewData["desc"] = "presents all low-risk customers need to be update their expired KYCs with the related information below";
+            ViewData["desc"] = "presents all low-risk customers need to be update their expired risk with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

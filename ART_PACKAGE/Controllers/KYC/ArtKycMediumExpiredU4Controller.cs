@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumExpiredU4Controller).ToLower()].SkipList;
             List<ArtKycMediumExpiredU4> data = dbfcfkc.ArtKycMediumExpiredU4s.CallData(req).Data.ToList();
             ViewData["title"] = "Medium risk expired customers U4 Report";
-            ViewData["desc"] = "presents all medium-risk customers need to be update their expired KYCs with the related information below";
+            ViewData["desc"] = "presents all medium-risk customers need to be update their expired risk with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers.KYC
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthU4Controller).ToLower()].SkipList;
             List<ArtKycMediumOneMonthU4> data = dbfcfkc.ArtKycMediumOneMonthU4s.CallData(req).Data.ToList();
             ViewData["title"] = "Medium risk within 1 month customers U4 Report";
-            ViewData["desc"] = "presents all medium-risk customers need to be update their KYCs within 1 month with the related information below";
+            ViewData["desc"] = "presents all medium-risk customers need to be update their risk within 1 month with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

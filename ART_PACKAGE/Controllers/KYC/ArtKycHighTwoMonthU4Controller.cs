@@ -71,7 +71,7 @@ namespace ART_PACKAGE.Controllers.KYC
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycHighTwoMonthU4Controller).ToLower()].SkipList;
             List<ArtKycHighTwoMonthU4> data = dbfcfkc.ArtKycHighTwoMonthU4s.CallData(req).Data.ToList();
             ViewData["title"] = "High risk within 2 months customers U4 Report";
-            ViewData["desc"] = "presents all high-risk customers need to be update their KYCs within 2 months with the related information below";
+            ViewData["desc"] = "presents all high-risk customers need to be update their risk within 2 months with the related information below";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
