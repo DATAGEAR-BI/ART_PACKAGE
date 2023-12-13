@@ -50,6 +50,9 @@ namespace Data.Data.FTI
         public virtual DbSet<ArtFtiEndToEndSubCases> ArtFtiEndToEndSubCasess { get; set; } = null!;
         public virtual DbSet<ArtFtiEndToEndEcmEventsWorkflow> ArtFtiEndToEndEcmEventsWorkflows { get; set; } = null!;
         public virtual DbSet<ArtFtiEndToEndFtiEventsWorkflow> ArtFtiEndToEndFtiEventsWorkflows { get; set; } = null!;
+        public virtual DbSet<ArtEcmAssignee> ArtEcmAssignees { get; set; } = null!;
+        public virtual DbSet<ArtEcmPendingCases> ArtEcmPendingCases { get; set; } = null!;
+        public virtual DbSet<ArtEcmSlaViolatedCasesTb> ArtEcmSlaViolatedCasesTb { get; set; } = null!;
 
         public FTIContext(DbContextOptions<FTIContext> options) : base(options)
         {

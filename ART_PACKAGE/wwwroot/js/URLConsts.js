@@ -6,6 +6,8 @@
     ArtFtiEcmTransaction: "/ArtFtiEcmTransaction/GetData",
     ArtFtiEndToEnd: "/ArtFtiEndToEnd/GetData",
     ArtFtiEndToEndNew: "/ArtFtiEndToEndNew/GetData",
+    ArtEcmPendingCases:"/ArtEcmPendingCases/GetData",
+    ArtEcmSlaViolatedCases:"/ArtEcmSlaViolatedCases/GetData",
     License: "/License/GetData",
     CustomReport: "/report/GetGridData/",
     MyReports: "/report/GetMyReportsData/",

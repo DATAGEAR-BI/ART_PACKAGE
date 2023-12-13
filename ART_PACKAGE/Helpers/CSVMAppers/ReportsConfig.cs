@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers.CustomReport;
+using Data.Data.FTI;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -258,7 +259,46 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {
                             }
                         }
-                    },     {
+                    },
+            {
+                        nameof(ArtEcmPendingCasesController).ToLower(),new ReportConfig
+                        {
+
+                              DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                            {"CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"                                 }},
+                            {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"                     }},
+                            {"SubCaseId",new DisplayNameAndFormat { DisplayName ="Sub Case Id"                          }},
+                            {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"                         }},
+                            {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"                     }},
+                            {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"                       }},
+                            {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"                                  }},
+                            {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"                              }},
+                            {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"                             }},
+                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"                       }},
+                            {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"                           }},
+                            {"Product",new DisplayNameAndFormat { DisplayName ="Product"                                }},
+                            {"RequestStatus",new DisplayNameAndFormat { DisplayName ="Request Status"                   }},
+                            {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"                         }},
+                            {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification" }},
+                            {"ParentActionBy",new DisplayNameAndFormat { DisplayName ="Parent Action By"                }},
+                            {"ParentLastActionDate",new DisplayNameAndFormat { DisplayName ="Parent Last Action Date"   }},
+                            {"SubLastActionDate",new DisplayNameAndFormat { DisplayName ="Sub Last Action Date"         }},
+                            {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference",Template="hyperlink" }},
+                            { "TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"} },
+                            { "AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
+                            { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
+                            { "AssignedTime ",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                              },
+
+
+                           SkipList =  new List<string>()
+                            {
+                               "CaseRk"
+                            }
+                        }
+                    },
+            {
                         nameof(ArtFtiEndToEndController).ToLower(),new ReportConfig
                         {
 
@@ -306,6 +346,44 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             }
                         }
                     },
+            {
+                        nameof(ArtEcmSlaViolatedCasesController).ToLower(),new ReportConfig
+                        {
+
+                              DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
+                                {"CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"}},
+                                {"CaseId",new DisplayNameAndFormat { DisplayName ="Case Id"}},
+                                {"RelatedCaseId",new DisplayNameAndFormat { DisplayName ="Related Case Id"}},
+                                {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                                {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                                {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"}},
+                                {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
+                                {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
+                                {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"}},
+                                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
+                                {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
+                                {"Product",new DisplayNameAndFormat { DisplayName ="Product"}},
+                                {"RequestStatus",new DisplayNameAndFormat { DisplayName ="Request Status"}},
+                                {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                                {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
+                                {"LastActionBy",new DisplayNameAndFormat { DisplayName ="Last Action By"}},
+                                {"LastActionDate",new DisplayNameAndFormat { DisplayName ="Last Action Date"}},
+                                {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference"}},
+                                {"ProdCd",new DisplayNameAndFormat { DisplayName ="Prod Cd"}},
+                                {"DisplayName",new DisplayNameAndFormat { DisplayName ="Display Name"}},
+                                {"MlsToEscalation1",new DisplayNameAndFormat { DisplayName ="Mls To Escalation1"}},
+                                {"FormattedTime",new DisplayNameAndFormat { DisplayName ="Formatted Time"}},
+                                {"TotalTime",new DisplayNameAndFormat { DisplayName = "Total Time" }},
+                                {"AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
+                                {"Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
+                                {"AssignedTime ",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                              },
+                              SkipList =  new List<string>()
+                            {
+                                  "CaseRk"
+                            }
+                        }
+            }
             ////        {
             ////            nameof(AlertedEntitiesController).ToLower(),new ReportConfig
             ////            {

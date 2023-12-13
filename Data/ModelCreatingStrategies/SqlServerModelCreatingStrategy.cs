@@ -4918,9 +4918,265 @@ namespace Data.ModelCreatingStrategies
 
             });
 
+            modelBuilder.Entity<ArtEcmPendingCases>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ECM_PENDING_CASES", "ART_DB");
+                entity.Property(e => e.CaseRk)
+                    .HasColumnName("case_rk")
+                    .HasColumnType("numeric")
+                    .IsRequired();
+                entity.Property(e => e.ParentCaseId)
+            .HasColumnName("PARENT_CASE_ID")
+            .HasColumnType("nvarchar(64)")
+            .IsRequired();
+
+                entity.Property(e => e.SubCaseId)
+                    .HasColumnName("SUB_CASE_ID")
+                    .HasColumnType("nvarchar(64)");
+
+                entity
+                    .Property(e => e.BranchName)
+                    .HasColumnName("BRANCH_NAME")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.CustomerName)
+                    .HasColumnName("CUSTOMER_NAME")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.CustomerCIF)
+                    .HasColumnName("CUSTOMER_CIF")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.Amount)
+                    .HasColumnName("AMOUNT")
+                    .HasColumnType("float");
+
+                entity
+                    .Property(e => e.Currency)
+                    .HasColumnName("CURRENCY")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.CaseType)
+                    .HasColumnName("CASE_TYPE")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.ProductType)
+                    .HasColumnName("PRODUCT_TYPE")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.EventName)
+                    .HasColumnName("EVENT_NAME")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.Product)
+                    .HasColumnName("PRODUCT")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.RequestStatus)
+                    .HasColumnName("REQUEST_STATUS")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.CreateDate)
+                    .HasColumnName("Create_Date")
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                entity
+                    .Property(e => e.CustomerClassification)
+                    .HasColumnName("CUSTOMER_CLASSIFICATION")
+                    .HasColumnType("varchar(1000)");
+
+                entity.Property(e => e.ParentActionBy)
+                    .HasColumnName("PARENT_ACTION_BY")
+                    .HasColumnType("nvarchar(60)");
+
+                entity.Property(e => e.ParentLastActionDate)
+                    .HasColumnName("PARENT_LAST_ACTION_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.SubLastActionDate)
+                    .HasColumnName("SUB_LAST_ACTION_DATE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.MasterReference)
+                    .HasColumnName("MASTER_REFERENCE")
+                    .HasColumnType("char(20)");
+
+                entity.Property(e => e.TimeDifference)
+                    .HasColumnName("TIME_DIFFERENCE")
+                    .HasColumnType("nvarchar(100)");
 
 
-            modelBuilder.Entity<ArtFtiEndToEnd>(entity =>
+
+            });
+
+            modelBuilder.Entity<ArtEcmSlaViolatedCasesTb>(entity =>
+            {
+                entity.HasNoKey();
+                entity
+           .ToTable("ART_ECM_SLA_VIOLATED_CASES_TB"); // Replace with your actual table name
+
+                entity
+                    .Property(e => e.CaseRk)
+                    .HasColumnName("case_rk")
+                    .HasColumnType("numeric")
+                    .IsRequired();
+
+                entity
+                    .Property(e => e.CaseId)
+                    .HasColumnName("CASE_ID")
+                    .HasColumnType("nvarchar(64)")
+                    .IsRequired();
+
+                entity
+                    .Property(e => e.RelatedCaseId)
+                    .HasColumnName("RELATED_CASE_ID")
+                    .HasColumnType("nvarchar(64)");
+
+                entity
+                    .Property(e => e.BranchName)
+                    .HasColumnName("BRANCH_NAME")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.CustomerName)
+                    .HasColumnName("CUSTOMER_NAME")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.CustomerCIF)
+                    .HasColumnName("CUSTOMER_CIF")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.Amount)
+                    .HasColumnName("AMOUNT")
+                    .HasColumnType("float");
+
+                entity
+                    .Property(e => e.Currency)
+                    .HasColumnName("CURRENCY")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.CaseType)
+                    .HasColumnName("CASE_TYPE")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.ProductType)
+                    .HasColumnName("PRODUCT_TYPE")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.EventName)
+                    .HasColumnName("EVENT_NAME")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.Product)
+                    .HasColumnName("PRODUCT")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.RequestStatus)
+                    .HasColumnName("REQUEST_STATUS")
+                    .HasColumnType("nvarchar(4000)");
+
+                entity
+                    .Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE")
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                entity
+                    .Property(e => e.CustomerClassification)
+                    .HasColumnName("CUSTOMER_CLASSIFICATION")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.LastActionBy)
+                    .HasColumnName("LAST_ACTION_BY")
+                    .HasColumnType("nvarchar(60)");
+
+                entity
+                    .Property(e => e.LastActionDate)
+                    .HasColumnName("LAST_ACTION_DATE")
+                    .HasColumnType("datetime");
+
+                entity
+                    .Property(e => e.MasterReference)
+                    .HasColumnName("MASTER_REFERENCE")
+                    .HasColumnType("char(20)");
+
+                entity
+                    .Property(e => e.ProdCd)
+                    .HasColumnName("PROD_CD")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.DisplayName)
+                    .HasColumnName("DISPLAY_NAME")
+                    .HasColumnType("nvarchar(255)");
+
+                entity
+                    .Property(e => e.MlsToEscalation1)
+                    .HasColumnName("MLS_TO_ESCALATION1")
+                    .HasColumnType("int");
+
+                entity
+                    .Property(e => e.FormattedTime)
+                    .HasColumnName("FORMATTEDTIME")
+                    .HasColumnType("nvarchar(100)");
+
+                entity
+                    .Property(e => e.TotalTime)
+                    .HasColumnName("TOTAL_TIME")
+                    .HasColumnType("int");
+
+            });
+
+            modelBuilder.Entity<ArtEcmAssignee>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ECM_ASSIGNEE", "ART_DB");
+
+                entity
+            .Property(e => e.CaseRk)
+            .HasColumnName("Case_Rk")
+            .HasColumnType("numeric")
+            .IsRequired();
+
+                entity
+                    .Property(e => e.AssignedBy)
+                    .HasColumnName("ASSIGNED_BY")
+                    .HasColumnType("varchar(1000)");
+
+                entity
+                    .Property(e => e.Assignee)
+                    .HasColumnName("ASSIGNEE")
+                    .HasColumnType("varchar(60)")
+                    .IsRequired();
+
+                entity
+                    .Property(e => e.AssignedTime)
+                    .HasColumnName("ASSIGNED_TIME")
+                    .HasColumnType("datetime");
+            });
+
+                modelBuilder.Entity<ArtFtiEndToEnd>(entity =>
             {
                 entity.HasNoKey();
 

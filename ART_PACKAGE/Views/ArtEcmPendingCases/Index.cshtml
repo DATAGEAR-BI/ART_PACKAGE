@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+<script src="~/js/FileExtraction.js" asp-append-version="true"></script>
+<script src="~/js/site.js"></script>
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+
+@*confirm.js files*@
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+@*toast.js files*@
+<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
+<section class="content-header">
+    <h1>
+        Pending Cases report
+        <br />
+    </h1>
+</section>
+<div class="modal fade" id="pending-cases-Modal" tabindex="-1" role="dialog" aria-labelledby="pending-cases-ModalLablel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-width" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pending-cases-Title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="pending-cases-Body">
+                <div id="pending-cases-Grid" style="max-height:333px;max-width:1463px;overflow:scroll">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="grid"></div>
+@section Scripts{
+
+
+    <script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="ArtEcmPendingCases" data-handlerkey="ArtEcmPendingCases" data-prop="CaseRk"></script>
+}

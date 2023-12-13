@@ -41,9 +41,9 @@ namespace ART_PACKAGE.Controllers
                 DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranchController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {"EcmReference".ToLower(),dropDownService   .GetECMREFERNCEDropDown()   .ToDynamicList() },
+                    //{"EcmReference".ToLower(),dropDownService   .GetECMREFERNCEDropDown()   .ToDynamicList() },
                     {"BranchName".ToLower(),dropDownService       .GetBranchNameDropDown()      .ToDynamicList() },
-                    {"CustomerName".ToLower(),dropDownService   .GetCustomerNameDropDown()  .ToDynamicList() },
+                    //{"CustomerName".ToLower(),dropDownService   .GetCustomerNameDropDown()  .ToDynamicList() },
                     {"Product".ToLower(),dropDownService        .GetProductDropDown()       .ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService    .GetProductTypeDropDown()   .ToDynamicList() },
                 };

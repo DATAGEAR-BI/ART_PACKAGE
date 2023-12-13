@@ -43,10 +43,10 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
+                    //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
-                    {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
-                    {"CaseStatus".ToLower(),dropDownService.GetCaseStatusDropDown().ToDynamicList() },
+                    //{"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
+                    //{"CaseStatus".ToLower(),dropDownService.GetCaseStatusDropDown().ToDynamicList() },
                     {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                 };

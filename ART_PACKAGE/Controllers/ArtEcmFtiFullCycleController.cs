@@ -43,11 +43,11 @@ namespace ART_PACKAGE.Controllers
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
-                    {"FtiReference".ToLower(),fti.ArtEcmFtiFullCycles.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    {"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
+                    //{"FtiReference".ToLower(),fti.ArtEcmFtiFullCycles.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
-                    {"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
+                    //{"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
             }

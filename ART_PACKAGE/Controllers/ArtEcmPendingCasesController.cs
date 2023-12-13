@@ -4,22 +4,20 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.FTI;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers
 {
-    [Authorize(Roles = "ArtFtiActivity")]
-
-    public class ArtFtiActivityController : Controller
+    public class ArtEcmPendingCasesController : Controller
     {
+
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiActivityController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtEcmPendingCasesController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.fti = fti; ;
             _pdfSrv = pdfSrv;
@@ -31,60 +29,32 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtFtiActivity> data = fti.ArtFtiActivities.AsQueryable();
-
+            IQueryable<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.AsQueryable();
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
-                   "Abort",
-                   "Review",
-                   "Final review",
-                   "Create",
-                   "Input",
-                   "Log",
-                   "Release",
-                   "Complete",
-                   "Limit check",
-                   "Final limit check",
-                   "Gateway",
-                   "SWIFT In",
-                   "Rate fixing",
-                   "*Review/Final review*",
-                   "Fix auth",
-                   "Limit approval",
-                   "Print",
-                   "Watch list check",
-                   "Release pending",
-                   "Post release",
-                   "Exchange",
-                   "External review",
-                   "Internal",
-                   "Synchronisation",
-                   "Batch",
-                   "Gwy auto input",
-                   "EoD auto input",
-                   "Int auto input",
-                   "Swft auto input",
-                   "Auto reject"
                 };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
+                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
+                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                     //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     //{"FtiReference".ToLower(),fti.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    {"EventSteps".ToLower(),evensteps.ToDynamicList() },
+                    //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtFtiActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtEcmPendingCases> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -95,11 +65,24 @@ namespace ART_PACKAGE.Controllers
                 {
                     /*new
                     {
-                        text = "Delete Cases",
-                        id="dltCases",
-                        show = User.IsInRole("Delete_Cases")
-                    }*/
+                        text = "Get Ecm Events Workflow",
+                        id = "ecmEventsWorkflow",
+                        //show = User.IsInRole("Delete_Cases")
+                    }
+                    , new
+                    {
+                        text = "Get Fti Events Workflow",
+                        id = "ftiEventsWorkflow",
+                        //show = User.IsInRole("Delete_Cases")
+                    }
+                    , new
+                    {
+                        text = "Get SubCases",
+                        id = "subCases",
+                        //show = User.IsInRole("Delete_Cases")
+                    },*/
                 },
+                selectable = true
 
             };
 
@@ -125,11 +108,11 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiActivityController).ToLower()].SkipList;
-            List<ArtFtiActivity> data = fti.ArtFtiActivities.CallData(req).Data.ToList();
-            ViewData["title"] = "FTI-Activities";
-            ViewData["desc"] = "DGECM Activity Report showing what cases have been created and their status";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].SkipList;
+            List<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.CallData(req).Data.ToList();
+            ViewData["title"] = "Pending Cases report";
+            ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");
@@ -138,5 +121,18 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
+        [HttpGet("[controller]/[action]/{caseRk}")]
+        public IActionResult GetAssignees(string? caseRk)
+        {
+            IQueryable<ArtEcmAssignee> assignees = fti.ArtEcmAssignees.Where(x => x.CaseRk.ToString() == Uri.UnescapeDataString(caseRk));
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(assignees)
+            };
+        }
+        
+
+
     }
 }

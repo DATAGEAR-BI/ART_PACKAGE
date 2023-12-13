@@ -44,9 +44,9 @@ namespace ART_PACKAGE.Controllers
                 {
                     //commented untill resolve drop down 
                     {"Product".ToLower(),_drpSrv.GetProductDropDown().ToDynamicList() },
-                    {"FtiReference".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    {"FirstLineParty".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
-                    {"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
+                    //{"FtiReference".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    //{"FirstLineParty".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
+                    //{"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransactionController).ToLower()].SkipList;

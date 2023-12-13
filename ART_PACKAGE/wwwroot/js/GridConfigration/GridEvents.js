@@ -1532,6 +1532,34 @@ export const CellDbHandlers = {
             kendo.ui.progress($('#grid'), false);
         }
 
+    },
+    ArtEcmPendingCases: {
+        MasterReference: async (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+
+            $('#pending-cases-Grid').empty();
+            var headers = ["#", "Case Rk","Assigned By",
+                                "Assignee",
+                                "Assigned Time"]
+            var events = await (await fetch(`/ArtEcmPendingCases/GetAssignees/${encodeURIComponent(dataItem.CaseRk)}`)).json();
+            createPopUpTable("pending-cases-Grid", events, `There is no Assignees for this case: ${dataItem.CaseRk}`, headers);
+            $("#pending-cases-Modal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        }
+    },
+    ArtEcmSlaViolatedCases: {
+        MasterReference: async (dataItem) => {
+            kendo.ui.progress($('#grid'), true);
+
+            $('#art-ecm-sla-violated-cases-Grid').empty();
+            var headers = ["#", "Case Rk", "Assigned By",
+                "Assignee",
+                "Assigned Time"]
+            var events = await (await fetch(`/ArtEcmSlaViolatedCases/GetAssignees/${encodeURIComponent(dataItem.CaseRk)}`)).json();
+            createPopUpTable("art-ecm-sla-violated-cases-Grid", events, `There is no Assignees for this case: ${dataItem.CaseRk}`, headers);
+            $("#art-ecm-sla-violated-cases-Modal").modal("show");
+            kendo.ui.progress($('#grid'), false);
+        }
     }
 }
 
