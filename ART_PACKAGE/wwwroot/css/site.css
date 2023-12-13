@@ -57,3 +57,22 @@ body {
     max-width: 2000px !important;
     overflow: scroll !important
 }
+#art-ecm-sla-violated-cases-Grid {
+    max-height: 333px !important;
+    max-width: 2000px !important;
+    overflow: scroll !important
+}
+#pending-cases-Grid {
+    max-height: 333px !important;
+    max-width: 2000px !important;
+    overflow: scroll !important
+}
+
+#logo-image {
+    width: 300px;
+    height: auto;
+}
+#login-container {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}

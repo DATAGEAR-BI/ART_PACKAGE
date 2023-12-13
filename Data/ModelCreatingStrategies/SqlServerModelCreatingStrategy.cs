@@ -5025,7 +5025,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
                 entity
-           .ToTable("ART_ECM_SLA_VIOLATED_CASES_TB"); // Replace with your actual table name
+           .ToTable("ART_ECM_SLA_VIOLATED_CASES_TB", "ART_DB"); // Replace with your actual table name
 
                 entity
                     .Property(e => e.CaseRk)
