@@ -41,7 +41,7 @@ class Grid extends HTMLElement {
     constructor() {
         super();
 
-        
+
 
     }
     connectedCallback() {
@@ -158,10 +158,11 @@ class Grid extends HTMLElement {
                 console.log(event);
             })
 
-            this.storedConfig.applyBtn.onclick = () => {
+            this.storedConfig.applyBtn.addEventListener('click', () => {
                 var grid = $(this.gridDiv).data("kendoGrid");
                 grid.dataSource.read();
-            }
+            });
+            
         }
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
@@ -198,7 +199,7 @@ class Grid extends HTMLElement {
 
     intializeColumns() {
 
-        var para = {};
+        var para = { IsIntialize: true };
         if (this.isStoredProc) {
             var flatted = this.storedConfig.builder.value.flat();
             var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
@@ -210,15 +211,9 @@ class Grid extends HTMLElement {
                 }
 
             });
-            para = {
-                Req: { IsIntialize: true },
-                Filters: val
-            }
-
-        } else {
-            para = { IsIntialize: true };
+            para.QueryBuilderFilters = val;
         }
-        console.log(this.url);
+
         fetch(this.url, {
             method: "POST",
             headers: {
@@ -500,6 +495,15 @@ class Grid extends HTMLElement {
             dataSource: {
                 transport: {
                     read: async (options) => {
+                        para = {
+                            IsIntialize: false,
+                            Take: options.data.take,
+                            Skip: options.data.skip,
+                            Sort: options.data.sort,
+                            Group: options.data.group,
+                            Filter: options.data.filter,
+                            All: true
+                        };
 
                         if (this.isStoredProc) {
                             var flatted = this.storedConfig.builder.value.flat();
@@ -520,29 +524,11 @@ class Grid extends HTMLElement {
                                 }
 
                             });
-                            para = {
-                                Req: {
-                                    IsIntialize: false,
-                                    Take: options.data.take,
-                                    Skip: options.data.skip,
-                                    Sort: options.data.sort,
-                                    Group: options.data.group,
-                                    Filter: options.data.filter
-
-                                },
-                                Filters: val
-                            }
+                            para.QueryBuilderFilters = val;
+                            para.IsStored = true;
                         }
-                        else {
-                            para.Take = options.data.take;
-                            para.Skip = options.data.skip;
-                            para.Sort = options.data.sort;
-                            para.IsIntialize = false;
-                            para.Filter = options.data.filter;
-                            para.Group = options.data.group;
-                            para.All = true;
 
-                        }
+
 
                         var d = await this.readdata(para);
                         if (d) {
@@ -640,6 +626,7 @@ class Grid extends HTMLElement {
             persistSelection: true,
             pageable: true,
             sortable: true,
+
             change: (e) => {
                 if ([...grid.select()].length > 0) {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {

@@ -36,6 +36,11 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.Property<string>("DayOfWeek")
                         .HasColumnType("NVARCHAR2(2000)");
 
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(1)")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Description")
                         .HasColumnType("NVARCHAR2(2000)");
 
@@ -48,6 +53,9 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.Property<bool>("IsSavedOnServer")
                         .HasColumnType("NUMBER(1)");
 
+                    b.Property<string>("MailContent")
+                        .HasColumnType("NVARCHAR2(2000)");
+
                     b.Property<int?>("Minute")
                         .HasColumnType("NUMBER(10)");
 
@@ -58,6 +66,13 @@ namespace OracleMigrations.Migrations.ExportSchedular
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(450)");
 
+                    b.Property<string>("ParametersJson")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("NVARCHAR2(2000)");
+
                     b.Property<string>("Period")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -66,6 +81,9 @@ namespace OracleMigrations.Migrations.ExportSchedular
 
                     b.Property<string>("ReportName")
                         .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("Id");
@@ -89,35 +107,6 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.ToTable("TaskMails");
                 });
 
-            modelBuilder.Entity("Data.Data.ExportSchedular.TaskParameters", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Operator")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<string>("ParameterName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<string>("ParameterValue")
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("TaskParameters");
-                });
-
             modelBuilder.Entity("Data.Data.ExportSchedular.TaskMails", b =>
                 {
                     b.HasOne("Data.Data.ExportSchedular.ExportTask", "Task")
@@ -129,22 +118,9 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("Data.Data.ExportSchedular.TaskParameters", b =>
-                {
-                    b.HasOne("Data.Data.ExportSchedular.ExportTask", "Task")
-                        .WithMany("Parameters")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
             modelBuilder.Entity("Data.Data.ExportSchedular.ExportTask", b =>
                 {
                     b.Navigation("Mails");
-
-                    b.Navigation("Parameters");
                 });
 #pragma warning restore 612, 618
         }

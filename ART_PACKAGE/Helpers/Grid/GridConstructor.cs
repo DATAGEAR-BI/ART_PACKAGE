@@ -75,21 +75,23 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
         {
-            ReportConfig reportConfig = ReportsConfig.CONFIG[controller.ToLower()];
+            ReportConfig? reportConfig = ReportsConfig.CONFIG.ContainsKey(controller.ToLower()) ? ReportsConfig.CONFIG[controller.ToLower()] : null;
+            bool hasConfig = reportConfig != null;
             Dictionary<string, List<SelectItem>> DropDownColumn = _dropDownMap.GetDorpDownForReport(controller);
-            List<string> ColumnsToSkip = reportConfig.SkipList;
-            Dictionary<string, GridColumnConfiguration> DisplayNames = reportConfig.DisplayNames;
+            List<string>? ColumnsToSkip = reportConfig?.SkipList;
+            Dictionary<string, GridColumnConfiguration>? DisplayNames = reportConfig?.DisplayNames;
 
-            return new GridIntializationConfiguration()
+            GridIntializationConfiguration conf = new()
             {
                 columns = GridHelprs.GetColumns<TModel>(DropDownColumn, DisplayNames, ColumnsToSkip),
-                selectable = reportConfig.Selectable,
-                toolbar = reportConfig.Toolbar,
-                actions = reportConfig.Actions,
-                containsActions = reportConfig.ContainsActions,
-                showCsvBtn = reportConfig.ShowExportCsv is null || reportConfig.ShowExportCsv(User),
-                showPdfBtn = reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User)
+                selectable = hasConfig && reportConfig.Selectable,
+                toolbar = hasConfig ? reportConfig.Toolbar : null,
+                actions = hasConfig ? reportConfig.Actions : null,
+                containsActions = hasConfig && reportConfig.ContainsActions,
+                showCsvBtn = hasConfig && (reportConfig.ShowExportCsv is null || reportConfig.ShowExportCsv(User)),
+                showPdfBtn = hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User))
             };
+            return conf;
         }
     }
 }

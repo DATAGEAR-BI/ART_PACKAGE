@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Helpers.Grid;
-using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -35,7 +34,7 @@ namespace ART_PACKAGE.Controllers
             else
             {
 
-                GridResult<TModel> res = _gridConstructor.Repo.GetGridData(request, new SortOption { field = nameof(ArtAmlCustomersDetailsView.CustomerNumber), dir = "asc" });
+                GridResult<TModel> res = _gridConstructor.Repo.GetGridData(request);
                 return new ContentResult
                 {
                     ContentType = "application/json",

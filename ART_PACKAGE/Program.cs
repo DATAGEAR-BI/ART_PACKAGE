@@ -8,7 +8,6 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
-using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Mail;
@@ -18,7 +17,6 @@ using ART_PACKAGE.Middlewares.Logging;
 using Data.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using QuestPDF.Infrastructure;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -41,18 +39,7 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 
 
-builder.Services.AddScoped<ITaskPerformer, TaskPerformer>();
 
-
-builder.Services.AddHangfire(
-configuration => configuration
-            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-            .UseSimpleAssemblyNameTypeSerializer()
-            .UseRecommendedSerializerSettings()
-            .UseSqlServerStorage(builder.Configuration.GetConnectionString("AuthContextConnection"))
-            .UseSerializerSettings(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-
-builder.Services.AddHangfireServer();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
@@ -116,7 +103,7 @@ app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();
 
-app.StartTasks();
+//app.StartTasks();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

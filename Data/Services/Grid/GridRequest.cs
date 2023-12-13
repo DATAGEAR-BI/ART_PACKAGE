@@ -1,4 +1,6 @@
-﻿namespace Data.Services.Grid
+﻿using Data.Services.QueryBuilder;
+
+namespace Data.Services.Grid
 {
     public class GridRequest
     {
@@ -11,6 +13,9 @@
         public bool All { get; set; }
         public string? IdColumn { get; set; }
         public List<string>? SelectedValues { get; set; }
+
+        public bool IsStored { get; set; }
+        public List<BuilderFilter>? QueryBuilderFilters { get; set; }
 
     }
 

@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<section class="content-header">
+    <h1>
+        
+        <small> </small>
+        <br />
+    </h1>
+</section>
+<div class="container-fluid">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <span class="row accordion-button collapsed text-uppercase fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                   Filters
+                </span>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="row d-flex align-items-center">
+                        <smart-query-builder  class="offset-3 col-4" id="querybuilder" data-applybtn="applyBtn" data-params="UserPerformancePerActionUser"></smart-query-builder>
+                        <div class="col-2 d-flex justify-content-center">
+                            <button id="applyBtn" class="btn btn-primary">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   @*     <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <span class="row accordion-button collapsed text-uppercase fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#report" aria-expanded="false" aria-controls="report">
+                   Report Title
+                </span>
+            </h2>
+            <div id="report" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                
+                        <smart-tabs class="w-100 h-75" tab-position="top" collapsible>
+                            <smart-tab-item label="Out Sta" selected>
+                                <m-grid id="OutSta" data-stored="querybuilder" data-urlkey="OutSta" data-handlerkey="OutSta"></m-grid>
+                            </smart-tab-item>
+                            <smart-tab-item label="Sum Country">
+                                <m-grid id="SumCountry" data-stored="querybuilder" data-urlkey="SumCountry" data-handlerkey="SumCountry"></m-grid>
+                            </smart-tab-item>
+                            <smart-tab-item label="Draft Type">
+                                <m-grid id="DraftType" data-stored="querybuilder" data-urlkey="DraftType" data-handlerkey="DraftType"></m-grid>
+                            </smart-tab-item>
+                            <smart-tab-item label="Draft Status">
+                                <m-grid id="DraftStatus" data-stored="querybuilder" data-urlkey="DraftStatus" data-handlerkey="DraftStatus"></m-grid>
+                            </smart-tab-item>
+                        </smart-tabs>
+                   
+                </div>
+            </div>
+        </div>*@
+    </div>
+
+
+    <smart-tabs class="w-100 h-75" tab-position="top" collapsible>
+        <smart-tab-item label="Out Sta" selected>
+            <m-grid id="OutSta" data-stored="querybuilder" data-urlkey="OutSta" data-handlerkey="OutSta"></m-grid>
+        </smart-tab-item>
+        <smart-tab-item label="Sum Country">
+            <m-grid id="SumCountry" data-stored="querybuilder" data-urlkey="SumCountry" data-handlerkey="SumCountry"></m-grid>
+        </smart-tab-item>
+        <smart-tab-item label="Draft Type">
+            <m-grid id="DraftType" data-stored="querybuilder" data-urlkey="DraftType" data-handlerkey="DraftType"></m-grid>
+        </smart-tab-item>
+        <smart-tab-item label="Draft Status">
+            <m-grid id="DraftStatus" data-stored="querybuilder" data-urlkey="DraftStatus" data-handlerkey="DraftStatus"></m-grid>
+        </smart-tab-item>
+    </smart-tabs>
+    
+</div>
+
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+@section Scripts {
+    <script src="~/lib/smartcomponents/source/modules/smart.progressbar.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.tabs.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.multicomboinput.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+    <script type="module" defer src="~/js/exportall.js"></script>
+}

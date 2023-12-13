@@ -2,6 +2,7 @@
 using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
+using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Middlewares.License;
 using ART_PACKAGE.Middlewares.Security;
@@ -27,6 +28,8 @@ using Data.FCFKC.SASAML;
 using Data.FCFKC.SEG;
 using Data.GOAML;
 using Data.TIZONE2;
+using Hangfire;
+using Hangfire.Oracle.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
@@ -132,7 +135,39 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("EXPORT_SCHEDULAR"))
             {
+
                 _ = services.AddDbContext<ExportSchedularContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddScoped<ITaskPerformer, TaskPerformer>();
+
+
+                _ = services.AddHangfire(
+                configuration =>
+                {
+                    _ = configuration
+                                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                                .UseSimpleAssemblyNameTypeSerializer()
+                                .UseRecommendedSerializerSettings();
+                    switch (dbType)
+                    {
+                        case DbTypes.SqlServer:
+                            _ = configuration.UseSqlServerStorage(connectionString);
+                            break;
+                        default:
+                            _ = configuration.UseStorage(new OracleStorage(connectionString,
+                                 new OracleStorageOptions
+                                 {
+                                     // Optional settings
+                                     QueuePollInterval = TimeSpan.FromSeconds(15),
+                                     JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                                     SchemaName = "ART"
+                                 }
+                             )
+                                                                        );
+                            break;
+                    }
+                });
+
+                _ = services.AddHangfireServer();
             }
             _ = services.AddScoped<IDbService, DBService>();
             return services;

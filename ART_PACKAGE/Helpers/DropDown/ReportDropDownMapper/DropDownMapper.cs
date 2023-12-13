@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.FTI.DraftsReport;
 
 namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
 {
@@ -11,7 +12,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
             _dropDown = dropDown;
         }
 
-        public Dictionary<string, List<SelectItem>> GetDorpDownForReport(string controller)
+        public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
         {
             return controller switch
             {
@@ -24,7 +25,13 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
                     {"PoliticallyExposedPersonInd".ToLower(), new List<string>(){"Y","N"}.Select(x=> new SelectItem{ text = x,value = x }).ToList()  },
                     {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() }
-                }
+                },
+                nameof(SumCountryController) => new Dictionary<string, List<SelectItem>>
+                {
+                    { "C7CNM".ToLower() , new List<SelectItem> { new SelectItem  { text = "brrrrr" , value = "brrrrr" }, new SelectItem { text = "brrrrr", value = "brrrrr" }, } }
+                },
+
+                _ => null
             };
         }
     }

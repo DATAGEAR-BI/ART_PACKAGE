@@ -28,5 +28,14 @@
         public static readonly string ART_ST_GOAML_REPORTS_PER_INDICATOR = "ART.ART_ST_GOAML_REPORTS_PER_INDICATOR";
         public static readonly string ART_ST_GOAML_REPORTS_PER_CREATOR = "ART.ART_ST_GOAML_REPORTS_PER_CREATOR";
 
+
+
+        //FTI
+        public static readonly string ART_ST_TI_ODC_OUTSTA_REPORT = "ART.ART_ST_TI_ODC_OUTSTA_REPORT";
+        public static readonly string ART_TI_ODC_OUTSTA_SUMM_COUNTRY_REPORT = "ART.ART_TI_ODC_OUTSTA_SUMM_COUNTRY_REPORT";
+        public static readonly string ART_TI_ODC_OUTSTA_SUMM_DRAFT_STATUS_REPORT = "ART.ART_TI_ODC_OUTSTA_SUMM_DRAFT_STATUS_REPORT";
+        public static readonly string ART_TI_ODC_OUTSTA_SUMM_DRAFT_TYPE_REPORT = "ART.ART_TI_ODC_OUTSTA_SUMM_DRAFT_TYPE_REPORT";
+
+
     }
 }

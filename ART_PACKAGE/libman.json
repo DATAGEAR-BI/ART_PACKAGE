@@ -77,7 +77,11 @@
     {
       "library": "bootstrap-icons@1.11.1",
       "destination": "wwwroot/lib/bootstrap-icons"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@progress/kendo-theme-material@3.22.0",
+      "destination": "wwwroot/progress/kendo-theme-material/"
     }
-
   ]
 }

@@ -4,7 +4,6 @@ using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Data.Services;
-using Hangfire;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -106,7 +105,7 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly object _locker = new();
         public event Action<int, int> OnProgressChanged;
 
-        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment, ILogger<ICsvExport> logger, IBackgroundJobClient backgroundJobClient)
+        public CsvExport(IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IWebHostEnvironment webHostEnvironment, ILogger<ICsvExport> logger)
         {
             _exportHub = exportHub;
             this.connections = connections;

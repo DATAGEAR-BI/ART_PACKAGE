@@ -2,6 +2,6 @@
 {
     public interface IDropDownMapper
     {
-        public Dictionary<string, List<SelectItem>> GetDorpDownForReport(string controller);
+        public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller);
     }
 }

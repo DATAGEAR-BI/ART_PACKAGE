@@ -1,9 +1,9 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
-using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ARTDGAML;
+using Data.Services.DbContextExtentions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;

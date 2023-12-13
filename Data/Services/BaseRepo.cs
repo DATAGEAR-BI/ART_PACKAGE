@@ -1,5 +1,11 @@
-﻿using Data.Services.Grid;
+﻿using Data.Constants.db;
+using Data.Constants.StoredProcs;
+using Data.Services.DbContextExtentions;
+using Data.Services.Grid;
+using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
+using System.Data;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -87,67 +93,54 @@ namespace Data.Services
         {
             Microsoft.EntityFrameworkCore.Metadata.IEntityType? entityType = _context.Model.FindEntityType(typeof(TModel));
             string? tableName = entityType?.GetTableName() ?? entityType?.GetViewName();
-
-            StringBuilder stringBuilder = new();
-            var Begin = "Begin";
-            var End = "End;";
-
-            stringBuilder.AppendLine(Begin);
-
-            List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
-            string columns = string.Join(", ", properties.Select(p => p?.GetColumnName() ?? p.Name));
-
-
-
-            List<string> parameterList = new();
-
-            foreach (TModel entity in data)
+            var connection = (OracleConnection)_context.Database.GetDbConnection();
+            OracleBulkCopy bulkCopy = new OracleBulkCopy(connection);
+            bulkCopy.DestinationTableName = tableName; // Replace with your table name
+            try
             {
-                stringBuilder.AppendLine($"INSERT INTO {tableName} (");
-                stringBuilder.AppendLine(columns);
-                stringBuilder.AppendLine(") VALUES");
-                IEnumerable<string> values = properties.Select(p =>
+                DataTable dataTable = new DataTable();
+                List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
+                foreach (var property in properties)
                 {
-                    object? value = p.PropertyInfo.GetValue(entity);
-                    if (value != null)
-                    {
+                    dataTable.Columns.Add(property?.GetColumnName());
+                }
+                foreach (var item in data)
+                {
+                    DataRow row = dataTable.NewRow();
 
-                        if (p.PropertyInfo.PropertyType == typeof(string) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(string))
-                        {
-                            // Escape single quotes in string values
-                            value = ((string?)value)?.Replace("'", "''"); // Handle nullable string
-                            return $"'{value}'";
-                        }
-                        else if (p.PropertyInfo.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(DateTime))
-                        {
-                            return $"'{(DateTime)value:yyyy-MM-dd HH:mm:ss}'";
-                        }
-                        else
-                        {
-                            return $"{value}";
-                        }
-                    }
-                    else
+                    foreach (var prop in properties)
                     {
-                        return "NULL";
+                        row[prop?.GetColumnName()] = prop.PropertyInfo.GetValue(item, null);
                     }
-                });
 
-                stringBuilder.Append($"({string.Join(", ", values)})");
+                    dataTable.Rows.Add(row);
+                }
+                connection.Open();
+                bulkCopy.WriteToServer(dataTable.Select());
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+
             }
 
-            stringBuilder.AppendLine(string.Join(";\n", parameterList));
-            stringBuilder.AppendLine(End);
-
-
-
-            int effected = _context.Database.ExecuteSqlRaw(stringBuilder.ToString());
-            return effected > 0;
         }
 
         public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null)
         {
-            var data = _context.Set<TModel>().AsQueryable();
+            IQueryable<TModel> data;
+            if (!request.IsStored)
+                data = _context.Set<TModel>().AsQueryable();
+            else
+            {
+                var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;
+                var @params = request.QueryBuilderFilters.MapToParameters(dbType);
+                var storedName = StoredNameManager.GetStoredName<TModel>(dbType);
+                data = _context.ExecuteProc<TModel>(storedName, @params.ToArray()).AsQueryable();
+            }
+
+
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
 
             data = data.Where(ex);

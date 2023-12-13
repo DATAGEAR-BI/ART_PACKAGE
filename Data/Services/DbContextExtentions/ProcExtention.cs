@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace ART_PACKAGE.Extentions.DbContextExtentions
+namespace Data.Services.DbContextExtentions
 {
     public static class ProcExtention
     {
