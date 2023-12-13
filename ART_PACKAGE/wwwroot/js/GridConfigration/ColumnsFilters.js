@@ -16,10 +16,13 @@ export const columnFilters = {
                     dataSource: column.menu,
 
 
-                    dataTextField: "text",
-                    dataValueField: "value",
 
-
+                    ...(column.menu[0].text &&
+                    {
+                        dataTextField: "text",
+                        dataValueField: "value",
+                    }
+                    ),
                     filter: "contains"
                 });
             },

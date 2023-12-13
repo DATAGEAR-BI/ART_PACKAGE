@@ -368,7 +368,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
                                 {"LastActionBy",new DisplayNameAndFormat { DisplayName ="Last Action By"}},
                                 {"LastActionDate",new DisplayNameAndFormat { DisplayName ="Last Action Date"}},
-                                {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference"}},
+                                {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference",Template="hyperlink" }},
                                 {"ProdCd",new DisplayNameAndFormat { DisplayName ="Prod Cd"}},
                                 {"DisplayName",new DisplayNameAndFormat { DisplayName ="Display Name"}},
                                 {"MlsToEscalation1",new DisplayNameAndFormat { DisplayName ="Mls To Escalation1"}},

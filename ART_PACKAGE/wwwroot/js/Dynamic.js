@@ -591,14 +591,15 @@ function generateGrid() {
         }
 
     });
-    grid.tbody.on("dblclick", "td", function (e) {
+    grid.tbody.on("click", "td > button", function (e) {
 
-
+       
         // Get the current item (row data)
         var item = grid.dataItem($(e.currentTarget).closest("tr"));
         // Get the field name associated with the clicked cell
-        var cellIndex = $(e.target).index(); // Get the index of the clicked cell
+        var cellIndex = $(e.target.parentElement).index(); // Get the index of the clicked cell
         var column = grid.columns[cellIndex];
+     
         var handler = CellDbHandlers[handlerkey][column.field];
         if (handler) {
             handler(item);
@@ -611,6 +612,8 @@ function generateGrid() {
         //    // Example action: display a message, open a modal, etc.
         //}
     });
+
+
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
