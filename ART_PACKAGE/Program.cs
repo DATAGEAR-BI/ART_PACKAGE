@@ -2,6 +2,7 @@
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Chart;
 using ART_PACKAGE.Helpers.ContextPerReport;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
@@ -47,6 +48,7 @@ builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(IGridConstructor<,>), typeof(GridConstructor<,>));
+builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 
 

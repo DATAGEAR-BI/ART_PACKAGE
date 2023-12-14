@@ -133,12 +133,8 @@ namespace Data.Services
             if (!request.IsStored)
                 data = _context.Set<TModel>().AsQueryable();
             else
-            {
-                var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;
-                var @params = request.QueryBuilderFilters.MapToParameters(dbType);
-                var storedName = StoredNameManager.GetStoredName<TModel>(dbType);
-                data = _context.ExecuteProc<TModel>(storedName, @params.ToArray()).AsQueryable();
-            }
+                data = ExcueteProc(request.QueryBuilderFilters);
+
 
 
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
@@ -203,6 +199,16 @@ namespace Data.Services
                 total = count,
             };
         }
+
+        public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)
+        {
+            var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;
+            var @params = QueryBuilderFilters.MapToParameters(dbType);
+            var storedName = StoredNameManager.GetStoredName<TModel>(dbType);
+            return _context.ExecuteProc<TModel>(storedName, @params.ToArray()).AsQueryable();
+        }
+
+
 
     }
 }

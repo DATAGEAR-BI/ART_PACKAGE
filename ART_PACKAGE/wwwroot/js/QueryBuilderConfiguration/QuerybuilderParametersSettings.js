@@ -20,35 +20,28 @@ export const parametersConfig = [
                 "isMulti": false,
                 "type": "date"
             },
-            //{
-            //    "paraName": "AlertStatus",
-            //    "paraDisplayName": "Alert Status",
-            //    "isMulti": true,
-            //    "type": "string",
-            //    "values": {
-            //        "static": ["Closed"],
-            //        "url": null
-            //    }
-            //},
-            //{
-            //    "paraName": "Test",
-            //    "paraDisplayName": "Test Drop Url",
-            //    "isMulti": true,
-            //    "type": "string",
-            //    "values": {
-            //        "static": ["zobry", "manga"],
-            //        "url": null
-            //    }
-            //},
-            //{
-            //    "paraName": "CreateDate",
-            //    "paraDisplayName": "Create Date",
-            //    "type": "date",
-            //}, {
-            //    "paraName": "number",
-            //    "paraDisplayName": "number",
-            //    "type": "number",
-            //}
+        ],
+        "defaultFilter": null //[
+        //    ["startdate", "=", today],
+        //    "and",
+        //    ["enddate", "=", yesterday]
+        //]
+    },
+    {
+        "reportName": "AlertSummary",
+        "parameters": [
+            {
+                "paraName": "startdate",
+                "paraDisplayName": "Start Date",
+                "isMulti": false,
+                "type": "date"
+            },
+            {
+                "paraName": "enddate",
+                "paraDisplayName": "End Date",
+                "isMulti": false,
+                "type": "date"
+            },
         ],
         "defaultFilter": [
             ["startdate", "=", today],

@@ -11,9 +11,11 @@ namespace ART_PACKAGE.Controllers
     {
         protected readonly IGridConstructor<TContext, TModel> _gridConstructor;
 
+
         protected BaseReportController(IGridConstructor<TContext, TModel> gridConstructor)
         {
             _gridConstructor = gridConstructor;
+
         }
 
         public abstract IActionResult Index();
@@ -42,6 +44,9 @@ namespace ART_PACKAGE.Controllers
                 };
             }
         }
+
+
+
 
         [HttpPost("[controller]/[action]/{gridId}")]
 

@@ -9,6 +9,7 @@ import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderC
 import { exportConnection } from "../../ExportListener.js";
 
 
+
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -146,23 +147,11 @@ class Grid extends HTMLElement {
                 this.storedConfig.builder.value = rep.defaultFilter;
             }
 
-            this.storedConfig.builder.addEventListener('propertySelected', (ev) => {
-                console.log(ev.detail.value);
-                //this.storedBuilder.fields = fields.filter(x => x.dataField != ev.detail.value);
-            });
-            this.storedConfig.builder.addEventListener('change', () => {
-                console.log(this.storedConfig.builder.value);
-                console.log("hi");
-            });
-            this.storedConfig.builder.addEventListener('itemClick', function (event) {
-                console.log(event);
-            })
-
             this.storedConfig.applyBtn.addEventListener('click', () => {
                 var grid = $(this.gridDiv).data("kendoGrid");
                 grid.dataSource.read();
             });
-            
+
         }
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);

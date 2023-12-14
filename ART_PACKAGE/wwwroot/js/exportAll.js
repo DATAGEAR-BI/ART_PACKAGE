@@ -8,9 +8,9 @@ exportAllBtn.innerText = "Export"
 
 window.onload = function () {
     console.log(tabs.getTabs());
-  var header = document.querySelector('.smart-tabs-header-items');
+    var header = document.querySelector('.smart-tabs-header-items');
     header.appendChild(exportAllBtn);
-    
+
 };
 exportAllBtn.onclick = async () => {
     const gridIds = tabs.getTabs().map(x => x.querySelector("m-grid").id);
@@ -18,7 +18,7 @@ exportAllBtn.onclick = async () => {
 
     var params = grids.map(x => {
 
-       var  para = {
+        var para = {
             IsIntialize: false,
             Take: x.total,
             Skip: 0,
@@ -57,7 +57,7 @@ exportAllBtn.onclick = async () => {
 
     var gridsData = grids.map((g, i) => g.readdata(params[i]));
     var data = await Promise.all(gridsData);
-     var wb = xlsx.utils.book_new();
+    var wb = xlsx.utils.book_new();
     data.map(x => xlsx.utils.json_to_sheet(x.data)).forEach((w, i) => xlsx.utils.book_append_sheet(wb, w, tabs.getTabLabel(i)));
 
     // Export the workbook

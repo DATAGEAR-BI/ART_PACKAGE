@@ -32,7 +32,13 @@
     CasesDetails: "/CasesDetails/GetData",
     Customers: "/Customers/GetData",
     HighRisk: "/HighRisk/GetData",
-    AlertSummary: "/AlertSummary/GetData",
+
+
+
+    AlertPerStatus  : "/AlertsPerStatus/GetData",
+    AlertPerOwner   : "/AlertPerOwner/GetData",
+
+
     CasesSummary: "/CasesSummary/GetData",
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",

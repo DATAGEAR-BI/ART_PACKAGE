@@ -1,4 +1,7 @@
-﻿
+﻿import * as core from "../lib/Plugins/amcharts_4.10.18/amcharts4/core.js"
+import * as charts from "../lib/Plugins/amcharts_4.10.18/amcharts4/charts.js";
+import * as matrial from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js";
+import * as animated from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
 
 var types = {
     bar: 0,
@@ -23,10 +26,10 @@ const exportMenu = [{
     }, {
         "label": "Data",
         "menu": [
-            
+
             { "type": "csv", "label": "CSV" },
             { "type": "xlsx", "label": "XLSX" }
-            
+
         ]
     }]
 }];
@@ -222,7 +225,7 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
 
     chart.scrollbarX = new am4core.Scrollbar();
 
-    
+
     //chart.exporting.menu = new am4core.ExportMenu();
 }
 

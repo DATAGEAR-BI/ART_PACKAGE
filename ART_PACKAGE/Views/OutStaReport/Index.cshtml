@@ -5,25 +5,25 @@
 
 
 
-<section class="content-header">
+@*<section class="content-header">
     <h1>
         
         <small> </small>
         <br />
     </h1>
-</section>
+</section>*@
 <div class="container-fluid">
-    <div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="row accordion accordion-flush mb-4" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
-                <span class="row accordion-button collapsed text-uppercase fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <span class="accordion-button collapsed text-uppercase fs-2 border border-primary-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                    Filters
                 </span>
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
                     <div class="row d-flex align-items-center">
-                        <smart-query-builder  class="offset-3 col-4" id="querybuilder" data-applybtn="applyBtn" data-params="UserPerformancePerActionUser"></smart-query-builder>
+                        <smart-query-builder  class="offset-2 col-6" id="querybuilder" data-applybtn="applyBtn" data-params="UserPerformancePerActionUser"></smart-query-builder>
                         <div class="col-2 d-flex justify-content-center">
                             <button id="applyBtn" class="btn btn-primary">Apply</button>
                         </div>
@@ -79,8 +79,6 @@
 </div>
 
 
-
-
 @section KendoScripts{
     <partial name="_GridScripts" />
 }
@@ -92,4 +90,5 @@
     <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
     <script type="module" defer src="~/js/components/grid/grid.js"></script>
     <script type="module" defer src="~/js/exportall.js"></script>
+   
 }

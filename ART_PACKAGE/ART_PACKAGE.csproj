@@ -2331,6 +2331,7 @@
 		<Folder Include="wwwroot\js\Components\EmailInput\" />
 		<Folder Include="wwwroot\js\Components\Card\" />
 		<Folder Include="wwwroot\js\Components\Grid\" />
+		<Folder Include="wwwroot\js\Components\Charts\" />
 		<Folder Include="wwwroot\js\Components\TextAreaInput\" />
 		<Folder Include="wwwroot\js\Components\TextInput\" />
 		<Folder Include="wwwroot\js\Emitters\" />

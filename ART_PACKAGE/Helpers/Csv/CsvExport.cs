@@ -368,6 +368,12 @@ namespace ART_PACKAGE.Helpers.Csv
                         bool isDate = IsPropertyOfType<DateTime>(paramType);
                         string columnName = prop.GetColumnName();
                         string clause = string.Empty;
+                        if (filterarr[1].StartsWith("in"))
+                        {
+                            filterarr[1] = "in";
+                            filterarr[2] = !isNumber ? string.Join(",", filterarr[2].Split(",").Select(x => $"'{x}'")) : filterarr[2];
+                        }
+
                         clause = isNumber
                             ? string.Format(NumberOp[filterarr[1]], filterarr[2], columnName)
                             : isDate

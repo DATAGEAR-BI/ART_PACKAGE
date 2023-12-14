@@ -1,4 +1,5 @@
 ﻿using Data.Services.Grid;
+using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Services
@@ -8,6 +9,9 @@ namespace Data.Services
         where TModel : class
     {
         public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null);
+
+
+        public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters);
 
         public bool BulkInsert(IEnumerable<TModel> data);
     }
