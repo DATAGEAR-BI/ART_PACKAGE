@@ -119,6 +119,7 @@ namespace ART_PACKAGE.Hubs
             #region ECM
             if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformanceNcba, SystemPerformanceController>(_db, Context.User.Identity.Name, para);
             if (nameof(AlertedEntitiesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAlertedEntity, AlertedEntitiesController>(_db, Context.User.Identity.Name, para);
+            if (nameof(SystemPerformanceFulizaController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformanceNcbaFuliza, SystemPerformanceFulizaController>(_db, Context.User.Identity.Name, para);
             #endregion
             #region KYC
             if (nameof(CustomersWithExpiredDocumentU2Controller).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<CustomersWithExpiredDocumentU2, CustomersWithExpiredDocumentU2Controller>(_kyc, Context.User.Identity.Name, para);

@@ -13,6 +13,9 @@ namespace Data.Constants.StoredProcs
         public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART.ART_ST_SYSTEM_PERF_PER_DATE";
         public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART.ART_ST_SYSTEM_PERF_PER_STATUS";
         public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART.ART_ST_SYSTEM_PERF_PER_TYPE";
+        public static readonly string ART_ST_SYSTEM_PERF_PER_DATE_FULIZA = "ART.ART_ST_SYSTEM_PERF_PER_DATE_FULIZA";
+        public static readonly string ART_ST_SYSTEM_PERF_PER_STATUS_FULIZA = "ART.ART_ST_SYSTEM_PERF_PER_STATUS_FULIZA";
+        public static readonly string ART_ST_SYSTEM_PERF_PER_TYPE_FULIZA = "ART.ART_ST_SYSTEM_PERF_PER_TYPE_FULIZA";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION_USER";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION";
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION";

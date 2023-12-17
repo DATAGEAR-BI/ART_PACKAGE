@@ -2123,6 +2123,110 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("UPDATE_USER_ID");
             });
+            modelBuilder.Entity<ArtSystemPerformanceNcbaFuliza>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_SYSTEM_PERFORMANCE_NCBA_FULIZA");
+
+                entity.Property(e => e.CaseDesc)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_DESC");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_STATUS");
+                entity.Property(e => e.LastComment)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT");
+                entity.Property(e => e.LastCommentSubject)
+                    .HasColumnType("VARCHAR2(100)")
+                    .HasColumnName("LAST_COMMENT_SUBJECT");
+
+                entity.Property(e => e.CaseTtpe)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_TTPE");
+
+                entity.Property(e => e.ClientName)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CLIENT_NAME");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.DurationsInDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_DAYS");
+
+                entity.Property(e => e.DurationsInHours)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_HOURS");
+
+                entity.Property(e => e.DurationsInMinutes)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_MINUTES");
+
+                entity.Property(e => e.DurationsInSeconds)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_SECONDS");
+
+                entity.Property(e => e.EcmLastStatusDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ECM_LAST_STATUS_DATE");
+
+                entity.Property(e => e.HitsCount)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("HITS_COUNT");
+
+                entity.Property(e => e.IdentityNum)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("IDENTITY_NUM");
+
+                entity.Property(e => e.LockedBy)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("LOCKED_BY");
+
+                entity.Property(e => e.Priority)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("PRIORITY");
+
+                entity.Property(e => e.SwiftReference)
+                    .HasMaxLength(3000)
+                    .IsUnicode(false)
+                    .HasColumnName("SWIFT_REFERENCE");
+
+                entity.Property(e => e.TransactionAmount)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("TRANSACTION_AMOUNT");
+
+                entity.Property(e => e.TransactionCurrency)
+                    .HasMaxLength(3000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CURRENCY");
+
+                entity.Property(e => e.TransactionDirection)
+                    .HasMaxLength(3000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_DIRECTION");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(3000)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_TYPE");
+
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATE_USER_ID");
+            });
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)

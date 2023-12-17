@@ -17,6 +17,8 @@
   SanctionListUpdateSummary: "/SanctionListUpdateSummary/GetData",
   PartyListUpdateSummary: "/PartyListUpdateSummary/GetData",
   SystemPerformance: "/SystemPerformance/GetData",
+  SystemPerformanceFuliza: "/SystemPerformanceFuliza/GetData",
+  SystemPerformanceFulizaSummary: "/SystemPerformanceFulizaSummary/GetData",
   UserPerformance: "/UserPerformance/GetData",
   SanctionManualSearchDetails: "/SanctionManualSearchDetails/GetData",
   VaPartyListUpdateDetails: "/VaPartyListUpdateDetails/GetData",
