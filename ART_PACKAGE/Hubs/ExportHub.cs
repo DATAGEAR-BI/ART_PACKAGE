@@ -143,6 +143,8 @@ namespace ART_PACKAGE.Hubs
             if (nameof(ArtFtiActivityController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiActivity, ArtFtiActivityController>(_fti, Context.User.Identity.Name, para);
             if (nameof(ArtFtiEcmTransactionController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiEcmTransaction, ArtFtiEcmTransactionController>(_fti, Context.User.Identity.Name, para);
             if (nameof(ArtFtiEndToEndController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFtiEndToEnd, ArtFtiEndToEndController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtEcmPendingCasesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtEcmPendingCases, ArtEcmPendingCasesController>(_fti, Context.User.Identity.Name, para);
+            if (nameof(ArtEcmSlaViolatedCasesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtEcmSlaViolatedCasesTb, ArtEcmSlaViolatedCasesController>(_fti, Context.User.Identity.Name, para);
             if (nameof(ArtFtiEndToEndNewController).ToLower().Replace("controller", "") == controller.ToLower()) await ExportEndToEnd(para);
 
             #endregion

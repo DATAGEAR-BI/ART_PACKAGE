@@ -5008,6 +5008,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.SubLastActionDate)
                     .HasColumnName("SUB_LAST_ACTION_DATE")
                     .HasColumnType("datetime");
+                entity.Property(e => e.LastActionTakenDate)
+                    .HasColumnName("LAST_ACTION_TAKEN_DATE")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.MasterReference)
                     .HasColumnName("MASTER_REFERENCE")

@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers.CustomReport;
-using Data.Data.FTI;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -267,24 +266,25 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
                             {"CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"                                 }},
-                            {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"                     }},
-                            {"SubCaseId",new DisplayNameAndFormat { DisplayName ="Sub Case Id"                          }},
                             {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"                         }},
-                            {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"                     }},
+                            {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="ECM Parent"                     }},
+                            {"CustomerName",new DisplayNameAndFormat { DisplayName ="Client Name"                     }},
+                            {"SubCaseId",new DisplayNameAndFormat { DisplayName ="ECM Request ID Sub"                          }},
                             {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"                       }},
-                            {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"                                  }},
+                            {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"} },
                             {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"                              }},
                             {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"                             }},
-                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"                       }},
-                            {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"                           }},
                             {"Product",new DisplayNameAndFormat { DisplayName ="Product"                                }},
+                            {"EventName",new DisplayNameAndFormat { DisplayName ="Case Type"                           }},
+                            {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"                       }},
+                            {"CreateDate",new DisplayNameAndFormat { DisplayName ="Created Time"                         }},
+                            {"MasterReference",new DisplayNameAndFormat { DisplayName ="FTI reference",Template="hyperlink" }},
                             {"RequestStatus",new DisplayNameAndFormat { DisplayName ="Request Status"                   }},
-                            {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"                         }},
                             {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification" }},
-                            {"ParentActionBy",new DisplayNameAndFormat { DisplayName ="Parent Action By"                }},
-                            {"ParentLastActionDate",new DisplayNameAndFormat { DisplayName ="Parent Last Action Date"   }},
+                            {"ParentActionBy",new DisplayNameAndFormat { DisplayName ="Last modified by"                }},
+                            {"ParentLastActionDate",new DisplayNameAndFormat { DisplayName ="Last action taken date"   }},
                             {"SubLastActionDate",new DisplayNameAndFormat { DisplayName ="Sub Last Action Date"         }},
-                            {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference",Template="hyperlink" }},
+                            {"LastActionTakenDate",new DisplayNameAndFormat { DisplayName ="Last Action Taken Date"         }},
                             { "TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"} },
                             { "AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
                             { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
@@ -294,7 +294,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                            SkipList =  new List<string>()
                             {
-                               "CaseRk"
+                               "CaseRk","CaseType","SubLastActionDate","ParentLastActionDate"
                             }
                         }
                     },
@@ -343,6 +343,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     },
                            SkipList =  new List<string>()
                             {
+
                             }
                         }
                     },

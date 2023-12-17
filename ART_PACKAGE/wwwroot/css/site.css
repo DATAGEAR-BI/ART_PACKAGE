@@ -69,10 +69,20 @@ body {
 }
 
 #logo-image {
-    width: 300px;
+    width: 470px;
     height: auto;
+    align-self: center;
 }
 #login-container {
     margin-right: 0px !important;
     margin-left: 0px !important;
+}
+
+#login-product-name{
+
+}
+#login-product-shortcut-name{
+
+}
+#login-container div{
 }

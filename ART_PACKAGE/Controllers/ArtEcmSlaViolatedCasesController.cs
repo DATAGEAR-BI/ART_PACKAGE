@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Controllers
                         //show = User.IsInRole("Delete_Cases")
                     },*/
                 },
-                selectable = true
+                //selectable = true
 
             };
 
@@ -131,7 +131,7 @@ namespace ART_PACKAGE.Controllers
                 Content = JsonConvert.SerializeObject(assignees)
             };
         }
-        
+
 
 
     }
