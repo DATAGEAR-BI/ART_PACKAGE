@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<string> GetCaseTypeDropDown()
         {
             List<string> distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE") && SANCTION_TYPES_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
                 .Select(x => x.ValDesc)
                 .ToList();
             return distinct_value;
@@ -177,7 +177,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
 
             List<string> distinct_value = _dbSrv.ECM.RefTableVals
-                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS") && SANCTION_STATUS_FILTER.Contains(a.ValCd))
+                .Where(a => a.RefTableName.StartsWith("RT_CASE_STATUS"))
                 //.Where(b => b.ValCd.Equals("SC") || b.ValCd.Equals("ST"))
                 .Select(x => x.ValDesc)
                 .ToList();
@@ -187,15 +187,15 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetTransDirectionDropDown()
         {
-            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "UNKNOWN" : x.TransactionDirection).Distinct()
-                .Select(x => x.ToUpper() == "I" ? "InComing" : x.ToUpper() == "O" ? "OutGoing" : x)
+            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionDirection == null || string.IsNullOrEmpty(x.TransactionDirection.Trim()) || x.TransactionDirection.ToLower() == "null" ? "Unknown" : x.TransactionDirection).Distinct()
+                .Select(x => x.ToUpper() == "I" ? "Input" : x.ToUpper() == "O" ? "Output" : x)
            .ToList();
             return distinct_value;
 
         }
         public List<string> GetTransTypeDropDown()
         {
-            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "UNKNOWN" : x.TransactionType).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "Unknown" : x.TransactionType).Distinct().ToList();
             return distinct_value;
 
         }
@@ -435,7 +435,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<string> GetUpdateUserIdDropDown()
         {
-            List<string> distinct_value = _dbSrv.ECM.CaseLives.Where(x => SANCTION_TYPES_FILTER.Contains(x.CaseTypeCd)).Select(x => x.UpdateUserId == null || string.IsNullOrEmpty(x.UpdateUserId.Trim()) ? "UNKNOWN" : x.UpdateUserId).Distinct().ToList();
+            List<string> distinct_value = _dbSrv.ECM.CaseLives.Where(x => !string.IsNullOrEmpty(x.UpdateUserId)).Select(x => x.UpdateUserId).Distinct().ToList();
             return distinct_value;
         }
 

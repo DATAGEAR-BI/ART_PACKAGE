@@ -3,7 +3,7 @@
     public partial class ArtSystemPerformanceNcba
     {
         public string CaseId { get; set; } = null!;
-        public string? CaseTtpe { get; set; }
+        public string? CaseType { get; set; }
         public string? CaseStatus { get; set; }
         public string? CaseDesc { get; set; }
         public string? Priority { get; set; }

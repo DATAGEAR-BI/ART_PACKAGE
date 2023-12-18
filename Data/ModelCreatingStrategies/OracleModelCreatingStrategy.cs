@@ -2045,7 +2045,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("VARCHAR2(100)")
                     .HasColumnName("LAST_COMMENT_SUBJECT");
 
-                entity.Property(e => e.CaseTtpe)
+                entity.Property(e => e.CaseType)
                     .HasColumnType("VARCHAR2(12000)")
                     .HasColumnName("CASE_TTPE");
 
@@ -2149,7 +2149,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("VARCHAR2(100)")
                     .HasColumnName("LAST_COMMENT_SUBJECT");
 
-                entity.Property(e => e.CaseTtpe)
+                entity.Property(e => e.CaseType)
                     .HasColumnType("VARCHAR2(12000)")
                     .HasColumnName("CASE_TTPE");
 
