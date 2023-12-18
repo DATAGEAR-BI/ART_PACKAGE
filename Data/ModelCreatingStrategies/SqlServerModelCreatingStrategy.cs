@@ -5161,7 +5161,10 @@ namespace Data.ModelCreatingStrategies
             .HasColumnName("Case_Rk")
             .HasColumnType("numeric")
             .IsRequired();
-
+                entity
+                    .Property(e => e.CaseId)
+                    .HasColumnName("Case_Id")
+                    .HasColumnType("varchar(64)");
                 entity
                     .Property(e => e.AssignedBy)
                     .HasColumnName("ASSIGNED_BY")

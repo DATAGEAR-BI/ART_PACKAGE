@@ -124,7 +124,13 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{caseRk}")]
         public IActionResult GetAssignees(string? caseRk)
         {
-            IQueryable<ArtEcmAssignee> assignees = fti.ArtEcmAssignees.Where(x => x.CaseRk.ToString() == Uri.UnescapeDataString(caseRk));
+            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseRk.ToString() == Uri.UnescapeDataString(caseRk)).OrderBy(s => s.AssignedTime).Select(s => new
+            {
+                s.CaseId,
+                s.AssignedBy,
+                s.Assignee,
+                AssignedTime = s.AssignedTime == null ? "" : s.AssignedTime.Value.ToString("dd/MM//yyyy HH:mm:ss tt")
+            });
             return new ContentResult
             {
                 ContentType = "application/json",

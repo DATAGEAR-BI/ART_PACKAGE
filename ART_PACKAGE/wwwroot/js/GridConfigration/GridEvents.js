@@ -1538,7 +1538,7 @@ export const CellDbHandlers = {
             kendo.ui.progress($('#grid'), true);
 
             $('#pending-cases-Grid').empty();
-            var headers = ["#", "Case Rk","Assigned By",
+            var headers = ["#", "ECM Reference","Assigned By",
                                 "Assignee",
                                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmPendingCases/GetAssignees/${encodeURIComponent(dataItem.CaseRk)}`)).json();
@@ -1552,7 +1552,7 @@ export const CellDbHandlers = {
             kendo.ui.progress($('#grid'), true);
 
             $('#art-ecm-sla-violated-cases-Grid').empty();
-            var headers = ["#", "Case Rk", "Assigned By",
+            var headers = ["#", "ECM Reference", "Assigned By",
                 "Assignee",
                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmSlaViolatedCases/GetAssignees/${encodeURIComponent(dataItem.CaseRk)}`)).json();

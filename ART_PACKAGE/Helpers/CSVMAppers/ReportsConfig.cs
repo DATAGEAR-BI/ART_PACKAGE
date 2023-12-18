@@ -287,6 +287,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"LastActionTakenDate",new DisplayNameAndFormat { DisplayName ="Last Action Taken Date"         }},
                             { "TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"} },
                             { "AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
+                            { "CaseId",new DisplayNameAndFormat{ DisplayName = "ECM Reference"} },
                             { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
                             { "AssignedTime ",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
                               },
@@ -353,27 +354,27 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
                                 {"CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"}},
-                                {"CaseId",new DisplayNameAndFormat { DisplayName ="Case Id"}},
-                                {"RelatedCaseId",new DisplayNameAndFormat { DisplayName ="Related Case Id"}},
                                 {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-                                {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                                {"CaseId",new DisplayNameAndFormat { DisplayName ="ECM Reference"}},
+                                {"CustomerName",new DisplayNameAndFormat { DisplayName ="Client Name"}},
+                                {"RelatedCaseId",new DisplayNameAndFormat { DisplayName ="Related ECM Reference"}},
                                 {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"}},
-                                {"Amount",new DisplayNameAndFormat { DisplayName ="Amount"}},
+                                {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"}},
                                 {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
-                                {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"}},
-                                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
-                                {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
-                                {"Product",new DisplayNameAndFormat { DisplayName ="Product"}},
+                                {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"                             }},
+                                {"Product",new DisplayNameAndFormat { DisplayName ="Product"                                }},
+                                {"EventName",new DisplayNameAndFormat { DisplayName ="Case Type"                           }},
+                                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"                       }},
+                                {"CreateDate",new DisplayNameAndFormat { DisplayName ="Created Time"}},
+                                {"MasterReference",new DisplayNameAndFormat { DisplayName ="ECM Reference",Template="hyperlink" }},
                                 {"RequestStatus",new DisplayNameAndFormat { DisplayName ="Request Status"}},
-                                {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
                                 {"CustomerClassification",new DisplayNameAndFormat { DisplayName ="Customer Classification"}},
-                                {"LastActionBy",new DisplayNameAndFormat { DisplayName ="Last Action By"}},
-                                {"LastActionDate",new DisplayNameAndFormat { DisplayName ="Last Action Date"}},
-                                {"MasterReference",new DisplayNameAndFormat { DisplayName ="Master Reference",Template="hyperlink" }},
-                                {"ProdCd",new DisplayNameAndFormat { DisplayName ="Prod Cd"}},
-                                {"DisplayName",new DisplayNameAndFormat { DisplayName ="Display Name"}},
-                                {"MlsToEscalation1",new DisplayNameAndFormat { DisplayName ="Mls To Escalation1"}},
+                                {"LastActionBy",new DisplayNameAndFormat { DisplayName ="Last Modified By"}},
                                 {"FormattedTime",new DisplayNameAndFormat { DisplayName ="Formatted Time"}},
+                                {"LastActionDate",new DisplayNameAndFormat { DisplayName ="Last action taken date"}},
+                                {"DisplayName",new DisplayNameAndFormat { DisplayName ="Violated at"}},
+                                {"ProdCd",new DisplayNameAndFormat { DisplayName ="Prod Cd"}},
+                                {"MlsToEscalation1",new DisplayNameAndFormat { DisplayName ="Mls To Escalation1"}},
                                 {"TotalTime",new DisplayNameAndFormat { DisplayName = "Total Time" }},
                                 {"AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
                                 {"Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
@@ -381,7 +382,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               },
                               SkipList =  new List<string>()
                             {
-                                  "CaseRk"
+                                  "CaseRk","ProdCd","MlsToEscalation1","TotalTime","CaseType"
                             }
                         }
             }
