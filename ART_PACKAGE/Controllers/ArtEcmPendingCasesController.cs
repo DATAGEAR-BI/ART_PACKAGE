@@ -121,10 +121,10 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
-        [HttpGet("[controller]/[action]/{caseRk}")]
-        public IActionResult GetAssignees(string? caseRk)
+        [HttpGet("[controller]/[action]/{caseId}")]
+        public IActionResult GetAssignees(string? caseId)
         {
-            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseRk.ToString() == Uri.UnescapeDataString(caseRk)).OrderBy(s => s.AssignedTime).Select(s => new
+            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseId.ToString() == Uri.UnescapeDataString(caseId)).OrderBy(s => s.AssignedTime).Select(s => new
             {
                 s.CaseId,
                 s.AssignedBy,
