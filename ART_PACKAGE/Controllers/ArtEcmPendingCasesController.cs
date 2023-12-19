@@ -17,6 +17,7 @@ namespace ART_PACKAGE.Controllers
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
+        
         public ArtEcmPendingCasesController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.fti = fti; ;
@@ -124,7 +125,7 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{caseId}")]
         public IActionResult GetAssignees(string? caseId)
         {
-            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseId.ToString() == Uri.UnescapeDataString(caseId)).OrderBy(s => s.AssignedTime).Select(s => new
+            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseId == Uri.UnescapeDataString(caseId)).OrderBy(s => s.AssignedTime).Select(s => new
             {
                 s.CaseId,
                 s.AssignedBy,
