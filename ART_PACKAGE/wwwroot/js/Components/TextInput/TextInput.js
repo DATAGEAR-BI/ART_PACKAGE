@@ -41,7 +41,11 @@ class TextInput extends HTMLElement {
 
         this.appendChild(this.input);
         this.appendChild(this.label);
-        this.intialize();
+        console.log(this.dataset.value);
+        if (this.input.value)
+            this.intialize(this.input.value);
+        else
+            this.intialize("");
     }
 
 
@@ -79,6 +83,9 @@ class TextInput extends HTMLElement {
             textFieldInstance.redraw();
         }
     }
+
+    
+
 
     toggleDisable() {
         if (this.input.disabled)

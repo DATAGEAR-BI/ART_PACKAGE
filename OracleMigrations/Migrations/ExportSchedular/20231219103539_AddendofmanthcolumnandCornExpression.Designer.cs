@@ -3,6 +3,7 @@ using System;
 using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace OracleMigrations.Migrations.ExportSchedular
 {
     [DbContext(typeof(ExportSchedularContext))]
-    partial class ExportSchedularContextModelSnapshot : ModelSnapshot
+    [Migration("20231219103539_AddendofmanthcolumnandCornExpression")]
+    partial class AddendofmanthcolumnandCornExpression
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

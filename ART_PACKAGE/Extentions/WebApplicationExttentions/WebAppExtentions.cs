@@ -69,7 +69,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 }
             }
 
-            if (modules.Contains("DGAML"))
+            if (modules.Contains(item: "DGAML"))
             {
                 ArtDgAmlContext DgAmlContext = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
 
@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     DgAmlContext.Database.Migrate();
                 }
             }
-            if (modules.Contains("DGAUDIT"))
+            if (modules.Contains(item: "DGAUDIT"))
             {
                 ArtAuditContext DgAuditContext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
 
@@ -87,7 +87,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     DgAuditContext.Database.Migrate();
                 }
             }
-            if (modules.Contains("AMLANALYSIS"))
+            if (modules.Contains(item: "AMLANALYSIS"))
             {
                 AmlAnalysisContext amlAnalysisContext = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
 
@@ -96,7 +96,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     amlAnalysisContext.Database.Migrate();
                 }
             }
-            if (modules.Contains("FTI"))
+            if (modules.Contains(item: "FTI"))
             {
                 FTIContext fti = scope.ServiceProvider.GetRequiredService<FTIContext>();
 
@@ -105,7 +105,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     fti.Database.Migrate();
                 }
             }
-            if (modules.Contains("KYC"))
+            if (modules.Contains(item: "KYC"))
             {
                 KYCContext kyc = scope.ServiceProvider.GetRequiredService<KYCContext>();
 
@@ -164,31 +164,14 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             IServiceScope scope = app.Services.CreateScope();
             ExportSchedularContext TasksContext = scope.ServiceProvider.GetRequiredService<ExportSchedularContext>();
             ITaskPerformer taskPerformer = scope.ServiceProvider.GetRequiredService<ITaskPerformer>();
-            IQueryable<ExportTask> jobs = TasksContext.ExportsTasks.Where(x => !x.Deleted).Include(x => x.Mails);//.Select(x => new ExportTaskDto
-            //{
-            //    Name = x.Name,
-            //    Day = x.Day,
-            //    DayOfWeek = x.DayOfWeek,
-            //    Description = x.Description,
-            //    Hour = x.Hour,
-            //    IsMailed = x.IsMailed,
-            //    IsSavedOnServer = x.IsSavedOnServer,
-            //    Minute = x.Minute,
-            //    Month = x.Month,ي
-            //    Period = x.Period,
-            //    ReportName = x.ReportName,
-            //    Mails = x.Mails.Select(x => x.Mail).ToList(),
-            //    Parameters = x.Parameters.Select(x => new Parameter { Name = x.ParameterName, Operator = x.Operator, Value = new List<string> { x.ParameterValue } }).ToList()
-
-
-            //});
+            IQueryable<ExportTask> jobs = TasksContext.ExportsTasks.Where(x => !x.Deleted);
             IRecurringJobManager ruccrunibJ = app.Services.GetRequiredService<IRecurringJobManager>();
 
             foreach (ExportTask job in jobs)
             {
 
                 //ruccrunibJ.RemoveIfExists(job.Name);
-                ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job), taskPerformer.GetPeriod(job));
+                ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job, null), job.CornExpression);
             }
         }
 

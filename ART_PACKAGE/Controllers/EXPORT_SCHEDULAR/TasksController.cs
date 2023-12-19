@@ -1,38 +1,38 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.ExportTasks;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ExportSchedular;
 using Hangfire;
-using Hangfire.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
-    public class TasksController : Controller
+    public class TasksController : BaseReportController<ExportSchedularContext, ExportTask>
     {
         private readonly ExportSchedularContext _context;
         private readonly IRecurringJobManager jobsManger;
+        private readonly IBackgroundJobClient backGroundJobManger;
         private readonly ILogger<TasksController> _logger;
         private readonly ITaskPerformer _taskPerformer;
         private readonly UserManager<AppUser> _userManager;
-        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager)
+
+
+        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager, IGridConstructor<ExportSchedularContext, ExportTask> gridConstructor, IBackgroundJobClient backGroundJobManger) : base(gridConstructor)
         {
             _context = context;
             this.jobsManger = jobsManger;
             _logger = logger;
             _taskPerformer = taskPerformer;
             _userManager = userManager;
+            this.backGroundJobManger = backGroundJobManger;
         }
 
-        public IActionResult Index()
+        public override IActionResult Index()
         {
             return View();
         }
@@ -86,9 +86,6 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             });
             return Ok(result);
         }
-
-
-
         [HttpGet]
         public IActionResult GetTaskPeriods()
         {
@@ -120,23 +117,24 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         [HttpGet("[controller]/[action]/{taskId}")]
         public IActionResult EditTask(int taskId)
         {
-            ExportTask? task = _context.ExportsTasks.Include(x => x.Mails).FirstOrDefault(x => x.Id == taskId);
-
+            ExportTask? task = _context.ExportsTasks.FirstOrDefault(x => x.Id == taskId);
             ExportTaskDto taskDto = new()
             {
+                Id = taskId,
                 Day = task?.Day,
                 DayOfWeek = task?.DayOfWeek,
                 Description = task?.Description,
                 Hour = task?.Hour,
                 IsMailed = task.IsMailed,
                 IsSavedOnServer = task.IsSavedOnServer,
-                Mails = task.Mails.Select(x => x.Mail).ToList(),
+                Mails = task.Mails,
                 Minute = task.Minute,
                 Month = task.Month,
                 Name = task.Name,
-                //Parameters = task.Parameters.GroupBy(x => new { x.ParameterName, x.Operator }).Select(x => new Parameter { Name = x.Key.ParameterName, Operator = x.Key.Operator, Value = x.Select(v => v.ParameterValue).ToList() }).ToList(),
+                Parameters = task.ParametersJson,
                 Period = task.Period,
-                ReportName = task.ReportName
+                ReportName = task.ReportName,
+                Path = task.Path,
             };
             return View(taskDto);
         }
@@ -164,8 +162,6 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         }
 
 
-
-
         [HttpPost]
         public IActionResult AddTask([FromBody] ExportTaskDto task)
         {
@@ -185,7 +181,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 ReportName = task.ReportName,
                 ParametersJson = task.Parameters,
                 IsMailed = task.IsMailed,
-                Mails = task.Mails.Select(x => new TaskMails { Mail = x }).ToList(),
+                Mails = task.Mails,
                 Month = task.Month,
                 DayOfWeek = task.DayOfWeek,
                 Day = task.Day,
@@ -196,7 +192,9 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Period = task.Period,
                 MailContent = task.MailContent,
                 Path = task.Path,
-                UserId = _userManager.GetUserId(User)
+                UserId = _userManager.GetUserId(User),
+                CornExpression = task.CronExpression,
+                EndOfMonth = task.EndOfMonth
 
             };
 
@@ -206,136 +204,18 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 return BadRequest();
 
 
+            jobsManger.AddOrUpdate(taskToAdd.Name, () => _taskPerformer.PerformTask(taskToAdd, null), taskToAdd.CornExpression);
+            (DateTime? lastDate, DateTime? nextDate) = _taskPerformer.GetExecutionDateTimes(taskToAdd.Name);
+            taskToAdd.NextExceutionDate = nextDate;
+            taskToAdd.LastExceutionDate = lastDate;
 
-
-            Func<string> period = _taskPerformer.GetPeriod(taskToAdd);
-
-            jobsManger.AddOrUpdate(taskToAdd.Name, () => _taskPerformer.PerformTask(taskToAdd), period);
-
+            _context.SaveChanges();
             return Ok();
         }
 
-        public async Task<IActionResult> GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ExportTask> data = _context.ExportsTasks.Where(x => x.UserId == _userManager.GetUserId(User));
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
-
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].DisplayNames;
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                   {nameof(ExportTaskDto.Period).ToLower(),Enum.GetNames(typeof(TaskPeriod)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
-                   {nameof(ExportTaskDto.DayOfWeek).ToLower(),Enum.GetNames(typeof(DayOfWeek)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
-                   {nameof(ExportTaskDto.Month).ToLower(),Enum.GetNames(typeof(MonthsOfYear)).Select((x,i) => new { text = x , value = i}).ToDynamicList() },
-                };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(TasksController).ToLower()].SkipList;
-                KendoDataDesc<ExportTask> d = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-
-                var res = new
-                {
-                    columns = d.Columns,
-                    containsActions = true,
-                    actions = new List<dynamic>
-                {
-                    new
-                    {
-                        text = "Edit",
-                        action = "editTask",
-                        icon = "k-i-edit"
-                    },
-                    new
-                    {
-                        text = "Delete",
-                        action = "deleteTask",
-                        icon = "k-i-trash"
-                    },
-                    new
-                    {
-                        text = "Run Now",
-                        action = "runNow",
-                        icon = "k-i-video-external"
-                    }
-                },
-                    toolbar = new List<dynamic>
-                {
-                    new
-                    {
-                        text = "Add New Task",
-                        id = "addTask"
-                    }
-                }
-                };
-
-                return new ContentResult
-                {
-                    ContentType = "application/json",
-                    Content = JsonConvert.SerializeObject(res)
-                };
-            }
-
-            KendoDataDesc<ExportTask> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-
-            var result = new
-            {
-                data = Data.Data.Select(x => new ExportTaskDto
-                {
-                    Id = x.Id,
-                    Day = x.Day,
-                    Month = x.Month,
-                    DayOfWeek = x.DayOfWeek,
-                    Description = x.Description,
-                    Hour = x.Hour,
-                    IsMailed = x.IsMailed,
-                    IsSavedOnServer = x.IsSavedOnServer,
-                    MailContent = x.MailContent,
-                    Minute = x.Minute,
-                    Name = x.Name,
-                    Parameters = x.ParametersJson,
-                    Path = x.Path,
-                    Period = x.Period,
-                    ReportName = x.ReportName,
-                    LastExceutionDate = GetExecutionDateTimes(x.Name).lastDate,
-                    NextExceutionDate = GetExecutionDateTimes(x.Name).nextDate,
-
-                }),
-
-                total = Data.Total,
 
 
-            };
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
-
-
-        private static (DateTime? lastDate, DateTime? nextDate) GetExecutionDateTimes(string jobName)
-        {
-            DateTime? lastExecutionDateTime = null;
-            DateTime? nextExecutionDateTime = null;
-            using (IStorageConnection connection = JobStorage.Current.GetConnection())
-            {
-                RecurringJobDto? job = connection.GetRecurringJobs().FirstOrDefault(p => p.Id == jobName);
-                if (job != null && job.LastExecution.HasValue)
-                    lastExecutionDateTime = job.LastExecution;
-                if (job != null && job.NextExecution.HasValue)
-                    nextExecutionDateTime = job.NextExecution;
-            }
-            return (lastExecutionDateTime, nextExecutionDateTime);
-        }
-
-        [HttpGet("[controller]/[action]/{name}")]
-        public IActionResult IsTaskExists(string name)
-        {
-            bool isExists = _context.ExportsTasks.FirstOrDefault(x => x.Name == name) != null;
-            return !isExists ? Ok() : BadRequest();
-        }
 
 
         [HttpDelete("[controller]/[action]/{id}")]
@@ -365,6 +245,53 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             jobsManger.Trigger(task.Name);
             return Ok();
         }
+
+
+        [HttpPut("[controller]/[action]/{taskId}")]
+        public IActionResult EditTask(int taskId, [FromBody] ExportTaskDto task)
+        {
+            ExportTask? oldTask = _context.ExportsTasks.FirstOrDefault(x => x.Id == taskId);
+
+            if (oldTask is null)
+                return BadRequest();
+
+
+
+            jobsManger.RemoveIfExists(oldTask.Name);
+
+            oldTask.Name = task.Name + "##" + Guid.NewGuid().ToString();
+            oldTask.ReportName = task.ReportName;
+            oldTask.ParametersJson = task.Parameters;
+            oldTask.IsMailed = task.IsMailed;
+            oldTask.Mails = task.Mails;
+            oldTask.Month = task.Month;
+            oldTask.DayOfWeek = task.DayOfWeek;
+            oldTask.Day = task.Day;
+            oldTask.Hour = task.Hour;
+            oldTask.Minute = task.Minute;
+            oldTask.Description = task.Description;
+            oldTask.IsSavedOnServer = task.IsSavedOnServer;
+            oldTask.Period = task.Period;
+            oldTask.MailContent = task.MailContent;
+            oldTask.Path = task.Path;
+            oldTask.UserId = _userManager.GetUserId(User);
+            oldTask.CornExpression = task.CronExpression;
+            oldTask.EndOfMonth = task.EndOfMonth;
+
+
+            int res = _context.SaveChanges();
+
+            if (res <= 0)
+                return BadRequest();
+
+            jobsManger.AddOrUpdate(oldTask.Name, () => _taskPerformer.PerformTask(oldTask, null), oldTask.CornExpression);
+            (DateTime? lastDate, DateTime? nextDate) = _taskPerformer.GetExecutionDateTimes(oldTask.Name);
+            oldTask.NextExceutionDate = nextDate;
+            _ = _context.SaveChanges();
+            return Ok();
+
+        }
+
 
     }
 }

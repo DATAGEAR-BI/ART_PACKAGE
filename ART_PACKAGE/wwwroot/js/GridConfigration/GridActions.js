@@ -2,25 +2,24 @@
 
 export const Actions = {
 
-    GoToReportDetails: (e) => {
+    GoToReportDetails: (e, gridDiv) => {
         e.preventDefault();
         var tr = $(e.target).closest("tr");
-        var grid = $("#grid").data("kendoGrid");
+        var grid = $(gridDiv).data("kendoGrid");
         var data = grid.dataItem(tr);
         window.location = `/report/showreport/${data.Id}`;
     },
-    editTask: (e) => {
+    editTask: (e, gridDiv) => {
         e.preventDefault();
         var tr = $(e.target).closest("tr");
-        var grid = $("#grid").data("kendoGrid");
+        var grid = $(gridDiv).data("kendoGrid");
         var data = grid.dataItem(tr);
-        console.log(data);
-        //window.location = `/report/showreport/${data.Id}`;
+        window.location = `/Tasks/EditTask/${data.Id}`;
     },
-    runNow: async (e) => {
+    runNow: async (e, gridDiv) => {
         e.preventDefault();
         var tr = $(e.target).closest("tr");
-        var grid = $("#grid").data("kendoGrid");
+        var grid = $(gridDiv).data("kendoGrid");
         var data = grid.dataItem(tr);
         var runRes = await fetch(`/Tasks/RunNow/${data.Id}`, {
             method: "Post"
@@ -32,7 +31,7 @@ export const Actions = {
             $.toast(toastObj);
         }
         else {
-            $("#grid").data("kendoGrid").dataSource.read();
+            $(gridDiv).data("kendoGrid").dataSource.read();
             toastObj.text = "Task is currentlly running";
             toastObj.heading = "Run Task Status";
             toastObj.icon = 'success';
@@ -40,10 +39,11 @@ export const Actions = {
         }
         //window.location = `/report/showreport/${data.Id}`;
     },
-    deleteTask: async (e) => {
+    deleteTask: async (e , gridDiv) => {
+
         e.preventDefault();
         var tr = $(e.target).closest("tr");
-        var grid = $("#grid").data("kendoGrid");
+        var grid = $(gridDiv).data("kendoGrid");
         var data = grid.dataItem(tr);
         var deleteRes = await fetch(`/Tasks/DeleteTask/${data.Id}`, {
             method: "DELETE"
@@ -56,7 +56,7 @@ export const Actions = {
             $.toast(toastObj);
         }
         else {
-            $("#grid").data("kendoGrid").dataSource.read();
+            $(gridDiv).data("kendoGrid").dataSource.read();
             toastObj.text = "Task Deleted Successfully";
             toastObj.heading = "Delete Task Status";
             toastObj.icon = 'success';

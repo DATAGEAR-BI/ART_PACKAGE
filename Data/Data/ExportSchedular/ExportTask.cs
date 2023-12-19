@@ -1,4 +1,8 @@
-﻿namespace Data.Data.ExportSchedular
+﻿using CronExpressionDescriptor;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Data.Data.ExportSchedular
 {
     public class ExportTask
     {
@@ -27,6 +31,8 @@
         public string? MailContent { get; set; }
 
         public bool Deleted { get; set; }
+        public bool EndOfMonth { get; set; }
+        public string CornExpression { get; set; } = null!;
 
         public string? UserId { get; set; }
 
@@ -34,7 +40,25 @@
         public DateTime? LastExceutionDate { get; set; }
         public DateTime? NextExceutionDate { get; set; }
 
-        public ICollection<TaskMails> Mails { get; set; } = null!;
+        // This property is stored in the database
+        public string? MailsSerialized { get; set; }
+
+        // Not mapped to the database, handled through serialization
+        [NotMapped]
+        public List<string> Mails
+        {
+            get { return MailsSerialized is not null ? JsonConvert.DeserializeObject<List<string>>(MailsSerialized) : null; }
+            set { MailsSerialized = JsonConvert.SerializeObject(value); }
+        }
+        [NotMapped]
+        public string CornReadable => ExpressionDescriptor.GetDescription(CornExpression);
+
+
+
+
+
+
+
 
     }
 }

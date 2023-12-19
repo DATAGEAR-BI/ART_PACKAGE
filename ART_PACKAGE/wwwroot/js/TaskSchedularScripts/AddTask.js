@@ -37,7 +37,8 @@ var timePicker = document.querySelector("#timepicker");
 var mailSwitch = document.getElementById("emailSwitch");
 var serverSwitch = document.getElementById("serverSwitch");
 const querybuilder = document.querySelector('#querybuilder');
-
+var endofmonthDiv = document.getElementById("endofmonthSec");
+var endofmonthSwitch = document.getElementById("endofMonth");
 Smart('#querybuilder', class {
     get properties() {
         return {
@@ -57,7 +58,7 @@ Smart('#calendar', class {
 });
 Smart('#timepicker', class {
     get properties() {
-        return { value: "12:00" }
+        return { value: "00:00" }
     }
 });
 
@@ -123,7 +124,7 @@ var form = document.getElementById("AddTaskForm");
 form.onsubmit = async (e) => {
     console.log("test");
     e.preventDefault();
-
+    var endofMonth = endofmonthSwitch.status;
     var report = reportsDropDown.value.value;
     if (!report || report == "") {
         toastObj.icon = 'error';
@@ -212,6 +213,7 @@ form.onsubmit = async (e) => {
     if (period >= 5) {
         var day = calender.selectedDates[0].getDate();
         taskTime.Day = day;
+        taskTime.EndOfMonth = endofMonth;
     }
 
 
@@ -355,11 +357,16 @@ periodDorpDown.onchange = (e) => {
 
     timePicker.disabled = true;
     calender.disabled = true;
+    if (!endofmonthDiv.classList.contains("disabledDiv")) {
+        endofmonthDiv.classList.add("disabledDiv")
+        endofmonthSwitch.unCheck();
+    }
     weekDayDropDown.disable();
-    weekDayDropDown.delect();
+    weekDayDropDown.deSelect();
+    monthDropDown.deSelect();
     monthDropDown.disable();
-    monthDropDown.delect();
-
+    timePicker.value = "00:00";
+    calender.selectedDates = []; 
 
     if (val == 2 || val == 3) {
         timePicker.disabled = false;
@@ -375,11 +382,13 @@ periodDorpDown.onchange = (e) => {
         timePicker.disabled = false;
         calender.disabled = false;
         calender.selectedDates = [new Date()]
+        endofmonthDiv.classList.remove("disabledDiv")
     }
 
     if (val == 6 || val == 7) {
         timePicker.disabled = false;
         calender.disabled = false;
+        endofmonthDiv.classList.remove("disabledDiv")
         monthDropDown.enable();
         calender.selectedDates = [new Date()];
     }
@@ -404,6 +413,11 @@ serverSwitch.onswitchchanged = (e) => {
     } else {
         filePath.disable();
     }
+}
+
+endofmonthSwitch.onswitchchanged = (e) => {
+    calender.selectedDates = [];
+    calender.disabled = !calender.disabled;
 }
 
 

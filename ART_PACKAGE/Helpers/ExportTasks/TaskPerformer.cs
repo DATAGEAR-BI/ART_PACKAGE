@@ -4,6 +4,8 @@ using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.Mail;
 using Data.Data.ExportSchedular;
 using Hangfire;
+using Hangfire.Server;
+using Hangfire.Storage;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -11,51 +13,19 @@ namespace ART_PACKAGE.Helpers.ExportTasks
 {
     public class TaskPerformer : ITaskPerformer
     {
+        private readonly ExportSchedularContext exContext;
         private readonly ICsvExport _csvSrv;
         private readonly IMailSender _mailSender;
         private readonly ContextPerReportFactory contextFactory;
-        public TaskPerformer(ICsvExport csvSrv, IMailSender mailSender, ContextPerReportFactory contextFactory)
+        public TaskPerformer(ICsvExport csvSrv, IMailSender mailSender, ContextPerReportFactory contextFactory, ExportSchedularContext exContext)
         {
             _csvSrv = csvSrv;
             _mailSender = mailSender;
             this.contextFactory = contextFactory;
+            this.exContext = exContext;
         }
 
-        public Func<string> GetPeriod(ExportTask task)
-        {
-            if (task.Period == TaskPeriod.Minutely)
-                return () => Cron.Minutely();
-            else if (task.Period == TaskPeriod.Hourly)
-                return () => Cron.Hourly(task.Minute ?? 0);
-            else if (task.Period == TaskPeriod.Daily)
-                return () => Cron.Daily(task.Hour ?? 0, task.Minute ?? 0);
-            else if (task.Period == TaskPeriod.Weekly)
-                return () => Cron.Weekly(task.DayOfWeek ?? 0, task.Hour ?? 0, task.Minute ?? 0);
-            else if (task.Period == TaskPeriod.Monthly)
-                return () => Cron.Monthly(task.Day ?? 0, task.Hour ?? 0, task.Minute ?? 0);
-            else if (task.Period == TaskPeriod.Yearly)
-                return () => Cron.Yearly(task.Month ?? 1, task.Day ?? 0, task.Hour ?? 0, task.Minute ?? 0);
-            else if (task.Period == TaskPeriod.Quarterly)
-            {
-                int? month = task.Month;
-                List<int?> quarters = new();
-
-                for (int i = 0; i < 4; i++)
-                {
-                    int? qmonth = month % 12;
-                    if (qmonth == 0)
-                        quarters.Add(12);
-                    else
-                        quarters.Add(qmonth);
-                }
-                return () => $"{task.Minute} {task.Hour} {task.Day} {string.Join(",", quarters)} *";
-            }
-            else return () => Cron.Never();
-
-
-        }
-
-        public async Task PerformTask(ExportTask task)
+        public async Task PerformTask(ExportTask task, PerformContext hangContext)
         {
             string noramlizedReportName = (task.ReportName + "controller").ToLower();
             Type? modelType = ReportModelMap.GetReportModels(noramlizedReportName)[0];
@@ -75,7 +45,7 @@ namespace ART_PACKAGE.Helpers.ExportTasks
 
             if (task.IsMailed)
             {
-                bool mailRes = _mailSender.SendEmail(new Message(task.Mails.Select(x => x.Mail), task.DisplayName, task.MailContent, files));
+                bool mailRes = _mailSender.SendEmail(new Message(task.Mails, task.DisplayName, task.MailContent, files));
             }
 
             if (task.IsSavedOnServer)
@@ -90,6 +60,37 @@ namespace ART_PACKAGE.Helpers.ExportTasks
 
 
 
+            _ = BackgroundJob.ContinueWith(hangContext.BackgroundJob.Id, () => updateExcutionDates(task));
+
+
         }
+
+        public void updateExcutionDates(ExportTask job)
+        {
+            ExportTask? jobfromdb = exContext.ExportsTasks.Find(job.Id);
+            (DateTime? lastDate, DateTime? nextDate) = GetExecutionDateTimes(job.Name);
+            jobfromdb.NextExceutionDate = nextDate;
+            jobfromdb.LastExceutionDate = lastDate;
+
+            exContext.SaveChanges();
+        }
+
+        public (DateTime? lastDate, DateTime? nextDate) GetExecutionDateTimes(string jobName)
+        {
+            DateTime? lastExecutionDateTime = null;
+            DateTime? nextExecutionDateTime = null;
+            using (IStorageConnection connection = JobStorage.Current.GetConnection())
+            {
+                RecurringJobDto? job = connection.GetRecurringJobs().FirstOrDefault(p => p.Id == jobName);
+
+                if (job != null && job.LastExecution.HasValue)
+                    lastExecutionDateTime = job.LastExecution;
+
+                if (job != null && job.NextExecution.HasValue)
+                    nextExecutionDateTime = job.NextExecution;
+            }
+            return (lastExecutionDateTime, nextExecutionDateTime);
+        }
+
     }
 }

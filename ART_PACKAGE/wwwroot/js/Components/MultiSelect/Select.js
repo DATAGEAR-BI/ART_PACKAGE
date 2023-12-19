@@ -112,8 +112,10 @@
         this.refresh()
     }
 
-    delect() {
+    deSelect() {
         [...this.select.options].forEach(x => x.selected = false);
+        this.querySelector('button[role=combobox]').innerText = "";
+        this.refresh();
     }
 }
 

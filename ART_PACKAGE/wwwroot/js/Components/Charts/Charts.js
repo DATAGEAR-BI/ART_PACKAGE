@@ -36,7 +36,7 @@ const exportMenu = [{
 }];
 
 
-class PieChart extends HTMLElement {
+class BaseCatValChart extends HTMLElement {
     chartDiv = document.createElement("div");
     loadingDiv = document.createElement("div");
     chart = undefined;
@@ -51,10 +51,8 @@ class PieChart extends HTMLElement {
         super();
 
     }
-
-
     connectedCallback() {
-        this.classList.add("d-flex", "justify-content-center","align-items-center")
+        this.classList.add("d-flex", "justify-content-center", "align-items-center")
         this.loadingDiv.classList.add("spinner-grow", "text-primary");
         this.chartDiv.classList.add("w-100", "h-100");
         this.appendChild(this.loadingDiv);
@@ -110,13 +108,74 @@ class PieChart extends HTMLElement {
 
 
         this.chartDiv.hidden = true;
-        this.chartDiv.id = this.id + "-BarChart";
+        //this.chartDiv.id = this.id + "-BarChart";
         this.dataUrl = URLS[this.dataset.dataurlkey];
         this.chartTitle = this.dataset.title;
         this.chartCategory = this.dataset.category;
         this.chartValue = this.dataset.value;
 
-        this.chart = am4core.create(this.id + "-BarChart", am4charts.PieChart);
+    }
+
+
+    async readData(body) {
+        this.toggleLoading();
+        var method = "GET";
+        if (body) {
+            method = "POST";
+        }
+
+        try {
+            var data = await (await fetch(this.dataUrl, {
+                method: method,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                ...(body && { body: JSON.stringify(body) })
+            })).json();
+            console.log(this.chartValue, this.chartCategory, data);
+            
+            this.data = data;
+            this.chart.data = this.data;
+            this.chart.validateData();
+        } catch (e) {
+            console.error(e);
+            toastObj.icon = 'error';
+            toastObj.text = "failed to load data for the chart";
+            toastObj.heading = "Chart Status";
+            $.toast(toastObj);
+        } finally {
+            this.toggleLoading();
+        }
+    }
+
+
+    setdata(data) {
+
+        this.toggleLoading();
+        this.data = data;
+        this.chart.data = this.data;
+        this.chart.validateData();
+        this.toggleLoading();
+
+    }
+
+    toggleLoading() {
+        this.loadingDiv.hidden = !this.loadingDiv.hidden
+        this.chartDiv.hidden = !this.chartDiv.hidden;
+
+    }
+}
+
+
+
+class PieChart extends BaseCatValChart {
+
+    connectedCallback() {
+       
+        super.connectedCallback();
+        this.chartDiv.id = this.id + "-PieChart";
+        this.chart = am4core.create(this.id + "-PieChart", am4charts.PieChart);
 
         this.chart.data = this.data;
         this.chart.exporting.menu = new am4core.ExportMenu();
@@ -142,61 +201,110 @@ class PieChart extends HTMLElement {
         title.marginBottom = 30;
         setTimeout(() => {
             this.toggleLoading();
-        }, 5000)
-
-
-    }
-
-
-    async readData(body) {
-        this.toggleLoading();
-        var method = "GET";
-        if (body) {
-            method = "POST";
-        }
-
-        try {
-            var data = await (await fetch(this.dataUrl, {
-                method: method,
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                ...(body && { body: JSON.stringify(body) })
-            })).json();
-            this.data = data;
-            this.chart.data = this.data;
-            this.chart.validateData();
-        } catch (e) {
-            console.error(e);
-            toastObj.icon = 'error';
-            toastObj.text = "failed to load data for the chart";
-            toastObj.heading = "Chart Status";
-            $.toast(toastObj);
-        } finally {
-             this.toggleLoading();
-        }
-    }
-
-
-    setdata(data) {
-
-        this.toggleLoading();
-        this.data = data;
-        this.chart.data = this.data;
-        this.chart.validateData();
-        this.toggleLoading();
-
-    }
-
-    toggleLoading() {
-        this.loadingDiv.hidden = !this.loadingDiv.hidden
-        this.chartDiv.hidden = !this.chartDiv.hidden;
-
+        }, 3000);
     }
 }
 
-customElements.define("m-bar-chart", PieChart);
+class BarChart extends BaseCatValChart {
+
+
+
+    connectedCallback() {
+
+        super.connectedCallback();
+        this.chartDiv.id = this.id + "-BarChart";
+        this.chart = am4core.create(this.id + "-BarChart", am4charts.XYChart);
+
+        this.chart.data = this.data;
+        this.chart.exporting.menu = new am4core.ExportMenu();
+        this.chart.exporting.menu.items = exportMenu;
+        var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
+
+        categoryAxis.renderer.labels.template.fontSize = 20;
+        categoryAxis.dataFields.category = this.chartCategory;
+
+
+        categoryAxis.renderer.labels.template.dy = -5;
+        categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
+            if (target.dataItem && target.dataItem.index & 2 == 2) {
+                return dy + 25;
+            }
+            return dy;
+        });
+        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+        var series = this.chart.series.push(new am4charts.ColumnSeries());
+
+        series.columns.template.fill = am4core.color("#104547");
+
+        //if (columnsColorFunc) {
+        //    series.columns.template.adapter.add("fill", (fill, target) => columnsColorFunc(fill, target)
+        //    );
+
+        //} else {
+        //    series.columns.template.adapter.add("fill", (fill, target) => {
+        //        return this.chart.colors.getIndex(target.dataItem.index);
+        //    });
+        //}
+        series.columns.template.adapter.add("fill", (fill, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
+        series.dataFields.valueY = this.chartValue;
+        series.dataFields.categoryX = this.chartCategory;
+        this.chart.maskBullets = false;
+        this.chart.paddingTop = 25;
+        var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+        labelBullet.label.text = "{valueY}";
+        labelBullet.adapter.add("y", function (y) {
+            return -15;
+        });
+        this.chart.cursor = new am4charts.XYCursor();
+        this.chart.cursor.behavior = "zoomX";
+        var scrollbar = new am4charts.XYChartScrollbar();
+
+        this.chart.scrollbarX = scrollbar;
+
+
+        var title = this.chart.titles.create();
+        title.text = this.chartTitle;
+        title.fontSize = 25;
+        title.marginBottom = 30;
+
+
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+
+
+
+        //var pieSeries = this.chart.series.push(new am4charts.PieSeries());
+        //pieSeries.dataFields.value = this.chartValue;
+        //pieSeries.dataFields.category = this.chartCategory;
+        //// Disable ticks and labels
+        //pieSeries.labels.template.disabled = true;
+        //pieSeries.ticks.template.disabled = true;
+
+        //this.chart.legend = new am4charts.Legend();
+        //this.chart.legend.maxHeight = 600;
+        //this.chart.legend.maxWidth = 300;
+        //this.chart.legend.scrollable = true;
+        //this.chart.legend.position = "bottom";
+        //this.chart.legend.labels.template.text = "{name} : ({value})";
+
+        //var title = this.chart.titles.create();
+        //title.text = this.chartTitle;
+        //title.fontSize = 25;
+        //title.marginBottom = 30;
+        //setTimeout(() => {
+        //    this.toggleLoading();
+        //}, 3000);
+    }
+
+}
+
+
+customElements.define("m-pie-chart", PieChart);
+customElements.define("m-bar-chart", BarChart);
 
 
 //export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {

@@ -139,7 +139,7 @@ function createTextBox(emailsContainer, options) {
 /**
  * return the valid array of emails
  */
- function getEmailsList() {
+function getEmailsList() {
     return listOfValidEmails;
 }
 
@@ -149,7 +149,7 @@ function createTextBox(emailsContainer, options) {
  * @param {Element} selector - main div selector that needs to be converted into multiple emails input
  * @param {Object} options - provided options from user
  */
- function EmailsInput(selector, options) {
+function EmailsInput(selector, options) {
     if (!options) options = {};
 
     selector.classList.add('lib-emails-input-container');
@@ -172,6 +172,6 @@ function createTextBox(emailsContainer, options) {
             addEmailToList(emailsContainer, email, options);
         },
     };
- }
+}
 
-export { EmailsInput, getEmailsList }
+export { EmailsInput, getEmailsList, addEmailToList }

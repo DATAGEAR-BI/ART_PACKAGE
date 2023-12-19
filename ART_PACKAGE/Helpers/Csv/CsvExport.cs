@@ -475,16 +475,27 @@ namespace ART_PACKAGE.Helpers.Csv
                 cw.WriteRecord(item);
                 cw.NextRecord();
                 index++; // Increment the index for each item
-
-                if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                if (dataCount > 100)
                 {
-                    //progress = (float)(index / (float)total * 100);
+                    if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                    {
+                        //progress = (float)(index / (float)total * 100);
+                        int recordsDone = index + 1;
+                        lock (_locker)
+                        {
+                            OnProgressChanged(recordsDone, fileNumber);
+                        }
+                    }
+                }
+                else
+                {
                     int recordsDone = index + 1;
                     lock (_locker)
                     {
                         OnProgressChanged(recordsDone, fileNumber);
                     }
                 }
+
             }
 
 

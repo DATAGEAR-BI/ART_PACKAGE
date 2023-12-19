@@ -15,9 +15,6 @@
 <h1>Add Task</h1>
 
 <form id="AddTaskForm">
-
-
-
     <div class="row m-2" >
         <a class="btn btn-link col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
         <div class="col-8"></div>
@@ -82,11 +79,15 @@
 
 
             <div class="row mt-5">
-                <div class="col-6 d-flex justify-content-center">
-                    <smart-calendar id="calendar" selection-mode='one' disabled></smart-calendar>
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <div id="endofmonthSec" class="w-25 disabledDiv" style="display:flex;justify-content:space-between">
+                        <label for="endofMonth-art-switch">End Of The month</label>
+                        <art-switch id="endofMonth"></art-switch>
+                    </div>
+                    <smart-calendar id="calendar" class="w-75" selection-mode='zeroOrOne' disabled></smart-calendar>
                 </div>
                 <div class="col-6">
-                    <smart-time-picker id="timepicker" view="landscape" disabled></smart-time-picker>
+                    <smart-time-picker class="w-100 h-100" id="timepicker" view="landscape" disabled></smart-time-picker>
                 </div>
             </div>
     
@@ -120,18 +121,6 @@
         </div>
     </div>
 
-
-
-
-
-  
-   
-    
- 
-
-    
-
-   
 </form>
 
 @section scripts {

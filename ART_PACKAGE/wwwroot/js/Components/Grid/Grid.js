@@ -2,6 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
+import { Actions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
@@ -219,8 +220,9 @@ class Grid extends HTMLElement {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
+                console.log(d);
                 this.model = this.generateModel(d.columns);
-                this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable);
+                this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
 
 
@@ -306,7 +308,7 @@ class Grid extends HTMLElement {
         return model;
     }
 
-    generateColumns(columns, containsActions, selectable) {
+    generateColumns(columns, containsActions, selectable, actions) {
         var columnNames = columns;
         var selectCol = {
             selectable: true,
@@ -390,12 +392,12 @@ class Grid extends HTMLElement {
         });
 
         if (containsActions) {
-            var actions = response["actions"];
+            console.log(actions);
             var actionsBtns = [...actions].map(x => ({
 
                 name: x.text,
                 iconClass: `k-icon ${x.icon}`,
-                click: (e) => Actions[x.action](e)
+                click: (e) => Actions[x.action](e, this.gridDiv)
             }));
             cols = [
                 ...cols,
@@ -446,7 +448,8 @@ class Grid extends HTMLElement {
             data.forEach((x) => {
                 var btn = {
                     name: `${x.action}`,
-                    text: `${x.text}`
+                    text: `${x.text}`,
+
                     //template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
                 }
                 this.customtToolBarBtns.push(btn);
@@ -463,7 +466,6 @@ class Grid extends HTMLElement {
                     <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" hidden>Download Files</a>
                 </span>
             </span>
-
             `,
         });
         return toolbar;
@@ -1077,8 +1079,26 @@ class Grid extends HTMLElement {
         }
         para.IdColumn = "CustomerNumber";
         para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x["CustomerNumber"].toString());
-        console.log(para.SelectedValues);
-        var exportRes = await fetch("/Grid/ExportToCsv/" + this.id, {
+
+        // This gets the full URL of the current page
+        var fullUrl = window.location.href;
+
+        // This extracts the path after the domain
+        var path = new URL(fullUrl).pathname;
+
+        // Split the path into its segments
+        var pathSegments = path.split('/').filter(function (segment) {
+            return segment.length > 0;
+        });
+
+        // Typically, the first segment is the controller, and the second is the action
+        var controller = pathSegments[0];
+        var action = pathSegments[1];
+
+        console.log("Controller: " + controller);
+        console.log("Action: " + action);
+
+        var exportRes = await fetch(`/${controller}/ExportToCsv/` + this.id, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

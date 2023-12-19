@@ -99,8 +99,6 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 WebApplication app = builder.Build();
 
-
-
 app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();
@@ -133,6 +131,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+
+
+
 
 
 

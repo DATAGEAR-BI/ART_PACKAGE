@@ -18,7 +18,10 @@ class TextAreaInput extends HTMLElement {
 
         this.appendChild(this.input);
         this.appendChild(this.label);
-        this.intialize();
+        if (this.input.value)
+            this.intialize(this.input.value);
+        else
+            this.intialize("");
     }
 
 

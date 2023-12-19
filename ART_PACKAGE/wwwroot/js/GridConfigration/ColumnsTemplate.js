@@ -21,4 +21,15 @@ export const Templates = {
     hyperlink: (dataItem , column) => {
         return `<a class="custom-link">${dataItem[column]}</a>`
     }
+    ,
+    TaskMails: (dataItem, column) => {
+
+        var Mails = JSON.parse(dataItem.MailsSerialized);
+        console.log(Mails);
+        var template = Mails.map(x => `<span class="badge text-bg-primary mb-1 ">${x}</span>`).join("");
+        console.log(template);
+        return `<div class="d-flex justify-content-around flex-wrap align-content-between">
+                                            ${template}        
+                   </div>`;
+    }
 }

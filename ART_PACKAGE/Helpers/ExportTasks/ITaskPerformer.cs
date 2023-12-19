@@ -1,11 +1,13 @@
 ﻿using Data.Data.ExportSchedular;
+using Hangfire.Server;
 
 namespace ART_PACKAGE.Helpers.ExportTasks
 {
     public interface ITaskPerformer
     {
-        public Task PerformTask(ExportTask task);
+        public Task PerformTask(ExportTask task, PerformContext hangContext);
 
-        public Func<string> GetPeriod(ExportTask task);
+        public (DateTime? lastDate, DateTime? nextDate) GetExecutionDateTimes(string jobName);
+
     }
 }

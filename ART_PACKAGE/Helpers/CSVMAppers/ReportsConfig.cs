@@ -22,23 +22,65 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
 
 
-               { nameof(TasksController).ToLower(), new ReportConfig {
-               SkipList = new List<string>()
-                {
-                    nameof(ExportTaskDto.Mails),
-                    nameof(ExportTaskDto.Name),
-                    nameof(ExportTask.UserId),
-                    nameof(ExportTask.Deleted),
-                    nameof(ExportTask.ParametersJson),
+               { nameof(TasksController).ToLower(), new ReportConfig
+                                                                {
+                                                                        SkipList = new List<string>()
+                                                                        {
+                                                                            nameof(ExportTaskDto.Mails),
+                                                                            nameof(ExportTaskDto.Name),
+                                                                            nameof(ExportTask.UserId),
+                                                                            nameof(ExportTask.Deleted),
+                                                                            nameof(ExportTask.ParametersJson),
+                                                                            nameof(ExportTask.Day),
+                                                                            nameof(ExportTask.Month),
+                                                                            nameof(ExportTask.EndOfMonth),
+                                                                            nameof(ExportTask.Hour),
+                                                                            nameof(ExportTask.Minute),
+                                                                            nameof(ExportTask.CornExpression),
+                                                                            nameof(ExportTask.Deleted),
+                                                                            nameof(ExportTask.DayOfWeek),
 
-                },
-               DisplayNames = new Dictionary<string, GridColumnConfiguration>
-            {
-                    {nameof(ExportTaskDto.Period),new GridColumnConfiguration { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
-                    {nameof(ExportTaskDto.DisplayName),new GridColumnConfiguration { DisplayName ="Name" }},
-            }
-               }
-            },
+                                                                        },
+                                                                        DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                                                                        {
+                                                                                {nameof(ExportTask.Period),new GridColumnConfiguration { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
+                                                                                {nameof(ExportTask.DisplayName),new GridColumnConfiguration { DisplayName ="Name" }},
+                                                                                {nameof(ExportTask.MailsSerialized),new GridColumnConfiguration { DisplayName ="Mails" , Template = "TaskMails" }},
+                                                                        },
+                                                                        ContainsActions = true,
+                                                                        Actions = new List<GridButton>
+                                                                        {
+                                                                              new GridButton
+                                                                                        {
+                                                                                            text = "Edit",
+                                                                                            action = "editTask",
+                                                                                            icon = "k-i-edit"
+                                                                                        },
+                                                                                        new GridButton
+                                                                                        {
+                                                                                            text = "Delete",
+                                                                                            action = "deleteTask",
+                                                                                            icon = "k-i-trash"
+                                                                                        },
+                                                                                        new GridButton
+                                                                                        {
+                                                                                            text = "Run Now",
+                                                                                            action = "runNow",
+                                                                                            icon = "k-i-video-external"
+                                                                                        }
+                                                                        },
+                                                                        Toolbar = new List<GridButton>
+                                                                        {
+                                                                             new GridButton
+                                                                             {
+                                                                                 text = "Add New Task",
+                                                                                 action = "addTask",
+                                                                                 icon = "k-i-edit"
+                                                                             }
+                                                                        },
+                                                                        Selectable = true
+                                                                }
+               },
 
             { nameof(GridController).ToLower(), new ReportConfig {
                SkipList =  new List<string>

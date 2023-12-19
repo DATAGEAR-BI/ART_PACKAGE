@@ -3,6 +3,7 @@ using System;
 using Data.Data.ExportSchedular;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace OracleMigrations.Migrations.ExportSchedular
 {
     [DbContext(typeof(ExportSchedularContext))]
-    partial class ExportSchedularContextModelSnapshot : ModelSnapshot
+    [Migration("20231218122000_dropmailstable")]
+    partial class dropmailstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +32,6 @@ namespace OracleMigrations.Migrations.ExportSchedular
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CornExpression")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
                     b.Property<int?>("Day")
                         .HasColumnType("NUMBER(10)");
 
@@ -48,9 +46,6 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.Property<string>("Description")
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<bool>("EndOfMonth")
-                        .HasColumnType("NUMBER(1)");
-
                     b.Property<int?>("Hour")
                         .HasColumnType("NUMBER(10)");
 
@@ -59,9 +54,6 @@ namespace OracleMigrations.Migrations.ExportSchedular
 
                     b.Property<bool>("IsSavedOnServer")
                         .HasColumnType("NUMBER(1)");
-
-                    b.Property<DateTime?>("LastExceutionDate")
-                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("MailContent")
                         .HasColumnType("NVARCHAR2(2000)");
@@ -78,9 +70,6 @@ namespace OracleMigrations.Migrations.ExportSchedular
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(450)");
-
-                    b.Property<DateTime?>("NextExceutionDate")
-                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("ParametersJson")
                         .IsRequired()

@@ -6,8 +6,9 @@ class Switch extends HTMLElement {
     constructor() {
         super();
         this.classList.add("form-check", "form-switch");
-     
-        var isChecked = this.dataset.checked;
+
+        var isChecked = this.dataset.checked && this.dataset.checked.toLowerCase() == "true";
+        console.log(isChecked);
 
         this.switchLable.classList.add("form-check-label");
         this.switchLable.for = this.id + "-" + "art-switch";
