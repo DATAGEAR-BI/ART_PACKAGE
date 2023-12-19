@@ -39,7 +39,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
                     MemberMap memberMap = Map(exp).Name(displayName);
 
-                    if (x.Name.ToLower().Contains("hour"))
+                    if (x.Name.ToLower().Contains("amount"))
                     {
                         _ = memberMap.TypeConverter<CurrencyTypeConverter>();
                     }
@@ -64,7 +64,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         _ = memeberMap.Ignore();
                     }
 
-                    if (prop.Name.ToLower().Contains("hour"))
+                    if (prop.Name.ToLower().Contains("amount"))
                     {
                         _ = memeberMap.TypeConverter<CurrencyTypeConverter>();
                     }
