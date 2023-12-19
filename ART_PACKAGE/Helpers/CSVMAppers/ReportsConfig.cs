@@ -55,11 +55,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
             }
         },
-        {
+
+
+                    {
                         nameof(ArtCasesInitiatedFromBranchController).ToLower(),new ReportConfig
                         {
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
-                    {
+                        {
                             {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
                             {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},

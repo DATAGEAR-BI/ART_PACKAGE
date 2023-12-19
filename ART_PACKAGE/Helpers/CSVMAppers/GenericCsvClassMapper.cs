@@ -1,16 +1,16 @@
-﻿using CsvHelper.Configuration;
+﻿using ART_PACKAGE.Helpers.CustomReport;
+using CsvHelper.Configuration;
 using System.Linq.Expressions;
-using ART_PACKAGE.Helpers.CustomReport;
 using System.Reflection;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
-    public class GenericCsvClassMapper<T, T1> : ClassMap<T>
+    public class GenericCsvClassMapper<TModel, TController> : ClassMap<TModel>
     {
         public GenericCsvClassMapper()
         {
-            string name = typeof(T1).Name.ToLower();
-            PropertyInfo[] props = typeof(T).GetProperties();
+            string name = typeof(TController).Name.ToLower();
+            PropertyInfo[] props = typeof(TModel).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
             Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
 
@@ -20,7 +20,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {
 
 
-                    Expression<Func<T, object>> exp = GenerateExpression(x);
+                    Expression<Func<TModel, object>> exp = GenerateExpression(x);
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
                     _ = Map(exp).Name(displayName);
 
@@ -32,7 +32,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             {
                 foreach (PropertyInfo prop in props)
                 {
-                    Expression<Func<T, object>> exp = GenerateExpression(prop);
+                    Expression<Func<TModel, object>> exp = GenerateExpression(prop);
                     if (!skip.Contains(prop.Name))
                     {
                         string displayName = displaynames is not null && displaynames.Keys.Contains(prop.Name) ? displaynames[prop.Name]?.DisplayName : prop.Name;
@@ -46,13 +46,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
 
         }
-        private Expression<Func<T, object>> GenerateExpression(PropertyInfo prop)
+        private Expression<Func<TModel, object>> GenerateExpression(PropertyInfo prop)
         {
-            ParameterExpression arg = Expression.Parameter(typeof(T), "x");
+            ParameterExpression arg = Expression.Parameter(typeof(TModel), "x");
             MemberExpression property = Expression.Property(arg, prop.Name);
             //return the property as object
             UnaryExpression conv = Expression.Convert(property, typeof(object));
-            Expression<Func<T, object>> exp = Expression.Lambda<Func<T, object>>(conv, new ParameterExpression[] { arg });
+            Expression<Func<TModel, object>> exp = Expression.Lambda<Func<TModel, object>>(conv, new ParameterExpression[] { arg });
 
             return exp;
         }
