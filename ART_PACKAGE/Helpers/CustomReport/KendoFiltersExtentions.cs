@@ -927,20 +927,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             cw.NextRecord();
                         }
 
-                        // Manually configure headers
-                        ClassMap<T>? headerMap = cw.Context.Maps.Find<T>();
-                        foreach (MemberMap? memberMap in headerMap.MemberMaps)
-                        {
-                            MemberInfo? property = memberMap.Data.Member;
-
-                            // Add custom type converters for specific properties
-                            if (property.Name.ToLower().Contains("amount"))
-                            {
-                                memberMap.TypeConverter<CurrencyTypeConverter>();
-                            }
-
-                            cw.WriteField(property.Name); // Write custom headers if needed
-                        }
+                        cw.WriteHeader<T>();
                         cw.NextRecord();
 
                         // Write records
