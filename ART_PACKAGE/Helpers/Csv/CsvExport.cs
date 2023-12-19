@@ -464,7 +464,7 @@ namespace ART_PACKAGE.Helpers.Csv
             using MemoryStream stream = new();
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
-
+            _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel, object>>();
 
             cw.WriteHeader<TModel>();
             cw.NextRecord();
