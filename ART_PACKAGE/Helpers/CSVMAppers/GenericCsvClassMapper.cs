@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public GenericCsvClassMapper()
         {
-            string name = typeof(TModel).Name.ToLower();
+            string name = typeof(TController).Name.ToLower();
             PropertyInfo[] props = typeof(TModel).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
             Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
