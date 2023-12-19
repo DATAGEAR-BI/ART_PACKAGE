@@ -467,6 +467,7 @@ namespace ART_PACKAGE.Helpers.Csv
             _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel, object>>();
 
             cw.WriteHeader<TModel>();
+
             cw.NextRecord();
             int index = 0;
             float progress = 0;

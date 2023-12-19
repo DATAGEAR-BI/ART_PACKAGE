@@ -34,7 +34,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                             nameof(ExportTask.Day),
                                                                             nameof(ExportTask.Month),
                                                                             nameof(ExportTask.EndOfMonth),
-                                                                            nameof(ExportTask.Hour),
+                                                                            //nameof(ExportTask.Hour),
                                                                             nameof(ExportTask.Minute),
                                                                             nameof(ExportTask.CornExpression),
                                                                             nameof(ExportTask.Deleted),
@@ -45,6 +45,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                         {
                                                                                 {nameof(ExportTask.Period),new GridColumnConfiguration { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
                                                                                 {nameof(ExportTask.DisplayName),new GridColumnConfiguration { DisplayName ="Name" }},
+                                                                                {nameof(ExportTask.Hour),new GridColumnConfiguration { DisplayName ="HHHHHour" }},
                                                                                 {nameof(ExportTask.MailsSerialized),new GridColumnConfiguration { DisplayName ="Mails" , Template = "TaskMails" }},
                                                                         },
                                                                         ContainsActions = true,
