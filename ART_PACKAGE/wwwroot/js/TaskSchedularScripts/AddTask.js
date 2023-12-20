@@ -416,7 +416,6 @@ serverSwitch.onswitchchanged = (e) => {
 }
 
 endofmonthSwitch.onswitchchanged = (e) => {
-    calender.selectedDates = [];
     calender.disabled = !calender.disabled;
 }
 

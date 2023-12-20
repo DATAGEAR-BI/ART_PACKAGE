@@ -39,6 +39,8 @@ var serverSwitch = document.getElementById("serverSwitch");
 const querybuilder = document.querySelector('#querybuilder');
 var mailsInput = document.getElementById("mailsInput");
 var modelCopy = model.accessWithKey("modelSecureSecretKey123@");
+var endofmonthDiv = document.getElementById("endofmonthSec");
+var endofmonthSwitch = document.getElementById("endofMonth");
 console.log(modelCopy);
 init();
 function init() {
@@ -62,7 +64,7 @@ function init() {
             x.selected = true;
     });
 
-    reportsDropDown.intialize([document.createElement("option"), opt, Topt]);
+    reportsDropDown.intialize([ opt, Topt]);
     var parametrs = parametersConfig.find(x => x.reportName == modelCopy.reportName).parameters;
     var customOps = [];
     var multifields = parametrs.filter(x => x.isMulti);
@@ -151,7 +153,7 @@ function init() {
     timePicker.value = `${modelCopy.hour ?? "00"}:${modelCopy.minute ?? "00"}`
 
 
-    if (modelCopy.day && modelCopy.month) {
+    if (!modelCopy.endOfMonth && modelCopy.day && modelCopy.month) {
         var year = new Date().getFullYear();
         calender.selectedDates = [`${year}-${modelCopy.month}-${modelCopy.day}`]
         calender.disabled = false;
@@ -183,9 +185,8 @@ var mailsDiv = document.getElementById("mailsDiv");
 
 var form = document.getElementById("EditTaskForm");
 form.onsubmit = async (e) => {
-    console.log("test");
     e.preventDefault();
-
+    var endofMonth = endofmonthSwitch.status;
     var report = reportsDropDown.value.value;
     if (!report || report == "") {
         toastObj.icon = 'error';
@@ -272,8 +273,13 @@ form.onsubmit = async (e) => {
     }
 
     if (period >= 5) {
-        var day = calender.selectedDates[0].getDate();
-        taskTime.Day = day;
+        if (!endofmonthSwitch.status) {
+            var day = calender.selectedDates[0].getDate();
+            taskTime.Day = day;
+        }
+        
+        
+        taskTime.EndOfMonth = endofMonth;
     }
 
 
@@ -343,6 +349,7 @@ form.onsubmit = async (e) => {
     };
 
 
+    
 
     var addTaskRes = await fetch("/Tasks/EditTask/" + modelCopy.id, {
         headers: {
@@ -356,7 +363,7 @@ form.onsubmit = async (e) => {
 
     if (!addTaskRes.ok) {
         toastObj.icon = 'error';
-        toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
+        toastObj.text = "Something wrong happend while updating this task, make sure every thing is correct and try again";
         toastObj.heading = "Add new Task Status";
         $.toast(toastObj);
         return;
@@ -416,11 +423,16 @@ periodDorpDown.onchange = (e) => {
 
     timePicker.disabled = true;
     calender.disabled = true;
+    if (!endofmonthDiv.classList.contains("disabledDiv")) {
+        endofmonthDiv.classList.add("disabledDiv")
+        endofmonthSwitch.unCheck();
+    }
     weekDayDropDown.disable();
-    weekDayDropDown.delect();
+    weekDayDropDown.deSelect();
+    monthDropDown.deSelect();
     monthDropDown.disable();
-    monthDropDown.delect();
-
+    timePicker.value = "00:00";
+    calender.selectedDates = [];
 
     if (val == 2 || val == 3) {
         timePicker.disabled = false;
@@ -432,19 +444,23 @@ periodDorpDown.onchange = (e) => {
         weekDayDropDown.enable();
     }
 
-    if (val == 5) {
+    if (val >= 5) {
         timePicker.disabled = false;
         calender.disabled = false;
         calender.selectedDates = [new Date()]
+        endofmonthDiv.classList.remove("disabledDiv")
     }
+
+   
 
     if (val == 6 || val == 7) {
-        timePicker.disabled = false;
-        calender.disabled = false;
+        endofmonthDiv.classList.remove("disabledDiv")
         monthDropDown.enable();
-        calender.selectedDates = [new Date()];
     }
 
+    
+
+  
     //if (val !== -1)
     //    disablIinputsDict[period[val]].forEach(x => x.classList.remove("disabledDiv"));
 }
@@ -467,4 +483,6 @@ serverSwitch.onswitchchanged = (e) => {
     }
 }
 
-
+endofmonthSwitch.onswitchchanged = (e) => {
+    calender.disabled = !calender.disabled;
+}

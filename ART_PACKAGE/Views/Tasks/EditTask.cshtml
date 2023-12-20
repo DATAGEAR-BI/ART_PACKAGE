@@ -18,15 +18,11 @@
 
 <h1>Edit Task</h1>
 
-<form id="EditTaskForm">
+<form id="EditTaskForm" class="h-100">
 
 
 
-    <div class="row m-2">
-        <a class="btn btn-link col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
-        <div class="col-8"></div>
-        <button type="submit" class="btn btn-primary col-2">Add</button>
-    </div>
+
 
 
     <ul class="icon-top nav nav-tabs nav-justified" role="tablist">
@@ -49,7 +45,7 @@
     </ul>
     <!-- Tab Panes -->
     <div class="tab-content">
-        <div class="tab-pane container-fluid " role="tabpanel" id="TaskName">
+        <div class="tab-pane container-fluid fade" role="tabpanel" id="TaskName">
             <div class="row mt-5">
                 <div class="col-6">
                     <m-input id="taskName" data-value="@Model.Name.Split("##")[0]" data-palceholder="Task Name" data-title="Task Name"></m-input>
@@ -57,17 +53,19 @@
                 <div class="col-6">
                     <m-select id="reportsDropDown" data-searchable data-title="Report" style="width:100%"></m-select>
                 </div>
-                <div class="col-12 mt-2 ">
+            </div>
+            <div class="row">
+                <div class="col-12 mt-5 ">
                     <m-areainput id="taskDesc" data-value="@Model.Description" dat-palceholder="Task Description" data-title="Task Description"></m-areainput>
                 </div>
-
-                <div class="col-12 mt-2">
-                    <smart-query-builder  id="querybuilder"></smart-query-builder>
-                </div>
             </div>
-
+            <div class="row">
+                <div class="col-12 mt-5">
+                    <smart-query-builder id="querybuilder"></smart-query-builder>
+                </div>
+            </div> 
         </div>
-        <div class="tab-pane container-fluid active" role="tabpanel" id="TaskTime">
+        <div class="tab-pane container-fluid  active " role="tabpanel" id="TaskTime">
 
 
             <div class="row mt-5">
@@ -85,16 +83,20 @@
 
 
             <div class="row mt-5">
-                <div class="col-6 d-flex justify-content-center">
-                    <smart-calendar id="calendar" selection-mode='one' disabled></smart-calendar>
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <div id="endofmonthSec" class="w-25 @(!Model.EndOfMonth ? "disabledDiv" : "")" style="display:flex;justify-content:space-between">
+                        <label for="endofMonth-art-switch">End Of The month</label>
+                        <art-switch id="endofMonth" data-checked="@Model.EndOfMonth"></art-switch>
+                    </div>
+                    <smart-calendar id="calendar" class="w-75" selection-mode='zeroOrOne' disabled></smart-calendar>
                 </div>
                 <div class="col-6">
-                    <smart-time-picker id="timepicker" view="landscape" disabled></smart-time-picker>
+                    <smart-time-picker class="w-100 h-100" id="timepicker" view="landscape" disabled></smart-time-picker>
                 </div>
             </div>
 
         </div>
-        <div class="tab-pane container-fluid fade" role="tabpanel" id="TaskConfiguratio">
+        <div class="tab-pane container-fluid fade " role="tabpanel" id="TaskConfiguratio">
             <div class="row mt-5" style="display:flex;align-items:center">
                 <div class="col-2">
                     <div style="display:flex;justify-content:space-between">
@@ -127,7 +129,11 @@
 
 
 
-
+    <div class="row mx-2 mt-5">
+        <a class="btn btn-outline-primary col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
+        <div class="col-8"></div>
+        <button type="submit" class="btn btn-primary col-2 text-uppercase">Update</button>
+    </div>
 
 
 

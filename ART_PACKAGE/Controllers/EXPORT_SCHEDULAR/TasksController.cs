@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
@@ -117,7 +118,20 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         [HttpGet("[controller]/[action]/{taskId}")]
         public IActionResult EditTask(int taskId)
         {
+
+
             ExportTask? task = _context.ExportsTasks.FirstOrDefault(x => x.Id == taskId);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+
+            if (task.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                return Forbid();
+
+
             ExportTaskDto taskDto = new()
             {
                 Id = taskId,
@@ -135,6 +149,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
                 Period = task.Period,
                 ReportName = task.ReportName,
                 Path = task.Path,
+                EndOfMonth = task.EndOfMonth
             };
             return View(taskDto);
         }

@@ -11,7 +11,7 @@ namespace ART_PACKAGE.Middlewares.Logging
             this.next = next;
         }
 
-        public Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context)
         {
             string user = "Unkown";
             if (context.User is not null && context.User.Identity is not null && context.User.Identity.Name is not null)
@@ -20,7 +20,9 @@ namespace ART_PACKAGE.Middlewares.Logging
             }
             _ = LogContext.PushProperty("User", user);
 
-            return next(context);
+            await next(context);
+            Console.WriteLine(context.Items["ErrorDetails"]);
+
         }
     }
 }

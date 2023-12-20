@@ -15,6 +15,7 @@ using ART_PACKAGE.Helpers.Mail;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Middlewares.Security;
 using Data.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
@@ -119,6 +120,8 @@ app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
 //app.UseCustomAuthorization();
+app.UseMiddleware<AccessDeniedMiddleware>();
+app.UseMiddleware<NotFoundMiddleware>();
 app.UseHangfireDashboard("/TasksDashBoard");
 
 //app.UseLicense();
