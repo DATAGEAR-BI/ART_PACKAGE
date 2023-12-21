@@ -173,7 +173,16 @@ namespace ART_PACKAGE.Controllers
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                containsActions = true
+                containsActions = true,
+                actions = new List<dynamic>
+                {
+                    new
+                    {
+                        text = "View",
+                        icon = "k-i-eye",
+                        action = "GoToReportDetails"
+                    }
+                }
             };
             return new ContentResult
             {
