@@ -128,7 +128,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             }
 
 
-            if (task.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            if (!User.IsInRole("art_admin") && task.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 return Forbid();
 
 

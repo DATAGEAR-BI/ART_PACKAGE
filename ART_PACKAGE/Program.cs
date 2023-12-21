@@ -120,7 +120,6 @@ app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
 //app.UseCustomAuthorization();
-app.UseMiddleware<AccessDeniedMiddleware>();
 app.UseMiddleware<NotFoundMiddleware>();
 app.UseHangfireDashboard("/TasksDashBoard");
 
