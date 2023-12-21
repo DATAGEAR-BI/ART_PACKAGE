@@ -357,9 +357,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
                                 {"CaseRk",new DisplayNameAndFormat { DisplayName ="Case Rk"}},
                                 {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
-                                {"CaseId",new DisplayNameAndFormat { DisplayName ="ECM Reference",Template="hyperlink"}},
-                                {"CustomerName",new DisplayNameAndFormat { DisplayName ="Client Name"}},
                                 {"RelatedCaseId",new DisplayNameAndFormat { DisplayName ="Related ECM Reference"}},
+                                {"CustomerName",new DisplayNameAndFormat { DisplayName ="Client Name"}},
+                                {"CaseId",new DisplayNameAndFormat { DisplayName ="ECM Reference",Template="hyperlink"}},
                                 {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"}},
                                 {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"}},
                                 {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
