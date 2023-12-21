@@ -11,8 +11,8 @@ namespace Data.Data.FTI
         public int CaseRk { get; set; }
         public string? BranchName { get; set; }
         public string? RelatedCaseId { get; set; }
-        public string? CaseId { get; set; }
         public string? CustomerName { get; set; }
+        public string? CaseId { get; set; }
         public string? CustomerCIF { get; set; }
         public double? Amount { get; set; }
         public string? Currency { get; set; }
