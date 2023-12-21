@@ -291,7 +291,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             { "AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
                             { "CaseId",new DisplayNameAndFormat{ DisplayName = "ECM Reference"} },
                             { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
-                            { "AssignedTime ",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                            { "AssignedTime",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
                               },
 
 
@@ -363,10 +363,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"}},
                                 {"Amount",new DisplayNameAndFormat { DisplayName ="Amount",Format = "{0:n2}"}},
                                 {"Currency",new DisplayNameAndFormat { DisplayName ="Currency"}},
-                                {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"                             }},
-                                {"Product",new DisplayNameAndFormat { DisplayName ="Product"                                }},
-                                {"EventName",new DisplayNameAndFormat { DisplayName ="Case Type"                           }},
-                                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"                       }},
+                                {"CaseType",new DisplayNameAndFormat { DisplayName ="Case Type"}},
+                                {"Product",new DisplayNameAndFormat { DisplayName ="Product"}},
+                                {"EventName",new DisplayNameAndFormat { DisplayName ="Case Type"}},
+                                {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                                 {"CreateDate",new DisplayNameAndFormat { DisplayName ="Created Time"}},
                                 {"MasterReference",new DisplayNameAndFormat { DisplayName ="FTI Reference"}},
                                 {"RequestStatus",new DisplayNameAndFormat { DisplayName ="Request Status"}},
@@ -378,9 +378,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"ProdCd",new DisplayNameAndFormat { DisplayName ="Prod Cd"}},
                                 {"MlsToEscalation1",new DisplayNameAndFormat { DisplayName ="Mls To Escalation1"}},
                                 {"TotalTime",new DisplayNameAndFormat { DisplayName = "Total Time" }},
-                                {"AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
+                                {"AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"} },
                                 {"Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
-                                {"AssignedTime ",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                                {"AssignedTime",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
                               },
                               SkipList =  new List<string>()
                             {
