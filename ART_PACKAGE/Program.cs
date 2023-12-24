@@ -25,9 +25,9 @@ culture.DateTimeFormat.LongTimePattern = "hh:mm:ss tt";
 Thread.CurrentThread.CurrentCulture = culture;*/
 JsonConvert.DefaultSettings = () => new JsonSerializerSettings
 {
-    Formatting = Newtonsoft.Json.Formatting.Indented,
+    Formatting = Formatting.Indented,
     //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
-    DateFormatString= "dd/MM/yyyy hh:mm:ss tt"
+    DateFormatString = "dd/MM/yyyy hh:mm:ss tt"
 };
 
 
