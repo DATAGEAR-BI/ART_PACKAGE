@@ -12,16 +12,24 @@ using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
-using System.Globalization;
+using Newtonsoft.Json;
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = "UAT",
 });
-CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+/*CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 culture.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
 culture.DateTimeFormat.LongTimePattern = "hh:mm:ss tt";
-Thread.CurrentThread.CurrentCulture = culture;
+Thread.CurrentThread.CurrentCulture = culture;*/
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{
+    Formatting = Newtonsoft.Json.Formatting.Indented,
+    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+    DateFormatString= "dd/MM/yyyy hh:mm:ss tt"
+};
+
 
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
@@ -37,7 +45,6 @@ builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
-
 builder.Services.ConfigureApplicationCookie(opt =>
  {
 

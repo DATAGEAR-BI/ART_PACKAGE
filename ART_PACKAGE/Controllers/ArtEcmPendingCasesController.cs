@@ -135,7 +135,7 @@ namespace ART_PACKAGE.Controllers
             return new ContentResult
             {
                 ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(assignees)
+                Content = JsonConvert.SerializeObject(assignees 
             };
         }
 
