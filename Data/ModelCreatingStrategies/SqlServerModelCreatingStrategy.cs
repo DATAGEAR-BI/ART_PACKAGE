@@ -5018,8 +5018,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.TimeDifference)
                     .HasColumnName("TIME_DIFFERENCE")
-                    .HasColumnType("nvarchar(100)");
-
+                    .HasColumnType("nvarchar(100)");//TimeDifferenceSLA
+                entity.Property(e => e.TimeDifferenceSLA)
+                   .HasColumnName("TIME_DIFFERENCE_SLA")
+                   .HasColumnType("nvarchar(100)");
 
 
             });

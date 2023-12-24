@@ -288,6 +288,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"SubLastActionDate",new DisplayNameAndFormat { DisplayName ="Sub Last Action Date"         }},
                             {"LastActionTakenDate",new DisplayNameAndFormat { DisplayName ="Last Action Taken Date"         }},
                             { "TimeDifference",new DisplayNameAndFormat { DisplayName ="Time Difference"} },
+                            { "TimeDifferenceSLA",new DisplayNameAndFormat { DisplayName ="Time Difference SLA"} },
                             { "AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"                     } },
                             { "CaseId",new DisplayNameAndFormat{ DisplayName = "ECM Reference"} },
                             { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},

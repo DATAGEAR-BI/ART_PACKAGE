@@ -29,5 +29,6 @@ namespace Data.Data.FTI
         public DateTime? SubLastActionDate { get; set; }
         public DateTime? LastActionTakenDate { get; set; }
         public string? TimeDifference { get; set; }
+        public string? TimeDifferenceSLA { get; set; }
     }
 }
