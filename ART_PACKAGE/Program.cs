@@ -12,11 +12,16 @@ using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
+using System.Globalization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = "UAT",
 });
+CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+culture.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+culture.DateTimeFormat.LongTimePattern = "hh:mm:ss tt";
+Thread.CurrentThread.CurrentCulture = culture;
 
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
