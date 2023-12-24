@@ -856,7 +856,7 @@ function generateColumns(response) {
             format: column.format ?
                 column.format :
                 isDateField[column.name]
-                    ? "{0:dd/MM/yyyy HH:mm:ss tt}"
+                    ? "{0:dd/MM/yyyy hh:mm:ss tt}"
                     : "",
 
             filterable: isCollection ? false : filter,
