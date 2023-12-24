@@ -48,32 +48,28 @@ export const parametersConfig = [
             "and",
             ["enddate", "=", yesterday]
         ]
-    },
-    {
-        "reportName": "AlertDetailsTest",
+    }, {
+        "reportName": "CasesSummary",
         "parameters": [
             {
-                "paraName": "AlertedEntityNumberT",
-                "paraDisplayName": "Alerted Entity NumberT",
+                "paraName": "startdate",
+                "paraDisplayName": "Start Date",
                 "isMulti": false,
-                "type": "string"
+                "type": "date"
             },
             {
-                "paraName": "AlertStatusT",
-                "paraDisplayName": "Alert StatusT",
-                "isMulti": true,
-                "type": "string",
-                "values": {
-                    "static": ["ACT", "CLS"],
-                    "url": null
-                }
+                "paraName": "enddate",
+                "paraDisplayName": "End Date",
+                "isMulti": false,
+                "type": "date"
             },
-            {
-                "paraName": "CreateDate",
-                "paraDisplayName": "Create Date",
-                "type": "date",
-            }
+        ],
+        "defaultFilter": [
+            ["startdate", "=", today],
+            "and",
+            ["enddate", "=", yesterday]
         ]
-    }
+    },
+
 
 ]

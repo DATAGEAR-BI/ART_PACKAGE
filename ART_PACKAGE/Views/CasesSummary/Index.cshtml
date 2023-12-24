@@ -3,63 +3,37 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-querybuilder/css/query-builder.dark.css" rel="stylesheet" />
-<link href="~/lib/jquery-querybuilder/css/query-builder.dark.min.css" rel="stylesheet" />
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
-<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
-
-
-
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-@*
-    <script src="~/js/site.js"></script>
-    <link href="~/css/site.css" rel="stylesheet" />
-    <script src="~/lib/Plugins/CustomPlugin/CustomGridScript.js"></script>*@
-
-<section class="content-header">
-    <h1>
-        Cases Summary
-        <small>Presents the cases summary in the charts</small>
-        <br />
-    </h1>
-</section>
-
-
-<filters-control data-key="CasesSummary" data-chartsurl="CasesSummary"></filters-control>
-@*<div id="grid"></div>*@
-<div id="charts">
-    <div id="StCasesPerStatus" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>
-    <br />
-    <div id="StCasesPerCategory" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>
-    <br />
-    <div id="StCasesPerSubCategory" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>
-    <br />
-    <div id="StCasesPerPriority" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>
-
+<div class="container-fluid">
+    <div class="row accordion accordion-flush mb-4" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <span class="accordion-button collapsed text-uppercase fs-2 border border-primary-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Filters
+                </span>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="row d-flex align-items-center">
+                        <smart-query-builder class="offset-2 col-6" id="querybuilder" data-applybtn="applyBtn" data-params="CasesSummary"></smart-query-builder>
+                        <div class="col-2 d-flex justify-content-center">
+                            <button id="applyBtn" class="btn btn-primary">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <m-bar-chart id="CasesPerStatus" data-dataurlkey="CasesPerStatus" data-filterbuilderid="querybuilder" data-title="Cases Per Status" data-category="CASE_STATUS" data-value="NUMBER_OF_CASES" style="height:600px"></m-bar-chart>
+        <m-bar-chart id="CasesPerCategory" data-dataurlkey="CasesPerCategory" data-filterbuilderid="querybuilder" data-title="Cases Per Category" data-category="CASE_CATEGORY" data-value="NUMBER_OF_CASES" style="height:600px"></m-bar-chart>
+        <m-bar-chart id="CasesPerSubcat" data-dataurlkey="CasesPerSubcat" data-filterbuilderid="querybuilder" data-title="Cases Per Sub Category" data-category="CASE_SUBCATEGORY" data-value="NUMBER_OF_CASES" style="height:600px"></m-bar-chart>
+        <m-bar-chart id="CasesPerPriority" data-dataurlkey="CasesPerPriority" data-filterbuilderid="querybuilder" data-title="Cases Per Priority" data-category="CASE_PRIORITY" data-value="NUMBER_OF_CASES" style="height:600px"></m-bar-chart>
+    </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/ConstructFilters.js" defer type="module"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script type="module" defer src="~/js/components/charts/charts.js"></script>
 }
+
+
+
+

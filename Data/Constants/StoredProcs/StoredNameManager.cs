@@ -22,6 +22,15 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_ALERT_PER_OWNER,
                 Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER,
 
+                Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_STATUS,
+                Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_CATEGORY,
+                Type t when t == typeof(ArtStCasesPerSubcat) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_SUBCAT,
+                Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_PRIORITY,
+                Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_STATUS,
+                Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_CATEGORY,
+                Type t when t == typeof(ArtStCasesPerSubcat) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_SUBCAT,
+                Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_PRIORITY,
+
 
                 Type t when t == typeof(ArtStTiOdcOutStaSumDraftStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_TI_ODC_OUTSTA_SUMM_DRAFT_STATUS_REPORT,
                 //Type t when t == typeof(ArtStTiOdcOutSta) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TI_ODC_OUTSTA_REPORT,

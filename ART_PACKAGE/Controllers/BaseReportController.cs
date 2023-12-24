@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -10,17 +11,16 @@ namespace ART_PACKAGE.Controllers
         where TModel : class
     {
         protected readonly IGridConstructor<TContext, TModel> _gridConstructor;
-
+        protected Expression<Func<TModel, bool>>? baseCondition;
 
         protected BaseReportController(IGridConstructor<TContext, TModel> gridConstructor)
         {
             _gridConstructor = gridConstructor;
-
         }
 
         public abstract IActionResult Index();
         [HttpPost]
-        public async Task<IActionResult> GetData([FromBody] GridRequest request)
+        public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
         {
 
             if (request.IsIntialize)
@@ -36,7 +36,7 @@ namespace ART_PACKAGE.Controllers
             else
             {
 
-                GridResult<TModel> res = _gridConstructor.Repo.GetGridData(request);
+                GridResult<TModel> res = _gridConstructor.GetGridData(request, baseCondition);
                 return new ContentResult
                 {
                     ContentType = "application/json",

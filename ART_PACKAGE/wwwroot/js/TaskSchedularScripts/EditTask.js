@@ -349,7 +349,8 @@ form.onsubmit = async (e) => {
     };
 
 
-    
+    var loader = document.getElementById("loader");
+    loader.hidden = false;
 
     var addTaskRes = await fetch("/Tasks/EditTask/" + modelCopy.id, {
         headers: {
@@ -362,6 +363,7 @@ form.onsubmit = async (e) => {
     });
 
     if (!addTaskRes.ok) {
+        loader.hidden = true;
         toastObj.icon = 'error';
         toastObj.text = "Something wrong happend while updating this task, make sure every thing is correct and try again";
         toastObj.heading = "Add new Task Status";

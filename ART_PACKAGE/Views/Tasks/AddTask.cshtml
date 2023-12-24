@@ -15,13 +15,7 @@
 <h1>Add Task</h1>
 
 <form id="AddTaskForm">
-    <div class="row m-2" >
-        <a class="btn btn-link col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
-        <div class="col-8"></div>
-        <button type="submit" class="btn btn-primary col-2">Add</button>
-    </div>
 
-   
     <ul class="icon-top nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item" role="presentation">
             <button type="button" class="nav-link " data-bs-toggle="tab" role="tab" data-bs-target="#TaskName">
@@ -120,7 +114,12 @@
             </div>
         </div>
     </div>
-
+    <div class="row mx-2 mt-5 d-flex justify-content-between">
+        <a class="btn btn-outline-primary col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
+        <div class="col-8 spinner-grow text-primary" id="loader" hidden>
+        </div>
+        <button type="submit" class="btn btn-primary col-2 text-uppercase">Add</button>
+    </div>
 </form>
 
 @section scripts {

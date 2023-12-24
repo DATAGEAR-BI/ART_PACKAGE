@@ -283,7 +283,8 @@ form.onsubmit = async (e) => {
     };
 
 
-    console.log(reqBody);
+    var loader = document.getElementById("loader");
+    loader.hidden = false;
 
     var addTaskRes = await fetch("/Tasks/AddTask", {
         headers: {
@@ -296,6 +297,7 @@ form.onsubmit = async (e) => {
     });
 
     if (!addTaskRes.ok) {
+        loader.hidden = true;
         toastObj.icon = 'error';
         toastObj.text = "Something wrong happend while adding this task, make sure every thing is correct and try again";
         toastObj.heading = "Add new Task Status";
@@ -366,7 +368,7 @@ periodDorpDown.onchange = (e) => {
     monthDropDown.deSelect();
     monthDropDown.disable();
     timePicker.value = "00:00";
-    calender.selectedDates = []; 
+    calender.selectedDates = [];
 
     if (val == 2 || val == 3) {
         timePicker.disabled = false;

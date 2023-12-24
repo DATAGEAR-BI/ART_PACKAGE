@@ -35,11 +35,14 @@
 
 
 
-    AlertPerStatus  : "/AlertsPerStatus/GetData",
-    AlertPerOwner   : "/AlertPerOwner/GetData",
+    AlertPerStatus: "/AlertsPerStatus/GetData",
+    AlertPerOwner: "/AlertPerOwner/GetData",
 
+    CasesPerStatus: "/CasesPerStatus/GetData",
+    CasesPerCategory: "/CasesPerCategory/GetData",
+    CasesPerSubcat: "/CasesPerSubcat/GetData",
+    CasesPerPriority: "/CasesPerPriority/GetData",
 
-    CasesSummary: "/CasesSummary/GetData",
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",

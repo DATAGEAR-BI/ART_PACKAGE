@@ -124,23 +124,12 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-    <div class="row mx-2 mt-5">
+    <div class="row mx-2 mt-5 d-flex justify-content-between">
         <a class="btn btn-outline-primary col-2" asp-action="index"><span class="glyphicon glyphicon-arrow-left"></span>Back to Tasks</a>
-        <div class="col-8"></div>
+        <div class="col-8 spinner-grow text-primary" id="loader" hidden>
+        </div>
         <button type="submit" class="btn btn-primary col-2 text-uppercase">Update</button>
     </div>
-
-
-
-
-
-
-
 </form>
 
 @section scripts {
