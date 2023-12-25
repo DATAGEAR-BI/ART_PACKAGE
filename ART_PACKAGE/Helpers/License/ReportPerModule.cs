@@ -10,6 +10,8 @@ using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.SASAML.AlertSummaryReport;
 using ART_PACKAGE.Controllers.SASAML.CasesSummaryReport;
+using ART_PACKAGE.Controllers.SASAML.CustomersSummaryReport;
+using ART_PACKAGE.Controllers.SASAML.RiskSummaryReport;
 using ART_PACKAGE.Controllers.SEG;
 using Data.Constants.AppModules;
 

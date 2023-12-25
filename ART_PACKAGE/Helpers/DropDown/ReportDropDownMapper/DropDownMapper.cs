@@ -62,6 +62,58 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"PoliticallyExposedPersonInd".ToLower(), pipList},
                     {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() }
                 },
+                nameof(CasesDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                      {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                      {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
+                      {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown() },
+                      {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown() },
+                      {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },
+                      {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown() },
+                      {"Owner".ToLower(),_dropDown.GetOwnerDropDown() },
+                     {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown() }
+                },
+                nameof(CustomersController) => new Dictionary<string, List<SelectItem>>
+                {
+                      {"CustomerType".ToLower(),_dropDown.GetPartyTypeDropDown() },
+                      {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                      {"NonProfitOrgInd".ToLower(),pipList },
+                      {"PoliticallyExposedPersonInd".ToLower(),pipList },
+                      {"CharityDonationsInd".ToLower(),pipList },
+                      {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
+                      {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                      {"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown() },
+                      {"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown() },
+                      {"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown() },
+                      {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() }
+                },
+                nameof(HighRiskController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"PartyIdentificationTypeDesc".ToLower(),_dropDown.GetPartyIdentificationTypeDropDown() },
+                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown()},
+                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    //{"PoliticallyExposedPersonInd".ToLower(),_dropDown.Getpo().ToDynamicList() },
+                    {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
+                    {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() },
+                    //{"MailingCityName".ToLower(),_dropDown.().ToDynamicList() },
+                },
+                nameof(RiskAssessmentController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown() },
+                    {"CreateUserId".ToLower(),_dropDown.GetOwnerDropDown() },
+                    {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown() },
+                    {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown() }
+                },
+                nameof(TriageController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
+                    {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown() }
+                },
                 _ => null
             };
         }

@@ -43,6 +43,14 @@
     CasesPerSubcat: "/CasesPerSubcat/GetData",
     CasesPerPriority: "/CasesPerPriority/GetData",
 
+    CustomerPerBranch: "/CustomerPerBranch/GetData",
+    CustomerPerRisk: "/CustomerPerRisk/GetData",
+    CustomerPerType: "/CustomerPerType/GetData",
+
+
+    AmlPropRisk: "/AmlPropRisk/GetData",
+    AmlRisk: "/AmlRisk/GetData",
+
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",

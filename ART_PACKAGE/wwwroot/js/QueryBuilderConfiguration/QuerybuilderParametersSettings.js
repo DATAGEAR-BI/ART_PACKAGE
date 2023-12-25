@@ -28,7 +28,7 @@ export const parametersConfig = [
         //]
     },
     {
-        "reportName": "AlertSummary",
+        "reportName": "BasicParams",
         "parameters": [
             {
                 "paraName": "startdate",
@@ -48,28 +48,7 @@ export const parametersConfig = [
             "and",
             ["enddate", "=", yesterday]
         ]
-    }, {
-        "reportName": "CasesSummary",
-        "parameters": [
-            {
-                "paraName": "startdate",
-                "paraDisplayName": "Start Date",
-                "isMulti": false,
-                "type": "date"
-            },
-            {
-                "paraName": "enddate",
-                "paraDisplayName": "End Date",
-                "isMulti": false,
-                "type": "date"
-            },
-        ],
-        "defaultFilter": [
-            ["startdate", "=", today],
-            "and",
-            ["enddate", "=", yesterday]
-        ]
-    },
+    }, 
 
 
 ]
