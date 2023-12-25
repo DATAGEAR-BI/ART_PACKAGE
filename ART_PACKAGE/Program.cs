@@ -12,7 +12,6 @@ using ART_PACKAGE.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
-using Newtonsoft.Json;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions

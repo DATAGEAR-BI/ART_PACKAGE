@@ -130,7 +130,7 @@ namespace ART_PACKAGE.Controllers
                 s.CaseId,
                 s.AssignedBy,
                 s.Assignee,
-                AssignedTime = s.AssignedTime == null ? "" : s.AssignedTime.Value.ToString("dd/MM//yyyy HH:mm:ss tt")
+                AssignedTime = s.AssignedTime == null ? "" : s.AssignedTime.Value.ToString("dd/MM/yyyy hh:mm:ss tt")
             });
             return new ContentResult
             {
