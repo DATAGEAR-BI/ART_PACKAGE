@@ -910,7 +910,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     if (i.field == null)
                     {
                         Filter filter = t.ToObject<Filter>();
-                        returnList.AddRange(GetFilterTextForCsv<T>(filter));
+                        returnList.AddRange(GetFilterTextForCsvWithDisplayNames<T>(filter));
 
                     }
                     else
@@ -943,7 +943,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     if (i.field == null)
                     {
                         Filter filter = t.ToObject<Filter>();
-                        returnList.AddRange(GetFilterTextForCsv(filter));
+                        returnList.AddRange(GetFilterTextForCsvWithDisplayNames<T>(filter));
 
                     }
                     else
