@@ -4377,7 +4377,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.AssignDifferenceSla)
                       .HasColumnName("ASSIGN_DIFFERENCE_SLA")
                       .HasMaxLength(100); // Adjust the length accordingly
-            });
+            
 
         });
             modelBuilder.Entity<ArtEcmFtiFullCycle>(entity =>
