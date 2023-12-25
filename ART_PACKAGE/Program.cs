@@ -23,12 +23,12 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 culture.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
 culture.DateTimeFormat.LongTimePattern = "hh:mm:ss tt";
 Thread.CurrentThread.CurrentCulture = culture;*/
-JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+/*JsonConvert.DefaultSettings = () => new JsonSerializerSettings
 {
     Formatting = Formatting.Indented,
     //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
     DateFormatString = "dd/MM/yyyy hh:mm:ss tt"
-};
+};*/
 
 
 builder.Services.AddDbs(builder.Configuration);

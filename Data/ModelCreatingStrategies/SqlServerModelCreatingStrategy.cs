@@ -4358,7 +4358,28 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.EcmEventCreatedDate)
                    .HasColumnType("datetime")
                   .HasColumnName("ECM_EVENT_CREATED_DATE");
+                // Configure StepDifference
+                entity.Property(e => e.StepDifference)
+                      .HasColumnName("STEP_DIFFERENCE")
+                      .HasMaxLength(100); // Adjust the length accordingly
+
+                // Configure StepDifferenceSla
+                entity.Property(e => e.StepDifferenceSla)
+                      .HasColumnName("STEP_DIFFERENCE_SLA")
+                      .HasMaxLength(100); // Adjust the length accordingly
+
+                // Configure AssignDifference
+                entity.Property(e => e.AssignDifference)
+                      .HasColumnName("ASSIGN_DIFFERENCE")
+                      .HasMaxLength(100); // Adjust the length accordingly
+
+                // Configure AssignDifferenceSla
+                entity.Property(e => e.AssignDifferenceSla)
+                      .HasColumnName("ASSIGN_DIFFERENCE_SLA")
+                      .HasMaxLength(100); // Adjust the length accordingly
             });
+
+        });
             modelBuilder.Entity<ArtEcmFtiFullCycle>(entity =>
             {
                 entity.HasNoKey();

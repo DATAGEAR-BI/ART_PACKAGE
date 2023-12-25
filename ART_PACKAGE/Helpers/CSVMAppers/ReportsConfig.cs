@@ -111,6 +111,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"EcmEventStep",new DisplayNameAndFormat { DisplayName ="Ecm Event Step"}},
                             {"EcmEventCreatedBy",new DisplayNameAndFormat { DisplayName ="Ecm Event Created By"}},
                             {"EcmEventCreatedDate",new DisplayNameAndFormat { DisplayName ="Ecm Event Created Date"}},
+                            {"AssignDifference",new DisplayNameAndFormat { DisplayName ="Assign Difference"}},
+                            {"AssignDifferenceSla",new DisplayNameAndFormat { DisplayName ="Assign Difference SLA"}},
+                            {"StepDifference",new DisplayNameAndFormat { DisplayName ="Step Difference"}},
+                            {"StepDifferenceSla",new DisplayNameAndFormat { DisplayName ="Step Difference SLA"}},
+
 
                     },
                            SkipList =  new List<string>()

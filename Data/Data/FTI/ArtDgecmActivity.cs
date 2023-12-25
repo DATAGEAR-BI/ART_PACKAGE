@@ -22,12 +22,16 @@ namespace Data.Data.FTI
         public string? EcmEventStep { get; set; }
         public string? EcmEventCreatedBy { get; set; }
         public DateTime? EcmEventCreatedDate { get; set; }
+        public string StepDifference { get; set; }
+        public string StepDifferenceSla { get; set; }
         public string? Assignee { get; set; }
         public string? AssignedBy { get; set; }
         public DateTime? AssignedTime { get; set; }
         public string? UnAssignee { get; set; }
         public string? UnAssignedBy { get; set; }
         public DateTime? UnAssignedTime { get; set; }
+        public string AssignDifference { get; set; }
+        public string AssignDifferenceSla { get; set; }
 
     }
 }

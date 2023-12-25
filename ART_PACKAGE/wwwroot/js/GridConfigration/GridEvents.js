@@ -1222,7 +1222,7 @@ export const Handlers = {
                     "Time Difference",
                     "Last ModUser"]
                 var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${selected[0]}`)).json();
-                createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
+                createPopUpTable("end-to-endGrid", formatDatesInObject(events), `There is no SubCases for this case: ${selected[0]}`, headers);
 
                 $("#end-to-endModal").modal("show");
                 kendo.ui.progress($('#grid'), false);
@@ -1255,7 +1255,7 @@ export const Handlers = {
                     "Ecm Event Created Date",
                     "Ecm Event Time Difference"]
                 var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${selected[0]}`)).json();
-                createPopUpTable("end-to-endGrid", events, `There is no SubCases for this case: ${selected[0]}`, headers);
+                createPopUpTable("end-to-endGrid", formatDatesInObject(events), `There is no SubCases for this case: ${selected[0]}`, headers);
 
                 $("#end-to-endModal").modal("show");
                 kendo.ui.progress($('#grid'), false);
@@ -1496,7 +1496,7 @@ export const CellDbHandlers = {
                 "Ecm Event Created Date",
                 "Ecm Event Time Difference"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${encodeURIComponent(dataItem.EcmReference)}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Ecm Events for this case: ${dataItem.EcmReference}`, headers);
+            createPopUpTable("end-to-endGrid", formatDatesInObject(events), `There is no Ecm Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1512,7 +1512,7 @@ export const CellDbHandlers = {
                 "Time Difference",
                 "Last ModUser", "Ecm Reference"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetFtiEvents/${encodeURIComponent(dataItem.MasterReference)}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no FTI Events for this case: ${dataItem.EcmReference}`, headers);
+            createPopUpTable("end-to-endGrid", formatDatesInObject(events), `There is no FTI Events for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1527,7 +1527,7 @@ export const CellDbHandlers = {
                 "Trade Instructions",
                 "Firts Line Instructions"]
             var events = await (await fetch(`/ArtFtiEndToEndNew/GetSubCases/${encodeURIComponent(dataItem.EcmReference)}`)).json();
-            createPopUpTable("end-to-endGrid", events, `There is no Sub Case for this case: ${dataItem.EcmReference}`, headers);
+            createPopUpTable("end-to-endGrid", formatDatesInObject(events), `There is no Sub Case for this case: ${dataItem.EcmReference}`, headers);
             $("#end-to-endModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         }
@@ -1542,7 +1542,7 @@ export const CellDbHandlers = {
                                 "Assignee",
                                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmPendingCases/GetAssignees/${encodeURIComponent(dataItem.CaseRk)}`)).json();
-            createPopUpTable("pending-cases-Grid", events, `There is no Assignees for this case: ${dataItem.CaseRk}`, headers);
+            createPopUpTable("pending-cases-Grid", formatDatesInObject(events), `There is no Assignees for this case: ${dataItem.CaseRk}`, headers);
             $("#pending-cases-Modal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1554,7 +1554,7 @@ export const CellDbHandlers = {
                 "Assignee",
                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmPendingCases/GetAssignees/${encodeURIComponent(dataItem.ParentCaseId)}`)).json();
-            createPopUpTable("pending-cases-Grid", events, `There is no Assignees for this Case: ${dataItem.ParentCaseId}`, headers);
+            createPopUpTable("pending-cases-Grid", formatDatesInObject(events), `There is no Assignees for this Case: ${dataItem.ParentCaseId}`, headers);
             $("#pending-cases-Modal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1566,7 +1566,7 @@ export const CellDbHandlers = {
                 "Assignee",
                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmPendingCases/GetAssignees/${encodeURIComponent(dataItem.SubCaseId)}`)).json();
-            createPopUpTable("pending-cases-Grid", events, `There is no Assignees for this Case : ${dataItem.SubCaseId}`, headers);
+            createPopUpTable("pending-cases-Grid", formatDatesInObject(events), `There is no Assignees for this Case : ${dataItem.SubCaseId}`, headers);
             $("#pending-cases-Modal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },
@@ -1580,7 +1580,7 @@ export const CellDbHandlers = {
                 "Assignee",
                 "Assigned Time"]
             var events = await (await fetch(`/ArtEcmSlaViolatedCases/GetAssignees/${encodeURIComponent(dataItem.CaseId)}`)).json();
-            createPopUpTable("art-ecm-sla-violated-cases-Grid", events, `There is no Assignees for this case: ${dataItem.CaseId}`, headers);
+            createPopUpTable("art-ecm-sla-violated-cases-Grid", formatDatesInObject(events), `There is no Assignees for this case: ${dataItem.CaseId}`, headers);
             $("#art-ecm-sla-violated-cases-Modal").modal("show");
             kendo.ui.progress($('#grid'), false);
         }
@@ -1603,3 +1603,35 @@ async function Select(idcolumn) {
 
 
 
+function formatDatesInObject(obj) {
+    for (const prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+            if (typeof obj[prop] === 'string') {
+                const parsedDate = new Date(obj[prop]);
+
+                if (!isNaN(Date.parse(obj[prop]))) {
+                    var s = obj[prop];
+                    obj[prop] = formatDate(obj[prop])
+                }
+            } else if (obj[prop] instanceof Date) {
+                // obj[prop] = moment(obj[prop]).format('DD,MM,YYYY hh:mm:ss A');
+            } else if (typeof obj[prop] === 'object') {
+                formatDatesInObject(obj[prop]);
+            }
+        }
+    }
+    return obj;
+}
+function formatDate(date) {
+    const inputDate = new Date(date);
+    const day = inputDate.getDate().toString().padStart(2, '0');
+    const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = inputDate.getFullYear();
+    const hours = inputDate.getHours() % 12 || 12; // Convert to 12-hour format
+    const minutes = inputDate.getMinutes().toString().padStart(2, '0');
+    const seconds = inputDate.getSeconds().toString().padStart(2, '0');
+    const ampm = inputDate.getHours() < 12 ? 'AM' : 'PM';
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+
+}
