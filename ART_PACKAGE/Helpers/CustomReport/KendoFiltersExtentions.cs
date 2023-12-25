@@ -1,10 +1,8 @@
-﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
@@ -884,7 +882,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
 
         }
-        public static List<List<object>> GetFilterTextForCsv<T>(this Filter Filters)
+        public static List<List<object>> GetFilterTextForCsvWithDisplayNames<T>(this Filter Filters)
         {
             Type typeParameterType = typeof(T);
             List<List<object>> returnList = new();
@@ -927,7 +925,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
                             returnList.Add(v);
                         }
-                        
+
                     }
 
 
@@ -935,7 +933,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
             }
             else
             {
-                
+
 
 
                 foreach (object? item in Filters.filters)
@@ -957,21 +955,21 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
                 }
             }
-            
-            
+
+
 
 
             return returnList;
 
 
-                    }
+        }
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
             var controllerType = typeof(T1).GetGenericArguments()[1];
 
-            var methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsv));
+            var methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsvWithDisplayNames));
             var gMethod = methodinfo.MakeGenericMethod(controllerType);
-            List<List<object>> filterCells =( List < List<object> >) gMethod.Invoke(null, new object[] { obj.Filter });
+            List<List<object>> filterCells = (List<List<object>>)gMethod.Invoke(null, new object[] { obj.Filter });
             decimal total = 0;
             if (all)
             {
