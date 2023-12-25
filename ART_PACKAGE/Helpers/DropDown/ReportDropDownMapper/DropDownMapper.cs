@@ -1,6 +1,8 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI.DraftsReport;
+using ART_PACKAGE.Controllers.GOAML;
+using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
@@ -113,6 +115,99 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown() }
+                },
+                nameof(ArtAuditCorporateController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtAuditIndividualsController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycExpiredIdController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycHighExpiredController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycHighThreeMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycHighTwoMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycLowExpiredController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycLowOneMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycLowThreeMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycLowTwoMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycMediumExpiredController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycMediumOneMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycMediumThreeMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycMediumTwoMonthController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(ArtKycSummaryByRiskController) => new Dictionary<string, List<SelectItem>>
+                {
+                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() }
+                },
+                nameof(GOAMLReportIndicatorDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                      {"Indicator".ToLower(),_dropDown.GetReportIndicatorDropDown() },
+
+                },
+                nameof(GOAMLReportsDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown()},
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
+                    {"Priority".ToLower(),_dropDown.GetReportPriorityDropDown() },
+                    {"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown() },
+                },
+                nameof(GOAMLReportsSuspectController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown() },
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
+                    {"Branch".ToLower(),_dropDown.GetReportAcctBranchDropDown() },
                 },
                 _ => null
             };

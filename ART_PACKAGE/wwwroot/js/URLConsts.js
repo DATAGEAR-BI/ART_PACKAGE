@@ -47,6 +47,10 @@
     CustomerPerRisk: "/CustomerPerRisk/GetData",
     CustomerPerType: "/CustomerPerType/GetData",
 
+    GoAmlReportsPerStatus: "/GoAmlReportsPerStatus/GetData",
+    GoAmlReportsPerCreator: "/GoAmlReportsPerCreator/GetData",
+    GoAmlReportsPerType: "/GoAmlReportsPerType/GetData",
+
 
     AmlPropRisk: "/AmlPropRisk/GetData",
     AmlRisk: "/AmlRisk/GetData",

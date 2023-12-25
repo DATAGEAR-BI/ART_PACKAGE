@@ -6,6 +6,7 @@ using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
+using ART_PACKAGE.Controllers.GOAML.GOAMLSummaryReport;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.SASAML.AlertSummaryReport;
