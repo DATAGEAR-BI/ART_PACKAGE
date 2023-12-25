@@ -1,7 +1,10 @@
-﻿using CsvHelper;
+﻿using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Helpers.CSVMAppers;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
@@ -881,9 +884,94 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
 
         }
+        public static List<List<object>> GetFilterTextForCsv<T>(this Filter Filters)
+        {
+            Type typeParameterType = typeof(T);
+            List<List<object>> returnList = new();
+            if (Filters is null)
+            {
+                return returnList;
+            }
+
+            string? logic = Filters.logic;
+
+            if (logic is null)
+            {
+                return returnList;
+            }
+            if (typeParameterType.IsGenericParameter)
+            {
+                var controllerName = typeParameterType.Name;
+                Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+                DisplayNames = ReportsConfig.CONFIG[controllerName.ToLower()].DisplayNames;
+
+                foreach (object? item in Filters.filters)
+                {
+                    JsonElement t = (JsonElement)item;
+                    FilterData i = t.ToObject<FilterData>();
+                    if (i.field == null)
+                    {
+                        Filter filter = t.ToObject<Filter>();
+                        returnList.AddRange(GetFilterTextForCsv<T>(filter));
+
+                    }
+                    else
+                    {
+                        if (DisplayNames.ContainsKey(i.field))
+                        {
+                            List<object> v = new() { DisplayNames[i.field].DisplayName, readableOperators[i.@operator], i.value };
+                            returnList.Add(v);
+                        }
+                        else
+                        {
+                            List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
+                            returnList.Add(v);
+                        }
+                        
+                    }
+
+
+                }
+            }
+            else
+            {
+                
+
+
+                foreach (object? item in Filters.filters)
+                {
+                    JsonElement t = (JsonElement)item;
+                    FilterData i = t.ToObject<FilterData>();
+                    if (i.field == null)
+                    {
+                        Filter filter = t.ToObject<Filter>();
+                        returnList.AddRange(GetFilterTextForCsv(filter));
+
+                    }
+                    else
+                    {
+                        List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
+                        returnList.Add(v);
+                    }
+
+
+                }
+            }
+            
+            
+
+
+            return returnList;
+
+
+                    }
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
-            List<List<object>> filterCells = GetFilterTextForCsv(obj.Filter);
+            var controllerType = typeof(T1).GetGenericArguments()[1];
+
+            var methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsv));
+            var gMethod = methodinfo.MakeGenericMethod(controllerType);
+            List<List<object>> filterCells =( List < List<object> >) gMethod.Invoke(null, new object[] { obj.Filter });
             decimal total = 0;
             if (all)
             {

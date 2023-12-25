@@ -593,13 +593,13 @@ function generateGrid() {
     });
     grid.tbody.on("click", "td > button", function (e) {
 
-       
+
         // Get the current item (row data)
         var item = grid.dataItem($(e.currentTarget).closest("tr"));
         // Get the field name associated with the clicked cell
         var cellIndex = $(e.target.parentElement).index(); // Get the index of the clicked cell
         var column = grid.columns[cellIndex];
-     
+
         var handler = CellDbHandlers[handlerkey][column.field];
         if (handler) {
             handler(item);
@@ -723,15 +723,16 @@ function createFiltersDiv(obj) {
     [...filters].forEach((x) => {
         if (x.field) {
             var existinp = document.getElementById(`${x.field}-0`);
+            var fieldXDisplayName = getHeaderTextByField("grid", x.field);
 
             if (existinp) {
                 var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${x.value}`;
+                existinp.value = `${fieldXDisplayName}=> ${oldVal},${ops[x.operator]} ${x.value}`;
             } else {
                 var inp = document.createElement("input");
                 inp.id = x.field + "-0";
                 inp.type = "text";
-                inp.value = `${x.field}=> ${ops[x.operator]} ${x.value}`;
+                inp.value = `${fieldXDisplayName}=> ${ops[x.operator]} ${x.value}`;
                 inp.classList = ["form-control"];
                 inp.readOnly = true;
                 fDiv.appendChild(inp);
@@ -742,16 +743,17 @@ function createFiltersDiv(obj) {
         } else {
             [...x.filters].forEach((y) => {
                 var existinp = document.getElementById(`${y.field}-0`);
+                var fieldYDisplayName = getHeaderTextByField("grid", y.field);
 
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${y.value
+                    existinp.value = `${fieldYDisplayName}=> ${oldVal},${ops[y.operator]} ${y.value
                         }`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
                     inp.type = "text";
-                    inp.value = `${y.field}=> ${ops[y.operator]} ${y.value}`;
+                    inp.value = `${fieldYDisplayName}=> ${ops[y.operator]} ${y.value}`;
                     inp.classList = ["form-control"];
                     inp.readOnly = true;
                     fDiv.appendChild(inp);
@@ -935,3 +937,14 @@ function generateModel(response) {
     return model;
 }
 
+// Function to get the header text by field
+function getHeaderTextByField(gridId, field) {
+    var grid = $("#" + gridId).data("kendoGrid");
+    const columns = grid.columns;
+    for (let i = 0; i < columns.length; i++) {
+        if (columns[i].field === field) {
+            return columns[i].title;
+        }
+    }
+    return null;
+}
