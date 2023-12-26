@@ -897,54 +897,27 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 return returnList;
             }
-            if (typeParameterType.IsGenericParameter)
+
+            string controllerName = typeParameterType.Name;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            DisplayNames = ReportsConfig.CONFIG[controllerName.ToLower()].DisplayNames;
+
+            foreach (object? item in Filters.filters)
             {
-                var controllerName = typeParameterType.Name;
-                Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
-                DisplayNames = ReportsConfig.CONFIG[controllerName.ToLower()].DisplayNames;
-
-                foreach (object? item in Filters.filters)
+                JsonElement t = (JsonElement)item;
+                FilterData i = t.ToObject<FilterData>();
+                if (i.field == null)
                 {
-                    JsonElement t = (JsonElement)item;
-                    FilterData i = t.ToObject<FilterData>();
-                    if (i.field == null)
-                    {
-                        Filter filter = t.ToObject<Filter>();
-                        returnList.AddRange(GetFilterTextForCsvWithDisplayNames<T>(filter));
-
-                    }
-                    else
-                    {
-                        if (DisplayNames.ContainsKey(i.field))
-                        {
-                            List<object> v = new() { DisplayNames[i.field].DisplayName, readableOperators[i.@operator], i.value };
-                            returnList.Add(v);
-                        }
-                        else
-                        {
-                            List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
-                            returnList.Add(v);
-                        }
-
-                    }
-
+                    Filter filter = t.ToObject<Filter>();
+                    returnList.AddRange(GetFilterTextForCsvWithDisplayNames<T>(filter));
 
                 }
-            }
-            else
-            {
-
-
-
-                foreach (object? item in Filters.filters)
+                else
                 {
-                    JsonElement t = (JsonElement)item;
-                    FilterData i = t.ToObject<FilterData>();
-                    if (i.field == null)
+                    if (DisplayNames.ContainsKey(i.field))
                     {
-                        Filter filter = t.ToObject<Filter>();
-                        returnList.AddRange(GetFilterTextForCsvWithDisplayNames<T>(filter));
-
+                        List<object> v = new() { DisplayNames[i.field].DisplayName, readableOperators[i.@operator], i.value };
+                        returnList.Add(v);
                     }
                     else
                     {
@@ -952,11 +925,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                         returnList.Add(v);
                     }
 
-
                 }
+
+
             }
-
-
 
 
             return returnList;
@@ -965,10 +937,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
-            var controllerType = typeof(T1).GetGenericArguments()[1];
+            Type controllerType = typeof(T1).GetGenericArguments()[1];
 
-            var methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsvWithDisplayNames));
-            var gMethod = methodinfo.MakeGenericMethod(controllerType);
+            MethodInfo? methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsvWithDisplayNames));
+            MethodInfo gMethod = methodinfo.MakeGenericMethod(controllerType);
             List<List<object>> filterCells = (List<List<object>>)gMethod.Invoke(null, new object[] { obj.Filter });
             decimal total = 0;
             if (all)
