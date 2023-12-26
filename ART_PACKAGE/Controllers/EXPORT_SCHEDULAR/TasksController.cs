@@ -25,6 +25,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 
         public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager, IGridConstructor<ExportSchedularContext, ExportTask> gridConstructor, IBackgroundJobClient backGroundJobManger) : base(gridConstructor)
         {
+
             _context = context;
             this.jobsManger = jobsManger;
             _logger = logger;
@@ -37,6 +38,14 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         {
             return View();
         }
+
+        public override Task<IActionResult> GetData([FromBody] GridRequest request)
+        {
+            string? id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            baseCondition = x => x.UserId == id;
+            return base.GetData(request);
+        }
+
 
         [HttpGet]
         public IActionResult AddTask()
@@ -128,7 +137,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             }
 
 
-            if (task.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            if (!User.IsInRole("art_admin") && task.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 return Forbid();
 
 

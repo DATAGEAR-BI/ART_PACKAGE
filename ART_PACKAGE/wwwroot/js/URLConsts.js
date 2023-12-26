@@ -35,11 +35,26 @@
 
 
 
-    AlertPerStatus  : "/AlertsPerStatus/GetData",
-    AlertPerOwner   : "/AlertPerOwner/GetData",
+    AlertPerStatus: "/AlertsPerStatus/GetData",
+    AlertPerOwner: "/AlertPerOwner/GetData",
+
+    CasesPerStatus: "/CasesPerStatus/GetData",
+    CasesPerCategory: "/CasesPerCategory/GetData",
+    CasesPerSubcat: "/CasesPerSubcat/GetData",
+    CasesPerPriority: "/CasesPerPriority/GetData",
+
+    CustomerPerBranch: "/CustomerPerBranch/GetData",
+    CustomerPerRisk: "/CustomerPerRisk/GetData",
+    CustomerPerType: "/CustomerPerType/GetData",
+
+    GoAmlReportsPerStatus: "/GoAmlReportsPerStatus/GetData",
+    GoAmlReportsPerCreator: "/GoAmlReportsPerCreator/GetData",
+    GoAmlReportsPerType: "/GoAmlReportsPerType/GetData",
 
 
-    CasesSummary: "/CasesSummary/GetData",
+    AmlPropRisk: "/AmlPropRisk/GetData",
+    AmlRisk: "/AmlRisk/GetData",
+
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",

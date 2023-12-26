@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Controllers
         {
             //Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
             //List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
-            GridResult<ArtAmlCustomersDetailsView> datGridResult = _gridConstructor.Repo.GetGridData(req);
+            GridResult<ArtAmlCustomersDetailsView> datGridResult = _gridConstructor.GetGridData(req, baseCondition);
             IQueryable<ArtAmlCustomersDetailsView> data = datGridResult.data;
             int count = datGridResult.total;
             System.Reflection.PropertyInfo[] props = typeof(ArtAmlAlertDetailView).GetProperties();

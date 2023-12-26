@@ -5,6 +5,7 @@ using ART_PACKAGE.Hubs;
 using Data.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
@@ -92,6 +93,17 @@ namespace ART_PACKAGE.Helpers.Grid
                 showPdfBtn = hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User))
             };
             return conf;
+        }
+
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition)
+        {
+            GridResult<TModel> dataRes = Repo.GetGridData(request);
+            if (baseCondition is not null)
+            {
+                dataRes.data = dataRes.data?.Where(baseCondition);
+                dataRes.total = dataRes.data.Count();
+            }
+            return dataRes;
         }
     }
 }

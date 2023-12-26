@@ -22,7 +22,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
 
 
-               { nameof(ExportTask).ToLower(), new ReportConfig
+                    { nameof(ExportTask).ToLower(), new ReportConfig
                                                                 {
                                                                         SkipList = new List<string>()
                                                                         {
@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                         Selectable = true
                                                                 }
                },
-            { nameof(TasksController).ToLower(), new ReportConfig
+                 { nameof(TasksController).ToLower(), new ReportConfig
                                                                 {
                                                                         SkipList = new List<string>()
                                                                         {
@@ -99,6 +99,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                             nameof(ExportTask.CornExpression),
                                                                             nameof(ExportTask.Deleted),
                                                                             nameof(ExportTask.DayOfWeek),
+                                                                            nameof(ExportTask.Id),
+
 
                                                                         },
                                                                         DisplayNames = new Dictionary<string, GridColumnConfiguration>
@@ -138,7 +140,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                                  icon = "k-i-edit"
                                                                              }
                                                                         },
-                                                                        Selectable = true
+
+
                                                                 }
                },
 

@@ -28,7 +28,7 @@ export const parametersConfig = [
         //]
     },
     {
-        "reportName": "AlertSummary",
+        "reportName": "BasicParams",
         "parameters": [
             {
                 "paraName": "startdate",
@@ -48,32 +48,7 @@ export const parametersConfig = [
             "and",
             ["enddate", "=", yesterday]
         ]
-    },
-    {
-        "reportName": "AlertDetailsTest",
-        "parameters": [
-            {
-                "paraName": "AlertedEntityNumberT",
-                "paraDisplayName": "Alerted Entity NumberT",
-                "isMulti": false,
-                "type": "string"
-            },
-            {
-                "paraName": "AlertStatusT",
-                "paraDisplayName": "Alert StatusT",
-                "isMulti": true,
-                "type": "string",
-                "values": {
-                    "static": ["ACT", "CLS"],
-                    "url": null
-                }
-            },
-            {
-                "paraName": "CreateDate",
-                "paraDisplayName": "Create Date",
-                "type": "date",
-            }
-        ]
-    }
+    }, 
+
 
 ]

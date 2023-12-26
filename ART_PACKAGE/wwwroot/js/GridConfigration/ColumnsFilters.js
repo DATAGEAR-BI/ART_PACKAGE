@@ -7,19 +7,17 @@ export const columnFilters = {
         else if (column.type === "date") ops = { date: equal };
         else if (column.type === "number") ops = { number: equal };
         else ops = { boolean: equal };
+
         return {
             ui: (element) => {
                 element.removeAttr("data-bind");
                 element[0].dataset.field = column.name;
-                var isEnum = column.menu[0].text;
+
+
                 element.kendoMultiSelect({
                     dataSource: column.menu,
-
-
                     dataTextField: "text",
                     dataValueField: "value",
-
-
                     filter: "contains"
                 });
             },
