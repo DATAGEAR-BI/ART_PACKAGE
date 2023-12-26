@@ -406,6 +406,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                    {"EmpInd".ToLower()    , new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() }
 
                 },
+                nameof(DGAMLArtExternalCustomerDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown() },
+                    {nameof(ArtExternalCustomerDetailView.CitizenshipCountryName).ToLower(),_dropDown .GetDGCitizenshipCountryNameDropDown() },
+                    {nameof(ArtExternalCustomerDetailView.ResidenceCountryName).ToLower(),_dropDown .GetDGresidenceCountryNameDropDown()},
+                // {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown() .ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown .GetDGCityNameDropDown()},
+                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown() },
+                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown() },
+
+                },
 
                 _ => null
             };
