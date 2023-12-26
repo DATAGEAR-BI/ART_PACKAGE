@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Controllers;
+using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.FTI.DraftsReport;
@@ -6,6 +7,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ExportTasks;
+using Data.Data.ARTDGAML;
 using Data.Data.ExportSchedular;
 using Data.Data.FTI;
 using System.Linq.Dynamic.Core;
@@ -16,11 +18,13 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
     {
         private readonly IDropDownService _dropDown;
         private readonly FTIContext fti;
+        private readonly ArtDgAmlContext artDgaml_;
 
-        public DropDownMapper(IDropDownService dropDown, FTIContext fTI)
+        public DropDownMapper(IDropDownService dropDown, FTIContext fTI, ArtDgAmlContext artDgaml)
         {
             _dropDown = dropDown;
             fti = fTI;
+            this.artDgaml_ = artDgaml;
         }
 
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
@@ -385,6 +389,24 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                    {"Address1".ToLower(),fti.ArtTiOsActivityReports.Select(x=>x.Address1).Distinct()         .Where(x=> x != null)          .Select(x => new SelectItem { text = x, value = x }).ToList() },
                    {"Ccy".ToLower(),fti.ArtTiOsActivityReports.Select(x=>x.Ccy).Distinct()                   .Where(x=> x != null)          .Select(x => new SelectItem { text = x, value = x }).ToList() },
                 },
+
+                /*DGAML*/
+                nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                   {"AlertStatus".ToLower()                    ,(List<SelectItem>)artDgaml_.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   {"AlertSubcategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertSubcategory) .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   {"AlertCategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertCategory)       .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   //{"OwnerUserid".ToLower()                  ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.)                      .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                     },
+                   {"BranchName".ToLower()                     ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.BranchName)            .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                             },
+                   {"ScenarioName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ScenarioName)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"ClosedUserId".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ClosedUserId)          .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"CloseUserName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseUserName)        .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"CloseReason".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseReason)            .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"PoliticallyExposedPersonInd".ToLower()    ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList()                                               },
+                   {"EmpInd".ToLower()    , new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() }
+
+                },
+
                 _ => null
             };
         }
