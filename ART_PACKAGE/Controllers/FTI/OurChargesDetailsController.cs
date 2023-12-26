@@ -1,11 +1,8 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Data;
-using System.Linq.Dynamic.Core;
+
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -14,13 +11,8 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class OurChargesDetailsController : BaseReportController<FTIContext, ArtTiChargesDetailsReport>
     {
-        private readonly FTIContext fti;
-        private readonly IPdfService _pdfSrv;
-
-        public OurChargesDetailsController(IPdfService pdfSrv, FTIContext fti)
+        public OurChargesDetailsController(IGridConstructor<FTIContext, ArtTiChargesDetailsReport> gridConstructor) : base(gridConstructor)
         {
-            _pdfSrv = pdfSrv;
-            this.fti = fti;
         }
 
         //public IActionResult GetData([FromBody] KendoRequest request)
