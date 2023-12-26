@@ -1,4 +1,52 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+
+
+<section class="content-header">
+    <h1>
+        ECM Audit Trial Report
+        <small class="h6">This report produces a list of diary activities that were not carried out when due because of exception conditions</small>
+        <br />
+    </h1>
+</section>
+
+<div class="modal fade" id="RiskModal" tabindex="-1" role="dialog" aria-labelledby="RiskModalLablel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RiskTitle">Note details For case with reference :  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="RiskModelBodyHTML">
+                <div id="partyRiskGrid" style="max-height:333px;max-width:1463px;overflow:scroll">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<m-grid id="EcmAuditTrial" data-urlkey="EcmAuditTrial" data-handlerkey="EcmAuditTrial" data-prop="EcmReference"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}
+
+@*
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,7 +62,7 @@
 @*
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>*@
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
 
 <script src="~/js/site.js"></script>
 <link href="~/css/site.css" rel="stylesheet" />
@@ -23,7 +71,7 @@
 <section class="content-header">
     <h1>
         ECM Audit Trial Report
-        @*<small>This report produces a list of diary activities that were not carried out when due because of exception conditions</small>*@
+        <small>This report produces a list of diary activities that were not carried out when due because of exception conditions</small>
     </h1>
 </section>
 
@@ -59,3 +107,4 @@
     <script src="~/js/Dynamic.js" type="module" defer id="script" data-prop="EcmReference" data-urlkey="EcmAuditTrial" data-handlerkey="EcmAuditTrial" ></script>
 }
 
+*@

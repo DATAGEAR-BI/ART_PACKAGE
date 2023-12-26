@@ -1,36 +1,27 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>     <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
 
-@*
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>*@
 
-<script src="~/js/site.js"></script>
-<link href="~/css/site.css" rel="stylesheet" />
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
 
 
 <section class="content-header">
     <h1>
         Advance Payment Utilization Report
-        <small></small>
+        <small class="h6"></small>
+        <br />
     </h1>
 </section>
 
-<div id="grid"></div>
+<m-grid id="AdvancePaymentUtilization" data-urlkey="AdvancePaymentUtilization" data-handlerkey="AdvancePaymentUtilization"></m-grid>
 
 @section Scripts{
-
-
-    <script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="AdvancePaymentUtilization"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
 }
+
 
