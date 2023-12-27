@@ -439,6 +439,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CreateUserId".ToLower(),_dropDown.GetDGCreateUserIdDropDown() },
                     {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
                 },
+                nameof(DGAMLArtSuspectDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower(),_dropDown           .GetDGBranchNameDropDown()          },
+                    {"ProfileRisk".ToLower(),_dropDown          .GetDGProfileRiskDropDown()         },
+                    {"OwnerUserid".ToLower(),_dropDown          .GetDGOwnerDropDown()               },
+                    {"PoliticalExpPrsnInd".ToLower(),_dropDown  .GetDGPoliticalExpPrsnIndDropDown() },
+                    {"RiskClassification".ToLower(),_dropDown   .GetDGRiskClassificationDropDown()  },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenCountryNameDropDown()  },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown    .GetDGCustIdentTypeDescDropDown()   },
+                    {"OccupDesc".ToLower(),_dropDown            .GetDGOccupDescDropDown()           },
+                },
 
 
 
