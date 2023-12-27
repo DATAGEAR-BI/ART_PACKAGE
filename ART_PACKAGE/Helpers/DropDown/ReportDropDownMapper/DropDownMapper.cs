@@ -475,6 +475,13 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"PoliticallyExposedPersonInd".ToLower()            ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
 
                 },
+                nameof(DGAMLTriageController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower()         ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"RiskScore".ToLower()          ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
 
                 _ => null
             };
