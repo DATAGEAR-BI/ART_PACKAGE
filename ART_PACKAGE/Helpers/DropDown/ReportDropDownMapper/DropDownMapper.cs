@@ -417,7 +417,23 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown() },
 
                 },
-
+                nameof(DGAMLArtScenarioAdminController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"ScenarioName".ToLower(),_dropDown         .GetDGScenarioNameDropDown()         },
+                    {"ScenarioCategory".ToLower(),_dropDown     .GetDGScenarioCategoryDropDown()     },
+                    {"ScenarioStatus".ToLower(),_dropDown       .GetDGScenarioStatusDropDown()       },
+                    {"ProductType".ToLower(),_dropDown          .GetDGProductTypeDropDown()          },
+                    {"ScenarioType".ToLower(),_dropDown         .GetDGScenarioTypeDropDown()         },
+                    {"ScenarioFrequency".ToLower(),_dropDown    .GetDGScenarioFrequencyDropDown()    },
+                    {"ObjectLevel".ToLower(),_dropDown          .GetDGObjectLevelDropDown()          },
+                    {"AlarmType".ToLower(),_dropDown            .GetDGAlarmTypeDropDown()            },
+                    {"AlarmCategory".ToLower(),_dropDown        .GetDGAlarmCategoryDropDown()        },
+                    {"AlarmSubcategory".ToLower(),_dropDown     .GetDGAlarmSubcategoryDropDown()     },
+                    {"RiskFact".ToLower(),_dropDown             .GetDGRiskFactDropDown()             },
+                    {"CreateUserId".ToLower(),_dropDown         .GetDGRoutineCreateUserIdDropDown()  },
+                    {"ParmValue".ToLower(),_dropDown            .GetDGParmValueDropDown()            },
+                    {"ParmTypeDesc".ToLower(),_dropDown         .GetDGParmTypeDescDropDown()         },
+                },
                 _ => null
             };
         }
