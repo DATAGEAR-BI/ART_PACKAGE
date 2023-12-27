@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.FTI.DraftsReport;
@@ -522,7 +523,22 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Descr".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )                 .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"Status".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Status).Distinct().Where(x=> x != null )               .Select(x => new SelectItem { text = x, value = x }).ToList() },
                 },
-
+                nameof(SystemPerformanceController) => new Dictionary<string, List<SelectItem>>
+                {
+                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
+                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
+                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
+                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                },
+                nameof(UserPerformanceController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                },
                 /*DGAML*/
                 nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
