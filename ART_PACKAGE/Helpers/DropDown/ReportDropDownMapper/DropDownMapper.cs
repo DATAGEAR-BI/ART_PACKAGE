@@ -434,6 +434,14 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"ParmValue".ToLower(),_dropDown            .GetDGParmValueDropDown()            },
                     {"ParmTypeDesc".ToLower(),_dropDown         .GetDGParmTypeDescDropDown()         },
                 },
+                nameof(DGAMLArtScenarioHistoryController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"CreateUserId".ToLower(),_dropDown.GetDGCreateUserIdDropDown() },
+                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                },
+
+
+
                 _ => null
             };
         }
