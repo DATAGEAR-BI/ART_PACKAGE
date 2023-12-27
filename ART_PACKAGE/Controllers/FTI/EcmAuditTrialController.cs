@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
+using Data.TIZONE2;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -9,8 +10,10 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class EcmAuditTrialController : BaseReportController<FTIContext, ArtTiEcmAuditReport>
     {
-        public EcmAuditTrialController(IGridConstructor<FTIContext, ArtTiEcmAuditReport> gridConstructor) : base(gridConstructor)
+        private readonly TIZONE2Context ti;
+        public EcmAuditTrialController(IGridConstructor<FTIContext, ArtTiEcmAuditReport> gridConstructor, TIZONE2Context ti) : base(gridConstructor)
         {
+            this.ti = ti;
         }
 
 
@@ -27,13 +30,13 @@ namespace ART_PACKAGE.Controllers.FTI
         //        Content = JsonConvert.SerializeObject(result)
         //    };
         //}
-        //[HttpGet("[controller]/[action]/{FtiReference}")]
-        //public IActionResult GetEcmComments(/*string EcmRefrence*/ string FtiReference)
-        //{
-        //    var comments = fti.ArtTiEcmAuditReports.Where(x => x.EcmReference == EcmRefrence).Select(x => new { x.EcmReference, x.Comments, x.Note });
-        //    var req = ti.Masters.Where(c => c.MasterRef == FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => new { ftiref = c.MasterRef, Comment = co.NoteText }).Where(x => x.Comment != null);
-        //    return req is null ? NotFound("there is no notes") : Ok(req);
-        //}
+        [HttpGet("[controller]/[action]/{FtiReference}")]
+        public IActionResult GetEcmComments(/*string EcmRefrence*/ string FtiReference)
+        {
+            //var comments = fti.ArtTiEcmAuditReports.Where(x => x.EcmReference == EcmRefrence).Select(x => new { x.EcmReference, x.Comments, x.Note });
+            var req = ti.Masters.Where(c => c.MasterRef == FtiReference)?.Join(ti.Notes, c => c.Key97, co => co.MasterKey, (c, co) => new { ftiref = c.MasterRef, Comment = co.NoteText }).Where(x => x.Comment != null);
+            return req is null ? NotFound("there is no notes") : Ok(req);
+        }
         //public IActionResult GetData([FromBody] KendoRequest request)
         //{
         //    IQueryable<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.AsQueryable();

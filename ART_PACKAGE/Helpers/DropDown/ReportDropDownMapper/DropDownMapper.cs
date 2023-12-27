@@ -389,6 +389,139 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                    {"Address1".ToLower(),fti.ArtTiOsActivityReports.Select(x=>x.Address1).Distinct()         .Where(x=> x != null)          .Select(x => new SelectItem { text = x, value = x }).ToList() },
                    {"Ccy".ToLower(),fti.ArtTiOsActivityReports.Select(x=>x.Ccy).Distinct()                   .Where(x=> x != null)          .Select(x => new SelectItem { text = x, value = x }).ToList() },
                 },
+                nameof(OSLiabilityController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {"Gfcun".ToLower(),fti.ArtTiOsLiabilityReports.Select(x=>x.Gfcun).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"Sovalue".ToLower(),fti.ArtTiOsLiabilityReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"LiabCcy".ToLower(),fti.ArtTiOsLiabilityReports.Select(x=>x.LiabCcy).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OSTransactionsAwaitiApprlController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {"Fullname".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null )            .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"Descri56".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.Descri56).Distinct().Where(x=> x != null )            .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"MasterRef".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )          .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"EventReference".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.EventReference).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"Status".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.Status).Distinct().Where(x=> x != null )                .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"PcpAddress1".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.PcpAddress1).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"NpcpAddress1".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.NpcpAddress1).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"Ccy".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null )                      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                  {"Lstmoduser".ToLower(),fti.ArtTiOsTransAwaitiApprlReports.Select(x=>x.Lstmoduser).Distinct().Where(x=> x != null )        .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OSTransactionsByGatewayController) => new Dictionary<string, List<SelectItem>>
+                {
+                   {"Fullname".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Address1".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Address1).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Sovalue".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null )       .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"MasterRef".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Partptd".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Partptd).Distinct().Where(x=> x != null )       .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Revolving".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Revolving).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Outstccy".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                  {"Ccy".ToLower(),fti.ArtTiOsTransByGatewayReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null )               .Select(x => new SelectItem { text = x, value = x }).ToList()},
+                },
+                nameof(OSTransactionsByNonPriController) => new Dictionary<string, List<SelectItem>>
+                {
+                   {"BhalfBrn".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.BhalfBrn).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Address1".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Address1).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Sovalue".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Descrip".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Descrip).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"MasterRef".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ) .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Partptd".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Partptd).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Revolving".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Revolving).Distinct().Where(x=> x != null ) .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Outstccy".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Ccy".ToLower(),fti.ArtTiOsTransByNonpriReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null )             .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OSTransactionsByPrincipalController) => new Dictionary<string, List<SelectItem>>
+                {
+                   {"BhalfBrn".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.BhalfBrn).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Address1".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Address1).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Sovalue".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Descrip".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Descrip).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"MasterRef".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Partptd".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Partptd).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Revolving".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Revolving).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Outstccy".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Ccy".ToLower(),fti.ArtTiOsTransByPrincipalReports.Select(x=>x.Ccy).Distinct().Where(x=> x != null )              .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OurChargesByCustomerController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Hvbad1".ToLower(),fti.ArtTiChargesByCustReports.Select(x=>x.Hvbad1).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Gfcun".ToLower(),fti.ArtTiChargesByCustReports.Select(x=>x.Gfcun).Distinct().Where(x=> x != null )       .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"Longname".ToLower(),fti.ArtTiChargesByCustReports.Select(x=>x.Longname).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                   {"MasterRef".ToLower(),fti.ArtTiChargesByCustReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OurChargesByMasterController) => new Dictionary<string, List<SelectItem>>
+                {
+                     {"Hvbad1".ToLower(),fti.ArtTiChargesByMasterReports.Select(x=>x.Hvbad1).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Longname".ToLower(),fti.ArtTiChargesByMasterReports.Select(x=>x.Longname).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"MasterRef".ToLower(),fti.ArtTiChargesByMasterReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(OurChargesDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                     {"Hvbad1".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Hvbad1).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Longname".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Longname).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"MasterRef".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Address1".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Address1).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Status".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Status).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Descr".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )        .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"ParticChg".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.ParticChg).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"EventRef".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.EventRef).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Action".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.Action).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"ChgbasCcy".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.ChgbasCcy).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"SchCcy".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.SchCcy).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"SchRate".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.SchRate).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList() },
+                    {"ChgCcy".ToLower(),fti.ArtTiChargesDetailsReports.Select(x=>x.ChgCcy).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(PeriodicCHRGsController) => new Dictionary<string, List<SelectItem>>
+                {
+                     {"Fullname".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Sovalue".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Descr".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )          .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Descri56".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Descri56).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Address1".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Address1).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"MasterRef".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Payrec".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Payrec).Distinct().Where(x=> x != null )        .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"AdvArr".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.AdvArr).Distinct().Where(x=> x != null )        .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"Outstccy".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                     {"AccrueCcy".ToLower(),fti.ArtTiPeriodicChrgsReports.Select(x=>x.AccrueCcy).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(PeriodicCHRGSPaymentController) => new Dictionary<string, List<SelectItem>>
+                {
+                       {"Fullname".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Sovalue".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Sovalue).Distinct().Where(x=> x != null )           .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Descr".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )               .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Descr1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Descr1).Distinct().Where(x=> x != null )             .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"MasterRef".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )       .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"PcpAddress1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.PcpAddress1).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Payrec".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Payrec).Distinct().Where(x=> x != null )             .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    //{"AdvArr".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.adv).Distinct().Where(x=> x != null )              .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Outstccy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.Outstccy).Distinct().Where(x=> x != null )         .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"NpcpAddress1".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.NpcpAddress1).Distinct().Where(x=> x != null ) .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"SchCcy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.SchCcy).Distinct().Where(x=> x != null )             .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"AccrueCcy".ToLower(),fti.ArtTiPeriodicChrgsPayReports.Select(x=>x.AccrueCcy).Distinct().Where(x=> x != null )       .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(SystemTailoringController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Paramsetdescr".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Paramsetdescr).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Prodlongname".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Prodlongname).Distinct().Where(x=> x != null )  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Eventlongname".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Eventlongname).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Attachment".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Attachment).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Mappingtype".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Mappingtype).Distinct().Where(x=> x != null )    .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Templateid".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Templateid).Distinct().Where(x=> x != null )      .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Optional".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Optional).Distinct().Where(x=> x != null )          .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Templatedescr".ToLower(),fti.ArtTiSystemTailoringReports.Select(x=>x.Templatedescr).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
+                nameof(WatchlistOSCheckController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Fullname".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Fullname).Distinct().Where(x=> x != null )           .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Descri56".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Descri56).Distinct().Where(x=> x != null )           .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"MasterRef".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null )         .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Pcpaddress1".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Pcpaddress1).Distinct().Where(x=> x != null )     .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Npcpaddress1".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Npcpaddress1).Distinct().Where(x=> x != null )   .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Longna85".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Longna85).Distinct().Where(x=> x != null )           .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Shortname".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Shortname).Distinct().Where(x=> x != null )         .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Descr".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )                 .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"Status".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Status).Distinct().Where(x=> x != null )               .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                },
 
                 /*DGAML*/
                 nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
