@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Data.FTI
+﻿namespace Data.Data.FTI
 {
     public class ArtEcmPendingCases
     {
@@ -22,7 +16,8 @@ namespace Data.Data.FTI
         public string? ProductType { get; set; }
         public DateTime? CreateDate { get; set; }
         public string? MasterReference { get; set; }
-        public string? RequestStatus { get; set; }
+        public string? ParentCaseStatus { get; set; }
+        public string? SubCaseStatus { get; set; }
         public string? CustomerClassification { get; set; }
         public string? ParentActionBy { get; set; }
         public DateTime? ParentLastActionDate { get; set; }

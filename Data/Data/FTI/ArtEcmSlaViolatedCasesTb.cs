@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Data.FTI
+﻿namespace Data.Data.FTI
 {
     public class ArtEcmSlaViolatedCasesTb
     {
@@ -26,6 +20,7 @@ namespace Data.Data.FTI
         public string? CustomerClassification { get; set; }
         public string? LastActionBy { get; set; }
         public string? FormattedTime { get; set; }
+        public string? ViolatedTime { get; set; }
         public DateTime? LastActionDate { get; set; }
         public string? ProdCd { get; set; }
         public string? DisplayName { get; set; }
