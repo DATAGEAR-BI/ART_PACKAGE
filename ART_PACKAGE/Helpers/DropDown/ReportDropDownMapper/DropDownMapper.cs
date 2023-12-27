@@ -450,7 +450,15 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CustIdentTypeDesc".ToLower(),_dropDown    .GetDGCustIdentTypeDescDropDown()   },
                     {"OccupDesc".ToLower(),_dropDown            .GetDGOccupDescDropDown()           },
                 },
-
+                nameof(DGAMLCasesDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    //commented untill resolve drop down 
+           {"BranchName".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CaseStatus".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CasePriority".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CaseCategory".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"EntityLevel".ToLower()                ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
 
 
                 _ => null
