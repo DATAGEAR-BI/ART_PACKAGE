@@ -157,7 +157,10 @@
     //cases summary
     StCasesPerPriority:"/ArtStDgAmlCasesPerPriority/GetData",
     StCasesPerCategory:"/ArtStDgAmlCasesPerCategory/GetData",
-    StCasesPerStatus:"/ArtStDgAmlCasesPerStatus/GetData",
+    StCasesPerStatus: "/ArtStDgAmlCasesPerStatus/GetData",
+    //customer summary
+    StCustomerPerBranch:"/ArtStDgAmlCustomerPerBranch/GetData",
+    StCustomerPerType:"/ArtStDgAmlCustomerPerType/GetData",
     
 
 };

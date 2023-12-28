@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data.Services;
 
 namespace Data.Data.ARTDGAML
 {
-    public class ArtStDgAmlCustomerPerType
+    public class ArtStDgAmlCustomerPerType : IChartDataEntity
     {
         public decimal? NUMBER_OF_CUSTOMERS { get; set; }
         public string? CUSTOMER_TYPE { get; set; }
