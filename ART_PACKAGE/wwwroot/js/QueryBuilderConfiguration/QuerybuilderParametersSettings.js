@@ -27,6 +27,51 @@ export const parametersConfig = [
         //    ["enddate", "=", yesterday]
         //]
     },
+
+    {
+        "reportName": "UserPerformancePerUserAndAction",
+        "parameters": [
+            {
+                "paraName": "startdate",
+                "paraDisplayName": "Start Date",
+                "isMulti": false,
+                "type": "date"
+            },
+            {
+                "paraName": "enddate",
+                "paraDisplayName": "End Date",
+                "isMulti": false,
+                "type": "date"
+            },
+        ],
+        "defaultFilter": null //[
+        //    ["startdate", "=", today],
+        //    "and",
+        //    ["enddate", "=", yesterday]
+        //]
+    },
+    {
+        "reportName": "UserPerformPerAction",
+        "parameters": [
+            {
+                "paraName": "startdate",
+                "paraDisplayName": "Start Date",
+                "isMulti": false,
+                "type": "date"
+            },
+            {
+                "paraName": "enddate",
+                "paraDisplayName": "End Date",
+                "isMulti": false,
+                "type": "date"
+            },
+        ],
+        "defaultFilter": null //[
+        //    ["startdate", "=", today],
+        //    "and",
+        //    ["enddate", "=", yesterday]
+        //]
+    },
     {
         "reportName": "BasicParams",
         "parameters": [

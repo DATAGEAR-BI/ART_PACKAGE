@@ -151,7 +151,6 @@ class Grid extends HTMLElement {
             this.storedConfig.applyBtn.addEventListener('click', () => {
                 var grid = $(this.gridDiv).data("kendoGrid");
                 grid.dataSource.read();
-                console.log('hello in store procdure');
             });
 
         }
