@@ -146,4 +146,11 @@
     Grid: "/Grid/GetData",
     //TaskSchedular
     TaskSchedularUrl: "/Tasks/GetData",
+
+
+    //DGAML
+    StAlertsPerStatus:"/StAlertsPerStatus/GetData",
+    StAlertPerOwner:"/StAlertPerOwner/GetData",
+    StAlertPerBranch:"/StAlertPerBranch/GetData",
+    StAlertPerScenario:"/StAlertPerScenario/GetData",
 };
