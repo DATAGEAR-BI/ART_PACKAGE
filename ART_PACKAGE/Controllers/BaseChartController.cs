@@ -19,9 +19,9 @@ namespace ART_PACKAGE.Controllers
 
         public abstract IActionResult Index();
         [HttpPost]
-        public async Task<IActionResult> GetData([FromBody] List<BuilderFilter> filters)
+        public virtual async Task<IActionResult> GetData([FromBody] List<BuilderFilter> filters)
         {
-            IEnumerable<IChartDataEntity> res = _chartConstructor.GetChartData(filters);
+            IEnumerable<TModel> res = _chartConstructor.GetChartData(filters);
             return new ContentResult
             {
                 ContentType = "application/json",

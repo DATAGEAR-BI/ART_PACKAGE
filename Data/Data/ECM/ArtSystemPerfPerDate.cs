@@ -1,6 +1,8 @@
-﻿namespace Data.Data.ECM
+﻿using Data.Services;
+
+namespace Data.Data.ECM
 {
-    public class ArtSystemPerfPerDate
+    public class ArtSystemPerfPerDate : IChartDataEntity
     {
         public decimal YEAR { get; set; }
         public string MONTH { get; set; } = null!;

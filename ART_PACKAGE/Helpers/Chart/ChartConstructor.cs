@@ -15,7 +15,7 @@ namespace ART_PACKAGE.Helpers.Chart
             this.repo = repo;
         }
 
-        public IEnumerable<IChartDataEntity> GetChartData(List<BuilderFilter> filters)
+        public IEnumerable<TModel> GetChartData(List<BuilderFilter> filters)
         {
             IQueryable<TModel> data = repo.ExcueteProc(filters);
             return data;

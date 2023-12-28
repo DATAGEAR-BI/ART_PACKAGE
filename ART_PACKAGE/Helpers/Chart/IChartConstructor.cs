@@ -8,6 +8,6 @@ namespace ART_PACKAGE.Helpers.Chart
         where TModel : class, IChartDataEntity
 
     {
-        public IEnumerable<IChartDataEntity> GetChartData(List<BuilderFilter> filters);
+        public IEnumerable<TModel> GetChartData(List<BuilderFilter> filters);
     }
 }
