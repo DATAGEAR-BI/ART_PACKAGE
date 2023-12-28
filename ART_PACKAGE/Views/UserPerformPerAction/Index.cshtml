@@ -1,43 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-@*<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />*@
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-@*<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-
-    
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>*@
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-querybuilder/css/query-builder.dark.css" rel="stylesheet" />
-<link href="~/lib/jquery-querybuilder/css/query-builder.dark.min.css" rel="stylesheet" />
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
-<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
-<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
 
 <section class="content-header">
     <h1>
@@ -47,23 +11,27 @@
     </h1>
 </section>
 
-@*
-    <script src="~/js/site.js"></script>
-    <link href="~/css/site.css" rel="stylesheet" />*@
-@*<div id="filterContainer" class="row" style="display:flex;
-        justify-content:center;
-        align-items:center;
-        padding:1%">
-        <div id="filters" class="col-xs-8 col-md-8 col-sm-8"></div>
-        <button id="Applyfilter" class="col-xs-2 col-md-2 col-sm-2 btn btn-primary">filter</button>
-    </div>*@
-<filters-control data-key="UserPerformPerAction"></filters-control>
-<div id="grid"></div>
+<div class="row d-flex align-items-center">
+    <smart-query-builder class="col-10" id="querybuilder" data-applybtn="applyBtn" data-params="UserPerformPerAction"></smart-query-builder>
+    <div class="col-2 d-flex justify-content-center">
+        <button id="applyBtn" class="btn btn-primary">Apply</button>
+    </div>
+</div>
+<m-grid id="UserPerformPerAction" data-stored="querybuilder" data-urlkey="UserPerformPerAction"></m-grid>
 
 
+@section KendoScripts{
+    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+    <script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
+    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+    <script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
+}
 @section Scripts {
 
-
-    <script src="~/js/constructfilters.js" defer type="module"></script>
-    <script src="~/js/dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="UserPerformPerAction" data-handlerkey="UserPerformPerAction"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.multicomboinput.js"></script>
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
 }
