@@ -148,9 +148,16 @@
     TaskSchedularUrl: "/Tasks/GetData",
 
 
-    //DGAML
-    StAlertsPerStatus:"/StAlertsPerStatus/GetData",
-    StAlertPerOwner:"/StAlertPerOwner/GetData",
-    StAlertPerBranch:"/StAlertPerBranch/GetData",
-    StAlertPerScenario:"/StAlertPerScenario/GetData",
+    /*DGAML*/
+    //alerts summary 
+    StAlertsPerStatus:"/ArtStDgAmlAlertsPerStatus/GetData",
+    StAlertPerOwner:"/ArtStDgAmlAlertPerOwner/GetData",
+    StAlertPerBranch:"/ArtStDgAmlAlertsPerBranch/GetData",
+    StAlertPerScenario: "/ArtStDgAmlAlertsPerScenario/GetData",
+    //cases summary
+    StCasesPerPriority:"/ArtStDgAmlCasesPerPriority/GetData",
+    StCasesPerCategory:"/ArtStDgAmlCasesPerCategory/GetData",
+    StCasesPerStatus:"/ArtStDgAmlCasesPerStatus/GetData",
+    
+
 };
