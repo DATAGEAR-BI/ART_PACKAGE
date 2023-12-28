@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
@@ -9,6 +10,7 @@ using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ARTDGAML;
+using Data.Data.Audit;
 using Data.Data.ExportSchedular;
 using Data.Data.FTI;
 using System.Linq.Dynamic.Core;
@@ -31,7 +33,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
         {
             List<SelectItem> pipList = new() { new SelectItem { text = "Y", value = "Y" }, new SelectItem { text = "N", value = "N" } };
-
+            List<SelectItem> actionList = new() { new SelectItem { text = "Add", value = "Add" }, new SelectItem { text = "Update", value = "Update" }, new SelectItem { text = "Delete", value = "Delete" } };
 
             return controller switch
             {
@@ -538,6 +540,52 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
                     {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                },
+                nameof(AuditGroupsController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtGroupsAuditView.CreatedBy            ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.LastUpdatedBy        ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.SubGroupNames        ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtGroupsAuditView.RoleNames            ).ToLower(), _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropDown.GetMemberUsersDropDown()  },
+                 {nameof(ArtGroupsAuditView.Action               ).ToLower(), actionList },
+                },
+                nameof(AuditRolesController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtRolesAuditView.GroupNames)       .ToLower()    , _dropDown.GetGroupAudNameDropDown()},
+                 {nameof(ArtRolesAuditView.CreatedBy)        .ToLower()    , _dropDown.GetUserAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.LastUpdatedBy)    .ToLower()    , _dropDown.GetUserAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.RoleName)         .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.MemberUsers)      .ToLower()    , _dropDown.GetMemberUsersDropDown() },
+                 {nameof(ArtRolesAuditView.Action)           .ToLower()    , actionList  },
+                },
+                nameof(AuditUsersController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtUsersAuditView.CreatedBy)       .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.LastUpdatedBy)   .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()     , _dropDown.GetMemberUsersDropDown()  },
+                 {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.Action)          .ToLower()     , actionList },
+                },
+                nameof(LastLoginPerDayController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(LastLoginPerDayView.AppName)        .ToLower()    , _dropDown.GetAppNameDropDown()     },
+                 {nameof(LastLoginPerDayView.DeviceName)     .ToLower()    , _dropDown.GetDeviceNameDropDown()  },
+                 {nameof(LastLoginPerDayView.DeviceType)     .ToLower()    , _dropDown.GetDeviceTypeDropDown()  },
+                 {nameof(LastLoginPerDayView.UserName)       .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListGroupsRolesSummaryController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropDown.GetGroupNameDropDown()   },
+                  {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()     , _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListGroupsSubGroupsSummaryController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropDown.GetGroupNameDropDown()    },
+                  {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropDown.GetGroupAudNameDropDown() },
                 },
                 /*DGAML*/
                 nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
