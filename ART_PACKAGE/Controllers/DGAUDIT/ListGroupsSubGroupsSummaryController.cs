@@ -1,17 +1,16 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
+
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
     public class ListGroupsSubGroupsSummaryController : BaseReportController<ArtAuditContext, ListGroupsSubGroupsSummary>
     {
+        public ListGroupsSubGroupsSummaryController(IGridConstructor<ArtAuditContext, ListGroupsSubGroupsSummary> gridConstructor) : base(gridConstructor)
+        {
+        }
 
         //private readonly ArtAuditContext context;
         //private readonly IPdfService _pdfSrv;
