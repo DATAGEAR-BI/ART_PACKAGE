@@ -51,6 +51,11 @@
     GoAmlReportsPerCreator: "/GoAmlReportsPerCreator/GetData",
     GoAmlReportsPerType: "/GoAmlReportsPerType/GetData",
 
+    SystemPerformancePerStatus: "/SystemPerformancePerStatus/GetData",
+    SystemPerformancePerType: "/SystemPerformancePerType/GetData",
+    SystemPerformancePerDirection: "/SystemPerformancePerDirection/GetData",
+    SystemPerformancePerDate: "/SystemPerformancePerDate/GetData",
+
 
     AmlPropRisk: "/AmlPropRisk/GetData",
     AmlRisk: "/AmlRisk/GetData",

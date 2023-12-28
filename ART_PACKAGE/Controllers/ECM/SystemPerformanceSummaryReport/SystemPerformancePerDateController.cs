@@ -2,6 +2,7 @@
 using Data.Data.ECM;
 using Data.Services.QueryBuilder;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.ECM.SystemPerformanceSummaryReport
 {
@@ -14,8 +15,12 @@ namespace ART_PACKAGE.Controllers.ECM.SystemPerformanceSummaryReport
         public override async Task<IActionResult> GetData([FromBody] List<BuilderFilter> filters)
         {
             IEnumerable<ArtSystemPerfPerDate> data = _chartConstructor.GetChartData(filters);
-            var result = data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) });
-            return Ok(result);
+            var result = data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = $"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToList();
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(result)
+            };
         }
 
         public override IActionResult Index()

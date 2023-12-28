@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.ECM.SystemPerformanceSummaryReport
 {
-    public class SystemPrefPerStatusController : BaseChartController<EcmContext, ArtSystemPrefPerStatus>
+    public class SystemPerformancePerTypeController : BaseChartController<EcmContext, ArtSystemPerfPerType>
     {
-        public SystemPrefPerStatusController(IChartConstructor<ArtSystemPrefPerStatus, EcmContext> chartConstructor) : base(chartConstructor)
+        public SystemPerformancePerTypeController(IChartConstructor<ArtSystemPerfPerType, EcmContext> chartConstructor) : base(chartConstructor)
         {
         }
 

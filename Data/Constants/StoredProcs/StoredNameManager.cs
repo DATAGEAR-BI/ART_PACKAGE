@@ -53,6 +53,15 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStGoAmlReportsPerCreator) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR,
 
 
+                Type t when t == typeof(ArtSystemPerfPerDate) && dbType == DbTypes.Oracle => ORACLESPName.ST_SYSTEM_PERF_PER_DATE,
+                Type t when t == typeof(ArtSystemPerfPerType) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ST_SYSTEM_PERF_PER_TYPE,
+                Type t when t == typeof(ArtSystemPerfPerType) && dbType == DbTypes.Oracle => ORACLESPName.ST_SYSTEM_PERF_PER_TYPE,
+                Type t when t == typeof(ArtSystemPrefPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS,
+                Type t when t == typeof(ArtSystemPrefPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ST_SYSTEM_PERF_PER_STATUS,
+                Type t when t == typeof(ArtSystemPrefPerDirection) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION,
+                Type t when t == typeof(ArtSystemPrefPerDirection) && dbType == DbTypes.Oracle => ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION,
+
+
                 Type t when t == typeof(ArtStTiOdcOutStaSumDraftStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_TI_ODC_OUTSTA_SUMM_DRAFT_STATUS_REPORT,
                 //Type t when t == typeof(ArtStTiOdcOutSta) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TI_ODC_OUTSTA_REPORT,
                 Type t when t == typeof(ArtStTiOdcOutStaSumCountry) && dbType == DbTypes.Oracle => ORACLESPName.ART_TI_ODC_OUTSTA_SUMM_COUNTRY_REPORT,
