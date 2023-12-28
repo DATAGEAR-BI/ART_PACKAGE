@@ -587,6 +587,49 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                   {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropDown.GetGroupNameDropDown()    },
                   {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropDown.GetGroupAudNameDropDown() },
                 },
+                nameof(ListOfDeletedUsersController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListOfDeletedUser.UserName)  .ToLower()  , _dropDown.GetUserAudNameDropDown() },
+                   {nameof(ListOfDeletedUser.UserType)  .ToLower() , _dropDown.GetUserTypeDropDown()    },
+                   {nameof(ListOfDeletedUser.CreatedBy) .ToLower() , _dropDown.GetUserAudNameDropDown() },
+                },
+                nameof(ListOfGroupsController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "GroupName".ToLower(),    _dropDown.GetGroupNameDropDown()  },
+                  { "GroupType".ToLower(),    _dropDown.GetGroupTypeDropDown()  },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown()},
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown()},
+                },
+                nameof(ListOfRoleController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "RoleName".ToLower(),     _dropDown.GetRoleNameDropDown()    },
+                  { "RoleType".ToLower(),     _dropDown.GetRoleTypeDropDown()    },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
+                },
+                nameof(ListOfUserController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                  { "UserType".ToLower(),     _dropDown.GetUserTypeDropDown()    },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
+              },
+                nameof(ListOfUsersAndGroupsRoleController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
+                   { "RoleOfGroup".ToLower(),  _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListOfUsersGroupController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
+                },
+                nameof(ListOfUsersRolesController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),_dropDown.GetUserNameDropDown()   },
+                   { "UserRole".ToLower(),_dropDown.GetRoleAudNameDropDown()},
+                },
                 /*DGAML*/
                 nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
