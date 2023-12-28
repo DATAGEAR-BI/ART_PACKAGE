@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data.Services;
 
 namespace Data.Data.ARTDGAML
 {
-    public class ArtStDgAmlCasesPerStatus
+    public class ArtStDgAmlCasesPerStatus : IChartDataEntity
     {
         public string? CASE_STATUS { get; set; }
         public decimal? NUMBER_OF_CASES { get; set; }

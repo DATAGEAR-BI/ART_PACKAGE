@@ -1,15 +1,21 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.AML_ANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.DGAML.DGAMLAlertSummary;
+using ART_PACKAGE.Controllers.DGAML.DGAMLCasesSummary;
+using ART_PACKAGE.Controllers.DGAML.DGAMLCustomerSummary;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
+using ART_PACKAGE.Controllers.GOAML.GOAMLSummaryReport;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.SASAML.AlertSummaryReport;
 using ART_PACKAGE.Controllers.SASAML.CasesSummaryReport;
+using ART_PACKAGE.Controllers.SASAML.CustomersSummaryReport;
+using ART_PACKAGE.Controllers.SASAML.RiskSummaryReport;
 using ART_PACKAGE.Controllers.SEG;
 using Data.Constants.AppModules;
 

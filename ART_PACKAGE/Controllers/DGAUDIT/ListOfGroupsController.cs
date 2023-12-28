@@ -1,69 +1,67 @@
-﻿using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListOfGroupsController : Controller
+    public class ListOfGroupsController : BaseReportController<ArtAuditContext, ListOfGroup>
     {
-        private readonly ArtAuditContext context;
-        private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService dropDownService;
-        private readonly ICsvExport _csvSrv;
-
-        public ListOfGroupsController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ListOfGroupsController(IGridConstructor<ArtAuditContext, ListOfGroup> gridConstructor) : base(gridConstructor)
         {
-            this.context = context;
-            _pdfSrv = pdfSrv;
-            this.dropDownService = dropDownService;
-            _csvSrv = csvSrv;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ListOfGroup> data = context.ListOfGroups.AsQueryable();
+        //private readonly ArtAuditContext context;
+        //private readonly IPdfService _pdfSrv;
+        //private readonly IDropDownService dropDownService;
+        //private readonly ICsvExport _csvSrv;
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
+        //public ListOfGroupsController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        //{
+        //    this.context = context;
+        //    _pdfSrv = pdfSrv;
+        //    this.dropDownService = dropDownService;
+        //    _csvSrv = csvSrv;
+        //}
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ListOfGroup> data = context.ListOfGroups.AsQueryable();
 
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    { "GroupName".ToLower(),dropDownService.GetGroupNameDropDown().ToDynamicList() },
-                    { "GroupType".ToLower(),dropDownService.GetGroupTypeDropDown().ToDynamicList() },
-                    { "CreatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
-                    { "LastUpdatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    List<string> ColumnsToSkip = null;
 
-                };
-            }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
 
-            KendoDataDesc<ListOfGroup> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            { "GroupName".ToLower(),dropDownService.GetGroupNameDropDown().ToDynamicList() },
+        //            { "GroupType".ToLower(),dropDownService.GetGroupTypeDropDown().ToDynamicList() },
+        //            { "CreatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
+        //            { "LastUpdatedBy".ToLower(),dropDownService.GetUserAudNameDropDown().ToDynamicList() },
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
+        //        };
+        //    }
+        //    ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
+
+        //    KendoDataDesc<ListOfGroup> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //    };
+
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
 
         //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         //{
@@ -73,18 +71,18 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //}
 
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
-            List<ListOfGroup> data = context.ListOfGroups.CallData(req).Data.ToList();
-            ViewData["title"] = "List Of Groups Report";
-            ViewData["desc"] = "This Report presents all groups with the related information as below";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        public IActionResult Index()
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListOfGroupsController).ToLower()].SkipList;
+        //    List<ListOfGroup> data = context.ListOfGroups.CallData(req).Data.ToList();
+        //    ViewData["title"] = "List Of Groups Report";
+        //    ViewData["desc"] = "This Report presents all groups with the related information as below";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
+        public override IActionResult Index()
         {
             return View();
         }
