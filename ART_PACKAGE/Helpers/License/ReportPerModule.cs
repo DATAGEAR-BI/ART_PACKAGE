@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.AML_ANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.DGAML.DGAMLAlertSummary;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;

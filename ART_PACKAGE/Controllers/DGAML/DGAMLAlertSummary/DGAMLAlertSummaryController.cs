@@ -1,17 +1,9 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.StoredProcsHelpers;
-using Data.Constants.db;
-using Data.Constants.StoredProcs;
-using Data.Data.ARTDGAML;
-using Data.Services.DbContextExtentions;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ART_PACKAGE.Controllers.DGAML
+namespace ART_PACKAGE.Controllers.DGAML.DGAMLAlertSummary
 {
     public class DGAMLAlertSummaryController : Controller
-    {
+    {/*
         private readonly ArtDgAmlContext _context;
         private readonly IConfiguration _config;
         private readonly string dbType;
@@ -107,7 +99,7 @@ namespace ART_PACKAGE.Controllers.DGAML
 
 
 
-        }
+        }*/
 
         public IActionResult Index()
         {
