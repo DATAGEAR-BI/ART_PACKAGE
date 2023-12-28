@@ -4,10 +4,9 @@ using Data.Services.DbContextExtentions;
 using Data.Services.Grid;
 using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
-using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Linq.Expressions;
-using System.Text;
+
 
 namespace Data.Services
 {
@@ -28,104 +27,78 @@ namespace Data.Services
             {
                 return false;
             }
-
-            if (_context.Database.IsOracle())
-                return OracleBulkInsert(data);
-
-
-            Microsoft.EntityFrameworkCore.Metadata.IEntityType? entityType = _context.Model.FindEntityType(typeof(TModel));
-            string? tableName = entityType?.GetTableName() ?? entityType?.GetViewName();
-
-            StringBuilder stringBuilder = new();
-            stringBuilder.AppendLine($"INSERT INTO {tableName} (");
-
-            List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
-            string columns = string.Join(", ", properties.Select(p => p?.GetColumnName() ?? p.Name));
-
-            stringBuilder.AppendLine(columns);
-            stringBuilder.AppendLine(") VALUES");
-
-            List<string> parameterList = new();
-
-            foreach (TModel entity in data)
-            {
-                IEnumerable<string> values = properties.Select(p =>
-                {
-                    object? value = p.PropertyInfo.GetValue(entity);
-                    if (value != null)
-                    {
-
-                        if (p.PropertyInfo.PropertyType == typeof(string) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(string))
-                        {
-                            // Escape single quotes in string values
-                            value = ((string?)value)?.Replace("'", "''"); // Handle nullable string
-                            return $"'{value}'";
-                        }
-                        else if (p.PropertyInfo.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(DateTime))
-                        {
-                            return $"'{(DateTime)value:yyyy-MM-dd HH:mm:ss}'";
-                        }
-                        else
-                        {
-                            return $"{value}";
-                        }
-                    }
-                    else
-                    {
-                        return "NULL";
-                    }
-                });
-
-                parameterList.Add($"({string.Join(", ", values)})");
-            }
-
-            stringBuilder.AppendLine(string.Join(",\n", parameterList));
-            stringBuilder.AppendLine(";");
-
-
-
-            int effected = _context.Database.ExecuteSqlRaw(stringBuilder.ToString());
-            return effected > 0;
-        }
-
-
-        private bool OracleBulkInsert(IEnumerable<TModel> data)
-        {
-            Microsoft.EntityFrameworkCore.Metadata.IEntityType? entityType = _context.Model.FindEntityType(typeof(TModel));
-            string? tableName = entityType?.GetTableName() ?? entityType?.GetViewName();
-            var connection = (OracleConnection)_context.Database.GetDbConnection();
-            OracleBulkCopy bulkCopy = new OracleBulkCopy(connection);
-            bulkCopy.DestinationTableName = tableName; // Replace with your table name
             try
             {
-                DataTable dataTable = new DataTable();
-                List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
-                foreach (var property in properties)
-                {
-                    dataTable.Columns.Add(property?.GetColumnName());
-                }
-                foreach (var item in data)
-                {
-                    DataRow row = dataTable.NewRow();
-
-                    foreach (var prop in properties)
-                    {
-                        row[prop?.GetColumnName()] = prop.PropertyInfo.GetValue(item, null);
-                    }
-
-                    dataTable.Rows.Add(row);
-                }
-                connection.Open();
-                bulkCopy.WriteToServer(dataTable.Select());
+                _context.BulkInsert(data);
                 return true;
             }
             catch (Exception ex)
             {
                 return false;
-
             }
 
+
+            //if (_context.Database.IsOracle())
+            //    return OracleBulkInsert(data);
+
+
+            //Microsoft.EntityFrameworkCore.Metadata.IEntityType? entityType = _context.Model.FindEntityType(typeof(TModel));
+            //string? tableName = entityType?.GetTableName() ?? entityType?.GetViewName();
+
+            //StringBuilder stringBuilder = new();
+            //stringBuilder.AppendLine($"INSERT INTO {tableName} (");
+
+            //List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
+            //string columns = string.Join(", ", properties.Select(p => p?.GetColumnName() ?? p.Name));
+
+            //stringBuilder.AppendLine(columns);
+            //stringBuilder.AppendLine(") VALUES");
+
+            //List<string> parameterList = new();
+
+            //foreach (TModel entity in data)
+            //{
+            //    IEnumerable<string> values = properties.Select(p =>
+            //    {
+            //        object? value = p.PropertyInfo.GetValue(entity);
+            //        if (value != null)
+            //        {
+
+            //            if (p.PropertyInfo.PropertyType == typeof(string) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(string))
+            //            {
+            //                // Escape single quotes in string values
+            //                value = ((string?)value)?.Replace("'", "''"); // Handle nullable string
+            //                return $"'{value}'";
+            //            }
+            //            else if (p.PropertyInfo.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(DateTime))
+            //            {
+            //                return $"'{(DateTime)value:yyyy-MM-dd HH:mm:ss}'";
+            //            }
+            //            else
+            //            {
+            //                return $"{value}";
+            //            }
+            //        }
+            //        else
+            //        {
+            //            return "NULL";
+            //        }
+            //    });
+
+            //    parameterList.Add($"({string.Join(", ", values)})");
+            //}
+
+            //stringBuilder.AppendLine(string.Join(",\n", parameterList));
+            //stringBuilder.AppendLine(";");
+
+
+
+            //int effected = _context.Database.ExecuteSqlRaw(stringBuilder.ToString());
+            //return effected > 0;
         }
+
+
+
 
         public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null)
         {
@@ -208,7 +181,24 @@ namespace Data.Services
             return _context.ExecuteProc<TModel>(storedName, @params.ToArray()).AsQueryable();
         }
 
+        public IEnumerable<TModel> GetAll()
+        {
+            return _context.Set<TModel>();
+        }
 
+        public bool DeleteAll()
+        {
+            try
+            {
+                var allData = GetAll();
+                _context.Set<TModel>().BulkDelete(allData);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 
+        }
     }
 }

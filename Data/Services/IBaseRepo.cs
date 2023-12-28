@@ -14,5 +14,10 @@ namespace Data.Services
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters);
 
         public bool BulkInsert(IEnumerable<TModel> data);
+
+
+        public IEnumerable<TModel> GetAll();
+
+        public bool DeleteAll();
     }
 }

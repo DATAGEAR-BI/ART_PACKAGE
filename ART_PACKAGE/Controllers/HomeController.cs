@@ -3,7 +3,9 @@ using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
+using Data.Data.ExportSchedular;
 using Data.Data.SASAml;
+using Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -23,8 +25,8 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        private readonly IBaseRepo<ExportSchedularContext, ExportTask> repo;
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IBaseRepo<ExportSchedularContext, ExportTask> repo)
         {
 
             _logger = logger;
@@ -50,6 +52,8 @@ namespace ART_PACKAGE.Controllers
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
+
+            this.repo = repo;
         }
 
 
@@ -57,14 +61,18 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> TestDrop()
         {
 
-            DateTime? lastExecutionDateTime = null;
-            DateTime? nextExecutionDateTime = null;
+
+            IEnumerable<ExportTask> data = repo.GetAll();
+            if (repo.DeleteAll())
+            {
+                repo.BulkInsert(data);
+                return Ok("deleted => added");
+            }
+            else
+                return BadRequest();
 
 
 
-
-
-            return Ok(new { lastExecutionDateTime, nextExecutionDateTime });
         }
 
 

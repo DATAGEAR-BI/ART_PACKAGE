@@ -13,6 +13,7 @@ using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
+using Data.FCFKC.SEG;
 using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
@@ -15190,7 +15191,946 @@ namespace Data.ModelCreatingStrategies
 
         public void OnSegFcfkcModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.HasDefaultSchema("FCFKC")
+                .UseCollation("USING_NLS_COMP");
+
+            modelBuilder.Entity<MebSegmentsV3>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            //    entity.ToTable("MEB_SEGMENT_V3");
+
+            //    entity.Property(e => e.AlertsCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("ALERTS_CNT");
+
+            //    entity.Property(e => e.AvgAtmCashInCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_ATM_CASH_IN_C_AMT");
+
+            //    entity.Property(e => e.atm)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_ATM_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.AvgCashCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_CASH_C_AMT");
+
+            //    entity.Property(e => e.AvgCashDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_CASH_D_AMT");
+
+            //    entity.Property(e => e.AvgCheckDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_CHECK_D_AMT");
+
+            //    entity.Property(e => e.AvgDebitCardDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_DEBIT_CARD_D_AMT");
+
+            //    entity.Property(e => e.AvgECommWithdrawalDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_E_COMM_WITHDRAWAL_D_AMT");
+
+            //    entity.Property(e => e.AvgFawryIntTransCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FAWRY_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.AvgFawryIntTransDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FAWRY_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.AvgFawryOtherTrnsactsDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FAWRY_OTHER_TRNSACTS_D_AMT");
+
+            //    entity.Property(e => e.AvgFawryWireCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FAWRY_WIRE_C_AMT");
+
+            //    entity.Property(e => e.AvgFawryWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FAWRY_WIRE_D_AMT");
+
+            //    entity.Property(e => e.AvgFeeDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FEE_D_AMT");
+
+            //    entity.Property(e => e.AvgFibWalletAccLoadCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FIB_WALLET_ACC_LOAD_C_AMT");
+
+            //    entity.Property(e => e.AvgFibWalletCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_FIB_WALLET_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.AvgIntTransCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.AvgIntTransDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.AvgMiscCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_MISC_C_AMT");
+
+            //    entity.Property(e => e.AvgRefundCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_REFUND_C_AMT");
+
+            //    entity.Property(e => e.AvgTotAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("AVG_TOT_AMT");
+
+            //    entity.Property(e => e.AvgTotCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("AVG_TOT_C_AMT");
+
+            //    entity.Property(e => e.AvgTotDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("AVG_TOT_D_AMT");
+
+            //    entity.Property(e => e.AvgWireCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_WIRE_C_AMT");
+
+            //    entity.Property(e => e.AvgWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("AVG_WIRE_D_AMT");
+
+            //    entity.Property(e => e.Cluster1)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("CLUSTER_1");
+
+            //    entity.Property(e => e.CreationDate)
+            //        .HasColumnType("DATE")
+            //        .HasColumnName("CREATION_DATE");
+
+            //    entity.Property(e => e.CustomerSinceDate)
+            //        .HasColumnType("DATE")
+            //        .HasColumnName("CUSTOMER_SINCE_DATE");
+
+            //    entity.Property(e => e.IndustryCode)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("INDUSTRY_CODE");
+
+            //    entity.Property(e => e.IndustryDesc)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("INDUSTRY_DESC");
+
+            //    entity.Property(e => e.LastSegmentId)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("LAST_SEGMENT_ID");
+
+            //    entity.Property(e => e.MaxAtmCashInCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_ATM_CASH_IN_C_AMT");
+
+            //    entity.Property(e => e.MaxAtmCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_ATM_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.MaxCashCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_CASH_C_AMT");
+
+            //    entity.Property(e => e.MaxCashDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_CASH_D_AMT");
+
+            //    entity.Property(e => e.MaxCheckDAmt)
+            //        .HasColumnType("NUMBER(38,1)")
+            //        .HasColumnName("MAX_CHECK_D_AMT");
+
+            //    entity.Property(e => e.MaxDebitCardDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_DEBIT_CARD_D_AMT");
+
+            //    entity.Property(e => e.MaxECommWithdrawalDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_E_COMM_WITHDRAWAL_D_AMT");
+
+            //    entity.Property(e => e.MaxFawryIntTransCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FAWRY_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.MaxFawryIntTransDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FAWRY_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.MaxFawryOtherTrnsactsDAmt)
+            //        .HasColumnType("NUMBER(38,1)")
+            //        .HasColumnName("MAX_FAWRY_OTHER_TRNSACTS_D_AMT");
+
+            //    entity.Property(e => e.MaxFawryWireCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FAWRY_WIRE_C_AMT");
+
+            //    entity.Property(e => e.MaxFawryWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FAWRY_WIRE_D_AMT");
+
+            //    entity.Property(e => e.MaxFeeDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_FEE_D_AMT");
+
+            //    entity.Property(e => e.MaxFibWalletAccLoadCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FIB_WALLET_ACC_LOAD_C_AMT");
+
+            //    entity.Property(e => e.MaxFibWalletCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_FIB_WALLET_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.MaxIntTransCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.MaxIntTransDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.MaxMiscCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_MISC_C_AMT");
+
+            //    entity.Property(e => e.MaxMls)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_MLS");
+
+            //    entity.Property(e => e.MaxRefundCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_REFUND_C_AMT");
+
+            //    entity.Property(e => e.MaxTotAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_TOT_AMT");
+
+            //    entity.Property(e => e.MaxTotCAmt)
+            //        .HasColumnType("NUMBER(38,4)")
+            //        .HasColumnName("MAX_TOT_C_AMT");
+
+            //    entity.Property(e => e.MaxTotDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MAX_TOT_D_AMT");
+
+            //    entity.Property(e => e.MaxWireCAmt)
+            //        .HasColumnType("NUMBER(38,4)")
+            //        .HasColumnName("MAX_WIRE_C_AMT");
+
+            //    entity.Property(e => e.MaxWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MAX_WIRE_D_AMT");
+
+            //    entity.Property(e => e.MinAtmCashInCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_ATM_CASH_IN_C_AMT");
+
+            //    entity.Property(e => e.MinAtmCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_ATM_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.MinCashCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_CASH_C_AMT");
+
+            //    entity.Property(e => e.MinCashDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_CASH_D_AMT");
+
+            //    entity.Property(e => e.MinCheckDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_CHECK_D_AMT");
+
+            //    entity.Property(e => e.MinDebitCardDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_DEBIT_CARD_D_AMT");
+
+            //    entity.Property(e => e.MinECommWithdrawalDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_E_COMM_WITHDRAWAL_D_AMT");
+
+            //    entity.Property(e => e.MinFawryIntTransCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FAWRY_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.MinFawryIntTransDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FAWRY_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.MinFawryOtherTrnsactsDAmt)
+            //        .HasColumnType("NUMBER(38,1)")
+            //        .HasColumnName("MIN_FAWRY_OTHER_TRNSACTS_D_AMT");
+
+            //    entity.Property(e => e.MinFawryWireCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FAWRY_WIRE_C_AMT");
+
+            //    entity.Property(e => e.MinFawryWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FAWRY_WIRE_D_AMT");
+
+            //    entity.Property(e => e.MinFeeDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FEE_D_AMT");
+
+            //    entity.Property(e => e.MinFibWalletAccLoadCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FIB_WALLET_ACC_LOAD_C_AMT");
+
+            //    entity.Property(e => e.MinFibWalletCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_FIB_WALLET_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.MinIntTransCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.MinIntTransDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.MinMiscCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_MISC_C_AMT");
+
+            //    entity.Property(e => e.MinRefundCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_REFUND_C_AMT");
+
+            //    entity.Property(e => e.MinTotAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_TOT_AMT");
+
+            //    entity.Property(e => e.MinTotCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_TOT_C_AMT");
+
+            //    entity.Property(e => e.MinTotDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("MIN_TOT_D_AMT");
+
+            //    entity.Property(e => e.MinWireCAmt)
+            //        .HasColumnType("NUMBER(38,4)")
+            //        .HasColumnName("MIN_WIRE_C_AMT");
+
+            //    entity.Property(e => e.MinWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MIN_WIRE_D_AMT");
+
+            //    entity.Property(e => e.MonthKey)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("MONTH_KEY");
+
+            //    entity.Property(e => e.OccupationCode)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("OCCUPATION_CODE");
+
+            //    entity.Property(e => e.OccupationDesc)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("OCCUPATION_DESC");
+
+            //    entity.Property(e => e.PartyDateOfBirth)
+            //        .HasColumnType("DATE")
+            //        .HasColumnName("PARTY_DATE_OF_BIRTH");
+
+            //    entity.Property(e => e.PartyFirstName)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("PARTY_FIRST_NAME");
+
+            //    entity.Property(e => e.PartyNumber)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("PARTY_NUMBER");
+
+            //    entity.Property(e => e.PartyTypeDesc)
+            //        .HasMaxLength(26)
+            //        .IsUnicode(false)
+            //        .HasColumnName("PARTY_TYPE_DESC");
+
+            //    entity.Property(e => e.PowerValue)
+            //        .HasColumnType("NUMBER(38,9)")
+            //        .HasColumnName("POWER_VALUE");
+
+            //    entity.Property(e => e.RiskClassification)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("RISK_CLASSIFICATION");
+
+            //    entity.Property(e => e.SegmentSorted)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("SEGMENT_SORTED");
+
+            //    entity.Property(e => e.SumValue)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("SUM_VALUE");
+
+            //    entity.Property(e => e.TotAmount)
+            //        .HasColumnType("NUMBER(38,11)")
+            //        .HasColumnName("TOT_AMOUNT");
+
+            //    entity.Property(e => e.TotAtmCashInCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_ATM_CASH_IN_C_AMT");
+
+            //    entity.Property(e => e.TotAtmCashInCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_ATM_CASH_IN_C_CNT");
+
+            //    entity.Property(e => e.TotAtmCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_ATM_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.TotAtmCashOutDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_ATM_CASH_OUT_D_CNT");
+
+            //    entity.Property(e => e.TotCashCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_CASH_C_AMT");
+
+            //    entity.Property(e => e.TotCashCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_CASH_C_CNT");
+
+            //    entity.Property(e => e.TotCashDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_CASH_D_AMT");
+
+            //    entity.Property(e => e.TotCashDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_CASH_D_CNT");
+
+            //    entity.Property(e => e.TotCheckDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_CHECK_D_AMT");
+
+            //    entity.Property(e => e.TotCheckDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_CHECK_D_CNT");
+
+            //    entity.Property(e => e.TotCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_CNT");
+
+            //    entity.Property(e => e.TotCreditAmount)
+            //        .HasColumnType("NUMBER(38,4)")
+            //        .HasColumnName("TOT_CREDIT_AMOUNT");
+
+            //    entity.Property(e => e.TotCreditCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_CREDIT_CNT");
+
+            //    entity.Property(e => e.TotDebitAmount)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_DEBIT_AMOUNT");
+
+            //    entity.Property(e => e.TotDebitCardDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_DEBIT_CARD_D_AMT");
+
+            //    entity.Property(e => e.TotDebitCardDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_DEBIT_CARD_D_CNT");
+
+            //    entity.Property(e => e.TotDebitCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_DEBIT_CNT");
+
+            //    entity.Property(e => e.TotECommWithdrawalDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_E_COMM_WITHDRAWAL_D_AMT");
+
+            //    entity.Property(e => e.TotECommWithdrawalDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_E_COMM_WITHDRAWAL_D_CNT");
+
+            //    entity.Property(e => e.TotFawryIntTransCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.TotFawryIntTransCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_INT_TRANS_C_CNT");
+
+            //    entity.Property(e => e.TotFawryIntTransDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.TotFawryIntTransDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_INT_TRANS_D_CNT");
+
+            //    entity.Property(e => e.TotFawryOtherTrnsactsDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_FAWRY_OTHER_TRNSACTS_D_AMT");
+
+            //    entity.Property(e => e.TotFawryOtherTrnsactsDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_OTHER_TRNSACTS_D_CNT");
+
+            //    entity.Property(e => e.TotFawryWireCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_WIRE_C_AMT");
+
+            //    entity.Property(e => e.TotFawryWireCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_WIRE_C_CNT");
+
+            //    entity.Property(e => e.TotFawryWireDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_WIRE_D_AMT");
+
+            //    entity.Property(e => e.TotFawryWireDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FAWRY_WIRE_D_CNT");
+
+            //    entity.Property(e => e.TotFeeDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_FEE_D_AMT");
+
+            //    entity.Property(e => e.TotFeeDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FEE_D_CNT");
+
+            //    entity.Property(e => e.TotFibWalletAccLoadCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FIB_WALLET_ACC_LOAD_C_AMT");
+
+            //    entity.Property(e => e.TotFibWalletAccLoadCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FIB_WALLET_ACC_LOAD_C_CNT");
+
+            //    entity.Property(e => e.TotFibWalletCashOutDAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FIB_WALLET_CASH_OUT_D_AMT");
+
+            //    entity.Property(e => e.TotFibWalletCashOutDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_FIB_WALLET_CASH_OUT_D_CNT");
+
+            //    entity.Property(e => e.TotIntTransCAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_INT_TRANS_C_AMT");
+
+            //    entity.Property(e => e.TotIntTransCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_INT_TRANS_C_CNT");
+
+            //    entity.Property(e => e.TotIntTransDAmt)
+            //        .HasColumnType("NUMBER(38,2)")
+            //        .HasColumnName("TOT_INT_TRANS_D_AMT");
+
+            //    entity.Property(e => e.TotIntTransDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_INT_TRANS_D_CNT");
+
+            //    entity.Property(e => e.TotMiscCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_MISC_C_AMT");
+
+            //    entity.Property(e => e.TotMiscCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_MISC_C_CNT");
+
+            //    entity.Property(e => e.TotRefundCAmt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_REFUND_C_AMT");
+
+            //    entity.Property(e => e.TotRefundCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_REFUND_C_CNT");
+
+            //    entity.Property(e => e.TotWireCAmt)
+            //        .HasColumnType("NUMBER(38,4)")
+            //        .HasColumnName("TOT_WIRE_C_AMT");
+
+            //    entity.Property(e => e.TotWireCCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_WIRE_C_CNT");
+
+            //    entity.Property(e => e.TotWireDAmt)
+            //        .HasColumnType("NUMBER(38,10)")
+            //        .HasColumnName("TOT_WIRE_D_AMT");
+
+            //    entity.Property(e => e.TotWireDCnt)
+            //        .HasColumnType("NUMBER(38)")
+            //        .HasColumnName("TOT_WIRE_D_CNT");
+            //});
+
+            modelBuilder.Entity<MebSegmentsV3Bk>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.ToTable("MEB_SEGMENTS_V3_BK");
+
+            entity.Property(e => e.AlertsCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("ALERTS_CNT");
+
+            entity.Property(e => e.AvgCashCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_CASH_C_AMT");
+
+            entity.Property(e => e.AvgCashDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_CASH_D_AMT");
+
+            entity.Property(e => e.AvgCheckDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_CHECK_D_AMT");
+
+            entity.Property(e => e.AvgDebitCardDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_DEBIT_CARD_D_AMT");
+
+            entity.Property(e => e.AvgFeeDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_FEE_D_AMT");
+
+            entity.Property(e => e.AvgInternalTransferCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_INTERNAL_TRANSFER_C_AMT");
+
+            entity.Property(e => e.AvgInternalTransferDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_INTERNAL_TRANSFER_D_AMT");
+
+            entity.Property(e => e.AvgMiscCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_MISC_C_AMT");
+
+            entity.Property(e => e.AvgTotAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("AVG_TOT_AMT");
+
+            entity.Property(e => e.AvgTotCAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("AVG_TOT_C_AMT");
+
+            entity.Property(e => e.AvgTotDAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("AVG_TOT_D_AMT");
+
+            entity.Property(e => e.AvgWireCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_WIRE_C_AMT");
+
+            entity.Property(e => e.AvgWireDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("AVG_WIRE_D_AMT");
+
+            entity.Property(e => e.CreationDate)
+                .HasColumnType("DATE")
+                .HasColumnName("CREATION_DATE");
+
+            entity.Property(e => e.CustomerCode)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("CUSTOMER_CODE");
+
+            entity.Property(e => e.CustomerName)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("CUSTOMER_NAME");
+
+            entity.Property(e => e.CustomerSinceDate)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("CUSTOMER_SINCE_DATE");
+
+            entity.Property(e => e.GoverOrgInd)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("GOVER_ORG_IND");
+
+            entity.Property(e => e.IndustryCode)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("INDUSTRY_CODE");
+
+            entity.Property(e => e.IndustryDesc)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("INDUSTRY_DESC");
+
+            entity.Property(e => e.Labels)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("LABELS");
+
+
+
+            entity.Property(e => e.MaxCashCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_CASH_C_AMT");
+
+            entity.Property(e => e.MaxCashDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_CASH_D_AMT");
+
+            entity.Property(e => e.MaxCheckDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_CHECK_D_AMT");
+
+            entity.Property(e => e.MaxDebitCardDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_DEBIT_CARD_D_AMT");
+
+            entity.Property(e => e.MaxFeeDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_FEE_D_AMT");
+
+            entity.Property(e => e.MaxInternalTransferCAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MAX_INTERNAL_TRANSFER_C_AMT");
+
+            entity.Property(e => e.MaxInternalTransferDAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MAX_INTERNAL_TRANSFER_D_AMT");
+
+            entity.Property(e => e.MaxMiscCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_MISC_C_AMT");
+
+            entity.Property(e => e.MaxMls)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_MLS");
+
+            entity.Property(e => e.MaxTotAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MAX_TOT_AMT");
+
+            entity.Property(e => e.MaxTotCAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MAX_TOT_C_AMT");
+
+            entity.Property(e => e.MaxTotDAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MAX_TOT_D_AMT");
+
+            entity.Property(e => e.MaxWireCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_WIRE_C_AMT");
+
+            entity.Property(e => e.MaxWireDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MAX_WIRE_D_AMT");
+
+            entity.Property(e => e.MinCashCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_CASH_C_AMT");
+
+            entity.Property(e => e.MinCashDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_CASH_D_AMT");
+
+            entity.Property(e => e.MinCheckDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_CHECK_D_AMT");
+
+            entity.Property(e => e.MinDebitCardDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_DEBIT_CARD_D_AMT");
+
+            entity.Property(e => e.MinFeeDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_FEE_D_AMT");
+
+            entity.Property(e => e.MinInternalTransferCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_INTERNAL_TRANSFER_C_AMT");
+
+            entity.Property(e => e.MinInternalTransferDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_INTERNAL_TRANSFER_D_AMT");
+
+            entity.Property(e => e.MinMiscCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_MISC_C_AMT");
+
+            entity.Property(e => e.MinTotAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MIN_TOT_AMT");
+
+            entity.Property(e => e.MinTotCAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MIN_TOT_C_AMT");
+
+            entity.Property(e => e.MinTotDAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("MIN_TOT_D_AMT");
+
+            entity.Property(e => e.MinWireCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_WIRE_C_AMT");
+
+            entity.Property(e => e.MinWireDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MIN_WIRE_D_AMT");
+
+            entity.Property(e => e.MonthKey)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("MONTH_KEY");
+
+            entity.Property(e => e.NonProfitOrgInd)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("NON_PROFIT_ORG_IND");
+
+            entity.Property(e => e.OccupationDesc)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("OCCUPATION_DESC");
+
+            entity.Property(e => e.PartyDateOfBirth)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("PARTY_DATE_OF_BIRTH");
+
+            entity.Property(e => e.PartyFirstName)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("PARTY_FIRST_NAME");
+
+            entity.Property(e => e.PartyNumber)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("PARTY_NUMBER");
+
+            entity.Property(e => e.PartyTypeDesc)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("PARTY_TYPE_DESC");
+
+            entity.Property(e => e.PoliticallyExposedPersonInd)
+                .HasMaxLength(26)
+                .IsUnicode(false)
+                .HasColumnName("POLITICALLY_EXPOSED_PERSON_IND");
+
+            entity.Property(e => e.RiskClassification)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("RISK_CLASSIFICATION");
+
+            entity.Property(e => e.SegmentSorted)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("SEGMENT_SORTED");
+
+            entity.Property(e => e.Target)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TARGET");
+
+            entity.Property(e => e.TargetDescription)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TARGET_DESCRIPTION");
+
+            entity.Property(e => e.TotAmount)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("TOT_AMOUNT");
+
+            entity.Property(e => e.TotCashCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CASH_C_AMT");
+
+            entity.Property(e => e.TotCashCCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CASH_C_CNT");
+
+            entity.Property(e => e.TotCashDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CASH_D_AMT");
+
+            entity.Property(e => e.TotCashDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CASH_D_CNT");
+
+            entity.Property(e => e.TotCheckDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CHECK_D_AMT");
+
+            entity.Property(e => e.TotCheckDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CHECK_D_CNT");
+
+            entity.Property(e => e.TotCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CNT");
+
+            entity.Property(e => e.TotCreditAmount)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("TOT_CREDIT_AMOUNT");
+
+            entity.Property(e => e.TotCreditCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_CREDIT_CNT");
+
+            entity.Property(e => e.TotDebitAmount)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("TOT_DEBIT_AMOUNT");
+
+            entity.Property(e => e.TotDebitCardDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_DEBIT_CARD_D_AMT");
+
+            entity.Property(e => e.TotDebitCardDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_DEBIT_CARD_D_CNT");
+
+            entity.Property(e => e.TotDebitCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_DEBIT_CNT");
+
+            entity.Property(e => e.TotFeeDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_FEE_D_AMT");
+
+            entity.Property(e => e.TotFeeDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_FEE_D_CNT");
+
+            entity.Property(e => e.TotInternalTransferCAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("TOT_INTERNAL_TRANSFER_C_AMT");
+
+            entity.Property(e => e.TotInternalTransferCCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_INTERNAL_TRANSFER_C_CNT");
+
+            entity.Property(e => e.TotInternalTransferDAmt)
+                .HasColumnType("NUMBER(38,2)")
+                .HasColumnName("TOT_INTERNAL_TRANSFER_D_AMT");
+
+            entity.Property(e => e.TotInternalTransferDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_INTERNAL_TRANSFER_D_CNT");
+
+            entity.Property(e => e.TotMiscCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_MISC_C_AMT");
+
+            entity.Property(e => e.TotMiscCCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_MISC_C_CNT");
+
+            entity.Property(e => e.TotWireCAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_WIRE_C_AMT");
+
+            entity.Property(e => e.TotWireCCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_WIRE_C_CNT");
+
+            entity.Property(e => e.TotWireDAmt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_WIRE_D_AMT");
+
+            entity.Property(e => e.TotWireDCnt)
+                .HasColumnType("NUMBER(38)")
+                .HasColumnName("TOT_WIRE_D_CNT");
+        });
+
         }
     }
 }

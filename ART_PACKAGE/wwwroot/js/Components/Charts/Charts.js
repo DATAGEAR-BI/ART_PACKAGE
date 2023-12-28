@@ -134,7 +134,7 @@ class BaseCatValChart extends HTMLElement {
                 ...(body && { body: JSON.stringify(body) })
             })).json();
             console.log(this.chartValue, this.chartCategory, data);
-            
+
             this.data = data;
             this.chart.data = this.data;
             this.chart.validateData();
@@ -165,14 +165,19 @@ class BaseCatValChart extends HTMLElement {
         this.chartDiv.hidden = !this.chartDiv.hidden;
 
     }
+
+    makeTitle() {
+        var title = this.chart.titles.create();
+        title.text = this.chartTitle;
+        title.fontSize = 25;
+        title.marginBottom = 30;
+    }
 }
-
-
 
 class PieChart extends BaseCatValChart {
 
     connectedCallback() {
-       
+
         super.connectedCallback();
         this.chartDiv.id = this.id + "-PieChart";
         this.chart = am4core.create(this.id + "-PieChart", am4charts.PieChart);
@@ -207,35 +212,20 @@ class PieChart extends BaseCatValChart {
 
 class BarChart extends BaseCatValChart {
 
-
+    isHorizontal = false;
 
     connectedCallback() {
 
         super.connectedCallback();
         this.chartDiv.id = this.id + "-BarChart";
-        this.chart = am4core.create(this.id + "-BarChart", am4charts.XYChart);
 
-        this.chart.data = this.data;
+        if (!Object.keys(this.dataset).includes("horizontal"))
+            this.makeBar();
+        else
+            this.makeHBar();
         this.chart.exporting.menu = new am4core.ExportMenu();
         this.chart.exporting.menu.items = exportMenu;
-        var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
 
-        categoryAxis.renderer.labels.template.fontSize = 20;
-        categoryAxis.dataFields.category = this.chartCategory;
-
-
-        categoryAxis.renderer.labels.template.dy = -5;
-        categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
-            if (target.dataItem && target.dataItem.index & 2 == 2) {
-                return dy + 25;
-            }
-            return dy;
-        });
-        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.renderer.labels.template.fontSize = 20;
-        var series = this.chart.series.push(new am4charts.ColumnSeries());
-
-        series.columns.template.fill = am4core.color("#104547");
 
         //if (columnsColorFunc) {
         //    series.columns.template.adapter.add("fill", (fill, target) => columnsColorFunc(fill, target)
@@ -246,35 +236,17 @@ class BarChart extends BaseCatValChart {
         //        return this.chart.colors.getIndex(target.dataItem.index);
         //    });
         //}
-        series.columns.template.adapter.add("fill", (fill, target) => {
-            return this.chart.colors.getIndex(target.dataItem.index);
-        });
-        series.dataFields.valueY = this.chartValue;
-        series.dataFields.categoryX = this.chartCategory;
-        this.chart.maskBullets = false;
-        this.chart.paddingTop = 25;
-        var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-        labelBullet.label.text = "{valueY}";
-        labelBullet.adapter.add("y", function (y) {
-            return -15;
-        });
-        this.chart.cursor = new am4charts.XYCursor();
-        this.chart.cursor.behavior = "zoomX";
-        var scrollbar = new am4charts.XYChartScrollbar();
-
-        this.chart.scrollbarX = scrollbar;
 
 
-        var title = this.chart.titles.create();
-        title.text = this.chartTitle;
-        title.fontSize = 25;
-        title.marginBottom = 30;
+
+
+
+
 
 
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
-
 
 
         //var pieSeries = this.chart.series.push(new am4charts.PieSeries());
@@ -299,12 +271,507 @@ class BarChart extends BaseCatValChart {
         //    this.toggleLoading();
         //}, 3000);
     }
+    makeRotateButton() {
+        let buttonContainer = this.chart.chartContainer.createChild(am4core.Container);
+        let button = buttonContainer.createChild(am4core.Button);
+        button.label.text = "Rotate Chart";
+        button.align = "left";
+        button.marginBottom = 15;
+        button.events.on("hit", () => {
+
+            this.toggleLoading();
+            if (this.isHorizontal) {
+                this.isHorizontal = false;
+                this.makeBar()
+            } else {
+                this.isHorizontal = true;
+                this.makeHBar();
+            }
+            setTimeout(() => {
+                this.toggleLoading();
+            }, 3000);
+        });
+    }
+    makeBar() {
+
+        this.chart = am4core.create(this.chartDiv, am4charts.XYChart);
+        this.chart.data = this.data;
+        var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
+
+        categoryAxis.renderer.labels.template.fontSize = 20;
+        categoryAxis.dataFields.category = this.chartCategory;
+
+
+        categoryAxis.renderer.labels.template.dy = -5;
+        categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
+            if (target.dataItem && target.dataItem.index & 2 == 2) {
+                return dy + 25;
+            }
+            return dy;
+        });
+        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+        var series = this.chart.series.push(new am4charts.ColumnSeries());
+        series.columns.template.fill = am4core.color("#104547");
+        series.dataFields.valueY = this.chartValue;
+        series.dataFields.categoryX = this.chartCategory;
+        series.columns.template.adapter.add("fill", (fill, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
+        this.chart.maskBullets = false;
+        this.chart.paddingTop = 25;
+        var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+        labelBullet.label.text = "{valueY}";
+        labelBullet.adapter.add("y", function (y) {
+            return -15;
+        });
+        this.chart.cursor = new am4charts.XYCursor();
+        this.chart.cursor.behavior = "zoomX";
+        var scrollbar = new am4charts.XYChartScrollbar();
+
+        this.chart.scrollbarX = scrollbar;
+
+        this.makeRotateButton();
+        this.makeTitle();
+    }
+    makeHBar() {
+        this.chart = am4core.create(this.chartDiv, am4charts.XYChart);
+        this.chart.data = this.data;
+        var categoryAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20;
+        categoryAxis.dataFields.category = this.chartCategory;
+        categoryAxis.renderer.grid.template.location = 0;
+
+        var valueAxis = this.chart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+        var series = this.chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueX = this.chartValue;
+        series.dataFields.categoryY = this.chartCategory;
+        series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/]";
+        series.sequencedInterpolation = true;
+        series.defaultState.transitionDuration = 1000;
+        series.sequencedInterpolationDelay = 100;
+        series.columns.template.strokeOpacity = 0;
+        series.tooltip.fontSize = 17;
+
+        // Set cell size in pixels
+        //var cellSize = 30;
+        //chart.events.on("datavalidated", function (ev) {
+        //    // Get objects of interest
+        //    var chart = ev.target;
+        //    var categoryAxis = chart.yAxes.getIndex(0);
+        //    // Calculate how we need to adjust chart height
+        //    var adjustHeight = chart.data.length * cellSize - categoryAxis.pixelHeight;
+        //    // get current chart height
+        //    var targetHeight = chart.pixelHeight + adjustHeight;
+        //    // Set it on chart's container
+        //    chart.svgContainer.htmlElement.style.height = targetHeight + "px";
+        //});
+        this.chart.cursor = new am4charts.XYCursor();
+        this.chart.cursor.behavior = "zoomY";
+
+        //set values on the bar without hover
+        var labelBullet = series.bullets.push(new am4charts.LabelBullet())
+        labelBullet.label.horizontalCenter = "right";
+        labelBullet.label.dx = -5;
+        labelBullet.label.text = "{valueX}";
+        var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{value}";
+        valueLabel.label.fontSize = 20;
+        valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.dx = 10;
+        valueLabel.locationX = 1;
+        var title = this.chart.titles.create();
+        title.text = this.title;
+        title.fontSize = 25;
+        title.marginBottom = 30;
+        //// Add scrollbar
+        var scrollbar = new am4charts.XYChartScrollbar();
+        this.chart.scrollbarY = scrollbar;
+        this.chart.events.on("ready", () => {
+            categoryAxis.zoomToIndexes(this.data.length - 5, this.data.length);
+        });
+        this.makeRotateButton();
+        this.makeTitle();
+    }
+}
+
+class DragDropChart extends BaseCatValChart {
+    connectedCallback() {
+
+        super.connectedCallback();
+
+        var dumm = {
+            disabled: true,
+            color: am4core.color("#dadada"),
+            opacity: 0.3,
+            strokeDasharray: "4,4",
+        };
+
+        dumm[this.chartCategory] = "Dummy";
+        dumm[this.chartValue] = 1000;
+
+        this.data = [dumm, ...this.data];
+
+        // cointainer to hold both charts
+        var container = am4core.create(this.chartDiv, am4core.Container);
+        container.width = am4core.percent(100);
+        container.height = am4core.percent(100);
+        container.layout = "horizontal";
+
+
+
+        var chart1 = container.createChild(am4charts.PieChart);
+        chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+        chart1.data = this.data;
+        chart1.radius = am4core.percent(70);
+        chart1.innerRadius = am4core.percent(40);
+        chart1.zIndex = 1;
+
+        var series1 = chart1.series.push(new am4charts.PieSeries());
+        series1.dataFields.value = this.chartCategory;
+        series1.dataFields.category = this.chartValue;
+        series1.colors.step = 2;
+
+        var sliceTemplate1 = series1.slices.template;
+        sliceTemplate1.cornerRadius = 5;
+        sliceTemplate1.draggable = true;
+        sliceTemplate1.inert = true;
+        sliceTemplate1.propertyFields.fill = "color";
+        sliceTemplate1.propertyFields.fillOpacity = "opacity";
+        sliceTemplate1.propertyFields.stroke = "color";
+        sliceTemplate1.propertyFields.strokeDasharray = "strokeDasharray";
+        sliceTemplate1.strokeWidth = 1;
+        sliceTemplate1.strokeOpacity = 1;
+
+        var zIndex = 5;
+
+        sliceTemplate1.events.on("down", function (event) {
+            event.target.toFront();
+            // also put chart to front
+            var series = event.target.dataItem.component;
+            series.chart.zIndex = zIndex++;
+        });
+        series1.labels.template.disabled = true;
+        series1.ticks.template.disabled = true;
+        //series1.labels.template.propertyFields.disabled = "disabled";
+        //series1.ticks.template.propertyFields.disabled = "disabled";
+
+        sliceTemplate1.states.getKey("active").properties.shiftRadius = 0;
+
+        sliceTemplate1.events.on("dragstop", function (event) {
+            handleDragStop(event);
+        });
+
+        // separator line and text
+        var separatorLine = container.createChild(am4core.Line);
+        separatorLine.x1 = 0;
+        separatorLine.y2 = 300;
+        separatorLine.strokeWidth = 3;
+        separatorLine.stroke = am4core.color("#dadada");
+        separatorLine.valign = "middle";
+        separatorLine.strokeDasharray = "5,5";
+
+        var dragText = container.createChild(am4core.Label);
+        dragText.text = "Drag slices over the line";
+        dragText.rotation = 90;
+        dragText.valign = "middle";
+        dragText.align = "center";
+        dragText.paddingBottom = 5;
+
+        var chartTitle = container.createChild(am4core.Label);
+        chartTitle.text = this.title;
+        chartTitle.valign = "top";
+        chartTitle.align = "center";
+        chartTitle.fontSize = 25;
+        chartTitle.marginBottom = 30;
+
+        // second chart
+        var chart2 = container.createChild(am4charts.PieChart);
+        chart2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+        chart2.radius = am4core.percent(70);
+        chart2.data = this.data;
+        chart2.innerRadius = am4core.percent(40);
+        chart2.zIndex = 1;
+
+        var series2 = chart2.series.push(new am4charts.PieSeries());
+        series2.dataFields.value = this.chartValue;
+        series2.dataFields.category = this.chartCategory;
+        series2.colors.step = 2;
+
+        var sliceTemplate2 = series2.slices.template;
+        sliceTemplate2.copyFrom(sliceTemplate1);
+        series2.labels.template.disabled = true;
+        series2.ticks.template.disabled = true;
+        //series2.labels.template.propertyFields.disabled = "disabled";
+        //series2.ticks.template.propertyFields.disabled = "disabled";
+        container.events.on("maxsizechanged", function () {
+            chart1.zIndex = 0;
+            separatorLine.zIndex = 1;
+            dragText.zIndex = 2;
+            chart2.zIndex = 3;
+        });
+        function handleDragStop(event) {
+            var targetSlice = event.target;
+            var dataItem1;
+            var dataItem2;
+            var slice1;
+            var slice2;
+
+            if (series1.slices.indexOf(targetSlice) != -1) {
+                slice1 = targetSlice;
+                slice2 = series2.dataItems.getIndex(targetSlice.dataItem.index).slice;
+            } else if (series2.slices.indexOf(targetSlice) != -1) {
+                slice1 = series1.dataItems.getIndex(targetSlice.dataItem.index).slice;
+                slice2 = targetSlice;
+            }
+
+            dataItem1 = slice1.dataItem;
+            dataItem2 = slice2.dataItem;
+
+            var series1Center = am4core.utils.spritePointToSvg(
+                { x: 0, y: 0 },
+                series1.slicesContainer
+            );
+            var series2Center = am4core.utils.spritePointToSvg(
+                { x: 0, y: 0 },
+                series2.slicesContainer
+            );
+
+            var series1CenterConverted = am4core.utils.svgPointToSprite(
+                series1Center,
+                series2.slicesContainer
+            );
+            var series2CenterConverted = am4core.utils.svgPointToSprite(
+                series2Center,
+                series1.slicesContainer
+            );
+
+            // tooltipY and tooltipY are in the middle of the slice, so we use them to avoid extra calculations
+            var targetSlicePoint = am4core.utils.spritePointToSvg(
+                { x: targetSlice.tooltipX, y: targetSlice.tooltipY },
+                targetSlice
+            );
+
+            if (targetSlice == slice1) {
+                if (targetSlicePoint.x > container.pixelWidth / 2) {
+                    var value = dataItem1.value;
+
+                    dataItem1.hide();
+
+                    var animation = slice1.animate(
+                        [
+                            { property: "x", to: series2CenterConverted.x },
+                            { property: "y", to: series2CenterConverted.y },
+                        ],
+                        400
+                    );
+                    animation.events.on("animationprogress", function (event) {
+                        slice1.hideTooltip();
+                    });
+
+                    slice2.x = 0;
+                    slice2.y = 0;
+
+                    dataItem2.show();
+                } else {
+                    slice1.animate(
+                        [
+                            { property: "x", to: 0 },
+                            { property: "y", to: 0 },
+                        ],
+                        400
+                    );
+                }
+            }
+            if (targetSlice == slice2) {
+                if (targetSlicePoint.x < container.pixelWidth / 2) {
+                    var value = dataItem2.value;
+
+                    dataItem2.hide();
+
+                    var animation = slice2.animate(
+                        [
+                            { property: "x", to: series1CenterConverted.x },
+                            { property: "y", to: series1CenterConverted.y },
+                        ],
+                        400
+                    );
+                    animation.events.on("animationprogress", function (event) {
+                        slice2.hideTooltip();
+                    });
+
+                    slice1.x = 0;
+                    slice1.y = 0;
+                    dataItem1.show();
+                } else {
+                    slice2.animate(
+                        [
+                            { property: "x", to: 0 },
+                            { property: "y", to: 0 },
+                        ],
+                        400
+                    );
+                }
+            }
+
+            toggleDummySlice(series1);
+            toggleDummySlice(series2);
+
+            series1.hideTooltip();
+            series2.hideTooltip();
+        }
+
+        function toggleDummySlice(series) {
+            var show = true;
+            for (var i = 1; i < series.dataItems.length; i++) {
+                var dataItem = series.dataItems.getIndex(i);
+                if (dataItem.slice.visible && !dataItem.slice.isHiding) {
+                    show = false;
+                }
+            }
+
+            var dummySlice = series.dataItems.getIndex(0);
+            if (show) {
+                dummySlice.show();
+            } else {
+                dummySlice.hide();
+            }
+        }
+
+        series2.events.on("datavalidated", function () {
+            var dummyDataItem = series2.dataItems.getIndex(0);
+            dummyDataItem.show(0);
+            dummyDataItem.slice.draggable = false;
+            dummyDataItem.slice.tooltipText = undefined;
+
+            for (var i = 1; i < series2.dataItems.length; i++) {
+                series2.dataItems.getIndex(i).hide(0);
+            }
+        });
+
+        series1.events.on("datavalidated", function () {
+            var dummyDataItem = series1.dataItems.getIndex(0);
+            dummyDataItem.hide(0);
+            dummyDataItem.slice.draggable = false;
+            dummyDataItem.slice.tooltipText = undefined;
+        });
+
+    }
+}
+
+class CurvedColumnChart extends BaseCatValChart {
+    connectedCallback() {
+
+        super.connectedCallback();
+
+
+        this.chart = am4core.create(this.chartDiv, am4charts.XYChart3D);
+        this.chart.data = this.data;
+        this.chart.exporting.menu = new am4core.ExportMenu();
+        this.chart.exporting.menu.items = exportMenu;
+
+        var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
+
+        categoryAxis.renderer.labels.template.fontSize = 20;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.dataFields.category = this.chartCategory;
+        categoryAxis.renderer.minGridDistance = 40;
+
+        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20
+        var series = this.chart.series.push(new am4charts.CurvedColumnSeries());
+        series.dataFields.categoryX = this.chartCategory;
+        series.dataFields.valueY = this.chartValue;
+        series.tooltipText = "{valueY.value}";
+        series.columns.template.strokeOpacity = 0;
+
+        series.columns.template.fillOpacity = 0.75;
+
+        var hoverState = series.columns.template.states.create("hover");
+        hoverState.properties.fillOpacity = 1;
+        hoverState.properties.tension = 0.5;
+
+        this.chart.cursor = new am4charts.XYCursor();
+        this.chart.cursor.behavior = "panX";
+
+        // Add distinctive colors for each column using adapter
+        series.columns.template.adapter.add("fill", (fill, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
+
+        this.chart.scrollbarX = new am4core.Scrollbar();
+
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+
+        this.makeTitle();
+        //chart.exporting.menu = new am4core.ExportMenu();
+    }
 
 }
+
+class CylnderChart extends BaseCatValChart {
+    connectedCallback() {
+
+        super.connectedCallback();
+
+        this.chart = am4core.create(this.chartDiv, am4charts.XYChart3D);
+        this.chart.data = this.data;
+        this.chart.exporting.menu = new am4core.ExportMenu();
+        this.chart.exporting.menu.items = exportMenu;
+
+        var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.dataFields.category = this.chartCategory;
+        categoryAxis.renderer.minGridDistance = 60;
+        categoryAxis.renderer.grid.template.disabled = true;
+        categoryAxis.renderer.baseGrid.disabled = true;
+        categoryAxis.renderer.labels.template.dy = 20;
+
+        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20
+        valueAxis.renderer.grid.template.disabled = true;
+        valueAxis.renderer.baseGrid.disabled = true;
+        valueAxis.renderer.labels.template.disabled = true;
+        valueAxis.renderer.minWidth = 0;
+
+        var series = this.chart.series.push(new am4charts.ConeSeries());
+        series.dataFields.categoryX = this.chartCategory;
+        series.dataFields.valueY = this.chartValue;
+        series.columns.template.tooltipText = "{valueY.value}";
+        series.columns.template.tooltipY = 0;
+        series.columns.template.strokeOpacity = 1;
+        // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+        series.columns.template.adapter.add("fill", (fill, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
+
+        series.columns.template.adapter.add("stroke", (stroke, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
+
+        chart.cursor = new am4charts.XYCursor();
+        this.makeTitle();
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+        //chart.exporting.menu = new am4core.ExportMenu();
+    }
+}
+
+
+//class
 
 
 customElements.define("m-pie-chart", PieChart);
 customElements.define("m-bar-chart", BarChart);
+customElements.define("m-drag-drop-chart", DragDropChart);
+customElements.define("m-curved-column-chart", CurvedColumnChart);
+customElements.define("m-clynder-chart", CylnderChart);
 
 
 //export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
@@ -456,591 +923,6 @@ customElements.define("m-bar-chart", BarChart);
 //        }
 //    });
 
-
-//}
-//function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
-//    am4charts.
-//        am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-//    var chart = am4core.create(divId, am4charts.XYChart3D);
-//    chart.data = data;
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-//    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-
-//    categoryAxis.renderer.labels.template.fontSize = 20;
-//    categoryAxis.renderer.grid.template.location = 0;
-//    categoryAxis.dataFields.category = chartCategory;
-//    categoryAxis.renderer.minGridDistance = 40;
-
-//    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-//    valueAxis.renderer.labels.template.fontSize = 20
-//    var series = chart.series.push(new am4charts.CurvedColumnSeries());
-//    series.dataFields.categoryX = chartCategory;
-//    series.dataFields.valueY = chartValue;
-//    series.tooltipText = "{valueY.value}";
-//    series.columns.template.strokeOpacity = 0;
-
-//    series.columns.template.fillOpacity = 0.75;
-
-//    var hoverState = series.columns.template.states.create("hover");
-//    hoverState.properties.fillOpacity = 1;
-//    hoverState.properties.tension = 0.5;
-
-//    chart.cursor = new am4charts.XYCursor();
-//    chart.cursor.behavior = "panX";
-
-//    // Add distinctive colors for each column using adapter
-//    series.columns.template.adapter.add("fill", function (fill, target) {
-//        return chart.colors.getIndex(target.dataItem.index);
-//    });
-
-//    chart.scrollbarX = new am4core.Scrollbar();
-
-
-//    //chart.exporting.menu = new am4core.ExportMenu();
-//}
-
-//function callClyChart(data, clytitle, divId, chartValue, chartCategory) {
-//    am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-//    var chart = am4core.create(divId, am4charts.XYChart3D);
-//    chart.data = data;
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-//    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-//    categoryAxis.renderer.labels.template.fontSize = 20;
-//    categoryAxis.renderer.grid.template.location = 0;
-//    categoryAxis.dataFields.category = chartCategory;
-//    categoryAxis.renderer.minGridDistance = 60;
-//    categoryAxis.renderer.grid.template.disabled = true;
-//    categoryAxis.renderer.baseGrid.disabled = true;
-//    categoryAxis.renderer.labels.template.dy = 20;
-
-//    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-//    valueAxis.renderer.labels.template.fontSize = 20
-//    valueAxis.renderer.grid.template.disabled = true;
-//    valueAxis.renderer.baseGrid.disabled = true;
-//    valueAxis.renderer.labels.template.disabled = true;
-//    valueAxis.renderer.minWidth = 0;
-
-//    var series = chart.series.push(new am4charts.ConeSeries());
-//    series.dataFields.categoryX = chartCategory;
-//    series.dataFields.valueY = chartValue;
-//    series.columns.template.tooltipText = "{valueY.value}";
-//    series.columns.template.tooltipY = 0;
-//    series.columns.template.strokeOpacity = 1;
-//    // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
-//    series.columns.template.adapter.add("fill", function (fill, target) {
-//        return chart.colors.getIndex(target.dataItem.index);
-//    });
-
-//    series.columns.template.adapter.add("stroke", function (stroke, target) {
-//        return chart.colors.getIndex(target.dataItem.index);
-//    });
-
-//    chart.cursor = new am4charts.XYCursor();
-
-//    var title = chart.titles.create();
-//    title.text = clytitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-
-//    //chart.exporting.menu = new am4core.ExportMenu();
-//}
-
-//function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
-
-
-
-
-//    /*chart.exporting.menu = new am4core.ExportMenu();*/
-//}
-//function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
-
-//    am4core.useTheme(am4themes_animated);
-
-//    // Create chart instance
-//    var chart = am4core.create(divId, am4charts.XYChart);
-//    am4core.addLicense("ch-custom-attribution");
-
-//    // Add data
-//    chart.data = data;
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-//    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-//    categoryAxis.renderer.labels.template.fontSize = 20;
-//    categoryAxis.dataFields.category = chartCategory;
-//    categoryAxis.renderer.grid.template.location = 0;
-
-//    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-//    valueAxis.renderer.labels.template.fontSize = 20;
-//    var series = chart.series.push(new am4charts.ColumnSeries());
-//    series.dataFields.valueX = chartValue;
-//    series.dataFields.categoryY = chartCategory;
-//    series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/]";
-//    series.sequencedInterpolation = true;
-//    series.defaultState.transitionDuration = 1000;
-//    series.sequencedInterpolationDelay = 100;
-//    series.columns.template.strokeOpacity = 0;
-//    series.tooltip.fontSize = 17;
-
-//    // Set cell size in pixels
-//    //var cellSize = 30;
-//    //chart.events.on("datavalidated", function (ev) {
-//    //    // Get objects of interest
-//    //    var chart = ev.target;
-//    //    var categoryAxis = chart.yAxes.getIndex(0);
-//    //    // Calculate how we need to adjust chart height
-//    //    var adjustHeight = chart.data.length * cellSize - categoryAxis.pixelHeight;
-//    //    // get current chart height
-//    //    var targetHeight = chart.pixelHeight + adjustHeight;
-//    //    // Set it on chart's container
-//    //    chart.svgContainer.htmlElement.style.height = targetHeight + "px";
-//    //});
-//    chart.cursor = new am4charts.XYCursor();
-//    chart.cursor.behavior = "zoomY";
-
-//    //set values on the bar without hover
-//    var labelBullet = series.bullets.push(new am4charts.LabelBullet())
-//    labelBullet.label.horizontalCenter = "right";
-//    labelBullet.label.dx = -5;
-//    labelBullet.label.text = "{valueX}";
-//    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-//    valueLabel.label.text = "{value}";
-//    valueLabel.label.fontSize = 20;
-//    valueLabel.label.horizontalCenter = "left";
-//    valueLabel.label.dx = 10;
-//    valueLabel.locationX = 1;
-//    var title = chart.titles.create();
-//    title.text = hbartitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-//    //// Add scrollbar
-//    var scrollbar = new am4charts.XYChartScrollbar();
-
-//    chart.scrollbarY = scrollbar;
-
-
-//    chart.events.on("ready", function () {
-//        categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
-//    });
-
-//}
-//function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRototate, columnsColorFunc) {
-//    am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-//    var chart = am4core.create(divId, am4charts.XYChart);
-//    chart.data = data;
-
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-
-//    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-
-//    categoryAxis.renderer.labels.template.fontSize = 20;
-//    categoryAxis.dataFields.category = chartCategory;
-
-
-//    categoryAxis.renderer.labels.template.dy = -5;
-//    categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
-//        if (target.dataItem && target.dataItem.index & 2 == 2) {
-//            return dy + 25;
-//        }
-//        return dy;
-//    });
-//    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-//    valueAxis.renderer.labels.template.fontSize = 20;
-//    var series = chart.series.push(new am4charts.ColumnSeries());
-
-//    series.columns.template.fill = am4core.color("#104547");
-
-//    if (columnsColorFunc) {
-//        series.columns.template.adapter.add("fill", (fill, target) => columnsColorFunc(fill, target)
-//        );
-
-//    } else {
-//        series.columns.template.adapter.add("fill", (fill, target) => {
-//            return chart.colors.getIndex(target.dataItem.index);
-//        });
-//    }
-
-//    series.dataFields.valueY = chartValue;
-//    series.dataFields.categoryX = chartCategory;
-//    chart.maskBullets = false;
-//    chart.paddingTop = 25;
-//    var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-//    labelBullet.label.text = "{valueY}";
-//    labelBullet.adapter.add("y", function (y) {
-//        return -15;
-//    });
-//    chart.cursor = new am4charts.XYCursor();
-//    chart.cursor.behavior = "zoomX";
-//    var scrollbar = new am4charts.XYChartScrollbar();
-
-//    chart.scrollbarX = scrollbar;
-
-
-//    var title = chart.titles.create();
-//    title.text = bartitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-
-//    //chart.exporting.menu = new am4core.ExportMenu();
-//}
-
-//function callDragDropChart(data, dragtitle, divId, chartValue, chartCategory) {
-//    /**
-//     * ---------------------------------------
-//     * This demo was created using amCharts 4.
-//     *
-//     * For more information visit:
-//     * https://www.amcharts.com/
-//     *
-//     * Documentation is available at:
-//     * https://www.amcharts.com/docs/v4/
-//     * ---------------------------------------
-//     */
-//    am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-//    var dumm = {
-//        disabled: true,
-//        color: am4core.color("#dadada"),
-//        opacity: 0.3,
-//        strokeDasharray: "4,4",
-//    };
-
-//    dumm[chartCategory] = "Dummy";
-//    dumm[chartValue] = 1000;
-
-//    data = [dumm, ...data];
-
-//    // cointainer to hold both charts
-//    var container = am4core.create(divId, am4core.Container);
-//    container.width = am4core.percent(100);
-//    container.height = am4core.percent(100);
-//    container.layout = "horizontal";
-
-//    container.events.on("maxsizechanged", function () {
-//        chart1.zIndex = 0;
-//        separatorLine.zIndex = 1;
-//        dragText.zIndex = 2;
-//        chart2.zIndex = 3;
-//    });
-
-//    var chart1 = container.createChild(am4charts.PieChart);
-//    chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-//    chart1.data = data;
-//    chart1.radius = am4core.percent(70);
-//    chart1.innerRadius = am4core.percent(40);
-//    chart1.zIndex = 1;
-
-//    var series1 = chart1.series.push(new am4charts.PieSeries());
-//    series1.dataFields.value = chartCategory;
-//    series1.dataFields.category = chartValue;
-//    series1.colors.step = 2;
-
-//    var sliceTemplate1 = series1.slices.template;
-//    sliceTemplate1.cornerRadius = 5;
-//    sliceTemplate1.draggable = true;
-//    sliceTemplate1.inert = true;
-//    sliceTemplate1.propertyFields.fill = "color";
-//    sliceTemplate1.propertyFields.fillOpacity = "opacity";
-//    sliceTemplate1.propertyFields.stroke = "color";
-//    sliceTemplate1.propertyFields.strokeDasharray = "strokeDasharray";
-//    sliceTemplate1.strokeWidth = 1;
-//    sliceTemplate1.strokeOpacity = 1;
-
-//    var zIndex = 5;
-
-//    sliceTemplate1.events.on("down", function (event) {
-//        event.target.toFront();
-//        // also put chart to front
-//        var series = event.target.dataItem.component;
-//        series.chart.zIndex = zIndex++;
-//    });
-//    series1.labels.template.disabled = true;
-//    series1.ticks.template.disabled = true;
-//    //series1.labels.template.propertyFields.disabled = "disabled";
-//    //series1.ticks.template.propertyFields.disabled = "disabled";
-
-//    sliceTemplate1.states.getKey("active").properties.shiftRadius = 0;
-
-//    sliceTemplate1.events.on("dragstop", function (event) {
-//        handleDragStop(event);
-//    });
-
-//    // separator line and text
-//    var separatorLine = container.createChild(am4core.Line);
-//    separatorLine.x1 = 0;
-//    separatorLine.y2 = 300;
-//    separatorLine.strokeWidth = 3;
-//    separatorLine.stroke = am4core.color("#dadada");
-//    separatorLine.valign = "middle";
-//    separatorLine.strokeDasharray = "5,5";
-
-//    var dragText = container.createChild(am4core.Label);
-//    dragText.text = "Drag slices over the line";
-//    dragText.rotation = 90;
-//    dragText.valign = "middle";
-//    dragText.align = "center";
-//    dragText.paddingBottom = 5;
-
-//    var chartTitle = container.createChild(am4core.Label);
-//    chartTitle.text = dragtitle;
-//    chartTitle.valign = "top";
-//    chartTitle.align = "center";
-//    chartTitle.fontSize = 25;
-//    title.marginBottom = 30;
-
-//    // second chart
-//    var chart2 = container.createChild(am4charts.PieChart);
-//    chart2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-
-//    chart2.radius = am4core.percent(70);
-//    chart2.data = data;
-//    chart2.innerRadius = am4core.percent(40);
-//    chart2.zIndex = 1;
-
-//    var series2 = chart2.series.push(new am4charts.PieSeries());
-//    series2.dataFields.value = chartCategory;
-//    series2.dataFields.category = chartValue;
-//    series2.colors.step = 2;
-
-//    var sliceTemplate2 = series2.slices.template;
-//    sliceTemplate2.copyFrom(sliceTemplate1);
-//    series2.labels.template.disabled = true;
-//    series2.ticks.template.disabled = true;
-//    //series2.labels.template.propertyFields.disabled = "disabled";
-//    //series2.ticks.template.propertyFields.disabled = "disabled";
-
-//    function handleDragStop(event) {
-//        var targetSlice = event.target;
-//        var dataItem1;
-//        var dataItem2;
-//        var slice1;
-//        var slice2;
-
-//        if (series1.slices.indexOf(targetSlice) != -1) {
-//            slice1 = targetSlice;
-//            slice2 = series2.dataItems.getIndex(targetSlice.dataItem.index).slice;
-//        } else if (series2.slices.indexOf(targetSlice) != -1) {
-//            slice1 = series1.dataItems.getIndex(targetSlice.dataItem.index).slice;
-//            slice2 = targetSlice;
-//        }
-
-//        dataItem1 = slice1.dataItem;
-//        dataItem2 = slice2.dataItem;
-
-//        var series1Center = am4core.utils.spritePointToSvg(
-//            { x: 0, y: 0 },
-//            series1.slicesContainer
-//        );
-//        var series2Center = am4core.utils.spritePointToSvg(
-//            { x: 0, y: 0 },
-//            series2.slicesContainer
-//        );
-
-//        var series1CenterConverted = am4core.utils.svgPointToSprite(
-//            series1Center,
-//            series2.slicesContainer
-//        );
-//        var series2CenterConverted = am4core.utils.svgPointToSprite(
-//            series2Center,
-//            series1.slicesContainer
-//        );
-
-//        // tooltipY and tooltipY are in the middle of the slice, so we use them to avoid extra calculations
-//        var targetSlicePoint = am4core.utils.spritePointToSvg(
-//            { x: targetSlice.tooltipX, y: targetSlice.tooltipY },
-//            targetSlice
-//        );
-
-//        if (targetSlice == slice1) {
-//            if (targetSlicePoint.x > container.pixelWidth / 2) {
-//                var value = dataItem1.value;
-
-//                dataItem1.hide();
-
-//                var animation = slice1.animate(
-//                    [
-//                        { property: "x", to: series2CenterConverted.x },
-//                        { property: "y", to: series2CenterConverted.y },
-//                    ],
-//                    400
-//                );
-//                animation.events.on("animationprogress", function (event) {
-//                    slice1.hideTooltip();
-//                });
-
-//                slice2.x = 0;
-//                slice2.y = 0;
-
-//                dataItem2.show();
-//            } else {
-//                slice1.animate(
-//                    [
-//                        { property: "x", to: 0 },
-//                        { property: "y", to: 0 },
-//                    ],
-//                    400
-//                );
-//            }
-//        }
-//        if (targetSlice == slice2) {
-//            if (targetSlicePoint.x < container.pixelWidth / 2) {
-//                var value = dataItem2.value;
-
-//                dataItem2.hide();
-
-//                var animation = slice2.animate(
-//                    [
-//                        { property: "x", to: series1CenterConverted.x },
-//                        { property: "y", to: series1CenterConverted.y },
-//                    ],
-//                    400
-//                );
-//                animation.events.on("animationprogress", function (event) {
-//                    slice2.hideTooltip();
-//                });
-
-//                slice1.x = 0;
-//                slice1.y = 0;
-//                dataItem1.show();
-//            } else {
-//                slice2.animate(
-//                    [
-//                        { property: "x", to: 0 },
-//                        { property: "y", to: 0 },
-//                    ],
-//                    400
-//                );
-//            }
-//        }
-
-//        toggleDummySlice(series1);
-//        toggleDummySlice(series2);
-
-//        series1.hideTooltip();
-//        series2.hideTooltip();
-//    }
-
-//    function toggleDummySlice(series) {
-//        var show = true;
-//        for (var i = 1; i < series.dataItems.length; i++) {
-//            var dataItem = series.dataItems.getIndex(i);
-//            if (dataItem.slice.visible && !dataItem.slice.isHiding) {
-//                show = false;
-//            }
-//        }
-
-//        var dummySlice = series.dataItems.getIndex(0);
-//        if (show) {
-//            dummySlice.show();
-//        } else {
-//            dummySlice.hide();
-//        }
-//    }
-
-//    series2.events.on("datavalidated", function () {
-//        var dummyDataItem = series2.dataItems.getIndex(0);
-//        dummyDataItem.show(0);
-//        dummyDataItem.slice.draggable = false;
-//        dummyDataItem.slice.tooltipText = undefined;
-
-//        for (var i = 1; i < series2.dataItems.length; i++) {
-//            series2.dataItems.getIndex(i).hide(0);
-//        }
-//    });
-
-//    series1.events.on("datavalidated", function () {
-//        var dummyDataItem = series1.dataItems.getIndex(0);
-//        dummyDataItem.hide(0);
-//        dummyDataItem.slice.draggable = false;
-//        dummyDataItem.slice.tooltipText = undefined;
-//    });
-//}
-
-//function callLineChart(data, lineTitle, divId, chartValue, chartCategory) {
-//    am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-
-
-
-//    // Create chart instance
-//    var chart = am4core.create(divId, am4charts.XYChart);
-
-//    // Add data
-//    chart.data = data;
-
-//    // Create axes
-//    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-//    dateAxis.renderer.grid.template.location = 0;
-//    dateAxis.renderer.minGridDistance = 40;
-//    dateAxis.baseInterval = {
-//        "timeUnit": "month",
-//        "count": 1
-//    }
-//    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-//    // Create series
-//    function createSeries(field, name) {
-//        var series = chart.series.push(new am4charts.LineSeries());
-//        series.dataFields.valueY = field;
-//        series.dataFields.dateX = name;
-//        series.name = name;
-//        series.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
-//        series.strokeWidth = 2;
-
-//        var bullet = series.bullets.push(new am4charts.CircleBullet());
-//        bullet.circle.stroke = am4core.color("#fff");
-//        bullet.circle.strokeWidth = 2;
-
-//        bullet.tooltip = new am4core.Tooltip();
-//        bullet.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
-//        bullet.showTooltipOn = "always";
-
-//    }
-
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-//    createSeries(chartValue, chartCategory);
-//    chart.legend = new am4charts.Legend();
-//    //chart.cursor = new am4charts.XYCursor();
-
-//    //chart.scrollbarX = new am4core.Scrollbar();
-//    //chart.scrollbarY = new am4core.Scrollbar();
-
-//    var title = chart.titles.create();
-//    title.text = lineTitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-//    // Zoom events
-//    valueAxis.events.on("startchanged", valueAxisZoomed);
-//    valueAxis.events.on("endchanged", valueAxisZoomed);
-
-//    function valueAxisZoomed(ev) {
-//        var start = ev.target.minZoomed;
-//        var end = ev.target.maxZoomed;
-
-//    }
-
-//    dateAxis.events.on("startchanged", dateAxisChanged);
-//    dateAxis.events.on("endchanged", dateAxisChanged);
-//    function dateAxisChanged(ev) {
-//        var start = new Date(ev.target.minZoomed);
-//        var end = new Date(ev.target.maxZoomed);
-//    }
-//    chart.exporting.events.on("exportstarted", function (ev) {
-//        //chart.series.bullets.showTooltipOn = "always";
-//        chart.series.template.bulletsContainer
-//        console.log(chart.series);
-//    });
 
 //}
 

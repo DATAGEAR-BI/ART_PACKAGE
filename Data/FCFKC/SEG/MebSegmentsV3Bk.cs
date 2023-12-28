@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.FCFKC.SEG
+﻿namespace Data.FCFKC.SEG
 {
     public partial class MebSegmentsV3Bk
     {
@@ -91,6 +88,6 @@ namespace Data.FCFKC.SEG
         public double? Target { get; set; }
         public string? TargetDescription { get; set; }
         public string? SegmentSorted { get; set; }
-        public string? CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }
