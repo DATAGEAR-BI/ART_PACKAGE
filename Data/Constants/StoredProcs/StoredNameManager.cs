@@ -58,6 +58,7 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStTiOdcOutStaSumCountry) && dbType == DbTypes.Oracle => ORACLESPName.ART_TI_ODC_OUTSTA_SUMM_COUNTRY_REPORT,
                 //Type t when t == typeof(ArtStTiOdcOutSta) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TI_ODC_OUTSTA_REPORT,
                 Type t when t == typeof(ArtUserPerformancePerActionUser) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION_USER,
+                Type t when t == typeof(ArtUserPerformancePerActionUser) && dbType == DbTypes.Oracle => ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION_USER,
                 // Add more cases for other types if needed
                 _ => throw new ArgumentException("Invalid entity type or database type")
             };

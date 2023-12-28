@@ -25,7 +25,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         {
             _dropDown = dropDown;
             fti = fTI;
-            this.artDgaml_ = artDgaml;
+            artDgaml_ = artDgaml;
         }
 
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
@@ -542,7 +542,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 /*DGAML*/
                 nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
-                   {"AlertStatus".ToLower()                    ,(List<SelectItem>)artDgaml_.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   {"AlertStatus".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
                    {"AlertSubcategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertSubcategory) .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
                    {"AlertCategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertCategory)       .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
                    //{"OwnerUserid".ToLower()                  ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.)                      .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                     },

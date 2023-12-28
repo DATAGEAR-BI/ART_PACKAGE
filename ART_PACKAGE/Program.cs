@@ -100,7 +100,7 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 WebApplication app = builder.Build();
 
-app.ApplyModulesMigrations();
+//app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();
 
