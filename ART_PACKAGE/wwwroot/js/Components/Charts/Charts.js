@@ -172,6 +172,10 @@ class BaseCatValChart extends HTMLElement {
         title.fontSize = 25;
         title.marginBottom = 30;
     }
+    makeExportMenu(){
+        this.chart.exporting.menu = new am4core.ExportMenu();
+        this.chart.exporting.menu.items = exportMenu;
+    }
 }
 
 class PieChart extends BaseCatValChart {
@@ -181,11 +185,7 @@ class PieChart extends BaseCatValChart {
         super.connectedCallback();
         this.chartDiv.id = this.id + "-PieChart";
         this.chart = am4core.create(this.id + "-PieChart", am4charts.PieChart);
-
         this.chart.data = this.data;
-        this.chart.exporting.menu = new am4core.ExportMenu();
-        this.chart.exporting.menu.items = exportMenu;
-
         var pieSeries = this.chart.series.push(new am4charts.PieSeries());
         pieSeries.dataFields.value = this.chartValue;
         pieSeries.dataFields.category = this.chartCategory;
@@ -204,6 +204,7 @@ class PieChart extends BaseCatValChart {
         title.text = this.chartTitle;
         title.fontSize = 25;
         title.marginBottom = 30;
+        this.makeExportMenu();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
@@ -702,12 +703,13 @@ class CurvedColumnChart extends BaseCatValChart {
         });
 
         this.chart.scrollbarX = new am4core.Scrollbar();
-
+        this.makeTitle();
+        this.makeExportMenu();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
 
-        this.makeTitle();
+        
         //chart.exporting.menu = new am4core.ExportMenu();
     }
 
@@ -756,6 +758,7 @@ class CylnderChart extends BaseCatValChart {
 
         chart.cursor = new am4charts.XYCursor();
         this.makeTitle();
+        this.makeExportMenu();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
@@ -763,376 +766,420 @@ class CylnderChart extends BaseCatValChart {
     }
 }
 
+class ClusteredColumnChart extends  BaseCatValChart {
+    connectedCallback() {
+        super.connectedCallback();
+         this.chart = am4core.create(this.chartDiv, am4charts.XYChart)
+        chart.colors.step = 2;
+        var xAxis = this.chart.xAxes.push(new am4charts.CategoryAxis())
+        xAxis.renderer.labels.template.fontSize = 20;
+        xAxis.dataFields.category = 'cat';
+        xAxis.renderer.cellStartLocation = 0.1;
+        xAxis.renderer.cellEndLocation = 0.9;
+        xAxis.renderer.grid.template.location = 0;
+        xAxis.renderer.labels.template.rotation = 90;
+        var yAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+        yAxis.renderer.labels.template.fontSize = 20
+        // Make the labels vertical
+        yAxis.min = 0;
+    function createSeries(value, name) {
+        var series = chart.series.push(new am4charts.ColumnSeries())
+        series.dataFields.valueY = value
+        series.dataFields.categoryX = 'cat'
+        series.name = name
+        series.events.on("hidden", arrangeColumns);
+        series.events.on("shown", arrangeColumns);
+        //var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+        //labelBullet.label.text = "{valueY}";
+        //labelBullet.adapter.add("y", function (y) {
+        //    return -15;
+        //});
+        var bullet = series.bullets.push(new am4charts.LabelBullet())
+        bullet.interactionsEnabled = false
+        bullet.label.text = '{valueY}'
+        bullet.label.fill = am4core.color('#000000')
+        bullet.adapter.add("y", function (y) {
+            return 15;
+        });
+        return series;
+    }
+    chart.data = data;
+    if (data[0]) {
+        Object.keys(data[0]).forEach(item => {
+            if (item != "cat")
+                createSeries(item, item);
+        })
+    }
+    /*createSeries('first', 'The First');
+    createSeries('second', 'The Second');
+    createSeries('third', 'The Third');*/
+    function arrangeColumns() {
+        var series = chart.series.getIndex(0);
+        var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
+        if (series.dataItems.length > 1) {
+            var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+            var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+            var delta = ((x1 - x0) / chart.series.length) * w;
+            if (am4core.isNumber(delta)) {
+                var middle = chart.series.length / 2;
+                var newIndex = 0;
+                chart.series.each(function (series) {
+                    if (!series.isHidden && !series.isHiding) {
+                        series.dummyData = newIndex;
+                        newIndex++;
+                    }
+                    else {
+                        series.dummyData = chart.series.indexOf(series);
+                    }
+                })
+                var visibleCount = newIndex;
+                var newMiddle = visibleCount / 2;
+                chart.series.each(function (series) {
+                    var trueIndex = chart.series.indexOf(series);
+                    var newIndex = series.dummyData;
+                    var dx = (newIndex - trueIndex + middle - newMiddle) * delta
 
+                    series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                    series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                })
+            }
+        }
+    }
+    var title = this.chart.titles.create();
+    title.text = this.chartTitle;
+    title.fontSize = 25;
+    title.marginBottom = 30;
+    this.chart.cursor = new am4charts.XYCursor();
+    this.chart.cursor.behavior = "zoomX";
+    var scrollbar = new am4charts.XYChartScrollbar();
+    chart.scrollbarX = scrollbar;
+    }
+}
+
+class DonutChart extends  BaseCatValChart{
+    connectedCallback() {
+        super.connectedCallback();
+        this.chart = am4core.create(this.chartDiv, am4charts.PieChart);
+        chart.data = this.data;
+
+        var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
+        pieSeries.dataFields.value = this.chartValue;
+        pieSeries.dataFields.category = this.chartCategory; // Disable ticks and labels
+        // Disable ticks and labels
+        pieSeries.labels.template.disabled = true;
+        pieSeries.ticks.template.disabled = true;
+
+        this.chart.innerRadius = am4core.percent(40);
+        this.chart.legend = new am4charts.Legend();
+        this.chart.legend.maxHeight = 600;
+        this.chart.legend.maxWidth = 300;
+        this.chart.legend.scrollable = true;
+        this.chart.legend.position = "bottom"; 
+        this.chart.legend.labels.template.text = "{name} : ({value})";
+        this.makeTitle();
+        this.makeExportMenu();
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+    }
+}
+
+class LineChart extends BaseCatValChart {
+    connectedCallback() {
+         super.connectedCallback();
+        // Create chart instance
+         this.chart = am4core.create(this.chartDiv, am4charts.XYChart);
+
+        // Add data
+        this.chart.data = this.data;
+
+        // Create axes
+        var dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.grid.template.location = 0;
+        dateAxis.renderer.minGridDistance = 40;
+        dateAxis.baseInterval = {
+            "timeUnit": "month",
+            "count": 1
+        }
+        var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+
+        // Create series
+        const createSeries =  (field, name)=> {
+            var series = this.chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = field;
+            series.dataFields.dateX = name;
+            series.name = name;
+            series.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
+            series.strokeWidth = 2;
+
+            var bullet = series.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.stroke = am4core.color("#fff");
+            bullet.circle.strokeWidth = 2;
+
+            bullet.tooltip = new am4core.Tooltip();
+            bullet.tooltipText = "{dateX.formatDate('yyyy-MM')}: [b]{valueY}[/]";
+            bullet.showTooltipOn = "always";
+
+        }
+
+      
+
+        createSeries(this.chartValue, this.chartCategory);
+        this.chart.legend = new am4charts.Legend();
+   
+        // Zoom events
+        valueAxis.events.on("startchanged", valueAxisZoomed);
+        valueAxis.events.on("endchanged", valueAxisZoomed);
+
+        function valueAxisZoomed(ev) {
+            var start = ev.target.minZoomed;
+            var end = ev.target.maxZoomed;
+
+        }
+
+        dateAxis.events.on("startchanged", dateAxisChanged);
+        dateAxis.events.on("endchanged", dateAxisChanged);
+        function dateAxisChanged(ev) {
+            var start = new Date(ev.target.minZoomed);
+            var end = new Date(ev.target.maxZoomed);
+        }
+    
+        this.makeTitle();
+        this.makeExportMenu();
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+    }
+}
 //class
+class PieWithBarChart extends  HTMLElement
+{
+    chartDiv = document.createElement("div");
+    donutChart = undefined;
+    barChart = undefined;
+    chart = undefined;
+    chartTitle = "";
+    barCategory ="";
+    barValue ="";
+    donutCategory ="";
+    donutValue ="";
+    data = [];
+    barDataKey = "";
+    onseriesChanged = () => {};
+    constructor() {
+        super();
+        this.appendChild(this.chartDiv)
+    }
+    connectedCallback(){
 
+        try {
+            this.chartDiv.classList.add("h-100","w-100")
+            this.chartTitle = this.dataset.title;
+            this.donutCategory = this.dataset.donutcategory ?? "";
+            this.donutValue = this.dataset.donutvalue ?? "";
+
+            this.barCategory = this.dataset.barcategory ?? "";
+            this.barValue = this.dataset.barvalue ?? "";
+
+            this.barDataKey = this.dataset.bardatakey ?? "";
+
+
+            this.chart = am4core.create(this.chartDiv, am4core.Container);
+            this.chart.width = am4core.percent(100);
+            this.chart.height = am4core.percent(100);
+            this.chart.layout = "horizontal";
+
+            this.chart.exporting.menu = new am4core.ExportMenu();
+            this.chart.exporting.menu.items = exportMenu;
+
+            /**
+             * Column chart
+             */
+
+            // Create chart instance
+            this.barChart = this.chart.createChild(am4charts.XYChart);
+
+            // Create axes
+            let categoryAxis = this.barChart.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.renderer.labels.template.fontSize = 20
+            categoryAxis.dataFields.category = this.barCategory;
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.inversed = true;
+
+            let valueAxis =   this.barChart .xAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.labels.template.fontSize = 20;
+
+            // Create series
+            let columnSeries =   this.barChart.series.push(new am4charts.ColumnSeries());
+            columnSeries.dataFields.valueX = this.barValue;
+            columnSeries.dataFields.categoryY = this.barCategory;
+            columnSeries.columns.template.strokeWidth = 0;
+            columnSeries.columns.template.tooltipText = "{value}";
+
+
+
+            let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
+            valueLabel.label.text = "{value}";
+            valueLabel.label.fontSize = 20;
+            valueLabel.label.horizontalCenter = "left";
+            valueLabel.label.hideOversized = false;
+            valueLabel.label.truncate = false;
+            valueLabel.label.dx = 10;
+            this.barChart .cursor = new am4charts.XYCursor();
+            this.barChart .cursor.behavior = "zoomX";
+            let scrollbar = new am4charts.XYChartScrollbar();
+            this.barChart.scrollbarX = scrollbar;
+
+
+
+
+
+
+
+            this.donutChart = this.chart.createChild(am4charts.PieChart);
+            this.donutChart.data = this.data;
+            this.donutChart.innerRadius = am4core.percent(50);
+            let title =   this.donutChart.titles.create();
+            title.text = this.chartTitle;
+            title.fontSize = 25;
+            this.donutChart.legend = new am4charts.Legend();
+            this.donutChart.legend.maxHeight = 600;
+            this.donutChart.legend.maxWidth = 300;
+            this.donutChart.legend.scrollable = true;
+            this.donutChart.legend.position = "bottom";
+            this.donutChart.legend.labels.template.text = "{name} : ({value})";
+            // Add and configure Series
+            let pieSeries = this.donutChart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = this.donutValue;
+            pieSeries.dataFields.category = this.donutCategory;
+            pieSeries.labels.template.disabled = true;
+
+
+            this.donutChart.events.on("datavalidated",  (ev) => {
+                if (this.data.length > 0) {
+                    console.log(pieSeries.slices);
+                    pieSeries.slices.getIndex(0).isActive = true;
+                }
+                    
+            });
+
+            pieSeries.slices.template.events.on("toggled", (ev) => {
+                console.log(ev.target.isActive);
+                if (ev.target.isActive) {
+
+                    // Untoggle other slices
+                    pieSeries.slices.each(function (slice) {
+                        if (slice !== ev.target) {
+                            slice.isActive = false;
+                        }
+                    });
+
+                    // Update column chart
+                    columnSeries.appeared = false;
+                    console.log(ev.target.dataItem.dataContext[this.barDataKey]);
+                    this.barChart.data = ev.target.dataItem.dataContext[this.barDataKey];
+                    columnSeries.fill = ev.target.fill;
+                    columnSeries.reinit();
+                    this.onseriesChanged(ev.target.dataItem.dataContext);
+
+                }
+            });
+        }
+        catch (e) {
+            console.error(  e)
+        }
+
+    }
+
+    setData(data){
+        console.log(data);
+        this.data = data;
+        this.donutChart.data = data;
+    }
+
+    set onSeriesChanged(callback){
+        this.onseriesChanged = callback;
+    }
+}
 
 customElements.define("m-pie-chart", PieChart);
 customElements.define("m-bar-chart", BarChart);
 customElements.define("m-drag-drop-chart", DragDropChart);
 customElements.define("m-curved-column-chart", CurvedColumnChart);
 customElements.define("m-clynder-chart", CylnderChart);
-
-
-//export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
-//    /**
-//  * ---------------------------------------
-//  * This demo was created using amCharts 4.
-//  *
-//  * For more information visit:
-//  * https://www.amcharts.com/
-//  *
-//  * Documentation is available at:
-//  * https://www.amcharts.com/docs/v4/
-//  * ---------------------------------------
-//  */
-
-//    am4core.useTheme(am4themes_animated);
-//    am4core.useTheme(am4themes_kelly);
-//    /**
-//     * Source data
-//     */
-
-
-//    /**
-//     * Chart container
-//     */
-
-//    // Create chart instance
-//    var chart = am4core.create(divId, am4core.Container);
-//    chart.width = am4core.percent(100);
-//    chart.height = am4core.percent(100);
-//    chart.layout = "horizontal";
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
-
-
-//    /**
-//     * Column chart
-//     */
-
-//    // Create chart instance
-//    var columnChart = chart.createChild(am4charts.XYChart);
-
-//    // Create axes
-//    var categoryAxis = columnChart.yAxes.push(new am4charts.CategoryAxis());
-//    categoryAxis.renderer.labels.template.fontSize = 20
-//    categoryAxis.dataFields.category = subcat;
-//    categoryAxis.renderer.grid.template.location = 0;
-//    categoryAxis.renderer.inversed = true;
-
-//    var valueAxis = columnChart.xAxes.push(new am4charts.ValueAxis());
-//    valueAxis.renderer.labels.template.fontSize = 20;
-
-//    // Create series
-//    var columnSeries = columnChart.series.push(new am4charts.ColumnSeries());
-//    columnSeries.dataFields.valueX = subval;
-//    columnSeries.dataFields.categoryY = subcat;
-//    columnSeries.columns.template.strokeWidth = 0;
-//    columnSeries.columns.template.tooltipText = "{value}";
+customElements.define("m-clustered-chart", ClusteredColumnChart);
+customElements.define("m-donut-chart", DonutChart);
+customElements.define("m-line-chart", LineChart);
+customElements.define("m-piewithbar-chart", PieWithBarChart);
 
 
 
-//    var valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
-//    valueLabel.label.text = "{value}";
-//    valueLabel.label.fontSize = 20;
-//    valueLabel.label.horizontalCenter = "left";
-//    valueLabel.label.hideOversized = false;
-//    valueLabel.label.truncate = false;
-//    valueLabel.label.dx = 10;
-//    columnChart.cursor = new am4charts.XYCursor();
-//    columnChart.cursor.behavior = "zoomX";
-//    var scrollbar = new am4charts.XYChartScrollbar();
-
-//    columnChart.scrollbarX = scrollbar;
-
-//    /**
-//     * Pie chart
-//     */
-
-//    // Create chart instance
-//    var pieChart = chart.createChild(am4charts.PieChart);
-//    pieChart.data = data;
-//    pieChart.innerRadius = am4core.percent(50);
-//    var title = pieChart.titles.create();
-//    title.text = ctitle;
-//    title.fontSize = 25;
-//    pieChart.legend = new am4charts.Legend();
-//    pieChart.legend.maxHeight = 600;
-//    pieChart.legend.maxWidth = 300;
-//    pieChart.legend.scrollable = true;
-//    pieChart.legend.position = "bottom"; pieChart.legend.labels.template.text = "{name} : ({value})";
-//    // Add and configure Series
-//    var pieSeries = pieChart.series.push(new am4charts.PieSeries());
-//    pieSeries.dataFields.value = val;
-//    pieSeries.dataFields.category = cat;
-
-//    pieSeries.labels.template.disabled = true;
-
-//    // Set up labels
-//    //var label1 = pieChart.seriesContainer.createChild(am4core.Label);
-//    //label1.text = "";
-//    //label1.horizontalCenter = "middle";
-//    //label1.fontSize = 35;
-//    //label1.fontWeight = 600;
-//    //label1.dy = -30;
-//    //
-//    //
-//    //var label3 = pieChart.seriesContainer.createChild(am4core.Label);
-//    //label3.text = "";
-//    //label3.horizontalCenter = "middle";
-//    //label3.fontSize = 20;
-//    //label3.dy = 40;
-//    //
-//    //
-//    //var label2 = pieChart.seriesContainer.createChild(am4core.Label);
-//    //label2.text = "";
-//    //label2.horizontalCenter = "middle";
-//    //label2.fontSize = 20;
-//    //label2.dy = 20;
-
-//    // Auto-select first slice on load
-//    pieChart.events.on("ready", function (ev) {
-//        pieSeries.slices.getIndex(0).isActive = true;
-//    });
-
-//    // Set up toggling events
-//    pieSeries.slices.template.events.on("toggled", function (ev) {
-//        if (ev.target.isActive) {
-
-//            // Untoggle other slices
-//            pieSeries.slices.each(function (slice) {
-//                if (slice != ev.target) {
-//                    slice.isActive = false;
-//                }
-//            });
-
-//            // Update column chart
-//            columnSeries.appeared = false;
-//            columnChart.data = ev.target.dataItem.dataContext[subListKey];
-//            columnSeries.fill = ev.target.fill;
-//            columnSeries.reinit();
-//            onDateChange(ev.target.dataItem.dataContext);
-//            // Update labels
-//            //label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
-//            //label1.fill = ev.target.fill;
-//            //label3.text = ev.target.dataItem.dataContext[val];
-//            //label3.fill = ev.target.fill;
-//            //console.log(ev.target.dataItem);
-//            //label2.text = ev.target.dataItem.dataContext[cat];
-//        }
-//    });
 
 
-//}
+export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
+   /**
+ * ---------------------------------------
+ * This demo was created using amCharts 4.
+ *
+ * For more information visit:
+ * https://www.amcharts.com/
+ *
+ * Documentation is available at:
+ * https://www.amcharts.com/docs/v4/
+ * ---------------------------------------
+ */
+
+   am4core.useTheme(am4themes_animated);
+   am4core.useTheme(am4themes_kelly);
+   /**
+    * Source data
+    */
 
 
-//function callDonutChart(data, donuttitle, divId, chartValue, chartCategory) {
-//    am4core.useTheme(am4themes_animated);
-//    am4core.addLicense("ch-custom-attribution");
-//    var chart = am4core.create(divId, am4charts.PieChart);
-//    chart.data = data;
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
+   /**
+    * Chart container
+    */
 
-//    var pieSeries = chart.series.push(new am4charts.PieSeries3D());
-//    pieSeries.dataFields.value = chartValue;
-//    pieSeries.dataFields.category = chartCategory; // Disable ticks and labels
-//    // Disable ticks and labels
-//    pieSeries.labels.template.disabled = true;
-//    pieSeries.ticks.template.disabled = true;
-
-//    chart.innerRadius = am4core.percent(40);
-
-
-//    chart.legend = new am4charts.Legend();
-//    chart.legend.maxHeight = 600;
-//    chart.legend.maxWidth = 300;
-//    chart.legend.scrollable = true;
-//    chart.legend.position = "bottom"; chart.legend.labels.template.text = "{name} : ({value})";
-
-//    pieSeries.colors.list = [
-//        am4core.color("#2799DB"),
-//        am4core.color("#D61C4E"),
-//        am4core.color("#FEB139"),
-//        am4core.color("#3CCF4E"),
-//        am4core.color("#7A4069"),
-//        am4core.color("#F9F871"),
-//        am4core.color("#FFE1C6"),
-//        am4core.color("#D6FFE0"),
-//        am4core.color("#E1E3FF"),
-//        am4core.color("#3EF6FF"),
-//        am4core.color("#EE6123"),
-//        am4core.color("#00916E"),
-//    ];
-//    var title = chart.titles.create();
-//    title.text = donuttitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-//}
-
-//function callClusterd(data, clusterdtitle, chartId,) {
-
-
-//    am4core.useTheme(am4themes_animated);
-//    // Themes end
+   // Create chart instance
+   
+   
 
 
 
-//    var chart = am4core.create(chartId, am4charts.XYChart)
-//    chart.colors.step = 2;
+   /**
+    * Pie chart
+    */
 
-//    chart.legend = new am4charts.Legend()
-//    chart.legend.position = 'top'
-//    chart.legend.paddingBottom = 20
-//    chart.legend.labels.template.maxWidth = 95
-//    chart.exporting.menu = new am4core.ExportMenu();
-//    chart.exporting.menu.items = exportMenu;
+   // Create chart instance
+ 
 
-//    var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-//    xAxis.renderer.labels.template.fontSize = 20;
-//    xAxis.dataFields.category = 'cat';
-//    xAxis.renderer.cellStartLocation = 0.1;
-//    xAxis.renderer.cellEndLocation = 0.9;
-//    xAxis.renderer.grid.template.location = 0;
-//    xAxis.renderer.labels.template.rotation = 90;
+   // Set up labels
+   //var label1 = pieChart.seriesContainer.createChild(am4core.Label);
+   //label1.text = "";
+   //label1.horizontalCenter = "middle";
+   //label1.fontSize = 35;
+   //label1.fontWeight = 600;
+   //label1.dy = -30;
+   //
+   //
+   //var label3 = pieChart.seriesContainer.createChild(am4core.Label);
+   //label3.text = "";
+   //label3.horizontalCenter = "middle";
+   //label3.fontSize = 20;
+   //label3.dy = 40;
+   //
+   //
+   //var label2 = pieChart.seriesContainer.createChild(am4core.Label);
+   //label2.text = "";
+   //label2.horizontalCenter = "middle";
+   //label2.fontSize = 20;
+   //label2.dy = 20;
 
-
-//    var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-//    yAxis.renderer.labels.template.fontSize = 20
-//    // Make the labels vertical
-//    yAxis.min = 0;
-
-//    function createSeries(value, name) {
-//        var series = chart.series.push(new am4charts.ColumnSeries())
-//        series.dataFields.valueY = value
-//        series.dataFields.categoryX = 'cat'
-//        series.name = name
-//        series.events.on("hidden", arrangeColumns);
-//        series.events.on("shown", arrangeColumns);
-
-//        //var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-//        //labelBullet.label.text = "{valueY}";
-//        //labelBullet.adapter.add("y", function (y) {
-//        //    return -15;
-//        //});
-
-//        var bullet = series.bullets.push(new am4charts.LabelBullet())
-//        bullet.interactionsEnabled = false
-//        bullet.label.text = '{valueY}'
-//        bullet.label.fill = am4core.color('#000000')
-//        bullet.adapter.add("y", function (y) {
-//            return 15;
-//        });
-
-//        return series;
-//    }
-
-//    chart.data = data;
-//    if (data[0]) {
-//        Object.keys(data[0]).forEach(item => {
-//            if (item != "cat")
-//                createSeries(item, item);
-//        })
-//    }
-//    /*createSeries('first', 'The First');
-//    createSeries('second', 'The Second');
-//    createSeries('third', 'The Third');*/
-
-//    function arrangeColumns() {
-
-//        var series = chart.series.getIndex(0);
-
-//        var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-//        if (series.dataItems.length > 1) {
-//            var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-//            var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-//            var delta = ((x1 - x0) / chart.series.length) * w;
-//            if (am4core.isNumber(delta)) {
-//                var middle = chart.series.length / 2;
-
-//                var newIndex = 0;
-//                chart.series.each(function (series) {
-//                    if (!series.isHidden && !series.isHiding) {
-//                        series.dummyData = newIndex;
-//                        newIndex++;
-//                    }
-//                    else {
-//                        series.dummyData = chart.series.indexOf(series);
-//                    }
-//                })
-//                var visibleCount = newIndex;
-//                var newMiddle = visibleCount / 2;
-
-//                chart.series.each(function (series) {
-//                    var trueIndex = chart.series.indexOf(series);
-//                    var newIndex = series.dummyData;
-
-//                    var dx = (newIndex - trueIndex + middle - newMiddle) * delta
-
-//                    series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-//                    series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-//                })
-//            }
-//        }
-//    }
-//    var title = chart.titles.create();
-//    title.text = clusterdtitle;
-//    title.fontSize = 25;
-//    title.marginBottom = 30;
-//    chart.cursor = new am4charts.XYCursor();
-//    chart.cursor.behavior = "zoomX";
-//    var scrollbar = new am4charts.XYChartScrollbar();
-
-//    chart.scrollbarX = scrollbar;
+   // Auto-select first slice on load
 
 
-//}
+   // Set up toggling events
+   
 
-//export function makedynamicChart(
-//    chartType,
-//    data,
-//    title,
-//    divId,
-//    chartValue,
-//    chartCategory,
-//    dontRotateCat,
-//    columnsColorFunc
-//) {
-//    var chart = document.getElementById(divId);
-//    chart.style.height = "600px";
-//    switch (chartType) {
-//        case types.pie:
-//            callPieChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.bar:
-//            callBarChart(data, title, divId, chartValue, chartCategory, dontRotateCat, columnsColorFunc);
-//            break;
-//        case types.hbar:
-//            callHBar(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.dragdrop:
-//            callDragDropChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.curvy:
-//            callCurvyChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.clynder:
-//            callClyChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.donut:
-//            callDonutChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        case types.clusteredbar:
-//            chart.style.height = "800px";
-//            callClusterd(data, title, divId);
-//            break;
-//        case types.line:
-//            chart.style.height = "800px";
-//            callLineChart(data, title, divId, chartValue, chartCategory);
-//            break;
-//        default:
-//            console.log("eror");
-//            break;
-//    }
-//}
+
+}

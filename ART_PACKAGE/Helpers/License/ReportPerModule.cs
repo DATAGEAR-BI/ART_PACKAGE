@@ -62,7 +62,7 @@ namespace ART_PACKAGE.Helpers.License
         private static readonly List<string> ECMControllers = new()
         {
             nameof(SystemPerformanceController).ToLower() ,
-            nameof(SystemPerformanceNewSummaryController).ToLower() ,
+            //nameof(SystemPerformanceNewSummaryController).ToLower() ,
             nameof(UserPerformanceController).ToLower() ,
             nameof(UserPerformancePerActionUserController).ToLower() ,
             nameof(UserPerformancePerUserAndActionController).ToLower() ,
