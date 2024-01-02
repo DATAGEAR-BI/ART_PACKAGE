@@ -4280,6 +4280,18 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CURRENCY")
                     .UseCollation("Arabic_100_CI_AI");
 
+                entity.Property(e => e.CustomerCIF)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_CIF")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerClassification)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_CLASSIFICATION")
+                    .UseCollation("Arabic_100_CI_AI");
+
                 entity.Property(e => e.CustomerName)
                     .HasMaxLength(1000)
                     .IsUnicode(false)

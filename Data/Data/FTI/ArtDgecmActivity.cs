@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.Data.FTI
+﻿namespace Data.Data.FTI
 {
     public partial class ArtDgecmActivity
     {
@@ -11,6 +8,8 @@ namespace Data.Data.FTI
         public string? CustomerName { get; set; }
         public double? Amount { get; set; }
         public string? Currency { get; set; }
+        public string? CustomerClassification { get; set; }
+        public string? CustomerCIF { get; set; }
         public string? PrimaryOwner { get; set; }
         public string? CaseStatus { get; set; }
         public string? CaseComments { get; set; }
