@@ -62,7 +62,7 @@
 
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
-    AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",
+    AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetDataByParams?",
     //GoAml
     GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
     GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",
@@ -155,17 +155,17 @@
 
     /*DGAML*/
     //alerts summary 
-    StAlertsPerStatus:"/ArtStDgAmlAlertsPerStatus/GetData",
-    StAlertPerOwner:"/ArtStDgAmlAlertPerOwner/GetData",
-    StAlertPerBranch:"/ArtStDgAmlAlertsPerBranch/GetData",
+    StAlertsPerStatus: "/ArtStDgAmlAlertsPerStatus/GetData",
+    StAlertPerOwner: "/ArtStDgAmlAlertPerOwner/GetData",
+    StAlertPerBranch: "/ArtStDgAmlAlertsPerBranch/GetData",
     StAlertPerScenario: "/ArtStDgAmlAlertsPerScenario/GetData",
     //cases summary
-    StCasesPerPriority:"/ArtStDgAmlCasesPerPriority/GetData",
-    StCasesPerCategory:"/ArtStDgAmlCasesPerCategory/GetData",
+    StCasesPerPriority: "/ArtStDgAmlCasesPerPriority/GetData",
+    StCasesPerCategory: "/ArtStDgAmlCasesPerCategory/GetData",
     StCasesPerStatus: "/ArtStDgAmlCasesPerStatus/GetData",
     //customer summary
-    StCustomerPerBranch:"/ArtStDgAmlCustomerPerBranch/GetData",
-    StCustomerPerType:"/ArtStDgAmlCustomerPerType/GetData",
-    
+    StCustomerPerBranch: "/ArtStDgAmlCustomerPerBranch/GetData",
+    StCustomerPerType: "/ArtStDgAmlCustomerPerType/GetData",
+
 
 };

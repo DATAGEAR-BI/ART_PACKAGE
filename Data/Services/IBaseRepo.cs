@@ -1,6 +1,7 @@
 ﻿using Data.Services.Grid;
 using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Data.Services
 {
@@ -17,6 +18,11 @@ namespace Data.Services
 
 
         public IEnumerable<TModel> GetAll();
+
+        public IEnumerable<TModel> GetByCondition(Expression<Func<TModel, bool>> condition);
+        public TModel? GetFirstWithCondition(Expression<Func<TModel, bool>> condition);
+
+        public IEnumerable<object?> GetDistinctValuesOf(Expression<Func<TModel, object>> propertySelector, Expression<Func<TModel, bool>>? condition = null);
 
         public bool DeleteAll();
     }

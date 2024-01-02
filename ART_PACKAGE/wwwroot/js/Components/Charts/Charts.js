@@ -860,7 +860,7 @@ class DonutChart extends  BaseCatValChart{
     connectedCallback() {
         super.connectedCallback();
         this.chart = am4core.create(this.chartDiv, am4charts.PieChart);
-        chart.data = this.data;
+        this.chart.data = this.data;
 
         var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
         pieSeries.dataFields.value = this.chartValue;
@@ -868,6 +868,8 @@ class DonutChart extends  BaseCatValChart{
         // Disable ticks and labels
         pieSeries.labels.template.disabled = true;
         pieSeries.ticks.template.disabled = true;
+        pieSeries.colors.step = 2;
+
 
         this.chart.innerRadius = am4core.percent(40);
         this.chart.legend = new am4charts.Legend();

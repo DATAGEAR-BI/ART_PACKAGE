@@ -4,7 +4,7 @@
     isMulti;
     constructor() {
         super();
-
+        console.log("ctr");
         var id = this.id;
         this.classList.add("form-floating", "form-floating-outline");
 
@@ -41,11 +41,13 @@
 
     intialize(options) {
         // Initialize
+       
         options.forEach(x => {
+            console.log(x);
             this.select.appendChild(x);
         })
         var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
-
+       
         var selectList = [].slice.call(selectnodelist);
 
         var selectFields = selectList.map(function (s) {

@@ -65,7 +65,7 @@ namespace ART_PACKAGE.Controllers
             IEnumerable<ExportTask> data = repo.GetAll();
             if (repo.DeleteAll())
             {
-                repo.BulkInsert(data);
+                _ = repo.BulkInsert(data);
                 return Ok("deleted => added");
             }
             else

@@ -36,65 +36,6 @@ namespace Data.Services
             {
                 return false;
             }
-
-
-            //if (_context.Database.IsOracle())
-            //    return OracleBulkInsert(data);
-
-
-            //Microsoft.EntityFrameworkCore.Metadata.IEntityType? entityType = _context.Model.FindEntityType(typeof(TModel));
-            //string? tableName = entityType?.GetTableName() ?? entityType?.GetViewName();
-
-            //StringBuilder stringBuilder = new();
-            //stringBuilder.AppendLine($"INSERT INTO {tableName} (");
-
-            //List<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties = entityType.GetProperties().Where(p => p.PropertyInfo != null && p.Name != "Id").ToList();
-            //string columns = string.Join(", ", properties.Select(p => p?.GetColumnName() ?? p.Name));
-
-            //stringBuilder.AppendLine(columns);
-            //stringBuilder.AppendLine(") VALUES");
-
-            //List<string> parameterList = new();
-
-            //foreach (TModel entity in data)
-            //{
-            //    IEnumerable<string> values = properties.Select(p =>
-            //    {
-            //        object? value = p.PropertyInfo.GetValue(entity);
-            //        if (value != null)
-            //        {
-
-            //            if (p.PropertyInfo.PropertyType == typeof(string) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(string))
-            //            {
-            //                // Escape single quotes in string values
-            //                value = ((string?)value)?.Replace("'", "''"); // Handle nullable string
-            //                return $"'{value}'";
-            //            }
-            //            else if (p.PropertyInfo.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(p.PropertyInfo.PropertyType) == typeof(DateTime))
-            //            {
-            //                return $"'{(DateTime)value:yyyy-MM-dd HH:mm:ss}'";
-            //            }
-            //            else
-            //            {
-            //                return $"{value}";
-            //            }
-            //        }
-            //        else
-            //        {
-            //            return "NULL";
-            //        }
-            //    });
-
-            //    parameterList.Add($"({string.Join(", ", values)})");
-            //}
-
-            //stringBuilder.AppendLine(string.Join(",\n", parameterList));
-            //stringBuilder.AppendLine(";");
-
-
-
-            //int effected = _context.Database.ExecuteSqlRaw(stringBuilder.ToString());
-            //return effected > 0;
         }
 
 
@@ -199,6 +140,27 @@ namespace Data.Services
                 return false;
             }
 
+        }
+
+        public IEnumerable<TModel> GetByCondition(Expression<Func<TModel, bool>> condition)
+        {
+            return _context.Set<TModel>().Where(condition);
+        }
+
+        public IEnumerable<object?> GetDistinctValuesOf(Expression<Func<TModel, object>> propertySelector, Expression<Func<TModel, bool>>? condition = null)
+        {
+            var query = _context.Set<TModel>().AsQueryable();
+
+            if (condition != null)
+                query = query.Where(condition);
+
+
+            return query.Select(propertySelector).Distinct();
+        }
+
+        public TModel? GetFirstWithCondition(Expression<Func<TModel, bool>> condition)
+        {
+            return _context.Set<TModel>().FirstOrDefault(condition);
         }
     }
 }

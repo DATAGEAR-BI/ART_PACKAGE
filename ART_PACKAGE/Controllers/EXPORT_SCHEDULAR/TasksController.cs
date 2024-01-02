@@ -233,7 +233,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
             taskToAdd.NextExceutionDate = nextDate;
             taskToAdd.LastExceutionDate = lastDate;
 
-            _context.SaveChanges();
+            _ = _context.SaveChanges();
             return Ok();
         }
 

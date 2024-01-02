@@ -3,69 +3,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-
-
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
 
 
 <section class="content-header">
     <div style="text-align:center;">
         <h1>
             All Segment Outliers
-            @*<small>All Segment Outliers Description</small>*@
         </h1>
     </div>
 </section>
 <br/>
-<div class="text-center">
-<div class="row top-buffer">
-    <div class="col-md-4  ">
-        <!-- <label style="display: block; text-align: center;">Hi</label> -->
-        <label>Run Month</label>
-        <select name="monthKey" id="MonthKey"
-                class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
-            <option value="monthKey">-- Not Selected --</option>
 
-        </select>
+<div class="row">
+    <div class="col-4">
+            <m-select name="monthKey" id="MonthKey" data-searchable data-title="Month Key">
+            </m-select>
     </div>
-    <div class="col-md-4  ">
-        <label>Segment Type</label>
-        <!-- <label style="display: block; text-align: center;">Hi</label> -->
-        <select name="segmentTypes" id="PartyTypeDesc"
-                class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
-            <option value="segmentType">-- Not Selected --</option>
-
-        </select>
+    <div class="col-4">
+            <m-select name="segmentTypes" id="PartyTypeDesc" data-searchable data-title="Party Type">
+            </m-select>
     </div>
-    <div class="col-md-4  ">
-        <label>Segment ID</label>
-        <!-- <label style="display: block; text-align: center;">Hi</label> -->
-        <select name="segmentId" id="Segment"
-                class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
-            <option value="segmentId">-- Not Selected --</option>
-
-        </select>
+    <div class="col-4">
+            <m-select name="segmentId" id="Segment" data-searchable data-title="Segment">
+            </m-select>
     </div>
 </div>
-</div>
+
 <br/>
-<div id="grid"></div>
+<m-grid id="outliers" data-urlkey="AllSegmentsOutliersNew" data-handlerkey="AllSegmentsOutliersNew"></m-grid>
 <br/>
-<div id="charts">
-    <div id="ch1" class="col-md-12 col-xs-12 col-sm-12 mb-2 mt-2" data-type="2" style="padding-bottom:50px;padding-top:50px;"></div>
 
-    <div id="ch2" class="col-md-12 col-xs-12 col-sm-12" data-type="2"></div>
-</div>
+    <m-donut-chart id="ch1" class="col-12" data-title="Outlier Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px"></m-donut-chart>
+    <m-donut-chart id="ch2" class="col-12" data-title="Outliers Vs Customers Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px"></m-donut-chart>
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
 @section scripts {
 
-    <script src="~/js/Dynamic.js" type="module"  defer id="script"  data-urlkey="AllSegmentsOutliersNew"  data-handlerkey="AllSegmentsOutliersNew" ></script>
+    <script src="~/js/components/multiselect/select.js"></script>
+    <script src="~/js/components/grid/grid.js" type="module" defer></script>
     <script src="~/js/segmentdetails.js" type="module" defer></script>
+    <script src="~/js/components/charts/charts.js" type="module" defer></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
 }

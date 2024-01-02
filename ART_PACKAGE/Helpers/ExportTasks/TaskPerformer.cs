@@ -72,7 +72,7 @@ namespace ART_PACKAGE.Helpers.ExportTasks
             jobfromdb.NextExceutionDate = nextDate;
             jobfromdb.LastExceutionDate = lastDate;
 
-            exContext.SaveChanges();
+            _ = exContext.SaveChanges();
         }
 
         public (DateTime? lastDate, DateTime? nextDate) GetExecutionDateTimes(string jobName)

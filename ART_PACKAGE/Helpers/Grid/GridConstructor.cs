@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Helpers.Grid
             {
                 fileProgress[fileNumber] = recordsDone;
                 float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
-                _exportHub.Clients.Clients(connections.GetConnections(user))
+                _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
             };
             while (total > 0)
@@ -66,7 +66,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
                 int localRound = round + 1;
 
-                Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Test.csv", localRound, user));
+                _ = Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Test.csv", localRound, user));
 
                 total -= batch;
                 round++;
