@@ -860,7 +860,7 @@ class DonutChart extends  BaseCatValChart{
     connectedCallback() {
         super.connectedCallback();
         this.chart = am4core.create(this.chartDiv, am4charts.PieChart);
-        chart.data = this.data;
+        //chart.data = this.data;
 
         var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
         pieSeries.dataFields.value = this.chartValue;
