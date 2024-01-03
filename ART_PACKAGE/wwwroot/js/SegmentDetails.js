@@ -10,9 +10,6 @@ document.getElementById('MonthKey').onchange = async (e) => await onChangeMonthK
 document.getElementById('PartyTypeDesc').onchange = async (e) => await onChangeSegmentType(e);
 document.getElementById('Segment').onchange = async (e) => await onChangeSegment(e);
 async function loadMonthKies() {
-    partyTypeSelect.intialize([]);
-    segmentSelect.intialize([]);
-    monthKeySelect.intialize([]);
     await makeDropDown("/AllSegmentsOutliersNew/GetMonthKies", monthKeySelect);
 
 }
@@ -55,8 +52,10 @@ async function onChangeSegment(e) {
 
     var res = await Promise.all([ch1res, ch2res]);
 
-    if (res[0].ok)
+    if (res[0].ok) {
         chart1.setdata(await res[0].json());
+        chart1.onSeriesDbClick = (e) => console.log(e);
+    }
 
     if (res[1].ok)
         chart2.setdata(await res[1].json());

@@ -36,18 +36,19 @@
 
         this.appendChild(this.select);
         this.appendChild(this.label);
+        this.intialize([]);
 
     }
 
     intialize(options) {
         // Initialize
-       
+
         options.forEach(x => {
             console.log(x);
             this.select.appendChild(x);
         })
         var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
-       
+
         var selectList = [].slice.call(selectnodelist);
 
         var selectFields = selectList.map(function (s) {
@@ -97,7 +98,7 @@
     }
 
     refresh() {
- 
+
         var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
         for (const [, value] of Object.entries(selectnodelist)) {
             var selectFieldInstance = materialstyle.SelectField.getOrCreateInstance(value)

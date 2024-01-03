@@ -1,9 +1,12 @@
 ﻿var selectedMonthKey = "";
 var selectedSegmentType = "";
-makeSpinner("/SegmentationCharts/MonthKeys", "month-key-spinner", "monthKey");
+var monthKeyDropDown = document.getElementById("month-key-spinner");
+var segmentTypeDropDown = document.getElementById("segment-type");
+makeDropDown("/SegmentationCharts/MonthKeys", monthKeyDropDown);
+monthKeyDropDown.onSelectChange = onChangeMonthKey;
 function onChangeMonthKey(e) {
-    selectedMonthKey = e.value;
-    makeSpinner("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, "segment-type", "segmentType");
+    selectedMonthKey = e.target.value;
+    makeDropDown("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, segmentTypeDropDown);
     DrawOnMonthCharts();
 }
 function onChangeSegmentType(e) {
@@ -13,7 +16,18 @@ function onChangeSegmentType(e) {
     DrawCharts(selectedSegmentType);
 }
 
+async function makeDropDown(url, dropdown) {
+    var items = await (await fetch(url)).json();
 
+    var opts = [];
+    items.forEach(q => {
+        var opt = document.createElement('option');
+        opt.value = q;
+        opt.innerHTML = q;
+        opts.push(opt)
+    })
+    dropdown.update([document.createElement('option'), ...opts]);
+}
 
 function makeSpinner(url, divId, spinnerDefaultValue) {
     $.ajax({
@@ -48,7 +62,7 @@ function PrepDataDrawChart(SegmentType) {
     //End
 
     //display elments
-  
+
 
     //start getting all segments data from api according to the current selected
     $.ajax({
@@ -144,7 +158,7 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-           
+
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
@@ -196,7 +210,7 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-            
+
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");
@@ -240,7 +254,9 @@ function DrawCharts(SegmentType) {
 
 }
 function DrawOnMonthCharts() {
-    var monthkey = document.getElementById('month-key-spinner').value;
+    var monthkey = document.getElementById('month-key-spinner').value.value;
+    console.log(monthkey);
+    var custCountPerType = document.getElementById("CustCountPerTypeChart");
     $.ajax({
         type: "GET",
         url: "/SegmentationCharts/GetCustCountPerType?monthKey=" + monthkey,
@@ -248,62 +264,36 @@ function DrawOnMonthCharts() {
         },
         success: function (data) {
             //display elments
-           
+            custCountPerType.setdata(data);
+            custCountPerType.onSeriesDbClick = (ev) => {
 
-            am4core.useTheme(am4themes_animated);
-            am4core.addLicense("ch-custom-attribution");
-            var chart = am4core.create("CustCountPerTypeChart", am4charts.PieChart3D);
-            chart.exporting.menu = new am4core.ExportMenu();
-            chart.exporting.menu.items = [{
-                "label": "...",
-                "menu": [
-                    { "type": "svg", "label": "Save" },
-                ]
-            }];
-            chart.legend = new am4charts.Legend();
-            chart.legend.maxHeight = 600;
-            chart.legend.maxWidth = 300;
-            chart.legend.scrollable = true;
-            chart.legend.position = "bottom";
-            chart.legend.labels.template.text = "{name} : ({value})";
-            chart.data = data;
-            chart.innerRadius = am4core.percent(40);
-            var series = chart.series.push(new am4charts.PieSeries3D());
-            series.dataFields.value = "NumberOfCustomers";
-            series.dataFields.category = "PartyTypeDesc";
-            series.labels.template.fontSize = 17;
-            chart.legend.fontSize = 17;
-            series.tooltip.fontSize = 17;
-            // Disable ticks and labels
-            series.labels.template.disabled = true;
-            series.ticks.template.disabled = true;
-            var title = chart.titles.create();
-            title.text = "Number of Customers Per Type";
-            title.fontSize = 25;
-            title.marginBottom = 30;
-
-
-
-            var label = chart.chartContainer.createChild(am4core.Label);
-            label.text = "You can double click any type slice to display other charts";
-            label.align = "center";
-            //chart.legend.itemContainers.template.events.on("hit", function (ev) {
-            //    console.log("clicked on ");
-            //});
-
-
-            series.slices.template.events.on("doublehit", function (ev) {
-                
 
                 makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + ev.target.dataItem.category);
                 PrepDataDrawChart(ev.target.dataItem.category);
                 DrawCharts(ev.target.dataItem.category);
 
                 // window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + ev.target.dataItem.category )
-            });
+            }
+
+
+            //var label = chart.chartContainer.createChild(am4core.Label);
+            //label.text = "You can double click any type slice to display other charts";
+            //label.align = "center";
+            //chart.legend.itemContainers.template.events.on("hit", function (ev) {
+            //    console.log("clicked on ");
+            //});
+
+
+          
 
 
         },
 
     });
 }
+
+
+
+
+
+

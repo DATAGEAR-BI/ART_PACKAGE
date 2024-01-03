@@ -856,12 +856,13 @@ class ClusteredColumnChart extends  BaseCatValChart {
     }
 }
 
-class DonutChart extends  BaseCatValChart{
+class DonutChart extends BaseCatValChart{
+    dHitEvent = undefined;
     connectedCallback() {
         super.connectedCallback();
-        this.chart = am4core.create(this.chartDiv, am4charts.PieChart);
+        this.chart = am4core.create(this.chartDiv, am4charts.PieChart3D);
         this.chart.data = this.data;
-
+        this.chart.innerRadius = am4core.percent(40);
         var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
         pieSeries.dataFields.value = this.chartValue;
         pieSeries.dataFields.category = this.chartCategory; // Disable ticks and labels
@@ -883,6 +884,14 @@ class DonutChart extends  BaseCatValChart{
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
+    }
+
+
+    set onSeriesDbClick(callBack) {
+        let series = this.chart.series.getIndex(0);
+        if (this.dHitEvent)
+            this.dHitEvent.dispose();
+        this.dHitEvent = series.slices.template.events.on("doublehit", (ev) => callBack(ev));
     }
 }
 
