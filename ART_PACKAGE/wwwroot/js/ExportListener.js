@@ -6,7 +6,6 @@ export async function start() {
         await exportConnection.start();
         console.log("SignalR Connected.");
         keepAliveInterval = setInterval(() => keepAlive(exportConnection, "KeepAlive"), 60000);
-        console.log(exportConnection.state);
 
     } catch (err) {
         console.log(err);
@@ -15,10 +14,8 @@ export async function start() {
     }
 };
 
-export const invokeExport = (para, controller,method) => {
-    console.log(controller, para);
-    exportConnection.invoke("Export", para, controller, method);
-}
+export const invokeExport = (para, controller, method, params) => exportConnection.invoke("Export", para, controller, method, params);
+;
 
 await start();
 
@@ -77,7 +74,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
     console.log(reqId, len, recivedFiles.length);
     if (len === recivedFiles.length) {
         console.log("clr");
-        exportConnection.invoke("ClearExportFolder", reqId);
+        //exportConnection.invoke("ClearExportFolder", reqId);
     }
 
     else {
@@ -94,7 +91,7 @@ exportConnection.on("FinishedExportFor", async (reqId, len) => {
     }
 });
 exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
-    console.log(guid, i);
+    console.log(file);
     var recivedFiles = JSON.parse(localStorage.getItem(guid));
     if (recivedFiles)
         localStorage.setItem(guid, JSON.stringify([...recivedFiles, i]));
@@ -122,11 +119,17 @@ exportConnection.on("csvRecevied", async (file, fileName, i, guid) => {
 })
 
 function downloadfile(file, fileName) {
+    console.log(file);
     const uint8Array = atob(file);
+    console.log(uint8Array);
 
+    var bytes = new Uint8Array(uint8Array.length);
+    for (var i = 0; i < uint8Array.length; i++) {
+        bytes[i] = uint8Array.charCodeAt(i);
+    }
     // Create a Blob from the Uint8Array data
-    const csvBlob = new Blob([uint8Array], { type: 'text/csv' });
-
+    console.log(bytes);
+    const csvBlob = new Blob(["\ufeff", bytes], { type: 'text/csv; charset=utf-8' });
     // Create an object URL from the Blob
     const objectURL = URL.createObjectURL(csvBlob);
 

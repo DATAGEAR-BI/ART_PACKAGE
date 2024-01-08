@@ -70,13 +70,6 @@ namespace ART_PACKAGE.Controllers
                 columns = Data.Columns,
                 total = Data.Total,
                 containsActions = false,
-                selectable = true,
-                toolbar = new List<dynamic>  {new
-                {
-                    id = "StreamExport",
-                    text = "StreamExport"
-                }
-                }
             };
 
             return new ContentResult
