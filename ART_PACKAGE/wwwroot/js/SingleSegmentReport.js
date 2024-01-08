@@ -1,5 +1,8 @@
+﻿
+
 var allTypesNames = [];
 var typesLength = 0;
+let segData = {};
 
 function draw_Stacked_Col_Chart() {
 
@@ -233,70 +236,67 @@ function openTab(evt, TabName) {
 
 };
 
-function renderTabsCounter() {
+async function renderTabsCounter() {
 
 
     var ActiveTab = document.querySelectorAll('.tablinks .active');
     //console.log($('.tablinks .active')['context']['activeElement']['id']);
-
-   
-
     console.log("/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id);
-    function calcSum(array) {
-        var total = 0;
-        for (var i = 0; i < array.length; i++) {
-            total += array[i];
-        }
-        return total;
+    try {
+        var res = await fetch("/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id);
+        segData = await res.json();
+        var loaders = document.getElementsByClassName("spinner-grow");
+        console.log(segData.Types);
+        [...loaders].forEach(l => {
+            l.hidden = true
+        });
+        var debitData = segData.Types.find(x=> x.name == "Wire");
+        
+        var aggs = [...document.querySelectorAll("p.aggText")]
+        console.log(debitData)
+        aggs.find(x=>x.id == "D-total").innerText = debitData.Amt.Tot;
+        
+        
+    }catch (err){
+        console.error(err)
     }
-
-    function calcMean(array) {
-        var arraySum = calcSum(array);
-        return arraySum / array.length;
-    }
-
-    function calcMedian(array) {
-        array = array.sort();
-        if (array.length % 2 === 0) { // array with even number elements
-            return (array[array.length / 2] + array[(array.length / 2) - 1]) / 2;
-        }
-        else {
-            return array[(array.length - 1) / 2]; // array with odd number elements
-        }
-    }
-    $.ajax({
-        type: "GET",
-        url: "/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id,
-        data: {
-        },
-        success: function (data) {
-
-            //replace null with 0 
-            console.log("seg data", data);
-            /*data[.forEach(function (myObj) {
-                for (let prop in myObj) {
-                    myObj[prop] = myObj[prop] === null ? 0 : myObj[prop];
-                }
-            });*/
-            document.getElementById("TabsButtonsContainer").innerHTML = "";
-            document.getElementById("tabContentContainer").innerHTML = "";
-            ChartData = [];
-            ChartDataCount = [];
-
-            typesLength = data["Types"].length;
-            data["Types"].forEach((obj) => {
-                allTypesNames.push(obj["name"]);
-                createTap(obj);
-            });
-            document.getElementById("TabsID").style.display = "block";
-
-
-        }
-    });
+  
+    
+    // $.ajax({
+    //     type: "GET",
+    //     url: "/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id,
+    //     data: {
+    //     },
+    //     success: function (data) {
+    //
+    //         //replace null with 0 
+    //         console.log("seg data", data);
+    //         segData = data;
+    //
+    //         /*data[.forEach(function (myObj) {
+    //             for (let prop in myObj) {
+    //                 myObj[prop] = myObj[prop] === null ? 0 : myObj[prop];
+    //             }
+    //         });*/
+    //         document.getElementById("TabsButtonsContainer").innerHTML = "";
+    //         document.getElementById("tabContentContainer").innerHTML = "";
+    //         ChartData = [];
+    //         ChartDataCount = [];
+    //
+    //         typesLength = data["Types"].length;
+    //         data["Types"].forEach((obj) => {
+    //             allTypesNames.push(obj["name"]);
+    //             createTap(obj);
+    //         });
+    //         document.getElementById("TabsID").style.display = "block";
+    //
+    //
+    //     }
+    // });
 
 }
 function createTap(typeObj) {
-
+    console.log(typeObj);
     var buttonOfTabString = `<button class="tablinks col-sm-1 container-fluid" style="color:#013459; text-align: center; font-weight: 600; width: ${100 / typesLength}%;" id="${typeObj["name"]}" onclick="openTab(event, '${typeObj["name"]}')">${typeObj["name"]}</button>`;
     const TabsButtonsContainerDiv = document.getElementById("TabsButtonsContainer");
     TabsButtonsContainerDiv.innerHTML += buttonOfTabString;
@@ -480,17 +480,15 @@ function RenderDataForCharts() {
         }
     });
 }
-setTimeout(function () {
-    document.getElementById("TabsID").style.display = "block";
-    renderTabsCounter();
 
-    setTimeout(function () {
-        $("#chartdiv").show()
-        $("#chartCountdiv").show()
-        $("#IndustrySegmentChart").show()
-        draw_Stacked_Col_Chart();
-        draw_Stacked_Col_Chart_Count();
-        RenderDataForCharts();
-    }, 1500);
+    renderTabsCounter().then(x=>  console.log("done") );
 
-}, 500);
+    // setTimeout(function () {
+    //     $("#chartdiv").show()
+    //     $("#chartCountdiv").show()
+    //     $("#IndustrySegmentChart").show()
+    //     draw_Stacked_Col_Chart();
+    //     draw_Stacked_Col_Chart_Count();
+    //     RenderDataForCharts();
+    // }, 1500);
+

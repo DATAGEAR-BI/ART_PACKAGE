@@ -1,19 +1,29 @@
-﻿var selectedMonthKey = "";
+﻿import * as core from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/core.js"
+import * as charts from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/charts.js";
+import * as matrial from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js";
+import * as animated from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
+var selectedMonthKey = "";
 var selectedSegmentType = "";
 var monthKeyDropDown = document.getElementById("month-key-spinner");
 var segmentTypeDropDown = document.getElementById("segment-type");
+var segmentCustomersChart = document.getElementById("SegmentsCustCountChart");
+var segmentAlertsChart = document.getElementById("SegmentsAlertCountChart");
 makeDropDown("/SegmentationCharts/MonthKeys", monthKeyDropDown);
 monthKeyDropDown.onSelectChange = onChangeMonthKey;
+segmentTypeDropDown.onSelectChange = onChangeSegmentType;
 function onChangeMonthKey(e) {
     selectedMonthKey = e.target.value;
     makeDropDown("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, segmentTypeDropDown);
     DrawOnMonthCharts();
+    document.getElementById("segmentsTypesChartContainer").hidden = false;
 }
 function onChangeSegmentType(e) {
-    selectedSegmentType = e.value;
-    makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + selectedSegmentType);
+  
+    selectedSegmentType = e.target.value;
     PrepDataDrawChart(selectedSegmentType);
     DrawCharts(selectedSegmentType);
+    document.getElementById("segmentsChartsContainer").hidden = false;
+    document.getElementById("SegmentsComparisonChart").hidden = false;
 }
 
 async function makeDropDown(url, dropdown) {
@@ -57,7 +67,7 @@ function makeSpinner(url, divId, spinnerDefaultValue) {
 function PrepDataDrawChart(SegmentType) {
 
     //start get the current selected monthKey & current Type
-    var monthkey = document.getElementById('month-key-spinner').value;
+    var monthkey = document.getElementById('month-key-spinner').value.value;
     var Type = SegmentType;
     //End
 
@@ -72,6 +82,7 @@ function PrepDataDrawChart(SegmentType) {
         },
         success: function (data) {
             am4core.useTheme(am4themes_animated);
+            am4core.useTheme(am4themes_material);
             am4core.addLicense("ch-custom-attribution");
             var chart = am4core.create("SegmentsComparisonChart", am4charts.XYChart3D);
             chart.data = data;
@@ -108,6 +119,7 @@ function PrepDataDrawChart(SegmentType) {
             function createSeries() {
 
                 Object.entries(data[0]).filter(checkForType).forEach((s) => {
+                    console.log(s);
                     console.log(s[0], s[0].replace(/([a-z0-9])([A-Z])/g, '$1 $2'))
                     var series = chart.series.push(new am4charts.ColumnSeries3D());
                     series.columns.template.width = am4core.percent(80);
@@ -147,7 +159,7 @@ function PrepDataDrawChart(SegmentType) {
 }
 function DrawCharts(SegmentType) {
     //start get the current selected monthKey & current Type
-    var monthkey = document.getElementById('month-key-spinner').value;
+    var monthkey = document.getElementById('month-key-spinner').value.value;
     var Type = SegmentType;
     //End
 
@@ -158,47 +170,11 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-
-
-            am4core.useTheme(am4themes_animated);
-            am4core.addLicense("ch-custom-attribution");
-            var chart = am4core.create("SegmentsCustCountChart", am4charts.PieChart3D);
-            chart.exporting.menu = new am4core.ExportMenu();
-            chart.exporting.menu.items = [{
-                "label": "...",
-                "menu": [
-                    { "type": "svg", "label": "Save" },
-                ]
-            }];
-            chart.legend = new am4charts.Legend();
-            chart.legend.maxHeight = 600;
-            chart.legend.maxWidth = 300;
-            chart.legend.scrollable = true;
-            chart.legend.position = "bottom";
-            chart.legend.labels.template.text = "( {name} , {SegmentDescription} ) : ({value})";
-
-            chart.data = data;
-            chart.innerRadius = am4core.percent(40);
-            var series = chart.series.push(new am4charts.PieSeries3D());
-            series.dataFields.value = "NumberOfCustomers";
-            series.dataFields.category = "SegmentSorted";
-            // Disable ticks and labels
-            series.labels.template.disabled = true;
-            series.ticks.template.disabled = true;
-            series.labels.template.fontSize = 17;
-            chart.legend.fontSize = 17;
-            series.tooltip.fontSize = 17;
-            //series.stroke = am4core.color("#000000");//red
-            //series.slices.template.stroke = am4core.color("#000000"); // red outline
-            //series.slices.template.fill = am4core.color("#00ff00"); // green fill
-
-            series.slices.template.events.on("doublehit", function (ev) {
+            console.log(data);
+            segmentCustomersChart.setdata(data);
+            segmentCustomersChart.onSeriesDbClick = (ev) => {
                 window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
-            });
-            var title = chart.titles.create();
-            title.text = "Number of Customers Per Segment";
-            title.fontSize = 25;
-            title.marginBottom = 30;
+            }
         },
 
     });
@@ -211,42 +187,13 @@ function DrawCharts(SegmentType) {
         success: function (data) {
             //display elments
 
-
-            am4core.useTheme(am4themes_animated);
-            am4core.addLicense("ch-custom-attribution");
-            var chart = am4core.create("SegmentsAlertCountChart", am4charts.PieChart3D);
-            chart.exporting.menu = new am4core.ExportMenu();
-            chart.exporting.menu.items = [{
-                "label": "...",
-                "menu": [
-                    { "type": "svg", "label": "Save" },
-                ]
-            }];
-            chart.legend = new am4charts.Legend();
-            chart.legend.maxHeight = 600;
-            chart.legend.maxWidth = 300;
-            chart.legend.scrollable = true;
-            chart.legend.position = "bottom";
-            chart.legend.labels.template.text = "({name} , {SegmentDescription} ): ({value})";
-
-            chart.data = data;
-            chart.innerRadius = am4core.percent(40);
-            var series = chart.series.push(new am4charts.PieSeries3D());
-            series.dataFields.value = "NumberOfAlerts";
-            series.dataFields.category = "SegmentSorted";
-            series.labels.template.fontSize = 17;
-            chart.legend.fontSize = 17;
-            // Disable ticks and labels
-            series.labels.template.disabled = true;
-            series.ticks.template.disabled = true;
-            series.slices.template.events.on("doublehit", function (ev) {
+            segmentAlertsChart.setdata(data);
+            segmentAlertsChart.onSeriesDbClick = (ev) => {
                 window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + Type + "&SegID=" + ev.target.dataItem.category)
-            });
+            }
+         
 
-            var title = chart.titles.create();
-            title.text = "Number of Alerts Per Segment";
-            title.fontSize = 25;
-            title.marginBottom = 30;
+          
         },
 
     });
@@ -268,9 +215,11 @@ function DrawOnMonthCharts() {
             custCountPerType.onSeriesDbClick = (ev) => {
 
 
-                makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + ev.target.dataItem.category);
-                PrepDataDrawChart(ev.target.dataItem.category);
+                //makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + ev.target.dataItem.category);
                 DrawCharts(ev.target.dataItem.category);
+                PrepDataDrawChart(ev.target.dataItem.category);
+                document.getElementById("segmentsChartsContainer").hidden = false;
+                document.getElementById("SegmentsComparisonChart").hidden = false;
 
                 // window.open("/SegmentationCharts/SingleSegmentReport?monthkey=" + selectedMonthKey + "&SegType=" + ev.target.dataItem.category )
             }
