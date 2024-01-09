@@ -16,6 +16,6 @@ namespace Data.ModelCreatingStrategies
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder);
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder);
 
-
+        public void OnFCFCORESegModelCreating(ModelBuilder modelBuilder);
     }
 }

@@ -21,6 +21,7 @@ using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCFCORE;
+using Data.FCFCORE.SEG;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -57,6 +58,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
             if (modulesToApply.Contains("SEG"))
             {
+                string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
+                _ = services.AddDbContext<FCFCORESeg>(opt => contextBuilder(opt, FCFCOREContextConnection));
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
             }
 

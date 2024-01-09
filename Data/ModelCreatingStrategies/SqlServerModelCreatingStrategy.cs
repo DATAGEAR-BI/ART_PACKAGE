@@ -7258,5 +7258,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("status");
             });
         }
+
+        public void OnFCFCORESegModelCreating(ModelBuilder modelBuilder)
+        {
+            
+        }
     }
 }

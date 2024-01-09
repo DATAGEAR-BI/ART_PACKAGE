@@ -27,7 +27,7 @@ builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
-
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
