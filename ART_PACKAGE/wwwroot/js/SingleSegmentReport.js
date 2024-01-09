@@ -1,19 +1,21 @@
-﻿
+﻿import * as core from "../lib/Plugins/amcharts_4.10.18/amcharts4/core.js"
+import * as charts from "../lib/Plugins/amcharts_4.10.18/amcharts4/charts.js";
+import * as matrial from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js";
+import * as animated from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
 
-var allTypesNames = [];
-var typesLength = 0;
 let segData = {};
 
-function draw_Stacked_Col_Chart() {
+function draw_Stacked_Col_Chart(data) {
 
     am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_material);
     am4core.addLicense("ch-custom-attribution");
     var chart = am4core.create("chartdiv", am4charts.XYChart3D);
     var title = chart.titles.create();
     title.text = "Transaction Type Amounts Comparison";
     title.fontSize = 25;
     title.marginBottom = 30;
-    chart.data = ChartData;
+    chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
     chart.exporting.menu.items = [{
         "label": "...",
@@ -119,8 +121,9 @@ function draw_Stacked_Col_Chart() {
     chart.legend.fontSize = 17;
 };
 
-function draw_Stacked_Col_Chart_Count() {
+function draw_Stacked_Col_Chart_Count(data) {
 
+    am4core.useTheme(am4themes_material);
     am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
     var chart = am4core.create("chartCountdiv", am4charts.XYChart3D);
@@ -128,7 +131,7 @@ function draw_Stacked_Col_Chart_Count() {
     title.text = "Transaction Type Counts Comparison";
     title.fontSize = 25;
     title.marginBottom = 30;
-    chart.data = ChartDataCount;
+    chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
     chart.exporting.menu.items = [{
         "label": "...",
@@ -182,230 +185,104 @@ function draw_Stacked_Col_Chart_Count() {
 
 };
 
-var ChartData = [];
-var ChartDataCount = [];
-var allTypesNames = [];
-function callCounters() {
-    // DOM Element's
-    const counters = document.querySelectorAll('.counter');
-
-    for (let n of counters) {
-        const updateCount = () => {
-            const target = + n.getAttribute('data-target');
-            const count = + n.innerText;
-            const speed = 650;
-            const inc = target / speed;
-            if (count < target) {
-                n.innerText = Math.ceil(count + inc);
-                setTimeout(updateCount, 1);
-            } else {
-                n.innerText = target;
-            }
-        }
-        updateCount();
-    };
-};
-
-function openTab(evt, TabName) {
-    //commented by Ehab Azab 23-07-2023
-    //callCounters();
-
-    allTypesNames.forEach((i) => {
-        document.getElementById(`${i}TabParent`).style.display = "none";
-        document.getElementById(`${i}`).className = document.getElementById(`${i}`).className.replace(" active", "");
-    });
-    document.getElementById(`${TabName}TabParent`).style.display = "block";
-    evt.currentTarget.className += " active";
-
-    //commented by Ehab Azab 23--7-2023
-    /*
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(TabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    */
-    //renderTabsCounter();
 
 
-};
+
 
 async function renderTabsCounter() {
-
-
-    var ActiveTab = document.querySelectorAll('.tablinks .active');
-    //console.log($('.tablinks .active')['context']['activeElement']['id']);
-    console.log("/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id);
     try {
         var res = await fetch("/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id);
+        var industryData = await (await fetch("/SegmentationCharts/ArtIndustrySegments?monthKey=" + monthkey + "&segment=" + segment_id + "&type=" + segType)).json()
+        
         segData = await res.json();
         var loaders = document.getElementsByClassName("spinner-grow");
-        console.log(segData.Types);
+        console.log(segData);
         [...loaders].forEach(l => {
             l.hidden = true
         });
-        var debitData = segData.Types.find(x=> x.name == "Wire");
+        var dataForChart = segData.Types.map( x => {
+            let obj = {};
+            obj.category = x.name;
+            obj.T_A_D = x.debit.Amt.Tot;
+            obj.L_A_D = x.debit.Amt.Min;
+            obj.M_A_D = x.debit.Amt.Max;
+            obj.T_A_D = x.debit.Amt.Avg;
+            obj.T_D_C = x.debit.Cnt.Tot;
+            obj.T_A_C = x.credit.Amt.Tot;
+            obj.L_A_C = x.credit.Amt.Min;
+            obj.M_A_C = x.credit.Amt.Max;
+            obj.A_A_C = x.credit.Amt.Avg;
+            
+            
+            return obj;
+        } )
+        
+        var countChartData = segData.Types.map( x => {
+            let obj = {};
+            obj.category = x.name;
+            obj.T_C_C = x.credit.Cnt.Tot;
+            return obj;
+        });
+
+        draw_Stacked_Col_Chart(dataForChart);
+        draw_Stacked_Col_Chart_Count(countChartData);
+        RenderDataForCharts(industryData);
+        var debitData = segData.Types.find(x=> x.name == "Wire").debit;
+        var creditData = segData.Types.find(x=> x.name == "Wire").credit;
         
         var aggs = [...document.querySelectorAll("p.aggText")]
-        console.log(debitData)
-        aggs.find(x=>x.id == "D-total").innerText = debitData.Amt.Tot;
         
+            
+        // debit
+        aggs.find(x=>x.id == "D-total").innerText = debitData.Amt.Tot;
+        aggs.find(x=>x.id == "D-min").innerText = debitData.Amt.Max;
+        aggs.find(x=>x.id == "D-max").innerText = debitData.Amt.Min;
+        aggs.find(x=>x.id == "D-avg").innerText = debitData.Amt.Avg;
+        aggs.find(x=>x.id == "D-Tcount").innerText = debitData.Cnt.Tot;
+        
+        // credit
+        aggs.find(x=>x.id == "C-total").innerText = creditData.Amt.Tot;
+        aggs.find(x=>x.id == "C-min").innerText = creditData.Amt.Max;
+        aggs.find(x=>x.id == "C-max").innerText = creditData.Amt.Min;
+        aggs.find(x=>x.id == "C-avg").innerText = creditData.Amt.Avg;
+        aggs.find(x=>x.id == "C-Tcount").innerText = creditData.Cnt.Tot;
+        
+        
+        var buttons = document.querySelectorAll("button[role='tab']");
+        
+        buttons.forEach(b => {
+            b.addEventListener('click' , e => {
+                var type = e.target.parentElement.dataset.aggcat;
+                var debitData = segData.Types.find(x=> x.name == type).debit;
+                var creditData = segData.Types.find(x=> x.name == type).credit;
+                // debit
+                aggs.find(x=>x.id == "D-total").innerText = debitData.Amt.Tot ?? 0;
+                aggs.find(x=>x.id == "D-min").innerText = debitData.Amt.Max ?? 0;
+                aggs.find(x=>x.id == "D-max").innerText = debitData.Amt.Min ?? 0;
+                aggs.find(x=>x.id == "D-avg").innerText = debitData.Amt.Avg ?? 0;
+                aggs.find(x=>x.id == "D-Tcount").innerText = debitData.Cnt.Tot ?? 0;
+
+                // credit
+                aggs.find(x=>x.id == "C-total").innerText = creditData.Amt.Tot ?? 0;
+                aggs.find(x=>x.id == "C-min").innerText = creditData.Amt.Max ?? 0;
+                aggs.find(x=>x.id == "C-max").innerText = creditData.Amt.Min ?? 0;
+                aggs.find(x=>x.id == "C-avg").innerText = creditData.Amt.Avg ?? 0;
+                aggs.find(x=>x.id == "C-Tcount").innerText = creditData.Cnt.Tot ?? 0;
+            })
+        })
+        console.log(buttons)
         
     }catch (err){
         console.error(err)
     }
   
     
-    // $.ajax({
-    //     type: "GET",
-    //     url: "/SegmentationCharts/DataForTabs?monthKey=" + monthkey + "&segment=" + segment_id,
-    //     data: {
-    //     },
-    //     success: function (data) {
-    //
-    //         //replace null with 0 
-    //         console.log("seg data", data);
-    //         segData = data;
-    //
-    //         /*data[.forEach(function (myObj) {
-    //             for (let prop in myObj) {
-    //                 myObj[prop] = myObj[prop] === null ? 0 : myObj[prop];
-    //             }
-    //         });*/
-    //         document.getElementById("TabsButtonsContainer").innerHTML = "";
-    //         document.getElementById("tabContentContainer").innerHTML = "";
-    //         ChartData = [];
-    //         ChartDataCount = [];
-    //
-    //         typesLength = data["Types"].length;
-    //         data["Types"].forEach((obj) => {
-    //             allTypesNames.push(obj["name"]);
-    //             createTap(obj);
-    //         });
-    //         document.getElementById("TabsID").style.display = "block";
-    //
-    //
-    //     }
-    // });
+    
 
 }
-function createTap(typeObj) {
-    console.log(typeObj);
-    var buttonOfTabString = `<button class="tablinks col-sm-1 container-fluid" style="color:#013459; text-align: center; font-weight: 600; width: ${100 / typesLength}%;" id="${typeObj["name"]}" onclick="openTab(event, '${typeObj["name"]}')">${typeObj["name"]}</button>`;
-    const TabsButtonsContainerDiv = document.getElementById("TabsButtonsContainer");
-    TabsButtonsContainerDiv.innerHTML += buttonOfTabString;
-
-    var tabsDivString = `
-        <div id="${typeObj["name"]}TabParent" class="tabcontent"style=";display:none;">
-            <section class="counters text-center" style="font-size:16px;" id="${typeObj["name"]}TabContainer">
-                
-            <div class="" id="${typeObj["name"]}Tab"></div>
-            </section>
-        </div>
-    `;
-    const tabsDiv = document.getElementById("tabContentContainer");
-    tabsDiv.innerHTML += tabsDivString;
-    var debitFlag = false;
-    var Type_Data = {
-        "category": `${typeObj["name"]}`
-    }
-    var Type_Data_Count = {
-        "category": `${typeObj["name"]}`
-    }
-    const tabDiv = document.getElementById(`${typeObj["name"]}Tab`);
-    if (Object.entries(typeObj["debit"]["Cnt"]).length !== 0) {
-        Type_Data["T_A_D"] = typeObj["debit"]["Amt"]["Tot"];
-        Type_Data["L_A_D"] = typeObj["debit"]["Amt"]["Min"];
-        Type_Data["M_A_D"] = typeObj["debit"]["Amt"]["Max"];
-        Type_Data["A_A_D"] = typeObj["debit"]["Amt"]["Avg"];
-        Type_Data_Count["T_D_C"] = typeObj["debit"]["Cnt"]["Tot"];
-        debitFlag = true;
-        var debitDivString = `
-            <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Debit: </h4>
-            <div class="row">
-                <div class='col-md-1'>
-                    <h4>Total</h4>
-                    <div class='counter' id="Tot_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Tot"]}</div>
-                </div>
-                <div class='col-md-3'>
-                    <h4>Lowest Amount</h4>
-                    <div class='counter' id="Min_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Min"]}</div>
-                </div>
-                <div class="col-md-3">
-                    <h4>Average Amount</h4>
-                    <div class="counter" id="Avg_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Avg"]}</div>
-                </div>
-                <div class="col-md-3">
-                    <h4>Highest Amount</h4>
-                    <div class="counter" id="Max_${typeObj["name"]}_D_Amt">${typeObj["debit"]["Amt"]["Max"]}</div>
-                </div>
-                <div class="col-md-1">
-                    <h4>Count</h4>
-                    <div class="counter" id="Tot_${typeObj["name"]}_D_Cnt">${typeObj["debit"]["Cnt"]["Tot"]}</div>
-                </div>
-            </div>
-         `;
-        tabDiv.innerHTML += debitDivString;
-    }
-    if (Object.entries(typeObj["credit"]["Cnt"]).length !== 0) {
-        Type_Data["T_A_C"] = typeObj["credit"]["Amt"]["Tot"];
-        Type_Data["L_A_C"] = typeObj["credit"]["Amt"]["Min"];
-        Type_Data["M_A_C"] = typeObj["credit"]["Amt"]["Max"];
-        Type_Data["A_A_C"] = typeObj["credit"]["Amt"]["Avg"];
-        Type_Data_Count["T_C_C"] = typeObj["credit"]["Cnt"]["Tot"];
-        if (debitFlag) {
-            var hrElementString = `<hr style="border:3px ;border-top: 3px solid #013459 ">`;
-            tabDiv.innerHTML += hrElementString;
-        }
-        var creditDivString = `
-            <h4 style="color: #013459; text-align: left; font-weight: 600; font-style: italic "> Credit: </h4>
-            <div class="row">
-               <div class='col-md-1'>
-                    <h4>Total</h4>
-                    <div class='counter' id="Tot_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Tot"]}</div>
-                </div>
-                <div class='col-md-3'>
-                    <h4>Lowest Amount</h4>
-                    <div class='counter' id="Min_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Min"]}</div>
-                </div>
-                <div class="col-md-3">
-                    <h4>Average Amount</h4>
-                    <div class="counter" id="Avg_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Avg"]}</div>
-                </div>
-                <div class="col-md-3">
-                    <h4>Highest Amount</h4>
-                    <div class="counter" id="Max_${typeObj["name"]}_C_Amt">${typeObj["credit"]["Amt"]["Max"]}</div>
-                </div>
-                <div class="col-md-1">
-                    <h4>Count</h4>
-                    <div class="counter" id="Tot_${typeObj["name"]}_C_Cnt">${typeObj["credit"]["Cnt"]["Tot"]}</div>
-                </div>
-            </div>`;
-        tabDiv.innerHTML += creditDivString;
-    }
-    console.log(ChartData);
-    ChartData.push(Type_Data);
-    ChartDataCount.push(Type_Data_Count);
-}
-function RenderDataForCharts() {
-    //var monthkey = '@ViewBag.monthkey';
-    //var segment_id = '@ViewBag.SegID';
-    //var segType = '@ViewBag.SegType';
-    console.log(segType);
-    $.ajax({
-        type: "GET",
-        url: "/SegmentationCharts/ArtIndustrySegments?monthKey=" + monthkey + "&segment=" + segment_id + "&type=" + segType,
-        data: {
-        },
-        success: function (data) {
-
+function RenderDataForCharts(data) {
             am4core.useTheme(am4themes_animated);
+            am4core.useTheme(am4themes_material);
             am4core.addLicense("ch-custom-attribution");
             var chart = am4core.create("IndustrySegmentChart", am4charts.XYChart3D);
             var title = chart.titles.create();
@@ -477,18 +354,8 @@ function RenderDataForCharts() {
             chart.scrollbarX = new am4core.Scrollbar();
             chart.legend.fontSize = 17;
 
-        }
-    });
+        
+  
 }
-
-    renderTabsCounter().then(x=>  console.log("done") );
-
-    // setTimeout(function () {
-    //     $("#chartdiv").show()
-    //     $("#chartCountdiv").show()
-    //     $("#IndustrySegmentChart").show()
-    //     draw_Stacked_Col_Chart();
-    //     draw_Stacked_Col_Chart_Count();
-    //     RenderDataForCharts();
-    // }, 1500);
+renderTabsCounter().then(x=>  console.log("done") );
 

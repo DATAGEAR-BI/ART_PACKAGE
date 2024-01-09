@@ -4,24 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+    
 
 
-    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-    <script src="~/lib/Plugins/CustomPlugin/CustomKendoChartsScript.js"></script>
-    <script src="~/js/purecounter.js"></script>
-    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/candlestick-chart/index.css" />
-    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/stacked-3D-column-chart/index.css" />
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-    <link href="~/css/segmentreport.css" rel="stylesheet" />
-
-
-
+<div id="report-header" style="text-align:center">
+    <h3>Monthly Segment Report</h3>
+    <h3>
+        Segment (<strong>@ViewBag.SegID</strong>)'s Report for Month (<strong>@ViewBag.monthkey    </strong>)  .
+        <button class="btn btn-primary" onclick="AnotherSegment()"> Another Segment ?</button>
+    </h3>
+    <script>
+        function AnotherSegment() {
+            window.location.replace("/SegmentationCharts/SegmentReport");
+        }
+    </script>
+</div>
 <ul class="nav nav-tabs nav-justified" role="tablist">
     <li class="nav-item active" role="presentation">
         <button class="nav-link " data-bs-toggle="tab" role="tab" data-aggCat="Wire" data-bs-target="#aggs">
@@ -69,11 +66,11 @@
 <!-- Tab Panes -->
 <div class="tab-content">
     <div class="tab-pane container-fluid active row" role="tabpanel" id="aggs">
-        <div class="row d-flex justify-content-around align-items-center">
+        <div class="row d-flex justify-content-around align-items-center my-3">
             <p class="col-1 text-center text-uppercase fs-4" >Debit:</p>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Total</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="D-total"></p>
@@ -82,7 +79,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Minimum</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="D-min"></p>
@@ -91,7 +88,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Maximum</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="D-max"></p>
@@ -100,7 +97,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Average</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="D-avg"></p>
@@ -109,7 +106,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Total Count</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="D-Tcount"></p>
@@ -118,11 +115,11 @@
             </div>
         </div>
         <hr class="col-12 my-2">
-        <div class="row d-flex justify-content-around align-items-center">
+        <div class="row d-flex justify-content-around align-items-center my-3">
             <p class="col-1 text-center text-uppercase fs-4" >Credit:</p>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Total</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="C-total"></p>
@@ -131,7 +128,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Minimum</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="C-min"></p>
@@ -140,7 +137,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Maximum</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="C-max"></p>
@@ -149,7 +146,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Average</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div>
                         <p class="aggText" id="C-avg"></p>
@@ -158,7 +155,7 @@
             </div>
             <div class="card border border-primary col-2">
                 <div class="card-body">
-                    <h4 class="card-title text-primary">Unlimited Music</h4>
+                    <h4 class="card-title text-primary">Total Count</h4>
                     <p class="card-text">
                         <div class="spinner-grow text-primary"></div><p class="aggText" id="C-Tcount"></p>
                     </p>
@@ -170,28 +167,17 @@
 
 
 
-<div id="report-header" style="text-align:center">
-    <h3>Monthly Segment Report</h3>
-    <h3>
-        Segment (<strong>@ViewBag.SegID</strong>)'s Report for Month (<strong>@ViewBag.monthkey    </strong>)  .
-        <button class="btn btn-primary" onclick="AnotherSegment()"> Another Segment ?</button>
-    </h3>
-    <script>
-        function AnotherSegment() {
-            window.location.replace("/SegmentationCharts/SegmentReport");
-        }
-    </script>
-</div>
+
 
 
 <div id="charts-container" class="text-center">
     <div class="row top-buffer">
         <div>
-            <div id="chartdiv" style="height:600px" hidden></div>
+            <div id="chartdiv" style="height:600px"></div>
             <hr>
-            <div id="chartCountdiv" style="height:500px" hidden></div>
+            <div id="chartCountdiv" style="height:500px"></div>
             <hr>
-            <div id="IndustrySegmentChart" style="height:700px" hidden></div>
+            <div id="IndustrySegmentChart" style="height:700px"></div>
         </div>
         <br>
         <br>
@@ -212,8 +198,7 @@
             new materialstyle.MaterialTab(tab)
         })
     </script>
-    <script src="~/lib/smartcomponents/source/modules/smart.pivottable.js"></script>
-    <script src="~/js/singlesegmentreport.js"></script>
+    <script src="~/js/singlesegmentreport.js" type="module"></script>
 }
 
 
