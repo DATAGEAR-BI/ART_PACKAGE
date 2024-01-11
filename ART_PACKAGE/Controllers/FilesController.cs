@@ -12,13 +12,6 @@ namespace ART_PACKAGE.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-
         [HttpGet("[controller]/[action]/{folder}")]
         //[HttpGet]
         public async Task<IActionResult> DownloadCsvFiles(string folder)

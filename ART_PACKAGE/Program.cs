@@ -83,7 +83,7 @@ builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
-IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
+
 
 
 
@@ -100,7 +100,7 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 WebApplication app = builder.Build();
 
-//app.ApplyModulesMigrations();
+app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();
 

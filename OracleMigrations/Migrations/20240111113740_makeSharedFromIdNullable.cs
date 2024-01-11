@@ -1,0 +1,112 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace OracleMigrations.Migrations
+{
+    public partial class makeSharedFromIdNullable : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropIndex(
+                name: "IX_UserReport_SharedFromId",
+                table: "UserReport");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "SharedFromId",
+                table: "UserReport",
+                type: "NVARCHAR2(2000)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "NVARCHAR2(450)");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
+                column: "ConcurrencyStamp",
+                value: "933facd1-bcf2-4030-aa4c-5b6e3c687336");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
+                column: "ConcurrencyStamp",
+                value: "6d874ca3-a453-4a85-905c-2adbc94ef71c");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "e60411ee-1127-4f5e-8f03-367ef13017a6",
+                column: "ConcurrencyStamp",
+                value: "50fdef2c-1f61-4c8d-ba0f-23233c915774");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "f96288d4-8936-4fb1-8427-d5b45dd66023",
+                column: "ConcurrencyStamp",
+                value: "48e87a59-9d87-4a4c-bc65-e85916940d12");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "1f207f24-0272-4d69-a68d-a5e03ef2b071", "AQAAAAEAACcQAAAAEC1V7uF3uIgVYnJS/p8cpkU6/4jUNAlTnoSalBJ7tJFV/WA2U4GuNtZa7Ej+3eugDQ==", "98c628a0-073e-4a28-99f8-498d1aa6814e" });
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "SharedFromId",
+                table: "UserReport",
+                type: "NVARCHAR2(450)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "NVARCHAR2(2000)",
+                oldNullable: true);
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
+                column: "ConcurrencyStamp",
+                value: "a80fb8a2-099e-43eb-956a-e86185d741d5");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
+                column: "ConcurrencyStamp",
+                value: "b80523e0-50fb-48fa-bede-8c7e5ac41040");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "e60411ee-1127-4f5e-8f03-367ef13017a6",
+                column: "ConcurrencyStamp",
+                value: "23824caa-5721-4f9a-9920-f01f3826e2bd");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "f96288d4-8936-4fb1-8427-d5b45dd66023",
+                column: "ConcurrencyStamp",
+                value: "fd732364-accf-41df-819b-fdfe2fd6da25");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "49870ecb-10e5-43ff-acbf-34f61734bf9c", "AQAAAAEAACcQAAAAEKWaqIoOD73wkSjrklI81pcyOxpDlj1WbcsoKTWtQam7L2w1sl96+aVN6sBlFEvACg==", "d44192b7-d1e3-410d-991e-d0e474637cab" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserReport_SharedFromId",
+                table: "UserReport",
+                column: "SharedFromId");
+        }
+    }
+}

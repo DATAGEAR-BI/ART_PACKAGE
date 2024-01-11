@@ -3,6 +3,7 @@ using System;
 using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace OracleMigrations.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    partial class AuthContextModelSnapshot : ModelSnapshot
+    [Migration("20240109124902_manyTomanyRelationForReports")]
+    partial class manyTomanyRelationForReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace OracleMigrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AppUserArtSavedCustomReport", b =>
+                {
+                    b.Property<int>("ReportsId")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.HasKey("ReportsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("AppUserArtSavedCustomReport");
+                });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.AppUser", b =>
                 {
@@ -95,15 +112,15 @@ namespace OracleMigrations.Migrations
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
                             Active = true,
-                            ConcurrencyStamp = "894dac60-80b7-4fe4-a5c1-1224c70700c8",
+                            ConcurrencyStamp = "d274a869-e17b-46b2-9395-5d7950511045",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAsRLDyP20IxtSLbqblE9gZrtcTyA/eg/GKmfh9vsia/bZmuQSGga5hFdQPXVXu3Eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMZNNUy8f4iwfGx2m3IFVzfW1E/Oo6JT/FwFZcjItRaOxrepxqz4HZLlFPb/a+h79g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "07091d2b-367e-4a0c-8668-9645aff339f4",
+                            SecurityStamp = "322e9327-6af3-4c11-a58a-b3e2ce3475c9",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -135,6 +152,10 @@ namespace OracleMigrations.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
@@ -831,27 +852,6 @@ namespace OracleMigrations.Migrations
                     b.ToView("LIST_OF_USERS_ROLES", "ART_DB");
                 });
 
-            modelBuilder.Entity("Data.Data.UserReport", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("NVARCHAR2(450)");
-
-                    b.Property<string>("SharedFromId")
-                        .HasColumnType("NVARCHAR2(450)");
-
-                    b.Property<string>("ShareMessage")
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.HasKey("ReportId", "UserId", "SharedFromId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserReport");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -882,28 +882,28 @@ namespace OracleMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "c22354f3-62a7-452e-9d4e-fae7031b734d",
+                            ConcurrencyStamp = "0274db94-bb39-440e-b170-6e52badd14a2",
                             Name = "art_home",
                             NormalizedName = "ART_HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "0b9ddd6f-4bb2-40bc-93aa-a4f6ec0a46a2",
+                            ConcurrencyStamp = "f5384d18-bd53-42f1-adb4-240e318fc091",
                             Name = "art_customreport",
                             NormalizedName = "ART_CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "e2ec8018-74ec-40d7-afd1-1a59b0ed7a54",
+                            ConcurrencyStamp = "41928dc7-7028-45a2-865e-897d1cb68d8a",
                             Name = "art_admin",
                             NormalizedName = "ART_ADMIN"
                         },
                         new
                         {
                             Id = "f96288d4-8936-4fb1-8427-d5b45dd66023",
-                            ConcurrencyStamp = "66c34ab5-f99b-4b3e-909f-94ae05417821",
+                            ConcurrencyStamp = "c14db2eb-e03c-4b01-88a1-2d47d6679766",
                             Name = "art_superadmin",
                             NormalizedName = "ART_SUPERADMIN"
                         });
@@ -1041,6 +1041,21 @@ namespace OracleMigrations.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AppUserArtSavedCustomReport", b =>
+                {
+                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", null)
+                        .WithMany()
+                        .HasForeignKey("ReportsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsChart", b =>
                 {
                     b.HasOne("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", "Report")
@@ -1061,25 +1076,6 @@ namespace OracleMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("Data.Data.UserReport", b =>
-                {
-                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", "Report")
-                        .WithMany("UserReports")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.AppUser", "User")
-                        .WithMany("UserReports")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Report");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1133,18 +1129,11 @@ namespace OracleMigrations.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.AppUser", b =>
-                {
-                    b.Navigation("UserReports");
-                });
-
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", b =>
                 {
                     b.Navigation("Charts");
 
                     b.Navigation("Columns");
-
-                    b.Navigation("UserReports");
                 });
 #pragma warning restore 612, 618
         }

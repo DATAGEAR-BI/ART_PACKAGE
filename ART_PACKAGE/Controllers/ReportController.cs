@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
+using Data.Data;
+using NuGet.Packaging;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
@@ -163,7 +165,31 @@ namespace ART_PACKAGE.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> ShareReport([FromBody] ShareReportDto shareRequest)
+        {
+            IQueryable<AppUser> users = userManager.Users.Where(x => shareRequest.Recievers.Contains(x.Email));
+            string currentUserId = userManager.GetUserId(User);
 
+            ArtSavedCustomReport? report = db.ArtSavedCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == shareRequest.ReportId);
+
+            if (report is null)
+                return BadRequest();
+
+            IQueryable<UserReport> usersreports = users.Select(x => new UserReport()
+            {
+                ReportId = report.Id,
+                ShareMessage = shareRequest.ShareMessage,
+                SharedFromId = currentUserId,
+                UserId = x.Id
+            });
+
+            usersreports.Append(new UserReport() { ReportId = report.Id, UserId = currentUserId, SharedFromId = null });
+
+            report.UserReports.AddRange(usersreports.ToList());
+            db.SaveChanges();
+            return Ok();
+        }
 
 
 
@@ -215,14 +241,12 @@ namespace ART_PACKAGE.Controllers
         public IActionResult GetMyReportsData([FromBody] KendoRequest obj)
         {
             string user = userManager.GetUserId(User);
-            IQueryable<ArtSavedCustomReport> alerts = db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Charts).Where(x => x.UserId == user);
-
-
-
+            IQueryable<ArtSavedCustomReport> alerts =
+                db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Charts);
             List<string> skipList = new()
             {
-                  nameof(ArtSavedCustomReport.User),
-                  nameof(ArtSavedCustomReport.UserId),
+                  nameof(ArtSavedCustomReport.Users),
+
                 nameof(ArtSavedCustomReport.Schema)
             };
 
@@ -286,14 +310,15 @@ namespace ART_PACKAGE.Controllers
                 ReportId = report.Id
             }).ToList();
 
-            report.UserId = userManager.GetUserId(User);
+            AppUser owner = await userManager.GetUserAsync(User);
+            report.Users.Add(owner);
             report.Charts = charts;
             report.Columns = columns;
 
             _ = db.Add(report);
             _ = db.SaveChanges();
 
-            ArtSavedCustomReport? reportAfter = db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.User).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
+            ArtSavedCustomReport? reportAfter = db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Users).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
 
             return Ok(reportAfter);
         }

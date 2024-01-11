@@ -12,6 +12,7 @@ namespace ART_PACKAGE.Controllers
     {
         protected readonly IGridConstructor<TContext, TModel> _gridConstructor;
         protected Expression<Func<TModel, bool>>? baseCondition;
+        protected IEnumerable<Expression<Func<TModel, object>>>? includes;
 
         protected BaseReportController(IGridConstructor<TContext, TModel> gridConstructor)
         {
@@ -36,11 +37,11 @@ namespace ART_PACKAGE.Controllers
             else
             {
 
-                GridResult<TModel> res = _gridConstructor.GetGridData(request, baseCondition);
+                GridResult<TModel> res = _gridConstructor.GetGridData(request, baseCondition, includes);
                 return new ContentResult
                 {
                     ContentType = "application/json",
-                    Content = JsonConvert.SerializeObject(res)
+                    Content = JsonConvert.SerializeObject(res, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
                 };
             }
         }

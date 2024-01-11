@@ -20,10 +20,7 @@ namespace ART_PACKAGE.Controllers.SEG
             _segContext = segContext;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+
 
 
         public IActionResult ReadData()

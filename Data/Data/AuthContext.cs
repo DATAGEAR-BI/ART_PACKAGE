@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
+using Data.Data;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -54,10 +55,14 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtSavedCustomReport>(e =>
         {
             e.ToTable("ArtSavedCustomReport");
-            e.HasOne<AppUser>(e => e.User)
+            e.HasMany<AppUser>(e => e.Users)
                 .WithMany(r => r.Reports)
-                .HasForeignKey(x => x.UserId);
-
+                .UsingEntity<UserReport>(ur =>
+                {
+                    ur.HasKey(i => new { i.ReportId, i.UserId  , i.SharedFromId});
+                    ur.HasOne<AppUser>(e => e.User).WithMany(e => e.UserReports).HasForeignKey(e => e.UserId);
+                    ur.HasOne<ArtSavedCustomReport>(e => e.Report).WithMany(e => e.UserReports).HasForeignKey(e => e.ReportId);
+                });
         });
 
 

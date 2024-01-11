@@ -15,9 +15,7 @@ var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
 
 
-TableSelect.intialize([document.createElement("option")]);
-ColumnsSelect.intialize([document.createElement("option")]);
-ChartColumnSelect.intialize([document.createElement("option")]);
+
 reportTitle.intialize();
 chartTitle.intialize();
 reportDesc.intialize();
@@ -28,7 +26,7 @@ fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
         opt.innerText = o.text;
         return opt;
     });
-    SchemaSelect.intialize(options);
+    SchemaSelect.update([document.createElement("option"),... options]);
 
 });
 fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
@@ -38,7 +36,7 @@ fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
         opt.innerText = o.text;
         return opt;
     });
-    ChartColumnTypeSelect.intialize(options);
+    ChartColumnTypeSelect.update([document.createElement("option"),... options]);
 
 });
 
@@ -53,7 +51,7 @@ ShcemaSelect.onchange = (e) => {
                 opt.value = elm.vieW_NAME;
                 return opt;
             });
-            TableSelect.update(options);
+            TableSelect.update([document.createElement("option"),... options]);
 
         });
     }
@@ -67,7 +65,7 @@ TableSelect.onSelectChange = async (e) => {
     var selected = TableSelect.value;
     var type = selected.dataset.type;
     var view = selected.value;
-    var schemaVal = parseInt(ShcemaSelect.value);
+    var schemaVal = parseInt(ShcemaSelect.value.value);
     var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}/${type}`, null, "GET");
 
     var options = columns.map(elm => {
@@ -81,7 +79,7 @@ TableSelect.onSelectChange = async (e) => {
 
     var clonedOptions = [...options].map(x => x.cloneNode(true));
 
-    ColumnsSelect.update(options);
+    ColumnsSelect.update([document.createElement("option"),... options]);
     ChartColumnSelect.update([document.createElement("option"),...clonedOptions]);
 
 }

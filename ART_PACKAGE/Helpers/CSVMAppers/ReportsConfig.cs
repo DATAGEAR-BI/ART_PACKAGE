@@ -217,17 +217,18 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     }
             },
             {
-    nameof(ReportController).ToLower(),new ReportConfig
+    nameof(MyReportsController).ToLower(),new ReportConfig
     {
-        SkipList = new List<string>()
-            {
-                  nameof(ArtSavedCustomReport.User),
-                  nameof(ArtSavedCustomReport.UserId),
-                nameof(ArtSavedCustomReport.Schema),
-                nameof(ArtSavedCustomReport.Columns),
-                nameof(ArtSavedCustomReport.Charts),
+                SkipList = new List<string>()
+                    {
+                        nameof(ArtSavedCustomReport.Users),
+                        nameof(ArtSavedCustomReport.Schema),
+                        nameof(ArtSavedCustomReport.Columns),
+                        nameof(ArtSavedCustomReport.Charts),
+                        nameof(ArtSavedCustomReport.UserReports),
 
-            }
+                    }
+                ,ContainsActions = true, Actions = new List<GridButton>() {new GridButton(){text = "Show" , action = "GoToReportDetails" , icon = "k-i-redo"},new GridButton() {text = "Share" , action = "shareReport" , icon="k-i-share"}  }
     }
             },
             {

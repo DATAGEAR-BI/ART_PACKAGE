@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shareModalLabel">Report Share</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="sharetitle"></p>
+        <form>
+          <div class="mb-3">
+            <m-select id="recievers" data-searchable data-title="Recipients" style="width:100%" data-multiple></m-select>
+          </div>
+          <div class="mb-3">
+            <m-areainput id="shareMessage" dat-palceholder="Share Message" data-title="Share Message"></m-areainput>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="shareBtn">Share</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<m-grid id="riskassessment" data-urlkey="MyReports"></m-grid>
+<input type='hidden' id='uid' readonly="readonly" runat='server' value="@User.Identity.Name">
+@section Scripts{
+  <script src="~/js/components/textareainput/textareainput.js"></script>
+    <script src="~/js/components/multiselect/select.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}

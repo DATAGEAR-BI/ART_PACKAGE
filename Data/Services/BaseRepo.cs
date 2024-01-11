@@ -41,7 +41,7 @@ namespace Data.Services
 
 
 
-        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null)
+        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)
@@ -49,7 +49,13 @@ namespace Data.Services
             else
                 data = ExcueteProc(request.QueryBuilderFilters);
 
-
+            if (includes is not null)
+            {
+                foreach (var inculde in includes)
+                {
+                    data = data.Include(inculde);
+                }
+            }
 
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
 

@@ -3,6 +3,7 @@ using System;
 using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace OracleMigrations.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    partial class AuthContextModelSnapshot : ModelSnapshot
+    [Migration("20240111113740_makeSharedFromIdNullable")]
+    partial class makeSharedFromIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,15 +97,15 @@ namespace OracleMigrations.Migrations
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
                             Active = true,
-                            ConcurrencyStamp = "894dac60-80b7-4fe4-a5c1-1224c70700c8",
+                            ConcurrencyStamp = "1f207f24-0272-4d69-a68d-a5e03ef2b071",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAsRLDyP20IxtSLbqblE9gZrtcTyA/eg/GKmfh9vsia/bZmuQSGga5hFdQPXVXu3Eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC1V7uF3uIgVYnJS/p8cpkU6/4jUNAlTnoSalBJ7tJFV/WA2U4GuNtZa7Ej+3eugDQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "07091d2b-367e-4a0c-8668-9645aff339f4",
+                            SecurityStamp = "98c628a0-073e-4a28-99f8-498d1aa6814e",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -839,13 +841,14 @@ namespace OracleMigrations.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("NVARCHAR2(450)");
 
-                    b.Property<string>("SharedFromId")
-                        .HasColumnType("NVARCHAR2(450)");
-
                     b.Property<string>("ShareMessage")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("ReportId", "UserId", "SharedFromId");
+                    b.Property<string>("SharedFromId")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("ReportId", "UserId");
 
                     b.HasIndex("UserId");
 
@@ -882,28 +885,28 @@ namespace OracleMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "c22354f3-62a7-452e-9d4e-fae7031b734d",
+                            ConcurrencyStamp = "50fdef2c-1f61-4c8d-ba0f-23233c915774",
                             Name = "art_home",
                             NormalizedName = "ART_HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "0b9ddd6f-4bb2-40bc-93aa-a4f6ec0a46a2",
+                            ConcurrencyStamp = "933facd1-bcf2-4030-aa4c-5b6e3c687336",
                             Name = "art_customreport",
                             NormalizedName = "ART_CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "e2ec8018-74ec-40d7-afd1-1a59b0ed7a54",
+                            ConcurrencyStamp = "6d874ca3-a453-4a85-905c-2adbc94ef71c",
                             Name = "art_admin",
                             NormalizedName = "ART_ADMIN"
                         },
                         new
                         {
                             Id = "f96288d4-8936-4fb1-8427-d5b45dd66023",
-                            ConcurrencyStamp = "66c34ab5-f99b-4b3e-909f-94ae05417821",
+                            ConcurrencyStamp = "48e87a59-9d87-4a4c-bc65-e85916940d12",
                             Name = "art_superadmin",
                             NormalizedName = "ART_SUPERADMIN"
                         });

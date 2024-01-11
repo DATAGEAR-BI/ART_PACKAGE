@@ -95,9 +95,9 @@ namespace ART_PACKAGE.Helpers.Grid
             return conf;
         }
 
-        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition)
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
-            GridResult<TModel> dataRes = Repo.GetGridData(request);
+            GridResult<TModel> dataRes = Repo.GetGridData(request, includes: includes);
             if (baseCondition is not null)
             {
                 dataRes.data = dataRes.data?.Where(baseCondition);

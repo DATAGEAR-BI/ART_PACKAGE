@@ -2,7 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
-import { Actions } from "../../GridConfigration/GridActions.js"
+import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
@@ -392,13 +392,21 @@ class Grid extends HTMLElement {
         });
 
         if (containsActions) {
-            console.log(actions);
-            var actionsBtns = [...actions].map(x => ({
+            console.log(ActionsConditions)
+            var actionsBtns = [];
+             [...actions].forEach(x => {
+                 let cond = ActionsConditions[x.action] ?? function (dt) {
+                     return true
+                 }
+                 let act = {
 
-                name: x.text,
-                iconClass: `k-icon ${x.icon}`,
-                click: (e) => Actions[x.action](e, this.gridDiv)
-            }));
+                        name: x.text,
+                        iconClass: `k-icon ${x.icon}`,
+                        click: (e) => Actions[x.action](e, this.gridDiv),
+                        visible: cond,
+                }
+                actionsBtns.push(act);
+             });
             cols = [
                 ...cols,
                 {
@@ -616,7 +624,6 @@ class Grid extends HTMLElement {
             noRecords: true,
             persistSelection: true,
             pageable: true,
-            sortable: true,
 
             change: (e) => {
                 if ([...grid.select()].length > 0) {
