@@ -27,11 +27,11 @@
                 </div>
             </div>
         </div>
-        <m-pie-chart id="SystemPerformancePerStatus" data-dataurlkey="SystemPerformancePerStatus" data-filterbuilderid="querybuilder" data-title="Cases Per Status" data-category="CASE_STATUS" data-value="TOTAL_NUMBER_OF_CASES" style="height:600px"></m-pie-chart>
-        <m-pie-chart id="SystemPerformancePerType" data-dataurlkey="SystemPerformancePerType" data-filterbuilderid="querybuilder" data-title="Cases Per Type" data-category="CASE_TYPE" data-value="TOTAL_NUMBER_OF_CASES" style="height:600px"></m-pie-chart>
+        <m-donut-chart id="SystemPerformancePerStatus" data-dataurlkey="SystemPerformancePerStatus" data-filterbuilderid="querybuilder" data-title="Cases Per Status" data-category="CASE_STATUS" data-value="TOTAL_NUMBER_OF_CASES" style="height:600px"></m-donut-chart>
+        <m-donut-chart id="SystemPerformancePerType" data-dataurlkey="SystemPerformancePerType" data-filterbuilderid="querybuilder" data-title="Cases Per Type" data-category="CASE_TYPE" data-value="TOTAL_NUMBER_OF_CASES" style="height:600px"></m-donut-chart>
         @if (dbType == DbTypes.SqlServer)
         {
-            <m-pie-chart id="SystemPerformancePerDirection" data-dataurlkey="SystemPerformancePerDirection" data-filterbuilderid="querybuilder" data-title="Swift Cases Per Direction" data-category="TOTAL_NUMBER_OF_CASES" data-value="ALERTS_CNT_SUM" style="height:600px"></m-pie-chart>
+            <m-donut-chart id="SystemPerformancePerDirection" data-dataurlkey="SystemPerformancePerDirection" data-filterbuilderid="querybuilder" data-title="Swift Cases Per Direction" data-category="TOTAL_NUMBER_OF_CASES" data-value="ALERTS_CNT_SUM" style="height:600px"></m-donut-chart>
 
         }
 
