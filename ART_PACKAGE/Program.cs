@@ -1,6 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
-using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Chart;
 using ART_PACKAGE.Helpers.ContextPerReport;
@@ -101,7 +100,7 @@ WebApplication app = builder.Build();
 
 //app.ApplyModulesMigrations();
 
-app.SeedModuleRoles();
+//app.SeedModuleRoles();
 
 //app.StartTasks();
 
