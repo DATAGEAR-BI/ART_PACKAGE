@@ -22,12 +22,29 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         private readonly IDropDownService _dropDown;
         private readonly FTIContext fti;
         private readonly ArtDgAmlContext artDgaml_;
-
-        public DropDownMapper(IDropDownService dropDown, FTIContext fTI, ArtDgAmlContext artDgaml)
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        public DropDownMapper(IDropDownService dropDown, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
+            _serviceScopeFactory = serviceScopeFactory;
+            _configuration = configuration;
+            List<string>? modules = _configuration.GetSection("Modules").Get<List<string>>();
             _dropDown = dropDown;
-            fti = fTI;
-            artDgaml_ = artDgaml;
+
+
+
+            if (modules.Contains("FTI"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                FTIContext ti = scope.ServiceProvider.GetRequiredService<FTIContext>();
+                fti = ti;
+            }
+            if (modules.Contains("DGAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgAml = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                artDgaml_ = dgAml;
+            }
         }
 
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
