@@ -23,7 +23,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
-builder.Services.AddHostedService<LicenseWatcher>();
+//builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
