@@ -10,6 +10,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SASAUDIT;
 using ART_PACKAGE.Controllers.SEG;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
@@ -23,6 +24,7 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAudit;
 using Data.Data.Segmentation;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
@@ -45,6 +47,7 @@ namespace ART_PACKAGE.Hubs
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly ArtAuditContext _dbAd;
+        private readonly ArtSasAuditContext _dbSasAd;
         private readonly ArtGoAmlContext _dbGoAml;
         private readonly SegmentationContext _seg;
         private readonly List<string>? modules;
@@ -102,6 +105,13 @@ namespace ART_PACKAGE.Hubs
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 ArtAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
                 _dbAd = auditcontext;
+
+            }
+            if (modules.Contains("SASAUDIT"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtSasAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtSasAuditContext>();
+                _dbSasAd = auditcontext;
 
             }
             if (modules.Contains("SEG"))
@@ -257,7 +267,13 @@ namespace ART_PACKAGE.Hubs
 
             #endregion
             if (nameof(AML_ANALYSISController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAnalysisViewTb, AML_ANALYSISController>(_amlanalysis, Context.User.Identity.Name, para);
+            #region SasAudit
+            if (nameof(AuditTrailController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<AuditTrailReport, AuditTrailController>(_dbSasAd, Context.User.Identity.Name, para);
+            if (nameof(ListAccessRightPerProfileController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListAccessRightPerProfile, ListAccessRightPerProfileController>(_dbSasAd, Context.User.Identity.Name, para);
+            if (nameof(ListAccessRightPerRoleController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ListAccessRightPerRole, ListAccessRightPerRoleController>(_dbSasAd, Context.User.Identity.Name, para);
+            if (nameof(SasUsersAndGroupsRoleController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<SasUsersAndGroupsRole, SasUsersAndGroupsRoleController>(_dbSasAd, Context.User.Identity.Name, para);
 
+            #endregion
 
         }
 

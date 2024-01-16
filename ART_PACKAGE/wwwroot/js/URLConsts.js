@@ -58,6 +58,12 @@
   AuditUsers: "/AuditUsers/GetData",
   AuditRoles: "/AuditRoles/GetData",
   AuditGroups: "/AuditGroups/GetData",
+
+  //SASAudit
+   AuditTrail: "/AuditTrail/GetData",
+   ListAccessRightPerProfile: "/ListAccessRightPerProfile/GetData",
+    ListAccessRightPerRole: "/ListAccessRightPerRole/GetData",
+    SasUsersAndGroupsRole: "/SasUsersAndGroupsRole/GetData",
   
    
   //KYC

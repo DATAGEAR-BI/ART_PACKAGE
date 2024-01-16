@@ -289,7 +289,7 @@
                         {
                             <li class="treeview  ">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-book"></i> <span>DG USER MANG REPORTS</span>
+                                    <i class="glyphicon glyphicon-book"></i> <span>DG Audit Reports</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -348,6 +348,31 @@
                             </li>
                         }
 
+                        @if (Modules.Contains("SASAUDIT"))
+                        {
+                            <li class="treeview  ">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-book"></i> <span>SAS Audit Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "AuditTrail")"><i class="glyphicon glyphicon-globe"></i> <span>Audit Trail</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SasUsersAndGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>Sas Users And Groups Role</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ListAccessRightPerRole")"><i class="glyphicon glyphicon-globe"></i> <span>List Access Right Per Role</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ListAccessRightPerProfile")"><i class="glyphicon glyphicon-globe"></i> <span>List Access Right Per Profile</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         @if (Modules.Contains("GOAML"))
                         {
                             <li class="treeview ">

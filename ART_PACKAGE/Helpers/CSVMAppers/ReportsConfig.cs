@@ -8,6 +8,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SASAUDIT;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.Audit;
 
@@ -131,8 +132,72 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
                                                         }
                                 }
+            },
+             { nameof(AuditTrailController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                                                                { "UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                                                                { "Title", new DisplayNameAndFormat { DisplayName = "Title"}},
+                                                                { "ActionDate", new DisplayNameAndFormat { DisplayName = "Action Date"}},
+                                                                { "Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                                                                { "ActionType", new DisplayNameAndFormat { DisplayName = "Action Type"}},
+                                                                { "ActionOn", new DisplayNameAndFormat { DisplayName = "Action On"}},
+                                                                { "DateTime", new DisplayNameAndFormat { DisplayName = "Date Time"}},
+                                                                { "ObjectName", new DisplayNameAndFormat { DisplayName = "Object Name"}},
+                                                                { "ObjectType", new DisplayNameAndFormat { DisplayName = "Object Type"}},
+                                                        }
+                                }
             }
             ,
+              { nameof(ListAccessRightPerProfileController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "GroupName", new DisplayNameAndFormat { DisplayName = "Group Name"}},
+                                                                { "GroupDescription", new DisplayNameAndFormat { DisplayName = "Group Description"}},
+                                                                { "Grouptype", new DisplayNameAndFormat { DisplayName = "Group Type"}},
+                                                                { "CapabilityId", new DisplayNameAndFormat { DisplayName = "Capability ID"}},
+                                                                { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capabilitiy Group Name"}},
+                                                                { "CapName", new DisplayNameAndFormat { DisplayName = "Cap Name"}},
+                                                                { "ComponentName", new DisplayNameAndFormat { DisplayName = "Component Name"}},
+                                                        }
+                                }
+            },
+              { nameof(ListAccessRightPerRoleController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                                                                { "Role", new DisplayNameAndFormat { DisplayName = "Role"}},
+                                                                { "RoleDescription", new DisplayNameAndFormat { DisplayName = "Role Description"}},
+                                                                { "CapabilityId", new DisplayNameAndFormat { DisplayName = "Capability ID"}},
+                                                                { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capabilitiy Group Name"}},
+                                                                { "CapName", new DisplayNameAndFormat { DisplayName = "Cap Name"}},
+                                                                { "ComponentName", new DisplayNameAndFormat { DisplayName = "Component Name"}},
+                                                        }
+                                }
+            },
+              { nameof(SasUsersAndGroupsRoleController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                                                                { "UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                                                                { "DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                                                                { "JobTitle", new DisplayNameAndFormat { DisplayName = "Job Title"}},
+                                                                { "Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                                                                { "Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                                                                { "MemberOfGroupMemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
+                                                                { "UserRole", new DisplayNameAndFormat { DisplayName = "User Role"}},
+                                                        }
+                                }
+            },
             {
                 nameof(GOAMLReportsSuspectController).ToLower(),new ReportConfig{
                     SkipList=new List<string>(),

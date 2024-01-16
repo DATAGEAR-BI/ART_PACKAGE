@@ -17,6 +17,7 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAudit;
 using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
@@ -122,6 +123,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("KYC"))
             {
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("SASAUDIT"))
+            {
+                _ = services.AddDbContext<ArtSasAuditContext>(opt => contextBuilder(opt, connectionString));
             }
             _ = services.AddScoped<IDbService, DBService>();
             return services;

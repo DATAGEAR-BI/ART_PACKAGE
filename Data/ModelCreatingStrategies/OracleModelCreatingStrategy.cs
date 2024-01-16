@@ -7,6 +7,7 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAudit;
 using Data.Data.Segmentation;
 using Data.DGECM;
 using Data.FCF71;
@@ -351,7 +352,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("created_by");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
+                    .HasPrecision(9)
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -380,7 +381,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("last_updated_by");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasColumnType("datetime")
+                    .HasPrecision(9)
                     .HasColumnName("last_updated_date");
             });
             modelBuilder.Entity<ListOfRole>(entity =>
@@ -431,74 +432,84 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("LIST_OF_USERS", "ART_DB");
+                entity.ToView("LIST_OF_USERS");
 
-                entity.Property(e => e.Active).HasColumnName("active");
+                entity.Property(e => e.Active)
+                    .HasPrecision(1)
+                    .HasColumnName("ACTIVE");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("address");
+                    .HasColumnName("ADDRESS");
 
-                entity.Property(e => e.CounterLock).HasColumnName("counter_lock");
+                entity.Property(e => e.CounterLock)
+                    .HasPrecision(10)
+                    .HasColumnName("COUNTER_LOCK");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("created_by");
+                    .HasColumnName("CREATED_BY");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("created_date");
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATED_DATE");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("description");
+                    .HasColumnName("DESCRIPTION");
 
                 entity.Property(e => e.DisplayName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("display_name");
+                    .HasColumnName("DISPLAY_NAME");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("email");
+                    .HasColumnName("EMAIL");
 
-                entity.Property(e => e.Enable).HasColumnName("enable");
+                entity.Property(e => e.Enable)
+                    .HasPrecision(1)
+                    .HasColumnName("ENABLE");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasColumnType("datetime")
-                    .HasColumnName("last_failed_login");
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_FAILED_LOGIN");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("last_login_date");
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_LOGIN_DATE");
 
                 entity.Property(e => e.LastUpdatedBy)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("last_updated_by");
+                    .HasColumnName("LAST_UPDATED_BY");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("last_updated_date");
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_UPDATED_DATE");
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("phone");
+                    .HasColumnName("PHONE");
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("user_name");
+                    .HasColumnName("USER_NAME");
 
                 entity.Property(e => e.UserType)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("user_type");
+                    .HasColumnName("USER_TYPE");
             });
             modelBuilder.Entity<ListOfUsersAndGroupsRole>(entity =>
             {
@@ -3157,8 +3168,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CREATED_BY");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("CREATED_DATE");
 
                 entity.Property(e => e.Description)
@@ -3177,13 +3187,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMAIL");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("LAST_FAILED_LOGIN");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("LAST_LOGIN_DATE");
 
                 entity.Property(e => e.Phone)
@@ -3261,8 +3269,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CREATED_BY");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("CREATED_DATE");
 
                 entity.Property(e => e.Description)
@@ -3281,8 +3288,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LAST_UPDATED_BY");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                     .HasPrecision(9)
                     .HasColumnName("LAST_UPDATED_DATE");
 
                 entity.Property(e => e.RoleName)
@@ -3321,8 +3327,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CREATED_BY");
 
                 entity.Property(e => e.CreatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("CREATED_DATE");
 
                 entity.Property(e => e.Description)
@@ -3345,13 +3350,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ENABLE");
 
                 entity.Property(e => e.LastFailedLogin)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("LAST_FAILED_LOGIN");
 
                 entity.Property(e => e.LastLoginDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("LAST_LOGIN_DATE");
 
                 entity.Property(e => e.LastUpdatedBy)
@@ -3360,8 +3363,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LAST_UPDATED_BY");
 
                 entity.Property(e => e.LastUpdatedDate)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
+                    .HasPrecision(9)
                     .HasColumnName("LAST_UPDATED_DATE");
 
                 entity.Property(e => e.Phone)
@@ -3466,7 +3468,195 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
         }
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AuditTrailReport>(entity =>
+            {
+                entity.HasNoKey();
 
+                entity.ToView("AUDIT_TRAIL_REPORT");
+
+                entity.Property(e => e.ActionDate)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_DATE");
+
+                entity.Property(e => e.ActionOn)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_ON");
+
+                entity.Property(e => e.ActionType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_TYPE");
+
+                entity.Property(e => e.DateTime)
+                    .HasColumnType("DATE")
+                    .HasColumnName("DATE_TIME");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.ObjectName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_NAME");
+
+                entity.Property(e => e.ObjectType)
+                    .HasMaxLength(160)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_TYPE");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<ListAccessRightPerProfile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("LIST_ACCESS_RIGHT_PER_PROFILE");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.GroupDescription)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DESCRIPTION");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_NAME");
+
+                entity.Property(e => e.Grouptype)
+                    .HasMaxLength(160)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPTYPE");
+            });
+
+            modelBuilder.Entity<ListAccessRightPerRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("LIST_ACCESS_RIGHT_PER_ROLE");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE");
+
+                entity.Property(e => e.RoleDescription)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DESCRIPTION");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+            });
+
+            modelBuilder.Entity<SasUsersAndGroupsRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_USERS_AND_GROUPS_ROLES");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB_TITLE");
+
+                entity.Property(e => e.MemberOfGroup)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("MEMBER_OF_GROUP");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.UserRole)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ROLE");
+            });
+        }
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ART");
