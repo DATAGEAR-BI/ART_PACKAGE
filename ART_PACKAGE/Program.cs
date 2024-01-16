@@ -50,7 +50,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddLicense(builder.Configuration);
+//builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
