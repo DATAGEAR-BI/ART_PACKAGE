@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.ECM.SystemPerformanceSummaryReport
 {
-    public class SystemPerformancePerDirectionController : BaseReportController<EcmContext, ArtSystemPrefPerDirection>
+    public class SystemPerformancePerDirectionController : BaseReportController<IBaseRepo<EcmContext, ArtSystemPrefPerDirection>, EcmContext, ArtSystemPrefPerDirection>
     {
-        public SystemPerformancePerDirectionController(IGridConstructor<EcmContext, ArtSystemPrefPerDirection> gridConstructor) : base(gridConstructor)
+        public SystemPerformancePerDirectionController(IGridConstructor<IBaseRepo<EcmContext, ArtSystemPrefPerDirection>, EcmContext, ArtSystemPrefPerDirection> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

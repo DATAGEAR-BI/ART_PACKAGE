@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListOfRoleController : BaseReportController<ArtAuditContext, ListOfRole>
+    public class ListOfRoleController : BaseReportController<IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole>
     {
-        public ListOfRoleController(IGridConstructor<ArtAuditContext, ListOfRole> gridConstructor) : base(gridConstructor)
+        public ListOfRoleController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

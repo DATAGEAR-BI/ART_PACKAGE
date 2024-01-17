@@ -4,17 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 
+
 namespace ART_PACKAGE.Controllers
 {
-    public abstract class BaseReportController<TContext, TModel> : Controller
+    public abstract class BaseReportController<TRepo, TContext, TModel> : BaseController
         where TContext : DbContext
-        where TModel : class
+        where TModel : class where TRepo : IBaseRepo<TContext, TModel>
     {
-        protected readonly IGridConstructor<TContext, TModel> _gridConstructor;
+        protected readonly IGridConstructor<TRepo, TContext, TModel> _gridConstructor;
         protected Expression<Func<TModel, bool>>? baseCondition;
         protected IEnumerable<Expression<Func<TModel, object>>>? includes;
 
-        protected BaseReportController(IGridConstructor<TContext, TModel> gridConstructor)
+
+        protected BaseReportController(IGridConstructor<TRepo, TContext, TModel> gridConstructor, UserManager<AppUser> um) : base(um)
         {
             _gridConstructor = gridConstructor;
         }

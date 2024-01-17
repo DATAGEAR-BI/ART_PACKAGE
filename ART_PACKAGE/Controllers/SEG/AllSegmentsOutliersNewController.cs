@@ -1,17 +1,16 @@
 ﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Segmentation;
-using Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace ART_PACKAGE.Controllers.SEG
 {
-    public class AllSegmentsOutliersNewController : BaseReportController<SegmentationContext, ArtAllSegmentsOutliersTb>
+    public class AllSegmentsOutliersNewController : BaseReportController<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb>
     {
         private readonly IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> _segsFeatrsStatcsRepo;
         private readonly IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> _segoutvsalloutRepo;
         private readonly IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> _segoutvsallcustRepo;
-        public AllSegmentsOutliersNewController(IGridConstructor<SegmentationContext, ArtAllSegmentsOutliersTb> gridConstructor, IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> segsFeatrsStatcsRepo, IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> segoutvsallcustRepo, IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> segoutvsalloutRepo) : base(gridConstructor)
+        public AllSegmentsOutliersNewController(IGridConstructor<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb> gridConstructor, IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> segsFeatrsStatcsRepo, IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> segoutvsallcustRepo, IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> segoutvsalloutRepo, UserManager<AppUser> um) : base(gridConstructor, um)
         {
             _segsFeatrsStatcsRepo = segsFeatrsStatcsRepo;
             _segoutvsallcustRepo = segoutvsallcustRepo;

@@ -95,15 +95,15 @@ namespace OracleMigrations.Migrations
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
                             Active = true,
-                            ConcurrencyStamp = "894dac60-80b7-4fe4-a5c1-1224c70700c8",
+                            ConcurrencyStamp = "6d316057-6966-421a-bd75-55211b6bc11b",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAsRLDyP20IxtSLbqblE9gZrtcTyA/eg/GKmfh9vsia/bZmuQSGga5hFdQPXVXu3Eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIHe2CMitDKgzYDFziu3r5lI7Lz7RI6l+qMhDF09oop0r5d/vNXAXak2SsYP/q03CQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "07091d2b-367e-4a0c-8668-9645aff339f4",
+                            SecurityStamp = "bb053494-1a96-4fd7-8818-3043278ab211",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -122,6 +122,9 @@ namespace OracleMigrations.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<bool>("IsShared")
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -882,28 +885,28 @@ namespace OracleMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "c22354f3-62a7-452e-9d4e-fae7031b734d",
+                            ConcurrencyStamp = "40e8abc2-cd80-418b-8c34-4e2120ee68a2",
                             Name = "art_home",
                             NormalizedName = "ART_HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "0b9ddd6f-4bb2-40bc-93aa-a4f6ec0a46a2",
+                            ConcurrencyStamp = "81295fe9-27c7-4371-b6d7-df95fcfad055",
                             Name = "art_customreport",
                             NormalizedName = "ART_CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "e2ec8018-74ec-40d7-afd1-1a59b0ed7a54",
+                            ConcurrencyStamp = "8bbdac70-01a7-40b1-bbe8-6d5b6fce0a9e",
                             Name = "art_admin",
                             NormalizedName = "ART_ADMIN"
                         },
                         new
                         {
                             Id = "f96288d4-8936-4fb1-8427-d5b45dd66023",
-                            ConcurrencyStamp = "66c34ab5-f99b-4b3e-909f-94ae05417821",
+                            ConcurrencyStamp = "1ec40724-27d6-49e7-a4fb-7b44de642046",
                             Name = "art_superadmin",
                             NormalizedName = "ART_SUPERADMIN"
                         });

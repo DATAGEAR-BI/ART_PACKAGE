@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Hubs;
-using Data.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -10,8 +9,8 @@ using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
-    public class GridConstructor<TContext, TModel> : IGridConstructor<TContext, TModel> where TContext : DbContext
-        where TModel : class
+    public class GridConstructor<TRepo, TContext, TModel> : IGridConstructor<TRepo, TContext, TModel> where TContext : DbContext
+        where TModel : class where TRepo : IBaseRepo<TContext, TModel>
     {
         private readonly IDropDownMapper _dropDownMap;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -22,7 +21,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
 
 
-        public GridConstructor(IBaseRepo<TContext, TModel> repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -31,7 +30,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _exportHub = exportHub;
             this.connections = connections;
         }
-        public IBaseRepo<TContext, TModel> Repo { get; private set; }
+        public TRepo Repo { get; private set; }
 
         public string ExportGridToCsv(GridRequest gridRequest, string user, string gridId)
         {

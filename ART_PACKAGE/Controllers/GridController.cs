@@ -7,9 +7,9 @@ using QuestPDF.Infrastructure;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class GridController : BaseReportController<SasAmlContext, ArtAmlCustomersDetailsView>
+    public class GridController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>
     {
-        public GridController(IGridConstructor<SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor) : base(gridConstructor)
+        public GridController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

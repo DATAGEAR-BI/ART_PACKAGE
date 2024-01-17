@@ -5,8 +5,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
 {

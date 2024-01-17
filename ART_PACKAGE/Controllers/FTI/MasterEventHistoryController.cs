@@ -7,9 +7,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "MasterEventHistory")]
 
 
-    public class MasterEventHistoryController : BaseReportController<FTIContext, ArtTiMasterEventHistory>
+    public class MasterEventHistoryController : BaseReportController<IBaseRepo<FTIContext, ArtTiMasterEventHistory>, FTIContext, ArtTiMasterEventHistory>
     {
-        public MasterEventHistoryController(IGridConstructor<FTIContext, ArtTiMasterEventHistory> gridConstructor) : base(gridConstructor)
+        public MasterEventHistoryController(IGridConstructor<IBaseRepo<FTIContext, ArtTiMasterEventHistory>, FTIContext, ArtTiMasterEventHistory> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

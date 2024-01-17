@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI.DraftsReport
 {
-    public class SumCountryController : BaseReportController<FTIContext, ArtStTiOdcOutStaSumCountry>
+    public class SumCountryController : BaseReportController<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry>
     {
-        public SumCountryController(IGridConstructor<FTIContext, ArtStTiOdcOutStaSumCountry> gridConstructor) : base(gridConstructor)
+        public SumCountryController(IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

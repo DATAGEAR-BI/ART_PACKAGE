@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "Triage")]
-    public class TriageController : BaseReportController<SasAmlContext, ArtAmlTriageView>
+    public class TriageController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView>
     {
-        public TriageController(IGridConstructor<SasAmlContext, ArtAmlTriageView> gridConstructor) : base(gridConstructor)
+        public TriageController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

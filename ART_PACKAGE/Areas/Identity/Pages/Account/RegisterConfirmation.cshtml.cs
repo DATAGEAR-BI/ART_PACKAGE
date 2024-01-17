@@ -3,8 +3,6 @@
 #nullable disable
 
 using System.Text;
-using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

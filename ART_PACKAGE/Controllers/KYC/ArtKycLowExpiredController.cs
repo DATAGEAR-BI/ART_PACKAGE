@@ -4,9 +4,9 @@ using ART_PACKAGE.Helpers.Grid;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtKycLowExpiredController : BaseReportController<KYCContext, ArtKycLowExpired>
+    public class ArtKycLowExpiredController : BaseReportController<IBaseRepo<KYCContext, ArtKycLowExpired>, KYCContext, ArtKycLowExpired>
     {
-        public ArtKycLowExpiredController(IGridConstructor<KYCContext, ArtKycLowExpired> gridConstructor) : base(gridConstructor)
+        public ArtKycLowExpiredController(IGridConstructor<IBaseRepo<KYCContext, ArtKycLowExpired>, KYCContext, ArtKycLowExpired> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

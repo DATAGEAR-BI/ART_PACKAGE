@@ -75,7 +75,7 @@
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script type="module" defer src="~/js/ExportListener.js"></script>
     <script   src="~/js/LicenseListener.js"></script>
-  
+    <input type='hidden' id='uid' readonly="readonly" runat='server' value="@User.Identity.Name">
     @RenderSection("scripts", required: false)
 
    

@@ -8,10 +8,10 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles ="EcmAuditTrial")]
 
 
-    public class EcmAuditTrialController : BaseReportController<FTIContext, ArtTiEcmAuditReport>
+    public class EcmAuditTrialController : BaseReportController<IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport>
     {
         private readonly TIZONE2Context ti;
-        public EcmAuditTrialController(IGridConstructor<FTIContext, ArtTiEcmAuditReport> gridConstructor, TIZONE2Context ti) : base(gridConstructor)
+        public EcmAuditTrialController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport> gridConstructor, TIZONE2Context ti, UserManager<AppUser> um) : base(gridConstructor, um)
         {
             this.ti = ti;
         }

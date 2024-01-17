@@ -1,7 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
-
-namespace ART_PACKAGE.Middlewares.Security
+﻿namespace ART_PACKAGE.Middlewares.Security
 {
     public class CustomAuthorizationRequirmentHandler : AuthorizationHandler<CustomAuthorizationRequirment>
     {

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
-    public class GOAMLReportIndicatorDetailsController : BaseReportController<ArtGoAmlContext, ArtGoamlReportsIndicator>
+    public class GOAMLReportIndicatorDetailsController : BaseReportController<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsIndicator>, ArtGoAmlContext, ArtGoamlReportsIndicator>
     {
-        public GOAMLReportIndicatorDetailsController(IGridConstructor<ArtGoAmlContext, ArtGoamlReportsIndicator> gridConstructor) : base(gridConstructor)
+        public GOAMLReportIndicatorDetailsController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsIndicator>, ArtGoAmlContext, ArtGoamlReportsIndicator> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

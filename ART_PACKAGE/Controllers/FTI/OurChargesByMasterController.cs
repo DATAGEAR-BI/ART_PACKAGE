@@ -8,9 +8,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OurChargesByMaster")]
 
 
-    public class OurChargesByMasterController : BaseReportController<FTIContext, ArtTiChargesByMasterReport>
+    public class OurChargesByMasterController : BaseReportController<IBaseRepo<FTIContext, ArtTiChargesByMasterReport>, FTIContext, ArtTiChargesByMasterReport>
     {
-        public OurChargesByMasterController(IGridConstructor<FTIContext, ArtTiChargesByMasterReport> gridConstructor) : base(gridConstructor)
+        public OurChargesByMasterController(IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesByMasterReport>, FTIContext, ArtTiChargesByMasterReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

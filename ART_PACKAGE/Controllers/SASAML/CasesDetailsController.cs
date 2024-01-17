@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "CasesDetails")]
-    public class CasesDetailsController : BaseReportController<SasAmlContext, ArtAmlCaseDetailsView>
+    public class CasesDetailsController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlCaseDetailsView>, SasAmlContext, ArtAmlCaseDetailsView>
     {
-        public CasesDetailsController(IGridConstructor<SasAmlContext, ArtAmlCaseDetailsView> gridConstructor) : base(gridConstructor)
+        public CasesDetailsController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCaseDetailsView>, SasAmlContext, ArtAmlCaseDetailsView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

@@ -4,6 +4,7 @@ using Data.FCFKC.AmlAnalysis;
 using FakeItEasy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
 namespace ART_PACKAGE.Helpers.Aml_Analysis
 {

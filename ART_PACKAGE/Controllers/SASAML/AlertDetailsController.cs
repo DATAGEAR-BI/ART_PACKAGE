@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "AlertDetails")]
-    public class AlertDetailsController : BaseReportController<SasAmlContext, ArtAmlAlertDetailView>
+    public class AlertDetailsController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView>
     {
-        public AlertDetailsController(IGridConstructor<SasAmlContext, ArtAmlAlertDetailView> gridConstructor) : base(gridConstructor)
+        public AlertDetailsController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

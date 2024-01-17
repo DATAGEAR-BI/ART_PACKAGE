@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
 namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 {

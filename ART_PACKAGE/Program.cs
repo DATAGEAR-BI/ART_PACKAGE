@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Chart;
@@ -16,13 +15,12 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
 using ART_PACKAGE.Middlewares.Security;
-using Data.Services;
 using Hangfire;
-using Microsoft.AspNetCore.Identity;
 using QuestPDF.Infrastructure;
 using Rotativa.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
+using Data.Services.CustomReport;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -48,7 +46,8 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
-builder.Services.AddTransient(typeof(IGridConstructor<,>), typeof(GridConstructor<,>));
+builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
+builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
 builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 

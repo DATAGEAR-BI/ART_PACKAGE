@@ -1,17 +1,17 @@
 ﻿using System.Linq.Expressions;
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Grid;
-using Microsoft.AspNetCore.Identity;
+using Data.Services.CustomReport;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class MyReportsController : BaseReportController<AuthContext, ArtSavedCustomReport>
+    public class MyReportsController : BaseReportController<ICustomReportRepo, AuthContext, ArtSavedCustomReport>
     {
-        private readonly UserManager<AppUser> _um;
-        public MyReportsController(IGridConstructor<AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor)
+
+        public MyReportsController(IGridConstructor<ICustomReportRepo, AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            _um = um;
+
         }
         // GET
         public override IActionResult Index()
@@ -23,6 +23,62 @@ namespace ART_PACKAGE.Controllers
         {
             IQueryable<string> users = _um.Users.Select(x => x.Email);
             return Ok(users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShareReport([FromBody] ShareReportDto shareRequest)
+        {
+            IQueryable<AppUser> users = _um.Users.Include(x => x.UserReports).Where(x => shareRequest.Recievers.Contains(x.Email));
+            AppUser currentUser = await GetUser();
+
+            try
+            {
+                bool IsShared = await _gridConstructor.Repo.ShareReport(shareRequest, currentUser, users);
+                if (IsShared)
+                    return Ok();
+                else
+                    return BadRequest();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UnShareReport([FromBody] UnShareDto unShareRequest)
+        {
+            IQueryable<AppUser> users = _um.Users.Where(x => unShareRequest.Holders.Contains(x.Email));
+            AppUser currentUser = await GetUser();
+            try
+            {
+                bool IsUnShared = await _gridConstructor.Repo.UnShareReport(unShareRequest, currentUser, users);
+                if (IsUnShared)
+                    return Ok();
+                else
+                    return BadRequest();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+
+        [HttpGet("[controller]/{id}/Users")]
+        public async Task<IActionResult> ReportUsers(int id)
+        {
+            IEnumerable<AppUser>? users = await _gridConstructor.Repo.GetReportUsers(id);
+            AppUser owner = await GetUser();
+            if (users is null)
+                return BadRequest();
+
+            return Ok(users.Where(x => x.Email != owner.Email).Select(x => x.Email));
         }
 
         public override async Task<IActionResult> GetData(GridRequest request)

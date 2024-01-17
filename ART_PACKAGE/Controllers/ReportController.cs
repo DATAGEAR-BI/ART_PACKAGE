@@ -1,14 +1,10 @@
-﻿
-
-using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Data.Attributes;
+﻿using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
@@ -16,18 +12,15 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
-using Data.Data;
-using NuGet.Packaging;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
 {
-    public partial class ReportController : Controller
+    public partial class ReportController : BaseController
     {
         private readonly AuthContext db;
         private readonly DBFactory dBFactory;
         private readonly ILogger<ReportController> logger;
-        private readonly UserManager<AppUser> userManager;
         private readonly IConfiguration _config;
         private readonly IPdfService _pdfSrv;
         private DbContext dbInstance;
@@ -36,12 +29,11 @@ namespace ART_PACKAGE.Controllers
         private readonly UsersConnectionIds connections;
 
 
-        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        public ReportController(ILogger<ReportController> logger, AuthContext db, UserManager<AppUser> userManager, IConfiguration config, IPdfService pdfSrv, DBFactory dBFactory, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections) : base(userManager)
         {
 
             this.logger = logger;
             this.db = db;
-            this.userManager = userManager;
             _config = config;
             _pdfSrv = pdfSrv;
             this.dBFactory = dBFactory;
@@ -165,32 +157,6 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> ShareReport([FromBody] ShareReportDto shareRequest)
-        {
-            IQueryable<AppUser> users = userManager.Users.Where(x => shareRequest.Recievers.Contains(x.Email));
-            string currentUserId = userManager.GetUserId(User);
-
-            ArtSavedCustomReport? report = db.ArtSavedCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == shareRequest.ReportId);
-
-            if (report is null)
-                return BadRequest();
-
-            IQueryable<UserReport> usersreports = users.Select(x => new UserReport()
-            {
-                ReportId = report.Id,
-                ShareMessage = shareRequest.ShareMessage,
-                SharedFromId = currentUserId,
-                UserId = x.Id
-            });
-
-            usersreports.Append(new UserReport() { ReportId = report.Id, UserId = currentUserId, SharedFromId = null });
-
-            report.UserReports.AddRange(usersreports.ToList());
-            db.SaveChanges();
-            return Ok();
-        }
-
 
 
 
@@ -240,7 +206,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetMyReportsData([FromBody] KendoRequest obj)
         {
-            string user = userManager.GetUserId(User);
+            string user = _um.GetUserId(User);
             IQueryable<ArtSavedCustomReport> alerts =
                 db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Charts);
             List<string> skipList = new()
@@ -310,7 +276,7 @@ namespace ART_PACKAGE.Controllers
                 ReportId = report.Id
             }).ToList();
 
-            AppUser owner = await userManager.GetUserAsync(User);
+            AppUser owner = await _um.GetUserAsync(User);
             report.Users.Add(owner);
             report.Charts = charts;
             report.Columns = columns;

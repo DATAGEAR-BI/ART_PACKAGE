@@ -13,6 +13,7 @@ public class ArtSavedCustomReport
     public DateTime CreateDate { get; set; }
     public string Table { get; set; } = null!;
     public string Type { get; set; } = null!;
+    public bool IsShared { get; set; }
     [JsonIgnore]
     public ICollection<AppUser> Users { get; set; } = new List<AppUser>();
     public ICollection<ArtSavedReportsColumns> Columns { get; set; }
@@ -28,7 +29,7 @@ public class ArtSavedCustomReport
             return owner.User.Email;
         }
     }
-    [NotMapped] public string ShareMessage => UserReports.FirstOrDefault(u => u.ReportId == Id && !u.isOwner).ShareMessage;
+    [NotMapped] public string ShareMessage => UserReports.FirstOrDefault(u => u.ReportId == Id && !u.isOwner)?.ShareMessage;
 
     [JsonIgnore] public ICollection<UserReport>? UserReports { get; set; } = new List<UserReport>();
 

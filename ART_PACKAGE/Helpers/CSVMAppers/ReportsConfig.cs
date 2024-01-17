@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Controllers;
+﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
@@ -157,7 +156,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             {
                     {"AlertId",new GridColumnConfiguration { DisplayName ="Alert ID"}},
                     {"AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
-                    {"AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number"}},
+                    {"AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number" }},
                     {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
                     {"PartyTypeDesc",new GridColumnConfiguration { DisplayName ="Party Type"}},
                     {"PoliticallyExposedPersonInd",new GridColumnConfiguration { DisplayName ="PEP"}},
@@ -228,7 +227,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         nameof(ArtSavedCustomReport.UserReports),
 
                     }
-                ,ContainsActions = true, Actions = new List<GridButton>() {new GridButton(){text = "Show" , action = "GoToReportDetails" , icon = "k-i-redo"},new GridButton() {text = "Share" , action = "shareReport" , icon="k-i-share"}  }
+                ,ContainsActions = true, Actions = new List<GridButton>() {new GridButton(){text = "Show" , action = "GoToReportDetails" , icon = "k-i-redo"}
+                    ,new GridButton() {text = "Share" , action = "shareReport" , icon="k-i-share"} ,new GridButton() {text = "UnShare" , action = "unShareReport" , icon="k-i-cancel"}  }
     }
             },
             {

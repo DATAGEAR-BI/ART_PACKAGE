@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Novell.Directory.Ldap;
+﻿using Novell.Directory.Ldap;
 
 namespace ART_PACKAGE.Helpers.LDap
 {

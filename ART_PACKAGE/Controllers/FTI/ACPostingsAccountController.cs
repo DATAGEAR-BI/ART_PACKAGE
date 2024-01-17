@@ -6,9 +6,9 @@ namespace ART_PACKAGE.Controllers.FTI
 {
 
 
-    public class ACPostingsAccountController : BaseReportController<FTIContext, ArtTiAcpostingsAccReport>
+    public class ACPostingsAccountController : BaseReportController<IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport>
     {
-        public ACPostingsAccountController(IGridConstructor<FTIContext, ArtTiAcpostingsAccReport> gridConstructor) : base(gridConstructor)
+        public ACPostingsAccountController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

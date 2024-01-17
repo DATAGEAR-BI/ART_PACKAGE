@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtKycMediumThreeMonthController : BaseReportController<KYCContext, ArtKycMediumThreeMonth>
+    public class ArtKycMediumThreeMonthController : BaseReportController<IBaseRepo<KYCContext, ArtKycMediumThreeMonth>, KYCContext, ArtKycMediumThreeMonth>
     {
-        public ArtKycMediumThreeMonthController(IGridConstructor<KYCContext, ArtKycMediumThreeMonth> gridConstructor) : base(gridConstructor)
+        public ArtKycMediumThreeMonthController(IGridConstructor<IBaseRepo<KYCContext, ArtKycMediumThreeMonth>, KYCContext, ArtKycMediumThreeMonth> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

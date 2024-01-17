@@ -8,9 +8,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "FinancingInterestAccruals")]
 
 
-    public class FinancingInterestAccrualsController : BaseReportController<FTIContext, ArtTiFinanInterAccrual>
+    public class FinancingInterestAccrualsController : BaseReportController<IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual>
     {
-        public FinancingInterestAccrualsController(IGridConstructor<FTIContext, ArtTiFinanInterAccrual> gridConstructor) : base(gridConstructor)
+        public FinancingInterestAccrualsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

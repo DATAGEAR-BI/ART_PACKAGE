@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListGroupsSubGroupsSummaryController : BaseReportController<ArtAuditContext, ListGroupsSubGroupsSummary>
+    public class ListGroupsSubGroupsSummaryController : BaseReportController<IBaseRepo<ArtAuditContext, ListGroupsSubGroupsSummary>, ArtAuditContext, ListGroupsSubGroupsSummary>
     {
-        public ListGroupsSubGroupsSummaryController(IGridConstructor<ArtAuditContext, ListGroupsSubGroupsSummary> gridConstructor) : base(gridConstructor)
+        public ListGroupsSubGroupsSummaryController(IGridConstructor<IBaseRepo<ArtAuditContext, ListGroupsSubGroupsSummary>, ArtAuditContext, ListGroupsSubGroupsSummary> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

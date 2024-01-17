@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
+﻿using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Helpers.CustomReport
 {

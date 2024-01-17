@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.ExportTasks;
+﻿using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ExportSchedular;
 using FakeItEasy;
 using Hangfire;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
@@ -128,7 +126,6 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
             if (modules is null)
             {
-
                 return;
             }
             foreach (string module in modules)

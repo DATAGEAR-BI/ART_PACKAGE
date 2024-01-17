@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Text;
 using AuthContext = ART_PACKAGE.Areas.Identity.Data.AuthContext;
 

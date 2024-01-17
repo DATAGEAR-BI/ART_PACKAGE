@@ -1,7 +1,4 @@
-﻿
-using ART_PACKAGE.Areas.Identity.Data;
-
-namespace ART_PACKAGE.Helpers.CustomReport
+﻿namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class Chart
     {

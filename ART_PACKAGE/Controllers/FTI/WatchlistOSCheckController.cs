@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
-    public class WatchlistOSCheckController : BaseReportController<FTIContext, ArtTiWatchlistOsCheckReport>
+    public class WatchlistOSCheckController : BaseReportController<IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport>
     {
-        public WatchlistOSCheckController(IGridConstructor<FTIContext, ArtTiWatchlistOsCheckReport> gridConstructor) : base(gridConstructor)
+        public WatchlistOSCheckController(IGridConstructor<IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

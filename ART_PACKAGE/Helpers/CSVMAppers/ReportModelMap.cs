@@ -16,6 +16,7 @@ using Data.Data.ExportSchedular;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {

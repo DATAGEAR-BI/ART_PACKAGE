@@ -1,7 +1,4 @@
-
-using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.LDap;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

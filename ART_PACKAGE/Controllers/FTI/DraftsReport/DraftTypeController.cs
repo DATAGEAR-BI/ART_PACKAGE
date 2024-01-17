@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI.DraftsReport
 {
-    public class DraftTypeController : BaseReportController<FTIContext, ArtStTiOdcOutStaSumDraftType>
+    public class DraftTypeController : BaseReportController<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumDraftType>, FTIContext, ArtStTiOdcOutStaSumDraftType>
     {
-        public DraftTypeController(IGridConstructor<FTIContext, ArtStTiOdcOutStaSumDraftType> gridConstructor) : base(gridConstructor)
+        public DraftTypeController(IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumDraftType>, FTIContext, ArtStTiOdcOutStaSumDraftType> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

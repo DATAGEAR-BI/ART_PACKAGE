@@ -1,5 +1,4 @@
-﻿using Data.Services;
-using Data.Services.QueryBuilder;
+﻿using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.Chart

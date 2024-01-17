@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;

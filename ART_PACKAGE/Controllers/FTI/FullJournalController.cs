@@ -7,9 +7,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "FullJournal")]
 
 
-    public class FullJournalController : BaseReportController<FTIContext, ArtTiFullJournalReport>
+    public class FullJournalController : BaseReportController<IBaseRepo<FTIContext, ArtTiFullJournalReport>, FTIContext, ArtTiFullJournalReport>
     {
-        public FullJournalController(IGridConstructor<FTIContext, ArtTiFullJournalReport> gridConstructor) : base(gridConstructor)
+        public FullJournalController(IGridConstructor<IBaseRepo<FTIContext, ArtTiFullJournalReport>, FTIContext, ArtTiFullJournalReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

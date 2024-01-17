@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.ECM
 {
     //[Authorize(Roles = "UserPerformancePerUserAndAction")]
-    public class UserPerformancePerUserAndActionController : BaseReportController<EcmContext, ArtUserPerformPerUserAndAction>
+    public class UserPerformancePerUserAndActionController : BaseReportController<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>
     {
-        public UserPerformancePerUserAndActionController(IGridConstructor<EcmContext, ArtUserPerformPerUserAndAction> gridConstructor) : base(gridConstructor)
+        public UserPerformancePerUserAndActionController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

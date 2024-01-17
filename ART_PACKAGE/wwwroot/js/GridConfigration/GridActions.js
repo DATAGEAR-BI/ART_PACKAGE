@@ -24,13 +24,16 @@ export const Actions = {
             let select = document.getElementById("recievers");
             let title = document.getElementById("sharetitle");
             let desc = document.getElementById("shareMessage");
+            let shareBtn = document.getElementById("shareBtn");
+            desc.hidden = false;
+            shareBtn.innerText = "Share"
             let tr = $(e.target).closest("tr");
             let grid = $(gridDiv).data("kendoGrid");
             let data = grid.dataItem(tr);
             title.innerHTML = `You are about to share <code style="background-color: #EEEEEE">${data.Name}</code> Report`
             select.update(options);
             $("#shareModal").modal("show");
-            let shareBtn = document.getElementById("shareBtn");
+            
             shareBtn.onclick = async () => {
                 let users = [...select.value].map(x => x.value)
                 if(users?.length == 0)
@@ -49,7 +52,7 @@ export const Actions = {
                     ReportId : data.Id
                 }
                 
-               var shareres =  await fetch("/report/ShareReport",
+               var shareres =  await fetch("/MyReports/ShareReport",
                     {
                         method : "POST",
                         headers : {
@@ -58,18 +61,94 @@ export const Actions = {
                         body : JSON.stringify(model)
                     })
                 if(!shareres.ok){
+                   
                     toastObj.text = "something wrong happend while trying to run the task ,try again later.";
                     toastObj.heading = "Run Task Status";
                     toastObj.icon = 'error';
                     $.toast(toastObj);
                     return
                 }
+                $(gridDiv).data("kendoGrid").dataSource.read();
                 toastObj.text = "something wrong happend while trying to run the task ,try again later.";
                 toastObj.heading = "Run Task Status";
                 toastObj.icon = 'success';
                 $.toast(toastObj);
             }
             
+        }
+        catch (e) {
+            console.error(e)
+            toastObj.text = "something wrong happend while trying to run the task ,try again later.";
+            toastObj.heading = "Run Task Status";
+            toastObj.icon = 'error';
+            $.toast(toastObj);
+        }
+
+    },
+    unShareReport : async (e,gridDiv) => {
+        
+        try {
+            let tr = $(e.target).closest("tr");
+            let grid = $(gridDiv).data("kendoGrid");
+            let data = grid.dataItem(tr);
+            let users = await (await fetch(`/MyReports/${data.Id}/Users`)).json();
+            let options = users.map(u =>{
+                let opt = document.createElement("option");
+                opt.value = u;
+                opt.innerText = u;
+                return opt;
+            } );
+            let select = document.getElementById("recievers");
+            let title = document.getElementById("sharetitle");
+            let desc = document.getElementById("shareMessage");
+            let shareBtn = document.getElementById("shareBtn");
+            shareBtn.innerText = "Un Share"
+            desc.hidden = true
+    
+            title.innerHTML = `You are about to unshare <code style="background-color: #EEEEEE">${data.Name}</code> Report. Select Users To unshare from`
+            select.update(options);
+            $("#shareModal").modal("show");
+            
+            shareBtn.onclick = async () => {
+                let users = [...select.value].map(x => x.value)
+                if(users?.length == 0)
+                {
+                    toastObj.text = "something wrong happend while trying to run the task ,try again later.";
+                    toastObj.heading = "Run Task Status";
+                    toastObj.icon = 'error';
+                    $.toast(toastObj);
+                    return
+                }
+
+
+                var model = {
+                    Holders : users,
+                    ReportId : data.Id
+                }
+
+                var unshareres =  await fetch("/Myreports/UnShareReport",
+                    {
+                        method : "POST",
+                        headers : {
+                            "content-type" : "application/json",
+                        },
+                        body : JSON.stringify(model)
+                    })
+                if(!unshareres.ok){
+
+                    toastObj.text = "something wrong happend while trying to run the task ,try again later.";
+                    toastObj.heading = "Run Task Status";
+                    toastObj.icon = 'error';
+                    $.toast(toastObj);
+                    return
+                }
+                $(gridDiv).data("kendoGrid").dataSource.read();
+                toastObj.text = "something wrong happend while trying to run the task ,try again later.";
+                toastObj.heading = "Run Task Status";
+                toastObj.icon = 'success';
+                $.toast(toastObj);
+            }
+
         }
         catch (e) {
             console.error(e)
@@ -142,5 +221,8 @@ export const Actions = {
 export const ActionsConditions = {
     shareReport : function (dt)  {
         return dt.SharedFrom === localStorage.getItem("currentUser")
+    },
+    unShareReport:  function (dt)  {
+        return dt.IsShared && dt.SharedFrom === localStorage.getItem("currentUser")
     }
 }

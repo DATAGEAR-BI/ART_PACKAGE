@@ -7,9 +7,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OSTransactionsAwaitiApprl")]
 
 
-    public class OSTransactionsAwaitiApprlController : BaseReportController<FTIContext, ArtTiOsTransAwaitiApprlReport>
+    public class OSTransactionsAwaitiApprlController : BaseReportController<IBaseRepo<FTIContext, ArtTiOsTransAwaitiApprlReport>, FTIContext, ArtTiOsTransAwaitiApprlReport>
     {
-        public OSTransactionsAwaitiApprlController(IGridConstructor<FTIContext, ArtTiOsTransAwaitiApprlReport> gridConstructor) : base(gridConstructor)
+        public OSTransactionsAwaitiApprlController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransAwaitiApprlReport>, FTIContext, ArtTiOsTransAwaitiApprlReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

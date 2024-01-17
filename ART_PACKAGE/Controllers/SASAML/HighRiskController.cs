@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "HighRisk")]
-    public class HighRiskController : BaseReportController<SasAmlContext, ArtAmlHighRiskCustView>
+    public class HighRiskController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView>
     {
-        public HighRiskController(IGridConstructor<SasAmlContext, ArtAmlHighRiskCustView> gridConstructor) : base(gridConstructor)
+        public HighRiskController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

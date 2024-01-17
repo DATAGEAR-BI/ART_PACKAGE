@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLCustomersDetailsController : BaseReportController<ArtDgAmlContext, ArtDgAmlCustomerDetailView>
+    public class DGAMLCustomersDetailsController : BaseReportController<IBaseRepo<ArtDgAmlContext, ArtDgAmlCustomerDetailView>, ArtDgAmlContext, ArtDgAmlCustomerDetailView>
     {
-        public DGAMLCustomersDetailsController(IGridConstructor<ArtDgAmlContext, ArtDgAmlCustomerDetailView> gridConstructor) : base(gridConstructor)
+        public DGAMLCustomersDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlCustomerDetailView>, ArtDgAmlContext, ArtDgAmlCustomerDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

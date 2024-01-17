@@ -14,7 +14,7 @@ namespace Data.Services
         where TContext : DbContext
         where TModel : class
     {
-        private readonly TContext _context;
+        protected readonly TContext _context;
 
         public BaseRepo(TContext context)
         {

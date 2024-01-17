@@ -7,9 +7,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "EcmTransactions")]
 
 
-    public class EcmTransactionsController : BaseReportController<FTIContext, ArtTiEcmTransactionsReport>
+    public class EcmTransactionsController : BaseReportController<IBaseRepo<FTIContext, ArtTiEcmTransactionsReport>, FTIContext, ArtTiEcmTransactionsReport>
     {
-        public EcmTransactionsController(IGridConstructor<FTIContext, ArtTiEcmTransactionsReport> gridConstructor) : base(gridConstructor)
+        public EcmTransactionsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmTransactionsReport>, FTIContext, ArtTiEcmTransactionsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

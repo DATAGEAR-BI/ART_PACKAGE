@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace ART_PACKAGE.Helpers.DgUserManagement
+﻿namespace ART_PACKAGE.Helpers.DgUserManagement
 {
     public class DgResponse
     {

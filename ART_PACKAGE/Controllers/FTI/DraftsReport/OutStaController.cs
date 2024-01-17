@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI.DraftsReport
 {
-    public class OutStaController : BaseReportController<FTIContext, ArtStTiOdcOutSta>
+    public class OutStaController : BaseReportController<IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta>
     {
-        public OutStaController(IGridConstructor<FTIContext, ArtStTiOdcOutSta> gridConstructor) : base(gridConstructor)
+        public OutStaController(IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.BackGroundServices;
+﻿using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.ExportTasks;

@@ -1,4 +1,4 @@
-﻿namespace ART_PACKAGE.Helpers.CustomReport
+﻿namespace Data.Services.CustomReport
 {
     public class ShareReportDto
     {

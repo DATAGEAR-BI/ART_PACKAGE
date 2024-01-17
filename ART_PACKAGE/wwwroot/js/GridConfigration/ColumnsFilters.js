@@ -23,6 +23,7 @@ export const columnFilters = {
             },
             extra: false,
             operators: ops,
+            
         }
     }
     ,

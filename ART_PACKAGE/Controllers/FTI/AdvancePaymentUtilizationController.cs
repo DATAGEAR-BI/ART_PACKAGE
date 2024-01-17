@@ -8,9 +8,9 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "Activity")]
 
 
-    public class AdvancePaymentUtilizationController : BaseReportController<FTIContext, ArtTiAdvancePaymentUtilizationReport>
+    public class AdvancePaymentUtilizationController : BaseReportController<IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport>
     {
-        public AdvancePaymentUtilizationController(IGridConstructor<FTIContext, ArtTiAdvancePaymentUtilizationReport> gridConstructor) : base(gridConstructor)
+        public AdvancePaymentUtilizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListOfDeletedUsersController : BaseReportController<ArtAuditContext, ListOfDeletedUser>
+    public class ListOfDeletedUsersController : BaseReportController<IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser>
     {
-        public ListOfDeletedUsersController(IGridConstructor<ArtAuditContext, ListOfDeletedUser> gridConstructor) : base(gridConstructor)
+        public ListOfDeletedUsersController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
 

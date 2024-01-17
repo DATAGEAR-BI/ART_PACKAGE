@@ -1,10 +1,8 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Data.Attributes;
+﻿using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ExportSchedular;
 using Hangfire;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq.Dynamic.Core;
@@ -13,7 +11,7 @@ using System.Security.Claims;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
-    public class TasksController : BaseReportController<ExportSchedularContext, ExportTask>
+    public class TasksController : BaseReportController<IBaseRepo<ExportSchedularContext, ExportTask>, ExportSchedularContext, ExportTask>
     {
         private readonly ExportSchedularContext _context;
         private readonly IRecurringJobManager jobsManger;
@@ -23,7 +21,7 @@ namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
         private readonly UserManager<AppUser> _userManager;
 
 
-        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager, IGridConstructor<ExportSchedularContext, ExportTask> gridConstructor, IBackgroundJobClient backGroundJobManger) : base(gridConstructor)
+        public TasksController(ExportSchedularContext context, IRecurringJobManager jobsManger, ILogger<TasksController> logger, ITaskPerformer taskPerformer, UserManager<AppUser> userManager, IGridConstructor<IBaseRepo<ExportSchedularContext, ExportTask>, ExportSchedularContext, ExportTask> gridConstructor, IBackgroundJobClient backGroundJobManger, UserManager<AppUser> um) : base(gridConstructor, um)
         {
 
             _context = context;
