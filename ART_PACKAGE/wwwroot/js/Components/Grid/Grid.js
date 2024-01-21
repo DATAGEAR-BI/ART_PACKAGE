@@ -626,6 +626,15 @@ class Grid extends HTMLElement {
                 },
                 resizable: true,
                 filterable: true,
+            columnMenu: {
+                componentType: "modern",
+                columns: {
+                    sort: "asc",
+                    groups: [
+                        { title: "Columns", columns: this.columns.map(x => x.title) }
+                    ]
+                }
+                },
                 columns: this.columns,
                 noRecords: true,
                 persistSelection: true,
@@ -1086,11 +1095,11 @@ class Grid extends HTMLElement {
         this.isExporting = true;
         this.isDownloaded = false;
         var grid = $(this.gridDiv).data("kendoGrid");
+       
         var filters = grid.dataSource.filter();
         var total = grid.dataSource.total();
         var sort = grid.dataSource.sort();
         var para = {}
-        console.log("bbb");
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
@@ -1152,7 +1161,12 @@ class Grid extends HTMLElement {
             let savedOptions = JSON.parse(savedOptionsString);
             let serverOptionsColumns = [];
             let serverOptionColumnsnotSaved = [];
-            let flattedFilters = savedOptions.dataSource.filter.filters.flat();
+            let flattedFilters = [];
+            if(savedOptions.dataSource.filter.filters){
+                
+                flattedFilters = savedOptions.dataSource.filter.filters.flat();
+            }
+            
             serverOptions.columns.forEach(c => {
                 let column =  savedOptions.columns.find(x => c.field == x.field);
                 let index = savedOptions.columns.indexOf(column);
