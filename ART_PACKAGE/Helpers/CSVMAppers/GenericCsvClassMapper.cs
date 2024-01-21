@@ -28,13 +28,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             PropertyInfo[] props = typeof(TModel).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
             Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
-
             if (skip is null)
             {
                 props.ToList().ForEach(x =>
                 {
-
-
                     Expression<Func<TModel, object>> exp = GenerateExpression(x);
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
                     MemberMap memberMap = Map(exp).Name(displayName);
@@ -43,9 +40,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {
                         _ = memberMap.TypeConverter<CurrencyTypeConverter>();
                     }
-
-
-
                 });
             }
             else
@@ -79,7 +73,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             //return the property as object
             UnaryExpression conv = Expression.Convert(property, typeof(object));
             Expression<Func<TModel, object>> exp = Expression.Lambda<Func<TModel, object>>(conv, new ParameterExpression[] { arg });
-
             return exp;
         }
     }
