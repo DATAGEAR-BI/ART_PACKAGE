@@ -9,6 +9,7 @@ import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderPa
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
 import * as c from "../TextInput/TextInput.js";
+import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
 class Grid extends HTMLElement {

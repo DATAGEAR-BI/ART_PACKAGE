@@ -66,6 +66,7 @@ builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection(M
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
+     
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
      if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
      else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
@@ -90,7 +91,6 @@ builder.Services.AddSingleton<UsersConnectionIds>();
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
-
     .CreateLogger();
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);

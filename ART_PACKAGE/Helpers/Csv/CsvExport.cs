@@ -312,18 +312,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        //_ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TController, TModel>>();
-                        //if (filterCells is not null && filterCells.Count != 0)
-                        //{
-                        //    foreach (List<object> item in filterCells)
-                        //    {
-                        //        cw.WriteComment(string.Join(",", item));
-                        //    }
-                        //    cw.NextRecord();
-                        //}
-
-
-
+                        _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TController, TModel>>();
                         cw.WriteHeader<TModel>();
                         cw.NextRecord();
                         foreach (TModel? elm in tempData)

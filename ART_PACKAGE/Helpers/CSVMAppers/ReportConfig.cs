@@ -12,5 +12,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         public List<GridButton>? Toolbar { get; set; }
         public Func<ClaimsPrincipal, bool>? ShowExportCsv { get; set; }
         public Func<ClaimsPrincipal, bool>? ShowExportPdf { get; set; }
+        public Type MapperType { get; set; }
     }
 }
