@@ -789,7 +789,7 @@ function generateColumns(response) {
         var template = column.template;
         var isCollection = column.isCollection;
         var hasTemplate = template && template != ""
-
+        let sortable = true;
 
         var columnF = column.filter;
         var hasFilters = columnF && columnF != ""
@@ -827,7 +827,14 @@ function generateColumns(response) {
             }
         }
 
-
+        if (column.isLargeText) {
+            filter["operators"] = {
+                string: {
+                    contains: "Contains"
+                }
+            }
+            sortable = false;
+        }
 
 
         return {
@@ -840,7 +847,7 @@ function generateColumns(response) {
 
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
-            sortable: !isCollection,
+            sortable: !isCollection && sortable,
             ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection
                 ? (di) =>

@@ -24,6 +24,8 @@ namespace Data.Data.Audit
         public DateTime? LastFailedLogin { get; set; }
         public bool? Enable { get; set; }
         public string? GroupNames { get; set; }
+        
+      
         public string? RoleNames { get; set; }
         public string? DomainAccounts { get; set; }
     }

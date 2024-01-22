@@ -13,12 +13,13 @@ namespace ART_PACKAGE.Extentions.DbContextExtentions
             {
                 return false;
             }
+
             try
             {
                 // _context.BulkInsert(data);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

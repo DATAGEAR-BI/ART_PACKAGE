@@ -112,7 +112,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("display_name");
 
-                entity.Property(e => e.GroupNames).HasColumnName("group_names");
+                entity.Property(e => e.GroupNames).HasColumnType("CLOB").HasColumnName("group_names");
 
                 entity.Property(e => e.LastUpdatedBy)
                     .HasMaxLength(255)
@@ -123,7 +123,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("last_updated_date");
 
-                entity.Property(e => e.MemberUsers).HasColumnName("member_users");
+                entity.Property(e => e.MemberUsers).HasColumnType("CLOB").HasColumnName("member_users");
 
                 entity.Property(e => e.RoleName)
                     .HasMaxLength(255)
@@ -165,7 +165,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("display_name");
 
-                entity.Property(e => e.DomainAccounts).HasColumnName("domain_accounts");
+                entity.Property(e => e.DomainAccounts).HasColumnType("CLOB").HasColumnName("domain_accounts");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
@@ -174,7 +174,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.Enable).HasColumnName("enable");
 
-                entity.Property(e => e.GroupNames).HasColumnName("group_names");
+                entity.Property(e => e.GroupNames).HasColumnType("CLOB").HasColumnName("group_names");
 
                 entity.Property(e => e.LastFailedLogin)
                     .HasColumnType("datetime")
@@ -198,7 +198,7 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("phone");
 
-                entity.Property(e => e.RoleNames).HasColumnName("role_names");
+                entity.Property(e => e.RoleNames).HasColumnType("CLOB").HasColumnName("role_names");
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(255)
@@ -2922,15 +2922,15 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LAST_UPDATED_DATE");
 
                 entity.Property(e => e.MemberUsers)
-                    .IsUnicode(false)
+                     .HasColumnType("CLOB")
                     .HasColumnName("MEMBER_USERS");
 
                 entity.Property(e => e.RoleNames)
-                    .IsUnicode(false)
+                    .HasColumnType("CLOB")
                     .HasColumnName("ROLE_NAMES");
 
                 entity.Property(e => e.SubGroupNames)
-                    .IsUnicode(false)
+                     .HasColumnType("CLOB")
                     .HasColumnName("SUB_GROUP_NAMES");
             });
 
@@ -3655,6 +3655,12 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(240)
                     .IsUnicode(false)
                     .HasColumnName("USER_ROLE");
+                entity.Property(e => e.CreationDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CREATION_DATE");
+                entity.Property(e => e.LastLogin)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_LOGIN");
             });
         }
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)

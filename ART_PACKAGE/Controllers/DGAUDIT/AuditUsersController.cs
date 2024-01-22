@@ -39,11 +39,11 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
                 DisplayNames = ReportsConfig.CONFIG[nameof(AuditUsersController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+                    //{nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
                     {nameof(ArtUsersAuditView.CreatedBy)       .ToLower()     , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
                     {nameof(ArtUsersAuditView.LastUpdatedBy)   .ToLower()         , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()         , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
+                    //{nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
+                    //{nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()         , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
                     {nameof(ArtUsersAuditView.Action)          .ToLower()     , new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
                     {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
 

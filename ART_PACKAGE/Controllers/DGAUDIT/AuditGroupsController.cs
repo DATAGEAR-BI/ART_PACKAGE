@@ -42,9 +42,9 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
                     {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
                     {nameof(ArtGroupsAuditView.CreatedBy            ).ToLower(), _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
                     {nameof(ArtGroupsAuditView.LastUpdatedBy        ).ToLower(), _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtGroupsAuditView.SubGroupNames        ).ToLower(), _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtGroupsAuditView.RoleNames            ).ToLower(), _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
+                    //{nameof(ArtGroupsAuditView.SubGroupNames        ).ToLower(), _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+                    //{nameof(ArtGroupsAuditView.RoleNames            ).ToLower(), _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
+                    //{nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
                     {nameof(ArtGroupsAuditView.Action               ).ToLower(), new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

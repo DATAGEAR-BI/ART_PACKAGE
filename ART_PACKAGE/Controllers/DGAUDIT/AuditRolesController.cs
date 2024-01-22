@@ -41,12 +41,12 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
                 DisplayNames = ReportsConfig.CONFIG[nameof(AuditRolesController).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    {nameof(ArtRolesAuditView.GroupNames)       .ToLower()    , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+                    //{nameof(ArtRolesAuditView.GroupNames)       .ToLower()    , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
                     {nameof(ArtRolesAuditView.CreatedBy)        .ToLower()    , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
                     {nameof(ArtRolesAuditView.LastUpdatedBy)    .ToLower()        , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
                     {nameof(ArtRolesAuditView.Action)           .ToLower()        , new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
                     {nameof(ArtRolesAuditView.RoleName)         .ToLower()    , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
-                    {nameof(ArtRolesAuditView.MemberUsers)      .ToLower()    , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
+                    //{nameof(ArtRolesAuditView.MemberUsers)      .ToLower()    , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

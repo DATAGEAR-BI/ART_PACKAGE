@@ -176,7 +176,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "Role", new DisplayNameAndFormat { DisplayName = "Role"}},
                                                                 { "RoleDescription", new DisplayNameAndFormat { DisplayName = "Role Description"}},
                                                                 { "CapabilityId", new DisplayNameAndFormat { DisplayName = "Capability ID"}},
-                                                                { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capabilitiy Group Name"}},
+                                                                { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capabilitiy Group Name"  }},
                                                                 { "CapName", new DisplayNameAndFormat { DisplayName = "Cap Name"}},
                                                                 { "ComponentName", new DisplayNameAndFormat { DisplayName = "Component Name"}},
                                                         }
@@ -195,6 +195,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "Email", new DisplayNameAndFormat { DisplayName = "Email"}},
                                                                 { "MemberOfGroupMemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
                                                                 { "UserRole", new DisplayNameAndFormat { DisplayName = "User Role"}},
+                                                                { "LastLogin", new DisplayNameAndFormat { DisplayName = "Last Login"}},
+                                                                { "CreationDate", new DisplayNameAndFormat { DisplayName = "Creation Date"}},
                                                         }
                                 }
             },
@@ -282,9 +284,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
                                 {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
                                 {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
-                                {"SubGroupNames", new DisplayNameAndFormat { DisplayName = "SubGroup Names"}},
-                                {"RoleNames", new DisplayNameAndFormat { DisplayName = "Role Names"}},
-                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+                                {"SubGroupNames", new DisplayNameAndFormat { DisplayName = "SubGroup Names",isLargeText=true}},
+                                {"RoleNames", new DisplayNameAndFormat { DisplayName = "Role Names",isLargeText=true}},
+                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users",isLargeText=true}},
 
                     }
                 }
@@ -304,8 +306,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"CreatedDate", new DisplayNameAndFormat { DisplayName = "Created Date"}},
                                 {"LastUpdatedBy", new DisplayNameAndFormat { DisplayName = "Last Updated By"}},
                                 {"LastUpdatedDate", new DisplayNameAndFormat { DisplayName = "Last Updated Date"}},
-                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names"}},
-                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
+                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names",isLargeText=true}},
+                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users",isLargeText=true}},
 
                     }
                 }
@@ -332,9 +334,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"LastLoginDate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
                                 {"LastFailedLogin", new DisplayNameAndFormat { DisplayName = "Last Failed Login"}},
                                 {"Enable", new DisplayNameAndFormat { DisplayName = "Enable"}},
-                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names"}},
-                                {"MemberUsers", new DisplayNameAndFormat { DisplayName = "Member Users"}},
-                                {"DomainAccounts", new DisplayNameAndFormat { DisplayName = "Domain Accounts"}}
+                                {"GroupNames", new DisplayNameAndFormat { DisplayName = "Group Names" ,isLargeText =true}},
+                                {"RoleNames", new DisplayNameAndFormat { DisplayName = "Role Names",isLargeText =true } },
+                                {"DomainAccounts", new DisplayNameAndFormat { DisplayName = "Domain Accounts",isLargeText =true}}
 
                     }
                 }

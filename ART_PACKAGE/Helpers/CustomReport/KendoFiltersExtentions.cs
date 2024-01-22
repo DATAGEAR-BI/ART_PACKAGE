@@ -557,6 +557,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 string? agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
                 DisplayNamesAndFormat[name].AggType.ToString() : null;
                 string? aggText = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].AggText) ? DisplayNamesAndFormat[name].AggText : null;
+                bool isLargeText = propDisplayExists && DisplayNamesAndFormat[name].isLargeText;
                 return new ColumnsDto
                 {
                     name = name,
@@ -572,6 +573,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     filter = propDisplayExists ? DisplayNamesAndFormat[name].Filter : null,
                     AggType = agg,
                     AggTitle = aggText,
+                    isLargeText = isLargeText
                 };
 
             }).ToList();

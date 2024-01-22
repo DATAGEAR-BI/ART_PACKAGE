@@ -10,7 +10,7 @@
         public bool isDropDown { get; set; }
         public bool isCollection { get; set; }
         public bool isNullable { get; set; }
-
+        public bool isLargeText { get; set; }
         public string format { get; set; }
         public List<dynamic> menu { get; set; }
         public string AggType { get; set; }

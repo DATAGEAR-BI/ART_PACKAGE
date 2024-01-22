@@ -13,5 +13,7 @@ namespace Data.Data.SASAudit
         public string? Email { get; set; }
         public string? MemberOfGroup { get; set; }
         public string? UserRole { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }
