@@ -45,7 +45,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
                     //{nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
                     //{nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()         , _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
                     {nameof(ArtUsersAuditView.Action)          .ToLower()     , new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
-                    {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
+                    {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropSrv.GetUserAudNameDropDown().ToDynamicList() },
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;
