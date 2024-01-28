@@ -79,8 +79,6 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"lte"  , "{0} <= \"{1}\"" },
             { "lt"  , "{0} < \"{1}\"" },
         };
-
-
         private static readonly Dictionary<string, string> readableOperators = new()
         {
             {"eq" , "Is Equal To" },
@@ -100,7 +98,6 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"endswith" , "Ends With" },
             {"doesnotendwith" , "Doesn't End With" },
         };
-
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
         {
             {
@@ -589,7 +586,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 _ => false,
             };
         }
-        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
+        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null , List<SortOptions>? defaultSort = null)
         {
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
@@ -618,20 +615,21 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 data = data.Where("para => " + filter).AsQueryable();
             }
 
-            string? sortString = obj.Sort.GetSortString();
-            if (sortString is not null)
+            string? sortString = string.Empty;
+            var sortStr =  obj.Sort.GetSortString();
+            if (string.IsNullOrEmpty(sortStr) && defaultSort is null)
             {
-                data = data.OrderBy(sortString).AsQueryable();
+                 sortString = typeof(T).GetProperties().First().Name;
             }
-            else
+            if (string.IsNullOrEmpty(sortStr) && defaultSort is not null)
             {
-                string sort = typeof(T).GetProperties().First().Name;
-                data = data.OrderBy(sort).AsQueryable();
+                sortString = defaultSort.GetSortString();
             }
-
-
-
-
+            if (!string.IsNullOrEmpty(sortStr))
+            {
+                sortString = sortStr;
+            }
+            data = data.OrderBy(sortString).AsQueryable();
             int Count = 0;
             if (!obj.IsIntialize)
             {
@@ -1060,12 +1058,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             string sort = string.Join(" , ", opt.Select(x =>
             {
-                //string dir = x.dir == "desc" ? " " + x.dir : "";
                 return $"{x.field} {x.dir}";
             }));
             return sort;
         }
-
         private static BinaryExpression MapOp<T>(MemberExpression prop, ConstantExpression constant, string op)
         {
             switch (op)

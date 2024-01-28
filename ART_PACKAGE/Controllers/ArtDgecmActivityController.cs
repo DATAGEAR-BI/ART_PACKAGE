@@ -36,7 +36,11 @@ namespace ART_PACKAGE.Controllers
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
-
+            List<SortOptions> defaultSort = new List<SortOptions>()
+            {
+                new SortOptions() {field = nameof(ArtDgecmActivity.EcmReference) , dir = "asc"},
+                new SortOptions() {field = nameof(ArtDgecmActivity.EcmEventCreatedDate) , dir = "desc"},
+            };
             if (request.IsIntialize)
             {
                 DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
@@ -51,9 +55,10 @@ namespace ART_PACKAGE.Controllers
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
+               
             }
 
-            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip , defaultSort: defaultSort);
             var result = new
             {
                 data = Data.Data,

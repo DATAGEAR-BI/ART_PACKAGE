@@ -26,5 +26,7 @@
         public DateTime? LastActionTakenDate { get; set; }
         public string? TimeDifference { get; set; }
         public string? TimeDifferenceSLA { get; set; }
+        
+        public string? PrimaryOwner { get; set; }
     }
 }

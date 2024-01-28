@@ -3,6 +3,7 @@
     public partial class ArtDgecmActivity
     {
         public string EcmReference { get; set; } = null!;
+        public string? ParentCaseId { get; set; }
         public string? BranchName { get; set; }
         public DateTime CaseCreationDate { get; set; }
         public string? CustomerName { get; set; }
@@ -16,7 +17,6 @@
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? EventName { get; set; }
-        public string? ParentCaseId { get; set; }
         public string? Reference { get; set; }
         public string? EcmEventStep { get; set; }
         public string? EcmEventCreatedBy { get; set; }

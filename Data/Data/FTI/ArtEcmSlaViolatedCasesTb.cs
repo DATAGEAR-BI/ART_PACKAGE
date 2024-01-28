@@ -26,6 +26,7 @@
         public string? DisplayName { get; set; }
         public int? MlsToEscalation1 { get; set; }
         public int? TotalTime { get; set; }
+        public string? PrimaryOwner { get; set; }
 
     }
 }

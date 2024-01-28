@@ -35,7 +35,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     Expression<Func<TModel, object>> exp = GenerateExpression(x);
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
                     MemberMap memberMap = Map(exp).Name(displayName);
-
+                    
                     if (x.Name.ToLower().Contains("amount"))
                     {
                         _ = memberMap.TypeConverter<CurrencyTypeConverter>();

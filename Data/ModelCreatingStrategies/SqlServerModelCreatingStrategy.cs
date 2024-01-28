@@ -4961,9 +4961,9 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("numeric")
                     .IsRequired();
                 entity.Property(e => e.ParentCaseId)
-            .HasColumnName("PARENT_CASE_ID")
-            .HasColumnType("nvarchar(64)")
-            .IsRequired();
+                        .HasColumnName("PARENT_CASE_ID")
+                        .HasColumnType("nvarchar(64)")
+                        .IsRequired();
 
                 entity.Property(e => e.SubCaseId)
                     .HasColumnName("SUB_CASE_ID")
@@ -4973,6 +4973,11 @@ namespace Data.ModelCreatingStrategies
                     .Property(e => e.BranchName)
                     .HasColumnName("BRANCH_NAME")
                     .HasColumnType("nvarchar(4000)");
+                
+                entity
+                    .Property(e => e.PrimaryOwner)
+                    .HasColumnName("PRINARY_OWNER")
+                    .HasColumnType("varchar(255)");
 
                 entity
                     .Property(e => e.CustomerName)
@@ -5065,8 +5070,7 @@ namespace Data.ModelCreatingStrategies
             modelBuilder.Entity<ArtEcmSlaViolatedCasesTb>(entity =>
             {
                 entity.HasNoKey();
-                entity
-           .ToTable("ART_ECM_SLA_VIOLATED_CASES_TB", "ART_DB"); // Replace with your actual table name
+                entity.ToTable("ART_ECM_SLA_VIOLATED_CASES_TB", "ART_DB"); // Replace with your actual table name
 
                 entity
                     .Property(e => e.CaseRk)
@@ -5089,6 +5093,10 @@ namespace Data.ModelCreatingStrategies
                     .Property(e => e.BranchName)
                     .HasColumnName("BRANCH_NAME")
                     .HasColumnType("nvarchar(4000)");
+                entity
+                    .Property(e => e.PrimaryOwner)
+                    .HasColumnName("PRINARY_OWNER")
+                    .HasColumnType("varchar(255)");
 
                 entity
                     .Property(e => e.CustomerName)
