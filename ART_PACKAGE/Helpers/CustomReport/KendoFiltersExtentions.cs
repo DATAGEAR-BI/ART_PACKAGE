@@ -935,11 +935,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
-            Type controllerType = typeof(T1).GetGenericArguments()[1];
 
-            MethodInfo? methodinfo = typeof(KendoFiltersExtentions).GetMethod(nameof(GetFilterTextForCsvWithDisplayNames));
-            MethodInfo gMethod = methodinfo.MakeGenericMethod(controllerType);
-            List<List<object>> filterCells = (List<List<object>>)gMethod.Invoke(null, new object[] { obj.Filter });
+            List<List<object>> filterCells = obj.Filter.GetFilterTextForCsvWithDisplayNames<T>();
             decimal total = 0;
             if (all)
             {

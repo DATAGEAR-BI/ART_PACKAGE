@@ -306,6 +306,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             { "CaseId",new DisplayNameAndFormat{ DisplayName = "ECM Reference"} },
                             { "Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
                             { "AssignedTime",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                            {nameof(ArtEcmPendingCases.PrimaryOwner),new DisplayNameAndFormat { DisplayName = "Primary Owner" }},
                               },
 
 
@@ -396,6 +397,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                 {"AssignedBy",new DisplayNameAndFormat{ DisplayName = "Assigned By"} },
                                 {"Assignee",new DisplayNameAndFormat { DisplayName = "Assignee" }},
                                 {"AssignedTime",new DisplayNameAndFormat { DisplayName = "Assigned Time" }},
+                                {nameof(ArtEcmSlaViolatedCasesTb.PrimaryOwner),new DisplayNameAndFormat { DisplayName = "Primary Owner" }},
                               },
                               SkipList =  new List<string>()
                             {
