@@ -66,7 +66,7 @@ builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection(M
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
-     
+
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
      if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
      else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");

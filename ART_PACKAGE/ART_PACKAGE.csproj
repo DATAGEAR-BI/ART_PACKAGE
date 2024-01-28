@@ -7,9 +7,7 @@
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
-	<Target Name="CleanCodeTask" BeforeTargets="Build">
-		<Exec Command="dotnet format style -v detailed" />
-	</Target>
+	
 
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />

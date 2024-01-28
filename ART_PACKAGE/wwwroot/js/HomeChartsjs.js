@@ -1,4 +1,4 @@
-﻿
+﻿console.log("T7T Elbatannia")
 var dateData = [];
 var typeData = [];
 var statusData = [];
