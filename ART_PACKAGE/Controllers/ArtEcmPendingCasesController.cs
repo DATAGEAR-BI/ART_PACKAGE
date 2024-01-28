@@ -38,7 +38,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
                 };
@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Controllers
                     //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
             }
 
             KendoDataDesc<ArtEcmPendingCases> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
