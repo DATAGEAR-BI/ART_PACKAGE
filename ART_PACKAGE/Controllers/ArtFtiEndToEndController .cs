@@ -38,7 +38,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEnd).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
                 };
@@ -50,7 +50,7 @@ namespace ART_PACKAGE.Controllers
                     //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEnd).ToLower()].SkipList;
             }
 
             KendoDataDesc<ArtFtiEndToEnd> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
@@ -94,8 +94,8 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndController).ToLower()].SkipList;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEnd).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEnd).ToLower()].SkipList;
             List<ArtFtiEndToEnd> data = fti.ArtFtiEndToEnds.CallData(req).Data.ToList();
             ViewData["title"] = "End to end report";
             ViewData["desc"] = "";

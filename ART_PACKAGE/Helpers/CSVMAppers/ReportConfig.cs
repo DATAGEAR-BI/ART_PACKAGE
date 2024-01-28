@@ -6,5 +6,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public List<string> SkipList { get; set; }
         public Dictionary<string, DisplayNameAndFormat> DisplayNames { get; set; }
+        public List<SortOptions> DefaultSort { get; set; }
     }
 }

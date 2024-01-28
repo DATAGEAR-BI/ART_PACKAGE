@@ -36,14 +36,10 @@ namespace ART_PACKAGE.Controllers
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
-            List<SortOptions> defaultSort = new List<SortOptions>()
-            {
-                new SortOptions() {field = nameof(ArtDgecmActivity.EcmReference) , dir = "asc"},
-                new SortOptions() {field = nameof(ArtDgecmActivity.EcmEventCreatedDate) , dir = "desc"},
-            };
+            List<SortOptions> defaultSort = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DefaultSort;
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
@@ -54,11 +50,9 @@ namespace ART_PACKAGE.Controllers
                     {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
                     {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
-               
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].SkipList;
             }
-
-            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip , defaultSort: defaultSort);
+            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip, defaultSort: defaultSort);
             var result = new
             {
                 data = Data.Data,
@@ -99,8 +93,8 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivityController).ToLower()].SkipList;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].SkipList;
             List<ArtDgecmActivity> data = fti.ArtDgecmActivities.CallData(req).Data.ToList();
             ViewData["title"] = "DGECM-Activities";
             ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";

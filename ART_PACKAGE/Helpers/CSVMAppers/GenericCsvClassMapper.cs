@@ -20,11 +20,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             return base.ConvertToString(value, row, memberMapData);
         }
     }
-    public class GenericCsvClassMapper<TModel, TController> : ClassMap<TModel>
+    public class GenericCsvClassMapper<TModel> : ClassMap<TModel>
     {
         public GenericCsvClassMapper()
         {
-            string name = typeof(TController).Name.ToLower();
+            string name = typeof(TModel).Name.ToLower();
             PropertyInfo[] props = typeof(TModel).GetProperties();
             List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
             Dictionary<string, DisplayNameAndFormat> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
@@ -35,7 +35,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     Expression<Func<TModel, object>> exp = GenerateExpression(x);
                     string displayName = displaynames is not null && displaynames.Keys.Contains(x.Name) ? displaynames[x.Name]?.DisplayName : x.Name;
                     MemberMap memberMap = Map(exp).Name(displayName);
-                    
+
                     if (x.Name.ToLower().Contains("amount"))
                     {
                         _ = memberMap.TypeConverter<CurrencyTypeConverter>();

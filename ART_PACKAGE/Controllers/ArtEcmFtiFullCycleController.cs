@@ -39,7 +39,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycle).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
@@ -49,7 +49,7 @@ namespace ART_PACKAGE.Controllers
                     {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
                     //{"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycle).ToLower()].SkipList;
             }
 
             KendoDataDesc<ArtEcmFtiFullCycle> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
@@ -93,8 +93,8 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycleController).ToLower()].SkipList;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycle).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmFtiFullCycle).ToLower()].SkipList;
             List<ArtEcmFtiFullCycle> data = fti.ArtEcmFtiFullCycles.CallData(req).Data.ToList();
             ViewData["title"] = "ECM-FTI Full cycle";
             ViewData["desc"] = "The full cycle between DGECM and FTI, DGECM case main details, Request and response on comment section, FTI main details, Action/ Feedback requested from FTI to DGECM first line, FTI Notes";

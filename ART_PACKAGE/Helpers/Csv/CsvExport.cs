@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Helpers.Csv
             int i = 0;
             string reqId = Guid.NewGuid().ToString();
             string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
-            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req))
+            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req))
             {
                 try
                 {
@@ -123,7 +123,7 @@ namespace ART_PACKAGE.Helpers.Csv
             int i = 1;
             if (obj.All)
             {
-                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
+                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
 
 
             }
@@ -132,7 +132,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 Type type = typeof(T);
                 System.Reflection.PropertyInfo? prop = type.GetProperty(propName);
                 Func<T, ExportDto<T2>, bool> crt = GetContainsExpression<T, T2>(propName);
-                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
+                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
             }
 
             foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())

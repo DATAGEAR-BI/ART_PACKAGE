@@ -4976,7 +4976,7 @@ namespace Data.ModelCreatingStrategies
                 
                 entity
                     .Property(e => e.PrimaryOwner)
-                    .HasColumnName("PRINARY_OWNER")
+                    .HasColumnName("PRIMARY_OWNER")
                     .HasColumnType("varchar(255)");
 
                 entity
@@ -5095,7 +5095,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("nvarchar(4000)");
                 entity
                     .Property(e => e.PrimaryOwner)
-                    .HasColumnName("PRINARY_OWNER")
+                    .HasColumnName("PRIMARY_OWNER")
                     .HasColumnType("varchar(255)");
 
                 entity

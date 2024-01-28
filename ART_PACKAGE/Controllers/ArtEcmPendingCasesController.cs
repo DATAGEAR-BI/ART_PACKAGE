@@ -109,8 +109,8 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCasesController).ToLower()].SkipList;
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
             List<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.CallData(req).Data.ToList();
             ViewData["title"] = "Pending Cases report";
             ViewData["desc"] = "";

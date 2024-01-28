@@ -586,7 +586,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 _ => false,
             };
         }
-        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null , List<SortOptions>? defaultSort = null)
+        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null, List<SortOptions>? defaultSort = null)
         {
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
@@ -616,10 +616,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
             }
 
             string? sortString = string.Empty;
-            var sortStr =  obj.Sort.GetSortString();
+            string sortStr = obj.Sort.GetSortString();
             if (string.IsNullOrEmpty(sortStr) && defaultSort is null)
             {
-                 sortString = typeof(T).GetProperties().First().Name;
+                sortString = typeof(T).GetProperties().First().Name;
             }
             if (string.IsNullOrEmpty(sortStr) && defaultSort is not null)
             {

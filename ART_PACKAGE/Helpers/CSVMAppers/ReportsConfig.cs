@@ -1,6 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Helpers.CustomReport;
+using Data.Data.FTI;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -42,7 +42,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             //           }
             //        },
                     {
-                        nameof(ReportController).ToLower(),new ReportConfig
+                        nameof(ArtSavedCustomReport).ToLower(),new ReportConfig
                         {
                            SkipList =  new List<string>()
                     {
@@ -58,7 +58,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
                     {
-                        nameof(ArtCasesInitiatedFromBranchController).ToLower(),new ReportConfig
+                        nameof(ArtCasesInitiatedFromBranch).ToLower(),new ReportConfig
                         {
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                         {
@@ -84,11 +84,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
           },
                     {
-                        nameof(ArtDgecmActivityController).ToLower(),new ReportConfig
+                        nameof(ArtDgecmActivity).ToLower(),new ReportConfig
                         {
 
-                              DisplayNames = new Dictionary<string, DisplayNameAndFormat>
-                    {
+                                DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                {
                             {"EcmReference",new DisplayNameAndFormat { DisplayName ="Ecm Reference"}},
                             {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                             {"CaseCreationDate",new DisplayNameAndFormat { DisplayName ="Case Creation Date"}},
@@ -120,13 +120,18 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
                     },
-                           SkipList =  new List<string>()
-                            {
-                            }
+                                SkipList =  new List<string>()
+                                {
+                            },
+                                DefaultSort = new()
+                                {
+                                    new SortOptions() {field = nameof(ArtDgecmActivity.EcmReference) , dir = "asc"},
+                                    new SortOptions() {field = nameof(ArtDgecmActivity.EcmEventCreatedDate) , dir = "desc"},
+                                }
                         }
                     },
                     {
-                        nameof(ArtEcmFtiFullCycleController).ToLower(),new ReportConfig
+                        nameof(ArtEcmFtiFullCycle).ToLower(),new ReportConfig
                         {
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
@@ -169,7 +174,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             }
                         }
                     }, {
-                       nameof(ArtFtiActivityController).ToLower(),new ReportConfig
+                       nameof(ArtFtiActivity).ToLower(),new ReportConfig
                         {
                                DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
@@ -191,7 +196,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
                     },
             {
-                        nameof(ArtFtiEcmTransactionController).ToLower(),new ReportConfig
+                        nameof(ArtFtiEcmTransaction).ToLower(),new ReportConfig
                         {
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
@@ -217,7 +222,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
                     },
             {
-                        nameof(ArtFtiEndToEndNewController).ToLower(),new ReportConfig
+                        nameof(ArtFtiEndToEndNew).ToLower(),new ReportConfig
                         {
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
@@ -269,7 +274,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
                     },
             {
-                        nameof(ArtEcmPendingCasesController).ToLower(),new ReportConfig
+                        nameof(ArtEcmPendingCases).ToLower(),new ReportConfig
                         {
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
@@ -311,7 +316,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
                     },
             {
-                        nameof(ArtFtiEndToEndController).ToLower(),new ReportConfig
+                        nameof(ArtFtiEndToEnd).ToLower(),new ReportConfig
                         {
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
@@ -360,7 +365,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         }
                     },
             {
-                        nameof(ArtEcmSlaViolatedCasesController).ToLower(),new ReportConfig
+                        nameof(ArtEcmSlaViolatedCasesTb).ToLower(),new ReportConfig
                         {
 
                               DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
