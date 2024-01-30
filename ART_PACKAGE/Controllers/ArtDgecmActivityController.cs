@@ -96,7 +96,7 @@ namespace ART_PACKAGE.Controllers
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].SkipList;
             List<SortOptions> defaultSort = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DefaultSort;
-            List<ArtDgecmActivity> data = fti.ArtDgecmActivities.CallData(req ,defaultSort:defaultSort).Data.ToList();
+            List<ArtDgecmActivity> data = fti.ArtDgecmActivities.CallData(req, defaultSort: defaultSort).Data.ToList();
             ViewData["title"] = "DGECM-Activities";
             ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

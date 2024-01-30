@@ -4241,6 +4241,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGECM_ACTIVITIES", "ART_DB");
 
                 entity.Property(e => e.Amount).HasColumnName("AMOUNT");
+                entity.Property(e => e.CaseRk).HasColumnName("Case_Rk");
                 entity.Property(e => e.Reference)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
@@ -4973,7 +4974,7 @@ namespace Data.ModelCreatingStrategies
                     .Property(e => e.BranchName)
                     .HasColumnName("BRANCH_NAME")
                     .HasColumnType("nvarchar(4000)");
-                
+
                 entity
                     .Property(e => e.PrimaryOwner)
                     .HasColumnName("PRIMARY_OWNER")

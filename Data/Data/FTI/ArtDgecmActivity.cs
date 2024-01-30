@@ -2,6 +2,7 @@
 {
     public partial class ArtDgecmActivity
     {
+        public decimal CaseRk { get; set; }
         public string EcmReference { get; set; } = null!;
         public string? ParentCaseId { get; set; }
         public string? BranchName { get; set; }

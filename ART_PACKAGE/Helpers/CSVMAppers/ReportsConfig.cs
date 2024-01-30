@@ -121,11 +121,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                     },
                                 SkipList =  new List<string>()
-                                {
+                                {"CaseRk"
                             },
                                 DefaultSort = new()
                                 {
-                                    new SortOptions() {field = nameof(ArtDgecmActivity.EcmReference) , dir = "asc"},
+                                    new SortOptions() {field = nameof(ArtDgecmActivity.CaseRk) , dir = "desc"},/*asc*/
                                     new SortOptions() {field = nameof(ArtDgecmActivity.EcmEventCreatedDate) , dir = "desc"},
                                 }
                         }
