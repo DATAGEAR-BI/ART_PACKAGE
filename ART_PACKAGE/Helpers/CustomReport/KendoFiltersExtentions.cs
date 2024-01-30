@@ -940,7 +940,12 @@ namespace ART_PACKAGE.Helpers.CustomReport
             decimal total = 0;
             if (all)
             {
-                KendoDataDesc<T> calldata = data.CallData(obj);
+                Type typeParameterType = typeof(T);
+                string modelName = typeParameterType.Name;
+                List<SortOptions> DefaultSort = null;
+                DefaultSort = ReportsConfig.CONFIG[modelName.ToLower()].DefaultSort;
+
+                KendoDataDesc<T> calldata = data.CallData(obj, defaultSort: DefaultSort);
                 data = calldata.Data;
                 total = calldata.Total;
             }
