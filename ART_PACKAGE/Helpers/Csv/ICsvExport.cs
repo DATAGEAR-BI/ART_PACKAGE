@@ -14,7 +14,7 @@ namespace ART_PACKAGE.Helpers.Csv
         public Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true);
         public void ClearExportFolder(string reqId);
 
-        public bool ExportData<TContext, TModel>(GridRequest gridRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
+        public bool ExportData<TContext, TModel>(ExportRequest exportRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
                where TContext : DbContext
                where TModel : class;
 

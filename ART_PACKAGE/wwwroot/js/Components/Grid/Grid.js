@@ -1100,6 +1100,8 @@ class Grid extends HTMLElement {
         var filters = grid.dataSource.filter();
         var total = grid.dataSource.total();
         var sort = grid.dataSource.sort();
+        let Request = {};
+        Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x=>x.field);
         var para = {}
         para.Take = total;
         para.Skip = 0;
@@ -1132,14 +1134,14 @@ class Grid extends HTMLElement {
 
         console.log("Controller: " + controller);
         console.log("Action: " + action);
-
+        Request.DataReq = para;
         var exportRes = await fetch(`/${controller}/ExportToCsv/` + this.id, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
             },
-            body: JSON.stringify(para),
+            body: JSON.stringify(Request),
         });
 
         if (exportRes.ok) {

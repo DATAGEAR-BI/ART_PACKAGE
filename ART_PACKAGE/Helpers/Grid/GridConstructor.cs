@@ -18,9 +18,6 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private static readonly Dictionary<int, int> fileProgress = new();
-
-
-
         public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             Repo = repo;
@@ -32,11 +29,11 @@ namespace ART_PACKAGE.Helpers.Grid
         }
         public TRepo Repo { get; private set; }
 
-        public string ExportGridToCsv(GridRequest gridRequest, string user, string gridId)
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId)
         {
             string folderGuid = Guid.NewGuid().ToString();
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-            GridResult<TModel> dataRes = Repo.GetGridData(gridRequest);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq);
             int total = dataRes.total;
             int totalcopy = total;
             int batch = 500_000;
@@ -51,21 +48,25 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest roundReq = new()
+                GridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
-                    Filter = gridRequest.Filter,
-                    Sort = gridRequest.Sort,
-                    Group = gridRequest.Group,
-                    All = gridRequest.All,
-                    IdColumn = gridRequest.IdColumn,
-                    SelectedValues = gridRequest.SelectedValues,
+                    Filter = exportRequest.DataReq.Filter,
+                    Sort = exportRequest.DataReq.Sort,
+                    Group = exportRequest.DataReq.Group,
+                    All = exportRequest.DataReq.All,
+                    IdColumn = exportRequest.DataReq.IdColumn,
+                    SelectedValues = exportRequest.DataReq.SelectedValues,
                 };
-
+                ExportRequest roundReq = new()
+                {
+                    DataReq = dataReq,
+                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Test.csv", localRound, user));
+                _ = Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Report.csv", localRound, user));
 
                 total -= batch;
                 round++;

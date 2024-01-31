@@ -1,13 +1,4 @@
-﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Controllers.DGAML;
-using ART_PACKAGE.Controllers.DGAUDIT;
-using ART_PACKAGE.Controllers.ECM;
-using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
-using ART_PACKAGE.Controllers.FTI;
-using ART_PACKAGE.Controllers.GOAML;
-using ART_PACKAGE.Controllers.KYC;
-using ART_PACKAGE.Controllers.SASAML;
-using ART_PACKAGE.Helpers.ExportTasks;
+﻿using ART_PACKAGE.Helpers.ExportTasks;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -19,9 +10,11 @@ using Data.Data.SASAml;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
 using GridColumnConfiguration = Data.Services.Grid.GridColumnConfiguration;
 
-namespace ART_PACKAGE.Helpers.CSVMAppers {
-  public class ReportsConfig {
-    public static readonly Dictionary < string, ReportConfig > CONFIG = new() {
+namespace ART_PACKAGE.Helpers.CSVMAppers
+{
+    public class ReportsConfig
+    {
+        public static readonly Dictionary<string, ReportConfig> CONFIG = new() {
       {
         nameof(ExportTask).ToLower(), new ReportConfig {
           SkipList = new List < string > () {
@@ -9455,5 +9448,5 @@ namespace ART_PACKAGE.Helpers.CSVMAppers {
 
     };
 
-  }
+    }
 }

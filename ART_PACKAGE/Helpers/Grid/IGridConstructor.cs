@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Helpers.Grid
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User);
         public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null);
 
-        public string ExportGridToCsv(GridRequest gridRequest, string user, string gridId);
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId);
 
     }
 }

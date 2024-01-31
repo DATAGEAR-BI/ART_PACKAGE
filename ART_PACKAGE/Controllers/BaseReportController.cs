@@ -29,7 +29,7 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
 
-                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(GetType().Name, User);
+                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(typeof(TModel).Name, User);
                 return new ContentResult
                 {
                     ContentType = "application/json",
@@ -53,7 +53,7 @@ namespace ART_PACKAGE.Controllers
 
         [HttpPost("[controller]/[action]/{gridId}")]
 
-        public async Task<IActionResult> ExportToCsv([FromBody] GridRequest req, [FromRoute] string gridId)
+        public async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
         {
             string folderGuid = _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId);
             return Ok(new { folder = folderGuid });

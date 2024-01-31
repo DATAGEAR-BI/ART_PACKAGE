@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Controllers.DGAML;
+﻿using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
@@ -34,21 +33,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         {
             List<SelectItem> pipList = new() { new SelectItem { text = "Y", value = "Y" }, new SelectItem { text = "N", value = "N" } };
             List<SelectItem> actionList = new() { new SelectItem { text = "Add", value = "Add" }, new SelectItem { text = "Update", value = "Update" }, new SelectItem { text = "Delete", value = "Delete" } };
-
             return controller switch
             {
-                nameof(GridController) => new Dictionary<string, List<SelectItem>>
-                {
-                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown()},
-                    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },
-                    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown()},
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
-                    {"PoliticallyExposedPersonInd".ToLower(), new List<string>(){"Y","N"}.Select(x=> new SelectItem{ text = x,value = x }).ToList()  },
-                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() }
-                },
-
-
                 nameof(SumCountryController) => new Dictionary<string, List<SelectItem>>
                 {
                     { "C7CNM".ToLower() , new List<SelectItem> { new SelectItem  { text = "brrrrr" , value = "brrrrr" }, new SelectItem { text = "brrrrr", value = "brrrrr" }, } }

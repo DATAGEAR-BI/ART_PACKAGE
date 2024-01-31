@@ -431,19 +431,19 @@ namespace ART_PACKAGE.Helpers.Csv
             //return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
         }
 
-        public bool ExportData<TContext, TModel>(GridRequest gridRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
+        public bool ExportData<TContext, TModel>(ExportRequest exportRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
          where TContext : DbContext
             where TModel : class
         {
             IBaseRepo<TContext, TModel> Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IBaseRepo<TContext, TModel>>();
-            GridResult<TModel> dataRes = Repo.GetGridData(gridRequest);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq);
             IQueryable<TModel>? data = dataRes.data;
-            return ExportToFolder(data, dataRes.total, folderPath, fileName, fileNumber);
+            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, fileNumber);
         }
 
 
 
-        private bool ExportToFolder<TModel>(IQueryable<TModel> data, int dataCount, string folderPath, string fileName, int fileNumber = 1)
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, int fileNumber = 1)
         {
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
@@ -452,7 +452,10 @@ namespace ART_PACKAGE.Helpers.Csv
             using MemoryStream stream = new();
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
-            _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel>>();
+
+            BaseClassMap<TModel> mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>();
+
+            cw.Context.RegisterClassMap(mapperInstance);
 
             cw.WriteHeader<TModel>();
 
