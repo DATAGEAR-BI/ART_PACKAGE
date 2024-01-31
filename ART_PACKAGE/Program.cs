@@ -29,8 +29,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 QuestPDF.Settings.License = LicenseType.Community;
 builder.Services.AddDbs(builder.Configuration);
-builder.Services.AddMediatR(m => m.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(AuthContext).Assembly));
-
 builder.Services.AddSingleton<ContextPerReportFactory>();
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();

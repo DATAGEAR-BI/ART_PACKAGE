@@ -19,69 +19,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
-
-
-                    { nameof(ExportTask).ToLower(), new ReportConfig
-                                                                {
-                                                                        SkipList = new List<string>()
-                                                                        {
-                                                                            nameof(ExportTaskDto.Mails),
-                                                                            nameof(ExportTaskDto.Name),
-                                                                            nameof(ExportTask.UserId),
-                                                                            nameof(ExportTask.Deleted),
-                                                                            nameof(ExportTask.ParametersJson),
-                                                                            nameof(ExportTask.Day),
-                                                                            nameof(ExportTask.Month),
-                                                                            nameof(ExportTask.EndOfMonth),
-                                                                            //nameof(ExportTask.Hour),
-                                                                            nameof(ExportTask.Minute),
-                                                                            nameof(ExportTask.CornExpression),
-                                                                            nameof(ExportTask.Deleted),
-                                                                            nameof(ExportTask.DayOfWeek),
-
-                                                                        },
-                                                                        DisplayNames = new Dictionary<string, GridColumnConfiguration>
-                                                                        {
-                                                                                {nameof(ExportTask.Period),new GridColumnConfiguration { DisplayName ="Period" , Template = "TaskPeriodTemplate"}},
-                                                                                {nameof(ExportTask.DisplayName),new GridColumnConfiguration { DisplayName ="Name" }},
-                                                                                {nameof(ExportTask.Hour),new GridColumnConfiguration { DisplayName ="HHHHHour" }},
-                                                                                {nameof(ExportTask.MailsSerialized),new GridColumnConfiguration { DisplayName ="Mails" , Template = "TaskMails" }},
-                                                                        },
-                                                                        ContainsActions = true,
-                                                                        Actions = new List<GridButton>
-                                                                        {
-                                                                              new GridButton
-                                                                                        {
-                                                                                            text = "Edit",
-                                                                                            action = "editTask",
-                                                                                            icon = "k-i-edit"
-                                                                                        },
-                                                                                        new GridButton
-                                                                                        {
-                                                                                            text = "Delete",
-                                                                                            action = "deleteTask",
-                                                                                            icon = "k-i-trash"
-                                                                                        },
-                                                                                        new GridButton
-                                                                                        {
-                                                                                            text = "Run Now",
-                                                                                            action = "runNow",
-                                                                                            icon = "k-i-video-external"
-                                                                                        }
-                                                                        },
-                                                                        Toolbar = new List<GridButton>
-                                                                        {
-                                                                             new GridButton
-                                                                             {
-                                                                                 text = "Add New Task",
-                                                                                 action = "addTask",
-                                                                                 icon = "k-i-edit"
-                                                                             }
-                                                                        },
-                                                                        Selectable = true
-                                                                }
-               },
-                 { nameof(TasksController).ToLower(), new ReportConfig
+                 { nameof(ExportTask).ToLower(), new ReportConfig
                                                                 {
                                                                         SkipList = new List<string>()
                                                                         {
@@ -146,42 +84,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
 
-            { nameof(GridController).ToLower(), new ReportConfig {
-               SkipList =  new List<string>
-                {
-                    "Val",
-                    "AlertsNotesFlag"
-                },
-               DisplayNames = new Dictionary<string, GridColumnConfiguration>
-            {
-                    {"AlertId",new GridColumnConfiguration { DisplayName ="Alert ID"}},
-                    {"AlertedEntityName",new GridColumnConfiguration { DisplayName ="Alerted Entity Name"}},
-                    {"AlertedEntityNumber",new GridColumnConfiguration { DisplayName ="Alerted Entity Number" }},
-                    {"BranchName",new GridColumnConfiguration { DisplayName ="Branch Name"}},
-                    {"PartyTypeDesc",new GridColumnConfiguration { DisplayName ="Party Type"}},
-                    {"PoliticallyExposedPersonInd",new GridColumnConfiguration { DisplayName ="PEP"}},
-                    {"RunDate",new GridColumnConfiguration { DisplayName ="Run Date"}},
-                    {"CreateDate",new GridColumnConfiguration { DisplayName ="Create Date"}},
-                    {"CloseDate",new GridColumnConfiguration { DisplayName ="Closed Date"}},
-                    {"MoneyLaunderingRiskScore",new GridColumnConfiguration { DisplayName ="Money Laundering RiskScore"}},
-                    {"AlertTypeCd",new GridColumnConfiguration { DisplayName ="Alert Type"}},
-                    {"AlertSubCat",new GridColumnConfiguration { DisplayName ="Alert Sub-Category"}},
-                    {"CustomerName",new GridColumnConfiguration { DisplayName ="Customer Name" , Template = "hyperlink"}},
-                    {"AlertDescription",new GridColumnConfiguration { DisplayName ="Alert Description"}},
-                    {"ScenarioName",new GridColumnConfiguration { DisplayName ="Scenario Name"}},
-                    {"ReportCloseRsn",new GridColumnConfiguration { DisplayName ="Report Close Reason"}},
-                    {"ActualValuesText",new GridColumnConfiguration { DisplayName ="Scenario Description"}},
-                    {"OwnerUserid",new GridColumnConfiguration { DisplayName ="Owner "}},
-                    {"InvestigationDays",new GridColumnConfiguration { DisplayName ="Investigation Days"}}
-
-            },
-               Toolbar = new List<GridButton> { new GridButton { action = "test", text = "TEST" } },
-               Selectable = true,
-                ShowExportPdf = (user) =>  user.IsInRole("de7k")
-    }
-
-}
-            ,
+        
             {
     nameof(AlertDetailsController).ToLower(), new ReportConfig
     {

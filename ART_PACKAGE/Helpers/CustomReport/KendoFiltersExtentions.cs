@@ -560,6 +560,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 string? agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
                 DisplayNamesAndFormat[name].AggType.ToString() : null;
                 string? aggText = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].AggText) ? DisplayNamesAndFormat[name].AggText : null;
+
                 return new ColumnsDto
                 {
                     name = name,

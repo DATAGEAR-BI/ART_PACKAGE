@@ -146,7 +146,7 @@ namespace ART_PACKAGE.Helpers.Csv
             int i = 0;
             string reqId = Guid.NewGuid().ToString();
             string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
-            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req))
+            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req))
             {
                 try
                 {
@@ -217,7 +217,7 @@ namespace ART_PACKAGE.Helpers.Csv
             int i = 1;
             if (obj.All)
             {
-                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
+                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
 
 
             }
@@ -226,7 +226,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 Type type = typeof(T);
                 System.Reflection.PropertyInfo? prop = type.GetProperty(propName);
                 Func<T, ExportDto<T2>, bool> crt = GetContainsExpression<T, T2>(propName);
-                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T, T1>>(obj.Req);
+                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
             }
 
             foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
@@ -312,7 +312,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TController, TModel>>();
+                        _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel>>();
                         cw.WriteHeader<TModel>();
                         cw.NextRecord();
                         foreach (TModel? elm in tempData)
@@ -452,7 +452,7 @@ namespace ART_PACKAGE.Helpers.Csv
             using MemoryStream stream = new();
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
-            _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel, object>>();
+            _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel>>();
 
             cw.WriteHeader<TModel>();
 

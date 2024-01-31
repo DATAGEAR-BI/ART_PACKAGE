@@ -19,7 +19,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             return base.ConvertToString(value, row, memberMapData);
         }
     }
-    public class GenericCsvClassMapper<TModel, TController> : ClassMap<TModel>
+    public class GenericCsvClassMapper<TModel> : ClassMap<TModel>
     {
         public GenericCsvClassMapper()
         {
