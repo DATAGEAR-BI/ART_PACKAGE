@@ -41,7 +41,7 @@ namespace Data.Services
 
 
 
-        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)
@@ -57,6 +57,10 @@ namespace Data.Services
                 }
             }
 
+            if (baseCondition is not null)
+            {
+                data = data.Where(baseCondition);
+            }
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
 
             data = data.Where(ex);

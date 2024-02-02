@@ -1,6 +1,5 @@
 ﻿using ART_PACKAGE.Helpers.ContextPerReport;
 using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.Mail;
 using Data.Data.ExportSchedular;
 using Hangfire;
@@ -28,11 +27,14 @@ namespace ART_PACKAGE.Helpers.ExportTasks
         public async Task PerformTask(ExportTask task, PerformContext hangContext)
         {
             string noramlizedReportName = (task.ReportName + "controller").ToLower();
-            Type? modelType = ReportModelMap.GetReportModels(noramlizedReportName)[0];
             Type? controllerType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
                       .FirstOrDefault(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested && a.Namespace.Contains($"ART_PACKAGE.Controllers") && a.Name.ToLower() == noramlizedReportName);
 
-            MethodInfo? ExportMethod = typeof(ICsvExport).GetMethod("ExportForSchedulaedTask").MakeGenericMethod(modelType, controllerType);
+            Type? baseType = controllerType.BaseType;
+
+            Type? modelType = baseType.GetGenericArguments()[2];
+
+            MethodInfo? ExportMethod = typeof(ICsvExport).GetMethod("ExportForSchedulaedTask").MakeGenericMethod(modelType);
 
             DbContext context = contextFactory.GetContextOf(task.ReportName);
 

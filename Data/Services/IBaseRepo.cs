@@ -9,7 +9,7 @@ namespace Data.Services
         where TContext : DbContext
         where TModel : class
     {
-        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null);
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null,SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null);
 
 
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters);

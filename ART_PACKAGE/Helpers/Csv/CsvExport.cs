@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -7,20 +6,18 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
-using System.Text.Json;
-using Expression = System.Linq.Expressions.Expression;
+using Newtonsoft.Json.Linq;
 using Type = System.Type;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
     public class CsvExport : ICsvExport
     {
-
-        private static readonly Dictionary<string, string> StringOp = new()
+        private static readonly Dictionary<string, string> StringOperations = new()
         {
             { "="              , "{1} = '{0}'" },
             { "<>"             , "{1} <> '{0}'" },
@@ -38,7 +35,7 @@ namespace ART_PACKAGE.Helpers.Csv
             { "not_in"  , "{1} NOT IN ({0})" },
         };
 
-        private static readonly Dictionary<string, string> NumberOp = new()
+        private static readonly Dictionary<string, string> NumberOperations = new()
         {
             { "=", "{1} = {0}" },
             { "<>", "{1} <> {0}" },
@@ -52,10 +49,9 @@ namespace ART_PACKAGE.Helpers.Csv
               { "not_in"  , "{1} NOT IN ({0})" },
         };
 
-        private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
+        private static readonly Dictionary<string, Dictionary<string, string>> DateOperations = new()
         {
             {
-
                 "sqlServer"
             ,
             new Dictionary<string, string> {
@@ -75,7 +71,6 @@ namespace ART_PACKAGE.Helpers.Csv
             ,
 
             {
-
                 "oracle"
             ,
                 new Dictionary<string, string> {
@@ -114,181 +109,27 @@ namespace ART_PACKAGE.Helpers.Csv
             OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
 
         }
-        public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
-        {
-            await Export<TModel, TController, object>(_db, userName, obj);
-        }
-
-        public async Task Export<TModel, TController, TColumn>(DbContext _db, string userName, ExportDto<object> obj, string idColumn = null) where TModel : class
-        {
-            IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
-            string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
-            IQueryable<TModel> data = null;
-            if (idColumn is not null && obj.SelectedIdz is not null && obj.SelectedIdz.Count() > 0)
-            {
-                string columnName = tableData.GetProperty(idColumn).GetColumnName();
-                IEnumerable<TColumn> idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
-                string idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
-                data = _db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchema()}.{tbName}
-                                                        WHERE {columnName} IN ({idzForSql})");
-            }
-            else
-            {
-                data = _db.Set<TModel>();
-            }
-            await ExportAllCsv<TModel, TController, object>(data, userName, obj);
-
-        }
 
 
-        public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
-        {
-            int i = 0;
-            string reqId = Guid.NewGuid().ToString();
-            string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
-            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req))
-            {
-                try
-                {
-
-                    byte[] bytes = await item;
-                    string FileName = i + 1 + "." + typeof(T1).Name.Replace("Controller", "") + "_" + Date + ".csv";
-                    SaveByteArrayAsCsv(bytes, FileName, reqId);
-
-
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvRecevied", bytes, FileName, i, reqId);
-                    i++;
-                }
-                catch (Exception)
-                {
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvErrorRecevied", i);
-
-                }
-
-            }
-            await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                               .SendAsync("FinishedExportFor", reqId, i);
-        }
-        private void SaveByteArrayAsCsv(byte[] byteArray, string fileName, string folderGuid)
-        {
-            try
-            {
-                // Create a directory with the GUID as its name
-                string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-                if (!Directory.Exists(folderPath))
-                    _ = Directory.CreateDirectory(folderPath);
-
-                // Create a file path within the directory using the provided file name
-                string filePath = Path.Combine(folderPath, fileName);
-
-                // Write the byte array to the CSV file
-                File.WriteAllBytes(filePath, byteArray);
-
-                Console.WriteLine($"Byte array saved as '{fileName}' in folder '{folderGuid}'");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-        }
-        public Func<T, ExportDto<T2>, bool> GetContainsExpression<T, T2>(string propName)
-        {
-            ParameterExpression param = Expression.Parameter(typeof(T), "x");
-            ParameterExpression objParam = Expression.Parameter(typeof(ExportDto<T2>), "obj");
-            MemberExpression prop = Expression.Property(param, propName);
-            MemberExpression objProp = Expression.Property(objParam, "SelectedIdz");
-            MethodCallExpression containsEx = Expression.Call(
-        typeof(Enumerable),  // Assuming SelectedIdz is IEnumerable
-        "Contains",
-        new[] { typeof(T2) },  // Adjust this if SelectedIdz is of a different type
-        objProp,
-        prop
-    );
-
-            Expression<Func<T, ExportDto<T2>, bool>> lambda = Expression.Lambda<Func<T, ExportDto<T2>, bool>>(containsEx, param, objParam);
-
-            return lambda.Compile();
-        }
-        public async Task ExportSelectedCsv<T, T1, T2>(IQueryable<T> data, string propName, string userName, ExportDto<T2> obj = null, bool all = true)
-        {
-            IEnumerable<Task> tasks;
-            int i = 1;
-            if (obj.All)
-            {
-                tasks = data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
-
-
-            }
-            else
-            {
-                Type type = typeof(T);
-                System.Reflection.PropertyInfo? prop = type.GetProperty(propName);
-                Func<T, ExportDto<T2>, bool> crt = GetContainsExpression<T, T2>(propName);
-                tasks = data.ToList().Where(x => crt(x, obj)).AsQueryable().ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req);
-            }
-
-            foreach (Task<byte[]> item in tasks.Cast<Task<byte[]>>())
-            {
-                try
-                {
-                    byte[] bytes = await item;
-                    string FileName = typeof(T1).Name.Replace("Controller", "") + "_" + i + "_" + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-
-
-
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvRecevied", bytes, FileName);
-
-                    i++;
-                }
-                catch (Exception ex)
-                {
-                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
-                                .SendAsync("csvErrorRecevied", i);
-
-                }
-
-            }
-        }
-
-        public async Task ExportMissed(string reqId, string UserName, List<int> missedFiles)
-        {
-            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), reqId);
-            IEnumerable<string> FilesNames = Directory.EnumerateFiles(folderPath);
-            IEnumerable<string> missedFilesNames = FilesNames.Where(f => missedFiles.Any(x => Path.GetFileName(f).StartsWith(x.ToString())));
-
-            var files = missedFilesNames.Select(x => new { file = File.ReadAllBytes(x), fileName = Path.GetFileName(x) });
-            await _exportHub.Clients.Clients(connections.GetConnections(UserName))
-                                .SendAsync("missedFilesRecived", files, reqId);
-        }
-
-        public void ClearExportFolder(string reqId)
-        {
-            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), reqId);
-            Directory.Delete(folderPath, true);
-        }
-
-        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TController>(DbContext db, string parameterJson) where TModel : class
+        public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel>(DbContext db, string parameterJson) where TModel : class
         {
             IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
             string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
             string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
             List<object>? param = JsonConvert.DeserializeObject<List<object>>(parameterJson);
-            string clause = GenerateWhereClause<TModel>(db, tableData, dbtype, param);
+            string clause = GenerateWhereClause<TModel>(tableData, dbtype, param);
             string where = string.IsNullOrEmpty(clause) ? "" : "Where " + clause;
             IQueryable<TModel> data = db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchemaQualifiedViewName()}
                                                        {where}");
-            byte[][] bytes = await Task.WhenAll(ExportDataToCsv<TModel, TController>(data));
+            byte[][] bytes = await Task.WhenAll(ExportDataToCsv(data));
             string currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
-            IEnumerable<DataFile> files = bytes.Select((b, i) => new DataFile(i + 1 + "." + typeof(TController).Name.Replace("Controller", "") + "_" + currentDate + ".csv"
+            IEnumerable<DataFile> files = bytes.Select((b, i) => new DataFile(i + 1 + ".Report_" + currentDate + ".csv"
                 , "text/csv", b));
 
             return files;
         }
 
-        private IEnumerable<Task<byte[]>> ExportDataToCsv<TModel, TController>(IQueryable<TModel> data)
+        private IEnumerable<Task<byte[]>> ExportDataToCsv<TModel>(IQueryable<TModel> data)
         {
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
@@ -312,7 +153,9 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        _ = cw.Context.RegisterClassMap<GenericCsvClassMapper<TModel>>();
+                        BaseClassMap<TModel> mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+
+                        cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
                         cw.NextRecord();
                         foreach (TModel? elm in tempData)
@@ -331,112 +174,101 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
         }
-        private bool IsPropertyOfType<T>(Type type)
+        // Check if the property is of a specific type
+        private bool IsPropertyOfType<T>(PropertyInfo propertyInfo)
         {
+            Type type = propertyInfo.PropertyType;
             Type? underlyingType = Nullable.GetUnderlyingType(type);
-            return type.Name == typeof(T).Name || underlyingType?.Name == typeof(T).Name;
+            return type == typeof(T) || underlyingType == typeof(T);
         }
 
-        private string GenerateWhereClause<TModel>(DbContext db, IEntityType? tableData, string dbtype, List<object> param)
+        // Generate the WHERE clause
+        public string GenerateWhereClause<TModel>(IEntityType tableData, string dbType, List<object> parameters)
         {
+            StringBuilder whereClause = new();
+            foreach (object filter in parameters)
+            {
+                whereClause.Append(ProcessFilter<TModel>(tableData, filter, dbType));
+            }
 
+            return whereClause.ToString();
+        }
 
-            StringBuilder sb = new();
-            foreach (object filter in param)
+        private bool TryParse<T>(JArray jarr, out T output)
+        {
+            try
+            {
+                output = jarr.ToObject<T>();
+                return true;
+            }
+            catch (Exception e)
+            {
+                output = default;
+                return false;
+            }
+        }
+
+        // Process each filter in the parameters
+        private string ProcessFilter<TModel>(IEntityType tableData, object filter, string dbType)
+        {
+            JArray f = (JArray)filter;
+            if (TryParse(f, out List<string> filterList))
+            {
+                return ProcessFilterList<TModel>(tableData, filterList, dbType);
+            }
+            else if (TryParse(f, out string op))
+            {
+                return $" {op} ";
+            }
+            else if (TryParse(f, out List<object> list))
             {
 
-                try
-                {
-                    List<string>? filterarr = filter as List<string> ?? (filter as JArray)?.ToObject<List<string>>();
-                    if (filterarr is not null)
-                    {
-                        IProperty prop = tableData.GetProperty(filterarr[0]);
-                        Type paramType = typeof(TModel).GetProperty(filterarr[0]).PropertyType;
-                        bool isNumber = paramType.IsNumericType();
-                        bool isDate = IsPropertyOfType<DateTime>(paramType);
-                        string columnName = prop.GetColumnName();
-                        string clause = string.Empty;
-                        if (filterarr[1].StartsWith("in"))
-                        {
-                            filterarr[1] = "in";
-                            filterarr[2] = !isNumber ? string.Join(",", filterarr[2].Split(",").Select(x => $"'{x}'")) : filterarr[2];
-                        }
-
-                        clause = isNumber
-                            ? string.Format(NumberOp[filterarr[1]], filterarr[2], columnName)
-                            : isDate
-                            ? string.Format(DateOp[dbtype][filterarr[1]], filterarr[2], columnName)
-                            : string.Format(StringOp[filterarr[1]], filterarr[2], columnName);
-                        _ = sb.Append(clause);
-                    }
-                    else
-                    {
-                        string? op = filter as string ?? (filter as JArray)?.ToObject<string>();
-                        _ = sb.Append(" " + op + " ");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        string? op = filter as string ?? (filter as JArray)?.ToObject<string>();
-
-                        _ = sb.Append(" " + op + " ");
-                    }
-                    catch (Exception opex)
-                    {
-                        try
-                        {
-                            List<object>? para = filter as List<object> ?? (filter as JArray)?.ToObject<List<object>>();
-                            _ = sb.Append("(" + GenerateWhereClause<TModel>(db, tableData, dbtype, para) + ")");
-                        }
-                        catch (Exception pex)
-                        {
-
-                            throw;
-                        }
-
-                    }
-                }
-
+                return $"({GenerateWhereClause<TModel>(tableData, dbType, list)})";
             }
-            string returnClause = sb.ToString();
-            return returnClause;
 
-            //var groupedParams = parameters.GroupBy(x => new { x.ParameterName, x.Operator });
-            //foreach (var paramGroup in groupedParams)
-            //{
-            //    IProperty prop = tableData.GetProperty(paramGroup.Key.ParameterName);
-            //    Type paramType = prop.GetType();
-            //    bool isNumber = paramType.IsNumericType();
-            //    bool isDate = paramType.Name == nameof(DateTime);
-            //    string values = string.Empty;
-            //    if (paramGroup.Key.Operator.Contains("in", StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        values = string.Join(",", groupedParams.SelectMany(x => x.Select(p => isNumber ? p.ParameterValue : $"'{p.ParameterValue}'")));
-            //    }
-            //    values = groupedParams.FirstOrDefault().FirstOrDefault().ParameterValue;
-            //    string columnName = prop.GetColumnName();
-            //    if (isNumber)
-            //        whereClause.Add(string.Format(NumberOp[paramGroup.Key.Operator], values, columnName));
-            //    else if (isDate)
-            //    {
-            //        string sql = DateOp[dbtype][paramGroup.Key.Operator];
-            //        whereClause.Add(string.Format(sql, values, columnName));
-            //    }
-            //    else
-            //        whereClause.Add(string.Format(StringOp[paramGroup.Key.Operator], values, columnName));
-            //}
-
-            //return whereClause.Count < 0 ? string.Empty : "WHERE " + string.Join(" AND ", whereClause);
+            throw new ArgumentException("Invalid filter type");
         }
 
-        public bool ExportData<TContext, TModel>(ExportRequest exportRequest, int total, string folderPath, string fileName, int fileNumber, string userName)
+        // Process filter when it's a list
+        private string ProcessFilterList<TModel>(IEntityType tableData, List<string> filterList, string dbType)
+        {
+            string propertyName = filterList[0];
+            IProperty property = tableData.GetProperty(propertyName);
+            PropertyInfo propInfo = typeof(TModel).GetProperty(propertyName) ?? throw new ArgumentException($"Property '{propertyName}' not found on '{typeof(TModel).Name}'");
+            string columnName = property.GetColumnName();
+            bool isNumber = IsPropertyOfType<decimal>(propInfo);
+            bool isDate = IsPropertyOfType<DateTime>(propInfo);
+
+            string clause;
+
+            if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
+            {
+                filterList[1] = "in";
+                filterList[2] = FormatInClauseValues(filterList[2], isNumber);
+            }
+
+            clause = isNumber
+                ? string.Format(NumberOperations[filterList[1]], filterList[2], columnName)
+                : isDate
+                    ? string.Format(DateOperations[dbType][filterList[1]], filterList[2], columnName)
+                    : string.Format(StringOperations[filterList[1]], filterList[2], columnName);
+
+            return clause;
+        }
+
+        // Format values for IN clause
+        private string FormatInClauseValues(string values, bool isNumber)
+        {
+            return isNumber
+                ? values
+                : string.Join(",", values.Split(',').Select(x => $"'{x.Trim()}'"));
+        }
+        public bool ExportData<TContext, TModel>(ExportRequest exportRequest, int total, string folderPath, string fileName, int fileNumber, string userName, Expression<Func<TModel, bool>> baseCondition = null)
          where TContext : DbContext
             where TModel : class
         {
             IBaseRepo<TContext, TModel> Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IBaseRepo<TContext, TModel>>();
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, fileNumber);
         }

@@ -2,11 +2,33 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
 {
+    private static readonly Dictionary<string, string> QueryBuilderOperationsMap = new()
+    {
+        { "="              , "neq" },
+        { "<>"             , "neq" },
+        { "isblank"          , "isnull" },
+        { "isnotblank"       , "isnotnull" },
+        { "is_empty"         , $@"isempty" },
+        { "is_not_empty"      , $@"isnotempty" },
+        { "startswith"      , "startswith" },
+        { "not_begins_with", "doesnotstartwith" },
+        { "contains"        , "contains" },
+        { "notcontains"  , "doesnotcontain" },
+        { "endswith"        , "endswith" },
+        { "not_ends_with"  , "doesnotendwith" },
+        { "in"  , "in" },
+        { "not_in"  , "not_in" },
+        {">="  ,"gte"},
+        {">"   ,"gt"},
+        {"<="  ,"lte"},
+        { "<"  , "lt" },
+    };
     public static Expression<Func<T, bool>> ToExpression<T>(this Filter filter)
     {
         if (filter == null)
@@ -70,13 +92,30 @@ public static class FilterExtensions
 
         MemberExpression member = Expression.Property(param, filter.field);
         Type memType = member.Type;
-        ConstantExpression constant = BuildConstantExpression(memType, filter.value);//Expression.Constant(Convert.ChangeType(filter.value, member.Type));
+        ConstantExpression constant = null;
+       
+        //Expression.Constant(Convert.ChangeType(filter.value, member.Type));
+        filter.@operator = QueryBuilderOperationsMap.TryGetValue(filter.@operator, out string op)
+            ? op
+            : filter.@operator;
+        MethodInfo inFunc = null;
+        if (filter.@operator == "in" || filter.@operator ==  "not_in")
+        {
+            var listType = typeof(List<>).MakeGenericType(memType);
+            constant = BuildConstantExpression(listType, filter.value);
+            inFunc = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.BuildInExpression)).MakeGenericMethod(listType);
+        }
+        else
+        {
+            constant = BuildConstantExpression(memType, filter.value);
+        }
+        
         return filter.@operator switch
         {
             "eq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.Equal(member, constant) : Expression.Equal(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "neq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.NotEqual(member, constant) : Expression.NotEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "isnull" => Expression.Equal(member, Expression.Constant(null, member.Type)),
-            "isnotnull" => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
+            "isnotnull"  => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
             "isempty" => Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type))),
             "isnotempty" => Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type))),
             "startswith" => BuildMethodExpression<string>(nameof(string.StartsWith), member, constant),
@@ -91,11 +130,21 @@ public static class FilterExtensions
             "lte" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.LessThanOrEqual(member, constant) : Expression.LessThanOrEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "isnullorempty" => Expression.Or(Expression.Equal(member, Expression.Constant(null, member.Type)), Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
             "isnotnullorempty" => Expression.And(Expression.NotEqual(member, Expression.Constant(null, member.Type)), Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
+            "in" => (Expression) inFunc.Invoke(null,new object[]{member , constant , memType}),
+            "not_in" => Expression.Not((Expression) inFunc.Invoke(null,new object[]{member , constant , memType})),
             _ => throw new NotSupportedException($"Operator {filter.@operator} is not supported.")
         };
 
     }
 
+    private static Expression BuildInExpression<T>(MemberExpression member, ConstantExpression constant , Type valuesType)
+    {
+        // Get the MethodInfo for the 'Contains' method of List<TValue>. This is used to create the method call expression.
+        MethodInfo containsMethod = typeof(T).GetMethod("Contains", new[] { valuesType });
+        
+        // Create the method call expression 'list.Contains(x.PropertyName)'.
+        return Expression.Call(constant, containsMethod, member);
+    } 
     private static Expression BuildMethodExpression<T>(string methodname, MemberExpression member, ConstantExpression constant)
     {
         MethodInfo startsWithMethod = typeof(T).GetMethod(methodname, new[] { typeof(string) }) ?? throw new InvalidOperationException($"No suitable {methodname} method found on string type.");

@@ -7,6 +7,7 @@ using Data.Data.ExportSchedular;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.Segmentation;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
 using GridColumnConfiguration = Data.Services.Grid.GridColumnConfiguration;
 
@@ -9441,6 +9442,65 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                   DisplayName = "Total"
                 }
               },
+
+            }
+        }
+      },{
+        nameof(ArtAllSegmentsOutliersTb).ToLower(),
+        new ReportConfig {
+          SkipList = new List < string > {},
+            DisplayNames = new Dictionary < string, GridColumnConfiguration > {
+              {
+                nameof(ArtAllSegmentsOutliersTb.SegmentSorted),
+                new GridColumnConfiguration {
+                  DisplayName = "Segment Sorted"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.PartyTypeDesc),
+                new GridColumnConfiguration {
+                  DisplayName = "Party Type Desc"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.MonthKey),
+                new GridColumnConfiguration {
+                  DisplayName = "Month Key"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.Amount),
+                new GridColumnConfiguration {
+                  DisplayName = "Amount"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.Feature),
+                new GridColumnConfiguration {
+                  DisplayName = "Feature"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.BranchName),
+                new GridColumnConfiguration {
+                  DisplayName = "Branch Name"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.BranchNumber),
+                new GridColumnConfiguration {
+                  DisplayName = "Branch Number"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.PartyName),
+                new GridColumnConfiguration {
+                  DisplayName = "Party Name"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.UpperOutlierLimit),
+                new GridColumnConfiguration {
+                  DisplayName = "Upper Outlier Limit"
+                }
+              },{
+                nameof(ArtAllSegmentsOutliersTb.PartyNumber),
+                new GridColumnConfiguration {
+                  DisplayName = "Party Number"
+                }
+              }
 
             }
         }

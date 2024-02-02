@@ -1,4 +1,5 @@
 import { URLS } from "../../URLConsts.js"
+import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
@@ -41,7 +42,7 @@ class Grid extends HTMLElement {
     csvExportId = "";
     isExporting = false;
     isDownloaded = true;
-
+    selectProp = "";
     constructor() {
         super();
 
@@ -82,7 +83,9 @@ class Grid extends HTMLElement {
 
 
 
-
+        if(this.dataset.prop){
+            this.selectProp = this.dataset.prop;
+        }
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
         this.isCustom = Object.keys(this.dataset).includes("custom");
@@ -1114,8 +1117,8 @@ class Grid extends HTMLElement {
             else
                 para.All = true;
         }
-        para.IdColumn = "CustomerNumber";
-        para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x["CustomerNumber"].toString());
+        para.IdColumn =  this.selectProp;
+        para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
 
         // This gets the full URL of the current page
         var fullUrl = window.location.href;
@@ -1131,11 +1134,19 @@ class Grid extends HTMLElement {
         // Typically, the first segment is the controller, and the second is the action
         var controller = pathSegments[0];
         var action = pathSegments[1];
-
-        console.log("Controller: " + controller);
-        console.log("Action: " + action);
+        
+        let exportUrl = `/${controller}/ExportToCsv/`+ this.id;
+        
+        if(Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)){
+            let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
+            console.log(urlParts);
+            exportUrl = urlParts[0] + `/${this.id}?` + urlParts[1];
+            console.log(exportUrl);
+        }
+        
+        
         Request.DataReq = para;
-        var exportRes = await fetch(`/${controller}/ExportToCsv/` + this.id, {
+        var exportRes = await fetch(exportUrl , {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

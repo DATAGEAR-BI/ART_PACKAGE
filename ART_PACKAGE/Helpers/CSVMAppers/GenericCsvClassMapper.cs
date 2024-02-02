@@ -23,10 +23,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
 
 
-        public GenericCsvClassMapper(List<string> includedColumns) : base(includedColumns)
+        public GenericCsvClassMapper(List<string>? includedColumns = null) : base(includedColumns)
         {
 
         }
+
+
 
         private Expression<Func<TModel, object>> GenerateExpression(PropertyInfo prop)
         {

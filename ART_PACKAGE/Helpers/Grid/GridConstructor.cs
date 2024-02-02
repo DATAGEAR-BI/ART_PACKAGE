@@ -29,11 +29,11 @@ namespace ART_PACKAGE.Helpers.Grid
         }
         public TRepo Repo { get; private set; }
 
-        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId)
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, Expression<Func<TModel, bool>> baseCondition = null)
         {
             string folderGuid = Guid.NewGuid().ToString();
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
             int total = dataRes.total;
             int totalcopy = total;
             int batch = 500_000;
@@ -66,7 +66,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Report.csv", localRound, user));
+                _ = Task.Run(() => _csvSrv.ExportData<TContext, TModel>(roundReq, totalcopy, folderPath, "Report.csv", localRound, user, baseCondition));
 
                 total -= batch;
                 round++;
@@ -97,12 +97,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
-            GridResult<TModel> dataRes = Repo.GetGridData(request, includes: includes);
-            if (baseCondition is not null)
-            {
-                dataRes.data = dataRes.data?.Where(baseCondition);
-                dataRes.total = dataRes.data.Count();
-            }
+            GridResult<TModel> dataRes = Repo.GetGridData(request, baseCondition: baseCondition, includes: includes);
             return dataRes;
         }
     }

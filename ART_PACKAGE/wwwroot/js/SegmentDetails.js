@@ -1,4 +1,5 @@
 ﻿import { URLS } from "./URLConsts.js"
+import {EXPORT_URLS} from "./GridConfigration/ExportUrls.js"
 var monthKeySelect = document.getElementById('MonthKey');
 var partyTypeSelect = document.getElementById('PartyTypeDesc');
 var segmentSelect = document.getElementById('Segment');
@@ -43,8 +44,9 @@ async function onChangeSegment(e) {
     var selectedSegmentType = document.getElementById('PartyTypeDesc').value.value;
     var selectedSegment = e.target.value;
     var baseUrl = URLS.AllSegmentsOutliersNew.split("?")[0];
+    let baseExport = EXPORT_URLS.AllSegmentsOutliersNew.split("?")[0];
     grid.url = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
-
+    EXPORT_URLS.AllSegmentsOutliersNew = baseExport + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
 
     $(grid.gridDiv).data("kendoGrid").dataSource.read();
     var ch1res = fetch(`/AllSegmentsOutliersNew/GetSegmentOutliersChartData?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`);

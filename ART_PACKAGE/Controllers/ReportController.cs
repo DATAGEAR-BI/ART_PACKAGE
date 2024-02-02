@@ -313,13 +313,6 @@ namespace ART_PACKAGE.Controllers
                                 .SendAsync("csvRecevied", bytes, FileName);
             return new EmptyResult();
         }
-
-        public async Task<IActionResult> ExportMyReports([FromBody] ExportDto<decimal> req)
-        {
-            IQueryable<ArtSavedCustomReport> data = db.ArtSavedCustomReports.AsQueryable();
-            await _csvSrv.ExportAllCsv<ArtSavedCustomReport, ReportController, decimal>(data, User.Identity.Name, req);
-            return new EmptyResult();
-        }
         public async Task<IActionResult> ExportPdfMyReports([FromBody] KendoRequest req)
         {
             Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].DisplayNames;

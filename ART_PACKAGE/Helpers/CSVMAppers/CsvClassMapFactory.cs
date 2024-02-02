@@ -2,9 +2,9 @@
 {
     public class CsvClassMapFactory
     {
-        private readonly List<string> _inculdedColumns;
+        private readonly List<string>? _inculdedColumns;
 
-        public CsvClassMapFactory(List<string> inculdedColumns)
+        public CsvClassMapFactory(List<string>? inculdedColumns = null)
         {
             _inculdedColumns = inculdedColumns;
         }

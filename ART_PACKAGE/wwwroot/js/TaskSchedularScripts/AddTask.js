@@ -79,7 +79,7 @@ var Topt = document.createElement('option');
 Topt.text = "Alert Details Test";
 Topt.value = "AlertDetailsTest";
 
-reportsDropDown.intialize([document.createElement("option"), opt, Topt]);
+reportsDropDown.update([document.createElement("option"), opt, Topt]);
 
 fetch("/Tasks/GetTaskPeriods").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
@@ -88,7 +88,7 @@ fetch("/Tasks/GetTaskPeriods").then(x => x.json()).then(data => {
         opt.innerText = o.text;
         return opt;
     });
-    periodDorpDown.intialize([...options]);
+    periodDorpDown.update([...options]);
 
 });
 fetch("/Tasks/GetMonthes").then(x => x.json()).then(data => {
@@ -98,7 +98,7 @@ fetch("/Tasks/GetMonthes").then(x => x.json()).then(data => {
         opt.innerText = o.text;
         return opt;
     });
-    monthDropDown.intialize([...options]);
+    monthDropDown.update([...options]);
 
 });
 fetch("/Tasks/GetDays").then(x => x.json()).then(data => {
@@ -108,7 +108,7 @@ fetch("/Tasks/GetDays").then(x => x.json()).then(data => {
         opt.innerText = o.text;
         return opt;
     });
-    weekDayDropDown.intialize([...options]);
+    weekDayDropDown.update([...options]);
 
 });
 
