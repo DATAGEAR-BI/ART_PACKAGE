@@ -4,7 +4,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -113,14 +112,14 @@ namespace ART_PACKAGE.Helpers.Csv
 
         public async Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel>(DbContext db, string parameterJson) where TModel : class
         {
-            IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
-            string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
-            string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
-            List<object>? param = JsonConvert.DeserializeObject<List<object>>(parameterJson);
-            string clause = GenerateWhereClause<TModel>(tableData, dbtype, param);
-            string where = string.IsNullOrEmpty(clause) ? "" : "Where " + clause;
-            IQueryable<TModel> data = db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchemaQualifiedViewName()}
-                                                       {where}");
+            // IEntityType? tableData = db.Model.FindEntityType(typeof(TModel));
+            // string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
+            // string dbtype = db.Database.IsSqlServer() ? "sqlServer" : "oracle";
+            List<object>? @params = JsonConvert.DeserializeObject<List<object>>(parameterJson);
+            ParameterExpression param = Expression.Parameter(typeof(TModel), "t");
+            Expression<Func<TModel, bool>> clause = GenerateWhereClause<TModel>(param, @params);
+            //string where = string.IsNullOrEmpty(clause) ? "" : "Where " + clause;
+            IQueryable<TModel> data = db.Set<TModel>().Where(clause);
             byte[][] bytes = await Task.WhenAll(ExportDataToCsv(data));
             string currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
             IEnumerable<DataFile> files = bytes.Select((b, i) => new DataFile(i + 1 + ".Report_" + currentDate + ".csv"
@@ -183,15 +182,26 @@ namespace ART_PACKAGE.Helpers.Csv
         }
 
         // Generate the WHERE clause
-        public string GenerateWhereClause<TModel>(IEntityType tableData, string dbType, List<object> parameters)
+        public Expression<Func<TModel, bool>> GenerateWhereClause<TModel>(ParameterExpression param, List<object> parameters)
         {
-            StringBuilder whereClause = new();
-            foreach (object filter in parameters)
-            {
-                whereClause.Append(ProcessFilter<TModel>(tableData, filter, dbType));
-            }
 
-            return whereClause.ToString();
+
+            Expression Exp = null;
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                JArray f = (JArray)parameters[i];
+                if (i == 0 && TryParse(f, out List<object> filterList))
+                    Exp = ProcessFilterGroup<TModel>(param, filterList);
+
+                if (TryParse(f, out string op))
+                {
+                    _ = TryParse((JArray)parameters[i + 1], out List<object> nextFilterList);
+                    Expression nextExp = ProcessFilterGroup<TModel>(param, nextFilterList);
+                    Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+                    i++;
+                }
+            }
+            return Exp is null ? x => true : Expression.Lambda<Func<TModel, bool>>(Exp, param);
         }
 
         private bool TryParse<T>(JArray jarr, out T output)
@@ -208,52 +218,70 @@ namespace ART_PACKAGE.Helpers.Csv
             }
         }
 
-        // Process each filter in the parameters
-        private string ProcessFilter<TModel>(IEntityType tableData, object filter, string dbType)
+        private Expression ProcessFilterGroup<TModel>(ParameterExpression param, List<object> filterGroup)
         {
-            JArray f = (JArray)filter;
-            if (TryParse(f, out List<string> filterList))
+            Expression Exp = null;
+            for (int i = 0; i < filterGroup.Count; i++)
             {
-                return ProcessFilterList<TModel>(tableData, filterList, dbType);
-            }
-            else if (TryParse(f, out string op))
-            {
-                return $" {op} ";
-            }
-            else if (TryParse(f, out List<object> list))
-            {
+                if (filterGroup[i] is not string)
+                {
+                    JArray f = (JArray)filterGroup[i];
+                    if (i == 0 && TryParse(f, out List<string> filterList))
+                        Exp = ProcessFilterList<TModel>(param, filterList);
+                    continue;
+                }
 
-                return $"({GenerateWhereClause<TModel>(tableData, dbType, list)})";
+
+                if (filterGroup[i] is string op)
+                {
+                    _ = TryParse((JArray)filterGroup[i + 1], out List<string> nextFilterList);
+                    Expression nextExp = ProcessFilterList<TModel>(param, nextFilterList);
+                    Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+                    i++;
+                }
             }
 
-            throw new ArgumentException("Invalid filter type");
+            return Exp;
         }
 
         // Process filter when it's a list
-        private string ProcessFilterList<TModel>(IEntityType tableData, List<string> filterList, string dbType)
+        private Expression ProcessFilterList<TModel>(ParameterExpression param, List<string> filterList)
         {
-            string propertyName = filterList[0];
-            IProperty property = tableData.GetProperty(propertyName);
-            PropertyInfo propInfo = typeof(TModel).GetProperty(propertyName) ?? throw new ArgumentException($"Property '{propertyName}' not found on '{typeof(TModel).Name}'");
-            string columnName = property.GetColumnName();
-            bool isNumber = IsPropertyOfType<decimal>(propInfo);
-            bool isDate = IsPropertyOfType<DateTime>(propInfo);
 
-            string clause;
-
+            Filter filter = new()
+            {
+                @operator = filterList[1],
+                field = filterList[0],
+                value = filterList[2]
+            };
             if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
             {
-                filterList[1] = "in";
-                filterList[2] = FormatInClauseValues(filterList[2], isNumber);
+                filter.@operator = "in";
+                filter.value = filterList[2].Split(",").ToList();
             }
-
-            clause = isNumber
-                ? string.Format(NumberOperations[filterList[1]], filterList[2], columnName)
-                : isDate
-                    ? string.Format(DateOperations[dbType][filterList[1]], filterList[2], columnName)
-                    : string.Format(StringOperations[filterList[1]], filterList[2], columnName);
-
-            return clause;
+            return FilterExtensions.BuildIndividualExpression<TModel>(param, filter);
+            // string propertyName = filterList[0];
+            // IProperty property = tableData.GetProperty(propertyName);
+            // PropertyInfo propInfo = typeof(TModel).GetProperty(propertyName) ?? throw new ArgumentException($"Property '{propertyName}' not found on '{typeof(TModel).Name}'");
+            // string columnName = property.GetColumnName();
+            // bool isNumber = IsPropertyOfType<decimal>(propInfo);
+            // bool isDate = IsPropertyOfType<DateTime>(propInfo);
+            //
+            // string clause;
+            //
+            // if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     filterList[1] = "in";
+            //     filterList[2] = FormatInClauseValues(filterList[2], isNumber);
+            // }
+            //
+            // clause = isNumber
+            //     ? string.Format(NumberOperations[filterList[1]], filterList[2], columnName)
+            //     : isDate
+            //         ? string.Format(DateOperations[dbType][filterList[1]], filterList[2], columnName)
+            //         : string.Format(StringOperations[filterList[1]], filterList[2], columnName);
+            //
+            // return clause;
         }
 
         // Format values for IN clause

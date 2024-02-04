@@ -10,7 +10,7 @@ public static class FilterExtensions
 {
     private static readonly Dictionary<string, string> QueryBuilderOperationsMap = new()
     {
-        { "="              , "neq" },
+        { "="              , "eq" },
         { "<>"             , "neq" },
         { "isblank"          , "isnull" },
         { "isnotblank"       , "isnotnull" },
@@ -87,7 +87,7 @@ public static class FilterExtensions
         return exp;
     }
 
-    private static Expression BuildIndividualExpression<T>(ParameterExpression param, Filter filter)
+    public static Expression BuildIndividualExpression<T>(ParameterExpression param, Filter filter)
     {
 
         MemberExpression member = Expression.Property(param, filter.field);
@@ -98,12 +98,12 @@ public static class FilterExtensions
         filter.@operator = QueryBuilderOperationsMap.TryGetValue(filter.@operator, out string op)
             ? op
             : filter.@operator;
-        MethodInfo inFunc = null;
+        MethodInfo? inFunc = null;
         if (filter.@operator == "in" || filter.@operator ==  "not_in")
         {
             var listType = typeof(List<>).MakeGenericType(memType);
             constant = BuildConstantExpression(listType, filter.value);
-            inFunc = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.BuildInExpression)).MakeGenericMethod(listType);
+            inFunc = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.BuildInExpression))?.MakeGenericMethod(listType);
         }
         else
         {
@@ -137,7 +137,7 @@ public static class FilterExtensions
 
     }
 
-    private static Expression BuildInExpression<T>(MemberExpression member, ConstantExpression constant , Type valuesType)
+    public static Expression BuildInExpression<T>(MemberExpression member, ConstantExpression constant , Type valuesType)
     {
         // Get the MethodInfo for the 'Contains' method of List<TValue>. This is used to create the method call expression.
         MethodInfo containsMethod = typeof(T).GetMethod("Contains", new[] { valuesType });
@@ -188,18 +188,30 @@ public static class FilterExtensions
 
     private static ConstantExpression BuildConstantExpression(Type fieldType, object value)
     {
-        if (fieldType == typeof(DateTime) || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime))
+        object? @const = null;
+        if (value is not JsonElement)
         {
-            DateTime dateTime = value is DateTime
-                ? ((DateTime)value).ToLocalTime()
-                : value is JsonElement jsonElement && jsonElement.TryGetDateTime(out dateTime)
-                    ? dateTime.ToLocalTime()
-                    : throw new ArgumentException("Invalid date format or value.");
-            return Expression.Constant(dateTime.Date, fieldType);
+            @const = value;
+            return Expression.Constant( @const, fieldType);
         }
-        MethodInfo? method = typeof(FilterExtensions)?.GetMethod(nameof(FilterExtensions.ToObject))?.MakeGenericMethod(fieldType);
-        object? @const = method?.Invoke(null, new object[] { (JsonElement)value });
-        return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
+            
+        else
+        {
+            if (fieldType == typeof(DateTime) || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime))
+            {
+                DateTime dateTime = value is DateTime
+                    ? ((DateTime)value).ToLocalTime()
+                    : value is JsonElement jsonElement && jsonElement.TryGetDateTime(out dateTime)
+                        ? dateTime.ToLocalTime()
+                        : throw new ArgumentException("Invalid date format or value.");
+                return Expression.Constant(dateTime.Date, fieldType);
+            }
+            MethodInfo? method = typeof(FilterExtensions)?.GetMethod(nameof(FilterExtensions.ToObject))?.MakeGenericMethod(fieldType);
+            @const = method?.Invoke(null, new object[] { (JsonElement)value });
+            return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
+        }
+        
+      
 
 
 
