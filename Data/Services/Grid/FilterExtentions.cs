@@ -1,9 +1,11 @@
 ﻿
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
@@ -191,7 +193,21 @@ public static class FilterExtensions
         object? @const = null;
         if (value is not JsonElement)
         {
-            @const = value;
+            if (fieldType == typeof(DateTime) || fieldType == typeof(Nullable<DateTime>))
+            {
+                DateTime dateTime;
+                if (DateTime.TryParseExact((string?)value, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out dateTime))
+                {
+                    @const = dateTime;
+                }
+            }
+            else
+            {
+                Type nonNullableType = Nullable.GetUnderlyingType(fieldType) ?? fieldType;
+                @const = Convert.ChangeType(value, nonNullableType);
+            }
+
             return Expression.Constant( @const, fieldType);
         }
             
@@ -259,7 +275,86 @@ public static class FilterExtensions
         return Convert.ChangeType(value, nonNullableType);
     }
 
+    public static Expression<Func<TModel, bool>> GenerateExpression<TModel>(List<object> parameters)
+    {
 
+        ParameterExpression param = Expression.Parameter(typeof(TModel), "t");
+        Expression Exp = null;
+        for (int i = 0; i < parameters.Count; i++)
+        {
+            JArray f = (JArray)parameters[i];
+            if (i == 0 && TryParse(f, out List<object> filterList))
+                Exp = ProcessFilterGroup<TModel>(param, filterList);
+
+            if (TryParse(f, out string op))
+            {
+                _ = TryParse((JArray)parameters[i + 1], out List<object> nextFilterList);
+                Expression nextExp = ProcessFilterGroup<TModel>(param, nextFilterList);
+                Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+                i++;
+            }
+        }
+        return Exp is null ? x => true : Expression.Lambda<Func<TModel, bool>>(Exp, param);
+    }
+
+    private static bool  TryParse<T>(JArray jarr, out T output)
+    {
+        try
+        {
+        output = jarr.ToObject<T>();
+        return true;
+        }
+        catch (Exception e)
+        {
+        output = default;
+        return false;
+        }
+    }
+
+    private static Expression ProcessFilterGroup<TModel>(ParameterExpression param, List<object> filterGroup)
+    {
+        Expression Exp = null;
+        for (int i = 0; i < filterGroup.Count; i++)
+        {
+        if (filterGroup[i] is not string)
+        {
+            JArray f = (JArray)filterGroup[i];
+            if (i == 0 && TryParse(f, out List<string> filterList))
+                Exp = ProcessFilterList<TModel>(param, filterList);
+            continue;
+        }
+
+
+        if (filterGroup[i] is string op)
+        {
+            _ = TryParse((JArray)filterGroup[i + 1], out List<string> nextFilterList);
+            Expression nextExp = ProcessFilterList<TModel>(param, nextFilterList);
+            Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+            i++;
+        }
+        }
+
+        return Exp;
+    }
+
+    // Process filter when it's a list
+    private static Expression ProcessFilterList<TModel>(ParameterExpression param, List<string> filterList)
+        {
+
+            Filter filter = new()
+            {
+                @operator = filterList[1],
+                field = filterList[0],
+                value = filterList[2]
+            };
+            if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
+            {
+                filter.@operator = "in";
+                filter.value = filterList[2].Split(",").ToList();
+            }
+
+            return FilterExtensions.BuildIndividualExpression<TModel>(param, filter);
+        }
     private static bool IsNumericType(Type type)
     {
         return Type.GetTypeCode(type) switch

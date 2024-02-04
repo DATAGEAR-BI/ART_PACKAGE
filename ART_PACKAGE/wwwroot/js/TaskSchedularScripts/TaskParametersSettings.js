@@ -33,8 +33,8 @@ export const parametersConfig = [
                 "paraDisplayName": "Create Date",
                 "type": "date",
             } ,{
-                "paraName": "number",
-                "paraDisplayName": "number",
+                "paraName": "InvestigationDays",
+                "paraDisplayName": "Investigation Days",
                 "type": "number",
             }
         ]

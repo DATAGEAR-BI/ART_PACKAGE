@@ -64,7 +64,7 @@ function init() {
             x.selected = true;
     });
 
-    reportsDropDown.intialize([ opt, Topt]);
+    reportsDropDown.update([document.createElement("option"), opt, Topt]);
     var parametrs = parametersConfig.find(x => x.reportName == modelCopy.reportName).parameters;
     var customOps = [];
     var multifields = parametrs.filter(x => x.isMulti);
@@ -102,7 +102,7 @@ function init() {
                 opt.selected = true;
             return opt;
         });
-        periodDorpDown.intialize([...options]);
+        periodDorpDown.update([...options]);
 
     });
     fetch("/Tasks/GetMonthes").then(x => x.json()).then(data => {
@@ -116,7 +116,7 @@ function init() {
             }
             return opt;
         });
-        monthDropDown.intialize([...options]);
+        monthDropDown.update([document.createElement("option"),...options]);
         if (modelCopy.month)
             monthDropDown.enable();
 
@@ -132,7 +132,7 @@ function init() {
             }
             return opt;
         });
-        weekDayDropDown.intialize([...options]);
+        weekDayDropDown.update([document.createElement("option"),...options]);
         if (modelCopy.dayOfWeek)
             weekDayDropDown.enable();
 

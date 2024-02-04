@@ -13,6 +13,6 @@ namespace ART_PACKAGE.Helpers.Csv
 
         public event Action<int, int> OnProgressChanged;
 
-        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel>(DbContext db, string parameterJson) where TModel : class;
+        public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TContext>(string parameterJson) where TModel : class where TContext : DbContext;
     }
 }

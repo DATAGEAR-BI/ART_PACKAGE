@@ -5,7 +5,6 @@ using Data.Data.ExportSchedular;
 using Hangfire;
 using Hangfire.Server;
 using Hangfire.Storage;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace ART_PACKAGE.Helpers.ExportTasks
@@ -34,12 +33,12 @@ namespace ART_PACKAGE.Helpers.ExportTasks
 
             Type? modelType = baseType.GetGenericArguments()[2];
 
-            MethodInfo? ExportMethod = typeof(ICsvExport).GetMethod("ExportForSchedulaedTask").MakeGenericMethod(modelType);
+            Type context = contextFactory.GetContextOf(task.ReportName);
+            MethodInfo? ExportMethod = typeof(ICsvExport).GetMethod("ExportForSchedulaedTask").MakeGenericMethod(modelType, context);
 
-            DbContext context = contextFactory.GetContextOf(task.ReportName);
 
 
-            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { context, task.ParametersJson });
+            Task<IEnumerable<DataFile>>? res = (Task<IEnumerable<DataFile>>?)ExportMethod.Invoke(_csvSrv, new object[] { task.ParametersJson });
             List<DataFile> files = new();
             if (res is not null)
                 files.AddRange(await res);

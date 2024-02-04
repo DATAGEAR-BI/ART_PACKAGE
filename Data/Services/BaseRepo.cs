@@ -124,6 +124,14 @@ namespace Data.Services
             };
         }
 
+        public IQueryable<TModel> GetScheduleData(List<object> @params)
+        {
+            Expression<Func<TModel, bool>> clause = FilterExtensions.GenerateExpression<TModel>(@params);
+            return _context.Set<TModel>().Where(clause);
+        }
+
+        
+        
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)
         {
             var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;

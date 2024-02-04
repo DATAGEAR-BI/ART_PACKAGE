@@ -10,47 +10,45 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
-using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.ContextPerReport
 {
     public class ContextPerReportFactory
     {
-        private readonly IServiceScopeFactory _serviceScopeFactory;
+
         private readonly List<string>? modules;
-        public ContextPerReportFactory(IServiceScopeFactory serviceScopeFactory, IConfiguration config)
+        public ContextPerReportFactory(IConfiguration config)
         {
-            _serviceScopeFactory = serviceScopeFactory;
             modules = config.GetSection("Modules").Get<List<string>>();
         }
 
-        public DbContext GetContextOf(string reportName)
+        public Type GetContextOf(string reportName)
         {
-            IServiceProvider serviceProvider = _serviceScopeFactory.CreateScope().ServiceProvider;
+
             string module = ReportPerModule.GetModule(reportName);
             bool isModuleExist = modules is not null && modules.Contains(module);
             if (isModuleExist && module == AppModules.SASAML)
-                return serviceProvider.GetRequiredService<SasAmlContext>();
+                return typeof(SasAmlContext);
             else if (isModuleExist && module == AppModules.ECM)
-                return serviceProvider.GetRequiredService<EcmContext>();
+                return typeof(EcmContext);
             else if (isModuleExist && module == AppModules.DGAML)
-                return serviceProvider.GetRequiredService<ArtDgAmlContext>();
+                return typeof(ArtDgAmlContext);
             else if (isModuleExist && module == AppModules.DGAUDIT)
-                return serviceProvider.GetRequiredService<ArtAuditContext>();
+                return typeof(ArtAuditContext);
             else if (isModuleExist && module == AppModules.EXPORT_SCHEDULAR)
-                return serviceProvider.GetRequiredService<ExportSchedularContext>();
+                return typeof(ExportSchedularContext);
             else if (isModuleExist && module == AppModules.SEG)
-                return serviceProvider.GetRequiredService<SegmentationContext>();
+                return typeof(SegmentationContext);
             else if (isModuleExist && module == AppModules.FTI)
-                return serviceProvider.GetRequiredService<FTIContext>();
+                return typeof(FTIContext);
             else if (isModuleExist && module == AppModules.AMLANALYSIS)
-                return serviceProvider.GetRequiredService<AmlAnalysisContext>();
+                return typeof(AmlAnalysisContext);
             else if (isModuleExist && module == AppModules.KYC)
-                return serviceProvider.GetRequiredService<KYCContext>();
+                return typeof(KYCContext);
             else if (isModuleExist && module == AppModules.GOAML)
-                return serviceProvider.GetRequiredService<ArtGoAmlContext>();
+                return typeof(ArtGoAmlContext);
             else
-                return serviceProvider.GetRequiredService<AuthContext>();
+                return typeof(AuthContext);
 
 
         }
