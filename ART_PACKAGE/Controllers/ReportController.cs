@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
+using Data.Data;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
@@ -276,8 +277,17 @@ namespace ART_PACKAGE.Controllers
                 ReportId = report.Id
             }).ToList();
 
+
+
             AppUser owner = await _um.GetUserAsync(User);
+            UserReport reportOwner = new UserReport()
+            {
+                UserId = owner.Id,
+                SharedFromId = owner.Id,
+                Report = report
+            };
             report.Users.Add(owner);
+            report.UserReports.Add(reportOwner);
             report.Charts = charts;
             report.Columns = columns;
 

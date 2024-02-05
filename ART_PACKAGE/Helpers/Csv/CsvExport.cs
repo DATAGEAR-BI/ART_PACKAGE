@@ -1,8 +1,6 @@
 ﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Globalization;

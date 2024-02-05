@@ -215,7 +215,7 @@ form.onsubmit = async (e) => {
     console.log(model);
     var d = await Fetch("/report/SaveReport", model, "POST").then(x => {
 
-        window.location = "/report/myreports";
+        window.location = "/myreports";
 
 
     })

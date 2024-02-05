@@ -63,6 +63,8 @@ public class CustomReportRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , ICu
            
             var usersToremain = report.UserReports.Where(x=>!unshareFromUsersIds.Contains(x.UserId));
             report.UserReports = usersToremain.ToList();
+            if (!report.UserReports.Any(x => x.UserId != x.SharedFromId))
+                report.IsShared = false;
             await _context.SaveChangesAsync();
             return true;
         }
