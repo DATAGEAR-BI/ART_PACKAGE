@@ -15,7 +15,7 @@
     <div id="errors" hidden class="alert alert-danger alert-dismissible" style="padding:2%" role="alert">
          <button type="button" style="margin-right:2%;" id="closeEroors" onclick="hideErrors()" class="close"><span aria-hidden="true">&times;</span></button>
     </div>
-    <form id="CustomReportForm" method="post" asp-action="SaveReport"> 
+    <form id="CustomReportForm" method="post"> 
         <div class="row">
         <h4 class="col-10">Select the table and columns you want.</h4>
 
@@ -35,12 +35,15 @@
                     <m-select id="ColumnNames" data-searchable data-title="Column" style="width:100%" data-multiple></m-select>
             </div>
         </div>
-        <div class="row" style="margin-top:2%"> 
-            <m-input id="title"  dat-palceholder="Report Title" data-title="Report Title"></m-input>
+        <div class="row" style="margin-top:2%">
+            <div class="col-12">
+                 <m-input id="title" dat-palceholder="Report Title" data-title="Report Title"></m-input>
+            </div>
         </div>
-        <div class="row" style="margin-top:2%" >
-            <m-areainput id="desc" dat-palceholder="Report Description" data-title="Report Description"></m-areainput>
-         
+        <div class="row" style="margin-top:2%">
+            <div class="col-12">
+                <m-areainput id="desc" dat-palceholder="Report Description" data-title="Report Description"></m-areainput>
+            </div>
         </div>
         
 
@@ -92,16 +95,8 @@
                 </div>
             </div>
         </div>
-
-
-
-
-       
-
-
     </form>
-
-
+    
 </div>
 
 @section scripts {

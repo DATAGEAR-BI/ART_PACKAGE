@@ -67,8 +67,15 @@ namespace ART_PACKAGE.Controllers
             }
         }
 
-
-
+        [HttpPost]
+        public async Task<IActionResult> SaveReport([FromBody] SaveReportDto model)
+        {
+            bool isSaved = await _gridConstructor.Repo.SaveReport(model, await GetUser());
+            if (isSaved)
+                return Ok();
+            else
+                return BadRequest();
+        }
 
         [HttpGet("[controller]/{id}/Users")]
         public async Task<IActionResult> ReportUsers(int id)

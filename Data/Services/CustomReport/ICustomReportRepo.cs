@@ -10,4 +10,6 @@ public interface ICustomReportRepo : IBaseRepo<AuthContext,ArtSavedCustomReport>
         IEnumerable<AppUser> unshareFromUsers);
 
     public Task<IEnumerable<AppUser>> GetReportUsers(int reportId);
+
+    public Task<bool> SaveReport(SaveReportDto reportDto , AppUser owner);
 }

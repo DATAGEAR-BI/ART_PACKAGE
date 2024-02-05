@@ -17,6 +17,7 @@
 	   <Compile Remove="Controllers\AdvancePaymentUtilizationController.cs" />
 	   <Compile Remove="Controllers\AlertDetailsController.cs" />
 	   <Compile Remove="Controllers\AlertedEntitiesController.cs" />
+	   <Compile Remove="Controllers\LicenseController.cs" />
 	 </ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />

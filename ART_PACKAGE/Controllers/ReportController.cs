@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
@@ -9,10 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
-using Data.Data;
 using static ART_PACKAGE.Helpers.CustomReport.DbContextExtentions;
 
 namespace ART_PACKAGE.Controllers
@@ -49,67 +46,67 @@ namespace ART_PACKAGE.Controllers
             return View();
         }
 
-        [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetGridData([FromRoute] int id, [FromBody] KendoRequest obj)
-        {
-
-
-
-
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
-
-            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
-            {
-                name = x.Column,
-                isNullable = x.IsNullable,
-                type = x.JsType
-
-            }).ToArray();
-            List<ArtSavedReportsChart>? charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
-
-            if (obj.IsIntialize)
-            {
-                return Content(JsonConvert.SerializeObject(new
-                {
-                    columns,
-                    title = Report.Name,
-                    desc = Report.Description,
-                    chartsids = charts.Select((x, i) => $"chart-{i}")
-
-                }
-         ), "application/json"
-         );
-            }
-            string schema = Report.Schema.ToString();
-            dbInstance = dBFactory.GetDbInstance(schema);
-            string dbtype = db.Database.IsOracle() ? "oracle" : db.Database.IsSqlServer() ? "sqlServer" : "";
-
-            string orderBy = obj.Sort is null ? null : string.Join(" , ", obj.Sort.Select(x => $"{x.field} {x.dir}"));
-
-            List<ChartData<dynamic>> chartsdata = null;
-
-
-            string filter = obj.Filter.GetFiltersString(dbtype, columns);
-            if (charts is not null && charts.Count != 0)
-            {
-                chartsdata = dbInstance.GetChartData(charts, filter);
-            }
-            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, obj.Take, obj.Skip, orderBy);
-            return Content(JsonConvert.SerializeObject(new
-            {
-                data = data.Data,
-                total = data.DataCount,
-                chartdata = chartsdata,
-                title = Report.Name,
-                desc = Report.Description,
-
-            }
-            ), "application/json"
-            );
-
-        }
-
-
+        // [HttpPost("[controller]/[action]/{id}")]
+        // public IActionResult GetGridData([FromRoute] int id, [FromBody] KendoRequest obj)
+        // {
+        //
+        //
+        //
+        //
+        //     ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
+        //
+        //     ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+        //     {
+        //         name = x.Column,
+        //         isNullable = x.IsNullable,
+        //         type = x.JsType
+        //
+        //     }).ToArray();
+        //     List<ArtSavedReportsChart>? charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+        //
+        //     if (obj.IsIntialize)
+        //     {
+        //         return Content(JsonConvert.SerializeObject(new
+        //         {
+        //             columns,
+        //             title = Report.Name,
+        //             desc = Report.Description,
+        //             chartsids = charts.Select((x, i) => $"chart-{i}")
+        //
+        //         }
+        //  ), "application/json"
+        //  );
+        //     }
+        //     string schema = Report.Schema.ToString();
+        //     dbInstance = dBFactory.GetDbInstance(schema);
+        //     string dbtype = db.Database.IsOracle() ? "oracle" : db.Database.IsSqlServer() ? "sqlServer" : "";
+        //
+        //     string orderBy = obj.Sort is null ? null : string.Join(" , ", obj.Sort.Select(x => $"{x.field} {x.dir}"));
+        //
+        //     List<ChartData<dynamic>> chartsdata = null;
+        //
+        //
+        //     string filter = obj.Filter.GetFiltersString(dbtype, columns);
+        //     if (charts is not null && charts.Count != 0)
+        //     {
+        //         chartsdata = dbInstance.GetChartData(charts, filter);
+        //     }
+        //     DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, obj.Take, obj.Skip, orderBy);
+        //     return Content(JsonConvert.SerializeObject(new
+        //     {
+        //         data = data.Data,
+        //         total = data.DataCount,
+        //         chartdata = chartsdata,
+        //         title = Report.Name,
+        //         desc = Report.Description,
+        //
+        //     }
+        //     ), "application/json"
+        //     );
+        //
+        // }
+        //
+        //
 
 
 
@@ -198,165 +195,57 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-
-
         public IActionResult MyReports()
         {
             return View();
         }
-
-        public IActionResult GetMyReportsData([FromBody] KendoRequest obj)
-        {
-            string user = _um.GetUserId(User);
-            IQueryable<ArtSavedCustomReport> alerts =
-                db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Charts);
-            List<string> skipList = new()
-            {
-                  nameof(ArtSavedCustomReport.Users),
-
-                nameof(ArtSavedCustomReport.Schema)
-            };
-
-            KendoDataDesc<ArtSavedCustomReport> Data = alerts.CallData(obj, propertiesToSkip: skipList);
-
-            var data = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = true,
-                actions = new List<dynamic>
-                {
-                    new {text = "Details" , action = "GoToReportDetails" , icon = "k-i-info-circle"}
-                }
-
-            };
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(data, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-
-                }),
-
-            };
-        }
-
-
-
-
-        [HttpPost("[controller]/[action]")]
-        public async Task<IActionResult> SaveReport([FromBody] CustumReportViewmodel model)
-        {
-            ArtSavedCustomReport report = new()
-            {
-                Table = model.Table,
-                Type = model.ObjectType,
-                Name = model.Title,
-                Description = model.Description,
-                CreateDate = DateTime.Now,
-                Schema = model.Schema,
-            };
-
-
-
-            List<ArtSavedReportsColumns> columns = model.Columns.Select(e => new ArtSavedReportsColumns
-            {
-                Column = e.Name,
-                IsNullable = e.IsNullable == "YES",
-                JsType = e.JsDataType,
-                ReportId = report.Id
-            }).ToList();
-
-            List<ArtSavedReportsChart> charts = model.Charts.Select(c => new ArtSavedReportsChart
-            {
-                Column = c.Column,
-                Type = c.Type,
-                Title = c.Title,
-                ReportId = report.Id
-            }).ToList();
-
-
-
-            AppUser owner = await _um.GetUserAsync(User);
-            UserReport reportOwner = new UserReport()
-            {
-                UserId = owner.Id,
-                SharedFromId = owner.Id,
-                Report = report
-            };
-            report.Users.Add(owner);
-            report.UserReports.Add(reportOwner);
-            report.Charts = charts;
-            report.Columns = columns;
-
-            _ = db.Add(report);
-            _ = db.SaveChanges();
-
-            ArtSavedCustomReport? reportAfter = db.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Users).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
-
-            return Ok(reportAfter);
-        }
-        [HttpPost("[controller]/[action]/{id}")]
-        public async Task<IActionResult> Export([FromRoute] int id, [FromBody] ExportDto<decimal> exportDto)
-        {
-            string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
-            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
-            dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
-            string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
-            {
-                name = x.Column,
-                isNullable = x.IsNullable,
-                type = x.JsType,
-            }).ToArray();
-            string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
-            List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
-            List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
-
-            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
-            byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
-            string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
-            await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
-                                .SendAsync("csvRecevied", bytes, FileName);
-            return new EmptyResult();
-        }
-        public async Task<IActionResult> ExportPdfMyReports([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ReportController).ToLower()].SkipList;
-            List<ArtSavedCustomReport> data = db.ArtSavedCustomReports.CallData(req).Data.ToList();
-            ViewData["title"] = $"My Reports ({User.Identity.Name})";
-            ViewData["desc"] = $"Reports That Are Made Using Custom Report Module By ({User.Identity.Name})";
-            ViewData["filters"] = req.Filter.GetFilterTextForCsv();
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip: ColumnsToSkip, DisplayNamesAndFormat: DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        [HttpPost("[controller]/[action]/{id}")]
-        public async Task<IActionResult> ExportPdf([FromRoute] int id, [FromBody] KendoRequest req)
-        {
-            string orderBy = req.Sort is null ? null : string.Join(" , ", req.Sort.Select(x => $"{x.field} {x.dir}"));
-            ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
-            List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
-            dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
-            string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
-            ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
-            {
-                name = x.Column,
-                type = x.JsType,
-                isNullable = x.IsNullable
-            }).ToArray();
-            string filter = req.Filter.GetFiltersString(dbtype, columns);
-            ViewData["title"] = Report.Name;
-            DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
-            ViewData["desc"] = Report.Description;
-            ViewData["filters"] = req.Filter.GetFilterTextForCsv();
-            byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data.Data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, Report.Columns.Select(x => x.Column).ToList());
-            return File(pdfBytes, "application/pdf");
-        }
+        //[HttpPost("[controller]/[action]/{id}")]
+        // public async Task<IActionResult> Export([FromRoute] int id, [FromBody] ExportDto<decimal> exportDto)
+        // {
+        //     string orderBy = exportDto.Req.Sort is null ? null : string.Join(" , ", exportDto.Req.Sort.Select(x => $"{x.field} {x.dir}"));
+        //     ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
+        //     List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+        //     dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
+        //     string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+        //     ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+        //     {
+        //         name = x.Column,
+        //         isNullable = x.IsNullable,
+        //         type = x.JsType,
+        //     }).ToArray();
+        //     string filter = exportDto.Req.Filter.GetFiltersString(dbtype, columns);
+        //     List<ChartData<dynamic>> chartsdata = charts is not null && charts.Count > 0 ? dbInstance.GetChartData(charts, filter) : null;
+        //     List<List<object>> filterCells = exportDto.Req.Filter.GetFilterTextForCsv();
+        //
+        //     DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, exportDto.Req.Take, exportDto.Req.Skip, orderBy);
+        //     byte[] bytes = KendoFiltersExtentions.ExportCustomReportToCSV(data.Data, chartsdata?.Select(x => x.Data).ToList(), filterCells);
+        //     string FileName = Report.Name + DateTime.UtcNow.ToString("dd-MM-yyyy:h-mm") + ".csv";
+        //     await _exportHub.Clients.Clients(connections.GetConnections(User.Identity.Name))
+        //                         .SendAsync("csvRecevied", bytes, FileName);
+        //     return new EmptyResult();
+        // }
+        // [HttpPost("[controller]/[action]/{id}")]
+        // public async Task<IActionResult> ExportPdf([FromRoute] int id, [FromBody] KendoRequest req)
+        // {
+        //     string orderBy = req.Sort is null ? null : string.Join(" , ", req.Sort.Select(x => $"{x.field} {x.dir}"));
+        //     ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == id);
+        //     List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
+        //     dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
+        //     string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+        //     ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
+        //     {
+        //         name = x.Column,
+        //         type = x.JsType,
+        //         isNullable = x.IsNullable
+        //     }).ToArray();
+        //     string filter = req.Filter.GetFiltersString(dbtype, columns);
+        //     ViewData["title"] = Report.Name;
+        //     DataResult data = dbInstance.GetData(Report.Table, columns.Select(x => x.name).ToArray(), filter, req.Take, req.Skip, orderBy);
+        //     ViewData["desc"] = Report.Description;
+        //     ViewData["filters"] = req.Filter.GetFilterTextForCsv();
+        //     byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data.Data, ViewData, ControllerContext, 5
+        //                                             , User.Identity.Name, Report.Columns.Select(x => x.Column).ToList());
+        //     return File(pdfBytes, "application/pdf");
+        // }
     }
 }

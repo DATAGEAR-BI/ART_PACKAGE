@@ -90,4 +90,65 @@ public class CustomReportRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , ICu
         }
       
     }
+
+    public async Task<bool> SaveReport(SaveReportDto reportDto , AppUser owner)
+    {
+        try
+        {
+            ArtSavedCustomReport report = new()
+            {
+                Table = reportDto.Table,
+                Type = reportDto.ObjectType,
+                Name = reportDto.Title,
+                Description = reportDto.Description,
+                CreateDate = DateTime.Now,
+                Schema = reportDto.Schema,
+            };
+
+
+
+            List<ArtSavedReportsColumns> columns = reportDto.Columns.Select(e => new ArtSavedReportsColumns
+            {
+                Column = e.Name,
+                IsNullable = e.IsNullable == "YES",
+                JsType = e.JsDataType,
+                ReportId = report.Id
+            }).ToList();
+
+            List<ArtSavedReportsChart> charts = reportDto.Charts.Select(c => new ArtSavedReportsChart
+            {
+                Column = c.Column,
+                Type = c.Type,
+                Title = c.Title,
+                ReportId = report.Id
+            }).ToList();
+
+
+
+         
+            UserReport reportOwner = new UserReport()
+            {
+                UserId = owner.Id,
+                SharedFromId = owner.Id,
+                Report = report
+            };
+            report.Users.Add(owner);
+            report.UserReports.Add(reportOwner);
+            report.Charts = charts;
+            report.Columns = columns;
+
+            _ = _context.Add(report);
+            _ = _context.SaveChanges();
+
+            ArtSavedCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Users).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("couldn't save report : {ex}",e.Message);
+            return false;
+        }
+        
+    }
 }

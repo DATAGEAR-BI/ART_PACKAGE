@@ -1,24 +1,19 @@
-﻿var SchemaSelect = document.getElementById("Shcema");
-var TableSelect = document.getElementById("TableName");
-var ColumnsSelect = document.getElementById("ColumnNames");
-var ChartColumnSelect = document.getElementById("ChartColumnSelect");
-var ChartColumnTypeSelect = document.getElementById("chartType");
-var addChartBtn = document.getElementById("addChart");
-var chartTitle = document.getElementById("chartTitle");
-var reportTitle = document.getElementById("title");
-var reportDesc = document.getElementById("desc");
-var cardContainer = document.getElementById("cardContainer");
-var dltBtns = document.getElementsByClassName("chart-delete");
-var addedCharts = [];
-var form = document.getElementById("CustomReportForm");
-var errosDiv = document.getElementById("errors");
-var ShcemaSelect = document.getElementById("Shcema");
+﻿let SchemaSelect = document.getElementById("Shcema");
+let TableSelect = document.getElementById("TableName");
+let ColumnsSelect = document.getElementById("ColumnNames");
+let ChartColumnSelect = document.getElementById("ChartColumnSelect");
+let ChartColumnTypeSelect = document.getElementById("chartType");
+let addChartBtn = document.getElementById("addChart");
+let chartTitle = document.getElementById("chartTitle");
+let reportTitle = document.getElementById("title");
+let reportDesc = document.getElementById("desc");
+let cardContainer = document.getElementById("cardContainer");
+let dltBtns = document.getElementsByClassName("chart-delete");
+let addedCharts = [];
+let form = document.getElementById("CustomReportForm");
+let errosDiv = document.getElementById("errors");
+let ShcemaSelect = document.getElementById("Shcema");
 
-
-
-reportTitle.intialize();
-chartTitle.intialize();
-reportDesc.intialize();
 fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
         var opt = document.createElement("option");
@@ -27,7 +22,6 @@ fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
         return opt;
     });
     SchemaSelect.update([document.createElement("option"),... options]);
-
 });
 fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
@@ -39,7 +33,6 @@ fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
     ChartColumnTypeSelect.update([document.createElement("option"),... options]);
 
 });
-
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
@@ -55,12 +48,7 @@ ShcemaSelect.onchange = (e) => {
 
         });
     }
-
 }
-
-
-
-
 TableSelect.onSelectChange = async (e) => {
     var selected = TableSelect.value;
     var type = selected.dataset.type;
@@ -83,7 +71,6 @@ TableSelect.onSelectChange = async (e) => {
     ChartColumnSelect.update([document.createElement("option"),...clonedOptions]);
 
 }
-
 function deleteCard(event) {
     var id = event.dataset.id;
     var cardToDlt = document.getElementById(id);
@@ -145,8 +132,6 @@ addChartBtn.onclick = (e) => {
 
 
 }
-
-
 function hideErrors() {
     errosDiv.hidden = true;
 }
@@ -212,42 +197,34 @@ form.onsubmit = async (e) => {
         Title: Title,
         Schema: parseInt(ShcemaSelect.value.value)
     }
-    console.log(model);
-    var d = await Fetch("/report/SaveReport", model, "POST").then(x => {
-
-        window.location = "/myreports";
-
-
-    })
-    .catch(err => {
+    
+    let req = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(model)
+    }
+    try {
+       var res =  await fetch("/MyReports/SaveReport/",req);
+       if(res.ok)
+           window.location = "/myreports"; 
+    }
+    catch (e) {
+        console.error(e);
         toastObj.icon = 'error';
         toastObj.text = "something wrong happend while creating the report please try again or call support";
         toastObj.heading = "Custom Report Status";
         $.toast(toastObj);
         return;
-    });
-
-
-
-
-
+    }
 }
-
-
-
-
-
-
 function GUID() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     ).toString();
 }
-
-
-
-
-
 async function Fetch(url, body, mthod) {
     var req = {
         method: mthod,
