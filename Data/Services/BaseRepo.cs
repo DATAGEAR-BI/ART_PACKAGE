@@ -41,7 +41,7 @@ namespace Data.Services
 
 
 
-        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
+        public virtual GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)
@@ -129,7 +129,6 @@ namespace Data.Services
             Expression<Func<TModel, bool>> clause = FilterExtensions.GenerateExpression<TModel>(@params);
             return _context.Set<TModel>().Where(clause);
         }
-
         
         
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)

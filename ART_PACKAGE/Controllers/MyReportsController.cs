@@ -6,12 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class MyReportsController : BaseReportController<ICustomReportRepo, AuthContext, ArtSavedCustomReport>
+    public class MyReportsController : BaseReportController<IMyReportsRepo, AuthContext, ArtSavedCustomReport>
     {
 
-        public MyReportsController(IGridConstructor<ICustomReportRepo, AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public MyReportsController(IGridConstructor<IMyReportsRepo, AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-
         }
         // GET
         public override IActionResult Index()

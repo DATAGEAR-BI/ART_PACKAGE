@@ -2,14 +2,7 @@
 
 namespace Data.Services.CustomReport;
 
-public interface ICustomReportRepo : IBaseRepo<AuthContext,ArtSavedCustomReport>
+public interface ICustomReportRepo : IBaseRepo<AuthContext,object>
 {
-    public Task<bool> ShareReport(ShareReportDto shareRequest , AppUser currentUser , IEnumerable<AppUser> shareToUsers);
-
-    public Task<bool> UnShareReport(UnShareDto unShareRequest, AppUser cuAppUser,
-        IEnumerable<AppUser> unshareFromUsers);
-
-    public Task<IEnumerable<AppUser>> GetReportUsers(int reportId);
-
-    public Task<bool> SaveReport(SaveReportDto reportDto , AppUser owner);
+    
 }

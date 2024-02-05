@@ -44,7 +44,7 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
-builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
+builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
 builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
 builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
