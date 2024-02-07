@@ -4,7 +4,7 @@ using Data.Services.CustomReport;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
-    public class CustomReportGridConstructor : IGridConstructor<ICustomReportRepo,AuthContext,object>
+    public class CustomReportGridConstructor : ICustomReportGridConstructor
     {
         public ICustomReportRepo Repo { get; }
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
@@ -20,6 +20,11 @@ namespace ART_PACKAGE.Helpers.Grid
         public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, Expression<Func<object, bool>>? baseCondition = null)
         {
             throw new NotImplementedException();
+        }
+
+        public GridIntializationConfiguration IntializeGrid(int reportId)
+        {
+            
         }
     }
 }

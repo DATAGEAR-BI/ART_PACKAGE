@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "RiskAssessment")]
-    public class RiskAssessmentController : BaseReportController<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView>
+    public class RiskAssessmentController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView>, IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView>
     {
         public RiskAssessmentController(IGridConstructor<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

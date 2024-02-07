@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "Customers")]
-    public class CustomersController : BaseReportController<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>
+    public class CustomersController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>, IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>
     {
         public CustomersController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

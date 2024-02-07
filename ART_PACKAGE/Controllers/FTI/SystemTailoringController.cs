@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "SystemTailoring")]
 
 
-    public class SystemTailoringController : BaseReportController<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport>
+    public class SystemTailoringController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport>, IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport>
     {
         public SystemTailoringController(IGridConstructor<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

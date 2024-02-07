@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.FTI
 {
     ////////[Authorize(Policy = "Licensed", Roles = "Amortization")]
-    public class AmortizationController : BaseReportController<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport>
+    public class AmortizationController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport>, IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport>
     {
         public AmortizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

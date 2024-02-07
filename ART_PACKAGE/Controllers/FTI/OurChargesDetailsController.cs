@@ -9,7 +9,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OurChargesDetails")]
 
 
-    public class OurChargesDetailsController : BaseReportController<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport>
+    public class OurChargesDetailsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport>, IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport>
     {
         public OurChargesDetailsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtAuditIndividualsController : BaseReportController<IBaseRepo<KYCContext, ArtAuditIndividualsView>, KYCContext, ArtAuditIndividualsView>
+    public class ArtAuditIndividualsController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtAuditIndividualsView>, KYCContext, ArtAuditIndividualsView>, IBaseRepo<KYCContext, ArtAuditIndividualsView>, KYCContext, ArtAuditIndividualsView>
     {
         public ArtAuditIndividualsController(IGridConstructor<IBaseRepo<KYCContext, ArtAuditIndividualsView>, KYCContext, ArtAuditIndividualsView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

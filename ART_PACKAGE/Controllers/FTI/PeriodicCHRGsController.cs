@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "PeriodicCHRGs")]
 
 
-    public class PeriodicCHRGsController : BaseReportController<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport>
+    public class PeriodicCHRGsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport>, IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport>
     {
         public PeriodicCHRGsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

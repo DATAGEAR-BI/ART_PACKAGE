@@ -9,7 +9,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "Activity")]
 
 
-    public class ActivityController : BaseReportController<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport>
+    public class ActivityController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport>, IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport>
     {
         public ActivityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

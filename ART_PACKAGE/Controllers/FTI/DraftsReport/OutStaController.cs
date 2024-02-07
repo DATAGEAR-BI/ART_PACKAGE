@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI.DraftsReport
 {
-    public class OutStaController : BaseReportController<IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta>
+    public class OutStaController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta>, IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta>
     {
         public OutStaController(IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutSta>, FTIContext, ArtStTiOdcOutSta> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

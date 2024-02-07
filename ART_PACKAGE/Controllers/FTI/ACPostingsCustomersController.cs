@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
 {
 
 
-    public class ACPostingsCustomersController : BaseReportController<IBaseRepo<FTIContext, ArtTiAcpostingsCustReport>, FTIContext, ArtTiAcpostingsCustReport>
+    public class ACPostingsCustomersController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsCustReport>, FTIContext, ArtTiAcpostingsCustReport>, IBaseRepo<FTIContext, ArtTiAcpostingsCustReport>, FTIContext, ArtTiAcpostingsCustReport>
     {
         public ACPostingsCustomersController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsCustReport>, FTIContext, ArtTiAcpostingsCustReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

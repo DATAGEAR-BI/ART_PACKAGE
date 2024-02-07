@@ -2,8 +2,8 @@
 
 namespace ART_PACKAGE.Helpers.Grid
 {
-    public interface ICustomReportGridConstructor : IGridConstructor<ICustomReportRepo,AuthContext,object>
+    public interface ICustomReportGridConstructor : IGridConstructor<ICustomReportRepo, AuthContext, object>
     {
-        
+        public GridIntializationConfiguration IntializeGrid(int reportId);
     }
 }

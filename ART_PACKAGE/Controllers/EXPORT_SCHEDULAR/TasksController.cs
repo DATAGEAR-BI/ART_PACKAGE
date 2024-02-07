@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace ART_PACKAGE.Controllers.EXPORT_SCHEDULAR
 {
-    public class TasksController : BaseReportController<IBaseRepo<ExportSchedularContext, ExportTask>, ExportSchedularContext, ExportTask>
+    public class TasksController : BaseReportController<IGridConstructor<IBaseRepo<ExportSchedularContext, ExportTask>, ExportSchedularContext, ExportTask>, IBaseRepo<ExportSchedularContext, ExportTask>, ExportSchedularContext, ExportTask>
     {
         private readonly ExportSchedularContext _context;
         private readonly IRecurringJobManager jobsManger;

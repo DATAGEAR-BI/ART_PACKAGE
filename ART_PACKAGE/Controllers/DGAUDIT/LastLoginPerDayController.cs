@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class LastLoginPerDayController : BaseReportController<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView>
+    public class LastLoginPerDayController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView>, IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView>
     {
         public LastLoginPerDayController(IGridConstructor<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

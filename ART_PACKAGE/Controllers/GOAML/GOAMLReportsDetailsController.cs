@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
-    public class GOAMLReportsDetailsController : BaseReportController<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail>
+    public class GOAMLReportsDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail>, IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail>
     {
         public GOAMLReportsDetailsController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

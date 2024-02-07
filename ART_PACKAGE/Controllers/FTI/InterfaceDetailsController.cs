@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "InterfaceDetails")]
 
 
-    public class InterfaceDetailsController : BaseReportController<IBaseRepo<FTIContext, ArtTiInterfaceDetailsReport>, FTIContext, ArtTiInterfaceDetailsReport>
+    public class InterfaceDetailsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiInterfaceDetailsReport>, FTIContext, ArtTiInterfaceDetailsReport>, IBaseRepo<FTIContext, ArtTiInterfaceDetailsReport>, FTIContext, ArtTiInterfaceDetailsReport>
     {
         public InterfaceDetailsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiInterfaceDetailsReport>, FTIContext, ArtTiInterfaceDetailsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

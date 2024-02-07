@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SEG
 {
-    public class AllSegmentsOutliersNewController : BaseReportController<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb>
+    public class AllSegmentsOutliersNewController : BaseReportController<IGridConstructor<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb>, IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb>
     {
         private readonly IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> _segsFeatrsStatcsRepo;
         private readonly IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> _segoutvsalloutRepo;

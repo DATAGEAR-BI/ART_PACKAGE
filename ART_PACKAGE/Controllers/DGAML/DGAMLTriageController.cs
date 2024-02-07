@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLTriageController : BaseReportController<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView>
+    public class DGAMLTriageController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView>, IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView>
     {
+
         public DGAMLTriageController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
-
         /*private readonly ArtDgAmlContext _context;
 private readonly IMemoryCache _cache;
 private readonly IDropDownService _dropDown;
@@ -99,5 +99,7 @@ public IActionResult Index()
         {
             return View();
         }
+
+
     }
 }

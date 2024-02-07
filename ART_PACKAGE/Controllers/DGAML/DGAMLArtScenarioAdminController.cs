@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLArtScenarioAdminController : BaseReportController<IBaseRepo<ArtDgAmlContext, ArtScenarioAdminView>, ArtDgAmlContext, ArtScenarioAdminView>
+    public class DGAMLArtScenarioAdminController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtScenarioAdminView>, ArtDgAmlContext, ArtScenarioAdminView>, IBaseRepo<ArtDgAmlContext, ArtScenarioAdminView>, ArtDgAmlContext, ArtScenarioAdminView>
     {
         public DGAMLArtScenarioAdminController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtScenarioAdminView>, ArtDgAmlContext, ArtScenarioAdminView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

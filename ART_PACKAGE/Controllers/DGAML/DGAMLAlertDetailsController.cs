@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLAlertDetailsController : BaseReportController<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView>
+    public class DGAMLAlertDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView>, IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView>
     {
         public DGAMLAlertDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

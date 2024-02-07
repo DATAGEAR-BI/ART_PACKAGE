@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI.DraftsReport
 {
-    public class SumCountryController : BaseReportController<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry>
+    public class SumCountryController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry>, IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry>
     {
         public SumCountryController(IGridConstructor<IBaseRepo<FTIContext, ArtStTiOdcOutStaSumCountry>, FTIContext, ArtStTiOdcOutStaSumCountry> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OurChargesByCustomer")]
 
 
-    public class OurChargesByCustomerController : BaseReportController<IBaseRepo<FTIContext, ArtTiChargesByCustReport>, FTIContext, ArtTiChargesByCustReport>
+    public class OurChargesByCustomerController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesByCustReport>, FTIContext, ArtTiChargesByCustReport>, IBaseRepo<FTIContext, ArtTiChargesByCustReport>, FTIContext, ArtTiChargesByCustReport>
     {
         public OurChargesByCustomerController(IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesByCustReport>, FTIContext, ArtTiChargesByCustReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

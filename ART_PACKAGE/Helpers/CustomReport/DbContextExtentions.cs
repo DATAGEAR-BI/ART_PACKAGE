@@ -122,7 +122,6 @@ namespace ART_PACKAGE.Helpers.CustomReport
             return columns;
         }
         public static DataResult GetData(this DbContext db, string view, string[]? columns = null, string filters = null, long take = 0, int skip = 0, string orderBy = null)
-
         {
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
@@ -131,7 +130,6 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string NormalizedName = "";
             string progection = string.Join(", ", isOracle ? columns.Select(x => @$"""{x}""") : columns);
             string? restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
-
             if (isOracle)
             {
 

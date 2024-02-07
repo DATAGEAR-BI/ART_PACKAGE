@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OSTransactionsByNonPri")]
 
 
-    public class OSTransactionsByNonPriController : BaseReportController<IBaseRepo<FTIContext, ArtTiOsTransByNonpriReport>, FTIContext, ArtTiOsTransByNonpriReport>
+    public class OSTransactionsByNonPriController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransByNonpriReport>, FTIContext, ArtTiOsTransByNonpriReport>, IBaseRepo<FTIContext, ArtTiOsTransByNonpriReport>, FTIContext, ArtTiOsTransByNonpriReport>
     {
         public OSTransactionsByNonPriController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransByNonpriReport>, FTIContext, ArtTiOsTransByNonpriReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    public class AlertedEntitiesController : BaseReportController<IBaseRepo<EcmContext, ArtAlertedEntity>, EcmContext, ArtAlertedEntity>
+    public class AlertedEntitiesController : BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtAlertedEntity>, EcmContext, ArtAlertedEntity>, IBaseRepo<EcmContext, ArtAlertedEntity>, EcmContext, ArtAlertedEntity>
     {
         public AlertedEntitiesController(IGridConstructor<IBaseRepo<EcmContext, ArtAlertedEntity>, EcmContext, ArtAlertedEntity> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

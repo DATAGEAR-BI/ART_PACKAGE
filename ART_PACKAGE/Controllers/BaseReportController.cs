@@ -7,16 +7,18 @@ using System.Linq.Expressions;
 
 namespace ART_PACKAGE.Controllers
 {
-    public abstract class BaseReportController<TRepo, TContext, TModel> : BaseController
+    public abstract class BaseReportController<TGridConstuctor, TRepo, TContext, TModel> : BaseController
         where TContext : DbContext
-        where TModel : class where TRepo : IBaseRepo<TContext, TModel>
+        where TModel : class
+        where TRepo : IBaseRepo<TContext, TModel>
+        where TGridConstuctor : IGridConstructor<TRepo, TContext, TModel>
     {
-        protected readonly IGridConstructor<TRepo, TContext, TModel> _gridConstructor;
+        protected readonly TGridConstuctor _gridConstructor;
         protected Expression<Func<TModel, bool>>? baseCondition;
         protected IEnumerable<Expression<Func<TModel, object>>>? includes;
 
 
-        protected BaseReportController(IGridConstructor<TRepo, TContext, TModel> gridConstructor, UserManager<AppUser> um) : base(um)
+        protected BaseReportController(TGridConstuctor gridConstructor, UserManager<AppUser> um) : base(um)
         {
             _gridConstructor = gridConstructor;
         }

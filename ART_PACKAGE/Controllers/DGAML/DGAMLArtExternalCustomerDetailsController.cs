@@ -4,13 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLArtExternalCustomerDetailsController : BaseReportController<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView>
+    public class DGAMLArtExternalCustomerDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView>, IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView>
     {
         public DGAMLArtExternalCustomerDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
         }
-
-
 
         /*private readonly ArtDgAmlContext _context;
 private readonly IDropDownService _dropDown;

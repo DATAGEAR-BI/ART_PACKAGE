@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtAuditCorporateController : BaseReportController<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>
+    public class ArtAuditCorporateController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>, IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>
     {
         public ArtAuditCorporateController(IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

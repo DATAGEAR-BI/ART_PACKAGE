@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "EcmWorkflowProg")]
 
 
-    public class EcmWorkflowProgController : BaseReportController<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport>
+    public class EcmWorkflowProgController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport>, IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport>
     {
         public EcmWorkflowProgController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

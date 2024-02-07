@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "DiaryExceptions")]
 
 
-    public class DiaryExceptionsController : BaseReportController<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport>
+    public class DiaryExceptionsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport>, IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport>
     {
         public DiaryExceptionsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {

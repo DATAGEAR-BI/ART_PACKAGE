@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class MyReportsController : BaseReportController<IMyReportsRepo, AuthContext, ArtSavedCustomReport>
+    public class MyReportsController : BaseReportController<IGridConstructor<IMyReportsRepo, AuthContext, ArtSavedCustomReport>, IMyReportsRepo, AuthContext, ArtSavedCustomReport>
     {
 
         public MyReportsController(IGridConstructor<IMyReportsRepo, AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)

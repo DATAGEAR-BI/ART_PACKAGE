@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed" , Roles = "OSLiability")]
 
 
-    public class OSLiabilityController : BaseReportController<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport>
+    public class OSLiabilityController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport>, IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport>
     {
         public OSLiabilityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
