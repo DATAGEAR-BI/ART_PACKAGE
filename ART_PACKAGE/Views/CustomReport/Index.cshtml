@@ -1,4 +1,9 @@
-﻿@using ART_PACKAGE.Areas.Identity.Data;
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@using ART_PACKAGE.Areas.Identity.Data;
 @model List<ArtSavedReportsChart>
 @{
     ViewData["Title"] = "ShowReport";
@@ -8,10 +13,10 @@
     <partial name="_GridScripts" />
 }
 <m-grid id="customreport" data-custom data-reportid="@ViewBag.id"></m-grid>
+<div id="chartContainer" class="row"></div>
 @section scripts {
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <script type="module" defer src="~/js/components/grid/grid.js"></script>
 }
-

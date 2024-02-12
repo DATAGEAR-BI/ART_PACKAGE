@@ -1812,6 +1812,7 @@
 
 	<ItemGroup>
 		<Folder Include="Licenses\" />
+		<Folder Include="Pages\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>

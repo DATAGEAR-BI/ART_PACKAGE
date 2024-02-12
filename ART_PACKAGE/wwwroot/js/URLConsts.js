@@ -1,6 +1,6 @@
 ﻿export const URLS = {
     License: "/License/GetData",
-    CustomReport: "/report/GetGridData/",
+    CustomReport: "/CustomReport/GetData/",
     MyReports: "/Myreports/GetData",
     FSKALERT: "/report/FSKALERTDATA",
     AlertSearch: "/AlertSearch/GetAlerts",

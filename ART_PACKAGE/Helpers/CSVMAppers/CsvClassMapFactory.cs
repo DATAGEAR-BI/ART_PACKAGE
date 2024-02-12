@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Helpers.CSVMAppers
+﻿using CsvHelper.Configuration;
+
+namespace ART_PACKAGE.Helpers.CSVMAppers
 {
     public class CsvClassMapFactory
     {
@@ -9,14 +11,15 @@
             _inculdedColumns = inculdedColumns;
         }
 
-        public BaseClassMap<TModel> CreateInstance<TModel>()
+        public ClassMap CreateInstance<TModel>()
         {
             Type modelType = typeof(TModel);
-            switch (modelType)
-            {
-                default:
-                    return new GenericCsvClassMapper<TModel>(_inculdedColumns);
-            }
+            Type dictType = typeof(CustomReportRecord);
+
+            if (modelType == dictType)
+                return new CustomReportClassMapper(_inculdedColumns);
+
+            return new GenericCsvClassMapper<TModel>(_inculdedColumns);
         }
     }
 }

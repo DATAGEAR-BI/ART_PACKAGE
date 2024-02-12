@@ -7,9 +7,14 @@ import { URLS } from "../../URLConsts.js"
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 
-var btn = document.getElementById("gg");
-var chart = document.getElementById("test");
+let chartTypes = {};
 
+fetch("/CustomReport/GetChartsTypes/").then(x => x.json()).then(types => {
+    types.forEach(t => {
+        chartTypes[t.value] = t.text
+    });
+    console.log(types);
+})
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_material);
@@ -1113,19 +1118,42 @@ class PieWithBarChart extends  HTMLElement
     }
 }
 
-customElements.define("m-pie-chart", PieChart);
-customElements.define("m-bar-chart", BarChart);
-customElements.define("m-drag-drop-chart", DragDropChart);
-customElements.define("m-curved-column-chart", CurvedColumnChart);
-customElements.define("m-clynder-chart", CylnderChart);
-customElements.define("m-clustered-chart", ClusteredColumnChart);
-customElements.define("m-donut-chart", DonutChart);
-customElements.define("m-line-chart", LineChart);
-customElements.define("m-piewithbar-chart", PieWithBarChart);
+customElements.define("m-pie-chart"                     , PieChart);
+customElements.define("m-bar-chart"                         , BarChart);
+customElements.define("m-drag-drop-chart"                       , DragDropChart);
+customElements.define("m-curved-column-chart"                               , CurvedColumnChart);
+customElements.define("m-clynder-chart"                                     , CylnderChart);
+customElements.define("m-clustered-chart"                                           , ClusteredColumnChart);
+customElements.define("m-donut-chart"                           , DonutChart);
+customElements.define("m-line-chart"                            ,    LineChart);
+customElements.define("m-piewithbar-chart"                          , PieWithBarChart);
 
 
 
 
+export function getChartType(chartType) {
+    let type = chartTypes[chartType];
+    console.log(type,chartType);
+    switch (type) {
+        case 'bar':
+            return "m-bar-chart";
+        case 'pie':
+            return "m-pie-chart";
+        case 'donut':
+            return "m-donut-chart";
+        case 'dragdrop':
+            return "m-drag-drop-chart";
+        case 'clynder':
+            return "m-clynder-chart";
+        case 'curvy':
+            return "m-curved-column-chart" ;
+        case 'curvedline':
+            // Assuming 'curvedline' refers to a line chart
+            return "m-line-chart";
+        default:
+            return "Invalid chart type";
+    }
+}
 
 export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
    /**

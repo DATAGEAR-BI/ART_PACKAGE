@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
+using ART_PACKAGE.Helpers.CustomReport;
+using Data.Services.CustomReport;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
@@ -14,6 +16,9 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly ILogger<ICsvExport> _logger;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly object _locker = new();
+
+
+
         public event Action<int, int> OnProgressChanged;
 
         public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger)
@@ -60,7 +65,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        BaseClassMap<TModel> mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -81,7 +86,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        BaseClassMap<TModel> mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -103,14 +108,28 @@ namespace ART_PACKAGE.Helpers.Csv
 
         }
 
-        public bool ExportData<TContext, TModel>(ExportRequest exportRequest, int total, string folderPath, string fileName, int fileNumber, string userName, Expression<Func<TModel, bool>> baseCondition = null)
-         where TContext : DbContext
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, Expression<Func<TModel, bool>> baseCondition = null)
+            where TContext : DbContext
             where TModel : class
+            where TRepo : IBaseRepo<TContext, TModel>
         {
-            IBaseRepo<TContext, TModel> Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IBaseRepo<TContext, TModel>>();
+            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, fileNumber);
+        }
+
+        public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
+            int fileNumber)
+        {
+            DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
+            ICustomReportRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ICustomReportRepo>();
+            DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
+            GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
+            IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
+            return ExportToFolder(data, exportRequest.IncludedColumns,
+                dataRes.total, folderPath, fileName, fileNumber);
+
         }
         private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, int fileNumber = 1)
         {
@@ -122,7 +141,7 @@ namespace ART_PACKAGE.Helpers.Csv
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
 
-            BaseClassMap<TModel> mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>();
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>();
 
             cw.Context.RegisterClassMap(mapperInstance);
 

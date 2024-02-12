@@ -5,6 +5,7 @@ import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
+import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
@@ -103,6 +104,7 @@ class Grid extends HTMLElement {
         }
         this.ToggleSelectAll = this.ToggleSelectAll.bind(this);
         if (this.isCustom) {
+            this.id = this.id + "-" + parseInt(this.dataset.reportid);
             this.url = URLS.CustomReport + parseInt(this.dataset.reportid)
             var title = document.createElement("h2");
             title.id = this.id + "-title";
@@ -110,6 +112,25 @@ class Grid extends HTMLElement {
             desc.id = this.id + "-desc";
             this.appendChild(title)
             this.appendChild(desc)
+            fetch("/CustomReport/GetReportCharts/"+parseInt(this.dataset.reportid))
+                .then(x => x.json())
+                .then(charts => {
+                    console.log(charts)
+                    let chartsContainer = document.getElementById("chartContainer");
+                    charts.forEach(c => {
+                        let type = getChartType(c.type);
+                        let chart = document.createElement(type);
+                        chart.dataset.value = c.valueField;
+                        chart.dataset.title = c.title;
+                        chart.dataset.category = c.categoryField;
+                        chart.id = c.chartId;
+                        chart.style.height = "700px"
+                        chart.classList.add("col-6")
+                        chartsContainer.appendChild(chart);
+                    })
+                }).catch(err => console.error(err));
+            
+            
         } else {
 
             this.url = URLS[this.dataset.urlkey];
@@ -208,7 +229,7 @@ class Grid extends HTMLElement {
             });
             para.QueryBuilderFilters = val;
         }
-
+        console.log(this.url , para)
         fetch(this.url, {
             method: "POST",
             headers: {
@@ -230,32 +251,6 @@ class Grid extends HTMLElement {
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
 
-
-
-                if (this.isCustom) {
-                    document.getElementById(this.id + "-title").innerText = d.title;
-                    document.getElementById(this.id + "-desc").innerText = d.desc;
-
-
-                    if (d.chartsids) {
-                        var chartsContainer = document.createElement("div");
-                        chartsContainer.classList.add("row");
-                        [...d.chartsids].forEach(x => {
-                            var chart = document.createElement("div");
-                            chart.id = x
-                            chart.classList.add("col-12");
-                            chartsContainer.appendChild(chart);
-                        })
-
-
-
-
-                        this.appendChild(chartsContainer);
-
-                    }
-
-                }
-                //$(".spinner").remove();
                 this.generateGrid();
 
             })
@@ -585,22 +580,20 @@ class Grid extends HTMLElement {
                                 }
 
                                 if (this.isCustom) {
-                                    var chartdata = [];
-                                    if (d.chartdata)
-                                        chartdata = [...d.chartdata];
-                                    chartdata.forEach((x) => {
-                                        var div = document.getElementById(x.ChartId);
-
-
-
-                                        makedynamicChart(
-                                            x.Type,
-                                            x.Data,
-                                            x.Title,
-                                            x.ChartId,
-                                            x.Val,
-                                            x.Cat
-                                        );
+                                    console.log(this.dataset.reportid)
+                                    fetch("/CustomReport/GetReportChartsData/"+this.dataset.reportid,{
+                                        method : "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            Accept: "application/json",
+                                        },
+                                        body: JSON.stringify(para),
+                                    }).then(x => x.json()).then(chartsData => {
+                                        console.log(chartsData);
+                                        chartsData.forEach(c => {
+                                            let chart = document.getElementById(c.chartId);
+                                            chart.setdata(c.chartData);
+                                        })
                                     });
                                 }
                             }
@@ -1080,6 +1073,7 @@ class Grid extends HTMLElement {
 
     }
     async ExportCsv(e) {
+        
         if (!this.isDownloaded) {
             toastObj.icon = 'error';
             toastObj.text = "you exported a file and haven't downloaded it yet.";
@@ -1139,36 +1133,53 @@ class Grid extends HTMLElement {
         
         if(Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)){
             let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
-            console.log(urlParts);
             exportUrl = urlParts[0] + `/${this.id}?` + urlParts[1];
-            console.log(exportUrl);
         }
         
         
         Request.DataReq = para;
-        var exportRes = await fetch(exportUrl , {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify(Request),
-        });
-
-        if (exportRes.ok) {
-            var exportId = (await exportRes.json()).folder;
-            this.csvExportId = exportId;
+        try {
+            var exportRes = await fetch(exportUrl , {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(Request),
+            });
+            if (exportRes.ok) {
+                var exportId = (await exportRes.json()).folder;
+                this.csvExportId = exportId;
+            }
+        }catch (err) {
+            this.isExporting = true;
+            this.isDownloaded = true;
         }
+       
+
+       
+            
+        
     }
+    
+    
+    
+    
     saveState(){
-      
+            let key = `${this.gridDiv.id}-Options`;
+            if(this.isCustom)
+                key +=  `-${this.dataset.reportid}`;
+            
             let grid = $(this.gridDiv).data("kendoGrid");
             let state = grid.getOptions();
-            localStorage.setItem(`${this.gridDiv.id}-Options`, JSON.stringify(state));
+            localStorage.setItem(key, JSON.stringify(state));
     }
     
     loadState(serverOptions){
-        let savedOptionsString = localStorage.getItem(`${this.gridDiv.id}-Options`);
+        let key = `${this.gridDiv.id}-Options`;
+        if(this.isCustom)
+            key +=  `-${this.dataset.reportid}`;
+        let savedOptionsString = localStorage.getItem(key);
         if(!savedOptionsString){
             return serverOptions;
         }else {

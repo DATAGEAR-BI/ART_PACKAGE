@@ -1,6 +1,4 @@
-﻿using ART_PACKAGE.Helpers.DBService;
-
-namespace ART_PACKAGE.Helpers.DropDown
+﻿namespace ART_PACKAGE.Helpers.DropDown
 {
     public class DropDownService : IDropDownService
     {

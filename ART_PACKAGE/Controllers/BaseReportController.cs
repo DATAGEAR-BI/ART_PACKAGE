@@ -55,9 +55,10 @@ namespace ART_PACKAGE.Controllers
 
         [HttpPost("[controller]/[action]/{gridId}")]
 
-        public async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
+        public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
         {
-            string folderGuid = _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId, baseCondition);
+            AppUser user = await GetUser();
+            string folderGuid = _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
             return Ok(new { folder = folderGuid });
         }
 

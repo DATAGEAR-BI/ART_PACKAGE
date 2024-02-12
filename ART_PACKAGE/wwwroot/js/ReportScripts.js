@@ -14,7 +14,7 @@ let form = document.getElementById("CustomReportForm");
 let errosDiv = document.getElementById("errors");
 let ShcemaSelect = document.getElementById("Shcema");
 
-fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
+fetch("/CustomReport/GetDbSchemas").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
         var opt = document.createElement("option");
         opt.value = o.value;
@@ -23,7 +23,7 @@ fetch("/report/GetDbSchemas").then(x => x.json()).then(data => {
     });
     SchemaSelect.update([document.createElement("option"),... options]);
 });
-fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
+fetch("/CustomReport/GetChartsTypes").then(x => x.json()).then(data => {
     var options = [...data].map(o => {
         var opt = document.createElement("option");
         opt.value = o.value;
@@ -36,7 +36,7 @@ fetch("/report/GetChartsTypes").then(x => x.json()).then(data => {
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
-        Fetch(`/Report/GetViews/${value}`, null, "GET").then(d => {
+        Fetch(`/CustomReport/GetDbObjects/${value}`, null, "GET").then(d => {
             var options = d.map(elm => {
                 var opt = document.createElement("option");
                 opt.innerText = elm.vieW_NAME.toString().split(".")[1];
@@ -54,7 +54,7 @@ TableSelect.onSelectChange = async (e) => {
     var type = selected.dataset.type;
     var view = selected.value;
     var schemaVal = parseInt(ShcemaSelect.value.value);
-    var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}/${type}`, null, "GET");
+    var columns = await Fetch(`/CustomReport/GetObjectColumnNames/${schemaVal}/${view}/${type}`, null, "GET");
 
     var options = columns.map(elm => {
         var opt = document.createElement("option");
@@ -209,7 +209,7 @@ form.onsubmit = async (e) => {
     try {
        var res =  await fetch("/MyReports/SaveReport/",req);
        if(res.ok)
-           window.location = "/myreports"; 
+           window.location = "/MyReports"; 
     }
     catch (e) {
         console.error(e);

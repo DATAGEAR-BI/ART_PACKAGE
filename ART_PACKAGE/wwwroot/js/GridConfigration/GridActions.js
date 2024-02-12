@@ -9,7 +9,7 @@ export const Actions = {
         var tr = $(e.target).closest("tr");
         var grid = $(gridDiv).data("kendoGrid");
         var data = grid.dataItem(tr);
-        window.location = `/report/showreport/${data.Id}`;
+        window.location = `/CustomReport/${data.Id}`;
     },
     shareReport:async (e,gridDiv) => {
         console.log(UserName)
