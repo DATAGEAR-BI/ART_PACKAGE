@@ -6,6 +6,7 @@ on:
       - main
       - ABK
       - MAIN_TEST
+      - BYC_DEV 
   pull_request:
     branches:
       - main

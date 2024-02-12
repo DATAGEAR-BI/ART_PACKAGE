@@ -23,18 +23,9 @@
         public string? LockedBy { get; set; }
         public DateTime? EcmLastStatusDate { get; set; }
         public string? HitsCount { get; set; }
-        public int? DurationsInSeconds { get; set; }
-        public int? DurationsInMinutes { get; set; }
-        public int? DurationsInHours { get; set; }
-        public int? DurationsInDays { get; set; }
-        public string? LastComment { get; set;}
-        public string? LastCommentSubject { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
-        public string? CreatedBy { get; set; }
-        public int? NumberOfComment { get; set; }
-        public int? NumberOfAttachments { get; set; }
-
-
+        public decimal? DurationsInSeconds { get; set; }
+        public decimal? DurationsInMinutes { get; set; }
+        public decimal? DurationsInHours { get; set; }
+        public decimal? DurationsInDays { get; set; }
     }
 }

@@ -7,5 +7,6 @@ namespace Data.Data.SASAml
     {
         public string? AlertStatus { get; set; }
         public int? AlertsCount { get; set; }
+        public int? Year { get; set; }
     }
 }

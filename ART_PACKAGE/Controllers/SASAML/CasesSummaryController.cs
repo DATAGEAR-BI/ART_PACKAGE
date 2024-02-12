@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
-    //////[Authorize(Roles = "CasesSummary")]
+    //[Authorize(Roles = "CasesSummary")]
     public class CasesSummaryController : Controller
     {
         private readonly SasAmlContext dbfcfkc;

@@ -1670,6 +1670,7 @@ namespace Data.ModelCreatingStrategies
             });
         }
 
+
         public void OnEcmModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -1876,19 +1877,19 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.DurationsInDays)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(10, 0)")
                     .HasColumnName("DURATIONS_IN_DAYS");
 
                 entity.Property(e => e.DurationsInHours)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(10, 0)")
                     .HasColumnName("DURATIONS_IN_HOURS");
 
                 entity.Property(e => e.DurationsInMinutes)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(10, 0)")
                     .HasColumnName("DURATIONS_IN_MINUTES");
 
                 entity.Property(e => e.DurationsInSeconds)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(10, 0)")
                     .HasColumnName("DURATIONS_IN_SECONDS");
 
                 entity.Property(e => e.EcmLastStatusDate)
@@ -1957,30 +1958,6 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ValidFromDate)
                     .HasColumnType("datetime")
                     .HasColumnName("VALID_FROM_DATE");
-                entity.Property(e => e.LastComment)
-                   .HasMaxLength(4000)
-                   .IsUnicode(false)
-                   .HasColumnName("LAST_COMMENT")
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.LastCommentSubject)
-                   .HasMaxLength(100)
-                   .IsUnicode(false)
-                   .HasColumnName("last_comment_subject".ToUpper())
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("UPDATED_DATE");
-                entity.Property(e => e.CreatedBy)
-                   .HasMaxLength(100)
-                   .IsUnicode(false)
-                   .HasColumnName("CREATED_BY")
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.NumberOfComment)
-                    .HasColumnType("int")
-                    .HasColumnName("number_of_comments".ToUpper());
-                entity.Property(e => e.NumberOfAttachments)
-                    .HasColumnType("int")
-                    .HasColumnName("number_of_attachments".ToUpper());
             });
         }
 
@@ -2007,7 +1984,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.AlertStatus)
                     .HasMaxLength(100)
                     .HasColumnName("ALERT_STATUS");
-
+                entity.Property(e => e.Year).HasColumnName("Year");
                 entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count");
             });
 
@@ -3160,14 +3137,6 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("USER_NAME");
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("created_date".ToUpper());
-                entity.Property(e => e.LastLoginDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("last_login_date".ToUpper());
-
-                entity.Property(e => e.AccountStatus).HasColumnName("ACCOUNT_STATUS");
             });
             modelBuilder.Entity<ListOfUsersGroup>(entity =>
             {

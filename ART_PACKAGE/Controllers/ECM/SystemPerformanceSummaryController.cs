@@ -8,12 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
-using System.Data;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    //[Authorize(Roles = "SystemPerformanceSummary")]
+    // [Authorize(Roles = "SystemPerformanceSummary")]
     public class SystemPerformanceSummaryController : Controller
     {
         private readonly EcmContext context;
@@ -35,8 +33,8 @@ namespace ART_PACKAGE.Controllers.ECM
         {
 
 
-            IEnumerable<ArtSystemPrefPerDirection> chart3Data = Enumerable.Empty<ArtSystemPrefPerDirection>().AsQueryable();
-            IEnumerable<ArtSystemPerfPerDate> chart4Data = Enumerable.Empty<ArtSystemPerfPerDate>().AsQueryable();
+            //IEnumerable<ArtSystemPrefPerDirection> chart3Data = Enumerable.Empty<ArtSystemPrefPerDirection>().AsQueryable();
+            //IEnumerable<ArtSystemPerfPerDate> chart4Data = Enumerable.Empty<ArtSystemPerfPerDate>().AsQueryable();
             IEnumerable<ArtSystemPrefPerStatus> chart1Data = Enumerable.Empty<ArtSystemPrefPerStatus>().AsQueryable();
             IEnumerable<ArtSystemPerfPerType> chart2data = Enumerable.Empty<ArtSystemPerfPerType>().AsQueryable();
 
@@ -76,7 +74,7 @@ namespace ART_PACKAGE.Controllers.ECM
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                //chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
 
@@ -86,7 +84,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
+                //chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
 
             }
 
@@ -114,33 +112,33 @@ namespace ART_PACKAGE.Controllers.ECM
 
 
             };
-            if (dbType == DbTypes.Oracle)
-            {
-                _ = chartData.Add(new ChartData<dynamic>
-                {
-                    ChartId = "StSystemPerfPerDate",
-                    //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
-                    Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
-                    Title = "Cases Per Trans Direction",
-                    Cat = "Date",
-                    Val = "CASES"
-                });
-            }
-            if (dbType == DbTypes.SqlServer)
-            {
-                _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
-                {
-                    ChartId = "StSystemPerfPerTransDir",
-                    Data = chart3Data.Select(x =>
-                    {
-                        x.TRANSACTION_DIRECTION ??= "UNKOWN";
-                        return x;
-                    }).ToList(),
-                    Title = "Swift Cases Per Direction",
-                    Cat = "TRANSACTION_DIRECTION",
-                    Val = "TOTAL_NUMBER_OF_CASES"
-                });
-            }
+            //if (dbType == DbTypes.Oracle)
+            //{
+            //    _ = chartData.Add(new ChartData<dynamic>
+            //    {
+            //        ChartId = "StSystemPerfPerDate",
+            //        //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
+            //        Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
+            //        Title = "Cases Per Trans Direction",
+            //        Cat = "Date",
+            //        Val = "CASES"
+            //    });
+            //}
+            //if (dbType == DbTypes.SqlServer)
+            //{
+            //    _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
+            //    {
+            //        ChartId = "StSystemPerfPerTransDir",
+            //        Data = chart3Data.Select(x =>
+            //        {
+            //            x.TRANSACTION_DIRECTION ??= "UNKOWN";
+            //            return x;
+            //        }).ToList(),
+            //        Title = "Swift Cases Per Direction",
+            //        Cat = "TRANSACTION_DIRECTION",
+            //        Val = "TOTAL_NUMBER_OF_CASES"
+            //    });
+            //}
             return new ContentResult
             {
                 ContentType = "application/json",
