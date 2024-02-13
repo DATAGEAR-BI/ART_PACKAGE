@@ -2,8 +2,8 @@
 {
     public partial class ArtSystemPerformance
     {
-        public string CaseId { get; set; } = null!;
         public decimal CaseRk { get; set; }
+        public string CaseId { get; set; } = null!;
         public DateTime? ValidFromDate { get; set; }
         public string? CaseType { get; set; }
         public string? CaseStatus { get; set; }

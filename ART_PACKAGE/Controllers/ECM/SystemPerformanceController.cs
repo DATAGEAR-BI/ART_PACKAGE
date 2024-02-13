@@ -33,7 +33,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public IActionResult Test()
         {
-            return Ok(context.ArtSystemPerformances.Select(x => x.DurationsInDays).Take(100));
+            return Ok(context.ArtSystemPerformances.Take(100));
         }
 
 
@@ -54,13 +54,13 @@ namespace ART_PACKAGE.Controllers.ECM
 
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //{ "CaseType".ToLower()              , _dropSrv.GetCaseTypeDropDown()      .ToDynamicList()     },
-                    //{"CaseStatus".ToLower()             , _dropSrv.GetSystemCaseStatusDropDown()    .ToDynamicList()     },
-                    //{"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
-                    //{"TransactionDirection".ToLower()   ,_dropSrv.GetTransDirectionDropDown() .ToDynamicList()     },
-                    //{"TransactionType".ToLower()        ,_dropSrv.GetTransTypeDropDown()      .ToDynamicList()     },
-                    //{"UpdateUserId".ToLower()           ,_dropSrv.GetUpdateUserIdDropDown()          .ToDynamicList()     },
-                    //{"InvestrUserId".ToLower()          ,_dropSrv.GetInvestagtorDropDown()          .ToDynamicList()     },
+                    { "CaseType".ToLower()              , _dropSrv.GetCaseTypeDropDown()      .ToDynamicList()     },
+                    {"CaseStatus".ToLower()             , _dropSrv.GetSystemCaseStatusDropDown()    .ToDynamicList()     },
+                    {"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
+                    {"TransactionDirection".ToLower()   ,_dropSrv.GetTransDirectionDropDown() .ToDynamicList()     },
+                    {"TransactionType".ToLower()        ,_dropSrv.GetTransTypeDropDown()      .ToDynamicList()     },
+                    {"UpdateUserId".ToLower()           ,_dropSrv.GetUpdateUserIdDropDown()          .ToDynamicList()     },
+                    {"InvestrUserId".ToLower()          ,_dropSrv.GetInvestagtorDropDown()          .ToDynamicList()     },
                 };
             }
             ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
