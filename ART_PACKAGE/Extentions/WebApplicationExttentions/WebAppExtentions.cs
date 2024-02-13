@@ -131,14 +131,12 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             foreach (string module in modules)
             {
                 IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
-                foreach (string role in moduleRoles)
+                IQueryable<string> rolesExist = rm.Roles.Where(x => moduleRoles.Contains(x.Name)).Select(x => x.Name);
+                IEnumerable<string> rolesNotExist = moduleRoles.Except(rolesExist);
+                foreach (string role in rolesNotExist)
                 {
-                    if (!await rm.RoleExistsAsync(role))
-                    {
-                        IdentityRole roleToadd = new(role);
-                        _ = await rm.CreateAsync(roleToadd);
-                    }
-
+                    IdentityRole roleToadd = new(role);
+                    _ = await rm.CreateAsync(roleToadd);
                 }
             }
 
@@ -157,7 +155,6 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
             foreach (ExportTask job in jobs)
             {
-
                 //ruccrunibJ.RemoveIfExists(job.Name);
                 ruccrunibJ.AddOrUpdate(job.Name, () => taskPerformer.PerformTask(job, null), job.CornExpression);
             }

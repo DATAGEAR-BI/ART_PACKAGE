@@ -51,39 +51,7 @@ class Grid extends HTMLElement {
 
     }
     connectedCallback() {
-        this.filtersModal.classList.add("modal", "fade");
-        this.filtersModal.id = this.id + "-modal";
-        this.filtersModal.tabIndex = -1;
-        this.filtersModal.ariaHidden = true;
-        this.filtersModal.ariaLabel = this.id + "-modal" + "Label";
-        this.filtersModal.innerHTML = `<div class="modal-dialog modal-lg">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h4 class="modal-title" id="${this.id}-modalLabel">Filters</h4>
-                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-
-               <div class="modal-body">
-                   <div class="row" id="${this.id}-filtersDiv">
-
-
-
-
-
-
-                   </div>
-               </div>
-
-               <div class="modal-footer">
-                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-               </div>
-           </div>
-       </div>`
-
-        this.appendChild(this.filtersModal);
-
-
-
+        
         if(this.dataset.prop){
             this.selectProp = this.dataset.prop;
         }
@@ -135,6 +103,46 @@ class Grid extends HTMLElement {
 
             this.url = URLS[this.dataset.urlkey];
         }
+
+
+
+        this.filtersModal.classList.add("modal", "fade");
+        this.filtersModal.id = this.id + "-modal";
+        this.filtersModal.tabIndex = -1;
+        this.filtersModal.ariaHidden = true;
+        this.filtersModal.ariaLabel = this.id + "-modal" + "Label";
+        this.filtersModal.innerHTML = `<div class="modal-dialog modal-lg">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h4 class="modal-title" id="${this.id}-modalLabel">Filters</h4>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+
+               <div class="modal-body">
+                   <div class="row" id="${this.id}-filtersDiv">
+
+
+
+
+
+
+                   </div>
+               </div>
+
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+               </div>
+           </div>
+       </div>`
+
+        this.appendChild(this.filtersModal);
+
+
+
+
+
+
+
 
 
         if (this.dataset.stored) {
@@ -992,7 +1000,7 @@ class Grid extends HTMLElement {
                 lte: "Less Than Or Equal",
                 lt: "Less Than",
             };
-            console.log(filter)
+           
             if (filter.logic) {
                 var logicDiv = document.createElement("div");
                 logicDiv.classList.add("row");
@@ -1019,7 +1027,6 @@ class Grid extends HTMLElement {
                 var filterInput = document.createElement("m-input");
                 filterInput.dataset.value = `${ops[filter.operator]} ${filter.value}`;
                 var column = columns.find(x => x.field == filter.field);
-                console.log(column);
                 filterInput.dataset.title = column.title;
                 filterInput.dataset.disabled = true;
                 div.appendChild(filterInput);
@@ -1028,9 +1035,7 @@ class Grid extends HTMLElement {
         }
 
         if (filters) {
-            console.log("fff")
             var x = buildInputs(filters);
-            console.log(x)
             filterDiv.appendChild(x);
         }
         //console.log(filters.filters.flat(Infinity));

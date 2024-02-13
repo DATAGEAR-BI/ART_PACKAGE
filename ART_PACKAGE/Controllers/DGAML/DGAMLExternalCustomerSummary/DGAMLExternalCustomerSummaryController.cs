@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ART_PACKAGE.Controllers.DGAML.DGAMLCustomerSummary
+namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLCustomerSummaryController : Controller
+    public class DGAMLExternalCustomerSummaryController : Controller
     {
         public IActionResult Index()
         {

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Security.Claims;
 using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Hubs;
 using Data.Services.CustomReport;
 using Microsoft.AspNetCore.SignalR;
@@ -105,12 +105,20 @@ namespace ART_PACKAGE.Helpers.Grid
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
-                fileProgress[fileNumber] = recordsDone;
-                float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
-                _ = _exportHub.Clients.Clients(connections.GetConnections(user))
-                    .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+                if (total == 0 && recordsDone == 0)
+                {
+                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                        .SendAsync("updateExportProgress", 100, folderGuid, gridId);
+                }
+                else
+                {
+                    fileProgress[fileNumber] = recordsDone;
+                    float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
+                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                        .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+                }
             };
-            while (total > 0)
+            if (total == 0)
             {
                 GridRequest dataReq = new()
                 {
@@ -132,9 +140,36 @@ namespace ART_PACKAGE.Helpers.Grid
 
                 _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound));
 
-                total -= batch;
-                round++;
             }
+            else
+            {
+                while (total > 0)
+                {
+                    GridRequest dataReq = new()
+                    {
+                        Skip = round * batch,
+                        Take = batch,
+                        Filter = exportRequest.DataReq.Filter,
+                        Sort = exportRequest.DataReq.Sort,
+                        Group = exportRequest.DataReq.Group,
+                        All = exportRequest.DataReq.All,
+                        IdColumn = exportRequest.DataReq.IdColumn,
+                        SelectedValues = exportRequest.DataReq.SelectedValues,
+                    };
+                    ExportRequest roundReq = new()
+                    {
+                        DataReq = dataReq,
+                        IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                    };
+                    int localRound = round + 1;
+
+                    _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound));
+
+                    total -= batch;
+                    round++;
+                }
+            }
+
             return folderGuid;
         }
     }

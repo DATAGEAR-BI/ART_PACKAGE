@@ -4,14 +4,14 @@ using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Chart;
 using ART_PACKAGE.Helpers.ContextPerReport;
 using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CustomReport;
+
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Mail;
-using ART_PACKAGE.Helpers.Pdf;
+//using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
 using ART_PACKAGE.Middlewares.Security;
@@ -20,6 +20,7 @@ using QuestPDF.Infrastructure;
 using Rotativa.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
+using ART_PACKAGE.Helpers.DBService;
 using Data.Services.CustomReport;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -33,7 +34,7 @@ builder.Services.AddSingleton<ContextPerReportFactory>();
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
-builder.Services.AddScoped<IPdfService, PdfService>();
+//builder.Services.AddScoped<IPdfService, PdfService>();
 
 
 

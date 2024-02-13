@@ -88,6 +88,8 @@ public class CustomReportRepo : BaseRepo<AuthContext,Dictionary<string, object>>
         var connection = schemaContext.Database.GetDbConnection();
         try
         {
+            if (connection.State != System.Data.ConnectionState.Open)
+                connection.Open();
             using var countCommand = connection.CreateCommand();
             countCommand.CommandText = GenerateSql(report, request, dbType, true);
             int count = Convert.ToInt32(countCommand.ExecuteScalar());

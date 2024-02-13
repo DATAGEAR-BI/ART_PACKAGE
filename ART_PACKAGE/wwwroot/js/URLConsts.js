@@ -166,6 +166,8 @@
     //customer summary
     StCustomerPerBranch: "/ArtStDgAmlCustomerPerBranch/GetData",
     StCustomerPerType: "/ArtStDgAmlCustomerPerType/GetData",
-
+    //exc ustomer summary
+    StExCustomerPerBranch : "/DGAmlExternalCustomerPerBranch/GetData",
+    StExCustomerPerType :"/DGAmlExternalCustomerPerType/GetData"
 
 };

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
-using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DBService;
 using Data.Services.CustomReport;
 
 namespace ART_PACKAGE.Helpers.Csv
@@ -178,6 +178,8 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
 
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
 
             cw.Flush();
             sw.Flush();

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
-namespace ART_PACKAGE.Helpers.CustomReport
+namespace ART_PACKAGE.Helpers.DBService
 {
     public class DBFactory
     {

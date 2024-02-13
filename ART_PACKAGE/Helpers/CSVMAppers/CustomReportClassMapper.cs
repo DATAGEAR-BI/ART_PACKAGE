@@ -11,14 +11,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             _includedColumns = includedColumns;
             DictionaryConverter converter = new(_includedColumns);
-            _ = Map(m => m.Data).TypeConverter(converter);
+            _ = Map(m => m.Data).Name("").TypeConverter(converter);
         }
     }
 
     public class DictionaryConverter : ITypeConverter
     {
         private readonly List<string> _includedColumns;
-
+        private static int _rowNumber = 0;
         public DictionaryConverter(List<string> includedColumns)
         {
             _includedColumns = includedColumns;
@@ -33,9 +33,23 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
+            if (_rowNumber == 0)
+            {
+                foreach (string header in _includedColumns)
+                {
+                    row.WriteField(header);
+                }
+                row.Context.Writer.NextRecord();
+            }
+
+            _rowNumber++;
             Dictionary<string, object> val = (Dictionary<string, object>)value;
             IEnumerable<object> vals = _includedColumns.Select(x => val[x]);
-            return string.Join(",", vals);
+            foreach (object v in vals)
+            {
+                row.WriteField(v);
+            }
+            return "";
         }
     }
 }
