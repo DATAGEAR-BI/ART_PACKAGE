@@ -1,6 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.Data.AmlAnalysis;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -8,15 +10,15 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
     {
         public static void ApplyModulesMigrations(this WebApplication app)
         {
-            _ = app.Configuration.GetSection("Modules").Get<List<string>>();
+            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
             using IServiceScope scope = app.Services.CreateScope();
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            //if (authContext.Database.GetPendingMigrations().Any())
-            //{
-            //    authContext.Database.Migrate();
-            //}
+            if (authContext.Database.GetPendingMigrations().Any())
+            {
+                authContext.Database.Migrate();
+            }
 
             //if (modules.Contains("ECM"))
             //{
@@ -74,15 +76,15 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //        DgAuditContext.Database.Migrate();
             //    }
             //}
-            //if (modules.Contains("AMLANALYSIS"))
-            //{
-            //    AmlAnalysisContext amlAnalysisContext = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
+            if (modules.Contains("AMLANALYSIS"))
+            {
+                AmlAnalysisContext amlAnalysisContext = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
 
-            //    if (amlAnalysisContext.Database.GetPendingMigrations().Any())
-            //    {
-            //        amlAnalysisContext.Database.Migrate();
-            //    }
-            //}
+                if (amlAnalysisContext.Database.GetPendingMigrations().Any())
+                {
+                    amlAnalysisContext.Database.Migrate();
+                }
+            }
             //if (modules.Contains("FTI"))
             //{
             //    FTIContext fti = scope.ServiceProvider.GetRequiredService<FTIContext>();

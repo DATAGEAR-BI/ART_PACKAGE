@@ -1,6 +1,7 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data;
+using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -3225,7 +3226,9 @@ namespace Data.ModelCreatingStrategies
 
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            modelBuilder.Entity<ArtAmlAnalysisViewTb>().HasNoKey();
+            modelBuilder.Entity<ArtAmlAnalysisView>().HasNoKey();
         }
 
         public void OnFcfkcAmlAnalysisModelCreating(ModelBuilder modelBuilder)
@@ -3659,7 +3662,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.RiskAssessmentId)
                     .HasName("PK_RISK_ASMNT");
 
-                entity.ToTable("FSK_RISK_ASSESSMENT", "FCFKC");
+                entity.ToTable("FSK_RISK_ASSESSMENT", "dbo");
 
                 entity.HasIndex(e => e.PartyKey, "XIE5FSK_RISK_ASMNT");
 
@@ -3754,7 +3757,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => new { e.LovTypeName, e.LovTypeCode, e.LovLanguageDesc })
                     .HasName("PK_LOV");
 
-                entity.ToTable("FSK_LOV", "FCFKC");
+                entity.ToTable("FSK_LOV", "dbo");
 
                 entity.Property(e => e.LovTypeName)
                     .HasMaxLength(64)
@@ -3789,7 +3792,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.ScenarioId)
                     .HasName("PK_SCENARIO");
 
-                entity.ToTable("FSK_SCENARIO", "FCFKC");
+                entity.ToTable("FSK_SCENARIO", "dbo");
 
                 entity.HasIndex(e => e.HeaderId, "IDX_SCENARIO_HEADER");
 
@@ -4005,7 +4008,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.CaseId)
                     .HasName("XPKFSK_CASE");
 
-                entity.ToTable("FSK_CASE", "FCFKC");
+                entity.ToTable("FSK_CASE", "dbo");
 
                 entity.HasIndex(e => e.QueueCode, "XEIQFSK_CASE");
 

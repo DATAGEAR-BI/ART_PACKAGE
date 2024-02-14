@@ -359,7 +359,7 @@ begin
    end if;
      execute immediate 'CREATE TABLE ART_AML_ANALYSIS_VIEW_TB AS SELECT * FROM ART_AML_ANALYSIS_VIEW';
 end;";
-            string msSql = "";
+            string msSql = "drop table ART_DB.ART_AML_ANALYSIS_VIEW_TB; SELECT * INTO ART_DB.ART_AML_ANALYSIS_VIEW_TB FROM ART_DB.ART_AML_ANALYSIS_VIEW;";
 
             string sql = _context.Database.IsOracle() ? oracleSql : msSql;
             try

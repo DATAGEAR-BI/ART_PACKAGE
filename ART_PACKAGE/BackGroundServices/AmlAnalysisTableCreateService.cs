@@ -22,9 +22,6 @@ namespace ART_PACKAGE.BackGroundServices
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 TimeOnly time = TimeOnly.FromDateTime(DateTime.Now);
-                Console.Out.WriteLine(time);
-                Console.Out.WriteLine(startTime);
-                Console.Out.WriteLine(endTime);
                 if (time.IsBetween(startTime, endTime))
                 {
                     try
@@ -37,9 +34,6 @@ namespace ART_PACKAGE.BackGroundServices
                             _logger.LogInformation("Aml_analysis_Table created successfully");
                         else
                             _logger.LogCritical("Something wrong happend while creating Aml_analysis_Table");
-
-
-
                     }
                     catch (Exception ex)
                     {
