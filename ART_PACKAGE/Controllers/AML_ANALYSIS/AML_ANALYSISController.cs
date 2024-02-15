@@ -82,9 +82,8 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             //var entitis = fcfcore.ArtAmlAnalysisViews.Select(x => x.PartyNumber);
             //var alertscount = fcfkc.FskAlertedEntities.Where(x => entitis.Contains(x.AlertedEntityNumber)).Select(a => a.AlertsCnt);
             IQueryable<ArtAmlAnalysisViewTb> _data = _context.ArtAmlAnalysisViewTbs;
-
-            string controllerName = GetType().Name.Replace("Controller", "");
-            List<string> temp = new()
+            _ = GetType().Name.Replace("Controller", "");
+            _ = new List<string>()
             {
                 "PartyNumber",
                 "SegmentSorted",
@@ -147,11 +146,11 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             Dictionary<string, List<dynamic>> dropdown = null;
             if (obj.IsIntialize)
             {
-                skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
-                dropdown = new Dictionary<string, List<dynamic>>{
-                    { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
-                    };
+                // skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
+                // displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+                // dropdown = new Dictionary<string, List<dynamic>>{
+                //     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
+                //     };
             }
 
 

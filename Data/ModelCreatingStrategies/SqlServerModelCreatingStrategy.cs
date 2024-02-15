@@ -3226,9 +3226,968 @@ namespace Data.ModelCreatingStrategies
 
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
         {
-            //throw new NotImplementedException();
-            modelBuilder.Entity<ArtAmlAnalysisViewTb>().HasNoKey();
-            modelBuilder.Entity<ArtAmlAnalysisView>().HasNoKey();
+            modelBuilder.Entity<ArtAmlAnalysisView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_AML_ANALYSIS_VIEW", "ART_DB");
+
+                entity.Property(e => e.AlertsCnt).HasColumnName("ALERTS_CNT");
+
+                entity.Property(e => e.AlertsCount).HasColumnName("ALERTS_COUNT");
+
+                entity.Property(e => e.AvgBuysecurityCAmt).HasColumnName("AVG_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.AvgCashCAmt).HasColumnName("AVG_CASH_C_AMT");
+
+                entity.Property(e => e.AvgCashDAmt).HasColumnName("AVG_CASH_D_AMT");
+
+                entity.Property(e => e.AvgCheckDAmt).HasColumnName("AVG_CHECK_D_AMT");
+
+                entity.Property(e => e.AvgClearingcheckCAmt).HasColumnName("AVG_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.AvgClearingcheckDAmt).HasColumnName("AVG_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.AvgDerivativesCAmt).HasColumnName("AVG_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.AvgDerivativesDAmt).HasColumnName("AVG_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.AvgInhousecheckCAmt).HasColumnName("AVG_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.AvgInhousecheckDAmt).HasColumnName("AVG_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.AvgInternaltransferCAmt).HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.AvgInternaltransferDAmt).HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnCAmt).HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt).HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.AvgLccollectionCAmt).HasColumnName("AVG_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.AvgLccollectionDAmt).HasColumnName("AVG_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.AvgLoanCAmt).HasColumnName("AVG_LOAN_C_AMT");
+
+                entity.Property(e => e.AvgLoanDAmt).HasColumnName("AVG_LOAN_D_AMT");
+
+                entity.Property(e => e.AvgLoandisbursementCAmt).HasColumnName("AVG_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.AvgLoantopUpCAmt).HasColumnName("AVG_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.AvgMiscCAmt).HasColumnName("AVG_MISC_C_AMT");
+
+                entity.Property(e => e.AvgMiscDAmt).HasColumnName("AVG_MISC_D_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceCAmt).HasColumnName("AVG_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceDAmt).HasColumnName("AVG_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.AvgOutwrdchqrtrnDAmt).HasColumnName("AVG_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.AvgPymntofinstllmntDAmt).HasColumnName("AVG_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.AvgReturnchequeCAmt).HasColumnName("AVG_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.AvgReturnedwiresDAmt).HasColumnName("AVG_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.AvgSalarycreditCAmt).HasColumnName("AVG_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.AvgSalarydebitDAmt).HasColumnName("AVG_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.AvgSecuritiesCAmt).HasColumnName("AVG_SECURITIES_C_AMT");
+
+                entity.Property(e => e.AvgSecuritiesDAmt).HasColumnName("AVG_SECURITIES_D_AMT");
+
+                entity.Property(e => e.AvgSellsecurityDAmt).HasColumnName("AVG_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.AvgTdredemptionCAmt).HasColumnName("AVG_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.AvgTdredemptionDAmt).HasColumnName("AVG_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.AvgTermdepositCAmt).HasColumnName("AVG_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.AvgTermdepositDAmt).HasColumnName("AVG_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.AvgTtissuanceDAmt).HasColumnName("AVG_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.AvgWireCAmt).HasColumnName("AVG_WIRE_C_AMT");
+
+                entity.Property(e => e.AvgWireDAmt).HasColumnName("AVG_WIRE_D_AMT");
+
+                entity.Property(e => e.ClosedAlertsCount).HasColumnName("CLOSED_ALERTS_COUNT");
+
+                entity.Property(e => e.IndustryCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_CODE");
+
+                entity.Property(e => e.IndustryDesc)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_DESC");
+
+                entity.Property(e => e.MaxBuysecurityCAmt).HasColumnName("MAX_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MaxCashCAmt).HasColumnName("MAX_CASH_C_AMT");
+
+                entity.Property(e => e.MaxCashDAmt).HasColumnName("MAX_CASH_D_AMT");
+
+                entity.Property(e => e.MaxCheckDAmt).HasColumnName("MAX_CHECK_D_AMT");
+
+                entity.Property(e => e.MaxClearingcheckCAmt).HasColumnName("MAX_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MaxClearingcheckDAmt).HasColumnName("MAX_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MaxDerivativesCAmt).HasColumnName("MAX_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MaxDerivativesDAmt).HasColumnName("MAX_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MaxInhousecheckCAmt).HasColumnName("MAX_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MaxInhousecheckDAmt).HasColumnName("MAX_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MaxInternaltransferCAmt).HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MaxInternaltransferDAmt).HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnCAmt).HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt).HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MaxLccollectionCAmt).HasColumnName("MAX_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MaxLccollectionDAmt).HasColumnName("MAX_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MaxLoanCAmt).HasColumnName("MAX_LOAN_C_AMT");
+
+                entity.Property(e => e.MaxLoanDAmt).HasColumnName("MAX_LOAN_D_AMT");
+
+                entity.Property(e => e.MaxLoandisbursementCAmt).HasColumnName("MAX_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MaxLoantopUpCAmt).HasColumnName("MAX_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MaxMiscCAmt).HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt).HasColumnName("MAX_MISC_D_AMT");
+
+                entity.Property(e => e.MaxMls).HasColumnName("MAX_MLS");
+
+                entity.Property(e => e.MaxMngrschckissnceCAmt).HasColumnName("MAX_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MaxMngrschckissnceDAmt).HasColumnName("MAX_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MaxOutwrdchqrtrnDAmt).HasColumnName("MAX_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MaxPymntofinstllmntDAmt).HasColumnName("MAX_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MaxReturnchequeCAmt).HasColumnName("MAX_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MaxReturnedwiresDAmt).HasColumnName("MAX_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MaxSalarycreditCAmt).HasColumnName("MAX_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MaxSalarydebitDAmt).HasColumnName("MAX_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MaxSecuritiesCAmt).HasColumnName("MAX_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MaxSecuritiesDAmt).HasColumnName("MAX_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MaxSellsecurityDAmt).HasColumnName("MAX_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MaxTdredemptionCAmt).HasColumnName("MAX_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MaxTdredemptionDAmt).HasColumnName("MAX_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MaxTermdepositCAmt).HasColumnName("MAX_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MaxTermdepositDAmt).HasColumnName("MAX_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MaxTtissuanceDAmt).HasColumnName("MAX_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MaxWireCAmt).HasColumnName("MAX_WIRE_C_AMT");
+
+                entity.Property(e => e.MaxWireDAmt).HasColumnName("MAX_WIRE_D_AMT");
+
+                entity.Property(e => e.MinBuysecurityCAmt).HasColumnName("MIN_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MinCashCAmt).HasColumnName("MIN_CASH_C_AMT");
+
+                entity.Property(e => e.MinCashDAmt).HasColumnName("MIN_CASH_D_AMT");
+
+                entity.Property(e => e.MinCheckDAmt).HasColumnName("MIN_CHECK_D_AMT");
+
+                entity.Property(e => e.MinClearingcheckCAmt).HasColumnName("MIN_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MinClearingcheckDAmt).HasColumnName("MIN_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MinDerivativesCAmt).HasColumnName("MIN_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MinDerivativesDAmt).HasColumnName("MIN_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MinInhousecheckCAmt).HasColumnName("MIN_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MinInhousecheckDAmt).HasColumnName("MIN_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MinInternaltransferCAmt).HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MinInternaltransferDAmt).HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MinLcBlClcnCAmt).HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt).HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MinLccollectionCAmt).HasColumnName("MIN_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MinLccollectionDAmt).HasColumnName("MIN_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MinLoanCAmt).HasColumnName("MIN_LOAN_C_AMT");
+
+                entity.Property(e => e.MinLoanDAmt).HasColumnName("MIN_LOAN_D_AMT");
+
+                entity.Property(e => e.MinLoandisbursementCAmt).HasColumnName("MIN_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MinLoantopUpCAmt).HasColumnName("MIN_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MinMiscCAmt).HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt).HasColumnName("MIN_MISC_D_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceCAmt).HasColumnName("MIN_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceDAmt).HasColumnName("MIN_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MinOutwrdchqrtrnDAmt).HasColumnName("MIN_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MinPymntofinstllmntDAmt).HasColumnName("MIN_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MinReturnchequeCAmt).HasColumnName("MIN_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MinReturnedwiresDAmt).HasColumnName("MIN_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MinSalarycreditCAmt).HasColumnName("MIN_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MinSalarydebitDAmt).HasColumnName("MIN_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MinSecuritiesCAmt).HasColumnName("MIN_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MinSecuritiesDAmt).HasColumnName("MIN_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MinSellsecurityDAmt).HasColumnName("MIN_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MinTdredemptionCAmt).HasColumnName("MIN_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MinTdredemptionDAmt).HasColumnName("MIN_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MinTermdepositCAmt).HasColumnName("MIN_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MinTermdepositDAmt).HasColumnName("MIN_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MinTtissuanceDAmt).HasColumnName("MIN_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MinWireCAmt).HasColumnName("MIN_WIRE_C_AMT");
+
+                entity.Property(e => e.MinWireDAmt).HasColumnName("MIN_WIRE_D_AMT");
+
+                entity.Property(e => e.MonthKey)
+                    .HasMaxLength(24)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_KEY");
+
+                entity.Property(e => e.NumberOfLocations).HasColumnName("NUMBER_OF_LOCATIONS");
+
+                entity.Property(e => e.OccupationCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_CODE");
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(220)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_DESC");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.Prediction).HasColumnName("PREDICTION");
+
+                entity.Property(e => e.RiskClassification).HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.Segment)
+                    .HasColumnType("numeric(13, 0)")
+                    .HasColumnName("SEGMENT");
+
+                entity.Property(e => e.SegmentSorted)
+                    .HasColumnType("numeric(13, 0)")
+                    .HasColumnName("SEGMENT_SORTED");
+
+                entity.Property(e => e.TotalAmount).HasColumnName("TOTAL_AMOUNT");
+
+                entity.Property(e => e.TotalBuysecurityCAmt).HasColumnName("TOTAL_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.TotalBuysecurityCCnt).HasColumnName("TOTAL_BUYSECURITY_C_CNT");
+
+                entity.Property(e => e.TotalCashCAmt).HasColumnName("TOTAL_CASH_C_AMT");
+
+                entity.Property(e => e.TotalCashCCnt).HasColumnName("TOTAL_CASH_C_CNT");
+
+                entity.Property(e => e.TotalCashDAmt).HasColumnName("TOTAL_CASH_D_AMT");
+
+                entity.Property(e => e.TotalCashDCnt).HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckDAmt).HasColumnName("TOTAL_CHECK_D_AMT");
+
+                entity.Property(e => e.TotalCheckDCnt).HasColumnName("TOTAL_CHECK_D_CNT");
+
+                entity.Property(e => e.TotalClearingcheckCAmt).HasColumnName("TOTAL_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.TotalClearingcheckCCnt).HasColumnName("TOTAL_CLEARINGCHECK_C_CNT");
+
+                entity.Property(e => e.TotalClearingcheckDAmt).HasColumnName("TOTAL_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.TotalClearingcheckDCnt).HasColumnName("TOTAL_CLEARINGCHECK_D_CNT");
+
+                entity.Property(e => e.TotalCnt).HasColumnName("TOTAL_CNT");
+
+                entity.Property(e => e.TotalCreditAmount).HasColumnName("TOTAL_CREDIT_AMOUNT");
+
+                entity.Property(e => e.TotalCreditCnt).HasColumnName("TOTAL_CREDIT_CNT");
+
+                entity.Property(e => e.TotalDebitAmount).HasColumnName("TOTAL_DEBIT_AMOUNT");
+
+                entity.Property(e => e.TotalDebitCnt).HasColumnName("TOTAL_DEBIT_CNT");
+
+                entity.Property(e => e.TotalDerivativesCAmt).HasColumnName("TOTAL_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.TotalDerivativesCCnt).HasColumnName("TOTAL_DERIVATIVES_C_CNT");
+
+                entity.Property(e => e.TotalDerivativesDAmt).HasColumnName("TOTAL_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.TotalDerivativesDCnt).HasColumnName("TOTAL_DERIVATIVES_D_CNT");
+
+                entity.Property(e => e.TotalInhousecheckCAmt).HasColumnName("TOTAL_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.TotalInhousecheckCCnt).HasColumnName("TOTAL_INHOUSECHECK_C_CNT");
+
+                entity.Property(e => e.TotalInhousecheckDAmt).HasColumnName("TOTAL_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.TotalInhousecheckDCnt).HasColumnName("TOTAL_INHOUSECHECK_D_CNT");
+
+                entity.Property(e => e.TotalInternaltransferCAmt).HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.TotalInternaltransferCCnt).HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
+
+                entity.Property(e => e.TotalInternaltransferDAmt).HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.TotalInternaltransferDCnt).HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnCAmt).HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt).HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt).HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt).HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
+                entity.Property(e => e.TotalLccollectionCAmt).HasColumnName("TOTAL_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.TotalLccollectionCCnt).HasColumnName("TOTAL_LCCOLLECTION_C_CNT");
+
+                entity.Property(e => e.TotalLccollectionDAmt).HasColumnName("TOTAL_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.TotalLccollectionDCnt).HasColumnName("TOTAL_LCCOLLECTION_D_CNT");
+
+                entity.Property(e => e.TotalLoanCAmt).HasColumnName("TOTAL_LOAN_C_AMT");
+
+                entity.Property(e => e.TotalLoanCCnt).HasColumnName("TOTAL_LOAN_C_CNT");
+
+                entity.Property(e => e.TotalLoanDAmt).HasColumnName("TOTAL_LOAN_D_AMT");
+
+                entity.Property(e => e.TotalLoanDCnt).HasColumnName("TOTAL_LOAN_D_CNT");
+
+                entity.Property(e => e.TotalLoandisbursementCAmt).HasColumnName("TOTAL_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.TotalLoandisbursementCCnt).HasColumnName("TOTAL_LOANDISBURSEMENT_C_CNT");
+
+                entity.Property(e => e.TotalLoantopUpCAmt).HasColumnName("TOTAL_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.TotalLoantopUpCCnt).HasColumnName("TOTAL_LOANTOP_UP_C_CNT");
+
+                entity.Property(e => e.TotalMiscCAmt).HasColumnName("TOTAL_MISC_C_AMT");
+
+                entity.Property(e => e.TotalMiscCCnt).HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt).HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt).HasColumnName("TOTAL_MISC_D_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceCAmt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceCCnt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceDAmt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceDCnt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_CNT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDAmt).HasColumnName("TOTAL_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDCnt).HasColumnName("TOTAL_OUTWRDCHQRTRN_D_CNT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDAmt).HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDCnt).HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_CNT");
+
+                entity.Property(e => e.TotalReturnchequeCAmt).HasColumnName("TOTAL_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.TotalReturnchequeCCnt).HasColumnName("TOTAL_RETURNCHEQUE_C_CNT");
+
+                entity.Property(e => e.TotalReturnedwiresDAmt).HasColumnName("TOTAL_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.TotalReturnedwiresDCnt).HasColumnName("TOTAL_RETURNEDWIRES_D_CNT");
+
+                entity.Property(e => e.TotalSalarycreditCAmt).HasColumnName("TOTAL_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.TotalSalarycreditCCnt).HasColumnName("TOTAL_SALARYCREDIT_C_CNT");
+
+                entity.Property(e => e.TotalSalarydebitDAmt).HasColumnName("TOTAL_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.TotalSalarydebitDCnt).HasColumnName("TOTAL_SALARYDEBIT_D_CNT");
+
+                entity.Property(e => e.TotalSecuritiesCAmt).HasColumnName("TOTAL_SECURITIES_C_AMT");
+
+                entity.Property(e => e.TotalSecuritiesCCnt).HasColumnName("TOTAL_SECURITIES_C_CNT");
+
+                entity.Property(e => e.TotalSecuritiesDAmt).HasColumnName("TOTAL_SECURITIES_D_AMT");
+
+                entity.Property(e => e.TotalSecuritiesDCnt).HasColumnName("TOTAL_SECURITIES_D_CNT");
+
+                entity.Property(e => e.TotalSellsecurityDAmt).HasColumnName("TOTAL_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.TotalSellsecurityDCnt).HasColumnName("TOTAL_SELLSECURITY_D_CNT");
+
+                entity.Property(e => e.TotalTdredemptionCAmt).HasColumnName("TOTAL_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.TotalTdredemptionCCnt).HasColumnName("TOTAL_TDREDEMPTION_C_CNT");
+
+                entity.Property(e => e.TotalTdredemptionDAmt).HasColumnName("TOTAL_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.TotalTdredemptionDCnt).HasColumnName("TOTAL_TDREDEMPTION_D_CNT");
+
+                entity.Property(e => e.TotalTermdepositCAmt).HasColumnName("TOTAL_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.TotalTermdepositCCnt).HasColumnName("TOTAL_TERMDEPOSIT_C_CNT");
+
+                entity.Property(e => e.TotalTermdepositDAmt).HasColumnName("TOTAL_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.TotalTermdepositDCnt).HasColumnName("TOTAL_TERMDEPOSIT_D_CNT");
+
+                entity.Property(e => e.TotalTtissuanceDAmt).HasColumnName("TOTAL_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.TotalTtissuanceDCnt).HasColumnName("TOTAL_TTISSUANCE_D_CNT");
+
+                entity.Property(e => e.TotalWireCAmt).HasColumnName("TOTAL_WIRE_C_AMT");
+
+                entity.Property(e => e.TotalWireCCnt).HasColumnName("TOTAL_WIRE_C_CNT");
+
+                entity.Property(e => e.TotalWireDAmt).HasColumnName("TOTAL_WIRE_D_AMT");
+
+                entity.Property(e => e.TotalWireDCnt).HasColumnName("TOTAL_WIRE_D_CNT");
+            });
+
+            modelBuilder.Entity<ArtAmlAnalysisViewTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_AML_ANALYSIS_VIEW_TB", "ART_DB");
+
+                entity.Property(e => e.AlertsCnt).HasColumnName("ALERTS_CNT");
+
+                entity.Property(e => e.AlertsCount).HasColumnName("ALERTS_COUNT");
+
+                entity.Property(e => e.AvgBuysecurityCAmt).HasColumnName("AVG_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.AvgCashCAmt).HasColumnName("AVG_CASH_C_AMT");
+
+                entity.Property(e => e.AvgCashDAmt).HasColumnName("AVG_CASH_D_AMT");
+
+                entity.Property(e => e.AvgCheckDAmt).HasColumnName("AVG_CHECK_D_AMT");
+
+                entity.Property(e => e.AvgClearingcheckCAmt).HasColumnName("AVG_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.AvgClearingcheckDAmt).HasColumnName("AVG_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.AvgDerivativesCAmt).HasColumnName("AVG_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.AvgDerivativesDAmt).HasColumnName("AVG_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.AvgInhousecheckCAmt).HasColumnName("AVG_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.AvgInhousecheckDAmt).HasColumnName("AVG_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.AvgInternaltransferCAmt).HasColumnName("AVG_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.AvgInternaltransferDAmt).HasColumnName("AVG_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnCAmt).HasColumnName("AVG_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.AvgLcBlClcnDAmt).HasColumnName("AVG_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.AvgLccollectionCAmt).HasColumnName("AVG_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.AvgLccollectionDAmt).HasColumnName("AVG_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.AvgLoanCAmt).HasColumnName("AVG_LOAN_C_AMT");
+
+                entity.Property(e => e.AvgLoanDAmt).HasColumnName("AVG_LOAN_D_AMT");
+
+                entity.Property(e => e.AvgLoandisbursementCAmt).HasColumnName("AVG_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.AvgLoantopUpCAmt).HasColumnName("AVG_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.AvgMiscCAmt).HasColumnName("AVG_MISC_C_AMT");
+
+                entity.Property(e => e.AvgMiscDAmt).HasColumnName("AVG_MISC_D_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceCAmt).HasColumnName("AVG_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.AvgMngrschckissnceDAmt).HasColumnName("AVG_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.AvgOutwrdchqrtrnDAmt).HasColumnName("AVG_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.AvgPymntofinstllmntDAmt).HasColumnName("AVG_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.AvgReturnchequeCAmt).HasColumnName("AVG_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.AvgReturnedwiresDAmt).HasColumnName("AVG_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.AvgSalarycreditCAmt).HasColumnName("AVG_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.AvgSalarydebitDAmt).HasColumnName("AVG_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.AvgSecuritiesCAmt).HasColumnName("AVG_SECURITIES_C_AMT");
+
+                entity.Property(e => e.AvgSecuritiesDAmt).HasColumnName("AVG_SECURITIES_D_AMT");
+
+                entity.Property(e => e.AvgSellsecurityDAmt).HasColumnName("AVG_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.AvgTdredemptionCAmt).HasColumnName("AVG_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.AvgTdredemptionDAmt).HasColumnName("AVG_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.AvgTermdepositCAmt).HasColumnName("AVG_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.AvgTermdepositDAmt).HasColumnName("AVG_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.AvgTtissuanceDAmt).HasColumnName("AVG_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.AvgWireCAmt).HasColumnName("AVG_WIRE_C_AMT");
+
+                entity.Property(e => e.AvgWireDAmt).HasColumnName("AVG_WIRE_D_AMT");
+
+                entity.Property(e => e.ClosedAlertsCount).HasColumnName("CLOSED_ALERTS_COUNT");
+
+                entity.Property(e => e.IndustryCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_CODE");
+
+                entity.Property(e => e.IndustryDesc)
+                    .HasMaxLength(1020)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY_DESC");
+
+                entity.Property(e => e.MaxBuysecurityCAmt).HasColumnName("MAX_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MaxCashCAmt).HasColumnName("MAX_CASH_C_AMT");
+
+                entity.Property(e => e.MaxCashDAmt).HasColumnName("MAX_CASH_D_AMT");
+
+                entity.Property(e => e.MaxCheckDAmt).HasColumnName("MAX_CHECK_D_AMT");
+
+                entity.Property(e => e.MaxClearingcheckCAmt).HasColumnName("MAX_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MaxClearingcheckDAmt).HasColumnName("MAX_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MaxDerivativesCAmt).HasColumnName("MAX_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MaxDerivativesDAmt).HasColumnName("MAX_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MaxInhousecheckCAmt).HasColumnName("MAX_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MaxInhousecheckDAmt).HasColumnName("MAX_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MaxInternaltransferCAmt).HasColumnName("MAX_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MaxInternaltransferDAmt).HasColumnName("MAX_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnCAmt).HasColumnName("MAX_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MaxLcBlClcnDAmt).HasColumnName("MAX_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MaxLccollectionCAmt).HasColumnName("MAX_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MaxLccollectionDAmt).HasColumnName("MAX_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MaxLoanCAmt).HasColumnName("MAX_LOAN_C_AMT");
+
+                entity.Property(e => e.MaxLoanDAmt).HasColumnName("MAX_LOAN_D_AMT");
+
+                entity.Property(e => e.MaxLoandisbursementCAmt).HasColumnName("MAX_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MaxLoantopUpCAmt).HasColumnName("MAX_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MaxMiscCAmt).HasColumnName("MAX_MISC_C_AMT");
+
+                entity.Property(e => e.MaxMiscDAmt).HasColumnName("MAX_MISC_D_AMT");
+
+                entity.Property(e => e.MaxMls).HasColumnName("MAX_MLS");
+
+                entity.Property(e => e.MaxMngrschckissnceCAmt).HasColumnName("MAX_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MaxMngrschckissnceDAmt).HasColumnName("MAX_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MaxOutwrdchqrtrnDAmt).HasColumnName("MAX_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MaxPymntofinstllmntDAmt).HasColumnName("MAX_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MaxReturnchequeCAmt).HasColumnName("MAX_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MaxReturnedwiresDAmt).HasColumnName("MAX_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MaxSalarycreditCAmt).HasColumnName("MAX_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MaxSalarydebitDAmt).HasColumnName("MAX_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MaxSecuritiesCAmt).HasColumnName("MAX_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MaxSecuritiesDAmt).HasColumnName("MAX_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MaxSellsecurityDAmt).HasColumnName("MAX_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MaxTdredemptionCAmt).HasColumnName("MAX_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MaxTdredemptionDAmt).HasColumnName("MAX_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MaxTermdepositCAmt).HasColumnName("MAX_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MaxTermdepositDAmt).HasColumnName("MAX_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MaxTtissuanceDAmt).HasColumnName("MAX_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MaxWireCAmt).HasColumnName("MAX_WIRE_C_AMT");
+
+                entity.Property(e => e.MaxWireDAmt).HasColumnName("MAX_WIRE_D_AMT");
+
+                entity.Property(e => e.MinBuysecurityCAmt).HasColumnName("MIN_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.MinCashCAmt).HasColumnName("MIN_CASH_C_AMT");
+
+                entity.Property(e => e.MinCashDAmt).HasColumnName("MIN_CASH_D_AMT");
+
+                entity.Property(e => e.MinCheckDAmt).HasColumnName("MIN_CHECK_D_AMT");
+
+                entity.Property(e => e.MinClearingcheckCAmt).HasColumnName("MIN_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.MinClearingcheckDAmt).HasColumnName("MIN_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.MinDerivativesCAmt).HasColumnName("MIN_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.MinDerivativesDAmt).HasColumnName("MIN_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.MinInhousecheckCAmt).HasColumnName("MIN_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.MinInhousecheckDAmt).HasColumnName("MIN_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.MinInternaltransferCAmt).HasColumnName("MIN_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.MinInternaltransferDAmt).HasColumnName("MIN_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.MinLcBlClcnCAmt).HasColumnName("MIN_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.MinLcBlClcnDAmt).HasColumnName("MIN_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.MinLccollectionCAmt).HasColumnName("MIN_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.MinLccollectionDAmt).HasColumnName("MIN_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.MinLoanCAmt).HasColumnName("MIN_LOAN_C_AMT");
+
+                entity.Property(e => e.MinLoanDAmt).HasColumnName("MIN_LOAN_D_AMT");
+
+                entity.Property(e => e.MinLoandisbursementCAmt).HasColumnName("MIN_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.MinLoantopUpCAmt).HasColumnName("MIN_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.MinMiscCAmt).HasColumnName("MIN_MISC_C_AMT");
+
+                entity.Property(e => e.MinMiscDAmt).HasColumnName("MIN_MISC_D_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceCAmt).HasColumnName("MIN_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.MinMngrschckissnceDAmt).HasColumnName("MIN_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.MinOutwrdchqrtrnDAmt).HasColumnName("MIN_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.MinPymntofinstllmntDAmt).HasColumnName("MIN_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.MinReturnchequeCAmt).HasColumnName("MIN_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.MinReturnedwiresDAmt).HasColumnName("MIN_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.MinSalarycreditCAmt).HasColumnName("MIN_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.MinSalarydebitDAmt).HasColumnName("MIN_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.MinSecuritiesCAmt).HasColumnName("MIN_SECURITIES_C_AMT");
+
+                entity.Property(e => e.MinSecuritiesDAmt).HasColumnName("MIN_SECURITIES_D_AMT");
+
+                entity.Property(e => e.MinSellsecurityDAmt).HasColumnName("MIN_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.MinTdredemptionCAmt).HasColumnName("MIN_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.MinTdredemptionDAmt).HasColumnName("MIN_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.MinTermdepositCAmt).HasColumnName("MIN_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.MinTermdepositDAmt).HasColumnName("MIN_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.MinTtissuanceDAmt).HasColumnName("MIN_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.MinWireCAmt).HasColumnName("MIN_WIRE_C_AMT");
+
+                entity.Property(e => e.MinWireDAmt).HasColumnName("MIN_WIRE_D_AMT");
+
+                entity.Property(e => e.MonthKey)
+                    .HasMaxLength(24)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_KEY");
+
+                entity.Property(e => e.NumberOfLocations).HasColumnName("NUMBER_OF_LOCATIONS");
+
+                entity.Property(e => e.OccupationCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_CODE");
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(220)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_DESC");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.PartyTypeDesc)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_TYPE_DESC");
+
+                entity.Property(e => e.Prediction).HasColumnName("PREDICTION");
+
+                entity.Property(e => e.RiskClassification).HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.Segment)
+                    .HasColumnType("numeric(13, 0)")
+                    .HasColumnName("SEGMENT");
+
+                entity.Property(e => e.SegmentSorted)
+                    .HasColumnType("numeric(13, 0)")
+                    .HasColumnName("SEGMENT_SORTED");
+
+                entity.Property(e => e.TotalAmount).HasColumnName("TOTAL_AMOUNT");
+
+                entity.Property(e => e.TotalBuysecurityCAmt).HasColumnName("TOTAL_BUYSECURITY_C_AMT");
+
+                entity.Property(e => e.TotalBuysecurityCCnt).HasColumnName("TOTAL_BUYSECURITY_C_CNT");
+
+                entity.Property(e => e.TotalCashCAmt).HasColumnName("TOTAL_CASH_C_AMT");
+
+                entity.Property(e => e.TotalCashCCnt).HasColumnName("TOTAL_CASH_C_CNT");
+
+                entity.Property(e => e.TotalCashDAmt).HasColumnName("TOTAL_CASH_D_AMT");
+
+                entity.Property(e => e.TotalCashDCnt).HasColumnName("TOTAL_CASH_D_CNT");
+
+                entity.Property(e => e.TotalCheckDAmt).HasColumnName("TOTAL_CHECK_D_AMT");
+
+                entity.Property(e => e.TotalCheckDCnt).HasColumnName("TOTAL_CHECK_D_CNT");
+
+                entity.Property(e => e.TotalClearingcheckCAmt).HasColumnName("TOTAL_CLEARINGCHECK_C_AMT");
+
+                entity.Property(e => e.TotalClearingcheckCCnt).HasColumnName("TOTAL_CLEARINGCHECK_C_CNT");
+
+                entity.Property(e => e.TotalClearingcheckDAmt).HasColumnName("TOTAL_CLEARINGCHECK_D_AMT");
+
+                entity.Property(e => e.TotalClearingcheckDCnt).HasColumnName("TOTAL_CLEARINGCHECK_D_CNT");
+
+                entity.Property(e => e.TotalCnt).HasColumnName("TOTAL_CNT");
+
+                entity.Property(e => e.TotalCreditAmount).HasColumnName("TOTAL_CREDIT_AMOUNT");
+
+                entity.Property(e => e.TotalCreditCnt).HasColumnName("TOTAL_CREDIT_CNT");
+
+                entity.Property(e => e.TotalDebitAmount).HasColumnName("TOTAL_DEBIT_AMOUNT");
+
+                entity.Property(e => e.TotalDebitCnt).HasColumnName("TOTAL_DEBIT_CNT");
+
+                entity.Property(e => e.TotalDerivativesCAmt).HasColumnName("TOTAL_DERIVATIVES_C_AMT");
+
+                entity.Property(e => e.TotalDerivativesCCnt).HasColumnName("TOTAL_DERIVATIVES_C_CNT");
+
+                entity.Property(e => e.TotalDerivativesDAmt).HasColumnName("TOTAL_DERIVATIVES_D_AMT");
+
+                entity.Property(e => e.TotalDerivativesDCnt).HasColumnName("TOTAL_DERIVATIVES_D_CNT");
+
+                entity.Property(e => e.TotalInhousecheckCAmt).HasColumnName("TOTAL_INHOUSECHECK_C_AMT");
+
+                entity.Property(e => e.TotalInhousecheckCCnt).HasColumnName("TOTAL_INHOUSECHECK_C_CNT");
+
+                entity.Property(e => e.TotalInhousecheckDAmt).HasColumnName("TOTAL_INHOUSECHECK_D_AMT");
+
+                entity.Property(e => e.TotalInhousecheckDCnt).HasColumnName("TOTAL_INHOUSECHECK_D_CNT");
+
+                entity.Property(e => e.TotalInternaltransferCAmt).HasColumnName("TOTAL_INTERNALTRANSFER_C_AMT");
+
+                entity.Property(e => e.TotalInternaltransferCCnt).HasColumnName("TOTAL_INTERNALTRANSFER_C_CNT");
+
+                entity.Property(e => e.TotalInternaltransferDAmt).HasColumnName("TOTAL_INTERNALTRANSFER_D_AMT");
+
+                entity.Property(e => e.TotalInternaltransferDCnt).HasColumnName("TOTAL_INTERNALTRANSFER_D_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnCAmt).HasColumnName("TOTAL_LC_BL_CLCN_C_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnCCnt).HasColumnName("TOTAL_LC_BL_CLCN_C_CNT");
+
+                entity.Property(e => e.TotalLcBlClcnDAmt).HasColumnName("TOTAL_LC_BL_CLCN_D_AMT");
+
+                entity.Property(e => e.TotalLcBlClcnDCnt).HasColumnName("TOTAL_LC_BL_CLCN_D_CNT");
+
+                entity.Property(e => e.TotalLccollectionCAmt).HasColumnName("TOTAL_LCCOLLECTION_C_AMT");
+
+                entity.Property(e => e.TotalLccollectionCCnt).HasColumnName("TOTAL_LCCOLLECTION_C_CNT");
+
+                entity.Property(e => e.TotalLccollectionDAmt).HasColumnName("TOTAL_LCCOLLECTION_D_AMT");
+
+                entity.Property(e => e.TotalLccollectionDCnt).HasColumnName("TOTAL_LCCOLLECTION_D_CNT");
+
+                entity.Property(e => e.TotalLoanCAmt).HasColumnName("TOTAL_LOAN_C_AMT");
+
+                entity.Property(e => e.TotalLoanCCnt).HasColumnName("TOTAL_LOAN_C_CNT");
+
+                entity.Property(e => e.TotalLoanDAmt).HasColumnName("TOTAL_LOAN_D_AMT");
+
+                entity.Property(e => e.TotalLoanDCnt).HasColumnName("TOTAL_LOAN_D_CNT");
+
+                entity.Property(e => e.TotalLoandisbursementCAmt).HasColumnName("TOTAL_LOANDISBURSEMENT_C_AMT");
+
+                entity.Property(e => e.TotalLoandisbursementCCnt).HasColumnName("TOTAL_LOANDISBURSEMENT_C_CNT");
+
+                entity.Property(e => e.TotalLoantopUpCAmt).HasColumnName("TOTAL_LOANTOP_UP_C_AMT");
+
+                entity.Property(e => e.TotalLoantopUpCCnt).HasColumnName("TOTAL_LOANTOP_UP_C_CNT");
+
+                entity.Property(e => e.TotalMiscCAmt).HasColumnName("TOTAL_MISC_C_AMT");
+
+                entity.Property(e => e.TotalMiscCCnt).HasColumnName("TOTAL_MISC_C_CNT");
+
+                entity.Property(e => e.TotalMiscDAmt).HasColumnName("TOTAL_MISC_D_AMT");
+
+                entity.Property(e => e.TotalMiscDCnt).HasColumnName("TOTAL_MISC_D_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceCAmt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceCCnt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_C_CNT");
+
+                entity.Property(e => e.TotalMngrschckissnceDAmt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_AMT");
+
+                entity.Property(e => e.TotalMngrschckissnceDCnt).HasColumnName("TOTAL_MNGRSCHCKISSNCE_D_CNT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDAmt).HasColumnName("TOTAL_OUTWRDCHQRTRN_D_AMT");
+
+                entity.Property(e => e.TotalOutwrdchqrtrnDCnt).HasColumnName("TOTAL_OUTWRDCHQRTRN_D_CNT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDAmt).HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_AMT");
+
+                entity.Property(e => e.TotalPymntofinstllmntDCnt).HasColumnName("TOTAL_PYMNTOFINSTLLMNT_D_CNT");
+
+                entity.Property(e => e.TotalReturnchequeCAmt).HasColumnName("TOTAL_RETURNCHEQUE_C_AMT");
+
+                entity.Property(e => e.TotalReturnchequeCCnt).HasColumnName("TOTAL_RETURNCHEQUE_C_CNT");
+
+                entity.Property(e => e.TotalReturnedwiresDAmt).HasColumnName("TOTAL_RETURNEDWIRES_D_AMT");
+
+                entity.Property(e => e.TotalReturnedwiresDCnt).HasColumnName("TOTAL_RETURNEDWIRES_D_CNT");
+
+                entity.Property(e => e.TotalSalarycreditCAmt).HasColumnName("TOTAL_SALARYCREDIT_C_AMT");
+
+                entity.Property(e => e.TotalSalarycreditCCnt).HasColumnName("TOTAL_SALARYCREDIT_C_CNT");
+
+                entity.Property(e => e.TotalSalarydebitDAmt).HasColumnName("TOTAL_SALARYDEBIT_D_AMT");
+
+                entity.Property(e => e.TotalSalarydebitDCnt).HasColumnName("TOTAL_SALARYDEBIT_D_CNT");
+
+                entity.Property(e => e.TotalSecuritiesCAmt).HasColumnName("TOTAL_SECURITIES_C_AMT");
+
+                entity.Property(e => e.TotalSecuritiesCCnt).HasColumnName("TOTAL_SECURITIES_C_CNT");
+
+                entity.Property(e => e.TotalSecuritiesDAmt).HasColumnName("TOTAL_SECURITIES_D_AMT");
+
+                entity.Property(e => e.TotalSecuritiesDCnt).HasColumnName("TOTAL_SECURITIES_D_CNT");
+
+                entity.Property(e => e.TotalSellsecurityDAmt).HasColumnName("TOTAL_SELLSECURITY_D_AMT");
+
+                entity.Property(e => e.TotalSellsecurityDCnt).HasColumnName("TOTAL_SELLSECURITY_D_CNT");
+
+                entity.Property(e => e.TotalTdredemptionCAmt).HasColumnName("TOTAL_TDREDEMPTION_C_AMT");
+
+                entity.Property(e => e.TotalTdredemptionCCnt).HasColumnName("TOTAL_TDREDEMPTION_C_CNT");
+
+                entity.Property(e => e.TotalTdredemptionDAmt).HasColumnName("TOTAL_TDREDEMPTION_D_AMT");
+
+                entity.Property(e => e.TotalTdredemptionDCnt).HasColumnName("TOTAL_TDREDEMPTION_D_CNT");
+
+                entity.Property(e => e.TotalTermdepositCAmt).HasColumnName("TOTAL_TERMDEPOSIT_C_AMT");
+
+                entity.Property(e => e.TotalTermdepositCCnt).HasColumnName("TOTAL_TERMDEPOSIT_C_CNT");
+
+                entity.Property(e => e.TotalTermdepositDAmt).HasColumnName("TOTAL_TERMDEPOSIT_D_AMT");
+
+                entity.Property(e => e.TotalTermdepositDCnt).HasColumnName("TOTAL_TERMDEPOSIT_D_CNT");
+
+                entity.Property(e => e.TotalTtissuanceDAmt).HasColumnName("TOTAL_TTISSUANCE_D_AMT");
+
+                entity.Property(e => e.TotalTtissuanceDCnt).HasColumnName("TOTAL_TTISSUANCE_D_CNT");
+
+                entity.Property(e => e.TotalWireCAmt).HasColumnName("TOTAL_WIRE_C_AMT");
+
+                entity.Property(e => e.TotalWireCCnt).HasColumnName("TOTAL_WIRE_C_CNT");
+
+                entity.Property(e => e.TotalWireDAmt).HasColumnName("TOTAL_WIRE_D_AMT");
+
+                entity.Property(e => e.TotalWireDCnt).HasColumnName("TOTAL_WIRE_D_CNT");
+            });
+
         }
 
         public void OnFcfkcAmlAnalysisModelCreating(ModelBuilder modelBuilder)
@@ -3238,7 +4197,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.AlertId)
                     .HasName("PK_ALERT");
 
-                entity.ToTable("FSK_ALERT", "FCFKC");
+                entity.ToTable("FSK_ALERT", "dbo");
 
                 entity.HasIndex(e => e.ScenarioId, "IDX_ALERT_SCENARIO");
 
@@ -3391,7 +4350,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.EventId)
                     .HasName("PK_ALERT_EVENT");
 
-                entity.ToTable("FSK_ALERT_EVENT", "FCFKC");
+                entity.ToTable("FSK_ALERT_EVENT", "dbo");
 
                 entity.HasIndex(e => e.AlertId, "IDX_ALERT_EVENT_ALERT");
 
@@ -3434,7 +4393,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToTable("FSK_ALERTED_ENTITY", "FCFKC");
+                entity.ToTable("FSK_ALERTED_ENTITY", "dbo");
 
                 entity.HasIndex(e => new { e.AlertedEntityNumber, e.AlertedEntityLevelCode }, "XAK1FSK_ALERTED_ENTITY")
                     .IsUnique();
@@ -3522,7 +4481,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.CommentId)
                     .HasName("XPKFSK_COMMENT");
 
-                entity.ToTable("FSK_COMMENT", "FCFKC");
+                entity.ToTable("FSK_COMMENT", "dbo");
 
                 entity.HasIndex(e => new { e.ObjectTypeCd, e.ObjectId }, "XIE1FSK_COMMENT");
 
@@ -3580,7 +4539,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.EventId)
                     .HasName("XPKFSK_ENTITY_EVENT");
 
-                entity.ToTable("FSK_ENTITY_EVENT", "FCFKC");
+                entity.ToTable("FSK_ENTITY_EVENT", "dbo");
 
                 entity.HasIndex(e => e.CaseId, "XIE1FSK_ENTITY_EVENT");
 
@@ -3626,7 +4585,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToTable("FSK_ENTITY_QUEUE", "FCFKC");
+                entity.ToTable("FSK_ENTITY_QUEUE", "dbo");
 
                 entity.HasIndex(e => new { e.AlertedEntityLevelCode, e.AlertedEntityNumber, e.QueueCode, e.OwnerUserid }, "XEI1FSK_ENTITY_QUEUE");
 

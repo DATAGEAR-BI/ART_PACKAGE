@@ -923,7 +923,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             // Add custom type converters for specific properties
                             if (property.GetType() == typeof(double))
                             {
-                                memberMap.TypeConverter<CurrencyTypeConverter>();
+                                _ = memberMap.TypeConverter<CurrencyTypeConverter>();
                             }
 
                             cw.WriteField(property.Name); // Write custom headers if needed

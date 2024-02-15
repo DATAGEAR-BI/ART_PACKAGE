@@ -124,10 +124,10 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 IEnumerable<string> newQueuesAlertedNumbers = entities.Except(existingQueues);
                 if (existingQueues is not null && existingQueues.Count() != 0)
                 {
-                    string sqlServerQeury = "SELECT TOP(1) alerted_entity_level_code FROM FCFKC.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number";
-                    string oracleQeury = "SELECT alerted_entity_level_code FROM FCFKC.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number FETCH FIRST  ROW ONLY";
+                    string sqlServerQeury = "SELECT TOP(1) alerted_entity_level_code FROM dbo.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number";
+                    string oracleQeury = "SELECT alerted_entity_level_code FROM dbo.FSK_ALERTED_ENTITY a WHERE a.alerted_entity_number = alerted_entity_number FETCH FIRST  ROW ONLY";
                     string sql = _fcfkc.Database.IsOracle() ? oracleQeury : sqlServerQeury;
-                    int updateRes = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE FCFKC.FSK_ENTITY_QUEUE
+                    int updateRes = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE dbo.FSK_ENTITY_QUEUE
                                                                             SET queue_code = '{queueCode}' , owner_userid = '{ownerId}' 
                                                                             , alerted_entity_level_code = ({sql})
                                                                             WHERE alerted_entity_number IN ({string.Join(",", existingQueues.Select(x => $"'{x}'"))})");
@@ -142,7 +142,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 });
                 if (newEntitiesQueues is not null && newEntitiesQueues.Count() != 0)
                 {
-                    int res = await _fcfkc.Database.ExecuteSqlRawAsync($@"INSERT INTO FCFKC.FSK_ENTITY_QUEUE(alerted_entity_level_code , alerted_entity_number , owner_userid , queue_code)
+                    int res = await _fcfkc.Database.ExecuteSqlRawAsync($@"INSERT INTO dbo.FSK_ENTITY_QUEUE(alerted_entity_level_code , alerted_entity_number , owner_userid , queue_code)
                                                                               VALUES {string.Join(",", newEntitiesQueues.Select(x => x.InsertString))}");
 
                     return res > 0;
@@ -184,7 +184,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
         {
             try
             {
-                int rowEffected = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE FCFKC.FSK_ALERTED_ENTITY 
+                int rowEffected = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE dbo.FSK_ALERTED_ENTITY 
                                                          SET alerts_cnt = 0 , transactions_cnt = 0
                                                          WHERE alerted_entity_number IN ({string.Join(",", alertedEntities.Select(x => $"'{x}'"))})");
                 return rowEffected > 0;
@@ -200,7 +200,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
 
         public async Task<bool> RemoveEntitiesFromBkTable(IEnumerable<string> AlertedEntities)
         {
-            int res = await _context.Database.ExecuteSqlRawAsync($@"DELETE FROM ART_AML_ANALYSIS_VIEW_TB
+            int res = await _context.Database.ExecuteSqlRawAsync($@"DELETE FROM ART_DB.ART_AML_ANALYSIS_VIEW_TB
                                                                         WHERE PARTY_NUMBER IN ({string.Join(",", AlertedEntities)})");
             return res > 0;
         }
@@ -247,7 +247,7 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
                 }
                 IEnumerable<decimal> alertIdsCoppy = alertIds.ToList();
                 (bool, IEnumerable<decimal>) res = (true, alertIdsCoppy);
-                int rowEffected = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE FCFKC.FSK_ALERT 
+                int rowEffected = await _fcfkc.Database.ExecuteSqlRawAsync($@"UPDATE dbo.FSK_ALERT 
                                                          SET alert_status_code = '{Status}'
                                                          WHERE alert_id IN ({string.Join(",", alertIds)})");
 
