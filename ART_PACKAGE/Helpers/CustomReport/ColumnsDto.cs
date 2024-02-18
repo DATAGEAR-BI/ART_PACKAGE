@@ -12,6 +12,8 @@
         public bool isNullable { get; set; }
 
         public string format { get; set; }
+        public string template { get; set; }
+        public string filter { get; set; }
         public List<dynamic> menu { get; set; }
         public string AggType { get; set; }
         public string AggTitle { get; set; }

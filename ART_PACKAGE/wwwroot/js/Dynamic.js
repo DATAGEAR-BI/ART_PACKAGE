@@ -172,14 +172,6 @@ function genrateToolBar(data, doesnotcontainsll) {
             },
             {
                 name: "custom",
-                template: `<a class="k-button k-button-icontext k-grid-custom" id="csvExport" href="\\#"">Export As CSV</a>`,
-            },
-            {
-                name: "custom",
-                template: `<a class="k-button k-button-icontext k-grid-custom" id="clientPdExport" href="\\#"">Export As Pdf</a>`,
-            },
-            {
-                name: "custom",
                 template: `<a class="k-button k-button-icontext k-grid-custom" id="sh_filters" href="\\#"">Show All Filters</a>`,
             },
             {
@@ -795,8 +787,10 @@ function generateColumns(response) {
         var columnF = column.filter;
         var hasFilters = columnF && columnF != ""
 
-        if (hasFilters)
+            console.log(column)
+        if (hasFilters){
             filter = columnFilters[columnF]();
+        }
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {

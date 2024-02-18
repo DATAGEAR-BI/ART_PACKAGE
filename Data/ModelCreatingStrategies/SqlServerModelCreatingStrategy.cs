@@ -3226,6 +3226,22 @@ namespace Data.ModelCreatingStrategies
 
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ArtAmlAnalysisRule>(entity =>
+            {
+                entity.ToTable("ArtAmlAnalysisRules", "ART_DB");
+
+                entity.Property(e => e.Action).HasMaxLength(20);
+
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasDefaultValue(true);
+
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Deleted)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+            });
             modelBuilder.Entity<ArtAmlAnalysisView>(entity =>
             {
                 entity.HasNoKey();

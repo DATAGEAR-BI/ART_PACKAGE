@@ -422,7 +422,7 @@ end;";
 
             IEnumerable<TestRulesResult> result = Rules.Select(x =>
             {
-                List<string> aens = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From {x.TableName} Where {x.Sql}").Select(x => x.PartyNumber).ToList();
+                List<string> aens = _context.ArtAmlAnalysisViewTbs.FromSqlRaw($"Select * From ART_DB.{x.TableName} Where {x.Sql}").Select(x => x.PartyNumber).ToList();
                 TestRulesResult ruleRes = new()
                 {
                     Id = x.Id,

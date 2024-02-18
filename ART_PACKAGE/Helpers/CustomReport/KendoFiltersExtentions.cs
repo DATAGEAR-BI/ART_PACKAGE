@@ -558,6 +558,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 string? agg = propDisplayExists && DisplayNamesAndFormat[name].AggType != GridAggregateType.none ?
                 DisplayNamesAndFormat[name].AggType.ToString() : null;
                 string? aggText = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].AggText) ? DisplayNamesAndFormat[name].AggText : null;
+                string? template = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].Template) ? DisplayNamesAndFormat[name].Template : null;
+                string? filter = propDisplayExists && !string.IsNullOrEmpty(DisplayNamesAndFormat[name].Filter) ? DisplayNamesAndFormat[name].Filter : null;
                 return new ColumnsDto
                 {
                     name = name,
@@ -566,11 +568,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     displayName = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].DisplayName : name : null,
                     format = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].Format : null : null,
                     isCollection = isCollection,
-                    CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null
-                                        ,
+                    CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null,
+                    filter = filter,
                     isNullable = isnullabe,
                     type = Type,
-
+                    template = template,
                     AggType = agg,
                     AggTitle = aggText,
                 };

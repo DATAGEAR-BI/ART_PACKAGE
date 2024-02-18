@@ -2,8 +2,9 @@
 {
     public partial class ArtAmlAnalysisViewTb
     {
-        public string? MonthKey { get; set; }
+        public double? Prediction { get; set; }
         public string PartyNumber { get; set; } = null!;
+        public string? MonthKey { get; set; }
         public int? RiskClassification { get; set; }
         public string PartyTypeDesc { get; set; } = null!;
         public string? IndustryCode { get; set; }
@@ -220,7 +221,6 @@
         public int? MaxMls { get; set; }
         public double? AlertsCnt { get; set; }
         public string? PartyName { get; set; }
-        public double? Prediction { get; set; }
         public int? AlertsCount { get; set; }
         public double? ClosedAlertsCount { get; set; }
         public double? Segment { get; set; }

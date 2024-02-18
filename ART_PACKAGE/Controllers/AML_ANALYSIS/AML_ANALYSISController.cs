@@ -82,62 +82,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             //var entitis = fcfcore.ArtAmlAnalysisViews.Select(x => x.PartyNumber);
             //var alertscount = fcfkc.FskAlertedEntities.Where(x => entitis.Contains(x.AlertedEntityNumber)).Select(a => a.AlertsCnt);
             IQueryable<ArtAmlAnalysisViewTb> _data = _context.ArtAmlAnalysisViewTbs;
-            _ = GetType().Name.Replace("Controller", "");
-            _ = new List<string>()
-            {
-                "PartyNumber",
-                "SegmentSorted",
-                "AlertsCount",
-                "AlertsCnt",
-                "ClosedAlertsCount",
-                "TotalWireCAmt"         ,
-                "MaxMls",
-                "PartyName",
-                "PartyTypeDesc",
-                "OccupationDesc",
-                "TotalWireDAmt"           ,
-                "EmployeeInd"          ,
-                "OwnerUserId"          ,
-                "BranchName"          ,
-                "IndustryDesc"          ,
-                "TotalCreditAmount"          ,
-                "TotalDebitAmount"          ,
-                "TotalCreditCnt"         ,
-                "TotalDebitCnt"           ,
-                "TotalAmount"          ,
-                "TotalCnt"          ,
-                "AvgWireCAmt"          ,
-                "MaxWireCAmt"          ,
-                "TotalWireDCnt"           ,
-                "MinWireDAmt"          ,
-                "AvgWireDAmt"          ,
-                "TotalCashCAmt"           ,
-                "TotalCashCCnt"           ,
-                "MinCashCAmt"          ,
-                "AvgCashCAmt"          ,
-                "MaxCashCAmt"          ,
-                "AvgCashDAmt"          ,
-                "TotalCashDAmt"           ,
-                "TotalCashDCnt"           ,
-                "MinCashDAmt"          ,
-                "MaxCashDAmt"          ,
-                "TotalCheckDCnt"          ,
-                "AvgCheckDAmt"          ,
-                "MaxCheckDAmt"          ,
-                "TotalCheckDAmt"          ,
-                "MinCheckDAmt"          ,
-                "MaxClearingcheckCAmt"    ,
-                "MinClearingcheckCAmt"    ,
-                "AvgClearingcheckCAmt"    ,
-                "TotalClearingcheckCAmt"   ,
-                "TotalClearingcheckCCnt"   ,
-                "MaxClearingcheckDAmt"    ,
-                "AvgClearingcheckDAmt"    ,
-                "TotalClearingcheckDAmt"   ,
-                "TotalClearingcheckDCnt"   ,
-                "MinClearingcheckDAmt",
-                "IndustryCode"
-            };
+
 
 
 
@@ -146,11 +91,142 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             Dictionary<string, List<dynamic>> dropdown = null;
             if (obj.IsIntialize)
             {
-                // skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                // displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
-                // dropdown = new Dictionary<string, List<dynamic>>{
-                //     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
-                //     };
+
+
+                List<string> columnsToview = new()
+                {
+                    "PartyNumber",
+                    "SegmentSorted",
+                    "AlertsCount",
+                    "AlertsCnt",
+                    "ClosedAlertsCount",
+                    "TotalWireCAmt",
+                    "MaxMls",
+                    "PartyName",
+                    "PartyTypeDesc",
+                    "OccupationDesc",
+                    "TotalWireDAmt",
+                    "EmployeeInd",
+                    "OwnerUserId",
+                    "BranchName",
+                    "IndustryDesc",
+                    "TotalCreditAmount",
+                    "TotalDebitAmount",
+                    "TotalCreditCnt",
+                    "TotalDebitCnt",
+                    "TotalAmount",
+                    "TotalCnt",
+                    "AvgWireCAmt",
+                    "MaxWireCAmt",
+                    "TotalWireDCnt",
+                    "MinWireDAmt",
+                    "AvgWireDAmt",
+                    "TotalCashCAmt",
+                    "TotalCashCCnt",
+                    "MinCashCAmt",
+                    "AvgCashCAmt",
+                    "MaxCashCAmt",
+                    "AvgCashDAmt",
+                    "TotalCashDAmt",
+                    "TotalCashDCnt",
+                    "MinCashDAmt",
+                    "MaxCashDAmt",
+                    "TotalCheckDCnt",
+                    "AvgCheckDAmt",
+                    "MaxCheckDAmt",
+                    "TotalCheckDAmt",
+                    "MinCheckDAmt",
+                    "MaxClearingcheckCAmt",
+                    "MinClearingcheckCAmt",
+                    "AvgClearingcheckCAmt",
+                    "TotalClearingcheckCAmt",
+                    "TotalClearingcheckCCnt",
+                    "MaxClearingcheckDAmt",
+                    "AvgClearingcheckDAmt",
+                    "TotalClearingcheckDAmt",
+                    "TotalClearingcheckDCnt",
+                    "MinClearingcheckDAmt",
+                    "IndustryCode",
+                    "Prediction"
+                };
+
+                skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !columnsToview.Contains(x.Name))
+                    .Select(x => x.Name).ToList();
+                displayNameAndFormat = new Dictionary<string, DisplayNameAndFormat>()
+                {
+                    { "PartyNumber", new DisplayNameAndFormat() { DisplayName = "Party Number", } },
+                    { "SegmentSorted", new DisplayNameAndFormat() { DisplayName = "Segment Sorted", } },
+                    { "AlertsCount", new DisplayNameAndFormat() { DisplayName = "Alerts Count", } },
+                    { "AlertsCnt", new DisplayNameAndFormat() { DisplayName = "Alerts Cnt", } },
+                    { "ClosedAlertsCount", new DisplayNameAndFormat() { DisplayName = "Closed Alerts Count", } },
+                    { "TotalWireCAmt", new DisplayNameAndFormat() { DisplayName = "Total WireC amount", } },
+                    { "MaxMls", new DisplayNameAndFormat() { DisplayName = "Max Mls", } },
+                    { "PartyName", new DisplayNameAndFormat() { DisplayName = "Party Name", } },
+                    { "PartyTypeDesc", new DisplayNameAndFormat() { DisplayName = "Party Type", } },
+                    { "OccupationDesc", new DisplayNameAndFormat() { DisplayName = "Occupation Desc", } },
+                    { "TotalWireDAmt", new DisplayNameAndFormat() { DisplayName = "Total Wire DAmt", } },
+                    { "EmployeeInd", new DisplayNameAndFormat() { DisplayName = "Employee Ind", } },
+                    { "OwnerUserId", new DisplayNameAndFormat() { DisplayName = "Owner User Id", } },
+                    { "BranchName", new DisplayNameAndFormat() { DisplayName = "Branch Name", } },
+                    { "IndustryDesc", new DisplayNameAndFormat() { DisplayName = "Industry Desc", } },
+                    { "TotalCreditAmount", new DisplayNameAndFormat() { DisplayName = "Total Credit Amount", } },
+                    { "TotalDebitAmount", new DisplayNameAndFormat() { DisplayName = "Total Debit Amount", } },
+                    { "TotalCreditCnt", new DisplayNameAndFormat() { DisplayName = "Total Credit Cnt", } },
+                    { "TotalDebitCnt", new DisplayNameAndFormat() { DisplayName = "Total Debit Cnt", } },
+                    { "TotalAmount", new DisplayNameAndFormat() { DisplayName = "Total Amount", } },
+                    { "TotalCnt", new DisplayNameAndFormat() { DisplayName = "Total Cnt", } },
+                    { "AvgWireCAmt", new DisplayNameAndFormat() { DisplayName = "Avg Wire CAmt", } },
+                    { "MaxWireCAmt", new DisplayNameAndFormat() { DisplayName = "Max Wire CAmt", } },
+                    { "TotalWireDCnt", new DisplayNameAndFormat() { DisplayName = "Total Wire Dcount", } },
+                    { "MinWireDAmt", new DisplayNameAndFormat() { DisplayName = "Min Wire DAmt", } },
+                    { "AvgWireDAmt", new DisplayNameAndFormat() { DisplayName = "Avg Wire DAmt", } },
+                    { "TotalCashCAmt", new DisplayNameAndFormat() { DisplayName = "Total Cash CAmt", } },
+                    { "TotalCashCCnt", new DisplayNameAndFormat() { DisplayName = "Total Cash CCnt", } },
+                    { "MinCashCAmt", new DisplayNameAndFormat() { DisplayName = "Min Cash CAmt", } },
+                    { "AvgCashCAmt", new DisplayNameAndFormat() { DisplayName = "Avg Cash CAmt", } },
+                    { "MaxCashCAmt", new DisplayNameAndFormat() { DisplayName = "Max Cash CAmt", } },
+                    { "AvgCashDAmt", new DisplayNameAndFormat() { DisplayName = "Avg Cash DAmt", } },
+                    { "TotalCashDAmt", new DisplayNameAndFormat() { DisplayName = "Total Cash DAmt", } },
+                    { "TotalCashDCnt", new DisplayNameAndFormat() { DisplayName = "Total Cash DCnt", } },
+                    { "MinCashDAmt", new DisplayNameAndFormat() { DisplayName = "Min Cash DAmt", } },
+                    { "MaxCashDAmt", new DisplayNameAndFormat() { DisplayName = "Max Cash DAmt", } },
+                    { "TotalCheckDCnt", new DisplayNameAndFormat() { DisplayName = "Total Check DCnt", } },
+                    { "AvgCheckDAmt", new DisplayNameAndFormat() { DisplayName = "Avg Check DAmt", } },
+                    { "MaxCheckDAmt", new DisplayNameAndFormat() { DisplayName = "Max Check DAmt", } },
+                    { "TotalCheckDAmt", new DisplayNameAndFormat() { DisplayName = "Total Check DAmt", } },
+                    { "MinCheckDAmt", new DisplayNameAndFormat() { DisplayName = "Min Check DAmt", } },
+                    { "MaxClearingcheckCAmt", new DisplayNameAndFormat() { DisplayName = "Max Clearingcheck CAmt", } },
+                    { "MinClearingcheckCAmt", new DisplayNameAndFormat() { DisplayName = "Min Clearingcheck CAmt", } },
+                    { "AvgClearingcheckCAmt", new DisplayNameAndFormat() { DisplayName = "Avg Clearingcheck CAmt", } },
+                    {
+                        "TotalClearingcheckCAmt",
+                        new DisplayNameAndFormat() { DisplayName = "Total Clearingcheck CAmt", }
+                    },
+                    {
+                        "TotalClearingcheckCCnt",
+                        new DisplayNameAndFormat() { DisplayName = "Total Clearingcheck CCnt", }
+                    },
+                    { "MaxClearingcheckDAmt", new DisplayNameAndFormat() { DisplayName = "Max Clearingcheck DAmt", } },
+                    { "AvgClearingcheckDAmt", new DisplayNameAndFormat() { DisplayName = "Avg Clearingcheck DAmt", } },
+                    {
+                        "TotalClearingcheckDAmt",
+                        new DisplayNameAndFormat() { DisplayName = "Total Clearingcheck DAmt", }
+                    },
+                    {
+                        "TotalClearingcheckDCnt",
+                        new DisplayNameAndFormat() { DisplayName = "Total Clearingcheck DCnt", }
+                    },
+                    { "MinClearingcheckDAmt", new DisplayNameAndFormat() { DisplayName = "Min Clearingcheck DAmt", } },
+                    { "IndustryCode", new DisplayNameAndFormat() { DisplayName = "Industry Code", } },
+                    {
+                        "Prediction",
+                        new DisplayNameAndFormat() { DisplayName = "Prediction", Template = "Aml_Analysis_prediction"  , Filter = "Aml_Analysis_predidtions"}
+                    },
+                };
+
+                dropdown = new Dictionary<string, List<dynamic>>{
+                     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
+                     };
             }
 
 
