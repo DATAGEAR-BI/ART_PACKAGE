@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Middlewares.Security
+﻿using ART_PACKAGE.Controllers;
+
+namespace ART_PACKAGE.Middlewares.Security
 {
     public class CustomAuthorizationRequirmentHandler : AuthorizationHandler<CustomAuthorizationRequirment>
     {
@@ -26,13 +28,8 @@
                 context.Succeed(requirement);
                 return;
             }
-            string roleName = controller.ToLower() == "userrole".ToLower()
-                                ? "art_admin".ToLower()
-                                : controller.ToLower() == "report".ToLower()
-                                ? "art_customreport".ToLower()
-                                : controller.ToLower() == "License".ToLower() ? "art_superadmin".ToLower() : $"art_{controller}".ToLower();
 
-
+            string roleName = GetControllerRole(controller + "controller");
 
             //IEnumerable<string> groups = (await _roleManger.GetClaimsAsync(routeRole)).Where(c => c.Type == "GROUP").Select(x => x.Value);
             //&& context.User.Claims.Where(c => c.Type == "GROUP").Select(x => x.Value).Distinct().All(x => !groups.Contains(x))
@@ -43,6 +40,24 @@
                 return;
             }
             context.Succeed(requirement);
+        }
+
+        private string GetControllerRole(string controller)
+        {
+            if (!controller.ToLower().EndsWith("controller"))
+                return "";
+
+
+            if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower())
+                return "art_customreport".ToLower();
+
+            if (controller.ToLower() == nameof(UserRoleController).ToLower())
+                return "art_admin".ToLower();
+
+            if (controller.ToLower() == nameof(LicenseController).ToLower())
+                return "art_superadmin".ToLower();
+
+            return $"art_{controller.Replace("controller", "")}".ToLower();
         }
     }
 }

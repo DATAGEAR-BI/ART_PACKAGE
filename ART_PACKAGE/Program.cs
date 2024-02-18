@@ -81,7 +81,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 });
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
-//builder.Services.AddLicense(builder.Configuration);
+builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 

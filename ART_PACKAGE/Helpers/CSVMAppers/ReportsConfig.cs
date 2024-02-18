@@ -82,6 +82,34 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         }
       },
+      {
+        nameof(Middlewares.License.License).ToLower(), new ReportConfig {
+            DisplayNames = new Dictionary < string, GridColumnConfiguration > {
+              {
+                nameof(Middlewares.License.License.ExpireDate), new GridColumnConfiguration {
+                  DisplayName = "Expire Date",
+                }
+              },
+              {
+                nameof(Middlewares.License.License.RemainingDays),
+                new GridColumnConfiguration {
+                  DisplayName = "Remaining Days"
+                }
+              },
+            },
+
+            Toolbar = new List <GridButton> {
+
+                new GridButton
+                           { text = "Add/Replace Module License",
+                               action = "addreplic",
+                               icon = "k-i-folder-up"
+                           }
+
+            },
+
+        }
+      },
 
       {
         nameof(ArtAmlAlertDetailView).ToLower(),

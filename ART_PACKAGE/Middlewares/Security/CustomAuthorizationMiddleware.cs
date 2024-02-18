@@ -47,20 +47,13 @@ namespace ART_PACKAGE.Middlewares.Security
                 context.Response.Redirect(_redirectUri);
                 return;
             }
-
-
-
             AuthorizationResult res = await authorizationService.AuthorizeAsync(context.User, null, "CustomAuthorization");
             if (!res.Succeeded)
             {
                 context?.Response.Redirect("/Identity/Account/AccessDenied");
                 return;
             }
-
             await next(context);
-
-
-
         }
     }
 }

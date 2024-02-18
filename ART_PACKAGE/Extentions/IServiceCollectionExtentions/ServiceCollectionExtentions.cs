@@ -185,9 +185,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                     {
                         req.Modules = LicenseModules;
                     }
-
                     _ = p.AddRequirements(req);
-
                 }
                 );
             });
@@ -202,12 +200,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 opt.AddPolicy("CustomAuthorization", p =>
                 {
                     CustomAuthorizationRequirment req = new();
-
-
                     _ = p.AddRequirements(req);
-
-                }
-                );
+                });
             });
             _ = services.AddScoped<IAuthorizationHandler, CustomAuthorizationRequirmentHandler>();
             return services;
@@ -218,7 +212,6 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
             _ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
-
             return services;
         }
 

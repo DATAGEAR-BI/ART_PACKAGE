@@ -4,69 +4,6 @@
     var modules = _config.GetSection("Modules")
                 .Get<List<string>>();
 }
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
-<script src="~/js/site.js"></script>
-<link href="~/css/site.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
-
-
-<style>
-    .drop-container {
-        position: relative;
-        display: flex;
-        gap: 10px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 200px;
-        padding: 20px;
-        border-radius: 10px;
-        border: 2px dashed #555;
-        color: #444;
-        cursor: pointer;
-        transition: background .2s ease-in-out, border .2s ease-in-out;
-    }
-
-        .drop-container:hover {
-            background: #eee;
-            border-color: #111;
-        }
-
-            .drop-container:hover .drop-title {
-                color: #222;
-            }
-
-    .drop-title {
-        color: #444;
-        font-size: 20px;
-        font-weight: bold;
-        text-align: center;
-        transition: color .2s ease-in-out;
-    }
-
-    input[type=file]::file-selector-button {
-        margin-right: 20px;
-        border: none;
-        background: #084cdf;
-        padding: 10px 20px;
-        border-radius: 10px;
-        color: #fff;
-        cursor: pointer;
-        transition: background .2s ease-in-out;
-    }
-
-        input[type=file]::file-selector-button:hover {
-            background: #0d45a5;
-        }
-</style>
 <section class="content-header">
     <h1>
         Licesnes
@@ -74,81 +11,101 @@
         <br />
     </h1>
 </section>
+<div class="modal fade" id="addreplicModal" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+    <form id="licForm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="${this.id}-modalLabel">Upload License</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-<div class="modal fade" id="addreplicModal" tabindex="-1" role="dialog" aria-labelledby="addreplicModal" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:60%">
-        <form id="licForm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload license...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="ModelBodyHTML">
+        <div class="modal-body">
+            
                 <div class="row">
                     <div id="uploadform" class="col-12 panel panel-primary customer-details medium-capped-width">
                         <div class="panel-body">
-                           
-                            <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Select License Module</span>
-                            <select  id="licModule" class="form-control" required>
-                                <option value="">Select A Module</option>
-                                <option value="base" >Base</option>
-                                @foreach (var module in modules)
-                                        {
-                                            <option value="@module">@module</option>
-                                        }
-                                
-                            </select>
+                   
+                            <div>
+                                <m-select id="licModule" data-title="Module" style="width:100%">
+                                </m-select>
                             </div>
-                            <label for="images" class="drop-container" id="dropcontainer">
-                                <span class="drop-title">Drop License file here</span>
-                                or
-                                <input type="file" id="fileinp" accept=".dg" required>
-                            </label>
-                           
+                            <div>
+                                <smart-file-upload id="fileupload" accept='.dg' drop-zone style="width:100%"></smart-file-upload>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button id="uploadlic" type="submit" class="btn btn-success">Ok</button>
-            </div>
-     
+           
         </div>
-        </form>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="uploadlic" type="submit" class="btn btn-primary">Ok</button> 
+        </div>
     </div>
+     </form>
+</div>
 </div>
 
-<div id="grid"></div>
+
+@* <div class="modal fade" id="addreplicModal" tabindex="-1" role="dialog" aria-labelledby="addreplicModal" aria-hidden="true"> *@
+@*     <div class="modal-dialog" role="document" style="width:60%"> *@
+@*             <div class="modal-content"> *@
+@*                 <div class="modal-header"> *@
+@*                     <h5 class="modal-title" id="exampleModalLabel">Upload license...</h5> *@
+@*                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> *@
+@*                         <span aria-hidden="true">&times;</span> *@
+@*                     </button> *@
+@*                 </div> *@
+@*                 <div class="modal-body" id="ModelBodyHTML"> *@
+@*                     <form id="licForm"> *@
+@*                         <div class="row"> *@
+@*                         <div id="uploadform" class="col-12 panel panel-primary customer-details medium-capped-width"> *@
+@*                             <div class="panel-body"> *@
+@* *@
+@*                                 <div> *@
+@*                                     <m-select id="licModule" data-title="Module" style="width:100%"> *@
+@*                                     </m-select> *@
+@*                                 </div> *@
+@*                                 <div> *@
+@*                                     <smart-file-upload accept='.dg' drop-zone style="width:100%"></smart-file-upload> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     </form> *@
+@*                 </div> *@
+@*                 <div class="modal-footer"> *@
+@*                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> *@
+@*                     <button id="uploadlic" type="submit" class="btn btn-primary">Ok</button> *@
+@*                 </div> *@
+@*       *@
+@*             </div> *@
+@*       *@
+@*     </div> *@
+@* </div> *@
+
+<m-grid id="License" data-urlkey="License" data-handlerkey="License"></m-grid>
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
 @section Scripts{
-   
+
+    <script src="lib/SmartComponents/source/modules/smart.fileupload.js"></script>
+    <script src="js/Components/Grid/Grid.js" type="module" defer="defer"></script>
+    <script src ="js/Components/MultiSelect/Select.js"></script>
     <script>
-        const dropContainer = document.getElementById("dropcontainer")
-        const fileInput = document.getElementById("fileinp")
-
-        dropContainer.addEventListener("dragover", (e) => {
-            // prevent default to allow drop
-            e.preventDefault()
-        }, false)
-
-        dropContainer.addEventListener("dragenter", () => {
-            dropContainer.classList.add("drag-active")
-        })
-
-        dropContainer.addEventListener("dragleave", () => {
-            dropContainer.classList.remove("drag-active")
-        })
-
-        dropContainer.addEventListener("drop", (e) => {
-            e.preventDefault()
-            dropContainer.classList.remove("drag-active")
-            fileInput.files = e.dataTransfer.files
-        })
-
+            let modulesSelect = document.getElementById("licModule");
+            let modules = @Html.Raw(Json.Serialize(modules));
+            let opts = []
+            modules.forEach(m => {
+                let opt = document.createElement("option");
+                opt.value = m;
+                opt.innerText = m;
+                opts.push(opt);
+            });
+            modulesSelect.update([document.createElement("option") , ...opts]);
     </script>
-    <script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="License" data-handlerkey="License"></script>
 }

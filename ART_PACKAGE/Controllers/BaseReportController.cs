@@ -40,7 +40,6 @@ namespace ART_PACKAGE.Controllers
             }
             else
             {
-
                 GridResult<TModel> res = _gridConstructor.GetGridData(request, baseCondition, includes);
                 return new ContentResult
                 {
