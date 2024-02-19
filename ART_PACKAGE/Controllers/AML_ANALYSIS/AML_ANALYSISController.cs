@@ -227,6 +227,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
                 dropdown = new Dictionary<string, List<dynamic>>{
                      { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
                      };
+
             }
 
 
@@ -236,9 +237,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 
             var data = new
             {
-                data = Data.Data.ToArray(),
                 columns = Data.Columns,
-                total = Data.Total,
                 containsActions = false,
                 selectable = true,
                 toolbar = new List<dynamic>
@@ -255,6 +254,26 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
                         },
                     }
             };
+            if (!obj.IsIntialize)
+            {
+                var x = new
+                {
+                    data = Data.Data.ToArray(),
+                    total = Data.Total
+                };
+
+                return new ContentResult
+                {
+                    ContentType = "application/json",
+                    Content = JsonConvert.SerializeObject(x, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+
+                    }),
+
+                };
+            }
+
             return new ContentResult
             {
                 ContentType = "application/json",

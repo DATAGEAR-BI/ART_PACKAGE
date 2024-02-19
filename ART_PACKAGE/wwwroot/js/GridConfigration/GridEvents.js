@@ -20,6 +20,14 @@ function getQueryParameters(urlString) {
 }
 
 export const Handlers = {
+    clrfil: (e) => {
+        var ds = $("#grid").data("kendoGrid");
+        var multiSelects = document.querySelectorAll("[data-role=multiselect]");
+        [...multiSelects].forEach(x => {
+            $(x).data("kendoMultiSelect").value(null);
+        });
+        ds.dataSource.filter(null);
+    },
     csvExport: async (e, controller, url, prop) => {
 
 
