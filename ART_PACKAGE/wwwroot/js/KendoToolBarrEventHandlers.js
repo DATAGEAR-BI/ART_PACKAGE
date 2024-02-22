@@ -1254,7 +1254,7 @@ export const dbClickHandlers = {
         }
         else {
             var noCommentsDiv = document.createElement("div");
-            noCommentsDiv.innerText = "There is no Comment  for the Alert Id:" + dataItem.alarmId
+            noCommentsDiv.innerText = "There is no Comment  for the Alert Id:" + dataItem.AlarmId
             noCommentsDiv.className = "text-center";
             commentGrid.appendChild(noCommentsDiv);
         }
