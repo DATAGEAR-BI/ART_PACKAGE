@@ -1221,17 +1221,17 @@ export const dbClickHandlers = {
                 rowNumberTd.innerText = index + 1;
 
                 var AlarmId = document.createElement("td");
-                AlarmId.innerText = x.AlarmId;
+                AlarmId.innerText = x.alarmId;
 
 
                 var commentTd = document.createElement("td");
-                commentTd.innerText = x.Comment;
+                commentTd.innerText = x.comment;
 
                 var CreatedBy = document.createElement("td");
-                CreatedBy.innerText = x.CreatedBy;
+                CreatedBy.innerText = x.createdBy;
 
                 var CreatedDate = document.createElement("td");
-                CreatedDate.innerText = x.CreatedDate;
+                CreatedDate.innerText = x.createdDate;
 
                 tr.appendChild(rowNumberTd);
                 tr.appendChild(AlarmId);
@@ -1255,6 +1255,8 @@ export const dbClickHandlers = {
             noCommentsDiv.className = "text-center";
             commentGrid.appendChild(noCommentsDiv);
         }
+        $("#closeReasonModal").modal("show");
+        kendo.ui.progress($('#grid'), false);
     },
 
     messagesDbHandler: async (item) => {
