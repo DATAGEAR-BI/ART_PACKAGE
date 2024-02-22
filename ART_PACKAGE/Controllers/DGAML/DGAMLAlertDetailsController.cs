@@ -67,9 +67,9 @@ namespace ART_PACKAGE.Controllers.DGAML
         }
 
         [HttpGet("[controller]/[action]/{AlarmId}")]
-        public IActionResult GetComments(decimal AlarmId)
+        public IActionResult GetComments(string AlarmId)
         {
-            var comments = _context.ArtAlertsCommentsPopupViews.Where(x => x.AlarmId == AlarmId && (x.Comment != null)).Select(x => new { x.AlarmId, x.Comment, x.CreatedBy, x.CreatedDate });
+            var comments = _context.ArtAlertsCommentsPopupViews.Where(x => x.AlarmId == Convert.ToDecimal(AlarmId) && (x.Comment != null)).Select(x => new { x.AlarmId, x.Comment, x.CreatedBy, x.CreatedDate });
             return Ok(comments);
 
         }

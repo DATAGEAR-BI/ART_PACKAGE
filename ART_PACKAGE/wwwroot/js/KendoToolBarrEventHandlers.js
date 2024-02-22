@@ -1194,6 +1194,7 @@ export const dbClickHandlers = {
         //var title = document.getElementById("closeReasonModalTitle");
         //var old_title = title.innerText;
         //title.innerText = old_title.split(":")[0] + " : " + dataItem.AlarmId;
+        console.log(commentData);
         var commentGrid = document.getElementById("closeReasonInfo");
         commentGrid.innerText = "";
         if (commentData && [...commentData].length > 0) {
