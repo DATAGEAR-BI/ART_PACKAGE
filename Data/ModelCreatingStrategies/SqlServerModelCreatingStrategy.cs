@@ -946,6 +946,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.AlertCategory)
                     .HasMaxLength(4000)
                     .HasColumnName("alert_category");
+                entity.Property(e => e.ForwardBy)
+                    .HasMaxLength(100)
+                    .HasColumnName("Forward_By");
 
                 entity.Property(e => e.AlertDescription)
                     .HasMaxLength(100)
@@ -1695,6 +1698,33 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_HOME_DGAML_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
 
                 entity.Property(e => e.NumberOfPepCustomers).HasColumnName("NUMBER_OF_PEP_CUSTOMERS");
+            });
+            modelBuilder.Entity<ArtAlertsCommentsPopupView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ALERTS_COMMENTS_POPUP_VIEW", "ART_DB");
+
+                entity.Property(e => e.AlarmId)
+                   .HasColumnType("numeric(12, 0)")
+                   .HasColumnName("alarm_id");
+                entity.Property(e => e.AlarmedObjKey)
+                   .HasColumnType("numeric(12, 0)")
+                   .HasColumnName("Alarmed_Obj_Key");
+
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(150)
+                    .HasColumnName("COMMENT");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(200)
+                    .HasColumnName("CREATED_BY");
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATED_DATE");
+                entity.Property(e => e.StateIndicator)
+                    .HasMaxLength(1)
+                    .HasColumnName("stateIndicator");
+
             });
         }
 

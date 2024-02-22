@@ -1187,6 +1187,74 @@ export const dbClickHandlers = {
         kendo.ui.progress($('#grid'), false);
 
     },
+    DGAMLAlertDetails: async (dataItem) => {
+        kendo.ui.progress($('#grid'), true);
+        console.log(dataItem.AlarmId);
+        var commentData = await (await fetch(`/DGAMLAlertDetails/GetComments/${dataItem.AlarmId}`)).json();
+        //var title = document.getElementById("closeReasonModalTitle");
+        //var old_title = title.innerText;
+        //title.innerText = old_title.split(":")[0] + " : " + dataItem.AlarmId;
+        var commentGrid = document.getElementById("closeReasonInfo");
+        commentGrid.innerText = "";
+        if (commentData && [...commentData].length > 0) {
+            var table = document.createElement("table");
+            table.className = "table";
+            var thead = document.createElement("thead");
+            var tr = document.createElement("tr");
+            var headers = ["#", "Alert Id", "Comment", "Created By", "Created Date"]
+            headers.forEach(x => {
+                var th = document.createElement("th");
+                th.setAttribute("scope", "col");
+                th.innerText = x;
+                tr.appendChild(th);
+            });
+
+            thead.appendChild(tr);
+            var tbody = document.createElement("tbody");
+
+            [...commentData].forEach((x, index) => {
+                var tr = document.createElement("tr");
+
+                var rowNumberTd = document.createElement("th");
+                rowNumberTd.setAttribute("scope", "row");
+                rowNumberTd.innerText = index + 1;
+
+                var AlarmId = document.createElement("td");
+                AlarmId.innerText = x.AlarmId;
+
+
+                var commentTd = document.createElement("td");
+                commentTd.innerText = x.Comment;
+
+                var CreatedBy = document.createElement("td");
+                CreatedBy.innerText = x.CreatedBy;
+
+                var CreatedDate = document.createElement("td");
+                CreatedDate.innerText = x.CreatedDate;
+
+                tr.appendChild(rowNumberTd);
+                tr.appendChild(AlarmId);
+
+                tr.appendChild(commentTd);
+                tr.appendChild(CreatedBy);
+                tr.appendChild(CreatedDate);
+
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+            commentGrid.appendChild(table);
+
+        }
+        else {
+            var noCommentsDiv = document.createElement("div");
+            noCommentsDiv.innerText = "There is no Comment  for the Alert Id:" + dataItem.AlarmId
+            noCommentsDiv.className = "text-center";
+            commentGrid.appendChild(noCommentsDiv);
+        }
+    },
 
     messagesDbHandler: async (item) => {
         kendo.ui.progress($('#grid'), true);

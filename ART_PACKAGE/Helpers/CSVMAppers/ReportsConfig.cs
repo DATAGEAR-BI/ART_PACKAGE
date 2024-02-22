@@ -710,6 +710,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
                         {  "CloseReason",new DisplayNameAndFormat { DisplayName ="Close Reason"}},
                         {  "InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}},
+                        {  "ForwardBy",new DisplayNameAndFormat { DisplayName ="Forward By"}},
                     }
                 }
             },

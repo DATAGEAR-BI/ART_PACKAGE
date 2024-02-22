@@ -26,5 +26,6 @@ namespace Data.Data.ARTDGAML
         public DateTime? CloseDate { get; set; }
         public string? CloseReason { get; set; }
         public int? InvestigationDays { get; set; }
+        public string? ForwardBy { get; set; }
     }
 }

@@ -50,8 +50,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                 ColumnsToSkip = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLAlertDetailsController).ToLower()].SkipList : new();
             }
 
-
-
             KendoDataDesc<ArtDgAmlAlertDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
@@ -68,7 +66,13 @@ namespace ART_PACKAGE.Controllers.DGAML
             };
         }
 
+        [HttpGet("[controller]/[action]/{AlarmId}")]
+        public IActionResult GetComments(decimal AlarmId)
+        {
+            var comments = _context.ArtAlertsCommentsPopupViews.Where(x => x.AlarmId == AlarmId && (x.Comment != null)).Select(x => new { x.AlarmId, x.Comment, x.CreatedBy, x.CreatedDate });
+            return Ok(comments);
 
+        }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
             Dictionary<string, DisplayNameAndFormat>? DisplayNames = ReportsConfig.CONFIG.ContainsKey(nameof(DGAMLAlertDetailsController).ToLower()) ? ReportsConfig.CONFIG[nameof(DGAMLAlertDetailsController).ToLower()].DisplayNames : null;

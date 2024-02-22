@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;

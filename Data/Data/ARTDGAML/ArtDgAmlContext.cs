@@ -26,6 +26,7 @@ namespace Data.Data.ARTDGAML
         public virtual DbSet<ArtHomeDgamlNumberOfCustomer> ArtHomeDgamlNumberOfCustomers { get; set; } = null!;
         public virtual DbSet<ArtHomeDgamlNumberOfHighRiskCustomer> ArtHomeDgamlNumberOfHighRiskCustomers { get; set; } = null!;
         public virtual DbSet<ArtHomeDgamlNumberOfPepCustomer> ArtHomeDgamlNumberOfPepCustomers { get; set; } = null!;
+        public virtual DbSet<ArtAlertsCommentsPopupView> ArtAlertsCommentsPopupViews { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
