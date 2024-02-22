@@ -1207,6 +1207,8 @@ export const dbClickHandlers = {
                 var th = document.createElement("th");
                 th.setAttribute("scope", "col");
                 th.innerText = x;
+                if (x == "Comment")
+                    th.style.width = "350px";
                 tr.appendChild(th);
             });
 
@@ -1226,6 +1228,7 @@ export const dbClickHandlers = {
 
                 var commentTd = document.createElement("td");
                 commentTd.innerText = x.comment;
+                commentTd.style.width = "350px";
 
                 var CreatedBy = document.createElement("td");
                 CreatedBy.innerText = x.createdBy;
@@ -1251,7 +1254,7 @@ export const dbClickHandlers = {
         }
         else {
             var noCommentsDiv = document.createElement("div");
-            noCommentsDiv.innerText = "There is no Comment  for the Alert Id:" + dataItem.AlarmId
+            noCommentsDiv.innerText = "There is no Comment  for the Alert Id:" + dataItem.alarmId
             noCommentsDiv.className = "text-center";
             commentGrid.appendChild(noCommentsDiv);
         }
