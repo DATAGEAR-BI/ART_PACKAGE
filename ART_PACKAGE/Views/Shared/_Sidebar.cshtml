@@ -652,6 +652,57 @@
                             </li>
 
                         }
+
+                        @if (Modules.Contains("FATCA"))
+                        {
+                            <li class="treeview  ">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-book"></i> <span>FATCA Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Summary Reports</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "FATCASummary")"><i class="glyphicon glyphicon-globe"></i> <span>FATCA Summary</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Details Reports</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "FATCADetails")"><i class="glyphicon glyphicon-globe"></i> <span>FATCA Details</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "FATCAAlertsDetails")"><i class="glyphicon glyphicon-globe"></i> <span>FATCA Alerts</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "FATCACasesDetails")"><i class="glyphicon glyphicon-globe"></i> <span>FATCA Cases</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "FATCAIrsReport")"><i class="glyphicon glyphicon-globe"></i> <span>FATCA IRS</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        }
                     </ul>
 
 

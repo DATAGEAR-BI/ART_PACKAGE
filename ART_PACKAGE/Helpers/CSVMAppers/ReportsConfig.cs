@@ -2694,7 +2694,123 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
             }
              }
+            },
+
+
+            //FATCA
+            { nameof(FATCAAlertsDetailsController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
+                    {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    {"CustomerId",new DisplayNameAndFormat { DisplayName ="Customer Id"}},
+                    {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                    {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                    {"IncidentId",new DisplayNameAndFormat { DisplayName ="IncidentId"}},
+                    {"Type",new DisplayNameAndFormat { DisplayName ="Type"}},
+                    {"Description",new DisplayNameAndFormat { DisplayName ="Description"}},
+
+
             }
+               }
+            },
+
+            { nameof(FATCACasesDetailsController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
+                    {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    {"CustomerId",new DisplayNameAndFormat { DisplayName ="Customer Id"}},
+                    {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                    {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                    {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                    {"CaseType",new DisplayNameAndFormat { DisplayName ="CaseType"}},
+
+
+
+            }
+               }
+            },
+            { nameof(FATCADetailsController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"CaseId",new DisplayNameAndFormat { DisplayName ="Case ID"}},
+                    {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                    {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
+                    {"CustKey",new DisplayNameAndFormat { DisplayName ="Cust Key"}},
+                    {"CustomerId",new DisplayNameAndFormat { DisplayName ="Customer Id"}},
+                    {"CustomerName",new DisplayNameAndFormat { DisplayName ="Customer Name"}},
+                    {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
+                    {"CustClsFlag",new DisplayNameAndFormat { DisplayName ="Cust Cls Flag"}},
+                    {"MainNationality",new DisplayNameAndFormat { DisplayName ="Main Nationality"}},
+                    {"SignW8",new DisplayNameAndFormat { DisplayName ="SignW8"}},
+                    {"SignW9",new DisplayNameAndFormat { DisplayName ="SignW9"}},
+                    {"W9SignDate",new DisplayNameAndFormat { DisplayName ="W9Sign Date"}},
+                    {"W8SignDate",new DisplayNameAndFormat { DisplayName ="W8Sign Date"}},
+
+
+
+            }
+               }
+            },
+
+            { nameof(FATCAIrsReportController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                     {"Accountnumber", new DisplayNameAndFormat { DisplayName ="Account Number"}},
+                    {"Accountclosed", new DisplayNameAndFormat { DisplayName ="Account Closed"}},
+                    {"Countrycode", new DisplayNameAndFormat { DisplayName ="Country Code"}},
+                    {"Tin", new DisplayNameAndFormat { DisplayName ="TIN"}},
+                    {"Middlename", new DisplayNameAndFormat { DisplayName ="Middle Name"}},
+                    {"Firstname", new DisplayNameAndFormat { DisplayName ="First Name"}},
+                    {"Lastname", new DisplayNameAndFormat { DisplayName ="Last Name"}},
+                    {"Countrycodeadd", new DisplayNameAndFormat { DisplayName ="Country Code Address"}},
+                    {"AddressfreeI", new DisplayNameAndFormat { DisplayName ="Address Free I"}},
+                    {"AddressfreeE", new DisplayNameAndFormat { DisplayName ="Address Free E"}},
+                    {"Birthdate", new DisplayNameAndFormat { DisplayName ="Birth Date"}},
+                    {"Nationality", new DisplayNameAndFormat { DisplayName ="Nationality"}},
+                    {"Accountbalance", new DisplayNameAndFormat { DisplayName ="Account Balance"}},
+                    {"Accountholdertype", new DisplayNameAndFormat { DisplayName ="Account Holder Type"}},
+                    {"Accounttype", new DisplayNameAndFormat { DisplayName ="Account Type"}},
+                    {"OwnerFirstName", new DisplayNameAndFormat { DisplayName ="Owner First Name"}},
+                    {"OwnerLastName", new DisplayNameAndFormat { DisplayName ="Owner Last Name"}},
+                    {"OwnerTin", new DisplayNameAndFormat { DisplayName ="Owner TIN"}},
+                    {"OwnerResCountryCode", new DisplayNameAndFormat { DisplayName ="Owner Res Country Code"}},
+                    {"OwnerAddress", new DisplayNameAndFormat { DisplayName ="Owner Address"}},
+                    {"Paymentamnt501", new DisplayNameAndFormat { DisplayName ="Payment Amount 501"}},
+                    {"Paymentamnt502", new DisplayNameAndFormat { DisplayName ="Payment Amount 502"}},
+                    {"Paymentamnt503", new DisplayNameAndFormat { DisplayName ="Payment Amount 503"}},
+                    {"Paymentamnt504", new DisplayNameAndFormat { DisplayName ="Payment Amount 504"}},
+                    {"AccountcountFatca201", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 201"}},
+                    {"PoolbalanceFatca201", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 201"}},
+                    {"AccountcountFatca202", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 202"}},
+                    {"PoolbalanceFatca202", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 202"}},
+                    {"AccountcountFatca203", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 203"}},
+                    {"PoolbalanceFatca203", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 203"}},
+                    {"AccountcountFatca204", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 204"}},
+                    {"PoolbalanceFatca204", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 204"}},
+                    {"AccountcountFatca205", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 205"}},
+                    {"PoolbalanceFatca205", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 205"}},
+                    {"AccountcountFatca206", new DisplayNameAndFormat { DisplayName ="Account Count FATCA 206"}},
+                    {"PoolbalanceFatca206", new DisplayNameAndFormat { DisplayName ="Pool Balance FATCA 206"}},
+                    {"SignW8", new DisplayNameAndFormat { DisplayName ="SignW8"}},
+                    {"SignW9", new DisplayNameAndFormat { DisplayName ="SignW9"}}
+
+
+
+            }
+               }
+            },
+
+
 
         };
 

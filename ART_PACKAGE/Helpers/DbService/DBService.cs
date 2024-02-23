@@ -2,6 +2,7 @@
 using Data.Audit.DGMGMT_AUD;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -45,6 +46,12 @@ namespace ART_PACKAGE.Helpers.DBService
                 DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
                 ECM = ecmService;
             }
+            if (modules.Contains("FATCA"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                DGFATCAContext fatcaService = scope.ServiceProvider.GetRequiredService<DGFATCAContext>();
+                FATCA = fatcaService;
+            }
             if (modules.Contains("DGAUDIT"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -64,6 +71,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public DGFATCAContext FATCA { get; }
 
         public GoAmlContext GOAML { get; }
 

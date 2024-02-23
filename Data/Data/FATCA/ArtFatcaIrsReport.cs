@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Data.DATA.FATCA
+﻿namespace Data.DATA.FATCA
 {
     public partial class ArtFatcaIrsReport
     {
@@ -17,7 +14,7 @@ namespace Data.DATA.FATCA
         public string? AddressfreeE { get; set; }
         public string? Birthdate { get; set; }
         public string? Nationality { get; set; }
-        public decimal? Accountbalance { get; set; }
+        public double? Accountbalance { get; set; }
         public string? Accountholdertype { get; set; }
         public string? Accounttype { get; set; }
         public string? OwnerFirstName { get; set; }
@@ -25,16 +22,16 @@ namespace Data.DATA.FATCA
         public string? OwnerTin { get; set; }
         public string? OwnerResCountryCode { get; set; }
         public string? OwnerAddress { get; set; }
-        public decimal? Paymentamnt501 { get; set; }
-        public decimal? Paymentamnt502 { get; set; }
-        public decimal? Paymentamnt503 { get; set; }
-        public decimal? Paymentamnt504 { get; set; }
+        public double? Paymentamnt501 { get; set; }
+        public double? Paymentamnt502 { get; set; }
+        public double? Paymentamnt503 { get; set; }
+        public double? Paymentamnt504 { get; set; }
         public string? AccountcountFatca201 { get; set; }
         public string? PoolbalanceFatca201 { get; set; }
         public string? AccountcountFatca202 { get; set; }
         public string? PoolbalanceFatca202 { get; set; }
-        public decimal? AccountcountFatca203 { get; set; }
-        public decimal? PoolbalanceFatca203 { get; set; }
+        public double? AccountcountFatca203 { get; set; }
+        public double? PoolbalanceFatca203 { get; set; }
         public string? AccountcountFatca204 { get; set; }
         public string? PoolbalanceFatca204 { get; set; }
         public string? AccountcountFatca205 { get; set; }

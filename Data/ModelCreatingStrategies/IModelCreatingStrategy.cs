@@ -9,6 +9,7 @@ namespace Data.ModelCreatingStrategies
         public void OnARTGOAMLModelCreating(ModelBuilder modelBuilder);
         void OnARTDGAMLModelCreating(ModelBuilder modelBuilder);
         void OnEcmModelCreating(ModelBuilder modelBuilder);
+        void OnFATCAModelCreating(ModelBuilder modelBuilder);
         void OnSasAmlModelCreating(ModelBuilder modelBuilder);
         void OnAuditModelCreating(ModelBuilder modelBuilder);
         void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder);

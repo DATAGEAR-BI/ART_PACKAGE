@@ -1814,7 +1814,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\FATCA\" />
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />

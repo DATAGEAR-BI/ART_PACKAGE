@@ -19,8 +19,10 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
@@ -87,6 +89,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("FATCA"))
+            {
+                string DGFATCAContextConnection = config.GetConnectionString("DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
+                _ = services.AddDbContext<DGFATCAContext>(opt => contextBuilder(opt, DGFATCAContextConnection));
+                _ = services.AddDbContext<FATCAContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("SASAML"))

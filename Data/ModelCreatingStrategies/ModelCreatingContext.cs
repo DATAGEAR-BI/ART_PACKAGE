@@ -35,6 +35,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnEcmModelCreating(modelBuilder);
         }
+        public void OnFATCAModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnFATCAModelCreating(modelBuilder);
+        }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,6 +80,10 @@ namespace Data.ModelCreatingStrategies
         public void OnDGECMModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnDGECMModelCreating(modelBuilder);
+        }
+        public void OnDGFATCAModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGFATCAModelCreating(modelBuilder);
         }
 
 

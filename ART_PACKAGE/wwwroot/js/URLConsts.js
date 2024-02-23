@@ -123,5 +123,14 @@
     CRPCases: "/CrpCases/GetData",
     CrpSystemPerformance: "/CrpSystemPerformance/GetData",
     CrpUserPerformance: "/CrpUserPerformance/GetData",
-    CRPSummary: "/CRPSummary/GetData"
+    CRPSummary: "/CRPSummary/GetData",
+
+
+    //FATCA
+    FATCAAlertsDetails: "/FATCAAlertsDetails/GetData",
+    FATCACasesDetails: "/FATCACasesDetails/GetData",
+    FATCADetails: "/FATCADetails/GetData",
+    FATCASummary: "/FATCASummary/GetData",
+    FATCAIrsReport: "/FATCAIrsReport/GetData"
+
 };

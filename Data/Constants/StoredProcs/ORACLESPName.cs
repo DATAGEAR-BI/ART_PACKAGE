@@ -34,5 +34,16 @@
         public static readonly string ART_ST_CRP_CASES_PER_STATUS = "";
         public static readonly string ART_ST_CRP_CASES_PER_RATE = "";
 
+
+        //FATCA
+        public static readonly string ART_ST_FATCA_ALERTS_PER_BRANCH = "ART.ART_ST_FATCA_ALERTS_PER_BRANCH";
+        public static readonly string ART_ST_FATCA_CASES_PER_BRANCH = "ART.ART_ST_FATCA_CASES_PER_BRANCH";
+        public static readonly string ART_ST_FATCA_ALERTS_PER_TYPE = "ART.ART_ST_FATCA_ALERTS_PER_TYPE";
+        public static readonly string ART_ST_FATCA_CASES_PER_TYPE = "ART.ART_ST_FATCA_CASES_PER_TYPE";
+        public static readonly string ART_ST_FATCA_CUSTS_PER_NATION = "ART.ART_ST_FATCA_CUSTS_PER_NATION";
+        public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "ART.ART_ST_FATCA_CASES_PER_STATUS";
+
+
+
     }
 }

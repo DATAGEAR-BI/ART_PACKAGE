@@ -2,6 +2,7 @@
 using Data.Audit.DGMGMT_AUD;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -17,6 +18,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public GoAmlContext GOAML { get; }
         public DGMGMTContext DGMGMT { get; }
         public DGMGMTAUDContext DGMGMTAUD { get; }
+        public DGFATCAContext FATCA { get; }
 
         public DGAMLContext DGAML { get; }
         public TIZONE2Context TI { get; }
