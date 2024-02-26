@@ -29,9 +29,6 @@ export const Handlers = {
         ds.dataSource.filter(null);
     },
     csvExport: async (e, controller, url, prop) => {
-
-
-
         var id = document.getElementById("script").dataset.id;
         var ds = $("#grid").data("kendoGrid");
         var selectedrecords = [];
