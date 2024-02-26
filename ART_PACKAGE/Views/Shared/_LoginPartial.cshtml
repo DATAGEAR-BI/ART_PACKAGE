@@ -7,15 +7,15 @@
       @if (SignInManager.IsSignedIn(User))
             {
 <ul class="navbar-nav d-flex flex-row align-items-center justify-content-evenly gap-2 me-2">
-        <li class="nav-item extra-links text-white">
+        <li class="nav-item extra-links">
 
-            <span>Loged as <strong> @User.Identity.Name </strong></span>
+            <strong> @User.Identity.Name </strong>
 
         </li>
     <li class="nav-item extra-links">
         <form id="logOutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit"  target="_blank" class="nav-link px-1 py-0 btn text-white border-0 rounded" href="https://materialstyle.github.io/theme-builder">
-                    Log Out
+                <button type="submit"  target="_blank" class="nav-link px-1 py-0 btn border-0 rounded" href="https://materialstyle.github.io/theme-builder">
+                    <strong><i class="bi bi-box-arrow-right"></i></strong>
                 </button>
         </form>
     </li> 

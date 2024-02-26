@@ -21,18 +21,36 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         private readonly IDropDownService _dropDown;
         private readonly FTIContext fti;
         private readonly ArtDgAmlContext artDgaml_;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly List<string>? modules;
 
-        public DropDownMapper(IDropDownService dropDown, FTIContext fTI, ArtDgAmlContext artDgaml)
+        public DropDownMapper(IDropDownService dropDown, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
             _dropDown = dropDown;
-            fti = fTI;
-            artDgaml_ = artDgaml;
-        }
+            _configuration = configuration;
+            _serviceScopeFactory = serviceScopeFactory;
+            modules = _configuration.GetSection("Modules").Get<List<string>>();
+            IServiceScope scope = _serviceScopeFactory.CreateScope();
 
+
+            if (modules.Contains("FTI"))
+                fti = scope.ServiceProvider.GetRequiredService<FTIContext>();
+
+
+            if (modules.Contains("DGAML"))
+                artDgaml_ = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+
+
+        }
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
         {
             List<SelectItem> pipList = new() { new SelectItem { text = "Y", value = "Y" }, new SelectItem { text = "N", value = "N" } };
             List<SelectItem> actionList = new() { new SelectItem { text = "Add", value = "Add" }, new SelectItem { text = "Update", value = "Update" }, new SelectItem { text = "Delete", value = "Delete" } };
+            Dictionary<string, List<SelectItem>>? ftiReportDropDown = GetFtiDropDowns(controller);
+            if (ftiReportDropDown is not null)
+                return ftiReportDropDown;
+
             return controller switch
             {
                 nameof(SumCountryController) => new Dictionary<string, List<SelectItem>>
@@ -40,16 +58,11 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     { "C7CNM".ToLower() , new List<SelectItem> { new SelectItem  { text = "brrrrr" , value = "brrrrr" }, new SelectItem { text = "brrrrr", value = "brrrrr" }, } }
                 },
 
-
                 nameof(TasksController) => new Dictionary<string, List<SelectItem>> {
                 { nameof(ExportTaskDto.Period).ToLower(), Enum.GetNames(typeof(TaskPeriod)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 { nameof(ExportTaskDto.DayOfWeek).ToLower(), Enum.GetNames(typeof(DayOfWeek)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 { nameof(ExportTaskDto.Month).ToLower(), Enum.GetNames(typeof(MonthsOfYear)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 },
-
-
-
-
 
                 nameof(AlertDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
@@ -206,6 +219,214 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
                     {"Branch".ToLower(),_dropDown.GetReportAcctBranchDropDown() },
                 },
+                nameof(SystemPerformanceController) => new Dictionary<string, List<SelectItem>>
+                {
+                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
+                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
+                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
+                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                },
+                nameof(UserPerformanceController) => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                },
+                nameof(AuditGroupsController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtGroupsAuditView.CreatedBy            ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.LastUpdatedBy        ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.SubGroupNames        ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtGroupsAuditView.RoleNames            ).ToLower(), _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropDown.GetMemberUsersDropDown()  },
+                 {nameof(ArtGroupsAuditView.Action               ).ToLower(), actionList },
+                },
+                nameof(AuditRolesController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtRolesAuditView.GroupNames)       .ToLower()    , _dropDown.GetGroupAudNameDropDown()},
+                 {nameof(ArtRolesAuditView.CreatedBy)        .ToLower()    , _dropDown.GetUserAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.LastUpdatedBy)    .ToLower()    , _dropDown.GetUserAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.RoleName)         .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
+                 {nameof(ArtRolesAuditView.MemberUsers)      .ToLower()    , _dropDown.GetMemberUsersDropDown() },
+                 {nameof(ArtRolesAuditView.Action)           .ToLower()    , actionList  },
+                },
+                nameof(AuditUsersController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropDown.GetGroupAudNameDropDown() },
+                 {nameof(ArtUsersAuditView.CreatedBy)       .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.LastUpdatedBy)   .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()     , _dropDown.GetMemberUsersDropDown()  },
+                 {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
+                 {nameof(ArtUsersAuditView.Action)          .ToLower()     , actionList },
+                },
+                nameof(LastLoginPerDayController) => new Dictionary<string, List<SelectItem>>
+                {
+                 {nameof(LastLoginPerDayView.AppName)        .ToLower()    , _dropDown.GetAppNameDropDown()     },
+                 {nameof(LastLoginPerDayView.DeviceName)     .ToLower()    , _dropDown.GetDeviceNameDropDown()  },
+                 {nameof(LastLoginPerDayView.DeviceType)     .ToLower()    , _dropDown.GetDeviceTypeDropDown()  },
+                 {nameof(LastLoginPerDayView.UserName)       .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListGroupsRolesSummaryController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropDown.GetGroupNameDropDown()   },
+                  {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()     , _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListGroupsSubGroupsSummaryController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropDown.GetGroupNameDropDown()    },
+                  {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropDown.GetGroupAudNameDropDown() },
+                },
+                nameof(ListOfDeletedUsersController) => new Dictionary<string, List<SelectItem>>
+                {
+                  {nameof(ListOfDeletedUser.UserName)  .ToLower()  , _dropDown.GetUserAudNameDropDown() },
+                   {nameof(ListOfDeletedUser.UserType)  .ToLower() , _dropDown.GetUserTypeDropDown()    },
+                   {nameof(ListOfDeletedUser.CreatedBy) .ToLower() , _dropDown.GetUserAudNameDropDown() },
+                },
+                nameof(ListOfGroupsController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "GroupName".ToLower(),    _dropDown.GetGroupNameDropDown()  },
+                  { "GroupType".ToLower(),    _dropDown.GetGroupTypeDropDown()  },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown()},
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown()},
+                },
+                nameof(ListOfRoleController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "RoleName".ToLower(),     _dropDown.GetRoleNameDropDown()    },
+                  { "RoleType".ToLower(),     _dropDown.GetRoleTypeDropDown()    },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
+                },
+                nameof(ListOfUserController) => new Dictionary<string, List<SelectItem>>
+                {
+                  { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                  { "UserType".ToLower(),     _dropDown.GetUserTypeDropDown()    },
+                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
+                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
+              },
+                nameof(ListOfUsersAndGroupsRoleController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
+                   { "RoleOfGroup".ToLower(),  _dropDown.GetRoleAudNameDropDown() },
+                },
+                nameof(ListOfUsersGroupController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
+                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
+                },
+                nameof(ListOfUsersRolesController) => new Dictionary<string, List<SelectItem>>
+                {
+                   { "UserName".ToLower(),_dropDown.GetUserNameDropDown()   },
+                   { "UserRole".ToLower(),_dropDown.GetRoleAudNameDropDown()},
+                },
+                /*DGAML*/
+                nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
+                {
+                   {"AlertStatus".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   {"AlertSubcategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertSubcategory) .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   {"AlertCategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertCategory)       .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
+                   //{"OwnerUserid".ToLower()                  ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.)                      .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                     },
+                   {"BranchName".ToLower()                     ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.BranchName)            .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                             },
+                   {"ScenarioName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ScenarioName)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"ClosedUserId".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ClosedUserId)          .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"CloseUserName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseUserName)        .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"CloseReason".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseReason)            .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
+                   {"PoliticallyExposedPersonInd".ToLower()    ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList()                                               },
+                   {"EmpInd".ToLower()    , new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() }
+
+                },
+                nameof(DGAMLArtExternalCustomerDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown() },
+                    {nameof(ArtExternalCustomerDetailView.CitizenshipCountryName).ToLower(),_dropDown .GetDGCitizenshipCountryNameDropDown() },
+                    {nameof(ArtExternalCustomerDetailView.ResidenceCountryName).ToLower(),_dropDown .GetDGresidenceCountryNameDropDown()},
+                // {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown() .ToDynamicList() },
+                    {"CityName".ToLower(),_dropDown .GetDGCityNameDropDown()},
+                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown() },
+                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown() },
+
+                },
+                nameof(DGAMLArtScenarioAdminController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"ScenarioName".ToLower(),_dropDown         .GetDGScenarioNameDropDown()         },
+                    {"ScenarioCategory".ToLower(),_dropDown     .GetDGScenarioCategoryDropDown()     },
+                    {"ScenarioStatus".ToLower(),_dropDown       .GetDGScenarioStatusDropDown()       },
+                    {"ProductType".ToLower(),_dropDown          .GetDGProductTypeDropDown()          },
+                    {"ScenarioType".ToLower(),_dropDown         .GetDGScenarioTypeDropDown()         },
+                    {"ScenarioFrequency".ToLower(),_dropDown    .GetDGScenarioFrequencyDropDown()    },
+                    {"ObjectLevel".ToLower(),_dropDown          .GetDGObjectLevelDropDown()          },
+                    {"AlarmType".ToLower(),_dropDown            .GetDGAlarmTypeDropDown()            },
+                    {"AlarmCategory".ToLower(),_dropDown        .GetDGAlarmCategoryDropDown()        },
+                    {"AlarmSubcategory".ToLower(),_dropDown     .GetDGAlarmSubcategoryDropDown()     },
+                    {"RiskFact".ToLower(),_dropDown             .GetDGRiskFactDropDown()             },
+                    {"CreateUserId".ToLower(),_dropDown         .GetDGRoutineCreateUserIdDropDown()  },
+                    {"ParmValue".ToLower(),_dropDown            .GetDGParmValueDropDown()            },
+                    {"ParmTypeDesc".ToLower(),_dropDown         .GetDGParmTypeDescDropDown()         },
+                },
+                nameof(DGAMLArtScenarioHistoryController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"CreateUserId".ToLower(),_dropDown.GetDGCreateUserIdDropDown() },
+                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                },
+                nameof(DGAMLArtSuspectDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower(),_dropDown           .GetDGBranchNameDropDown()          },
+                    {"ProfileRisk".ToLower(),_dropDown          .GetDGProfileRiskDropDown()         },
+                    {"OwnerUserid".ToLower(),_dropDown          .GetDGOwnerDropDown()               },
+                    {"PoliticalExpPrsnInd".ToLower(),_dropDown  .GetDGPoliticalExpPrsnIndDropDown() },
+                    {"RiskClassification".ToLower(),_dropDown   .GetDGRiskClassificationDropDown()  },
+                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenCountryNameDropDown()  },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown    .GetDGCustIdentTypeDescDropDown()   },
+                    {"OccupDesc".ToLower(),_dropDown            .GetDGOccupDescDropDown()           },
+                },
+                nameof(DGAMLCasesDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    //commented untill resolve drop down 
+           {"BranchName".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CaseStatus".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CasePriority".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"CaseCategory".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+           {"EntityLevel".ToLower()                ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
+                nameof(DGAMLCustomersDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"CustomerType".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerType)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"RiskClassification".ToLower()                     ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.RiskClassification)             .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList() },
+                    {"ResidenceCountryName".ToLower()                   ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.ResidenceCountryName)           .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"BranchName".ToLower()                             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.BranchName)                     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"IndustryDesc".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CustomerIdentificationType".ToLower()             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerIdentificationType)     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"OccupationDesc".ToLower()                         ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc)                 .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CitizenshipCountryName".ToLower()                 ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CitizenshipCountryName)         .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CityName".ToLower()                               ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CityName)                       .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"MaritalStatusDesc".ToLower()                      ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.MaritalStatusDesc)              .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"NonProfitOrgInd".ToLower()                        ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
+                    {"PoliticallyExposedPersonInd".ToLower()            ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
+
+                },
+                nameof(DGAMLTriageController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower()         ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"RiskScore".ToLower()          ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                    {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
+
+                _ => null
+            };
+        }
+
+
+
+        private Dictionary<string, List<SelectItem>>? GetFtiDropDowns(string controller)
+        {
+            return controller switch
+            {
                 nameof(ACPostingsAccountController) => new Dictionary<string, List<SelectItem>>
                 {
                     { "MasterRef".ToLower(), fti.ArtTiAcpostingsAccReports.Select(x=>x.MasterRef).Distinct().Where(x=> x != null ).Select(x => new SelectItem { text = x, value = x }).ToList() },
@@ -511,204 +732,6 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Descr".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Descr).Distinct().Where(x=> x != null )                 .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"Status".ToLower(),fti.ArtTiWatchlistOsCheckReports.Select(x=>x.Status).Distinct().Where(x=> x != null )               .Select(x => new SelectItem { text = x, value = x }).ToList() },
                 },
-                nameof(SystemPerformanceController) => new Dictionary<string, List<SelectItem>>
-                {
-                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
-                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
-                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
-                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
-                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
-                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
-                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
-                },
-                nameof(UserPerformanceController) => new Dictionary<string, List<SelectItem>>
-                {
-                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
-                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
-                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
-                },
-                nameof(AuditGroupsController) => new Dictionary<string, List<SelectItem>>
-                {
-                 {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
-                 {nameof(ArtGroupsAuditView.CreatedBy            ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
-                 {nameof(ArtGroupsAuditView.LastUpdatedBy        ).ToLower(), _dropDown.GetUserAudNameDropDown()  },
-                 {nameof(ArtGroupsAuditView.SubGroupNames        ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
-                 {nameof(ArtGroupsAuditView.RoleNames            ).ToLower(), _dropDown.GetRoleAudNameDropDown()  },
-                 {nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropDown.GetMemberUsersDropDown()  },
-                 {nameof(ArtGroupsAuditView.Action               ).ToLower(), actionList },
-                },
-                nameof(AuditRolesController) => new Dictionary<string, List<SelectItem>>
-                {
-                 {nameof(ArtRolesAuditView.GroupNames)       .ToLower()    , _dropDown.GetGroupAudNameDropDown()},
-                 {nameof(ArtRolesAuditView.CreatedBy)        .ToLower()    , _dropDown.GetUserAudNameDropDown() },
-                 {nameof(ArtRolesAuditView.LastUpdatedBy)    .ToLower()    , _dropDown.GetUserAudNameDropDown() },
-                 {nameof(ArtRolesAuditView.RoleName)         .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
-                 {nameof(ArtRolesAuditView.MemberUsers)      .ToLower()    , _dropDown.GetMemberUsersDropDown() },
-                 {nameof(ArtRolesAuditView.Action)           .ToLower()    , actionList  },
-                },
-                nameof(AuditUsersController) => new Dictionary<string, List<SelectItem>>
-                {
-                 {nameof(ArtUsersAuditView.GroupNames)      .ToLower()     , _dropDown.GetGroupAudNameDropDown() },
-                 {nameof(ArtUsersAuditView.CreatedBy)       .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
-                 {nameof(ArtUsersAuditView.LastUpdatedBy)   .ToLower()     , _dropDown.GetUserAudNameDropDown()  },
-                 {nameof(ArtUsersAuditView.RoleNames)       .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
-                 {nameof(ArtUsersAuditView.DomainAccounts)  .ToLower()     , _dropDown.GetMemberUsersDropDown()  },
-                 {nameof(ArtUsersAuditView.UserName)        .ToLower()     , _dropDown.GetRoleAudNameDropDown()  },
-                 {nameof(ArtUsersAuditView.Action)          .ToLower()     , actionList },
-                },
-                nameof(LastLoginPerDayController) => new Dictionary<string, List<SelectItem>>
-                {
-                 {nameof(LastLoginPerDayView.AppName)        .ToLower()    , _dropDown.GetAppNameDropDown()     },
-                 {nameof(LastLoginPerDayView.DeviceName)     .ToLower()    , _dropDown.GetDeviceNameDropDown()  },
-                 {nameof(LastLoginPerDayView.DeviceType)     .ToLower()    , _dropDown.GetDeviceTypeDropDown()  },
-                 {nameof(LastLoginPerDayView.UserName)       .ToLower()    , _dropDown.GetRoleAudNameDropDown() },
-                },
-                nameof(ListGroupsRolesSummaryController) => new Dictionary<string, List<SelectItem>>
-                {
-                  {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropDown.GetGroupNameDropDown()   },
-                  {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()     , _dropDown.GetRoleAudNameDropDown() },
-                },
-                nameof(ListGroupsSubGroupsSummaryController) => new Dictionary<string, List<SelectItem>>
-                {
-                  {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropDown.GetGroupNameDropDown()    },
-                  {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropDown.GetGroupAudNameDropDown() },
-                },
-                nameof(ListOfDeletedUsersController) => new Dictionary<string, List<SelectItem>>
-                {
-                  {nameof(ListOfDeletedUser.UserName)  .ToLower()  , _dropDown.GetUserAudNameDropDown() },
-                   {nameof(ListOfDeletedUser.UserType)  .ToLower() , _dropDown.GetUserTypeDropDown()    },
-                   {nameof(ListOfDeletedUser.CreatedBy) .ToLower() , _dropDown.GetUserAudNameDropDown() },
-                },
-                nameof(ListOfGroupsController) => new Dictionary<string, List<SelectItem>>
-                {
-                  { "GroupName".ToLower(),    _dropDown.GetGroupNameDropDown()  },
-                  { "GroupType".ToLower(),    _dropDown.GetGroupTypeDropDown()  },
-                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown()},
-                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown()},
-                },
-                nameof(ListOfRoleController) => new Dictionary<string, List<SelectItem>>
-                {
-                  { "RoleName".ToLower(),     _dropDown.GetRoleNameDropDown()    },
-                  { "RoleType".ToLower(),     _dropDown.GetRoleTypeDropDown()    },
-                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
-                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
-                },
-                nameof(ListOfUserController) => new Dictionary<string, List<SelectItem>>
-                {
-                  { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
-                  { "UserType".ToLower(),     _dropDown.GetUserTypeDropDown()    },
-                  { "CreatedBy".ToLower(),    _dropDown.GetUserAudNameDropDown() },
-                  { "LastUpdatedBy".ToLower(),_dropDown.GetUserAudNameDropDown() },
-              },
-                nameof(ListOfUsersAndGroupsRoleController) => new Dictionary<string, List<SelectItem>>
-                {
-                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
-                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
-                   { "RoleOfGroup".ToLower(),  _dropDown.GetRoleAudNameDropDown() },
-                },
-                nameof(ListOfUsersGroupController) => new Dictionary<string, List<SelectItem>>
-                {
-                   { "UserName".ToLower(),     _dropDown.GetUserNameDropDown()    },
-                   { "MemberOfGroup".ToLower(),_dropDown.GetGroupAudNameDropDown()},
-                },
-                nameof(ListOfUsersRolesController) => new Dictionary<string, List<SelectItem>>
-                {
-                   { "UserName".ToLower(),_dropDown.GetUserNameDropDown()   },
-                   { "UserRole".ToLower(),_dropDown.GetRoleAudNameDropDown()},
-                },
-                /*DGAML*/
-                nameof(DGAMLAlertDetailsController) => new Dictionary<string, List<SelectItem>>
-                {
-                   {"AlertStatus".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x => x.AlertStatus)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
-                   {"AlertSubcategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertSubcategory) .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
-                   {"AlertCategory".ToLower()                    ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.AlertCategory)       .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()        },
-                   //{"OwnerUserid".ToLower()                  ,_context.ArtDGAMLAlertDetailViews.Select(x =>x.)                      .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                     },
-                   {"BranchName".ToLower()                     ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.BranchName)            .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()                             },
-                   {"ScenarioName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ScenarioName)          .Distinct()   .Where(x=> x != null)           .Select(x => new SelectItem { text = x, value = x }).ToList()         },
-                   {"ClosedUserId".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.ClosedUserId)          .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
-                   {"CloseUserName".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseUserName)        .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
-                   {"CloseReason".ToLower()                   ,artDgaml_.ArtDGAMLAlertDetailViews.Select(x =>x.CloseReason)            .Distinct()   .Where(x=> x != null)        .Select(x => new SelectItem { text = x, value = x }).ToList()         },
-                   {"PoliticallyExposedPersonInd".ToLower()    ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList()                                               },
-                   {"EmpInd".ToLower()    , new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() }
-
-                },
-                nameof(DGAMLArtExternalCustomerDetailsController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"BranchName".ToLower(),_dropDown.GetDGExternalCustomerBranchNameDropDown() },
-                    {nameof(ArtExternalCustomerDetailView.CitizenshipCountryName).ToLower(),_dropDown .GetDGCitizenshipCountryNameDropDown() },
-                    {nameof(ArtExternalCustomerDetailView.ResidenceCountryName).ToLower(),_dropDown .GetDGresidenceCountryNameDropDown()},
-                // {"CntryName".ToLower(),_dropDown.GetDGStreetCountryNameDropDown() .ToDynamicList() },
-                    {"CityName".ToLower(),_dropDown .GetDGCityNameDropDown()},
-                    {"IdentTypeDesc".ToLower(),_dropDown.GetDGCustomerIdentificationTypeDropDown() },
-                    {"ExtCustTypeDesc".ToLower(),_dropDown.GetDGCustomerTypeDropDown() },
-
-                },
-                nameof(DGAMLArtScenarioAdminController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"ScenarioName".ToLower(),_dropDown         .GetDGScenarioNameDropDown()         },
-                    {"ScenarioCategory".ToLower(),_dropDown     .GetDGScenarioCategoryDropDown()     },
-                    {"ScenarioStatus".ToLower(),_dropDown       .GetDGScenarioStatusDropDown()       },
-                    {"ProductType".ToLower(),_dropDown          .GetDGProductTypeDropDown()          },
-                    {"ScenarioType".ToLower(),_dropDown         .GetDGScenarioTypeDropDown()         },
-                    {"ScenarioFrequency".ToLower(),_dropDown    .GetDGScenarioFrequencyDropDown()    },
-                    {"ObjectLevel".ToLower(),_dropDown          .GetDGObjectLevelDropDown()          },
-                    {"AlarmType".ToLower(),_dropDown            .GetDGAlarmTypeDropDown()            },
-                    {"AlarmCategory".ToLower(),_dropDown        .GetDGAlarmCategoryDropDown()        },
-                    {"AlarmSubcategory".ToLower(),_dropDown     .GetDGAlarmSubcategoryDropDown()     },
-                    {"RiskFact".ToLower(),_dropDown             .GetDGRiskFactDropDown()             },
-                    {"CreateUserId".ToLower(),_dropDown         .GetDGRoutineCreateUserIdDropDown()  },
-                    {"ParmValue".ToLower(),_dropDown            .GetDGParmValueDropDown()            },
-                    {"ParmTypeDesc".ToLower(),_dropDown         .GetDGParmTypeDescDropDown()         },
-                },
-                nameof(DGAMLArtScenarioHistoryController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"CreateUserId".ToLower(),_dropDown.GetDGCreateUserIdDropDown() },
-                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
-                },
-                nameof(DGAMLArtSuspectDetailsController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"BranchName".ToLower(),_dropDown           .GetDGBranchNameDropDown()          },
-                    {"ProfileRisk".ToLower(),_dropDown          .GetDGProfileRiskDropDown()         },
-                    {"OwnerUserid".ToLower(),_dropDown          .GetDGOwnerDropDown()               },
-                    {"PoliticalExpPrsnInd".ToLower(),_dropDown  .GetDGPoliticalExpPrsnIndDropDown() },
-                    {"RiskClassification".ToLower(),_dropDown   .GetDGRiskClassificationDropDown()  },
-                    {"CitizenCntryName".ToLower(),_dropDown     .GetDGCitizenCountryNameDropDown()  },
-                    {"CustIdentTypeDesc".ToLower(),_dropDown    .GetDGCustIdentTypeDescDropDown()   },
-                    {"OccupDesc".ToLower(),_dropDown            .GetDGOccupDescDropDown()           },
-                },
-                nameof(DGAMLCasesDetailsController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    //commented untill resolve drop down 
-           {"BranchName".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CaseStatus".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CasePriority".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CaseCategory".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"EntityLevel".ToLower()                ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          }
-                },
-                nameof(DGAMLCustomersDetailsController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"CustomerType".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerType)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"RiskClassification".ToLower()                     ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.RiskClassification)             .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList() },
-                    {"ResidenceCountryName".ToLower()                   ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.ResidenceCountryName)           .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"BranchName".ToLower()                             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.BranchName)                     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"IndustryDesc".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"CustomerIdentificationType".ToLower()             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerIdentificationType)     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"OccupationDesc".ToLower()                         ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc)                 .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"CitizenshipCountryName".ToLower()                 ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CitizenshipCountryName)         .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"CityName".ToLower()                               ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CityName)                       .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"MaritalStatusDesc".ToLower()                      ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.MaritalStatusDesc)              .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"NonProfitOrgInd".ToLower()                        ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
-                    {"PoliticallyExposedPersonInd".ToLower()            ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
-
-                },
-                nameof(DGAMLTriageController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"BranchName".ToLower()         ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"RiskScore".ToLower()          ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
-                },
-
                 _ => null
             };
         }

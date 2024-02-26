@@ -684,44 +684,8 @@ export const Handlers = {
         }
 
     },
-    AlertDetails: {
-        StreamExport: () => {
-
-            //exportConnection.invoke("ExportAlertDetails");
-            const apiUrl = '/AlertDetails/StreamExport';
-
-            fetch(apiUrl);
-            //    .then((response) => {
-            //        if (!response.ok) {
-            //            throw new Error('Network response was not ok');
-            //        }
-            //        //return response.blob();
-            //    })
-            //    //.then((blob) => {
-            //    //    // Create a URL for the Blob object
-            //    //    const url = URL.createObjectURL(blob);
-
-            //    //    // Create an anchor element to trigger the download
-            //    //    const a = document.createElement('a');
-            //    //    a.href = url;
-            //    //    a.download = 'your_file_name.csv';
-            //    //    a.style.display = 'none';
-
-            //    //    // Append the anchor element to the DOM and click it to initiate the download
-            //    //    document.body.appendChild(a);
-            //    //    a.click();
-
-            //    //    // Cleanup the URL and anchor element
-            //    //    URL.revokeObjectURL(url);
-            //    //    a.remove();
-            //    //})
-            //    .catch((error) => {
-            //        console.error('Error exporting data:', error);
-            //    });
-        }
-    },
     License: {
-        addreplic: async () => {
+        addreplic: async (e , gridDiv) => {
             $("#addreplicModal").modal("show");
             var form = document.getElementById("licForm");
             form.onsubmit = async (e) => {
@@ -743,7 +707,7 @@ export const Handlers = {
 
                 if (res.ok) {
                     $("#addreplicModal").modal("hide");
-                    $("#grid").data("kendoGrid").dataSource.read();
+                    $(gridDiv).data("kendoGrid").dataSource.read();
                     toastObj.text = "license has been uploaded";
                     toastObj.heading = "License Status";
                     toastObj.icon = 'success';
@@ -756,8 +720,8 @@ export const Handlers = {
                 }
 
                 else {
-                    var error = await res.json();
-                    toastObj.text = error.description;
+                    
+                    toastObj.text = "Something wrong happened";
                     toastObj.heading = "License Status";
                     toastObj.icon = 'error';
                     $.toast(toastObj);

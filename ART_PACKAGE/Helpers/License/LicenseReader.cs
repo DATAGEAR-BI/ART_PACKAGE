@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Helpers.License
         private readonly PublicKey _publicKey;
         private readonly ILogger<LicenseReader> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private readonly IConfiguration _configuration;
         public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment)
         {
             _cipher = Cipher.getInstance("RSA");
@@ -91,6 +91,50 @@ namespace ART_PACKAGE.Helpers.License
             IEnumerable<string> licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
             IEnumerable<Middlewares.License.License> licenses = licenseFilesNames.Select(x => ReadFromPath(x));
             return licenses;
+        }
+
+        public async Task AddOrUpdateLicense(LicenseUpload lic)
+        {
+            string? client = _configuration.GetSection("Client")
+                .Get<string>()?.ToLower();
+            IEnumerable<string>? LicenseModules = _configuration.GetSection("Modules")
+                .Get<List<string>>()?.Select(x => x.ToLower());
+            using StreamReader reader = new(lic.License.OpenReadStream());
+            string licText = reader.ReadToEnd();
+
+            Middlewares.License.License license = ReadFromText(licText);
+
+            if (lic.Module == "base" && client != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && !LicenseModules.Contains(lic.Module.ToLower()))
+            {
+                throw new Exception();
+            }
+
+            if (!license.IsValid())
+            {
+                throw new Exception();
+            }
+
+            string licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
+            bool isLicExist = File.Exists(licPath);
+
+            if (isLicExist)
+            {
+                File.Delete(licPath);
+            }
+
+            using FileStream fileStream = new(licPath, FileMode.Create, FileAccess.ReadWrite);
+            await lic.License.CopyToAsync(fileStream);
+
         }
 
         public GridResult<Middlewares.License.License> GetGridData(GridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null,

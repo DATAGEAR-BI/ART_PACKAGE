@@ -2,13 +2,13 @@
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
-using Data.Data.ExportSchedular;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
+using Data.FCFKC.AmlAnalysis;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -23,8 +23,10 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        private readonly IBaseRepo<ExportSchedularContext, ExportTask> repo;
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IBaseRepo<ExportSchedularContext, ExportTask> repo)
+        private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
+
+
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo)
         {
 
             _logger = logger;
@@ -56,18 +58,11 @@ namespace ART_PACKAGE.Controllers
 
 
 
-        public async Task<IActionResult> TestDrop()
+        public IActionResult Test()
         {
 
 
-            IEnumerable<ExportTask> data = repo.GetAll();
-            if (repo.DeleteAll())
-            {
-                _ = repo.BulkInsert(data);
-                return Ok("deleted => added");
-            }
-            else
-                return BadRequest();
+            return Ok(repo.GetAll().Take(200));
 
 
 

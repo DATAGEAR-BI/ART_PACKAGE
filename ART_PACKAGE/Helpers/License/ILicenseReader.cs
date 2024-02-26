@@ -9,6 +9,6 @@ namespace ART_PACKAGE.Helpers.License
 
         public IEnumerable<Middlewares.License.License> ReadAllAppLicenses();
 
-
+        public Task AddOrUpdateLicense(LicenseUpload lic);
     }
 }

@@ -59,11 +59,14 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+
+
             if (modulesToApply is null)
             {
                 _ = services.AddScoped<IDbService, DBService>();
                 return services;
             }
+
             if (modulesToApply.Contains("SEG"))
             {
                 string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
