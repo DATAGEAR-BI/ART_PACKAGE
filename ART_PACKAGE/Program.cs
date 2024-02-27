@@ -21,6 +21,7 @@ using Rotativa.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
 using ART_PACKAGE.Helpers.DBService;
+using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -36,7 +37,7 @@ builder.Services.AddSignalR();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 //builder.Services.AddScoped<IPdfService, PdfService>();
 
-
+builder.Services.AddReportsConfiguratons();
 
 
 builder.Services.AddScoped<DBFactory>();
@@ -46,6 +47,7 @@ builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
+builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
 builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
 builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
 builder.Services.AddTransient(typeof(ICustomReportGridConstructor), typeof(CustomReportGridConstructor));
@@ -58,20 +60,14 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 
-
-
 builder.Services.AddScoped<IMailSender, MailSender>();
 builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection(MailConfiguration.OptionName));
 
-
-
 builder.Services.ConfigureApplicationCookie(opt =>
  {
-
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
      if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
      else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
-
  });
 
 // Add services to the container.
@@ -87,7 +83,6 @@ builder.Services.AddSingleton<UsersConnectionIds>();
 
 
 
-
 // Get the IHttpContextAccessor instance
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -99,7 +94,7 @@ RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)bu
 
 
 WebApplication app = builder.Build();
-
+//automateReportConfig.automate();
 app.ApplyModulesMigrations();
 
 app.SeedModuleRoles();

@@ -5,6 +5,7 @@
     FSKALERT: "/report/FSKALERTDATA",
     AlertSearch: "/AlertSearch/GetAlerts",
     Aml_Analysis: "/AML_ANALYSIS/GetData",
+    AmlAnalysis: "/AmlAnalysis/GetData",
     Aml_AnalysisRules: "/AML_ANALYSIS/GetRulesData",
     casesumExFilters: "/SanctionAllCasesDetails/ExternalFilters",
     SanctionAllCasesDetails: "/SanctionAllCasesDetails/GetDatal",

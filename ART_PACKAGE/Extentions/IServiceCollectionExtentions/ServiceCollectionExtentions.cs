@@ -33,6 +33,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
+    public delegate ReportConfig ReportConfigResolver(string key);
     public static class ServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
@@ -215,6 +216,25 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
             _ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
+            return services;
+        }
+
+
+        public static IServiceCollection AddReportsConfiguratons(this IServiceCollection services)
+        {
+            IEnumerable<Type> configTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass && t.Namespace == "ART_PACKAGE.Helpers.ReportsConfigurations");
+            foreach (Type? type in configTypes)
+            {
+                services.AddSingleton(type);
+            }
+
+            services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
+            {
+                Type? configType = configTypes.FirstOrDefault(x => x.Name.ToLower() == key.ToLower());
+                return (ReportConfig)serviceProvider.GetService(configType);
+            });
             return services;
         }
 

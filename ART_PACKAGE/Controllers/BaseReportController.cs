@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
 
-                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(typeof(TModel).Name, User);
+                GridIntializationConfiguration res = _gridConstructor.IntializeGrid((typeof(TModel).Name + "Config").ToLower(), User);
                 return new ContentResult
                 {
                     ContentType = "application/json",

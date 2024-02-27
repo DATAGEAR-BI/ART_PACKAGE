@@ -631,7 +631,7 @@ class Grid extends HTMLElement {
                 },
                 resizable: true,
                 filterable: true,
-            columnMenu: {
+                columnMenu: {
                 componentType: "modern",
                 columns: {
                     sort: "asc",
@@ -665,6 +665,9 @@ class Grid extends HTMLElement {
                 },
                 height: 700,
                 groupable: true,
+                scrollable: {
+                    virtual: true
+                },
                 //excelExport: function (e) {
                 //    e.preventDefault();
 

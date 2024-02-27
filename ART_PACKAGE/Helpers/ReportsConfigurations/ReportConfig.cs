@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace ART_PACKAGE.Helpers.CSVMAppers
+namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
     public class ReportConfig
     {
