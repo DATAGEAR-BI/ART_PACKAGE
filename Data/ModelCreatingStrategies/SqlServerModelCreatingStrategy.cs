@@ -7494,6 +7494,39 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("RELEASED_DATE");
             });
+            modelBuilder.Entity<ArtCrpConfig>(entity =>
+            {
+                entity.ToView("ART_CRP_CONFIG");
+                entity.Property(e => e.CaseId)
+                .HasColumnName("case_id")
+                .HasMaxLength(64)
+                .IsRequired();
+
+                entity.Property(e => e.Maker)
+                    .HasColumnName("Maker")
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.MakerDate)
+                    .HasColumnName("Maker_Date")
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                entity.Property(e => e.Checker)
+                    .HasColumnName("Checker")
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.CheckerDate)
+                    .HasColumnName("Checker_Date")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerAction)
+                    .HasColumnName("Checker_Action")
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.ActionDetail)
+                    .HasColumnName("Action_Detail")
+                    .HasColumnType("nvarchar(max)");
+            });
         }
         public void OnFATCAModelCreating(ModelBuilder modelBuilder)
         {

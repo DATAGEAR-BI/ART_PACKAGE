@@ -6,6 +6,7 @@ namespace Data.Data.CRP
     public class CRPContext : DbContext
     {
         public virtual DbSet<ArtCrpCase> ArtCrpCases { get; set; } = null!;
+        public virtual DbSet<ArtCrpConfig> ArtCrpConfigs { get; set; } = null!;
         public virtual DbSet<ArtCrpSystemPerformance> ArtCrpSystemPerformances { get; set; } = null!;
         public virtual DbSet<ArtCrpUserPerformance> ArtCrpUserPerformances { get; set; } = null!;
 
