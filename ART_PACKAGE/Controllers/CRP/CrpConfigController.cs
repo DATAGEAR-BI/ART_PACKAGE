@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.CRP
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].SkipList;
             List<ArtCrpConfig> data = _crp.ArtCrpConfigs.CallData(req).Data.ToList();
-            ViewData["title"] = "CRP Cases Details";
+            ViewData["title"] = "CRP Configs ";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, ColumnsToSkip, DisplayNames);

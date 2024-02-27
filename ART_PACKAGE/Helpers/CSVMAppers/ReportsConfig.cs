@@ -108,6 +108,21 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
             }
             },
+            { nameof(CFTConfigController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                    { "Maker", new DisplayNameAndFormat { DisplayName = "Maker"}},
+                    { "MakerDate", new DisplayNameAndFormat { DisplayName = "Maker Date"}},
+                    { "Checker", new DisplayNameAndFormat { DisplayName = "Checker"}},
+                    { "CheckerDate", new DisplayNameAndFormat { DisplayName = "Checker Date"}},
+                    { "CheckerAction", new DisplayNameAndFormat { DisplayName = "Checker Action"}},
+                    { "ActionDetail", new DisplayNameAndFormat { DisplayName = "Action Detail"}},
+
+            }
+             }
+            },
             { nameof(UserPerformanceController).ToLower(),
                 new ReportConfig{
                                         SkipList = new List<string>(){   "CaseRk","ValidFromDate","CreateUserId" } ,

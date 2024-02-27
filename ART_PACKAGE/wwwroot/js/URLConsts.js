@@ -132,6 +132,10 @@
     FATCACasesDetails: "/FATCACasesDetails/GetData",
     FATCADetails: "/FATCADetails/GetData",
     FATCASummary: "/FATCASummary/GetData",
-    FATCAIrsReport: "/FATCAIrsReport/GetData"
+    FATCAIrsReport: "/FATCAIrsReport/GetData",
+
+    //ECM
+    CFTConfigs: "/CFTConfig/GetData",
+
 
 };
