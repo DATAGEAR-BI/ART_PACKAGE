@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Controllers.SASAML;
-using ART_PACKAGE.Helpers;
+﻿using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
@@ -12,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.CRP
 {
-    public class CrpCasesController : Controller
+    public class CrpConfigController : Controller
     {
         private readonly CRPContext _crp;
         private readonly IDropDownService _dropDown;
@@ -20,7 +19,7 @@ namespace ART_PACKAGE.Controllers.CRP
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
 
-        public CrpCasesController(CRPContext crp, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        public CrpConfigController(CRPContext crp, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
         {
             _crp = crp;
 
@@ -39,35 +38,24 @@ namespace ART_PACKAGE.Controllers.CRP
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtCrpCase> data = _crp.ArtCrpCases.AsQueryable();
+            IQueryable<ArtCrpConfig> data = _crp.ArtCrpConfigs.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
             {
-                //DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
-                //List<dynamic> PEPlist = new()
-                //    {
-                //        "Y","N"
-                //    };
-                //DropDownColumn = new Dictionary<string, List<dynamic>>
-                //{
-                //    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                //    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                //    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                //    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                //    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                //    {"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                //    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
-                //};
+                DisplayNames = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].DisplayNames;
+                DropDownColumn = new Dictionary<string, List<dynamic>>
+                {
+                };
 
-                //ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].SkipList;
             }
 
 
 
-            KendoDataDesc<ArtCrpCase> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtCrpConfig> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -85,9 +73,9 @@ namespace ART_PACKAGE.Controllers.CRP
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
-            List<ArtCrpCase> data = _crp.ArtCrpCases.CallData(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].SkipList;
+            List<ArtCrpConfig> data = _crp.ArtCrpConfigs.CallData(req).Data.ToList();
             ViewData["title"] = "CRP Cases Details";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
