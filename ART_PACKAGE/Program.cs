@@ -32,6 +32,7 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
+builder.Services.AddSingleton<AuthContext>();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()

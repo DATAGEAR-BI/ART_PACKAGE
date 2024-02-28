@@ -21,6 +21,9 @@ namespace Data.ModelCreatingStrategies
             if (_context.Database.IsOracle())
                 return new OracleModelCreatingStrategy();
 
+            if (_context.Database.IsMySql())
+                return new MySqlModelCreatingStrategy();
+
             throw new NotSupportedException();
         }
     }

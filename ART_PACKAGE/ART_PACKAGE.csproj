@@ -1804,6 +1804,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Data\Data.csproj" />
+		<ProjectReference Include="..\MySqlMigrations\MySqlMigrations.csproj" />
 		<ProjectReference Include="..\OracleMigrations\OracleMigrations.csproj" />
 		<ProjectReference Include="..\SqlServerMigrations\SqlServerMigrations.csproj" />
 	</ItemGroup>

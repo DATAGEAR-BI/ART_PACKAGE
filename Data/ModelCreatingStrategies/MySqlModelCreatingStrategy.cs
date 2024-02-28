@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.ModelCreatingStrategies
 {
-    public class SqlServerModelCreatingStrategy : IBaseModelCreatingStrategy
+    public class MySqlModelCreatingStrategy : IBaseModelCreatingStrategy
     {
 
 

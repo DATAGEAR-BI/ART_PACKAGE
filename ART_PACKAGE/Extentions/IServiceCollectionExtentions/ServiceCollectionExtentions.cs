@@ -53,6 +53,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         conn,
                         x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
+                    DbTypes.MySql => options.UseMySql(
+                        conn,
+                        ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
+                        x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                        ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
             }

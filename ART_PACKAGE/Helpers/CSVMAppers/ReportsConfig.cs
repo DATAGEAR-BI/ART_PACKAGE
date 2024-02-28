@@ -2698,7 +2698,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "CheckerAction", new DisplayNameAndFormat { DisplayName = "Checker Action"}},
                     { "ActionDetail", new DisplayNameAndFormat { DisplayName = "Action Detail"}},
 
-            }
+            },
+                SkipList =  new List<string>
+                {/*"ActionDetail"*/},
              }
             },
               { nameof(CrpUserPerformanceController).ToLower() , new ReportConfig
