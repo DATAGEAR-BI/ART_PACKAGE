@@ -55,7 +55,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         ),
                     DbTypes.MySql => options.UseMySql(
                         conn,
-                        ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
+                        new MySqlServerVersion(new Version( 8,0,36)),//ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
                         x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
@@ -63,6 +63,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            if (modulesToApply is null)
+            {
+                _ = services.AddScoped<IDbService, DBService>();
+                return services;
+            }
             if (modulesToApply.Contains("SEG"))
             {
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));

@@ -31,6 +31,11 @@ namespace ART_PACKAGE.Controllers
             _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
             modules = _configuration.GetSection("Modules").Get<List<string>>();
+
+            if (modules is not null)
+            {
+                
+         
             if (modules.Contains("SASAML"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -48,6 +53,8 @@ namespace ART_PACKAGE.Controllers
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
+            }
+            
             }
         }
 

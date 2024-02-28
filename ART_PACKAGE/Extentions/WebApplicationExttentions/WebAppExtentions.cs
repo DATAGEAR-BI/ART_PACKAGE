@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -13,10 +14,10 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            //if (authContext.Database.GetPendingMigrations().Any())
-            //{
-            //    authContext.Database.Migrate();
-            //}
+            if (authContext.Database.GetPendingMigrations().Any())
+            {
+                authContext.Database.Migrate();
+            }
 
             //if (modules.Contains("ECM"))
             //{
@@ -112,7 +113,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                         .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
             List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
             RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
-
+            if (modules is null || modules.Count == 0)
+                return;
             foreach (string module in modules)
             {
                 IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());

@@ -5,7 +5,7 @@
 }
 
 
-@if (Modules.Contains("AMLANALYSIS"))
+@if (Modules is not null && Modules.Contains("AMLANALYSIS"))
 {
 
     <script src="~/js/amlanalysislistener.js"></script>

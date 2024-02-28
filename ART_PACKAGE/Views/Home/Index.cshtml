@@ -1,6 +1,7 @@
 ﻿@using Data.Constants.HomeType;
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Home Page";
     var homeType = Configuration.GetValue<string>("homeType").ToUpper();
     var modules = Configuration.GetSection("Modules").Get<string[]>();

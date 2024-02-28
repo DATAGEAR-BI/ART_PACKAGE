@@ -4,40 +4,25 @@
     <projectFile profileName="ART_PACKAGE">ART_PACKAGE/ART_PACKAGE.csproj</projectFile>
     <projectFile profileName="IIS Express">ART_PACKAGE/ART_PACKAGE.csproj</projectFile>
     <projectFile pubXmlPath="ART_PACKAGE/Properties/PublishProfiles/FolderProfile.pubxml">ART_PACKAGE/ART_PACKAGE.csproj</projectFile>
+    <projectFile pubXmlPath="ART_PACKAGE/Properties/PublishProfiles/FolderProfile1.pubxml">ART_PACKAGE/ART_PACKAGE.csproj</projectFile>
+    <projectFile pubXmlPath="ART_PACKAGE/Properties/PublishProfiles/FolderProfile2.pubxml">ART_PACKAGE/ART_PACKAGE.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FATCA/FATCAAlertsDetailsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FATCA/FATCACasesDetailsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FATCA/FATCADetailsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FATCA/FATCASummaryController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/DGFATCA/DGFATCAContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/ArtFatcaAlert.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/ArtFatcaCace.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/ArtFatcaCustomer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/ArtFatcaDormantAccountsSummary.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/ArtFatcaIrsReport.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Data/FATCA/FATCAContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Extentions/IServiceCollectionExtentions/ServiceCollectionExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Extentions/IServiceCollectionExtentions/ServiceCollectionExtentions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CustomReport/KendoFiltersExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CustomReport/KendoFiltersExtentions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Extentions/WebApplicationExttentions/WebAppExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Extentions/WebApplicationExttentions/WebAppExtentions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/DBService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/DBService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/IDbService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/IDbService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/aml_analysisScript.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/aml_analysisScript.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Modules/ExternalFilters.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Modules/ExternalFilters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Constants/StoredProcs/ORACLESPName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Constants/StoredProcs/ORACLESPName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Constants/StoredProcs/SQLSERVERSPNames.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Constants/StoredProcs/SQLSERVERSPNames.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/IModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/IModelCreatingStrategy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/ISchemaModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/ISchemaModelCreatingStrategy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/ModelCreatingContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/ModelCreatingContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Data/AuthContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/AuthContext.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,19 +30,61 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="ChangeSideBar" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Extensions/Features/src/FeatureReferences.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Http/Http/src/DefaultHttpContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Core/src/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Core/src/Infrastructure/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Razor/src/RazorView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Servers/Kestrel/Core/src/Internal/Http/HttpProtocol.Generated.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore.Relational/Metadata/Internal/ViewColumn.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore.Relational/Query/Internal/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/coreclr/System.Private.CoreLib/src/System/RuntimeType.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Diagnostics.DiagnosticSource/src/System/Diagnostics/DiagnosticListener.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Future.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/13/cf213c7a/OracleDataReader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/d7/aed28299/OracleCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56177b963230e2aa38217bfe7bfe8faf7b986d936de0608d999eba7335aa48d/SerilogLoggingBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/58b0b7706a8be4f7160749424eb996a3f845a1682c3c7ac5e405a346a8c20f1/JToken.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5f8b1b66e5e5b489f6bab41513041a777351240ac97acbdd32993bba7d972f9/ClassMap.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/65564e101750ff5f657d63abac3ada3974d1e8d11795bdf8258b64f23adab/ClassMap`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f623736f2488a11716f7a03aa1d499eeece3df015251a70468a5f72c2db27/JArray.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73462a4a9394ff73b345712598c94965b0f6032ce187cd124f118b498662d1/MimeMessage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ciPrMBjj0P3mx3TcBHk15IcTNE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.ART_PACKAGE.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "MAIL__TEST__FATCA",
@@ -70,10 +97,14 @@
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver",
+      "mysql"
+    ],
     "rider.external.source.directories": [
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\User\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\eslam\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -122,13 +153,36 @@
       <option name="presentableId" value="Default" />
       <updated>1708591628550</updated>
       <workItem from="1708591633278" duration="1628000" />
+      <workItem from="1709159183091" duration="2006000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml</url>
+          <line>10</line>
+          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Views\Home\Index.cshtml" initialLine="9" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

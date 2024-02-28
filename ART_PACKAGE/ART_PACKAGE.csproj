@@ -4,13 +4,9 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		
 	</PropertyGroup>
-	<Target Name="CleanCodeTask" BeforeTargets="Build">
-		<Exec Command="dotnet format style -v detailed" />
-	</Target>
-
+	
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />

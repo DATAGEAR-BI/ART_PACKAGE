@@ -20,6 +20,10 @@ namespace ART_PACKAGE.Helpers.DBService
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
             List<string>? modules = _configuration.GetSection("Modules").Get<List<string>>();
+            if (modules is not null)
+            {
+                
+           
             if (modules.Contains("SASAML"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -65,6 +69,7 @@ namespace ART_PACKAGE.Helpers.DBService
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 TIZONE2Context ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
                 TI = ti;
+            }
             }
         }
 
