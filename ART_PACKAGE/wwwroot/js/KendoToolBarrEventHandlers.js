@@ -1195,7 +1195,7 @@ export const dbClickHandlers = {
         //var old_title = title.innerText;
         //title.innerText = old_title.split(":")[0] + " : " + dataItem.AlarmId;
         console.log(commentData);
-        var commentGrid = document.getElementById("closeReasonInfo");
+        var commentGrid = document.getElementById("CommentInfo");
         commentGrid.innerText = "";
         if (commentData && [...commentData].length > 0) {
             var table = document.createElement("table");
@@ -1258,7 +1258,7 @@ export const dbClickHandlers = {
             noCommentsDiv.className = "text-center";
             commentGrid.appendChild(noCommentsDiv);
         }
-        $("#closeReasonModal").modal("show");
+        $("#commentModal").modal("show");
         kendo.ui.progress($('#grid'), false);
     },
 
@@ -1334,10 +1334,76 @@ export const CellDbHandlers = {
     DGAMLAlertDetails: {
         CloseReason: async (dataItem) => {
             kendo.ui.progress($('#grid'), true);
-            var CloseReasonInfo = document.getElementById("closeReasonInfo");
-            //var events = await (await fetch(`/ArtFtiEndToEndNew/GetEcmEvents/${encodeURIComponent(dataItem.EcmReference)}`)).json();
-            CloseReasonInfo.innerText = "Other Commment";
-            CloseReasonInfo.className = "text-center";
+            console.log(dataItem.AlarmId);
+            var closeReasonData = await (await fetch(`/DGAMLAlertDetails/GetCloseReasons/${dataItem.AlarmId}`)).json();
+            //var title = document.getElementById("closeReasonModalTitle");
+            //var old_title = title.innerText;
+            //title.innerText = old_title.split(":")[0] + " : " + dataItem.AlarmId;
+            console.log(closeReasonData);
+            var closeReasonGrid = document.getElementById("closeReasonInfo");
+            closeReasonGrid.innerText = "";
+            if (closeReasonData && [...closeReasonData].length > 0) {
+                var table = document.createElement("table");
+                table.className = "table";
+                var thead = document.createElement("thead");
+                var tr = document.createElement("tr");
+                var headers = ["#", "Alert Id", "Alarm Status", "Close Reason", "Close Date","Closed By"]
+                headers.forEach(x => {
+                    var th = document.createElement("th");
+                    th.setAttribute("scope", "col");
+                    th.innerText = x;
+                    tr.appendChild(th);
+                });
+
+                thead.appendChild(tr);
+                var tbody = document.createElement("tbody");
+
+                [...closeReasonData].forEach((x, index) => {
+                    var tr = document.createElement("tr");
+
+                    var rowNumberTd = document.createElement("th");
+                    rowNumberTd.setAttribute("scope", "row");
+                    rowNumberTd.innerText = index + 1;
+
+                    var AlarmId = document.createElement("td");
+                    AlarmId.innerText = x.AlarmId;
+
+
+                    var AlarmStatus = document.createElement("td");
+                    AlarmStatus.innerText = x.AlarmStatus;
+
+                    var CloseReason = document.createElement("td");
+                    CloseReason.innerText = x.CloseReason;
+
+                    var CloseDate = document.createElement("td");
+                    CloseDate.innerText = x.CloseDate;
+
+                    var ClosedBy = document.createElement("td");
+                    ClosedBy.innerText = x.ClosedBy;
+
+                    tr.appendChild(rowNumberTd);
+                    tr.appendChild(AlarmId);
+
+                    tr.appendChild(AlarmStatus);
+                    tr.appendChild(CloseReason);
+                    tr.appendChild(CloseDate);
+                    tr.appendChild(ClosedBy);
+
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+
+                closeReasonGrid.appendChild(table);
+
+            }
+            else {
+                var noCloseReasonDiv = document.createElement("div");
+                noCloseReasonDiv.innerText = "There is no CloseReason  for the Alert Id:" + dataItem.AlarmId
+                noCloseReasonDiv.className = "text-center";
+                closeReasonGrid.appendChild(noCloseReasonDiv);
+            }
             $("#closeReasonModal").modal("show");
             kendo.ui.progress($('#grid'), false);
         },

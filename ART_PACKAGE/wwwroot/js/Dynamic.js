@@ -532,7 +532,9 @@ function generateGrid() {
                 }
             });
             this.tbody.find("tr").dblclick(function (e) {
-              var dataItem = grid.dataItem(this);
+                var dataItem = grid.dataItem(this);
+                console.log("Hello in tr")
+                console.log(dataItem);
              var dbclickhandler = dbClickHandlers[handlerkey];
             dbclickhandler(dataItem).then(console.log("done"));
             });
@@ -590,20 +592,20 @@ function generateGrid() {
 
     });
 
-    //grid.tbody.on("dblclick", "td", function (e) {
+    grid.tbody.on("dblclick", "td", function (e) {
 
 
-    //    // Get the current item (row data)
-    //    var item = grid.dataItem($(e.currentTarget).closest("tr"));
-    //    // Get the field name associated with the clicked cell
-    //    var cellIndex = $(e.target).index(); // Get the index of the clicked cell
-    //    var column = grid.columns[cellIndex];
-    //    if (column != null && column.field.toLowerCase() == "closereason" && item[column.field].toLowerCase() == 'other') {
-    //        var handler = CellDbHandlers[handlerkey][column.field];
-    //        if (handler) {
-    //          handler(item);
-    //        }
-    //    }
+        // Get the current item (row data)
+        var item = grid.dataItem($(e.currentTarget).closest("tr"));
+        // Get the field name associated with the clicked cell
+        var cellIndex = $(e.target).index(); // Get the index of the clicked cell
+        var column = grid.columns[cellIndex];
+        if (column != null && column.field.toLowerCase() == "closereason" && item[column.field].toLowerCase() == 'other') {
+            var handler = CellDbHandlers[handlerkey][column.field];
+            if (handler) {
+              handler(item);
+            }
+        }
 
     //    // Check if the clicked cell is from a specific column
     //    //if (fieldName === "yourColumnName") {

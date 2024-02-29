@@ -1726,6 +1726,33 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("stateIndicator");
 
             });
+            modelBuilder.Entity<ArtAlertsCloseReasonPopupView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_ALERTS_CLSRSN_POPUP_VIEW", "ART_DB");
+
+                entity.Property(e => e.AlarmId)
+                   .HasColumnType("numeric(12, 0)")
+                   .HasColumnName("ALARM_ID");
+
+                entity.Property(e => e.AlarmStatus)
+                    .HasMaxLength(4000)
+                    .HasColumnName("ALRM_STATUS");
+
+                entity.Property(e => e.CloseReason)
+                    .HasMaxLength(255)
+                    .HasColumnName("COLSE_REASON");
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CLOSED_DATE");
+
+                entity.Property(e => e.ClosedBy)
+                    .HasMaxLength(60)
+                    .HasColumnName("CLOSED_BY");
+
+            });
         }
 
         public void OnEcmModelCreating(ModelBuilder modelBuilder)

@@ -19,11 +19,32 @@
         <br />
     </h1>
 </section>
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLablel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-width" role="document" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentTitle">Alert Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="commentModalBody">
+                <div id="CommentInfo" style="max-height:333px;max-width:1463px;overflow:scroll">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="closeReasonModal" tabindex="-1" role="dialog" aria-labelledby="closeReasonModalLablel" aria-hidden="true">
     <div class="modal-dialog custom-modal-width" role="document" style="width:60%">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="closeReasonModalTitle">Alert Comments</h5>
+                <h5 class="modal-title" id="closeReasonModalTitle">Close Reasons</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -40,7 +61,6 @@
         </div>
     </div>
 </div>
-
 <div id="grid"></div>
 @section Scripts{
 
