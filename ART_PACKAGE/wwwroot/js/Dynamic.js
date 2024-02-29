@@ -2,6 +2,7 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers, CellDbHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
 
 const handleError = (error) => {
     if (error instanceof Error) {

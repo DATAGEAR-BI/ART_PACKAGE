@@ -1764,6 +1764,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\Components\GridConfigration\ColumnsTemplate.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
