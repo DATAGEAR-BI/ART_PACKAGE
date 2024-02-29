@@ -1207,8 +1207,6 @@ export const dbClickHandlers = {
                 var th = document.createElement("th");
                 th.setAttribute("scope", "col");
                 th.innerText = x;
-                if (x == "Comment")
-                    th.style.width = "350px";
                 tr.appendChild(th);
             });
 
@@ -1228,7 +1226,6 @@ export const dbClickHandlers = {
 
                 var commentTd = document.createElement("td");
                 commentTd.innerText = x.comment;
-                commentTd.style.width = "350px";
 
                 var CreatedBy = document.createElement("td");
                 CreatedBy.innerText = x.createdBy;
@@ -1347,7 +1344,7 @@ export const CellDbHandlers = {
                 table.className = "table";
                 var thead = document.createElement("thead");
                 var tr = document.createElement("tr");
-                var headers = ["#", "Alert Id", "Alarm Status", "Close Reason", "Close Date","Closed By"]
+                var headers = ["#", "Alert Id", "Alarm Status", "Close Reason", "Close Date", "Closed By"]
                 headers.forEach(x => {
                     var th = document.createElement("th");
                     th.setAttribute("scope", "col");
@@ -1366,20 +1363,20 @@ export const CellDbHandlers = {
                     rowNumberTd.innerText = index + 1;
 
                     var AlarmId = document.createElement("td");
-                    AlarmId.innerText = x.AlarmId;
+                    AlarmId.innerText = x.alarmId;
 
 
                     var AlarmStatus = document.createElement("td");
-                    AlarmStatus.innerText = x.AlarmStatus;
+                    AlarmStatus.innerText = x.alarmStatus;
 
                     var CloseReason = document.createElement("td");
-                    CloseReason.innerText = x.CloseReason;
+                    CloseReason.innerText = x.closeReason;
 
                     var CloseDate = document.createElement("td");
-                    CloseDate.innerText = x.CloseDate;
+                    CloseDate.innerText = x.closeDate;
 
                     var ClosedBy = document.createElement("td");
-                    ClosedBy.innerText = x.ClosedBy;
+                    ClosedBy.innerText = x.closedBy;
 
                     tr.appendChild(rowNumberTd);
                     tr.appendChild(AlarmId);
