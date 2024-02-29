@@ -41,7 +41,7 @@ namespace ART_PACKAGE.Controllers.CRP
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            _ = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 

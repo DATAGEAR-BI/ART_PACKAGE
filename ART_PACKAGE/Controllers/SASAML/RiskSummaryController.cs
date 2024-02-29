@@ -32,10 +32,12 @@ namespace ART_PACKAGE.Controllers.SASAML
 
             IEnumerable<ArtStAmlRiskClass> chart1Data = Enumerable.Empty<ArtStAmlRiskClass>().AsQueryable();
             IEnumerable<ArtStAmlPropRiskClass> chart2data = Enumerable.Empty<ArtStAmlPropRiskClass>().AsQueryable();
-
+            IEnumerable<ArtStAmlRiskStatus> chart3data = Enumerable.Empty<ArtStAmlRiskStatus>().AsQueryable();
+            List<Dictionary<string, object>> chartDictList = new();
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
@@ -47,6 +49,19 @@ namespace ART_PACKAGE.Controllers.SASAML
             {
                 chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(ORACLESPName.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
                 chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(ORACLESPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                chart3data = dbfcfcore.ExecuteProc<ArtStAmlRiskStatus>(ORACLESPName.ART_ST_AML_RISK_STATUS, chart3Params.ToArray());
+                foreach (IGrouping<string?, ArtStAmlRiskStatus>? chartResult in chart3data.GroupBy(x => x.RISK).ToList())
+                {
+                    Dictionary<string, object> result = new()
+                    {
+                        { "RISK", chartResult.Key }
+                    };
+                    foreach (ArtStAmlRiskStatus? list in chartResult)
+                    {
+                        result.Add(list.RISK_STATUS, list.NUMBER_OF_CUSTOMERS);
+                    }
+                    chartDictList.Add(result);
+                };
 
             }
 
@@ -56,7 +71,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                 {
                     ChartId = "StRiskClassSummary",
                     Data = chart1Data.ToList(),
-                    Title = "Number OF Customers Per Risk Classification",
+                    Title = "Risk Assessment Per Risk Classification",
                     Cat = "RISK_CLASSIFICATION",
                     Val = "NUMBER_OF_CUSTOMERS"
 
@@ -65,10 +80,17 @@ namespace ART_PACKAGE.Controllers.SASAML
                 {
                     ChartId = "StPropRiskClassSummary",
                     Data = chart2data.ToList(),
-                    Title = "Number OF Customers Per Proposed Risk Classification",
+                    Title = "Risk Assessment Per Proposed Risk Classification",
                     Cat = "PROPOSED_RISK_CLASS",
                     Val = "NUMBER_OF_CUSTOMERS"
-                }
+                },
+                new ChartData<Dictionary<string,object>>
+                {
+                    ChartId = "StRiskStatus",
+                    Data =chartDictList,
+                    Title = "Risk Assessment Per Risk Status",
+                    Cat = "RISK"
+                },
             };
 
 

@@ -2,8 +2,8 @@
 {
     public partial class ArtSystemPerformance
     {
-        public string CaseId { get; set; } = null!;
         public decimal CaseRk { get; set; }
+        public string CaseId { get; set; } = null!;
         public DateTime? ValidFromDate { get; set; }
         public string? CaseType { get; set; }
         public string? CaseStatus { get; set; }
@@ -27,13 +27,7 @@
         public int? DurationsInMinutes { get; set; }
         public int? DurationsInHours { get; set; }
         public int? DurationsInDays { get; set; }
-        public string? LastComment { get; set;}
-        public string? LastCommentSubject { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
-        public string? CreatedBy { get; set; }
-        public int? NumberOfComment { get; set; }
-        public int? NumberOfAttachments { get; set; }
+        public string? LastStatus { get; set; }
 
 
     }

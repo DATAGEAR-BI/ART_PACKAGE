@@ -171,12 +171,16 @@ namespace ART_PACKAGE.Hubs
             if (nameof(CustomersController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlCustomersDetailsView, CustomersController>(_dbAml, Context.User.Identity.Name, para);
             if (nameof(RiskAssessmentController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtRiskAssessmentView, RiskAssessmentController>(_dbAml, Context.User.Identity.Name, para);
             if (nameof(HighRiskController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlHighRiskCustView, HighRiskController>(_dbAml, Context.User.Identity.Name, para);
+            if (nameof(AmlAuditReportController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAuditReportView, AmlAuditReportController>(_dbAml, Context.User.Identity.Name, para);
 
             #endregion
 
             #region ECM
             if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformance, SystemPerformanceController>(_ecm, Context.User.Identity.Name, para);
             if (nameof(UserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUserPerformance, UserPerformanceController>(_ecm, Context.User.Identity.Name, para);
+            if (nameof(SWIFTClearDetectController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSwiftClearDetect, SWIFTClearDetectController>(_ecm, Context.User.Identity.Name, para);
+            if (nameof(CasesBirthdateController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtEcmCasesBirthdateView, CasesBirthdateController>(_ecm, Context.User.Identity.Name, para);
+
             #endregion
 
             #region DGAML

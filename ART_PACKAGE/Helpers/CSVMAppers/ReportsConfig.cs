@@ -45,7 +45,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"ReportCloseRsn",new DisplayNameAndFormat { DisplayName ="Report Close Reason"}},
                     {"ActualValuesText",new DisplayNameAndFormat { DisplayName ="Scenario Description"}},
                     {"OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner "}},
-                    {"InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}}
+                    {"InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}},
+                    {"LastComment",new DisplayNameAndFormat { DisplayName ="Last Note"}},
+                    {"NumberOfComments",new DisplayNameAndFormat { DisplayName ="Notes Count"}},
 
             }
                }
@@ -99,7 +101,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}},
+                    { "LastStatus", new DisplayNameAndFormat { DisplayName = "Last Status"}},
             },
                 SkipList = new List<string>
             {
@@ -110,7 +113,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             },
             { nameof(UserPerformanceController).ToLower(),
                 new ReportConfig{
-                                        SkipList = new List<string>(){   "CaseRk","ValidFromDate","CreateUserId" } ,
+                                        SkipList = new List<string>(){   "CaseRk","ValidFromDate" } ,
                                         DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                                                         {
                                                                 { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
@@ -128,7 +131,45 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
                                                                 { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
                                                                 { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
-                                                                { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                                                                { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}},
+                                                                { "CreateUserId", new DisplayNameAndFormat { DisplayName = "Create User"}},
+                                                        }
+                                }
+            }
+            ,
+            { nameof(SWIFTClearDetectController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "RequestDate", new DisplayNameAndFormat { DisplayName = "Request Date"}},
+                                                                { "RequestUid", new DisplayNameAndFormat { DisplayName = "Request Uid"}},
+                                                                { "Direction", new DisplayNameAndFormat { DisplayName = "Direction"}},
+                                                                { "Correspondent", new DisplayNameAndFormat { DisplayName = "Correspondent"}},
+                                                                { "Type", new DisplayNameAndFormat { DisplayName = "Type"}},
+                                                                { "Reference", new DisplayNameAndFormat { DisplayName = "Reference"}},
+                                                                { "CurrencyAmount", new DisplayNameAndFormat { DisplayName = "Currency Amount"}},
+                                                                { "InstanceType", new DisplayNameAndFormat { DisplayName = "Instance Type"}},
+                                                                { "Sender", new DisplayNameAndFormat { DisplayName = "Sender"}},
+                                                                { "Status", new DisplayNameAndFormat { DisplayName = "Status"}},
+                                                                { "Branch", new DisplayNameAndFormat { DisplayName = "Branch"}},
+                                                                { "Body", new DisplayNameAndFormat { DisplayName = "Body"}},
+                                                        }
+                                }
+            },
+            { nameof(CasesBirthdateController).ToLower(),
+                new ReportConfig{
+                                        SkipList = new List<string>(){   } ,
+                                        DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                                                        {
+                                                                { "CaseId", new DisplayNameAndFormat { DisplayName = "Case ID"}},
+                                                                { "CustomerNumber", new DisplayNameAndFormat { DisplayName = "Customer Number"}},
+                                                                { "CustomerName", new DisplayNameAndFormat { DisplayName = "Customer Name"}},
+                                                                { "CreateDate", new DisplayNameAndFormat { DisplayName = "Create Date"}},
+                                                                { "IsDateAvailable", new DisplayNameAndFormat { DisplayName = "Is Date Available"}},
+                                                                { "BranchName", new DisplayNameAndFormat { DisplayName = "Branch Name"}},
+                                                                { "BranchNumber", new DisplayNameAndFormat { DisplayName = "Branch Number"}},
+                                                                { "CustomerDateOfBirth", new DisplayNameAndFormat { DisplayName = "Customer Date of Birth"}},
                                                         }
                                 }
             }
@@ -424,6 +465,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"EntityName",new DisplayNameAndFormat { DisplayName ="Entity Name"}},
                     {"EntityNumber",new DisplayNameAndFormat { DisplayName ="Entity Number"}},
                     {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
+                    {"BranchNumber",new DisplayNameAndFormat { DisplayName ="Branch Number"}},
                     {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                     {"CasePriority",new DisplayNameAndFormat { DisplayName ="Case Priority"}},
                     {"CaseCategory",new DisplayNameAndFormat { DisplayName ="Case Category"}},
@@ -436,6 +478,29 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
             },
+              {
+                nameof(AmlAuditReportController).ToLower(),new ReportConfig
+                {
+                    SkipList = new List<string>
+                    {
+                    },
+                    DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+                    {
+                    {"Customer",new DisplayNameAndFormat { DisplayName ="Customer Number"}},
+                    {"Date",new DisplayNameAndFormat { DisplayName ="Date"}},
+                    {"Time",new DisplayNameAndFormat { DisplayName ="Time"}},
+                    {"User",new DisplayNameAndFormat { DisplayName ="User Name"}},
+                    {"Ip",new DisplayNameAndFormat { DisplayName ="IP"}},
+                    {"Action",new DisplayNameAndFormat { DisplayName ="Action"}},
+                    {"Parameter",new DisplayNameAndFormat { DisplayName ="Parameter"}},
+                    {"Details",new DisplayNameAndFormat { DisplayName ="Details"}},
+                    {"DurationInSeconds",new DisplayNameAndFormat { DisplayName ="DurationInSeconds"}},
+                    {"Alert",new DisplayNameAndFormat { DisplayName ="Alert"}},
+                    {"Case",new DisplayNameAndFormat { DisplayName ="Case"}},
+                    {"RiskAssessment",new DisplayNameAndFormat { DisplayName ="Risk Assessment"}},
+                    }
+                }
+            },
                {
                 nameof(CustomersController).ToLower(),new ReportConfig
                 {
@@ -444,7 +509,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      "CustomerTaxId",
                      "DoingBusinessAsName",
                      "GovernorateName",
-                     "CustomerStatus",
                      "StreetPostalCode",
                      "StreetCountryCode",
                      "StreetCountryName",
@@ -457,12 +521,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      "EmployerName",
                      "EmployerPhoneNumber",
                      "EmailAddress",
-                     "PhoneNumber1",
-                     "PhoneNumber2",
                      "PhoneNumber3",
                      "AnnualIncomeAmount",
                      "NetWorthAmount",
-                     "LastRiskAssessmentDate",
                      "ActiveFlg",
                     },
                     DisplayNames = new Dictionary<string, DisplayNameAndFormat>
@@ -486,7 +547,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                   {"BranchNumber",new DisplayNameAndFormat { DisplayName ="Branch Number"}},
                                   {"BranchName",new DisplayNameAndFormat { DisplayName ="Branch Name"}},
                                   {"CustomerIdentificationId",new DisplayNameAndFormat { DisplayName ="Customer Identification ID"}},
-                                  {"CustomerIdentificationType",new DisplayNameAndFormat { DisplayName ="Customer Identification Type"}}
+                                  {"CustomerLevel",new DisplayNameAndFormat { DisplayName ="Customer Level"}},
+                                  {"EntitySegmentId",new DisplayNameAndFormat { DisplayName ="Current Segment Id"}},
+                                  {"LastSegmentId",new DisplayNameAndFormat { DisplayName ="Last Segment Id"}},
+                                  {"CustomerAge",new DisplayNameAndFormat { DisplayName ="Customer Age"}},
+                                  {"CustomerStatus",new DisplayNameAndFormat { DisplayName ="Customer Status"}},
+                                  {"PhoneNumber1",new DisplayNameAndFormat { DisplayName ="Phone Number 1"}},
+                                  {"PhoneNumber2",new DisplayNameAndFormat { DisplayName ="Phone Number 2"}},
+                                  {"LastRiskAssessmentDate",new DisplayNameAndFormat { DisplayName ="Last Risk Assessment Date"}},
+                                  {"Nationality2",new DisplayNameAndFormat { DisplayName ="Nationality 2"}},
+                                  {"Nationality3",new DisplayNameAndFormat { DisplayName ="Nationality 3"}},
                     }
                 }
             },
@@ -542,8 +612,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {
                 nameof(TriageController).ToLower(),new ReportConfig{
                     SkipList = new List<string> {
-                                "AlertedEntityLevel"
-                                //"Outstamt",
                             },
                     DisplayNames = new Dictionary<string, DisplayNameAndFormat>{
                         {  "AlertedEntityName",new DisplayNameAndFormat { DisplayName ="Alerted Entity Name"}},
@@ -555,7 +623,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "AggregateAmt",new DisplayNameAndFormat { DisplayName ="Aggregate Amount"}},
                         {  "AgeOldestAlert",new DisplayNameAndFormat { DisplayName ="Alert Age"}},
                         {  "AlertsCntSum",new DisplayNameAndFormat { DisplayName ="Alerts Count"}},
-
+                        {  "AlertedEntityLevel",new DisplayNameAndFormat { DisplayName ="Alerted Entity Level"}},
                     }
                 }
             },

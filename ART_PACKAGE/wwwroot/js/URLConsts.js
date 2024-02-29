@@ -18,6 +18,8 @@
     PartyListUpdateSummary: "/PartyListUpdateSummary/GetData",
     SystemPerformance: "/SystemPerformance/GetData",
     UserPerformance: "/UserPerformance/GetData",
+    SWIFTClearDetect: "/SWIFTClearDetect/GetData",
+    CasesBirthdate: "/CasesBirthdate/GetData",
     SanctionManualSearchDetails: "/SanctionManualSearchDetails/GetData",
     VaPartyListUpdateDetails: "/VaPartyListUpdateDetails/GetData",
     VaSanctionListUpdateDetails: "/VaSanctionListUpdateDetails/GetData",
@@ -35,6 +37,7 @@
     AlertSummary: "/AlertSummary/GetData",
     CasesSummary: "/CasesSummary/GetData",
     CustomersSummary: "/CustomersSummary/GetData",
+    AmlAuditReport: "/AmlAuditReport/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",
     //GoAml

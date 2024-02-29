@@ -13,7 +13,9 @@ namespace Data.Data.SASAml
         public string? CustomerType { get; set; }
         public string? CustomerIdentificationId { get; set; }
         public string? CustomerIdentificationType { get; set; }
+        public string? CustomerLevel { get; set; }
         public DateTime? CustomerDateOfBirth { get; set; }
+        public int? CustomerAge { get; set; }
         public string? RiskClassification { get; set; }
         public string? CustomerTaxId { get; set; }
         public string? DoingBusinessAsName { get; set; }
@@ -50,5 +52,10 @@ namespace Data.Data.SASAml
         public string? ActiveFlg { get; set; }
         public string? BranchName { get; set; }
         public string? BranchNumber { get; set; }
+        public int? EntitySegmentId { get; set; }
+        public int? LastSegmentId { get; set; }
+        public string? Nationality2 { get; set; }
+        public string? Nationality3 { get; set; }
+
     }
 }

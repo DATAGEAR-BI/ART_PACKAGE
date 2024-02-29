@@ -30,5 +30,8 @@ namespace Data.Data.SASAml
         public string? PoliticallyExposedPersonInd { get; set; }
         public string? EmployeeInd { get; set; }
         public int? InvestigationDays { get; set; }
+        public string? LastComment { get; set; }
+        public int? NumberOfComments { get; set; }
+
     }
 }

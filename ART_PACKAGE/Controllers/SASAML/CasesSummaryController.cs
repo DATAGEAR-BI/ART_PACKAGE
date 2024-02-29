@@ -33,12 +33,16 @@ namespace ART_PACKAGE.Controllers.SASAML
             IEnumerable<ArtStCasesPerCategory> chart2data = Enumerable.Empty<ArtStCasesPerCategory>().AsQueryable();
             IEnumerable<ArtStCasesPerSubcat> chart3Data = Enumerable.Empty<ArtStCasesPerSubcat>().AsQueryable();
             IEnumerable<ArtStCasesPerPriority> chart4Data = Enumerable.Empty<ArtStCasesPerPriority>().AsQueryable();
-
+            IEnumerable<ArtStCasesPerBranch> chart5Data = Enumerable.Empty<ArtStCasesPerBranch>().AsQueryable();
+            IEnumerable<ArtStCasesPerDate> chart6Data = Enumerable.Empty<ArtStCasesPerDate>().AsQueryable();
+            List<Dictionary<string, object>> chartDictList = new();
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart5Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart6Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -56,6 +60,20 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart2data = dbfcfkc.ExecuteProc<ArtStCasesPerCategory>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
                 chart3Data = dbfcfkc.ExecuteProc<ArtStCasesPerSubcat>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
                 chart4Data = dbfcfkc.ExecuteProc<ArtStCasesPerPriority>(ORACLESPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+                chart5Data = dbfcfkc.ExecuteProc<ArtStCasesPerBranch>(ORACLESPName.ART_ST_CASES_PER_BRANCH, chart5Params.ToArray());
+                chart6Data = dbfcfkc.ExecuteProc<ArtStCasesPerDate>(ORACLESPName.ART_ST_CASES_STATUS_PER_MONTH, chart6Params.ToArray());
+                foreach (IGrouping<string?, ArtStCasesPerDate>? chartResult in chart6Data.GroupBy(x => x.MONTH).ToList())
+                {
+                    Dictionary<string, object> result = new()
+                    {
+                        { "MONTH", chartResult.Key }
+                    };
+                    foreach (ArtStCasesPerDate? list in chartResult)
+                    {
+                        result.Add(list.CASE_STATUS, list.NUMBER_OF_CASES);
+                    }
+                    chartDictList.Add(result);
+                };
 
             }
 
@@ -93,7 +111,30 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Title = "Cases Per Priority",
                     Cat = "CASE_PRIORITY",
                     Val = "NUMBER_OF_CASES"
-                }
+                },
+                new ChartData<ArtStCasesPerBranch>
+                {
+                    ChartId = "StCasesPerBranch",
+                    Data = chart5Data.ToList(),
+                    Title = "Cases Per Branch",
+                    Cat = "BRANCH_NAME",
+                    Val = "NUMBER_OF_CASES"
+                },
+                new ChartData<ArtStCasesPerDate>
+                {
+                    ChartId = "StCasesPerDate",
+                    Data = chart6Data.ToList(),
+                    Title = "Cases Per Branch",
+                    Cat = "MONTH",
+                    Val = "NUMBER_OF_CASES"
+                },
+                new ChartData<Dictionary<string,object>>
+                {
+                    ChartId = "StCasesPerDate",
+                    Data =chartDictList,
+                    Title = "Cases Per Date",
+                    Cat = "MONTH"
+                },
             };
 
             return new ContentResult

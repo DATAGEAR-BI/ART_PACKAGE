@@ -22,7 +22,7 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
         public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
-
+        public virtual DbSet<ArtAuditReportView> ArtAuditReportViews { get; set; } = null!;
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 
 
@@ -38,8 +38,15 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerIndustry>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerOccupation>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlRiskStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerDate>().HasNoKey().ToView(null);
+            
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);
         }
