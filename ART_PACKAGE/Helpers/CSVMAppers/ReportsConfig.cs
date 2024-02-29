@@ -708,7 +708,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "ClosedUserId",new DisplayNameAndFormat { DisplayName ="Closed User ID"}},
                         {  "CloseUserName",new DisplayNameAndFormat { DisplayName ="Close User Name"}},
                         {  "CloseDate",new DisplayNameAndFormat { DisplayName ="Close Date"}},
-                        {  "CloseReason",new DisplayNameAndFormat { DisplayName ="Close Reason"}},
+                        {  "CloseReason",new DisplayNameAndFormat { DisplayName ="Close Reason",Template="hyperlink"}},
                         {  "InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}},
                         {  "ForwardBy",new DisplayNameAndFormat { DisplayName ="Forward By"}},
                     }
