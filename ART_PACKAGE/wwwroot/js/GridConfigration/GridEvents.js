@@ -71,10 +71,11 @@ export const Handlers = {
             ds.dataSource.filter(null);
         }
     },
-    Aml_Analysis: {
-        closeAlerts: async (e) => {
-
-            var selectedidz = await Select("PartyNumber");
+    AmlAnalysis: {
+        closeAlerts: async (e,grid) => {
+            console.log(grid.selectedRows);
+            return ;
+            var selectedidz = ""
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
@@ -120,7 +121,7 @@ export const Handlers = {
 
             }
         },
-        routeAlerts: async (e) => {
+        routeAlerts: async (e,grid) => {
             var selectedidz = await Select("PartyNumber");
 
             if ([...selectedidz].length == 0) {
@@ -243,7 +244,7 @@ export const Handlers = {
             }
 
         },
-        CloseAll: async (e) => {
+        CloseAll: async (e,grid) => {
             var Entities = await (await fetch("/AML_ANALYSIS/GetAllEntities", {
                 method: "GET",
                 headers: {
@@ -954,18 +955,6 @@ export const changeRowColorHandlers = {
 
         chngeRowColor(dataItem, row, colorMapping);
     }
-}
-async function Select(idcolumn) {
-
-    var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
-
-
-    console.log(idz);
-
-    return idz;
-
-
-
 }
 
 

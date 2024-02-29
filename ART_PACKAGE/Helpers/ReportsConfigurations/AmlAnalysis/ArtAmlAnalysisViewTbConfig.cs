@@ -64,6 +64,12 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             };
             SkipList = typeof(ArtAmlAnalysisViewTb).GetProperties().Where(x => !columnsToKeep.Contains(x.Name))
                 .Select(x => x.Name).ToList();
+            Selectable = true;
+            Toolbar = new List<GridButton>()
+            {
+                new GridButton() { action = "closeAlerts", text = "Close Alerts", icon = "k-i-cancel-outline" },
+                new GridButton() { action = "routeAlerts", text = "Route Alerts", icon = "k-i-redo" },
+            };
         }
     }
 }
