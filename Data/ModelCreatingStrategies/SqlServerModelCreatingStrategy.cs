@@ -1738,7 +1738,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.AlarmStatus)
                     .HasMaxLength(4000)
-                    .HasColumnName("ALRM_STATUS");
+                    .HasColumnName("ALARM_STATUS");
 
                 entity.Property(e => e.CloseReason)
                     .HasMaxLength(255)

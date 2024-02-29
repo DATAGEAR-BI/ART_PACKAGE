@@ -2,7 +2,7 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers, CellDbHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
-import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+import { Templates } from "./Components/GridConfigration/ColumnsTemplate.js"
 
 const handleError = (error) => {
     if (error instanceof Error) {
@@ -534,10 +534,16 @@ function generateGrid() {
             });
             this.tbody.find("tr").dblclick(function (e) {
                 var dataItem = grid.dataItem(this);
-                console.log("Hello in tr")
-                console.log(dataItem);
-             var dbclickhandler = dbClickHandlers[handlerkey];
-            dbclickhandler(dataItem).then(console.log("done"));
+                if (dataItem.CloseReason && dataItem.CloseReason.toLowerCase() == "other") {
+                    var handler = CellDbHandlers[handlerkey]["CloseReason"];
+                    if (handler) {
+                        handler(dataItem);
+                    }
+                }
+                else {
+                    var dbclickhandler = dbClickHandlers[handlerkey];
+                    dbclickhandler(dataItem).then(console.log("done"));
+                }
             });
         },
         ...(isHierarchy == "true" && {
@@ -602,6 +608,7 @@ function generateGrid() {
         var cellIndex = $(e.target).index(); // Get the index of the clicked cell
         var column = grid.columns[cellIndex];
         if (column != null && column.field.toLowerCase() == "closereason" && item[column.field].toLowerCase() == 'other') {
+            console.log("Hello in cell");
             var handler = CellDbHandlers[handlerkey][column.field];
             if (handler) {
                 handler(item);
