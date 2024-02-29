@@ -873,7 +873,7 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? (di) => Templates[template](di, column.name) : null,
         };
     });
 
