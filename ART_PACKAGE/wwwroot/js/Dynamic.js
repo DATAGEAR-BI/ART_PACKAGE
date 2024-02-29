@@ -827,6 +827,8 @@ function generateColumns(response) {
         }
 
         var isCollection = column.isCollection;
+        var template = column.template;
+        var hasTemplate = template && template != ""
 
         if (!column.isNullable) {
             if (isNumberField[column.name]) {
