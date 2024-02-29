@@ -604,9 +604,10 @@ function generateGrid() {
         if (column != null && column.field.toLowerCase() == "closereason" && item[column.field].toLowerCase() == 'other') {
             var handler = CellDbHandlers[handlerkey][column.field];
             if (handler) {
-              handler(item);
+                handler(item);
             }
         }
+    });
 
     //    // Check if the clicked cell is from a specific column
     //    //if (fieldName === "yourColumnName") {
