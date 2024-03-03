@@ -9,6 +9,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
@@ -53,7 +54,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
-//builder.Services.AddCustomAuthorization();
+builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -90,7 +91,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
-//app.UseCustomAuthorization();
+app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
