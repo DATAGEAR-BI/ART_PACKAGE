@@ -126,5 +126,16 @@
     CRPCases: "/CrpCases/GetData",
     CrpSystemPerformance: "/CrpSystemPerformance/GetData",
     CrpUserPerformance: "/CrpUserPerformance/GetData",
-    CRPSummary: "/CRPSummary/GetData"
+    CRPSummary: "/CRPSummary/GetData",
+
+    //SasAudit
+    SASAuditTrailAction:"/SASAuditTrailAction/GetData",
+    SASAuditTrailGroupsRolesSummary:"/SASAuditTrailGroupsRolesSummary/GetData",
+    SASAuditTrailAccessGroupRole:"/SASAuditTrailAccessGroupRole/GetData",
+    SASAuditTrailAccessRole:"/SASAuditTrailAccessRole/GetData",
+    SASAuditTrailUsersGroups:"/SASAuditTrailUsersGroups/GetData",
+    SASAuditTrailUsersGroupsCaps:"/SASAuditTrailUsersGroupsCaps/GetData",
+    SASAuditTrailUsersDepartment:"/SASAuditTrailUsersDepartment/GetData",
+    SASAuditTrailLastLogin:"/SASAuditTrailLastLogin/GetData",
+    SASAuditListApp:"/SASAuditListApp/GetData",
 };

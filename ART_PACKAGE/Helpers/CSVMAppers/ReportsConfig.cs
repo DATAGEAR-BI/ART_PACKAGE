@@ -8,6 +8,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SASAUDIT;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.Audit;
 
@@ -2762,8 +2763,128 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
             }
              }
+            },
+               { nameof(SASAuditTrailActionController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                    { "UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                    { "Title", new DisplayNameAndFormat { DisplayName = "Title"}},
+                    { "ActionDate", new DisplayNameAndFormat { DisplayName = "Action Date"}},
+                    { "Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                    { "ActionType", new DisplayNameAndFormat { DisplayName = "Action Type"}},
+                    { "ActionOn", new DisplayNameAndFormat { DisplayName = "Action On"}},
+                    { "DateTime", new DisplayNameAndFormat { DisplayName = "Action DateTime"}},
+                    { "ObjectName", new DisplayNameAndFormat { DisplayName = "Object Name"}},
+                    { "ObjectType", new DisplayNameAndFormat { DisplayName = "Object Type"}},
             }
-
+             }
+            },
+               { nameof(SASAuditTrailGroupsRolesSummaryController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "Groups", new DisplayNameAndFormat { DisplayName = "Group"}},
+                    { "Roles", new DisplayNameAndFormat { DisplayName = "Role"}},
+            }
+             }
+            },
+               { nameof(SASAuditTrailAccessGroupRoleController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "GroupName", new DisplayNameAndFormat { DisplayName = "Group / Role Name"}},
+                    { "GroupDescription", new DisplayNameAndFormat { DisplayName = "Group Description"}},
+                    { "Grouptype", new DisplayNameAndFormat { DisplayName = "Group / Role"}},
+                    { "CapabilityId", new DisplayNameAndFormat { DisplayName = "Capability ID"}},
+                    { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capability Group"}},
+                    { "CapName", new DisplayNameAndFormat { DisplayName = "Capability"}},
+                    { "ComponentName", new DisplayNameAndFormat { DisplayName = "Source of Capability"}},
+            }
+             }
+            },
+               { nameof(SASAuditTrailAccessRoleController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "Role", new DisplayNameAndFormat { DisplayName = "Role"}},
+                    { "RoleDescription", new DisplayNameAndFormat { DisplayName = "Role Description"}},
+                    { "CapabilityId", new DisplayNameAndFormat { DisplayName = "Capability ID"}},
+                    { "CapName", new DisplayNameAndFormat { DisplayName = "Capability Name"}},
+                    { "CapabilitiyGroupName", new DisplayNameAndFormat { DisplayName = "Capabilitiy Group Name"}},
+                    { "ComponentName", new DisplayNameAndFormat { DisplayName = "Component Name"}},
+            }
+             }
+            },
+                 { nameof(SASAuditTrailUsersGroupsController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                    { "UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                    { "DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                    { "JobTitle", new DisplayNameAndFormat { DisplayName = "Job Title"}},
+                    { "Email", new DisplayNameAndFormat { DisplayName = "Email"}},
+                    { "Description", new DisplayNameAndFormat { DisplayName = "Description"}},
+                    { "MemberOfGroup", new DisplayNameAndFormat { DisplayName = "Member Of Group"}},
+                    { "RoleDisplayName", new DisplayNameAndFormat { DisplayName = "Role Display Name"}},
+                    { "UserRole", new DisplayNameAndFormat { DisplayName = "User Role"}},
+                    { "GroupDisplayName", new DisplayNameAndFormat { DisplayName = "Group Display Name"}},
+            }
+             }
+            },
+                  { nameof(SASAuditTrailUsersGroupsCapsController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "UserName", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                    { "DisplayName", new DisplayNameAndFormat { DisplayName = "Display Name"}},
+                    { "Ggroup", new DisplayNameAndFormat { DisplayName = "Group"}},
+                    { "Rrole", new DisplayNameAndFormat { DisplayName = "Role"}},
+                    { "Capabilities", new DisplayNameAndFormat { DisplayName = "Capability"}},
+            }
+             }
+            },
+            { nameof(SASAuditTrailUsersDepartmentController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "UserId", new DisplayNameAndFormat { DisplayName = "User ID"}},
+                    { "UserDisplayName", new DisplayNameAndFormat { DisplayName = "User Display Name"}},
+                    { "UserTitle", new DisplayNameAndFormat { DisplayName = "User Title"}},
+                    { "UserDesccription", new DisplayNameAndFormat { DisplayName = "Description"}},
+                    { "Department", new DisplayNameAndFormat { DisplayName = "Department"}},
+                    { "Appname", new DisplayNameAndFormat { DisplayName = "App Name"}},
+                    { "Logindatetime", new DisplayNameAndFormat { DisplayName = "Login datetime"}},
+            }
+             }
+            },
+            { nameof(SASAuditTrailLastLoginController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "Username", new DisplayNameAndFormat { DisplayName = "User Name"}},
+                    { "Logindatetime", new DisplayNameAndFormat { DisplayName = "Last Login Datetime"}},
+                    { "Logindate", new DisplayNameAndFormat { DisplayName = "Last Login Date"}},
+                    { "Appname", new DisplayNameAndFormat { DisplayName = "Application Name"}},
+            }
+             }
+            },
+            { nameof(SASAuditListAppController).ToLower() , new ReportConfig
+            {
+                DisplayNames =  new Dictionary<string, DisplayNameAndFormat>
+            {
+                    { "AppLebal", new DisplayNameAndFormat { DisplayName = "Application Name"}},
+                    { "ProType", new DisplayNameAndFormat { DisplayName = "Application Type"}},
+                    { "Diedate", new DisplayNameAndFormat { DisplayName = "Expiration Date"}},
+            },SkipList = new List<string>{
+               "BeginDate",
+               "Fmtname",
+               "ProStart"
+            }
+             }
+            }
         };
 
     }

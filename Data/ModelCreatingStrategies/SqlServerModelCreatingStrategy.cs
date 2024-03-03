@@ -7465,5 +7465,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("RELEASED_DATE");
             });
         }
+
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Controllers.ECM;
-using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
@@ -47,7 +46,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
                     {nameof(ArtGroupsAuditView.MemberUsers          ).ToLower(), _dropSrv.GetMemberUsersDropDown().ToDynamicList() },
                     {nameof(ArtGroupsAuditView.Action               ).ToLower(), new List<string> { "Add", "Update", "Delete" }.ToDynamicList() },
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AuditGroupsController).ToLower()].SkipList;
             }
 
 
