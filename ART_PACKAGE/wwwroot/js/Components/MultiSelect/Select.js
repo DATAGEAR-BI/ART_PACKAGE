@@ -4,7 +4,9 @@
     isMulti;
     constructor() {
         super();
-        console.log("ctr");
+    }
+
+    connectedCallback() {
         var id = this.id;
         this.classList.add("form-floating", "form-floating-outline");
 
@@ -34,17 +36,23 @@
 
         this.label.innerText = this.dataset.title;
 
+        
         this.appendChild(this.select);
         this.appendChild(this.label);
-        this.intialize([]);
-
+        let children = this.querySelectorAll("option");
+        console.log(children);
+        if(children && children.length > 0){
+            this.intialize(children);
+        }
+        else 
+            this.intialize([]);
     }
 
     intialize(options) {
         // Initialize
 
         options.forEach(x => {
-            console.log(x);
+            
             this.select.appendChild(x);
         })
         var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);

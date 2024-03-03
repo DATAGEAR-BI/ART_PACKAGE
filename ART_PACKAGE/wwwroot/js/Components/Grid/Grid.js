@@ -10,7 +10,9 @@ import {getChartType} from "../Charts/Charts.js"
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
-import * as c from "../TextInput/TextInput.js";
+import * as t from "../TextInput/TextInput.js";
+import * as ta from "../TextAreaInput/TextAreaInput.js";
+import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
@@ -897,7 +899,7 @@ class Grid extends HTMLElement {
                 if (this.handlerkey) {
                     var reportHandlers = Handlers[this.handlerkey];
                     if (reportHandlers)
-                        reportHandlers[x.name](e, this.gridDiv);
+                        reportHandlers[x.name](e, this);
                     else
                         console.error("there is no Handlers for this report");
                 } else {

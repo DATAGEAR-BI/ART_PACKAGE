@@ -73,9 +73,8 @@ export const Handlers = {
     },
     AmlAnalysis: {
         closeAlerts: async (e,grid) => {
-            console.log(grid.selectedRows);
-            return ;
-            var selectedidz = ""
+            
+            var selectedidz = Object.values( grid.selectedRows).flat().map(x => x.PartyNumber);
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
@@ -87,24 +86,30 @@ export const Handlers = {
             }
 
 
-            document.getElementById("selcted-div").innerText = `You Selected ${selectedidz.length} Entities`
+            document.getElementById("number_of_entities_to_close").innerText = `You are about to close alerts for ${selectedidz.length} ${selectedidz.length == 1 ? "entity" : "entities"}`
             $("#closeModal").modal("show");
             var closeBtn = document.getElementById("closeBtn");
-
+            var comment = document.getElementById("comment");
+            var errorspan = document.getElementById("comment-validation")
+            comment.onkeyup = () => {
+                console.log("k",comment.value)
+                if(!comment.value || comment.value == "")
+                    errorspan.hidden = false;
+                else
+                    errorspan.hidden = true;
+            }
+            errorspan.hidden = true;
             closeBtn.onclick = async (e) => {
-                var comment = document.getElementById("comment-box-close")
-                var errorspan = document.getElementById("comment-span")
+                
                 if (!comment.value || comment.value == "") {
-
-                    errorspan.innerText = "You must type a comment";
                     errorspan.hidden = false;
                     return;
                 }
-                errorspan.hidden = true;
+                
                 var para = {
                     Entities: selectedidz.map(x => x.toString()),
                     Comment: comment.value,
-                    Desc: document.getElementById("close-desc").value,
+                    Desc: document.getElementById("closeDesc").value.value,
                 }
                 var res = fetch("/AML_ANALYSIS/Close", {
                     method: "POST",
@@ -113,9 +118,6 @@ export const Handlers = {
                         "Accept": "application/json"
                     },
                     body: JSON.stringify(para)
-                }).then(x => {
-                    comment.value = "";
-                    localStorage.removeItem("selectedidz");
                 });
                 $("#closeModal").modal("hide");
 
