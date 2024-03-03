@@ -25,6 +25,7 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.DATA.FATCA;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ namespace ART_PACKAGE.Hubs
         private readonly UsersConnectionIds connections;
         private readonly ICsvExport _csvSrv;
         private readonly EcmContext _ecm;
+        private readonly FATCAContext _fatca;
         private readonly SasAmlContext _dbAml;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
@@ -64,72 +66,84 @@ namespace ART_PACKAGE.Hubs
             _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
             modules = _configuration.GetSection("Modules").Get<List<string>>();
-            if (modules.Contains("SASAML"))
+            if (modules is not null && modules.Count > 0)
             {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
-                _dbAml = amlService;
-            }
-            if (modules.Contains("ECM"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
-                _ecm = ecmService;
-            }
-            if (modules.Contains("DGAML"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
-                _dgaml = dgamlService;
-            }
 
 
-            if (modules.Contains("FTI"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                FTIContext fticontext = scope.ServiceProvider.GetRequiredService<FTIContext>();
-                TIZONE2Context _ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
-                _fti = fticontext;
-                ti = _ti;
-            }
-            if (modules.Contains("GOAML"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtGoAmlContext goamlcontext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
-                _dbGoAml = goamlcontext;
+                if (modules.Contains("SASAML"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                    _dbAml = amlService;
+                }
+                if (modules.Contains("ECM"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                    _ecm = ecmService;
+                }
+                if (modules.Contains("FATCA"))
 
-            }
-            if (modules.Contains("DGAUDIT"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
-                _dbAd = auditcontext;
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    FATCAContext fatcaService = scope.ServiceProvider.GetRequiredService<FATCAContext>();
+                    _fatca = fatcaService;
+                }
+                if (modules.Contains("DGAML"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                    _dgaml = dgamlService;
+                }
 
-            }
-            if (modules.Contains("SEG"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
-                _seg = seg;
-            }
-            if (modules.Contains("KYC"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                KYCContext kyc = scope.ServiceProvider.GetRequiredService<KYCContext>();
-                _kyc = kyc;
-            }
-            if (modules.Contains("AMLANALYSIS"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                AmlAnalysisContext amlanalysis = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
-                _amlanalysis = amlanalysis;
-            }
 
-            if (modules.Contains("CRP"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                CRPContext crp = scope.ServiceProvider.GetRequiredService<CRPContext>();
-                _crp = crp;
+                if (modules.Contains("FTI"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    FTIContext fticontext = scope.ServiceProvider.GetRequiredService<FTIContext>();
+                    TIZONE2Context _ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
+                    _fti = fticontext;
+                    ti = _ti;
+                }
+                if (modules.Contains("GOAML"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    ArtGoAmlContext goamlcontext = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+                    _dbGoAml = goamlcontext;
+
+                }
+                if (modules.Contains("DGAUDIT"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    ArtAuditContext auditcontext = scope.ServiceProvider.GetRequiredService<ArtAuditContext>();
+                    _dbAd = auditcontext;
+
+                }
+                if (modules.Contains("SEG"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    SegmentationContext seg = scope.ServiceProvider.GetRequiredService<SegmentationContext>();
+                    _seg = seg;
+                }
+                if (modules.Contains("KYC"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    KYCContext kyc = scope.ServiceProvider.GetRequiredService<KYCContext>();
+                    _kyc = kyc;
+                }
+                if (modules.Contains("AMLANALYSIS"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    AmlAnalysisContext amlanalysis = scope.ServiceProvider.GetRequiredService<AmlAnalysisContext>();
+                    _amlanalysis = amlanalysis;
+                }
+
+                if (modules.Contains("CRP"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    CRPContext crp = scope.ServiceProvider.GetRequiredService<CRPContext>();
+                    _crp = crp;
+                }
             }
             this.db = db;
             this.dBFactory = dBFactory;
