@@ -459,8 +459,10 @@ function generateGrid() {
         columns: columns,
         noRecords: true,
         persistSelection: true,
+        scrollable: {
+            virtual: true
+        },
         pageable: true,
-        sortable: true,
         change: function (e) {
             if ([...this.select()].length > 0) {
                 selected[this.dataSource.page()] = [...this.select()].map((x) => {
