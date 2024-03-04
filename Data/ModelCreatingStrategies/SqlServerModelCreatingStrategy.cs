@@ -7,6 +7,7 @@ using Data.Data.Audit;
 using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.SASAml;
+using Data.Data.SASAudit;
 using Data.Data.Segmentation;
 using Data.DGAML;
 using Data.DGECM;
@@ -7468,7 +7469,284 @@ namespace Data.ModelCreatingStrategies
 
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.Entity<SasAuditTrailReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_AUDIT_TRAIL_REPORT", "ART_DB");
+
+                entity.Property(e => e.ActionDate)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_DATE");
+
+                entity.Property(e => e.ActionOn)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_ON");
+
+                entity.Property(e => e.ActionType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_TYPE");
+
+                entity.Property(e => e.DateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DATE_TIME");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.ObjectName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_NAME");
+
+                entity.Property(e => e.ObjectType)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_TYPE");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerProfile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_PROFILE", "ART_DB");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.GroupDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DESCRIPTION");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_NAME");
+
+                entity.Property(e => e.Grouptype)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPTYPE");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_ROLE", "ART_DB");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE");
+
+                entity.Property(e => e.RoleDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DESCRIPTION");
+            });
+
+            modelBuilder.Entity<SasListAccessUsersGroupsCap>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_USERS_GROUPS_CAPS", "ART_DB");
+
+                entity.Property(e => e.Capabilities)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("Display_Name");
+
+                entity.Property(e => e.Ggroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GGroup");
+
+                entity.Property(e => e.Rrole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("RRole");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListGroupsRolesSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_GROUPS_ROLES_SUMMARY", "ART_DB");
+
+                entity.Property(e => e.Groups)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPS");
+
+                entity.Property(e => e.Roles)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLES");
+            });
+
+            modelBuilder.Entity<SasListOfUsersAndGroupsRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_OF_USERS_AND_GROUPS_ROLES", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("Display_Name");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DISPLAY_NAME");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Job_Title");
+
+                entity.Property(e => e.MemberOfGroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("MEMBER_OF_GROUP");
+
+                entity.Property(e => e.RoleDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.UserRole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("User_ROLE");
+            });
+
+            modelBuilder.Entity<SasListUsersDepartment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_USERS_DEPARTMENT", "ART_DB");
+
+                entity.Property(e => e.Appname)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
+                    .HasColumnName("APPNAME");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Logindatetime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LOGINDATETIME");
+
+                entity.Property(e => e.UserDesccription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DESCCRIPTION");
+
+                entity.Property(e => e.UserDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_TITLE");
+            });
         }
     }
 }
