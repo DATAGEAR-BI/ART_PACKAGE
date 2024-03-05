@@ -458,7 +458,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {
                     SkipList = new List<string>
                     {
-                               "BranchNumber"
                     },
                     DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
@@ -475,7 +474,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"CreatedBy",new DisplayNameAndFormat { DisplayName ="Created By"}},
                     {"Owner",new DisplayNameAndFormat { DisplayName ="Owner"}},
                     {"CreateDate",new DisplayNameAndFormat { DisplayName ="Create Date"}},
-                    {"ClosedDate",new DisplayNameAndFormat { DisplayName ="Closed Date"}}
+                    {"ClosedDate",new DisplayNameAndFormat { DisplayName ="Closed Date"}},
                     }
                 }
             },
@@ -525,7 +524,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      "PhoneNumber3",
                      "AnnualIncomeAmount",
                      "NetWorthAmount",
-                     "ActiveFlg",
+                     "ActiveFlg"
                     },
                     DisplayNames = new Dictionary<string, DisplayNameAndFormat>
                     {
@@ -557,7 +556,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                   {"PhoneNumber2",new DisplayNameAndFormat { DisplayName ="Phone Number 2"}},
                                   {"LastRiskAssessmentDate",new DisplayNameAndFormat { DisplayName ="Last Risk Assessment Date"}},
                                   {"Nationality2",new DisplayNameAndFormat { DisplayName ="Nationality 2"}},
-                                  {"Nationality3",new DisplayNameAndFormat { DisplayName ="Nationality 3"}},
                     }
                 }
             },

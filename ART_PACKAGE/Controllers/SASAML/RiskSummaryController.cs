@@ -43,6 +43,19 @@ namespace ART_PACKAGE.Controllers.SASAML
 
                 chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(SQLSERVERSPNames.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
                 chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(SQLSERVERSPNames.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                chart3data = dbfcfcore.ExecuteProc<ArtStAmlRiskStatus>(SQLSERVERSPNames.ART_ST_AML_RISK_STATUS, chart3Params.ToArray());
+                foreach (IGrouping<string?, ArtStAmlRiskStatus>? chartResult in chart3data.GroupBy(x => x.RISK).ToList())
+                {
+                    Dictionary<string, object> result = new()
+                    {
+                        { "RISK", chartResult.Key }
+                    };
+                    foreach (ArtStAmlRiskStatus? list in chartResult)
+                    {
+                        result.Add(list.RISK_STATUS, list.NUMBER_OF_CUSTOMERS);
+                    }
+                    chartDictList.Add(result);
+                };
             }
 
             if (dbType == DbTypes.Oracle)

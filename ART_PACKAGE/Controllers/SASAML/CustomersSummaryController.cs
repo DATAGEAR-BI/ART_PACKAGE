@@ -52,6 +52,9 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(SQLSERVERSPNames.ART_ST_CUST_PER_TYPE, chart1Params.ToArray());
                 chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(SQLSERVERSPNames.ART_ST_CUST_PER_RISK, chart2Params.ToArray());
                 chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(SQLSERVERSPNames.ART_ST_CUST_PER_BRANCH, chart3Params.ToArray());
+                chart4Data = dbfcfcore.ExecuteProc<ArtStCustPerIndustry>(SQLSERVERSPNames.ART_ST_CUST_PER_INDUSTRY, chart4Params.ToArray());
+                chart5Data = dbfcfcore.ExecuteProc<ArtStCustPerOccupation>(SQLSERVERSPNames.ART_ST_CUST_PER_OCCUPATION, chart5Params.ToArray());
+                chart6Data = dbfcfcore.ExecuteProc<ArtStCustPerStatus>(SQLSERVERSPNames.ART_ST_CUST_PER_STATUS, chart6Params.ToArray());
 
             }
 

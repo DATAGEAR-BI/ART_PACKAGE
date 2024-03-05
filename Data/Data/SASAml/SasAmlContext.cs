@@ -31,6 +31,8 @@ namespace Data.Data.SASAml
             //AML
             modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAlertPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAlertPerScenario>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);

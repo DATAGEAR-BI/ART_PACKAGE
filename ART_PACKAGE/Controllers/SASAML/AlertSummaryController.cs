@@ -30,15 +30,21 @@ namespace ART_PACKAGE.Controllers.SASAML
 
             IEnumerable<ArtStAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStAlertsPerStatus>().AsQueryable();
             IEnumerable<ArtStAlertPerOwner> chart2data = Enumerable.Empty<ArtStAlertPerOwner>().AsQueryable();
+            IEnumerable<ArtStAlertPerBranch> chart3data = Enumerable.Empty<ArtStAlertPerBranch>().AsQueryable();
+            IEnumerable<ArtStAlertPerScenario> chart4data = Enumerable.Empty<ArtStAlertPerScenario>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(SQLSERVERSPNames.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = dbfcfkc.ExecuteProc<ArtStAlertPerBranch>(SQLSERVERSPNames.ART_ST_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = dbfcfkc.ExecuteProc<ArtStAlertPerScenario>(SQLSERVERSPNames.ART_ST_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 
@@ -46,6 +52,8 @@ namespace ART_PACKAGE.Controllers.SASAML
             {
                 chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(ORACLESPName.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = dbfcfkc.ExecuteProc<ArtStAlertPerBranch>(ORACLESPName.ART_ST_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = dbfcfkc.ExecuteProc<ArtStAlertPerScenario>(ORACLESPName.ART_ST_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 
@@ -68,7 +76,23 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_USERID",
                     Val = "ALERTS_CNT_SUM"
-                }
+                },
+                new ChartData<ArtStAlertPerBranch>
+                {
+                    ChartId = "StAlertPerBranch",
+                    Data = chart3data.ToList(),
+                    Title = "Alerts Per Branch",
+                    Cat = "BRANCH_NAME",
+                    Val = "ALERTS_COUNT"
+                },
+                new ChartData<ArtStAlertPerScenario>
+                {
+                    ChartId = "StAlertPerScenario",
+                    Data = chart4data.ToList(),
+                    Title = "Alerts Per Scenario",
+                    Cat = "SCENARIO_NAME",
+                    Val = "ALERTS_COUNT"
+                },
             };
 
 

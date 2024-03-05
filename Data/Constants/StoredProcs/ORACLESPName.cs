@@ -13,6 +13,8 @@
         //AML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_ALERTS_PER_SCENARIO = "ART.ART_ST_ALERTS_PER_SCENARIO";
+        public static readonly string ART_ST_ALERTS_PER_BRANCH = "ART.ART_ST_ALERTS_PER_BRANCH";
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART.ART_ST_CASES_PER_PRIORITY";
         public static readonly string ART_ST_CASES_PER_STATUS = "ART.ART_ST_CASES_PER_STATUS";

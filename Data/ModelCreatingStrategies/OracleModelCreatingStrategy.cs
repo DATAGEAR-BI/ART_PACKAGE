@@ -2534,10 +2534,6 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("NATIONALITY2");
-                entity.Property(e => e.Nationality3)
-                    .HasMaxLength(26)
-                    .IsUnicode(false)
-                    .HasColumnName("NATIONALITY3");
 
                 entity.Property(e => e.BranchNumber)
                     .HasMaxLength(40)
