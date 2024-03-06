@@ -7,8 +7,8 @@ namespace Data.Data.KYC
     {
         public string? AmlRisk { get; set; }
         public string? Type { get; set; }
-        public decimal? NumberOfUpdatedKyc { get; set; }
-        public decimal? NumberOfNotUpdatedKyc { get; set; }
-        public decimal? Total { get; set; }
+        public int? NumberOfUpdatedKyc { get; set; }
+        public int? NumberOfNotUpdatedKyc { get; set; }
+        public int? Total { get; set; }
     }
 }
