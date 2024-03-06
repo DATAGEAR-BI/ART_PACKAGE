@@ -486,9 +486,12 @@ function generateGrid() {
         height: 550,
         groupable: true,
         dataBound: function (e) {
-            for (var i = 0; i < this.columns.length; i++) {
-                this.autoFitColumn(i);
+            if (window.location.href.split('/')[3].toUpperCase() != "AML_ANALYSIS") {
+                for (var i = 0; i < this.columns.length; i++) {
+                    this.autoFitColumn(i);
+                }
             }
+            
 
             if (isColoredRows) {
                 var rows = e.sender.tbody.children();
@@ -834,6 +837,7 @@ function generateColumns(response) {
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
+            width: column.name.toUpperCase().includes("NAME")?300: 180,
             ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection
                 ? (di) =>
