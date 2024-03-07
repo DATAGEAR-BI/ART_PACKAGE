@@ -287,7 +287,7 @@ namespace ART_PACKAGE.Hubs
             if (nameof(SASAuditTrailUsersGroupsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<SasListOfUsersAndGroupsRole, SASAuditTrailUsersGroupsController>(_dbSasAd, Context.User.Identity.Name, para);
             if (nameof(SASAuditTrailUsersGroupsCapsController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<SasListAccessUsersGroupsCap, SASAuditTrailUsersGroupsCapsController>(_dbSasAd, Context.User.Identity.Name, para);
             if (nameof(SASAuditTrailUsersDepartmentController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<SasListUsersDepartment, SASAuditTrailUsersDepartmentController>(_dbSasAd, Context.User.Identity.Name, para);
-            if (nameof(SASAuditTrailLastLoginController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<VaLastLogin, SASAuditTrailLastLoginController>(_dbSasAd, Context.User.Identity.Name, para);
+            if (nameof(SASAuditTrailLastLoginController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<VaLastLoginView, SASAuditTrailLastLoginController>(_dbSasAd, Context.User.Identity.Name, para);
             if (nameof(SASAuditListAppController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<VaLicensed, SASAuditListAppController>(_dbSasAd, Context.User.Identity.Name, para);
             #endregion
             if (nameof(AML_ANALYSISController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlAnalysisViewTb, AML_ANALYSISController>(_amlanalysis, Context.User.Identity.Name, para);

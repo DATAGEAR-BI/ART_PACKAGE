@@ -15701,14 +15701,15 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("USER_TITLE");
             });
-            modelBuilder.Entity<VaLastLogin>(entity =>
+            modelBuilder.Entity<VaLastLoginView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("VA_LAST_LOGIN");
+                entity.ToView("VA_LAST_LOGIN_VIEW");
 
                 entity.Property(e => e.Appname)
-                    .HasMaxLength(150)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
                     .HasColumnName("APPNAME");
 
                 entity.Property(e => e.Logindate)
@@ -15716,11 +15717,17 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LOGINDATE");
 
                 entity.Property(e => e.Logindatetime)
-                    .HasMaxLength(50)
+                    .HasPrecision(9)
                     .HasColumnName("LOGINDATETIME");
 
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
                 entity.Property(e => e.Username)
-                    .HasMaxLength(100)
+                    .HasMaxLength(80)
+                    .IsUnicode(false)
                     .HasColumnName("USERNAME");
             });
             modelBuilder.Entity<VaLicensed>(entity =>

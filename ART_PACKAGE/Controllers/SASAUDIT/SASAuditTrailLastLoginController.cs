@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<VaLastLogin> data = context.VaLastLogins.AsQueryable();
+            IQueryable<VaLastLoginView> data = context.VaLastLogins.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -40,7 +40,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
             }
 
 
-            KendoDataDesc<VaLastLogin> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<VaLastLoginView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
         {
             Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(SASAuditTrailLastLoginController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(SASAuditTrailLastLoginController).ToLower()].SkipList;
-            List<VaLastLogin> data = context.VaLastLogins.CallData(req).Data.ToList();
+            List<VaLastLoginView> data = context.VaLastLogins.CallData(req).Data.ToList();
             ViewData["title"] = "SAS Last Login Report";
             ViewData["desc"] = "Presents each user with last login date";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

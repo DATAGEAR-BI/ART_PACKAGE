@@ -16,7 +16,7 @@ namespace Data.Data.SASAudit
         public virtual DbSet<SasListGroupsRolesSummary> SasListGroupsRolesSummaries { get; set; } = null!;
         public virtual DbSet<SasListOfUsersAndGroupsRole> SasListOfUsersAndGroupsRoles { get; set; } = null!;
         public virtual DbSet<SasListUsersDepartment> SasListUsersDepartments { get; set; } = null!;
-        public virtual DbSet<VaLastLogin> VaLastLogins { get; set; }=null!;
+        public virtual DbSet<VaLastLoginView> VaLastLogins { get; set; }=null!;
         public virtual DbSet<VaLicensed> VaLicenseds { get; set; }=null!;
 
         public SasAuditContext(DbContextOptions<SasAuditContext> options) : base(options)
