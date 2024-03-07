@@ -2,8 +2,8 @@
 {
     public partial class FskEntityEvent
     {
-        public decimal EventId { get; set; }
-        public decimal? CaseId { get; set; }
+        public int EventId { get; set; }
+        public int? CaseId { get; set; }
         public string EventTypeCode { get; set; } = null!;
         public string? EventDescription { get; set; }
         public string EntityNumber { get; set; } = null!;

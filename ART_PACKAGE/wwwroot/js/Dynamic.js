@@ -486,12 +486,13 @@ function generateGrid() {
         height: 550,
         groupable: true,
         dataBound: function (e) {
-            if (window.location.href.split('/')[3].toUpperCase() != "AML_ANALYSIS") {
+            //console.log(window.location.href.split('/')[3].toUpperCase())
+            if (!window.location.href.split('/')[3].toUpperCase().includes("AML_ANALYSIS")) {
                 for (var i = 0; i < this.columns.length; i++) {
                     this.autoFitColumn(i);
                 }
             }
-            
+
 
             if (isColoredRows) {
                 var rows = e.sender.tbody.children();
@@ -719,7 +720,7 @@ function createFiltersDiv(obj) {
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
                     existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${y.value
-                    }`;
+                        }`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
@@ -790,8 +791,8 @@ function generateColumns(response) {
         var columnF = column.filter;
         var hasFilters = columnF && columnF != ""
 
-            console.log(column)
-        if (hasFilters){
+        console.log(column)
+        if (hasFilters) {
             filter = columnFilters[columnF]();
         }
 
@@ -837,7 +838,7 @@ function generateColumns(response) {
             filterable: isCollection ? false : filter,
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
-            width: column.name.toUpperCase().includes("NAME")?300: 180,
+            width: column.name.toUpperCase().includes("NAME") ? 300 : 180,
             ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection
                 ? (di) =>
