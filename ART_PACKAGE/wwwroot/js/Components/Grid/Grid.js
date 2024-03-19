@@ -461,6 +461,10 @@ class Grid extends HTMLElement {
                 {
                     name: this.gridDiv.id + "SaveOptions",
                     text: "Save Options"
+                },
+                {   
+                    name: this.gridDiv.id + "ResetOptions",
+                    text: "Reset Options"
                 }
             );
 
@@ -472,8 +476,6 @@ class Grid extends HTMLElement {
                 var btn = {
                     name: `${x.action}`,
                     text: `${x.text}`,
-
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
                 }
                 this.customtToolBarBtns.push(btn);
                 toolbar.push(btn);
@@ -874,6 +876,11 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}SaveOptions`).click(async (e) => {
             this.saveState();
         });
+        
+        
+        $(`.k-grid-${this.gridDiv.id}ResetOptions`).click(async (e) => {
+            this.resetState();
+        });
 
 
         $(`.k-grid-download`).click(async (e) => {
@@ -1174,7 +1181,18 @@ class Grid extends HTMLElement {
     
     
     
-    
+    resetState(){
+        let key = `${this.gridDiv.id}-Options`;
+        if(this.isCustom)
+            key +=  `-${this.dataset.reportid}`;
+        
+        let options = localStorage.getItem(key);
+        if(options){
+            console.log("dddddddd")
+            localStorage.removeItem(key);
+            window.location.reload();
+        }
+    }
     saveState(){
             let key = `${this.gridDiv.id}-Options`;
             if(this.isCustom)
@@ -1246,6 +1264,10 @@ class Grid extends HTMLElement {
                         }
                        
                     }
+
+                    if(c.template)
+                        column.template = c.template;
+                    
                     serverOptionsColumns[index] = column;
                 }
                 
@@ -1254,7 +1276,6 @@ class Grid extends HTMLElement {
             savedOptions.columns = serverOptionsColumns;
             savedOptions.dataSource.transport = serverOptions.dataSource.transport;
             savedOptions.dataBound = serverOptions.dataBound;
-            console.log(savedOptions)
             return savedOptions;
         }
             

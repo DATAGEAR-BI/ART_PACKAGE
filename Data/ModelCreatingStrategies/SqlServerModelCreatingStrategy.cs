@@ -3197,7 +3197,7 @@ namespace Data.ModelCreatingStrategies
             modelBuilder.Entity<ArtAmlAnalysisRule>(entity =>
             {
                 entity.ToTable("ArtAmlAnalysisRules", "ART_DB");
-
+                entity.HasQueryFilter(x => !x.Deleted);
                 entity.Property(e => e.Action).HasMaxLength(20);
 
                 entity.Property(e => e.Active)

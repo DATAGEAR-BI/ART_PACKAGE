@@ -1,36 +1,37 @@
-﻿
-using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
 {
-    private static readonly Dictionary<string, string> QueryBuilderOperationsMap = new()
-    {
-        { "="              , "eq" },
-        { "<>"             , "neq" },
-        { "isblank"          , "isnull" },
-        { "isnotblank"       , "isnotnull" },
-        { "is_empty"         , $@"isempty" },
-        { "is_not_empty"      , $@"isnotempty" },
-        { "startswith"      , "startswith" },
-        { "not_begins_with", "doesnotstartwith" },
-        { "contains"        , "contains" },
-        { "notcontains"  , "doesnotcontain" },
-        { "endswith"        , "endswith" },
-        { "not_ends_with"  , "doesnotendwith" },
-        { "in"  , "in" },
-        { "not_in"  , "not_in" },
-        {">="  ,"gte"},
-        {">"   ,"gt"},
-        {"<="  ,"lte"},
-        { "<"  , "lt" },
-    };
+    private static readonly Dictionary<string, string> QueryBuilderOperationsMap =
+        new()
+        {
+            { "=", "eq" },
+            { "<>", "neq" },
+            { "isblank", "isnull" },
+            { "isnotblank", "isnotnull" },
+            { "is_empty", $@"isempty" },
+            { "is_not_empty", $@"isnotempty" },
+            { "startswith", "startswith" },
+            { "not_begins_with", "doesnotstartwith" },
+            { "contains", "contains" },
+            { "notcontains", "doesnotcontain" },
+            { "endswith", "endswith" },
+            { "not_ends_with", "doesnotendwith" },
+            { "in", "in" },
+            { "not_in", "not_in" },
+            { ">=", "gte" },
+            { ">", "gt" },
+            { "<=", "lte" },
+            { "<", "lt" },
+        };
+
     public static Expression<Func<T, bool>> ToExpression<T>(this Filter filter)
     {
         if (filter == null)
@@ -63,13 +64,13 @@ public static class FilterExtensions
                     foreach (Filter item in f.filters)
                     {
                         Expression nestedChildExp = BuildExpression<T>(param, item);
-                        childExp = childExp == null
-                            ? nestedChildExp
-                            : item.logic == "or"
-                                ? Expression.OrElse(childExp, nestedChildExp)
-                                : Expression.AndAlso(childExp, nestedChildExp);
+                        childExp =
+                            childExp == null
+                                ? nestedChildExp
+                                : item.logic == "or"
+                                    ? Expression.OrElse(childExp, nestedChildExp)
+                                    : Expression.AndAlso(childExp, nestedChildExp);
                     }
-
                 }
                 else
                 {
@@ -77,87 +78,172 @@ public static class FilterExtensions
                     childExp = BuildIndividualExpression<T>(param, f);
                 }
 
-                exp = exp == null
-                    ? childExp
-                    : filter.logic == "or"
-                        ? Expression.OrElse(exp, childExp)
-                        : Expression.AndAlso(exp, childExp);
+                exp =
+                    exp == null
+                        ? childExp
+                        : filter.logic == "or"
+                            ? Expression.OrElse(exp, childExp)
+                            : Expression.AndAlso(exp, childExp);
             }
         }
-
 
         return exp;
     }
 
     public static Expression BuildIndividualExpression<T>(ParameterExpression param, Filter filter)
     {
-
         MemberExpression member = Expression.Property(param, filter.field);
         Type memType = member.Type;
         ConstantExpression constant = null;
-       
+
         //Expression.Constant(Convert.ChangeType(filter.value, member.Type));
         filter.@operator = QueryBuilderOperationsMap.TryGetValue(filter.@operator, out string op)
             ? op
             : filter.@operator;
         MethodInfo? inFunc = null;
-        if (filter.@operator == "in" || filter.@operator ==  "not_in")
+        if (filter.@operator == "in" || filter.@operator == "not_in")
         {
             var listType = typeof(List<>).MakeGenericType(memType);
             constant = BuildConstantExpression(listType, filter.value);
-            inFunc = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.BuildInExpression))?.MakeGenericMethod(listType);
+            inFunc = typeof(FilterExtensions)
+                .GetMethod(nameof(FilterExtensions.BuildInExpression))
+                ?.MakeGenericMethod(listType);
         }
         else
         {
             constant = BuildConstantExpression(memType, filter.value);
         }
-        
+
         return filter.@operator switch
         {
-            "eq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.Equal(member, constant) : Expression.Equal(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
-            "neq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.NotEqual(member, constant) : Expression.NotEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
+            "eq"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.Equal(member, constant)
+                    : Expression.Equal(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
+            "neq"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.NotEqual(member, constant)
+                    : Expression.NotEqual(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
             "isnull" => Expression.Equal(member, Expression.Constant(null, member.Type)),
-            "isnotnull"  => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
-            "isempty" => Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type))),
-            "isnotempty" => Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type))),
-            "startswith" => BuildMethodExpression<string>(nameof(string.StartsWith), member, constant),
-            "doesnotstartwith" => Expression.Not(BuildMethodExpression<string>(nameof(string.StartsWith), member, constant)),
+            "isnotnull" => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
+            "isempty"
+                => Expression.Equal(
+                    member,
+                    Expression.Constant(Convert.ChangeType("", member.Type))
+                ),
+            "isnotempty"
+                => Expression.NotEqual(
+                    member,
+                    Expression.Constant(Convert.ChangeType("", member.Type))
+                ),
+            "startswith"
+                => BuildMethodExpression<string>(nameof(string.StartsWith), member, constant),
+            "doesnotstartwith"
+                => Expression.Not(
+                    BuildMethodExpression<string>(nameof(string.StartsWith), member, constant)
+                ),
             "contains" => BuildMethodExpression<string>(nameof(string.Contains), member, constant),
-            "doesnotcontain" => Expression.Not(BuildMethodExpression<string>(nameof(string.Contains), member, constant)),
+            "doesnotcontain"
+                => Expression.Not(
+                    BuildMethodExpression<string>(nameof(string.Contains), member, constant)
+                ),
             "endswith" => BuildMethodExpression<string>(nameof(string.EndsWith), member, constant),
-            "doesnotendwith" => Expression.Not(BuildMethodExpression<string>(nameof(string.EndsWith), member, constant)),
-            "gt" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.GreaterThan(member, constant) : Expression.GreaterThan(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
-            "gte" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.GreaterThanOrEqual(member, constant) : Expression.GreaterThanOrEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
-            "lt" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.LessThan(member, constant) : Expression.LessThan(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
-            "lte" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.LessThanOrEqual(member, constant) : Expression.LessThanOrEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
-            "isnullorempty" => Expression.Or(Expression.Equal(member, Expression.Constant(null, member.Type)), Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
-            "isnotnullorempty" => Expression.And(Expression.NotEqual(member, Expression.Constant(null, member.Type)), Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
-            "in" => (Expression) inFunc.Invoke(null,new object[]{member , constant , memType}),
-            "not_in" => Expression.Not((Expression) inFunc.Invoke(null,new object[]{member , constant , memType})),
+            "doesnotendwith"
+                => Expression.Not(
+                    BuildMethodExpression<string>(nameof(string.EndsWith), member, constant)
+                ),
+            "gt"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.GreaterThan(member, constant)
+                    : Expression.GreaterThan(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
+            "gte"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.GreaterThanOrEqual(member, constant)
+                    : Expression.GreaterThanOrEqual(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
+            "lt"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.LessThan(member, constant)
+                    : Expression.LessThan(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
+            "lte"
+                => !IsDateTimeOrNullableDateTime(member.Type)
+                    ? Expression.LessThanOrEqual(member, constant)
+                    : Expression.LessThanOrEqual(
+                        GetDatePropertyExpression(member),
+                        GetDatePropertyExpression(constant)
+                    ),
+            "isnullorempty"
+                => Expression.Or(
+                    Expression.Equal(member, Expression.Constant(null, member.Type)),
+                    Expression.Equal(
+                        member,
+                        Expression.Constant(Convert.ChangeType("", member.Type))
+                    )
+                ),
+            "isnotnullorempty"
+                => Expression.And(
+                    Expression.NotEqual(member, Expression.Constant(null, member.Type)),
+                    Expression.NotEqual(
+                        member,
+                        Expression.Constant(Convert.ChangeType("", member.Type))
+                    )
+                ),
+            "in" => (Expression)inFunc.Invoke(null, new object[] { member, constant, memType }),
+            "not_in"
+                => Expression.Not(
+                    (Expression)inFunc.Invoke(null, new object[] { member, constant, memType })
+                ),
             _ => throw new NotSupportedException($"Operator {filter.@operator} is not supported.")
         };
-
     }
 
-    public static Expression BuildInExpression<T>(MemberExpression member, ConstantExpression constant , Type valuesType)
+    public static Expression BuildInExpression<T>(
+        MemberExpression member,
+        ConstantExpression constant,
+        Type valuesType
+    )
     {
         // Get the MethodInfo for the 'Contains' method of List<TValue>. This is used to create the method call expression.
         MethodInfo containsMethod = typeof(T).GetMethod("Contains", new[] { valuesType });
-        
+
         // Create the method call expression 'list.Contains(x.PropertyName)'.
         return Expression.Call(constant, containsMethod, member);
-    } 
-    private static Expression BuildMethodExpression<T>(string methodname, MemberExpression member, ConstantExpression constant)
+    }
+
+    private static Expression BuildMethodExpression<T>(
+        string methodname,
+        MemberExpression member,
+        ConstantExpression constant
+    )
     {
-        MethodInfo startsWithMethod = typeof(T).GetMethod(methodname, new[] { typeof(string) }) ?? throw new InvalidOperationException($"No suitable {methodname} method found on string type.");
+        MethodInfo startsWithMethod =
+            typeof(T).GetMethod(methodname, new[] { typeof(string) })
+            ?? throw new InvalidOperationException(
+                $"No suitable {methodname} method found on string type."
+            );
 
         // Ensure the member is of type string
         if (member.Type != typeof(T))
-            throw new InvalidOperationException($"{methodname} can only be used with string properties.");
+            throw new InvalidOperationException(
+                $"{methodname} can only be used with string properties."
+            );
 
         return Expression.Call(member, startsWithMethod, constant);
     }
-
 
     public static MemberExpression GetDatePropertyExpression(Expression memberExpression)
     {
@@ -177,16 +263,16 @@ public static class FilterExtensions
         }
         else if (memberType == typeof(DateTime))
         {
-
             return Expression.Property(memberExpression, "Date");
         }
         else
         {
-            throw new ArgumentException("The member is not a DateTime or nullable DateTime type.", nameof(memberExpression));
+            throw new ArgumentException(
+                "The member is not a DateTime or nullable DateTime type.",
+                nameof(memberExpression)
+            );
         }
     }
-
-
 
     private static ConstantExpression BuildConstantExpression(Type fieldType, object value)
     {
@@ -196,8 +282,15 @@ public static class FilterExtensions
             if (fieldType == typeof(DateTime) || fieldType == typeof(Nullable<DateTime>))
             {
                 DateTime dateTime;
-                if (DateTime.TryParseExact((string?)value, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture,
-                        DateTimeStyles.None, out dateTime))
+                if (
+                    DateTime.TryParseExact(
+                        (string?)value,
+                        "dd/MM/yyyy HH:mm:ss",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out dateTime
+                    )
+                )
                 {
                     @const = dateTime;
                 }
@@ -208,34 +301,34 @@ public static class FilterExtensions
                 @const = Convert.ChangeType(value, nonNullableType);
             }
 
-            return Expression.Constant( @const, fieldType);
+            return Expression.Constant(@const, fieldType);
         }
-            
         else
         {
-            if (fieldType == typeof(DateTime) || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime))
+            if (
+                fieldType == typeof(DateTime)
+                || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime)
+            )
             {
-                DateTime dateTime = value is DateTime
-                    ? ((DateTime)value).ToLocalTime()
-                    : value is JsonElement jsonElement && jsonElement.TryGetDateTime(out dateTime)
-                        ? dateTime.ToLocalTime()
-                        : throw new ArgumentException("Invalid date format or value.");
+                DateTime dateTime =
+                    value is DateTime
+                        ? ((DateTime)value).ToLocalTime()
+                        : value is JsonElement jsonElement
+                        && jsonElement.TryGetDateTime(out dateTime)
+                            ? dateTime.ToLocalTime()
+                            : throw new ArgumentException("Invalid date format or value.");
                 return Expression.Constant(dateTime.Date, fieldType);
             }
-            MethodInfo? method = typeof(FilterExtensions)?.GetMethod(nameof(FilterExtensions.ToObject))?.MakeGenericMethod(fieldType);
+            MethodInfo? method = typeof(FilterExtensions)
+                ?.GetMethod(nameof(FilterExtensions.ToObject))
+                ?.MakeGenericMethod(fieldType);
             @const = method?.Invoke(null, new object[] { (JsonElement)value });
             return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
         }
-        
-      
-
-
-
     }
 
     public static T ToObject<T>(this JsonElement element)
     {
-
         string json = element.GetRawText();
 
         return JsonSerializer.Deserialize<T>(json);
@@ -263,7 +356,6 @@ public static class FilterExtensions
         return false;
     }
 
-
     private static object ConvertToNullableType(object value, Type targetType)
     {
         if (value == null || Convert.IsDBNull(value))
@@ -277,7 +369,6 @@ public static class FilterExtensions
 
     public static Expression<Func<TModel, bool>> GenerateExpression<TModel>(List<object> parameters)
     {
-
         ParameterExpression param = Expression.Parameter(typeof(TModel), "t");
         Expression Exp = null;
         for (int i = 0; i < parameters.Count; i++)
@@ -290,79 +381,100 @@ public static class FilterExtensions
             {
                 _ = TryParse((JArray)parameters[i + 1], out List<object> nextFilterList);
                 Expression nextExp = ProcessFilterGroup<TModel>(param, nextFilterList);
-                Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+                Exp =
+                    op == "and"
+                        ? Expression.AndAlso(Exp, nextExp)
+                        : Expression.OrElse(Exp, nextExp);
                 i++;
             }
         }
         return Exp is null ? x => true : Expression.Lambda<Func<TModel, bool>>(Exp, param);
     }
 
-    private static bool  TryParse<T>(JArray jarr, out T output)
+    private static bool TryParse<T>(JArray jarr, out T output)
     {
         try
         {
-        output = jarr.ToObject<T>();
-        return true;
+            output = jarr.ToObject<T>();
+            return true;
         }
         catch (Exception e)
         {
-        output = default;
-        return false;
+            output = default;
+            return false;
         }
     }
 
-    private static Expression ProcessFilterGroup<TModel>(ParameterExpression param, List<object> filterGroup)
+    private static Expression ProcessFilterGroup<TModel>(
+        ParameterExpression param,
+        List<object> filterGroup
+    )
     {
         Expression Exp = null;
         for (int i = 0; i < filterGroup.Count; i++)
         {
-        if (filterGroup[i] is not string)
-        {
-            JArray f = (JArray)filterGroup[i];
-            if (i == 0 && TryParse(f, out List<string> filterList))
-                Exp = ProcessFilterList<TModel>(param, filterList);
-            continue;
-        }
+            if (filterGroup[i] is not string)
+            {
+                JArray f = (JArray)filterGroup[i];
+                if (i == 0 && TryParse(f, out List<string> filterList))
+                    Exp = ProcessFilterList<TModel>(param, filterList);
+                continue;
+            }
 
-
-        if (filterGroup[i] is string op)
-        {
-            _ = TryParse((JArray)filterGroup[i + 1], out List<string> nextFilterList);
-            Expression nextExp = ProcessFilterList<TModel>(param, nextFilterList);
-            Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
-            i++;
-        }
+            if (filterGroup[i] is string op)
+            {
+                _ = TryParse((JArray)filterGroup[i + 1], out List<string> nextFilterList);
+                Expression nextExp = ProcessFilterList<TModel>(param, nextFilterList);
+                Exp =
+                    op == "and"
+                        ? Expression.AndAlso(Exp, nextExp)
+                        : Expression.OrElse(Exp, nextExp);
+                i++;
+            }
         }
 
         return Exp;
     }
 
     // Process filter when it's a list
-    private static Expression ProcessFilterList<TModel>(ParameterExpression param, List<string> filterList)
-        {
-
-            Filter filter = new()
+    private static Expression ProcessFilterList<TModel>(
+        ParameterExpression param,
+        List<string> filterList
+    )
+    {
+        Filter filter =
+            new()
             {
                 @operator = filterList[1],
                 field = filterList[0],
                 value = filterList[2]
             };
-            if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
-            {
-                filter.@operator = "in";
-                filter.value = filterList[2].Split(",").ToList();
-            }
-
-            return FilterExtensions.BuildIndividualExpression<TModel>(param, filter);
+        if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
+        {
+            filter.@operator = "in";
+            filter.value = filterList[2].Split(",").ToList();
         }
+
+        return FilterExtensions.BuildIndividualExpression<TModel>(param, filter);
+    }
+
     private static bool IsNumericType(Type type)
     {
         return Type.GetTypeCode(type) switch
         {
-            TypeCode.Byte or TypeCode.Decimal or TypeCode.Double or TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64 or TypeCode.SByte or TypeCode.Single or TypeCode.UInt16 or TypeCode.UInt32 or TypeCode.UInt64 => true,
+            TypeCode.Byte
+            or TypeCode.Decimal
+            or TypeCode.Double
+            or TypeCode.Int16
+            or TypeCode.Int32
+            or TypeCode.Int64
+            or TypeCode.SByte
+            or TypeCode.Single
+            or TypeCode.UInt16
+            or TypeCode.UInt32
+            or TypeCode.UInt64
+                => true,
             _ => false,
         };
     }
-
-
 }

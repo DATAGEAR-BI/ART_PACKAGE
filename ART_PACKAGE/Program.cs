@@ -48,6 +48,7 @@ builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
 builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
+builder.Services.AddTransient(typeof(IAutoRulesRepo), typeof(AutoRulesRepo));
 builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
 builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
 builder.Services.AddTransient(typeof(ICustomReportGridConstructor), typeof(CustomReportGridConstructor));

@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.BackGroundServices;
-using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.License;
@@ -26,6 +25,7 @@ using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.FCFKC.SEG;
 using Data.GOAML;
+using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Hangfire;
 using Hangfire.Oracle.Core;
@@ -227,10 +227,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 .Where(t => t.IsClass && t.Namespace == "ART_PACKAGE.Helpers.ReportsConfigurations");
             foreach (Type? type in configTypes)
             {
-                services.AddSingleton(type);
+                _ = services.AddSingleton(type);
             }
 
-            services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
+            _ = services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
             {
                 Type? configType = configTypes.FirstOrDefault(x => x.Name.ToLower() == key.ToLower());
                 return (ReportConfig)serviceProvider.GetService(configType);

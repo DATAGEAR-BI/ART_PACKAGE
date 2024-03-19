@@ -1,4 +1,6 @@
-﻿using ART_PACKAGE.Helpers.Aml_Analysis;
+﻿
+
+using Data.Services.AmlAnalysis;
 
 namespace ART_PACKAGE.BackGroundServices
 {
