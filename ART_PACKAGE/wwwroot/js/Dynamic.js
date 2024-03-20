@@ -532,18 +532,24 @@ function generateGrid() {
 
                 }
             });
-            this.tbody.find("tr").dblclick(function (e) {
-                var dataItem = grid.dataItem(this);
-                if (dataItem.CloseReason && dataItem.CloseReason.toLowerCase() == "other") {
-                    var handler = CellDbHandlers[handlerkey]["CloseReason"];
-                    if (handler) {
-                        handler(dataItem);
-                    }
+            grid.tbody.find("tr").dblclick((e) => {
+                let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
+                let cell = e.target.closest("td");
+                // Get the field name associated with the clicked cell
+                var cellIndex = $(cell).index(); // Get the index of the clicked cell
+                var column = grid.columns[cellIndex];
+                if (column && CellDbHandlers[handlerkey][column.field]) {
+                    CellDbHandlers[handlerkey][column.field](dataItem);
                 }
                 else {
-                    var dbclickhandler = dbClickHandlers[handlerkey];
-                    dbclickhandler(dataItem).then(console.log("done"));
+                    if (handlerkey && handlerkey != "") {
+                        var dbclickhandler = dbClickHandlers[handlerkey];
+                        dbclickhandler(dataItem).then(console.log("done"));
+                    }
                 }
+
+
+
             });
         },
         ...(isHierarchy == "true" && {
@@ -599,7 +605,7 @@ function generateGrid() {
 
     });
 
-    grid.tbody.on("dblclick", "td", function (e) {
+   /* grid.tbody.on("dblclick", "td", function (e) {
 
 
         // Get the current item (row data)
@@ -614,7 +620,7 @@ function generateGrid() {
                 handler(item);
             }
         }
-    });
+    });*/
 
     //    // Check if the clicked cell is from a specific column
     //    //if (fieldName === "yourColumnName") {

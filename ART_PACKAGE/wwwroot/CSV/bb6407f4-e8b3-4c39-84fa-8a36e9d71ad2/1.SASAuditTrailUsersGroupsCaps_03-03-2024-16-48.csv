@@ -1,0 +1,529 @@
+UserName,DisplayName,Ggroup,Rrole,Capabilities
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Metadata Manager
+sasadm,SAS Administrator,SASAdministrators,META: User and Group Administrators Role,
+sasadm,SAS Administrator,SASAdministrators,META: Operators Role,
+sasadm,SAS Administrator,SASAdministrators,Home: Administration,
+sasadm,SAS Administrator,SASAdministrators,Fonts Administrator,
+sasadm,SAS Administrator,SQL SERVER Group,,
+sasadm,SAS Administrator,,,
+sasadm,SAS Administrator,SAS_EV_Super_User,,
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Server Manager
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Search View
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Authorization Manager
+sasadm,SAS Administrator,ThemeDesigner Administrators,Theme Designer: Administration,Customize HTML Themes
+sasadm,SAS Administrator,SASAdministrators,Theme Designer: Administration,Customize HTML Themes
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Foundation Services Manager
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Data Library Manager
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Application Monitor
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Access Unregistered Plug-ins
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Schedule Manager
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Publishing Framework
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,User Manager
+sasadm,SAS Administrator,SASAdministrators,Management Console: Advanced,Folder View
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,User Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,META: User and Group Administrators Role,
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Fonts Administrator,
+sasevs,SAS Environment Manager Service Account,SAS_EV_Guest,,
+sasevs,SAS Environment Manager Service Account,SAS_EV_AppServer_Tier,,
+sasevs,SAS Environment Manager Service Account,,,
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Home: Administration,
+sasevs,SAS Environment Manager Service Account,SASAdministrators,META: Operators Role,
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Schedule Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Authorization Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Server Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Metadata Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Search View
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Folder View
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Data Library Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Application Monitor
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Foundation Services Manager
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Publishing Framework
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Management Console: Advanced,Access Unregistered Plug-ins
+sasevs,SAS Environment Manager Service Account,SASAdministrators,Theme Designer: Administration,Customize HTML Themes
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Entity
+sasinst,,SASAdministrators,Home: Administration,
+sasinst,,Visual Analytics Data Administrators,Home: Administration,
+sasinst,,SASAdministrators,Fonts Administrator,
+sasinst,,CASE_FINANCIAL,,
+sasinst,,Ent Case Mgmt DB Group,,
+sasinst,,Social Network Analysis Database Access Group,,
+sasinst,,Business Unit Knowledge Center,,
+sasinst,,CDD Managers,,
+sasinst,,Ent Case Mgmt Administrators,,
+sasinst,,FCF Investigators,,
+sasinst,,SAS General Servers,,
+sasinst,,Knowledge Center,,
+sasinst,,CDD Investigators,,
+sasinst,,Ent Case Mgmt Users,,
+sasinst,,CS-FCFBU1,,
+sasinst,,FCF Managers,,
+sasinst,,SQL SERVER Group,,
+sasinst,,,,
+sasinst,,BI Web Services Users,,
+sasinst,,Core,,
+sasinst,,SAS_EV_Super_User,,
+sasinst,,SAS_EV_Guest,,
+sasinst,,SNA Investigator,,
+sasinst,,Visual Analytics Data Administrators,,
+sasinst,,Visual Data Builder Administrators,,
+sasinst,,SAS_EV_AppServer_Tier,,
+sasinst,,AML Investigators,,
+sasinst,,AML Managers,,
+sasinst,,Visual Analytics Users,Visual Analytics: Report Viewing,
+sasinst,,SASAdministrators,META: User and Group Administrators Role,
+sasinst,,SASAdministrators,META: Operators Role,
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Metadata Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Metadata Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Metadata Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Authorization Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Authorization Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Authorization Manager
+sasinst,,Data Management Executives,Job Monitor: Operation,View Application
+sasinst,,Data Management Business Approvers,Job Monitor: Operation,View Application
+sasinst,,Data Management Business Users,Job Monitor: Operation,View Application
+sasinst,,Data Management Stewards,Job Monitor: Operation,View Application
+sasinst,,Data Management Administrators,Job Monitor: Operation,View Application
+sasinst,,Data Management Power Users,Job Monitor: Operation,View Application
+sasinst,,Data Management Business Users,Process Orchestration: Job Execution,Run Jobs
+sasinst,,Data Management Executives,Data Management: Process Orchestration,View Application
+sasinst,,Data Management Business Approvers,Data Management: Process Orchestration,View Application
+sasinst,,Data Management Administrators,Data Remediation: Issue Administration,Manage Issues
+sasinst,,Data Management Administrators,Task Manager: Task Administration,Terminate Tasks
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Distribute Reports
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Manage Mobile Devices
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Build Data
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Vertica
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Twitter
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Teradata
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Deploy to FCF
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Edit Rules and Rule Groups
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Test Scenarios
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from SQL Server
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Hortonworks
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Greenplum
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Facebook
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from DB2
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import Local Files
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Delete Attachment
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Delete Any Note
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Delete Note
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Return Entity Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Return Entity Ownership
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Take Case Ownership for Customer Due Diligence
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Print Cases for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route Any Cases for Anti-Money Laundering
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Search Cases Page
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Access Search Cases Page
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Search Cases Page
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Search Cases Page
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Search Cases Page
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Search Cases Page
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Print Case Reports
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Print Case Reports
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Cases
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Cases
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access E-Files
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Access E-Files
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Return Regulatory Report Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Return Regulatory Report Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route Any Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route My Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Suppressed Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Suppressed Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access My Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Suppress My Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Activate Suppressed Alerts
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Clear Cache
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Clear Cache
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Clear Cache
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,View Application Logs
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Global and Targeted Search
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Global and Targeted Search
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Access Compliance Solutions REST Services
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Access Compliance Solutions REST Services
+sasinst,,Visual Analytics Data Administrators,Management Console: Content Management,User Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Content Management,User Manager
+sasinst,,SAS System Services,Comments: Administrator,Delete comments
+sasinst,,Data Management Power Users,Process Orchestration: Job Development,Run Jobs
+sasinst,,Data Management Stewards,Process Orchestration: Job Development,Run Jobs
+sasinst,,Data Management Power Users,Process Orchestration: Job Development,View Application
+sasinst,,Data Management Stewards,Process Orchestration: Job Development,View Application
+sasinst,,Data Management Administrators,Task Manager: Task Administration,View All Data Objects
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Manage Environment
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Import Rules
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Teradata
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Salesforce
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Pivotal HD
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Pivotal HAWQ
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from ODBC
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from ODBC
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Netezza
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from DB2
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import SAS Data Sets from a Server
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import and Load Data
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Delete Attachment
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Delete Attachment
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Attachment
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Delete Any Note
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Create Note
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Create Note
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Route Cases for Customer Due Diligence
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit My Cases for Anti-Money Laundering
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Create case from Alerts for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Cases for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Risk Assessments Search
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Closed Risk Assessments
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Closed Risk Assessments
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Available Risk Assessments
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Available Risk Assessments
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,"Create Scenarios, Headers and Routing Groups"
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Edit E-Files for Compliance Solutions
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Reports
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Reports
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Access Reports
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Close My Regulatory Reports
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Alert Search
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Closed Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Closed Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Closed Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Suppressed Alerts
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Available Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Activate Suppressed Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Activate Closed Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Edit Alerts
+sasinst,,CDD Administrators,Customer Due Diligence: Administrator,Clear Cache
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Clear Cache
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Clear Cache
+sasinst,,CDD Administrators,Customer Due Diligence: Administrator,Access Compliance Solutions REST Services
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Compliance Solutions REST Services
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Compliance Solutions REST Services
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Take Risk Assessment Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Route Risk Assessments
+sasinst,,SAS System Services,Comments: Administrator,Edit comments
+sasinst,,Data Management Business Approvers,Data Management: Operation,View Application
+sasinst,,Data Management Administrators,Data Management: Operation,View Application
+sasinst,,Data Management Executives,Data Management: Operation,View Application
+sasinst,,Data Management Power Users,Data Management: Operation,View Application
+sasinst,,Data Management Business Users,Data Management: Operation,View Application
+sasinst,,Data Management Stewards,Data Management: Operation,View Application
+sasinst,,Data Management Stewards,Task Manager: Task Management,Initiate Tasks
+sasinst,,Data Management Business Approvers,Task Manager: Task Management,Initiate Tasks
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Twitter
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Create Rules and Rule Groups
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from SAP HANA
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from MySQL
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from MapR
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Google Analytics
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Cloudera Impala
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Cloudera Impala
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Cloudera Impala
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Cloudera
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from BigInsights
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import SAS Data Sets from a Server
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import Local Files
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import and Load Data
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Edit Regulatory Reports for Anti-Money Laundering
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Delete Attachment
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Create Attachment
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Create Note
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Note
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Note
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Return Entity Ownership
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Take Entity Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Take Entity Ownership
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Create Cases for Customer Due Diligence
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Take Case Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Return Case Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route My Cases for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route My Cases for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit My Cases for Anti-Money Laundering
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Search Cases Page
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Risk Assessments Search
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Reset E-Files for Compliance Solutions
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Subscribe to Regulatory Report Notifications
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Closed Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Close My Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Close My Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Alerts
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,View Audit Events
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Clear Cache
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Clear Cache
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Export to CSV
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Compliance Solutions REST Services
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Compliance Solutions REST Services
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access My Risk Assessments
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access My Risk Assessments
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Edit Risk Assessments
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Entity
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Foundation Services Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Foundation Services Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Foundation Services Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Content Management,Folder View
+sasinst,,Visual Data Builder Administrators,Management Console: Content Management,Folder View
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Folder View
+sasinst,,SASAdministrators,Management Console: Advanced,Folder View
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Folder View
+sasinst,,Visual Analytics Data Administrators,Management Console: Content Management,Data Library Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Content Management,Data Library Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Data Library Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Data Library Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Data Library Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Content Management,Authorization Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Content Management,Authorization Manager
+sasinst,,Data Management Administrators,Process Orchestration: Job Administration,Stop Other Users Jobs
+sasinst,,Data Management Administrators,Data Remediation: Issue Administration,Issue Administration
+sasinst,,Data Management Business Users,Task Manager: Task View,View Application
+sasinst,,Data Management Administrators,Task Manager: Task Administration,View Application
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Vertica
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Twitter
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Access CDD Rule Administrator
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access AML Scenario Administrator
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Import Scenarios
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Salesforce
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Salesforce
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Pivotal HD
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from MapR
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Hortonworks
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Facebook
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Facebook
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Delete Note
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Note
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route Entity
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Route Cases for Customer Due Diligence
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Print Cases for Anti-Money Laundering
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Print Cases for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Print Cases for Anti-Money Laundering
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Take Case Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Return Case Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Close My Cases
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Edit My Cases for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Closed Risk Assessments
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Available Risk Assessments
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Create E-Files for Compliance Solutions
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Reports
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Search Reports Page
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Take Regulatory Report Ownership
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Entity
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Alert Search
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Alert Search
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Available Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Available Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Close Any Alert
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Activate Suppressed Alerts
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Clear Cache
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Global and Targeted Search
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Export to CSV
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Compliance Solutions REST Services
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Access Compliance Solutions REST Services
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Manage Risk Classifiers
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Take Risk Assessment Ownership
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Risk Assessments
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Server Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Server Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Server Manager
+sasinst,,Visual Analytics Data Administrators,Management Console: Content Management,Search View
+sasinst,,Visual Data Builder Administrators,Management Console: Content Management,Search View
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Entity
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Risk Assessments
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route Risk Assessments
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Manage Risk Assessment Routing Rules
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Export to CSV
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Global and Targeted Search
+sasinst,,CDD Administrators,Customer Due Diligence: Administrator,Update Preferences
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Activate Closed Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Activate Closed Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Close My Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Suppressed Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Alert Search
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route Any Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Take Regulatory Report Ownership
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Reports
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Search E-Files Page
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Closed Risk Assessments
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create case from Alerts for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route Any Cases for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Return Case Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Take Case Ownership
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Print Cases for Anti-Money Laundering
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Take Case Ownership for Customer Due Diligence
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Delete Any Note
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Delete Any Note
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Aster
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Google Analytics
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Google Analytics
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Greenplum
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from MapR
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from MySQL
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Oracle
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from PostgreSQL
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Export Rules
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Vertica
+sasinst,,Data Management Administrators,Task Manager: Task Administration,View All Tasks
+sasinst,,Data Management Administrators,Task Manager: Task Administration,Initiate Tasks
+sasinst,,Data Management Administrators,Data Remediation: Issue Administration,View Application
+sasinst,,Data Management Business Users,Data Remediation: Issue View,View Application
+sasinst,,Data Management Administrators,Process Orchestration: Job Administration,Edit Jobs
+sasinst,,ThemeDesigner Administrators,Theme Designer: Administration,Customize HTML Themes
+sasinst,,SASAdministrators,Theme Designer: Administration,Customize HTML Themes
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access My Risk Assessments
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Compliance Solutions REST Services
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Manage Lists
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Suppress Any Alert
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Suppress Any Alert
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Available Alerts
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Closed Alerts
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Alert Search
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Route My Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Route My Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Take Regulatory Report Ownership
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Subscribe to Regulatory Report Notifications
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Subscribe to Regulatory Report Notifications
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Search Reports Page
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Access Search Reports Page
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Subscribe to E-Files for Compliance Solutions
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Access Search E-Files Page
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Available Risk Assessments
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Search Cases Page
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Cases for Anti-Money Laundering
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Edit My Cases for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Any Cases for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Subscribe to Case Notifications
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Create Cases for Customer Due Diligence
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Create Note
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Delete Note
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Attachment
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Attachment
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import SAS Data Sets from a Server
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Aster
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Cloudera
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from DB2
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from PostgreSQL
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from SAP HANA
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from SQL Server
+sasinst,,Data Management Business Approvers,Task Manager: Task Management,View Application
+sasinst,,Data Management Stewards,Task Manager: Task Management,View Application
+sasinst,,Data Management Administrators,Task Manager: Task Administration,Manage Tasks
+sasinst,,Data Management Business Approvers,Task Manager: Task Management,Manage Tasks
+sasinst,,Data Management Stewards,Task Manager: Task Management,Manage Tasks
+sasinst,,Data Management Administrators,Process Orchestration: Job Administration,View Application
+sasinst,,Data Management Stewards,Process Orchestration: Job Development,Edit Jobs
+sasinst,,Data Management Power Users,Process Orchestration: Job Development,Edit Jobs
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Access Unregistered Plug-ins
+sasinst,,SASAdministrators,Management Console: Advanced,Access Unregistered Plug-ins
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Access Unregistered Plug-ins
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Search View
+sasinst,,SASAdministrators,Management Console: Advanced,Search View
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Search View
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Publishing Framework
+sasinst,,SASAdministrators,Management Console: Advanced,Publishing Framework
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Publishing Framework
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,User Manager
+sasinst,,SASAdministrators,Management Console: Advanced,User Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,User Manager
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create Manual Risk Assessments
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Compliance Solutions REST Services
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Global and Targeted Search
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Create Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Suppress My Alerts
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Suppress My Alerts
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Suppress Any Alert
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access My Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Available Alerts
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Suppressed Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Entity
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Search Reports Page
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Ready E-Files for Compliance Solutions
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Export Scenarios
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Available Risk Assessments
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Risk Assessments Search
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Risk Assessments Search
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,Access Print Case Reports
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Access Print Case Reports
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Create case from Alerts for Anti-Money Laundering
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Edit My Cases for Anti-Money Laundering
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Edit Any Cases for Anti-Money Laundering
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Route My Cases for Anti-Money Laundering
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Print Cases for Anti-Money Laundering
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Return Case Ownership for Customer Due Diligence
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Note
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from BigInsights
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Greenplum
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Hortonworks
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from MySQL
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Netezza
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Pivotal HAWQ
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Pivotal HAWQ
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from PostgreSQL
+sasinst,,AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User,"Edit Scenarios, Headers and Routing Rule Groups"
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Distribute Reports
+sasinst,,Data Management Stewards,Data Remediation: Issue Management,Manage Issues
+sasinst,,Data Management Administrators,Process Orchestration: Job Administration,Run Jobs
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Application Monitor
+sasinst,,SASAdministrators,Management Console: Advanced,Application Monitor
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Application Monitor
+sasinst,,Visual Analytics Data Administrators,Management Console: Advanced,Schedule Manager
+sasinst,,SASAdministrators,Management Console: Advanced,Schedule Manager
+sasinst,,Visual Data Builder Administrators,Management Console: Advanced,Schedule Manager
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Create Manual Risk Assessments
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Manual Risk Assessments
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route Risk Assessments
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Take Risk Assessment Ownership
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Clear Cache
+sasinst,,AML Administrators,Anti-Money Laundering: Administrator,Update Preferences
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Close Any Alert
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access My Alerts
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Return Regulatory Report Ownership
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Access Search Reports Page
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Access Search Reports Page
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Reports
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Closed Risk Assessments
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Risk Assessments Search
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Access Cases
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Cases
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Cases
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Access Print Case Reports
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Access Print Case Reports
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Access Print Case Reports
+sasinst,,CDD Administrators,Customer Due Diligence: Administrator,Access Search Cases Page
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Any Cases for Anti-Money Laundering
+sasinst,,CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit,Print Cases for Anti-Money Laundering
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Return Case Ownership for Customer Due Diligence
+sasinst,,AML Analysts,Anti-Money Laundering: Analyst,Route Entity
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Route Entity
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Take Entity Ownership
+sasinst,,CDD Investigators,Customer Due Diligence: Investigator,Delete Note
+sasinst,,CDD Managers,Customer Due Diligence: Manager,Delete Note
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Create Attachment
+sasinst,,AML E-File Managers,Anti-Money Laundering: E-File Manager,Create Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Investigators,Anti-Money Laundering: Investigator,Edit Regulatory Reports for Anti-Money Laundering
+sasinst,,AML Managers,Anti-Money Laundering: Manager,Edit Any Regulatory Reports for Anti-Money Laundering
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import and Load Data
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import Local Files
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Aster
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from BigInsights
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from Cloudera
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Netezza
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from ODBC
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Oracle
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from Oracle
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Pivotal HD
+sasinst,,Visual Analytics Data Administrators,Visual Analytics: Administration,Import from SAP HANA
+sasinst,,Visual Analytics Users,Visual Analytics: Analysis,Import from SQL Server
+sasinst,,CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User,Administration
+sasinst,,SNA Investigator,SNA_INVESTIGATOR,View SNA Hub Link
+sasinst,,Visual Data Builder Administrators,Visual Analytics: Data Building,Import from Teradata
+sasinst,,Data Management Stewards,Data Remediation: Issue Management,View Application
+sasinst,,Data Management Business Users,Process Orchestration: Job Execution,View Application
+sasinst,,Data Management Administrators,Process Orchestration: Job Administration,Unlock Other Users Jobs
+sasrmdt,SAS Data Remediation Services User,,,
+sassearch,Search Interface to SAS Content User,,,
+sastrust,SAS Trusted User,SAS System Services,Comments: Administrator,Delete comments
+sastrust,SAS Trusted User,SAS General Servers,,
+sastrust,SAS Trusted User,SAS System Services,Comments: Administrator,Edit comments
+webanon,SAS Anonymous Web User,BI Web Services Users,,

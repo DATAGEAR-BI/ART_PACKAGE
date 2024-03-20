@@ -1,0 +1,80 @@
+Groups,Roles
+AML Administrators,Anti-Money Laundering: Administrator
+AML Analysts,Anti-Money Laundering: Analyst
+AML E-File Managers,Anti-Money Laundering: E-File Manager
+AML Investigators,Anti-Money Laundering: Investigator
+AML Managers,Anti-Money Laundering: Manager
+AML Scenario Administrators,Anti-Money Laundering: Scenario Administrator User
+ART,Visual Analytics: Administration
+ART,META: User and Group Administrators Role
+BI Web Services Users,No Role
+Business Unit Knowledge Center,No Role
+CASE_FINANCIAL,No Role
+CDD Administrators,Customer Due Diligence: Administrator
+CDD Investigators,Customer Due Diligence: Investigator
+CDD Managers,Customer Due Diligence: Manager
+CDD Scenario Manager Users,Customer Due Diligence: Scenario Manager User
+CS Quality Review and Audit Users,Compliance Solutions: Quality Review and Audit
+CS-FCFBU1,No Role
+Core,No Role
+Data Management Administrators,Task Manager: Task Administration
+Data Management Administrators,Data Management: Operation
+Data Management Administrators,Process Orchestration: Job Administration
+Data Management Administrators,Data Remediation: Issue Administration
+Data Management Administrators,Job Monitor: Operation
+Data Management Business Approvers,Data Management: Operation
+Data Management Business Approvers,Task Manager: Task Management
+Data Management Business Approvers,Data Management: Process Orchestration
+Data Management Business Approvers,Job Monitor: Operation
+Data Management Business Users,Process Orchestration: Job Execution
+Data Management Business Users,Data Remediation: Issue View
+Data Management Business Users,Data Management: Operation
+Data Management Business Users,Task Manager: Task View
+Data Management Business Users,Job Monitor: Operation
+Data Management Executives,Data Management: Process Orchestration
+Data Management Executives,Data Management: Operation
+Data Management Executives,Job Monitor: Operation
+Data Management Power Users,Data Management: Operation
+Data Management Power Users,Job Monitor: Operation
+Data Management Power Users,Process Orchestration: Job Development
+Data Management Stewards,Process Orchestration: Job Development
+Data Management Stewards,Task Manager: Task Management
+Data Management Stewards,Job Monitor: Operation
+Data Management Stewards,Data Remediation: Issue Management
+Data Management Stewards,Data Management: Operation
+Ent Case Mgmt Administrators,No Role
+Ent Case Mgmt DB Group,No Role
+Ent Case Mgmt Users,No Role
+FCF Investigators,No Role
+FCF Managers,No Role
+Knowledge Center,No Role
+PUBLIC,Enterprise Guide: Advanced
+SAS General Servers,No Role
+SAS System Services,Comments: Administrator
+SASAdministrators,META: User and Group Administrators Role
+SASAdministrators,Home: Administration
+SASAdministrators,Theme Designer: Administration
+SASAdministrators,Fonts Administrator
+SASAdministrators,META: Operators Role
+SASAdministrators,Management Console: Advanced
+SASUSERS,Home: Usage
+SASUSERS,Management Console: Content Management
+SASUSERS,SAS Studio: Usage
+SASUSERS,Visual Analytics: Basic
+SASUSERS,SAS Studio: Report Consumer
+SAS_EV_AppServer_Tier,No Role
+SAS_EV_Guest,No Role
+SAS_EV_Super_User,No Role
+SNA Investigator,SNA_INVESTIGATOR
+SQL SERVER Group,No Role
+Social Network Analysis Database Access Group,No Role
+ThemeDesigner Administrators,Theme Designer: Administration
+Visual Analytics Data Administrators,Management Console: Content Management
+Visual Analytics Data Administrators,Visual Analytics: Administration
+Visual Analytics Data Administrators,Management Console: Advanced
+Visual Analytics Data Administrators,Home: Administration
+Visual Analytics Users,Visual Analytics: Report Viewing
+Visual Analytics Users,Visual Analytics: Analysis
+Visual Data Builder Administrators,Management Console: Content Management
+Visual Data Builder Administrators,Visual Analytics: Data Building
+Visual Data Builder Administrators,Management Console: Advanced

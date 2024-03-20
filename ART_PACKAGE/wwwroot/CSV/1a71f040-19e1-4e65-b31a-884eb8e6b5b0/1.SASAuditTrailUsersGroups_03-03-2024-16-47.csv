@@ -1,0 +1,104 @@
+UserId,UserName,DisplayName,JobTitle,Email,Description,MemberOfGroup,RoleDisplayName,UserRole,GroupDisplayName
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,META: Operators Role,Metadata Server: Operation,SASAdministrators,SAS Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,Theme Designer: Administration,Theme Designer: Administration,ThemeDesigner Administrators,ThemeDesigner Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,,,SQL SERVER Group,
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,Fonts Administrator,Fonts Administrator,SASAdministrators,SAS Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,Theme Designer: Administration,Theme Designer: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,,,,
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,,,SAS_EV_Super_User,SAS Environment Manager Super Users
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,Management Console: Advanced,Management Console: Advanced,SASAdministrators,SAS Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,Home: Administration,Home: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000001,sasadm,SAS Administrator,,,,META: User and Group Administrators Role,Metadata Server: User Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000002,sastrust,SAS Trusted User,,,,,,SAS General Servers,SAS General Servers
+A55FVM56.AP000002,sastrust,SAS Trusted User,,,,Comments: Administrator,Comments: Administrator,SAS System Services,SAS System Services
+A55FVM56.AP000003,webanon,SAS Anonymous Web User,,,,,,BI Web Services Users,BI Web Services Users
+A55FVM56.AP000004,sassearch,Search Interface to SAS Content User,,,,,,,
+A55FVM56.AP000005,sasrmdt,SAS Data Remediation Services User,,,,,,,
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,Home: Administration,Home: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,,,SAS_EV_Guest,SAS Environment Manager Guests
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,Fonts Administrator,Fonts Administrator,SASAdministrators,SAS Administrators
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,Theme Designer: Administration,Theme Designer: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,,,SAS_EV_AppServer_Tier,SAS Environment Manager App Server Tier Users
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,,,,
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,META: User and Group Administrators Role,Metadata Server: User Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,META: Operators Role,Metadata Server: Operation,SASAdministrators,SAS Administrators
+A55FVM56.AP000006,sasevs,SAS Environment Manager Service Account,,,SAS Environment Manager Service Account,Management Console: Advanced,Management Console: Advanced,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,Management Console: Content Management,Management Console: Content Management,Visual Data Builder Administrators,Visual Data Builder Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Stewards,Data Management Stewards
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Power Users,Data Management Power Users
+A55FVM56.AP000007,sasinst,,,,,Data Remediation: Issue Administration,Data Remediation: Issue Administration,Data Management Administrators,Data Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Task Manager: Task Management,Task Manager: Task Management,Data Management Business Approvers,Data Management Business Approvers
+A55FVM56.AP000007,sasinst,,,,,Visual Analytics: Report Viewing,Visual Analytics: Report Viewing,Visual Analytics Users,Visual Analytics Users
+A55FVM56.AP000007,sasinst,,,,,,,AML Managers,Anti-Money Laundering Managers
+A55FVM56.AP000007,sasinst,,,,,,,AML Investigators,Anti-Money Laundering Investigators
+A55FVM56.AP000007,sasinst,,,,,Customer Due Diligence: Scenario Manager User,Customer Due Diligence: Rule Administrator User,CDD Scenario Manager Users,Customer Due Diligence Rule Administrator Users
+A55FVM56.AP000007,sasinst,,,,,,,SAS_EV_AppServer_Tier,SAS Environment Manager App Server Tier Users
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Administrators,Data Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Process Orchestration: Job Development,Process Orchestration: Job Development,Data Management Stewards,Data Management Stewards
+A55FVM56.AP000007,sasinst,,,,,Process Orchestration: Job Execution,Process Orchestration: Job Execution,Data Management Business Users,Data Management Business Users
+A55FVM56.AP000007,sasinst,,,,,,,Visual Data Builder Administrators,Visual Data Builder Administrators
+A55FVM56.AP000007,sasinst,,,,,Management Console: Advanced,Management Console: Advanced,Visual Analytics Data Administrators,Visual Analytics Data Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Business Users,Data Management Business Users
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Power Users,Data Management Power Users
+A55FVM56.AP000007,sasinst,,,,,,,Visual Analytics Data Administrators,Visual Analytics Data Administrators
+A55FVM56.AP000007,sasinst,,,,,,,SNA Investigator,Social Network Analysis Investigator
+A55FVM56.AP000007,sasinst,,,,,SNA_INVESTIGATOR,Social Network Analysis: Investigator,SNA Investigator,Social Network Analysis Investigator
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: Analyst,Anti-Money Laundering: Analyst,AML Analysts,Anti-Money Laundering Analysts
+A55FVM56.AP000007,sasinst,,,,,Customer Due Diligence: Administrator,Customer Due Diligence: Administrator,CDD Administrators,Customer Due Diligence Administrators
+A55FVM56.AP000007,sasinst,,,,,,,SAS_EV_Guest,SAS Environment Manager Guests
+A55FVM56.AP000007,sasinst,,,,,,,SAS_EV_Super_User,SAS Environment Manager Super Users
+A55FVM56.AP000007,sasinst,,,,,,,Core,Compliance Solutions Core Database Access Group
+A55FVM56.AP000007,sasinst,,,,,META: Operators Role,Metadata Server: Operation,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Stewards,Data Management Stewards
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Business Users,Data Management Business Users
+A55FVM56.AP000007,sasinst,,,,,Task Manager: Task Administration,Task Manager: Task Administration,Data Management Administrators,Data Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Visual Analytics: Data Building,Visual Analytics: Data Building,Visual Data Builder Administrators,Visual Data Builder Administrators
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: Investigator,Anti-Money Laundering: Investigator,AML Investigators,Anti-Money Laundering Investigators
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: Administrator,Anti-Money Laundering: Administrator,AML Administrators,Anti-Money Laundering Administrators
+A55FVM56.AP000007,sasinst,,,,,Customer Due Diligence: Investigator,Customer Due Diligence: Investigator,CDD Investigators,Customer Due Diligence Investigators
+A55FVM56.AP000007,sasinst,,,,,Compliance Solutions: Quality Review and Audit,Compliance Solutions: Quality Review and Audit,CS Quality Review and Audit Users,Compliance Solutions Quality Review and Audit Users
+A55FVM56.AP000007,sasinst,,,,,,,BI Web Services Users,BI Web Services Users
+A55FVM56.AP000007,sasinst,,,,,,,,
+A55FVM56.AP000007,sasinst,,,,,,,SQL SERVER Group,
+A55FVM56.AP000007,sasinst,,,,,Management Console: Advanced,Management Console: Advanced,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,Comments: Administrator,Comments: Administrator,SAS System Services,SAS System Services
+A55FVM56.AP000007,sasinst,,,,,Theme Designer: Administration,Theme Designer: Administration,ThemeDesigner Administrators,ThemeDesigner Administrators
+A55FVM56.AP000007,sasinst,,,,,Fonts Administrator,Fonts Administrator,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Executives,Data Management Executives
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Business Approvers,Data Management Business Approvers
+A55FVM56.AP000007,sasinst,,,,,Data Management: Process Orchestration,Data Management: Process Orchestration,Data Management Business Approvers,Data Management Business Approvers
+A55FVM56.AP000007,sasinst,,,,,Home: Administration,Home: Administration,Visual Analytics Data Administrators,Visual Analytics Data Administrators
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: Manager,Anti-Money Laundering: Manager,AML Managers,Anti-Money Laundering Managers
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: E-File Manager,Anti-Money Laundering: E-File Manager,AML E-File Managers,Anti-Money Laundering E-File Managers
+A55FVM56.AP000007,sasinst,,,,,,,FCF Managers,Compliance Solutions Managers
+A55FVM56.AP000007,sasinst,,,,,,,CS-FCFBU1,Compliance Solutions FCFBU1 Users
+A55FVM56.AP000007,sasinst,,,,,META: User and Group Administrators Role,Metadata Server: User Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,,,Ent Case Mgmt Users,Enterprise Case Management Users
+A55FVM56.AP000007,sasinst,,,,,Management Console: Content Management,Management Console: Content Management,Visual Analytics Data Administrators,Visual Analytics Data Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Administrators,Data Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Management: Operation,Data Management: Operation,Data Management Business Approvers,Data Management Business Approvers
+A55FVM56.AP000007,sasinst,,,,,Job Monitor: Operation,Job Monitor: Operation,Data Management Executives,Data Management Executives
+A55FVM56.AP000007,sasinst,,,,,Data Management: Process Orchestration,Data Management: Process Orchestration,Data Management Executives,Data Management Executives
+A55FVM56.AP000007,sasinst,,,,,Data Remediation: Issue Management,Data Remediation: Issue Management,Data Management Stewards,Data Management Stewards
+A55FVM56.AP000007,sasinst,,,,,Home: Administration,Home: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,,,CDD Investigators,Customer Due Diligence Investigators
+A55FVM56.AP000007,sasinst,,,,,Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering: Scenario Administrator User,AML Scenario Administrators,Anti-Money Laundering Scenario Administrators
+A55FVM56.AP000007,sasinst,,,,,,,Knowledge Center,Compliance Solutions Knowledge Center Database Access Group
+A55FVM56.AP000007,sasinst,,,,,,,SAS General Servers,SAS General Servers
+A55FVM56.AP000007,sasinst,,,,,,,FCF Investigators,Compliance Solutions Investigators
+A55FVM56.AP000007,sasinst,,,,,,,Ent Case Mgmt Administrators,Enterprise Case Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Theme Designer: Administration,Theme Designer: Administration,SASAdministrators,SAS Administrators
+A55FVM56.AP000007,sasinst,,,,,Process Orchestration: Job Administration,Process Orchestration: Job Administration,Data Management Administrators,Data Management Administrators
+A55FVM56.AP000007,sasinst,,,,,Data Remediation: Issue View,Data Remediation: Issue View,Data Management Business Users,Data Management Business Users
+A55FVM56.AP000007,sasinst,,,,,Task Manager: Task Management,Task Manager: Task Management,Data Management Stewards,Data Management Stewards
+A55FVM56.AP000007,sasinst,,,,,Task Manager: Task View,Task Manager: Task View,Data Management Business Users,Data Management Business Users
+A55FVM56.AP000007,sasinst,,,,,Visual Analytics: Administration,Visual Analytics: Administration,Visual Analytics Data Administrators,Visual Analytics Data Administrators
+A55FVM56.AP000007,sasinst,,,,,,,CDD Managers,Customer Due Diligence Managers
+A55FVM56.AP000007,sasinst,,,,,Customer Due Diligence: Manager,Customer Due Diligence: Manager,CDD Managers,Customer Due Diligence Managers
+A55FVM56.AP000007,sasinst,,,,,,,Business Unit Knowledge Center,Compliance Solutions Business Unit Knowledge Center Database Access Group
+A55FVM56.AP000007,sasinst,,,,,,,Social Network Analysis Database Access Group,Social Network Analysis Database Access Group
+A55FVM56.AP000007,sasinst,,,,,,,Ent Case Mgmt DB Group,Enterprise Case Management database access group
+A55FVM56.AP000007,sasinst,,,,,Management Console: Advanced,Management Console: Advanced,Visual Data Builder Administrators,Visual Data Builder Administrators
+A55FVM56.AP000007,sasinst,,,,,Process Orchestration: Job Development,Process Orchestration: Job Development,Data Management Power Users,Data Management Power Users
+A55FVM56.AP000007,sasinst,,,,,Visual Analytics: Analysis,Visual Analytics: Analysis,Visual Analytics Users,Visual Analytics Users
+A55FVM56.AP000007,sasinst,,,,,,,CASE_FINANCIAL,Case Management Financial Users

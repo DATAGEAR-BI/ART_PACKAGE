@@ -1,0 +1,1126 @@
+Role,RoleDescription,CapabilityId,CapName,CapabilitiyGroupName,ComponentName
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.RISK_ASSESSMENTS.MANAGE.ROUTING_RULE,Manage Risk Assessment Routing Rules,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.LOGS.ACCESS,View Application Logs,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.PREFERENCES.UPDATE,Update Preferences,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.LISTS.MANAGE,Manage Lists,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.AUDIT_EVENTS.ACCESS,View Audit Events,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Administrator,Anti-Money Laundering Administrator,AML.RISK_CLASSIFIERS.MANAGE,Manage Risk Classifiers,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENT.TAKE_OWNERSHIP,Take Risk Assessment Ownership,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CASE.CHECKIN,Return Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.CASE.ACCESS,Access Cases,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.REPORT.CHECKOUT,Take Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ENTITY.ROUTE,Route Entity,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CASE.EDIT,Edit My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.REPORT.CHECKIN,Return Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERTS.ACCESS.SUPPRESSED,Access Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.SUPPRESS.ALL,Suppress Any Alert,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CASE.CHECKOUT,Take Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CASE.CREATE.FROM.ALERTS,Create case from Alerts for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENTS.ACCESS.SEARCH,Access Risk Assessments Search,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENTS.ACCESS.CLOSED,Access Closed Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.CLOSE,Close My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.EXPORT.CSV,Export to CSV,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENT.CREATE,Create Manual Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ENTITY.CHECKIN,Return Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERTS.ACCESS.MY,Access My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.SUPPRESS,Suppress My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENT.ROUTE,Route Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.CASE.ROUTE,Route My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.ENTITY.ACCESS,Access Entity,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERTS.ACCESS.AVAILABLE,Access Available Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.ACTIVATE.CLOSED,Activate Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.CREATE,Create Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENTS.ACCESS.MY,Access My Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.REPORT.ROUTE,Route My Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERTS.ACCESS.CLOSED,Access Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.SEARCH,Access Global and Targeted Search,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENTS.ACCESS.AVAILABLE,Access Available Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERTS.ACCESS.SEARCH,Access Alert Search,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.EDIT,Edit Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.RISK_ASSESSMENT.EDIT,Edit Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ENTITY.CHECKOUT,Take Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Analyst,Anti-Money Laundering Analyst,AML.ALERT.ACTIVATE.SUPPRESSED,Activate Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.REPORT.EDIT,Edit Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.ATTACHMENT.CREATE,Create Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.EFILE.EDIT,Edit E-Files for Compliance Solutions,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.COMMENT.DELETE,Delete Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.ACCESS.SEARCH.EFILES,Access Search E-Files Page,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.EFILE.SUBSCRIBE,Subscribe to E-Files for Compliance Solutions,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.EFILE.REPORT.RESET,Reset E-Files for Compliance Solutions,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.EFILE.CREATE,Create E-Files for Compliance Solutions,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.REPORT.CREATE,Create Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.COMMENT.DELETE.ALL,Delete Any Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.REPORT.SUBSCRIBE,Subscribe to Regulatory Report Notifications,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.ATTACHMENT.DELETE,Delete Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,FCF.EFILE.ACCESS,Access E-Files,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: E-File Manager,Anti-Money Laundering E-File Manager,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENT.EDIT,Edit Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ATTACHMENT.EDIT,Edit Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.COMMENT.DELETE,Delete Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERTS.ACCESS.AVAILABLE,Access Available Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.CLOSE,Close My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.COMMENT.DELETE.ALL,Delete Any Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ENTITY.CHECKOUT,Take Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.ROUTE,Route My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.EDIT.ALL,Edit Any Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.ROUTE,Route My Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.ENTITY.ACCESS,Access Entity,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERTS.ACCESS.SUPPRESSED,Access Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENT.TAKE_OWNERSHIP,Take Risk Assessment Ownership,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENT.CREATE,Create Manual Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.EDIT,Edit Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.CREATE.FROM.ALERTS,Create case from Alerts for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.CHECKOUT,Take Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.SEARCH,Access Global and Targeted Search,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENTS.ACCESS.MY,Access My Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.SUPPRESS,Suppress My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.CLOSE.ALL,Close Any Alert,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.ACTIVATE.SUPPRESSED,Activate Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.ACTIVATE.CLOSED,Activate Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.EDIT,Edit My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.CREATE,Create Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENTS.ACCESS.SEARCH,Access Risk Assessments Search,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENTS.ACCESS.CLOSED,Access Closed Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.SUBSCRIBE,Subscribe to Regulatory Report Notifications,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.ROUTE.ALL,Route Any Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.EDIT,Edit Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.EXPORT.CSV,Export to CSV,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ATTACHMENT.DELETE,Delete Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENTS.ACCESS.AVAILABLE,Access Available Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERTS.ACCESS.CLOSED,Access Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERTS.ACCESS.MY,Access My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.RISK_ASSESSMENT.ROUTE,Route Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.CREATE,Create Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ATTACHMENT.CREATE,Create Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ENTITY.ROUTE,Route Entity,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.CHECKOUT,Take Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.ROUTE.ALL,Route Any Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.CASE.ACCESS,Access Cases,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.CREATE,Create Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.COMMENT.EDIT,Edit Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ENTITY.CHECKIN,Return Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CASE.CHECKIN,Return Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.REPORT.CHECKIN,Return Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERTS.ACCESS.SEARCH,Access Alert Search,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.ALERT.SUPPRESS.ALL,Suppress Any Alert,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Investigator,Anti-Money Laundering Investigator,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.ACTIVATE.CLOSED,Activate Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.EDIT.ALL,Edit Any Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.SUBSCRIBE,Subscribe to Case Notifications,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.EFILE.READY,Ready E-Files for Compliance Solutions,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.CLOSE,Close My Regulatory Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERTS.ACCESS.SUPPRESSED,Access Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.SUPPRESS,Suppress My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.SEARCH,Access Global and Targeted Search,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ATTACHMENT.EDIT,Edit Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.CREATE.FROM.ALERTS,Create case from Alerts for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENTS.ACCESS.SEARCH,Access Risk Assessments Search,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERTS.ACCESS.MY,Access My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.CLOSE,Close My Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.CREATE,Create Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.EXPORT.CSV,Export to CSV,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENT.TAKE_OWNERSHIP,Take Risk Assessment Ownership,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.COMMENT.EDIT,Edit Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.CHECKOUT,Take Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.EDIT.ALL,Edit Any Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.EDIT,Edit My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.ROUTE.ALL,Route Any Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.ROUTE,Route My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.CREATE,Create Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.CASE.ACCESS,Access Cases,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENTS.ACCESS.AVAILABLE,Access Available Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.SUBSCRIBE,Subscribe to Regulatory Report Notifications,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.CHECKOUT,Take Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.ROUTE.ALL,Route Any Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENT.EDIT,Edit Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ENTITY.ROUTE,Route Entity,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENTS.ACCESS.CLOSED,Access Closed Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERTS.ACCESS.CLOSED,Access Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERTS.ACCESS.AVAILABLE,Access Available Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.CLOSE.ALL,Close Any Alert,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.ACTIVATE.SUPPRESSED,Activate Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.EDIT,Edit Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENT.ROUTE,Route Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.EDIT,Edit Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.CREATE,Create Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ATTACHMENT.CREATE,Create Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.COMMENT.DELETE,Delete Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.CHECKIN,Return Case Ownership,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERT.SUPPRESS.ALL,Suppress Any Alert,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENTS.ACCESS.MY,Access My Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.RISK_ASSESSMENT.CREATE,Create Manual Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.ENTITY.ACCESS,Access Entity,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ENTITY.CHECKOUT,Take Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.CASE.CLOSE,Close My Cases,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.CHECKIN,Return Regulatory Report Ownership,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.REPORT.ROUTE,Route My Regulatory Reports for Anti-Money Laundering,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ATTACHMENT.DELETE,Delete Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.COMMENT.DELETE.ALL,Delete Any Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ENTITY.CHECKIN,Return Entity Ownership,Anti-Money Laundering Entities,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Manager,Anti-Money Laundering Manager,AML.ALERTS.ACCESS.SEARCH,Access Alert Search,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.ALERTS.ACCESS.SUPPRESSED,Access Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.SCENARIO.CREATE,"Create Scenarios, Headers and Routing Groups",Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.ALERTS.ACCESS.SEARCH,Access Alert Search,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.SCENARIO.TEST,Test Scenarios,Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.RISK_ASSESSMENTS.ACCESS.SEARCH,Access Risk Assessments Search,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.ALERTS.ACCESS.CLOSED,Access Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.SCENARIO.EDIT,"Edit Scenarios, Headers and Routing Rule Groups",Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,FCF.ENTITY.ACCESS,Access Entity,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.HOME.ACCESS.SA,Access AML Scenario Administrator,Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.RISK_ASSESSMENTS.ACCESS.CLOSED,Access Closed Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.RISK_ASSESSMENTS.ACCESS.AVAILABLE,Access Available Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.ALERTS.ACCESS.AVAILABLE,Access Available Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.SCENARIO.IMPORT,Import Scenarios,Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+Anti-Money Laundering: Scenario Administrator User,Anti-Money Laundering Scenario Administrator User,AML.SCENARIO.EXPORT,Export Scenarios,Anti-Money Laundering Scenarios,Compliance Solutions Mid 7.1
+CASE_ADMIN,Users who administer Case Management.,Print Case,Print Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Upload UI Definitions,Upload UI Definitions,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Upload Custom Properties,Upload Custom Properties,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,View Documentation,View Documentation,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Upload Report Configuration,Upload Report Configuration,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Upload Search Configuration,Upload Search Configuration,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Refresh Labels,Refresh Labels,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Clear Cache,Clear Cache,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADMIN,Users who administer Case Management.,Bulk Load Index,Bulk Load Index,Search,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Refresh Labels,Refresh Labels,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Bulk Load Index,Bulk Load Index,Search,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Attachment To EFile,Add Attachment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any EFile Comment,Delete Any EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Comment To Any EFile,Add Comment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Subscribe to Any Party,Subscribe to Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Party Attachment,Delete Any Party Attachment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Create Party,Create Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Comment To Any Party,Add Comment To Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Subscribe to Any Incident,Subscribe to Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Terminate Case Workflow,Terminate Case Workflow,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Case Attachment,Delete Any Case Attachment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Incident Attachment,Delete Any Incident Attachment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Print Case,Print Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Clear Cache,Clear Cache,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Upload Report Configuration,Upload Report Configuration,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Upload Search Configuration,Upload Search Configuration,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Incident To Case,Add Incident To Case,Relational,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Incident Comment,Delete Any Incident Comment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit My Case Anytime,Edit My Case Anytime,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Create EFile,Create EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Terminate Report Workflow,Terminate Report Workflow,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Activate Report Workflow,Activate Report Workflow,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Comment To Any Report,Add Comment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Create Report,Create Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit Party,Edit Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit Incident,Edit Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Activate Case Workflow,Activate Case Workflow,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Reassign Any Case,Reassign Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Case Comment,Delete Any Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,View Documentation,View Documentation,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Upload UI Definitions,Upload UI Definitions,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit EFile,Edit EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete My Incident Comment,Delete My Incident Comment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Subscribe to Any Case,Subscribe to Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Comment To Any Case Anytime,Add Comment To Any Case Anytime,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit My Closed Case,Edit My Closed Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit Any Closed Case,Edit Any Closed Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Create Case,Create Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Attachment To Report,Add Attachment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit Report,Edit Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete My Party Comment,Delete My Party Comment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Add Comment To Any Incident,Add Comment To Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Reassign My Case,Reassign My Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Edit Any Case Anytime,Edit Any Case Anytime,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Upload Custom Properties,Upload Custom Properties,Administration,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any EFile Attachment,Delete Any EFile Attachment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Report Attachment,Delete Any Report Attachment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Report Comment,Delete Any Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete Any Party Comment,Delete Any Party Comment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Create Incident,Create Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Delete My Case Comment,Delete My Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ADVANCED,Users who can conduct Advanced Administration.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Edit Party,Edit Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Add Comment To Any Party,Add Comment To Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Create Party,Create Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Reassign My Case,Reassign My Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Subscribe to Any Incident,Subscribe to Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Edit Incident,Edit Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Delete My Case Comment,Delete My Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Subscribe to Any Party,Subscribe to Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Edit My Closed Case,Edit My Closed Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Add Incident To Case,Add Incident To Case,Relational,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Add Comment To Any Report,Add Comment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Subscribe to Any Case,Subscribe to Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Create Report,Create Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Delete My Party Comment,Delete My Party Comment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Create Incident,Create Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Add Comment To Any EFile,Add Comment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Delete My Incident Comment,Delete My Incident Comment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Add Comment To Any Incident,Add Comment To Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_ANALYST,Users who analyze incoming incidents.,Edit Report,Edit Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Delete My Case Comment,Delete My Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_FILER,Users who perform legal review of cases.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete My Case Comment,Delete My Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete My Incident Comment,Delete My Incident Comment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Subscribe to Any Case,Subscribe to Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Incident To Case,Add Incident To Case,Relational,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete Any Party Attachment,Delete Any Party Attachment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Create Party,Create Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Create Incident,Create Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Edit My Closed Case,Edit My Closed Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Create Case,Create Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Activate Report Workflow,Activate Report Workflow,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Edit Incident,Edit Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Comment To Any Incident,Add Comment To Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete Any Report Attachment,Delete Any Report Attachment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Comment To Any Report,Add Comment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Create Report,Create Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Edit Party,Edit Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Print Case,Print Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Attachment To Report,Add Attachment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Subscribe to Any Party,Subscribe to Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete Any Incident Attachment,Delete Any Incident Attachment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete Any Case Attachment,Delete Any Case Attachment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Comment To Any EFile,Add Comment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Edit Report,Edit Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Add Comment To Any Party,Add Comment To Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Subscribe to Any Incident,Subscribe to Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Activate Case Workflow,Activate Case Workflow,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Reassign My Case,Reassign My Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Delete My Party Comment,Delete My Party Comment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_INVESTIGATOR,Users who can investigate cases.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Delete My Case Comment,Delete My Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Subscribe to Any Incident,Subscribe to Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Subscribe to Any Case,Subscribe to Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Subscribe to Any Party,Subscribe to Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Print Case,Print Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_LEGAL,Users who perform legal review of cases.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any EFile Attachment,Delete Any EFile Attachment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Activate Report Workflow,Activate Report Workflow,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Subscribe to Any Party,Subscribe to Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Party Comment,Delete Any Party Comment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Subscribe to Any Incident,Subscribe to Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Incident Comment,Delete Any Incident Comment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Incident Attachment,Delete Any Incident Attachment,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Case Attachment,Delete Any Case Attachment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any EFile Comment,Delete Any EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Party Attachment,Delete Any Party Attachment,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Search Parties,Search Parties,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Report Attachment,Delete Any Report Attachment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Search Incidents,Search Incidents,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Reassign Any Case,Reassign Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Terminate Report Workflow,Terminate Report Workflow,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Edit Report,Edit Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Add Comment To Any Party,Add Comment To Any Party,Party,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Activate Case Workflow,Activate Case Workflow,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Add Comment To Any Report,Add Comment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Add Comment To Any Incident,Add Comment To Any Incident,Incident,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Case Comment,Delete Any Case Comment,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Delete Any Report Comment,Delete Any Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Terminate Case Workflow,Terminate Case Workflow,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Add Comment To Any EFile,Add Comment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Subscribe to Any Case,Subscribe to Any Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Add Comment To Any Case Anytime,Add Comment To Any Case Anytime,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Print Case,Print Case,Case,Ent Case Mgmt Mid-Tier 6.3
+CASE_MANAGER,Users who manage investigators.,Search Cases,Search Cases,Case,Ent Case Mgmt Mid-Tier 6.3
+Comments: Administrator,,WIP_COMMENT_DELETE,Delete comments,Comments,SAS Application Infrastructure
+Comments: Administrator,,WIP_COMMENT_EDIT,Edit comments,Comments,SAS Application Infrastructure
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.RISK_ASSESSMENTS.ACCESS.AVAILABLE,Access Available Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.RISK_ASSESSMENTS.ACCESS.CLOSED,Access Closed Risk Assessments,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.ENTITY.ACCESS,Access Entity,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.EFILE.ACCESS,Access E-Files,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.ALERTS.ACCESS.SEARCH,Access Alert Search,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.ALERTS.ACCESS.SUPPRESSED,Access Suppressed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.ACCESS.SEARCH.EFILES,Access Search E-Files Page,Compliance Solutions E-File,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.ALERTS.ACCESS.CLOSED,Access Closed Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.ALERTS.ACCESS.AVAILABLE,Access Available Alerts,Anti-Money Laundering Alerts,Compliance Solutions Mid 7.1
+Compliance Solutions: Quality Review and Audit,Quality Review and Audit User,AML.RISK_ASSESSMENTS.ACCESS.SEARCH,Access Risk Assessments Search,Anti-Money Laundering Risk Assessment,Compliance Solutions Mid 7.1
+Customer Due Diligence: Administrator,Customer Due Diligence Administrator,AML.PREFERENCES.UPDATE,Update Preferences,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Administrator,Customer Due Diligence Administrator,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Administrator,Customer Due Diligence Administrator,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Administrator,Customer Due Diligence Administrator,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,CDD.CASE.ROUTE,Route Cases for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,AML.CASE.EDIT,Edit My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,CDD.CASE.CHECKIN,Return Case Ownership for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,CDD.CASE.CHECKOUT,Take Case Ownership for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,CDD.CASE.CREATE,Create Cases for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,AML.COMMENT.DELETE,Delete Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.CASE.ACCESS,Access Cases,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.SEARCH,Access Global and Targeted Search,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Customer Due Diligence: Investigator,Customer Due Diligence Investigator,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.ACCESS.SEARCH.REPORTS,Access Search Reports Page,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,CDD.CASE.CHECKOUT,Take Case Ownership for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,CDD.CASE.CREATE,Create Cases for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.CASE.ACCESS,Access Cases,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,CDD.CASE.ROUTE,Route Cases for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.SEARCH,Access Global and Targeted Search,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.COMMENT.DELETE.ALL,Delete Any Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.COMMENT.DELETE,Delete Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,CDD.CASE.CHECKIN,Return Case Ownership for Customer Due Diligence,Customer Due Diligence Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.CASE.EDIT.ALL,Edit Any Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.ATTACHMENT.DELETE,Delete Attachment,Anti-Money Laundering Attachments,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.COMMENT.CREATE,Create Note,Anti-Money Laundering Notes,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,FCF.REPORT.ACCESS,Access Reports,Anti-Money Laundering Regulatory Reports,Compliance Solutions Mid 7.1
+Customer Due Diligence: Manager,Customer Due Diligence Manager,AML.CASE.EDIT,Edit My Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.HOME.ACCESS.SCENARIO_MANAGER,Access CDD Rule Administrator,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,FCF.ACCESS.SEARCH.CASES,Access Search Cases Page,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.IMPORT,Import Rules,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,AML.CASE.PRINT,Print Cases for Anti-Money Laundering,Anti-Money Laundering Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.CREATE,Create Rules and Rule Groups,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,FCF.SERVICES.ACCESS.ALL,Access Compliance Solutions REST Services,Compliance Solutions Services,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.EDIT,Edit Rules and Rule Groups,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.EXPORT,Export Rules,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,FCF.CASE.PRINT,Access Print Case Reports,Compliance Solutions Cases,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,AML.CLEAR_CACHE,Clear Cache,Anti-Money Laundering Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.DEPLOY,Deploy to FCF,CDD Rule Administration,Compliance Solutions Mid 7.1
+Customer Due Diligence: Scenario Manager User,Customer Due Diligence Rule Administrator User,CDD.RULES.ADMIN,Administration,CDD Rule Administration,Compliance Solutions Mid 7.1
+Data Management: Operation,Provides default access to the Home page.,ViewApplication,View Application,Operation,Data Management Cnsle Home Page
+Data Management: Process Orchestration,Provides default access to the SAS Process Orchestration application.,ViewApplication,View Application,Operation,Visual Process Orch
+Data Remediation: Issue Administration,"Provides functionality related to administrative activities for all data remediation packages, items, and issues.",IssueAdministration,Issue Administration,Administrative,Data Remediation
+Data Remediation: Issue Administration,"Provides functionality related to administrative activities for all data remediation packages, items, and issues.",IssueManagement,Manage Issues,Process Management,Data Remediation
+Data Remediation: Issue Administration,"Provides functionality related to administrative activities for all data remediation packages, items, and issues.",ViewApplication,View Application,Operation,Data Remediation
+Data Remediation: Issue Management,"Provides functionality related to interacting with data remediation packages, items, and issues.",ViewApplication,View Application,Operation,Data Remediation
+Data Remediation: Issue Management,"Provides functionality related to interacting with data remediation packages, items, and issues.",IssueManagement,Manage Issues,Process Management,Data Remediation
+Data Remediation: Issue View,"Provides functionality related to viewing data remediation packages, items, and issues.",ViewApplication,View Application,Operation,Data Remediation
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Add Attachment To Report,Add Attachment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,View ECM Hub Link,View ECM Hub Link,Visual Analytics,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Add Comment To Any EFile,Add Comment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Delete My Report Comment,Delete My Report Comment,Report,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Search Reports,Search Reports,Report,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Add Attachment To EFile,Add Attachment To EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Delete Any EFile Attachment,Delete Any EFile Attachment,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Subscribe to Any Report,Subscribe to Any Report,Report,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Subscribe to Any EFile,Subscribe to Any EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Delete My EFile Comment,Delete My EFile Comment,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Edit EFile,Edit EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Add Comment To Any Report,Add Comment To Report,Report,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Create EFile,Create EFile,EFile,Ent Case Mgmt Mid-Tier 6.3
+EFILE_TRANSMITTER,Users who can work with and transmit EFiles.,Search EFiles,Search EFiles,EFile,Ent Case Mgmt Mid-Tier 6.3
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyMetadataAuthorization,Modify Metadata Authorization,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,8675c61b-e816-48e0-96d1-667668217d98,Nonparametric One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,2dfe3e4d-3a20-4fce-8bc0-6d3e623eea8e,Mixed Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,3e8b2599-4e09-4023-a484-87d42158cfa5,Linear Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,95970fbc-2b0d-4c43-8024-8c2b824a942b,Scatter Plot Matrix,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,80a6a3dd-79a7-489a-84c9-c37d669a2920,Bar-Line Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,addf2362-59e8-4224-84b3-a2f4117853fe,Donut Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,db2921c2-7f95-435f-a99b-d7e1ca852686,Box Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,c3e9d551-8070-404e-9dc7-8ef7b4baf629,List Report Wizard,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,c84628c5-7890-4faf-b9b8-79abf1b6a901,Transpose,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,4cb361c6-1bbb-425e-87a5-7392673aebb9,"Recency, Frequency, and Monetary Analysis",Data Mining,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,fb3a7d22-984f-462b-a759-a95e4dd64267,np Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,fcfb3730-ec89-49bd-98ae-e13e9208cb55,Life Tables,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SendToJMP,Send SAS content to JMP,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,fdc06bb0-3eac-404b-a5af-b53b79415679,Compare Data,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyAppendTables,Append Tables,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AccessSASStudioTasks,Access SAS Studio Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowHTMLResult,Allow HTML Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyOptionsEmail,Modify E-mail Options,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AnalyzeProgramForFlow,Analyze for Program Flow,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyStoredProcess,Create or Modify SAS Stored Process,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyTaskCustomCode,Add or Modify Custom Code to SAS Tasks,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,53303e6c-6f4d-459b-b6b5-bb30f34bd218,Nonlinear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,d3932e3a-4fee-43df-956c-a605ac9af3e7,Summary Tables,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,f7e9c560-ec4a-4767-923b-31614549e2c2,Summary Statistics,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,0decd3d8-9271-490b-8c47-7626f9ec2762,Create Format,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,2ca35611-dbc3-423a-bd1e-799bd69c41c0,Principal Components,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyAdvanceQuery,Create or Modify Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SendToSystemViewer,Send SAS content to System Viewer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,PrintData,Print Data and Results,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,NavigateStoredProcessServerFileSystem,Browse Stored Process Server File System,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,f1613afe-aa29-47e7-9920-dc80941af440,Access System Options Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ViewCapabilities,View Capabilities,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowExcelResult,Allow Excel Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyOptions,Modify All Options,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,DebugDATASteps,Debug DATA Steps,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifySASProgram,Create or Modify SAS Program,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,3c0d1cb1-78b7-48c2-accf-3a36b6490b20,Generalized Linear Models,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,1e926edb-b092-4445-8931-92e169d0b287,Tile Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,3c33b31d-2db6-46ac-954b-f4d13dad5cd4,Surface Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,9439748d-30d9-4b3d-bc4f-dcb925a0ac3f,Bar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a3c8277e-fd1d-44e1-abe9-9db23f29ba69,Create Format from a Data Set,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,e5610195-5311-4ac3-b302-da89ce225464,Upload Data Files to Server,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,605cf2ff-f80b-4cfd-b97c-d1f380fad71e,Download Data Files to PC,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,754a8023-d64d-4b89-be21-62a91e6ae8b8,Model Scoring,Data Mining,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,fd3738eb-fd1a-4a5b-ac24-515c7584b648,Forecast Studio Override Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b86a6ad7-1c07-4d18-85d6-e6b53461429e,Forecast Studio Open Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b497e329-911a-46fd-8daf-9d8f19cb51c9,ARIMA Modeling and Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,7692c179-1a38-496a-a312-1005634a7e4c,Basic Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,8bbf1546-bad9-4e7b-b651-7595d5a4a958,Pareto Chart,Pareto,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a35652ca-0ddc-4ade-bfcd-1e347438ec5f,u Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a7c5ee16-9920-44d7-8a53-a6b2b6f2e757,Correlations,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ca4e7d68-4f64-4ec1-ae3a-7ff4c5711e97,Import Data,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,OpenSourceServerFiles,Open Files from SAS Server,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,OpenSourceServerOLAP,Open Cube from OLAP Server,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AccessProjectMaintenance,Access Project Maintenance,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b244b87c-30f9-41cf-a990-05429d445d14,Access Catalog and Formats Explorer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowPowerPointResult,Allow PowerPoint Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ffd7e52f-3dd3-4961-a533-cbe319f565b8,One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,f1924900-881f-4553-9b18-5867e05418eb,Show ODS Statistical Graph,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b3089a95-0e2a-4e0a-8105-4e06ecee5915,Open ODS Graphics Designer,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,0199db3c-3cd8-4f56-b9fc-3e23047f2a36,Line Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,2debfe1a-ccea-4769-b031-a8943a6c4826,Pie Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b09e34e8-c010-4db2-abba-04f5f1eddcf9,List Data,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,8f5b3d8e-9d0d-4833-967d-05fb95474019,Import JMP,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,660ed464-dab4-48ad-a1d9-452148b2cffe,Copy Files,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,63a6beb6-c531-4214-88f2-c078e8a4d93f,p Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,da1f3d6b-b20c-40ae-9888-a690378ffcae,c Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a86884f6-6d89-40d1-8f39-9fa801b4c7a8,Factor Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a062455d-134f-46f4-b1d9-0adafb776cb1,Discriminant Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,TrackProgramHistory,Track Program History,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyOutputData,Modify Output Data Location in SAS Tasks,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ResetLogin,Reset Login,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyOptionsSecurity,Modify Security Options,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,197ac995-8634-450c-a8cc-e0e7ce7a3a14,Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,e5936a2e-f57a-46d8-91f9-3528ab0146ee,Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,30516520-5559-4cb8-b5cf-4ee8698178af,HP Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ec243de8-3164-4b0a-9824-b7e3452eaf7f,Map Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ExtractDataFromVAReport,Extract Data from SAS Visual Analytics Reports,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,94cdfba1-6a97-4318-b54e-7dd4c919de35,Stack Columns,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,28f8ac65-3860-4183-afc1-6b4171af5a2b,Sort Data,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,0771aa89-60ec-4444-a055-466acbc84383,Data Set Attributes,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,cf763f1e-61d4-41d4-bcbb-3c1d8cd2827f,Rapid Predictive Modeler,Data Mining,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,bcbfc45d-1c59-468d-9aed-d251d45d3e5f,Regression Analysis with Autoregressive Errors,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,af4938b3-3c09-4719-a8b6-438d992184a6,Mean and Standard Deviation Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,6cecaf49-ab00-4024-b8b3-74ed57215963,Mean and Range Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,09236185-d950-4c40-b4ba-7d08cf905646,P-P Plots,Capability,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowPublishing,Publish To Distribution Channel,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ExportDataToServerFiles,Export Data to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveProgramLocalComputer,Save Program to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SendToOffice,Send SAS content to Microsoft Office,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveSourceServerFiles,Save Files to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveSourceLocalComputer,Save Files to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,OpenSourceODBC,Open Data from ODBC,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,EditDataSets,Edit Data Sets,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AccessSASTechnicalSupport,Access SAS Technical Support,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,e22167e2-0ca4-4ab1-a3c5-9a7143c8e3f8,Assign Project Library,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowParallelExecution,Allow Parallel Execution on the Same Server,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowRTFResult,Allow RTF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyOptionsPerformance,Modify Performance Options,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyProjectServer,Modify SAS Server Reference in Project or Document,Options,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AnalyzeProgramForGrid,Analyze for Grid Computing,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,dd5a4c5f-96b3-4743-a79d-84daaa3e8fc1,HP Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,34d071eb-7855-41fb-acf2-7c60194514a8,t Test,ANOVA,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,12dcbf05-0420-4a13-81e4-9698565b5a2a,Scatter Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,InteractiveDataGrid,Explore Data,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,4d2e1c04-f6da-4ba1-8928-42a6b7e607f7,Split Columns,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,285708a2-09b9-4d6c-933f-0d605b41000d,Standardize Data,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,4b54f20a-81d4-4a6c-b5a6-0d992c969d72,Create Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,d66cb741-0f71-46d4-ad49-8115371f2f37,Prepare Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,c23a69c3-10a2-4aa7-998c-06c599851767,Box Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ed63e6eb-3bd3-45a4-91f4-639862be396c,Q-Q Plots,Capability,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a7e0b786-facb-4846-bfa3-6de7d0bffbdb,CDF Plots,Capability,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ExportDataToLocalComputer,Export Data to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveProjectServerFiles,Save Project to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyDistributeEmailRecipient,Send Content to E-mail Recipient,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,BrowseLASRLibraries,Browse LASR Libraries,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,8ac21c6c-9dca-445f-b789-2f20266bd382,Delete Data Sets and Formats,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,abd953d7-9920-4b84-8d98-688668f80bf0,Update Library Metadata,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyScheduledProject,Create or Modify Schedules,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ModifyStyles,Modify Styles,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,0f7c3669-1ad7-414b-8d9d-27c85047b779,Area Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,0d429186-fc81-43e3-b1f7-aba0055ac049,Bubble Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b764327e-cadf-4adb-91b2-b72073d5fb63,One-Way Frequencies,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a94ffbd5-293e-4913-8f14-e5d995dbcc9b,Distribution Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CutAndCopyData,Cut and Copy Table Data,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,38f10a59-fe55-4316-b3fe-aef6a54c4092,Import Stata,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,ab8bb011-9679-4785-b563-e1ba4daf0b98,Upload to CAS,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,411735c6-928b-476e-b834-65d23563bd7d,Random Sample,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,c7fbbe6a-4362-4a8c-8a18-2c89b03cd7ed,Individual Measurements Chart,Control Charts,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,edc58e88-7d0d-4fb3-9f58-27e888a590fa,Cluster Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CreateModifyQueryJoinCapability,Create or Modify Data Join in Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveProjectLocalComputer,Save Project to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveToSASFolder,Save to SAS Folder,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,CopyPasteServerContent,Copy and Paste SAS Server Content,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,OpenSourceOLEDB,Open Data from OLEDB,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,OpenSourceLocalComputer,Open Files from Local Computer,Open or Import,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AccessUnregisteredCustomTasks,Access Unregistered Custom Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,61f14b1f-7558-4132-8f73-ab7ff95251e0,Radar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,c7cc1bc4-593c-4ca1-9739-e6d694c8c1ba,Contour Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,41ffe6c0-4f2f-4e23-986a-5222a8539fd6,Table Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,1f65d7ba-d4d1-4afc-aadb-fc1598677eff,Characterize Data,Describe,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,5abcdefb-27fa-40cb-8f4a-e669f574f2cc,Import SPSS,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,b02136d3-0380-4177-b4a1-8aa454f6e654,Upload to LASR,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,bacf7ce2-405c-4add-9c4e-236b59de17ff,Rank,Data,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,bb8567eb-017c-4021-a02c-4012dd25370a,Forecast Studio Create Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,6c27ca4e-9f6a-4d64-9c0b-66859f9b9d0f,Regression Analysis of Panel Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,8e24f125-070a-4b4c-8481-9ddfb333e58e,Probability Plots,Capability,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,a0fc5136-093f-422a-b1b1-4cd57ab0c90b,Histograms,Capability,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,87cd57d3-0c3d-44e2-8f52-9c54aedf7599,Proportional Hazards,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,37f0c7df-6325-40ae-9026-77f80d0215be,Canonical Correlation,Multivariate,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,SaveProgramServerFiles,Save Program to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,3e71b636-9d38-413f-95c0-4f0d6707276a,JMP Stored Process Packager,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,d67af4a1-1628-455d-a411-8cf074318ef5,Access SAS Macro Variable Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Advanced,Provides all capabilities in SAS Enterprise Guide.,AllowPDFResult,Allow PDF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ModifyProjectServer,Modify SAS Server Reference in Project or Document,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",8675c61b-e816-48e0-96d1-667668217d98,Nonparametric One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",1e926edb-b092-4445-8931-92e169d0b287,Tile Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b02136d3-0380-4177-b4a1-8aa454f6e654,Upload to LASR,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",e5610195-5311-4ac3-b302-da89ce225464,Upload Data Files to Server,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",94cdfba1-6a97-4318-b54e-7dd4c919de35,Stack Columns,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",0decd3d8-9271-490b-8c47-7626f9ec2762,Create Format,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",fd3738eb-fd1a-4a5b-ac24-515c7584b648,Forecast Studio Override Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",7692c179-1a38-496a-a312-1005634a7e4c,Basic Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",a062455d-134f-46f4-b1d9-0adafb776cb1,Discriminant Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",edc58e88-7d0d-4fb3-9f58-27e888a590fa,Cluster Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",53303e6c-6f4d-459b-b6b5-bb30f34bd218,Nonlinear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CreateModifyAdvanceQuery,Create or Modify Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SendToJMP,Send SAS content to JMP,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SaveSourceLocalComputer,Save Files to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AccessSASTechnicalSupport,Access SAS Technical Support,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",f1613afe-aa29-47e7-9920-dc80941af440,Access System Options Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",d67af4a1-1628-455d-a411-8cf074318ef5,Access SAS Macro Variable Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowExcelResult,Allow Excel Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowRTFResult,Allow RTF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",dd5a4c5f-96b3-4743-a79d-84daaa3e8fc1,HP Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",3e8b2599-4e09-4023-a484-87d42158cfa5,Linear Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b3089a95-0e2a-4e0a-8105-4e06ecee5915,Open ODS Graphics Designer,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",0f7c3669-1ad7-414b-8d9d-27c85047b779,Area Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",0d429186-fc81-43e3-b1f7-aba0055ac049,Bubble Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",41ffe6c0-4f2f-4e23-986a-5222a8539fd6,Table Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",InteractiveDataGrid,Explore Data,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",8f5b3d8e-9d0d-4833-967d-05fb95474019,Import JMP,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",0771aa89-60ec-4444-a055-466acbc84383,Data Set Attributes,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",d66cb741-0f71-46d4-ad49-8115371f2f37,Prepare Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",87cd57d3-0c3d-44e2-8f52-9c54aedf7599,Proportional Hazards,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SendToSystemViewer,Send SAS content to System Viewer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",PrintData,Print Data and Results,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ExportDataToLocalComputer,Export Data to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SaveProgramLocalComputer,Save Program to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CreateModifyDistributeEmailRecipient,Send Content to E-mail Recipient,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",OpenSourceLocalComputer,Open Files from Local Computer,Open or Import,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",fdc06bb0-3eac-404b-a5af-b53b79415679,Compare Data,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CreateModifyScheduledProject,Create or Modify Schedules,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ModifyStyles,Modify Styles,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ffd7e52f-3dd3-4961-a533-cbe319f565b8,One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",d3932e3a-4fee-43df-956c-a605ac9af3e7,Summary Tables,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b764327e-cadf-4adb-91b2-b72073d5fb63,One-Way Frequencies,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ExtractDataFromVAReport,Extract Data from SAS Visual Analytics Reports,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",660ed464-dab4-48ad-a1d9-452148b2cffe,Copy Files,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",28f8ac65-3860-4183-afc1-6b4171af5a2b,Sort Data,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",bacf7ce2-405c-4add-9c4e-236b59de17ff,Rank,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",4cb361c6-1bbb-425e-87a5-7392673aebb9,"Recency, Frequency, and Monetary Analysis",Data Mining,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",bb8567eb-017c-4021-a02c-4012dd25370a,Forecast Studio Create Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowPublishing,Publish To Distribution Channel,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ViewCapabilities,View Capabilities,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowHTMLResult,Allow HTML Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",197ac995-8634-450c-a8cc-e0e7ce7a3a14,Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",e5936a2e-f57a-46d8-91f9-3528ab0146ee,Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",95970fbc-2b0d-4c43-8024-8c2b824a942b,Scatter Plot Matrix,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",1f65d7ba-d4d1-4afc-aadb-fc1598677eff,Characterize Data,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",c3e9d551-8070-404e-9dc7-8ef7b4baf629,List Report Wizard,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ab8bb011-9679-4785-b563-e1ba4daf0b98,Upload to CAS,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",cf763f1e-61d4-41d4-bcbb-3c1d8cd2827f,Rapid Predictive Modeler,Data Mining,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",754a8023-d64d-4b89-be21-62a91e6ae8b8,Model Scoring,Data Mining,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",a86884f6-6d89-40d1-8f39-9fa801b4c7a8,Factor Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SaveToSASFolder,Save to SAS Folder,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowPowerPointResult,Allow PowerPoint Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ModifyOptions,Modify All Options,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",30516520-5559-4cb8-b5cf-4ee8698178af,HP Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ec243de8-3164-4b0a-9824-b7e3452eaf7f,Map Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",addf2362-59e8-4224-84b3-a2f4117853fe,Donut Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b09e34e8-c010-4db2-abba-04f5f1eddcf9,List Data,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",a3c8277e-fd1d-44e1-abe9-9db23f29ba69,Create Format from a Data Set,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",4d2e1c04-f6da-4ba1-8928-42a6b7e607f7,Split Columns,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",fcfb3730-ec89-49bd-98ae-e13e9208cb55,Life Tables,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",TrackProgramHistory,Track Program History,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ModifyOutputData,Modify Output Data Location in SAS Tasks,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",8ac21c6c-9dca-445f-b789-2f20266bd382,Delete Data Sets and Formats,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ModifyOptionsEmail,Modify E-mail Options,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",3c33b31d-2db6-46ac-954b-f4d13dad5cd4,Surface Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",0199db3c-3cd8-4f56-b9fc-3e23047f2a36,Line Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",61f14b1f-7558-4132-8f73-ab7ff95251e0,Radar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",605cf2ff-f80b-4cfd-b97c-d1f380fad71e,Download Data Files to PC,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",c84628c5-7890-4faf-b9b8-79abf1b6a901,Transpose,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",285708a2-09b9-4d6c-933f-0d605b41000d,Standardize Data,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",6c27ca4e-9f6a-4d64-9c0b-66859f9b9d0f,Regression Analysis of Panel Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b497e329-911a-46fd-8daf-9d8f19cb51c9,ARIMA Modeling and Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",2ca35611-dbc3-423a-bd1e-799bd69c41c0,Principal Components,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",a7c5ee16-9920-44d7-8a53-a6b2b6f2e757,Correlations,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CopyPasteServerContent,Copy and Paste SAS Server Content,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowParallelExecution,Allow Parallel Execution on the Same Server,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AllowPDFResult,Allow PDF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",f1924900-881f-4553-9b18-5867e05418eb,Show ODS Statistical Graph,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",12dcbf05-0420-4a13-81e4-9698565b5a2a,Scatter Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",c7cc1bc4-593c-4ca1-9739-e6d694c8c1ba,Contour Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",f7e9c560-ec4a-4767-923b-31614549e2c2,Summary Statistics,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",411735c6-928b-476e-b834-65d23563bd7d,Random Sample,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b86a6ad7-1c07-4d18-85d6-e6b53461429e,Forecast Studio Open Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",SaveProjectLocalComputer,Save Project to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",BrowseLASRLibraries,Browse LASR Libraries,Open or Import,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ca4e7d68-4f64-4ec1-ae3a-7ff4c5711e97,Import Data,Open or Import,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CreateModifyAppendTables,Append Tables,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AccessSASStudioTasks,Access SAS Studio Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",3c0d1cb1-78b7-48c2-accf-3a36b6490b20,Generalized Linear Models,Regression,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",34d071eb-7855-41fb-acf2-7c60194514a8,t Test,ANOVA,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",2dfe3e4d-3a20-4fce-8bc0-6d3e623eea8e,Mixed Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",80a6a3dd-79a7-489a-84c9-c37d669a2920,Bar-Line Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",9439748d-30d9-4b3d-bc4f-dcb925a0ac3f,Bar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",2debfe1a-ccea-4769-b031-a8943a6c4826,Pie Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",db2921c2-7f95-435f-a99b-d7e1ca852686,Box Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",a94ffbd5-293e-4913-8f14-e5d995dbcc9b,Distribution Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CutAndCopyData,Cut and Copy Table Data,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",38f10a59-fe55-4316-b3fe-aef6a54c4092,Import Stata,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",5abcdefb-27fa-40cb-8f4a-e669f574f2cc,Import SPSS,Data,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",4b54f20a-81d4-4a6c-b5a6-0d992c969d72,Create Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",bcbfc45d-1c59-468d-9aed-d251d45d3e5f,Regression Analysis with Autoregressive Errors,Time Series,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",37f0c7df-6325-40ae-9026-77f80d0215be,Canonical Correlation,Multivariate,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",CreateModifyQueryJoinCapability,Create or Modify Data Join in Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",abd953d7-9920-4b84-8d98-688668f80bf0,Update Library Metadata,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",b244b87c-30f9-41cf-a990-05429d445d14,Access Catalog and Formats Explorer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",AccessUnregisteredCustomTasks,Access Unregistered Custom Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Analysis,"Provides basic data analysis, reporting, and other capabilities.",ResetLogin,Reset Login,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ViewCapabilities,View Capabilities,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,e5936a2e-f57a-46d8-91f9-3528ab0146ee,Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,95970fbc-2b0d-4c43-8024-8c2b824a942b,Scatter Plot Matrix,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,2debfe1a-ccea-4769-b031-a8943a6c4826,Pie Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,d3932e3a-4fee-43df-956c-a605ac9af3e7,Summary Tables,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b764327e-cadf-4adb-91b2-b72073d5fb63,One-Way Frequencies,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ExtractDataFromVAReport,Extract Data from SAS Visual Analytics Reports,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,38f10a59-fe55-4316-b3fe-aef6a54c4092,Import Stata,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,8f5b3d8e-9d0d-4833-967d-05fb95474019,Import JMP,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,PrintData,Print Data and Results,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SaveProgramLocalComputer,Save Program to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ca4e7d68-4f64-4ec1-ae3a-7ff4c5711e97,Import Data,Open or Import,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,OpenSourceServerOLAP,Open Cube from OLAP Server,Open or Import,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AccessSASStudioTasks,Access SAS Studio Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,197ac995-8634-450c-a8cc-e0e7ce7a3a14,Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,30516520-5559-4cb8-b5cf-4ee8698178af,HP Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,8675c61b-e816-48e0-96d1-667668217d98,Nonparametric One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,9439748d-30d9-4b3d-bc4f-dcb925a0ac3f,Bar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,c3e9d551-8070-404e-9dc7-8ef7b4baf629,List Report Wizard,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,5abcdefb-27fa-40cb-8f4a-e669f574f2cc,Import SPSS,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,0decd3d8-9271-490b-8c47-7626f9ec2762,Create Format,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,bcbfc45d-1c59-468d-9aed-d251d45d3e5f,Regression Analysis with Autoregressive Errors,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,87cd57d3-0c3d-44e2-8f52-9c54aedf7599,Proportional Hazards,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,a7c5ee16-9920-44d7-8a53-a6b2b6f2e757,Correlations,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,53303e6c-6f4d-459b-b6b5-bb30f34bd218,Nonlinear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowPublishing,Publish To Distribution Channel,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SaveToSASFolder,Save to SAS Folder,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowHTMLResult,Allow HTML Result Format,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ModifyOptions,Modify All Options,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,3c0d1cb1-78b7-48c2-accf-3a36b6490b20,Generalized Linear Models,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,addf2362-59e8-4224-84b3-a2f4117853fe,Donut Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,db2921c2-7f95-435f-a99b-d7e1ca852686,Box Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b02136d3-0380-4177-b4a1-8aa454f6e654,Upload to LASR,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,bacf7ce2-405c-4add-9c4e-236b59de17ff,Rank,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,0771aa89-60ec-4444-a055-466acbc84383,Data Set Attributes,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,6c27ca4e-9f6a-4d64-9c0b-66859f9b9d0f,Regression Analysis of Panel Data,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,fcfb3730-ec89-49bd-98ae-e13e9208cb55,Life Tables,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,edc58e88-7d0d-4fb3-9f58-27e888a590fa,Cluster Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,8ac21c6c-9dca-445f-b789-2f20266bd382,Delete Data Sets and Formats,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,CreateModifyAppendTables,Append Tables,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,f1613afe-aa29-47e7-9920-dc80941af440,Access System Options Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowParallelExecution,Allow Parallel Execution on the Same Server,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ResetLogin,Reset Login,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ModifyOptionsEmail,Modify E-mail Options,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,f1924900-881f-4553-9b18-5867e05418eb,Show ODS Statistical Graph,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,0f7c3669-1ad7-414b-8d9d-27c85047b779,Area Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,c7cc1bc4-593c-4ca1-9739-e6d694c8c1ba,Contour Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,f7e9c560-ec4a-4767-923b-31614549e2c2,Summary Statistics,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b497e329-911a-46fd-8daf-9d8f19cb51c9,ARIMA Modeling and Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,d66cb741-0f71-46d4-ad49-8115371f2f37,Prepare Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SendToJMP,Send SAS content to JMP,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SendToSystemViewer,Send SAS content to System Viewer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b244b87c-30f9-41cf-a990-05429d445d14,Access Catalog and Formats Explorer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowPowerPointResult,Allow PowerPoint Result Format,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,2dfe3e4d-3a20-4fce-8bc0-6d3e623eea8e,Mixed Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,3e8b2599-4e09-4023-a484-87d42158cfa5,Linear Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,1e926edb-b092-4445-8931-92e169d0b287,Tile Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,80a6a3dd-79a7-489a-84c9-c37d669a2920,Bar-Line Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,61f14b1f-7558-4132-8f73-ab7ff95251e0,Radar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,0d429186-fc81-43e3-b1f7-aba0055ac049,Bubble Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,InteractiveDataGrid,Explore Data,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,e5610195-5311-4ac3-b302-da89ce225464,Upload Data Files to Server,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,605cf2ff-f80b-4cfd-b97c-d1f380fad71e,Download Data Files to PC,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,c84628c5-7890-4faf-b9b8-79abf1b6a901,Transpose,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,94cdfba1-6a97-4318-b54e-7dd4c919de35,Stack Columns,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,285708a2-09b9-4d6c-933f-0d605b41000d,Standardize Data,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,28f8ac65-3860-4183-afc1-6b4171af5a2b,Sort Data,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,BrowseLASRLibraries,Browse LASR Libraries,Open or Import,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,OpenSourceLocalComputer,Open Files from Local Computer,Open or Import,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,fdc06bb0-3eac-404b-a5af-b53b79415679,Compare Data,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ModifyStyles,Modify Styles,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AccessUnregisteredCustomTasks,Access Unregistered Custom Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,dd5a4c5f-96b3-4743-a79d-84daaa3e8fc1,HP Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b3089a95-0e2a-4e0a-8105-4e06ecee5915,Open ODS Graphics Designer,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,3c33b31d-2db6-46ac-954b-f4d13dad5cd4,Surface Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,41ffe6c0-4f2f-4e23-986a-5222a8539fd6,Table Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,b09e34e8-c010-4db2-abba-04f5f1eddcf9,List Data,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,a94ffbd5-293e-4913-8f14-e5d995dbcc9b,Distribution Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ExportDataToLocalComputer,Export Data to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SaveSourceLocalComputer,Save Files to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,d67af4a1-1628-455d-a411-8cf074318ef5,Access SAS Macro Variable Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowExcelResult,Allow Excel Result Format,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowRTFResult,Allow RTF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AllowPDFResult,Allow PDF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,34d071eb-7855-41fb-acf2-7c60194514a8,t Test,ANOVA,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,12dcbf05-0420-4a13-81e4-9698565b5a2a,Scatter Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ec243de8-3164-4b0a-9824-b7e3452eaf7f,Map Chart,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,0199db3c-3cd8-4f56-b9fc-3e23047f2a36,Line Plot,Graph,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,CutAndCopyData,Cut and Copy Table Data,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ab8bb011-9679-4785-b563-e1ba4daf0b98,Upload to CAS,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,660ed464-dab4-48ad-a1d9-452148b2cffe,Copy Files,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,7692c179-1a38-496a-a312-1005634a7e4c,Basic Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,a86884f6-6d89-40d1-8f39-9fa801b4c7a8,Factor Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,CreateModifyDistributeEmailRecipient,Send Content to E-mail Recipient,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,AccessSASTechnicalSupport,Access SAS Technical Support,Tools and Help,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,ffd7e52f-3dd3-4961-a533-cbe319f565b8,One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,1f65d7ba-d4d1-4afc-aadb-fc1598677eff,Characterize Data,Describe,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,4d2e1c04-f6da-4ba1-8928-42a6b7e607f7,Split Columns,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,411735c6-928b-476e-b834-65d23563bd7d,Random Sample,Data,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,4b54f20a-81d4-4a6c-b5a6-0d992c969d72,Create Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,2ca35611-dbc3-423a-bd1e-799bd69c41c0,Principal Components,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,a062455d-134f-46f4-b1d9-0adafb776cb1,Discriminant Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,37f0c7df-6325-40ae-9026-77f80d0215be,Canonical Correlation,Multivariate,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,TrackProgramHistory,Track Program History,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: OLAP,Supports viewing OLAP cubes in the OLAP Analyzer and provides other capabilities.,SaveProjectLocalComputer,Save Project to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyOptionsPerformance,Modify Performance Options,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ffd7e52f-3dd3-4961-a533-cbe319f565b8,One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",1e926edb-b092-4445-8931-92e169d0b287,Tile Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",28f8ac65-3860-4183-afc1-6b4171af5a2b,Sort Data,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b86a6ad7-1c07-4d18-85d6-e6b53461429e,Forecast Studio Open Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",2ca35611-dbc3-423a-bd1e-799bd69c41c0,Principal Components,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",edc58e88-7d0d-4fb3-9f58-27e888a590fa,Cluster Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveProgramLocalComputer,Save Program to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CopyPasteServerContent,Copy and Paste SAS Server Content,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",BrowseLASRLibraries,Browse LASR Libraries,Open or Import,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",fdc06bb0-3eac-404b-a5af-b53b79415679,Compare Data,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowHTMLResult,Allow HTML Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ResetLogin,Reset Login,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyTaskCustomCode,Add or Modify Custom Code to SAS Tasks,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",197ac995-8634-450c-a8cc-e0e7ce7a3a14,Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",3c0d1cb1-78b7-48c2-accf-3a36b6490b20,Generalized Linear Models,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",9439748d-30d9-4b3d-bc4f-dcb925a0ac3f,Bar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",a94ffbd5-293e-4913-8f14-e5d995dbcc9b,Distribution Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",38f10a59-fe55-4316-b3fe-aef6a54c4092,Import Stata,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",4d2e1c04-f6da-4ba1-8928-42a6b7e607f7,Split Columns,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",bacf7ce2-405c-4add-9c4e-236b59de17ff,Rank,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b497e329-911a-46fd-8daf-9d8f19cb51c9,ARIMA Modeling and Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",a86884f6-6d89-40d1-8f39-9fa801b4c7a8,Factor Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",37f0c7df-6325-40ae-9026-77f80d0215be,Canonical Correlation,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",53303e6c-6f4d-459b-b6b5-bb30f34bd218,Nonlinear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowPublishing,Publish To Distribution Channel,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveProjectServerFiles,Save Project to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveSourceServerFiles,Save Files to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveSourceLocalComputer,Save Files to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",f1613afe-aa29-47e7-9920-dc80941af440,Access System Options Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowExcelResult,Allow Excel Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifySASProgram,Create or Modify SAS Program,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",8675c61b-e816-48e0-96d1-667668217d98,Nonparametric One-Way ANOVA,ANOVA,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ec243de8-3164-4b0a-9824-b7e3452eaf7f,Map Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",2debfe1a-ccea-4769-b031-a8943a6c4826,Pie Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ExtractDataFromVAReport,Extract Data from SAS Visual Analytics Reports,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CutAndCopyData,Cut and Copy Table Data,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ab8bb011-9679-4785-b563-e1ba4daf0b98,Upload to CAS,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b02136d3-0380-4177-b4a1-8aa454f6e654,Upload to LASR,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",660ed464-dab4-48ad-a1d9-452148b2cffe,Copy Files,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",fd3738eb-fd1a-4a5b-ac24-515c7584b648,Forecast Studio Override Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",d66cb741-0f71-46d4-ad49-8115371f2f37,Prepare Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyQueryJoinCapability,Create or Modify Data Join in Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SendToSystemViewer,Send SAS content to System Viewer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",PrintData,Print Data and Results,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ExportDataToLocalComputer,Export Data to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveProjectLocalComputer,Save Project to Local Computer,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ca4e7d68-4f64-4ec1-ae3a-7ff4c5711e97,Import Data,Open or Import,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b244b87c-30f9-41cf-a990-05429d445d14,Access Catalog and Formats Explorer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyOptionsEmail,Modify E-mail Options,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",e5936a2e-f57a-46d8-91f9-3528ab0146ee,Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",dd5a4c5f-96b3-4743-a79d-84daaa3e8fc1,HP Logistic Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",34d071eb-7855-41fb-acf2-7c60194514a8,t Test,ANOVA,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",80a6a3dd-79a7-489a-84c9-c37d669a2920,Bar-Line Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",61f14b1f-7558-4132-8f73-ab7ff95251e0,Radar Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",d3932e3a-4fee-43df-956c-a605ac9af3e7,Summary Tables,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",f7e9c560-ec4a-4767-923b-31614549e2c2,Summary Statistics,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b09e34e8-c010-4db2-abba-04f5f1eddcf9,List Data,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",c84628c5-7890-4faf-b9b8-79abf1b6a901,Transpose,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",bcbfc45d-1c59-468d-9aed-d251d45d3e5f,Regression Analysis with Autoregressive Errors,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SendToJMP,Send SAS content to JMP,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveToSASFolder,Save to SAS Folder,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyOutputData,Modify Output Data Location in SAS Tasks,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",abd953d7-9920-4b84-8d98-688668f80bf0,Update Library Metadata,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AccessUnregisteredCustomTasks,Access Unregistered Custom Tasks,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ViewCapabilities,View Capabilities,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowRTFResult,Allow RTF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b3089a95-0e2a-4e0a-8105-4e06ecee5915,Open ODS Graphics Designer,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",95970fbc-2b0d-4c43-8024-8c2b824a942b,Scatter Plot Matrix,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",12dcbf05-0420-4a13-81e4-9698565b5a2a,Scatter Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",c7cc1bc4-593c-4ca1-9739-e6d694c8c1ba,Contour Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",1f65d7ba-d4d1-4afc-aadb-fc1598677eff,Characterize Data,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",a3c8277e-fd1d-44e1-abe9-9db23f29ba69,Create Format from a Data Set,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",754a8023-d64d-4b89-be21-62a91e6ae8b8,Model Scoring,Data Mining,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",7692c179-1a38-496a-a312-1005634a7e4c,Basic Forecasting,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",a7c5ee16-9920-44d7-8a53-a6b2b6f2e757,Correlations,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyDistributeEmailRecipient,Send Content to E-mail Recipient,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",OpenSourceServerFiles,Open Files from SAS Server,Open or Import,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",OpenSourceServerOLAP,Open Cube from OLAP Server,Open or Import,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyAppendTables,Append Tables,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyOptions,Modify All Options,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyStoredProcess,Create or Modify SAS Stored Process,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",30516520-5559-4cb8-b5cf-4ee8698178af,HP Linear Regression,Regression,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",0d429186-fc81-43e3-b1f7-aba0055ac049,Bubble Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",c3e9d551-8070-404e-9dc7-8ef7b4baf629,List Report Wizard,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",InteractiveDataGrid,Explore Data,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",5abcdefb-27fa-40cb-8f4a-e669f574f2cc,Import SPSS,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",605cf2ff-f80b-4cfd-b97c-d1f380fad71e,Download Data Files to PC,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",411735c6-928b-476e-b834-65d23563bd7d,Random Sample,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",0decd3d8-9271-490b-8c47-7626f9ec2762,Create Format,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",0771aa89-60ec-4444-a055-466acbc84383,Data Set Attributes,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",6c27ca4e-9f6a-4d64-9c0b-66859f9b9d0f,Regression Analysis of Panel Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",87cd57d3-0c3d-44e2-8f52-9c54aedf7599,Proportional Hazards,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",fcfb3730-ec89-49bd-98ae-e13e9208cb55,Life Tables,Survival Analysis,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",a062455d-134f-46f4-b1d9-0adafb776cb1,Discriminant Analysis,Multivariate,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyAdvanceQuery,Create or Modify Advanced Query,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",CreateModifyScheduledProject,Create or Modify Schedules,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowPowerPointResult,Allow PowerPoint Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyProjectServer,Modify SAS Server Reference in Project or Document,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AnalyzeProgramForGrid,Analyze for Grid Computing,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",DebugDATASteps,Debug DATA Steps,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",0199db3c-3cd8-4f56-b9fc-3e23047f2a36,Line Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",db2921c2-7f95-435f-a99b-d7e1ca852686,Box Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",b764327e-cadf-4adb-91b2-b72073d5fb63,One-Way Frequencies,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",e5610195-5311-4ac3-b302-da89ce225464,Upload Data Files to Server,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",94cdfba1-6a97-4318-b54e-7dd4c919de35,Stack Columns,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",285708a2-09b9-4d6c-933f-0d605b41000d,Standardize Data,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",bb8567eb-017c-4021-a02c-4012dd25370a,Forecast Studio Create Project,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",TrackProgramHistory,Track Program History,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",SaveProgramServerFiles,Save Program to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",OpenSourceLocalComputer,Open Files from Local Computer,Open or Import,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",8ac21c6c-9dca-445f-b789-2f20266bd382,Delete Data Sets and Formats,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AccessSASTechnicalSupport,Access SAS Technical Support,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowParallelExecution,Allow Parallel Execution on the Same Server,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AllowPDFResult,Allow PDF Result Format,Options,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AnalyzeProgramForFlow,Analyze for Program Flow,Content,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",2dfe3e4d-3a20-4fce-8bc0-6d3e623eea8e,Mixed Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",3e8b2599-4e09-4023-a484-87d42158cfa5,Linear Models,ANOVA,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",f1924900-881f-4553-9b18-5867e05418eb,Show ODS Statistical Graph,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",3c33b31d-2db6-46ac-954b-f4d13dad5cd4,Surface Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",0f7c3669-1ad7-414b-8d9d-27c85047b779,Area Plot,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",addf2362-59e8-4224-84b3-a2f4117853fe,Donut Chart,Graph,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",41ffe6c0-4f2f-4e23-986a-5222a8539fd6,Table Analysis,Describe,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",8f5b3d8e-9d0d-4833-967d-05fb95474019,Import JMP,Data,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",4b54f20a-81d4-4a6c-b5a6-0d992c969d72,Create Time Series Data,Time Series,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ExportDataToServerFiles,Export Data to SAS Server,Save or Distribute,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",d67af4a1-1628-455d-a411-8cf074318ef5,Access SAS Macro Variable Viewer,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",ModifyStyles,Modify Styles,Tools and Help,Enterprise Guide 8
+Enterprise Guide: Programming,"Provides SAS programming, stored process authoring, and other capabilities.",AccessSASStudioTasks,Access SAS Studio Tasks,Tools and Help,Enterprise Guide 8
+Job Monitor: Operation,Provides default access to the JobMonitor portlet.,ViewApplication,View Application,Operation,Job Monitor Services
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.SASLibraries.Plugin,Data Library Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.metadataManager.Plugin,Metadata Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.usermgr.Plugin,User Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.services.ServiceManagerPlugin,Foundation Services Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.services.plugins.monitor.ApplicationMonitorPlugin,Application Monitor,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.services.plugins.publish.PublicationFrameworkPlugin,Publishing Framework,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.authmgr.Plugin,Authorization Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.plugins.servers.Plugin,Server Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.scheduler.schmgr.ScheduleManager,Schedule Manager,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.folderview.visuals.ConsoleFolderView,Folder View,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,com.sas.console.searchview.SearchView,Search View,Plug-ins,Management Console 9.4
+Management Console: Advanced,Provides access to all plug-ins in SAS Management Console.,AccessUnregisteredPlugins,Access Unregistered Plug-ins,General,Management Console 9.4
+Management Console: Content Management,"Provides access to the Folders tab, User Manager, Library Manager, and Authorization Manager.",com.sas.console.searchview.SearchView,Search View,Plug-ins,Management Console 9.4
+Management Console: Content Management,"Provides access to the Folders tab, User Manager, Library Manager, and Authorization Manager.",com.sas.console.folderview.visuals.ConsoleFolderView,Folder View,Plug-ins,Management Console 9.4
+Management Console: Content Management,"Provides access to the Folders tab, User Manager, Library Manager, and Authorization Manager.",com.sas.console.plugins.SASLibraries.Plugin,Data Library Manager,Plug-ins,Management Console 9.4
+Management Console: Content Management,"Provides access to the Folders tab, User Manager, Library Manager, and Authorization Manager.",com.sas.console.plugins.authmgr.Plugin,Authorization Manager,Plug-ins,Management Console 9.4
+Management Console: Content Management,"Provides access to the Folders tab, User Manager, Library Manager, and Authorization Manager.",com.sas.console.plugins.usermgr.Plugin,User Manager,Plug-ins,Management Console 9.4
+Process Orchestration: Job Administration,Provides all functionality related to administrative activities for Process Orchestration jobs.,UnlockOtherUsersJobs,Unlock Other Users Jobs,Administrative,Visual Process Orch
+Process Orchestration: Job Administration,Provides all functionality related to administrative activities for Process Orchestration jobs.,ViewApplication,View Application,Operation,Visual Process Orch
+Process Orchestration: Job Administration,Provides all functionality related to administrative activities for Process Orchestration jobs.,RunJobs,Run Jobs,Job Management,Visual Process Orch
+Process Orchestration: Job Administration,Provides all functionality related to administrative activities for Process Orchestration jobs.,EditJobs,Edit Jobs,Job Management,Visual Process Orch
+Process Orchestration: Job Administration,Provides all functionality related to administrative activities for Process Orchestration jobs.,StopOtherUsersJobs,Stop Other Users Jobs,Administrative,Visual Process Orch
+Process Orchestration: Job Development,Provides functionality related to editing Process Orchestration jobs.,EditJobs,Edit Jobs,Job Management,Visual Process Orch
+Process Orchestration: Job Development,Provides functionality related to editing Process Orchestration jobs.,ViewApplication,View Application,Operation,Visual Process Orch
+Process Orchestration: Job Development,Provides functionality related to editing Process Orchestration jobs.,RunJobs,Run Jobs,Job Management,Visual Process Orch
+Process Orchestration: Job Execution,Provides functionality related to running Process Orchestration jobs.,ViewApplication,View Application,Operation,Visual Process Orch
+Process Orchestration: Job Execution,Provides functionality related to running Process Orchestration jobs.,RunJobs,Run Jobs,Job Management,Visual Process Orch
+SAS Studio: Report Consumer,Provides access to view or run existing SAS Studio reports without general access to SAS programming environment.,AccessSASStudioReports,Access SAS Studio Reports,Access,SAS Studio Mid-Tier 3.8
+SAS Studio: Usage,Provides access to the SAS programming environment.,AccessSASStudio,Access SAS Studio,Access,SAS Studio Mid-Tier 3.8
+SNA_INVESTIGATOR,Users who can use SNA.,View SNA Hub Link,View SNA Hub Link,Visual Analytics,Social Network Analysis 6.2
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,taskInitiation,Initiate Tasks,Task Lifecycle,Task Manager
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,ViewAllHiddenDataObjects,View All Data Objects,Operation,Task Manager
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,ViewAllTasks,View All Tasks,Operation,Task Manager
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,ViewApplication,View Application,Operation,Task Manager
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,taskTermination,Terminate Tasks,Task Lifecycle,Task Manager
+Task Manager: Task Administration,Provides functionality related to administrative activities for all tasks.,taskManagement,Manage Tasks,Process Management,Task Manager
+Task Manager: Task Management,Provides functionality related to interacting with active tasks.,ViewApplication,View Application,Operation,Task Manager
+Task Manager: Task Management,Provides functionality related to interacting with active tasks.,taskManagement,Manage Tasks,Process Management,Task Manager
+Task Manager: Task Management,Provides functionality related to interacting with active tasks.,taskInitiation,Initiate Tasks,Task Lifecycle,Task Manager
+Task Manager: Task View,Provides functionality related to viewing active tasks.,ViewApplication,View Application,Operation,Task Manager
+Theme Designer: Administration,Provides Theme Designer administration capabilities.,UseHTMLThemeDesigner,Customize HTML Themes,Basic,Theme Designer
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromAster,Import from Aster,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,DistributeReports,Distribute Reports,Advanced,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromTeradata,Import from Teradata,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportSASDataSetsFromServer,Import SAS Data Sets from a Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromNetezza,Import from Netezza,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromMySQL,Import from MySQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromGreenplum,Import from Greenplum,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromFacebook,Import from Facebook,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromSalesforce,Import from Salesforce,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromPivotalHD,Import from Pivotal HD,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromPivotalHAWQ,Import from Pivotal HAWQ,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromODBC,Import from ODBC,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromGoogleAnalytics,Import from Google Analytics,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportandLoadData,Import and Load Data,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ManageEnvironment,Manage Environment,Advanced,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromVertica,Import from Vertica,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromSQLServer,Import from SQL Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromCloudera,Import from Cloudera,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromPostgreSQL,Import from PostgreSQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromDB2,Import from DB2,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ManageMobileDevices,Manage Mobile Devices,Advanced,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromTwitter,Import from Twitter,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromOracle,Import from Oracle,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromHortonworks,Import from Hortonworks,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromClouderaImpala,Import from Cloudera Impala,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromBigInsights,Import from BigInsights,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportLocalFiles,Import Local Files,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromSAPHANA,Import from SAP HANA,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Administration,Provides administrative capabilities in the Visual Analytics suite.,ImportFromMapR,Import from MapR,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromDB2,Import from DB2,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromSalesforce,Import from Salesforce,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromClouderaImpala,Import from Cloudera Impala,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromCloudera,Import from Cloudera,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportandLoadData,Import and Load Data,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromPostgreSQL,Import from PostgreSQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromPivotalHD,Import from Pivotal HD,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromPivotalHAWQ,Import from Pivotal HAWQ,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromOracle,Import from Oracle,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromMapR,Import from MapR,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromBigInsights,Import from BigInsights,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportSASDataSetsFromServer,Import SAS Data Sets from a Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",DistributeReports,Distribute Reports,Advanced,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromSQLServer,Import from SQL Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromMySQL,Import from MySQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromGoogleAnalytics,Import from Google Analytics,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromODBC,Import from ODBC,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromFacebook,Import from Facebook,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromVertica,Import from Vertica,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromSAPHANA,Import from SAP HANA,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromGreenplum,Import from Greenplum,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromTwitter,Import from Twitter,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromTeradata,Import from Teradata,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromAster,Import from Aster,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportLocalFiles,Import Local Files,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromHortonworks,Import from Hortonworks,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Analysis,"If SAS Visual Statistics is licensed, provides the Build Analytical Model capability.",ImportFromNetezza,Import from Netezza,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromPivotalHAWQ,Import from Pivotal HAWQ,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromVertica,Import from Vertica,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromCloudera,Import from Cloudera,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromOracle,Import from Oracle,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromBigInsights,Import from BigInsights,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromGreenplum,Import from Greenplum,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromPostgreSQL,Import from PostgreSQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromSAPHANA,Import from SAP HANA,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromClouderaImpala,Import from Cloudera Impala,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromFacebook,Import from Facebook,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromHortonworks,Import from Hortonworks,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromODBC,Import from ODBC,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromAster,Import from Aster,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromMySQL,Import from MySQL,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportandLoadData,Import and Load Data,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromDB2,Import from DB2,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromGoogleAnalytics,Import from Google Analytics,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromPivotalHD,Import from Pivotal HD,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromSalesforce,Import from Salesforce,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromTeradata,Import from Teradata,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportLocalFiles,Import Local Files,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportSASDataSetsFromServer,Import SAS Data Sets from a Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromMapR,Import from MapR,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromNetezza,Import from Netezza,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromSQLServer,Import from SQL Server,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,ImportFromTwitter,Import from Twitter,Self-Service Import,Visual Analytics 7.5
+Visual Analytics: Data Building,Provides data preparation capabilities in the Visual Analytics suite.,PrepareData,Build Data,Advanced,Visual Analytics 7.5
