@@ -100,14 +100,15 @@ namespace ART_PACKAGE.Helpers.Aml_Analysis
         }
         private async Task<bool> CreateEntityEvents(IEnumerable<string> entitiesNumber, string eventTypeCode, string eventDescription, string userName)
         {
-            decimal maxEntityEvent = _fcfkc.FskEntityEvents.Max(x => x.EventId);
+            int maxEntityEvent = _fcfkc.FskEntityEvents.Max(x => x.EventId);
+
             IEnumerable<FskEntityEvent> events = entitiesNumber.Select(a => new FskEntityEvent
             {
                 CaseId = null,
                 CreateDate = DateTime.UtcNow,
                 CreateUserId = userName,
                 EventTypeCode = eventTypeCode,
-                EntityLevelCode = _fcfkc?.FskAlertedEntities?.FirstOrDefault(x => x.AlertedEntityNumber == a)?.AlertedEntityLevelCode ?? "",
+                EntityLevelCode = _fcfkc?.FskAlertedEntities?.Select(s => s.AlertedEntityLevelCode).FirstOrDefault() ?? "",
                 EntityNumber = a,
                 EventDescription = eventDescription,
                 EventId = ++maxEntityEvent

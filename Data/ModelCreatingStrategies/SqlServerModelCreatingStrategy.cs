@@ -4410,6 +4410,89 @@ namespace Data.ModelCreatingStrategies
                 entity.HasNoKey();
 
                 entity.ToTable("FSK_ALERTED_ENTITY", "dbo");
+                entity.HasIndex(e => new { e.AlertedEntityNumber, e.AlertedEntityLevelCode }, "XAK1FSK_ALERTED_ENTITY")
+       .IsUnique();
+
+                entity.Property(e => e.AgeOldestAlert)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("age_oldest_alert");
+
+                entity.Property(e => e.AggregateAmt)
+                    .HasColumnType("decimal(15, 3)")
+                    .HasColumnName("aggregate_amt");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(12)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_level_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(800)
+                    .HasColumnName("alerted_entity_name");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("alerted_entity_number");
+
+                entity.Property(e => e.AlertedEntitySegmentId)
+                    .HasColumnType("decimal(19, 0)")
+                    .HasColumnName("alerted_entity_segment_id");
+
+                entity.Property(e => e.AlertsCnt)
+                    .HasColumnType("int")
+                    .HasColumnName("alerts_cnt");
+
+                entity.Property(e => e.CreatedTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_timestamp");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("employee_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LockTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lock_timestamp");
+
+                entity.Property(e => e.LockUserid)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("lock_userid");
+
+                entity.Property(e => e.LstupdateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lstupdate_date");
+
+                entity.Property(e => e.LstupdateUserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("lstupdate_user_id");
+
+                entity.Property(e => e.MoneyLaunderingScore)
+                    .HasColumnType("int")
+                    .HasColumnName("money_laundering_score");
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("politically_exposed_person_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RiskScoreCode)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("risk_score_code");
+
+                entity.Property(e => e.TransactionsCnt)
+                    .HasColumnType("numeric(11, 0)")
+                    .HasColumnName("transactions_cnt");
+                /*entity.HasNoKey();
+
+                entity.ToTable("FSK_ALERTED_ENTITY", "dbo");
 
                 entity.HasIndex(e => new { e.AlertedEntityNumber, e.AlertedEntityLevelCode }, "XAK1FSK_ALERTED_ENTITY")
                     .IsUnique();
@@ -4490,7 +4573,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.TransactionsCnt)
                     .HasColumnType("decimal(4, 0)")
-                    .HasColumnName("transactions_cnt");
+                    .HasColumnName("transactions_cnt");*/
             });
             modelBuilder.Entity<FskComment>(entity =>
             {

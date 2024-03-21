@@ -534,6 +534,12 @@ export const Handlers = {
                 }).then(x => {
                     comment.value = "";
                     localStorage.removeItem("selectedidz");
+                   /* $("#grid").data("kendoGrid").dataSource.read();
+                    $("#grid").data("kendoGrid").refresh();
+                    toastObj.text = "Alert Closed Succesfully";
+                    toastObj.icon = "message";
+                    toastObj.heading = "Close Status";
+                    $.toast(toastObj);*/
                 });
                 $("#closeModal").modal("hide");
 
@@ -563,7 +569,16 @@ export const Handlers = {
 
 
 
-
+            queueSelect.innerHTML = "";
+            users.innerHTML = "";
+            var usersOpt = document.createElement("option");
+            usersOpt.value = "";
+            usersOpt.innerText = "Select An User";
+            users.append(usersOpt);
+            var queueSelectOpt = document.createElement("option");
+            queueSelectOpt.value = "";
+            queueSelectOpt.innerText = "Select An User";
+            queueSelect.append(queueSelectOpt);
             queues.forEach(x => {
                 var opt = document.createElement("option");
                 opt.value = x;
@@ -645,7 +660,7 @@ export const Handlers = {
                     QueueCode: queueSelect.value
 
                 }
-
+                kendo.ui.progress($('#grid'), true);
                 var res = fetch("/AML_ANALYSIS/Route", {
                     method: "POST",
                     headers: {
@@ -656,6 +671,13 @@ export const Handlers = {
                 }).then(x => {
                     comment.value = "";
                     localStorage.removeItem("selectedidz");
+                  /*  $("#grid").data("kendoGrid").refresh();
+                    
+                    toastObj.text = "Alert Routed Succesfully";
+                    toastObj.icon = "message";
+                    toastObj.heading = "Route Status";
+                    $.toast(toastObj);*/
+                    kendo.ui.progress($('#grid'), false);
                 });
 
                 $("#RouteModal").modal("hide");
@@ -705,6 +727,7 @@ export const Handlers = {
                                 },
                                 body: JSON.stringify(para)
                             });
+                            console, log(res);
                             if (res.ok) {
 
                                 toastObj.icon = 'success';
@@ -719,10 +742,11 @@ export const Handlers = {
                             toastObj.text = resText;
                             toastObj.heading = "Close Status";
                             $.toast(toastObj);
+                            $("#grid").data("kendoGrid").dataSource.read();
                             comment.value = "";
 
                             $("#closeAllModal").modal("hide");
-                            $("#grid").data("kendoGrid").refresh();
+                           // $("#grid").data("kendoGrid").refresh();
                         },
                         cancel: function () {
 
