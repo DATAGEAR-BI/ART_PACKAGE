@@ -6,10 +6,11 @@ on:
       - main
       - ABK
       - MAIN_TEST
+      - AML_ANALYSIs_DEMO
   pull_request:
     branches:
       - main
-      - ABK 
+      - ABK
 
 jobs:
   build:
@@ -27,29 +28,25 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name : List Folders
-        run : ls
+      - name: List Folders
+        run: ls
       - name: Build
         run: dotnet build --no-restore
 
       - name: Build and Publish
         run: dotnet publish -c Release -o ./Release
 
-
-
-      
-
       - name: Get Version and Tag From Code
         id: set_ver
         run: |
-              content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
-              # the following lines are only required for multi line json
-              content="${content//'%'/'%25'}"
-              content="${content//$'\n'/'%0A'}"
-              content="${content//$'\r'/'%0D'}"
-              # end of optional handling for multi line json
-              echo "::set-output name=appsettings::$content"
-              echo "${{ steps.set_ver.outputs.appsettings }}"
+          content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=appsettings::$content"
+          echo "${{ steps.set_ver.outputs.appsettings }}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -61,8 +58,6 @@ jobs:
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
           prerelease: false
-          
-
 
       - name: Copy ReleaseNote To Release Folder
         run: cp Release_Note.md ./Release
@@ -70,7 +65,7 @@ jobs:
       - name: Zip folder
         run: |
           zip -r Release.zip ./Release
-          
+
       - name: Upload Release Artifact
         id: upload-release-asset
         uses: actions/upload-release-asset@v1

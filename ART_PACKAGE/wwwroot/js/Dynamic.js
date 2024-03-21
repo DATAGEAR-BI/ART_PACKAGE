@@ -488,9 +488,9 @@ function generateGrid() {
         height: 550,
         groupable: true,
         dataBound: function (e) {
-            for (var i = 0; i < this.columns.length; i++) {
-                this.autoFitColumn(i);
-            }
+            // for (var i = 0; i < this.columns.length; i++) {
+            //     this.autoFitColumn(i);
+            // }
 
             if (isColoredRows) {
                 var rows = e.sender.tbody.children();
@@ -837,7 +837,7 @@ function generateColumns(response) {
             title: column.displayName ? column.displayName : column.name,
             sortable: !isCollection,
             ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
-            template: isCollection
+            width : 150 ,template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
                 : hasTemplate ? Templates[template] : null,
