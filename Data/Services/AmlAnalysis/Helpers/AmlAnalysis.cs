@@ -79,8 +79,8 @@ namespace Data.Services.AmlAnalysis
             {
                 bool isEntityQueueSucceed = await SaveEntityQueue(
                     routeReq.Entities,
-                    routeReq.QueueCode,
-                    routeReq.OwnerId
+                    routeReq.OwnerId,
+                    routeReq.QueueCode
                 );
                 if (!isEntityQueueSucceed)
                 {

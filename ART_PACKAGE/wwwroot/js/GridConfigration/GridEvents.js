@@ -630,7 +630,9 @@ export const dbClickHandlers = {
         kendo.ui.progress($('#grid'), false);
 
     },
-
+    autorules : async () => {
+        console.log("dclick handler")
+    },
     messagesDbHandler: async (item) => {
         kendo.ui.progress($('#grid'), true);
         var id = item.RequestUid;
@@ -702,6 +704,12 @@ export const changeRowColorHandlers = {
         chngeRowColor(dataItem, row, colorMapping);
     }
 }
-
+export  const  CellHandlers = {
+    autorules : {
+        TableName : () => {
+            console.log("test")
+        }
+    }
+}
 
 

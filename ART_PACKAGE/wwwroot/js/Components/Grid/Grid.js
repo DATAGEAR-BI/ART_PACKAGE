@@ -2,7 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers  , CellHandlers} from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 import {getChartType} from "../Charts/Charts.js"
@@ -700,12 +700,22 @@ class Grid extends HTMLElement {
 
 
                     grid.tbody.find("tr").dblclick((e) => {
-
-                        var dataItem = grid.dataItem(e.target.parentElement);
-                        if (this.handlerkey && this.handlerkey != "") {
-                            var dbclickhandler = dbClickHandlers[this.handlerkey];
-                            dbclickhandler(dataItem).then(console.log("done"));
+                        let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
+                        let cell = e.target.closest("td");
+                        // Get the field name associated with the clicked cell
+                        var cellIndex = $(cell).index(); // Get the index of the clicked cell
+                        var column = grid.columns[cellIndex];
+                        if(column && CellHandlers[this.handlerkey][column.field]){
+                            CellHandlers[this.handlerkey][column.field]();
                         }
+                        else{
+                            if (this.handlerkey && this.handlerkey != "") {
+                                var dbclickhandler = dbClickHandlers[this.handlerkey];
+                                dbclickhandler(dataItem).then(console.log("done"));
+                            }
+                        }
+                       
+                        
 
                     });
                 },
@@ -825,28 +835,7 @@ class Grid extends HTMLElement {
 
             }
         });
-
-        // Assuming you have a Kendo Grid initialized with the ID 'myGrid'
-        grid.tbody.on("dblclick", "td", function (e) {
-
-
-            // Get the current item (row data)
-            var item = grid.dataItem($(e.currentTarget).closest("tr"));
-            console.log(e);
-            // Get the field name associated with the clicked cell
-            var cellIndex = $(e.target).index(); // Get the index of the clicked cell
-            var column = grid.columns[cellIndex];
-            console.log(item);
-            console.log(column.field);
-            // Check if the clicked cell is from a specific column
-            //if (fieldName === "yourColumnName") {
-            //    // Perform action specific to the column
-            //    console.log("Double-clicked on column", fieldName, "of", item);
-
-            //    // Example action: display a message, open a modal, etc.
-            //}
-        });
-
+        
 
 
 
@@ -1077,7 +1066,6 @@ class Grid extends HTMLElement {
         if (res.ok)
             return await res.json();
         else {
-
             console.error(res.body);
             toastObj.icon = 'error';
             toastObj.text = "something wrong happend while getting data please try again";
