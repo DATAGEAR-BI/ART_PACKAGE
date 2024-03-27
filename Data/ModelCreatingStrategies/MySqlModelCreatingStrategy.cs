@@ -936,34 +936,34 @@ namespace Data.ModelCreatingStrategies
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
         {
             //DGAML
+
             modelBuilder.Entity<ArtDgAmlAlertDetailView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW", "ART_DB");
+                entity.ToView("art_dgaml_alert_detail_view");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
                     .HasColumnName("ACTUAL_VALUES_TEXT");
 
-                entity.Property(e => e.AlarmId)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("alarm_id");
+                entity.Property(e => e.AlarmId).HasColumnName("alarm_id");
 
                 entity.Property(e => e.AlertCategory)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("alert_category");
 
                 entity.Property(e => e.AlertDescription)
                     .HasMaxLength(100)
-                    .HasColumnName("ALERT_DESCRIPTION");
+                    .HasColumnName("ALERT_DESCRIPTION")
+                    .HasDefaultValueSql("''");
 
                 entity.Property(e => e.AlertStatus)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("alert_status");
 
                 entity.Property(e => e.AlertSubcategory)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("alert_subcategory");
 
                 entity.Property(e => e.AlertedEntityName)
@@ -972,7 +972,8 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.AlertedEntityNumber)
                     .HasMaxLength(50)
-                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+                    .HasColumnName("ALERTED_ENTITY_NUMBER")
+                    .HasDefaultValueSql("''");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(35)
@@ -988,7 +989,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CloseUserName)
                     .HasMaxLength(200)
-                    .IsUnicode(false)
                     .HasColumnName("close_user_Name");
 
                 entity.Property(e => e.ClosedUserId)
@@ -997,30 +997,32 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("Create_Date");
+                    .HasColumnName("Create_Date")
+                    .HasDefaultValueSql("'0000-00-00 00:00:00'");
 
                 entity.Property(e => e.EmpInd)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("Emp_Ind")
                     .IsFixedLength();
 
                 entity.Property(e => e.InvestigationDays).HasColumnName("Investigation_Days");
 
-                entity.Property(e => e.MoneyLaunderingRiskScore).HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
+                entity.Property(e => e.MoneyLaunderingRiskScore)
+                    .HasPrecision(10)
+                    .HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
 
                 entity.Property(e => e.PoliticallyExposedPersonInd)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("POLITICALLY_EXPOSED_PERSON_IND")
                     .IsFixedLength();
 
                 entity.Property(e => e.RunDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("Run_Date");
+                    .HasColumnName("Run_Date")
+                    .HasDefaultValueSql("'0000-00-00 00:00:00'");
 
                 entity.Property(e => e.ScenarioId)
-                    .HasColumnType("numeric(12, 0)")
+                    .HasPrecision(12)
                     .HasColumnName("SCENARIO_ID");
 
                 entity.Property(e => e.ScenarioName)
@@ -1028,14 +1030,73 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("SCENARIO_NAME");
             });
 
+            modelBuilder.Entity<ArtDgAmlCaseDetailView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("art_dgaml_case_detail_view");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CaseCategory)
+                    .HasColumnType("text")
+                    .HasColumnName("CASE_CATEGORY");
+
+                entity.Property(e => e.CaseCategoryCode)
+                    .HasMaxLength(32)
+                    .HasColumnName("CASE_CATEGORY_CODE");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CasePriority)
+                    .HasColumnType("text")
+                    .HasColumnName("CASE_PRIORITY");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("text")
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseStatusCode)
+                    .HasMaxLength(100)
+                    .HasColumnName("CASE_STATUS_CODE");
+
+                entity.Property(e => e.CaseSubCategoryCode)
+                    .HasMaxLength(32)
+                    .HasColumnName("CASE_SUB_CATEGORY_CODE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(60)
+                    .HasColumnName("CREATED_BY");
+
+                entity.Property(e => e.EntityLevel)
+                    .HasColumnType("text")
+                    .HasColumnName("ENTITY_LEVEL");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(200)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasColumnType("text")
+                    .HasColumnName("ENTITY_NUMBER");
+            });
+
             modelBuilder.Entity<ArtDgAmlCustomerDetailView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_DGAML_CUSTOMER_DETAIL_VIEW", "ART_DB");
+                entity.ToView("art_dgaml_customer_detail_view");
 
                 entity.Property(e => e.AnnualIncomeAmount)
-                    .HasColumnType("numeric(10, 0)")
+                    .HasPrecision(10)
                     .HasColumnName("ANNUAL_INCOME_AMOUNT");
 
                 entity.Property(e => e.BranchName)
@@ -1047,7 +1108,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CITIZENSHIP_COUNTRY_NAME");
 
                 entity.Property(e => e.CityName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(50)
                     .HasColumnName("City_name");
 
                 entity.Property(e => e.CustomerDateOfBirth)
@@ -1087,7 +1148,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("customer_type");
 
                 entity.Property(e => e.DoingBusinessAsName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(50)
                     .HasColumnName("DOING_BUSINESS_AS_NAME");
 
                 entity.Property(e => e.EmailAddress)
@@ -1095,11 +1156,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMAIL_ADDRESS");
 
                 entity.Property(e => e.EmployeeNumber)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .HasColumnName("EMPLOYEE_NUMBER");
 
                 entity.Property(e => e.EmployerName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(100)
                     .HasColumnName("EMPLOYER_NAME");
 
                 entity.Property(e => e.EmployerPhoneNumber)
@@ -1107,7 +1168,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYER_PHONE_NUMBER");
 
                 entity.Property(e => e.GovernorateName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(50)
                     .HasColumnName("Governorate_name");
 
                 entity.Property(e => e.IndustryDesc)
@@ -1116,7 +1177,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.IsEmployee)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("Is_EMPLOYEE")
                     .IsFixedLength();
 
@@ -1125,11 +1185,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LAST_RISK_ASSESSMENT_DATE");
 
                 entity.Property(e => e.MailingAddress1)
-                    .HasMaxLength(35)
+                    .HasMaxLength(50)
                     .HasColumnName("MAILING_ADDRESS_1");
 
                 entity.Property(e => e.MailingCityName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(50)
                     .HasColumnName("MAILING_CITY_NAME");
 
                 entity.Property(e => e.MailingCountryName)
@@ -1145,17 +1205,16 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("MARITAL_STATUS_DESC");
 
                 entity.Property(e => e.NetWorthAmount)
-                    .HasColumnType("numeric(10, 0)")
+                    .HasPrecision(10)
                     .HasColumnName("NET_WORTH_AMOUNT");
 
                 entity.Property(e => e.NonProfitOrgInd)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("non_profit_org_ind")
                     .IsFixedLength();
 
                 entity.Property(e => e.OccupationDesc)
-                    .HasMaxLength(35)
+                    .HasMaxLength(100)
                     .HasColumnName("occupation_desc");
 
                 entity.Property(e => e.PhoneNumber1)
@@ -1172,7 +1231,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.PoliticallyExposedPersonInd)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("politically_exposed_person_ind")
                     .IsFixedLength();
 
@@ -1180,10 +1238,12 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(100)
                     .HasColumnName("RESIDENCE_COUNTRY_NAME");
 
-                entity.Property(e => e.RiskClassification).HasColumnName("RISK_CLASSIFICATION");
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(10)
+                    .HasColumnName("RISK_CLASSIFICATION");
 
                 entity.Property(e => e.StreetAddress1)
-                    .HasMaxLength(35)
+                    .HasMaxLength(100)
                     .HasColumnName("street_address_1");
 
                 entity.Property(e => e.StreetCountryCode)
@@ -1203,12 +1263,14 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_DGAML_TRIAGE_VIEW", "ART_DB");
+                entity.ToView("art_dgaml_triage_view");
 
-                entity.Property(e => e.AgeOldestAlert).HasColumnName("AGE_OLDEST_ALERT");
+                entity.Property(e => e.AgeOldestAlert)
+                    .HasPrecision(10)
+                    .HasColumnName("AGE_OLDEST_ALERT");
 
                 entity.Property(e => e.AggregateAmt)
-                    .HasColumnType("numeric(15, 3)")
+                    .HasPrecision(15, 3)
                     .HasColumnName("AGGREGATE_AMT");
 
                 entity.Property(e => e.AlertedEntityLevel)
@@ -1223,7 +1285,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
-                entity.Property(e => e.AlertsCntSum).HasColumnName("ALERTS_CNT_SUM");
+                entity.Property(e => e.AlertsCntSum)
+                    .HasPrecision(10)
+                    .HasColumnName("ALERTS_CNT_SUM");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(50)
@@ -1242,81 +1306,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("RISK_SCORE");
             });
 
-            modelBuilder.Entity<ArtDgAmlCaseDetailView>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ART_DGAML_CASE_DETAIL_VIEW", "ART_DB");
-
-                entity.Property(e => e.BranchName)
-                    .HasMaxLength(35)
-                    .HasColumnName("BRANCH_NAME");
-
-                entity.Property(e => e.CaseCategory)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CASE_CATEGORY")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CaseCategoryCode)
-                    .HasMaxLength(32)
-                    .HasColumnName("CASE_CATEGORY_CODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CaseId)
-                    .HasMaxLength(64)
-                    .HasColumnName("CASE_ID")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CasePriority)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CASE_PRIORITY")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CASE_STATUS")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CaseStatusCode)
-                    .HasMaxLength(100)
-                    .HasColumnName("CASE_STATUS_CODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CaseSubCategoryCode)
-                    .HasMaxLength(32)
-                    .HasColumnName("CASE_SUB_CATEGORY_CODE")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CREATE_DATE");
-
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(60)
-                    .HasColumnName("CREATED_BY")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.EntityLevel)
-                    .HasMaxLength(1000)
-                    .HasColumnName("ENTITY_LEVEL")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.EntityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("ENTITY_NAME")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.EntityNumber)
-                    .HasMaxLength(1000)
-                    .HasColumnName("ENTITY_NUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
-            });
-
             modelBuilder.Entity<ArtExternalCustomerDetailView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_EXTERNAL_CUSTOMER_DETAIL_VIEW", "ART_DB");
+                entity.ToView("art_external_customer_detail_view");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(35)
@@ -1332,7 +1326,8 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CREATE_DATE");
+                    .HasColumnName("CREATE_DATE")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CustomerDateOfBirth)
                     .HasColumnType("datetime")
@@ -1399,7 +1394,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SCENARIO_ADMIN_VIEW", "ART_DB");
+                entity.ToView("art_scenario_admin_view");
 
                 entity.Property(e => e.AlarmCategory)
                     .HasMaxLength(4000)
@@ -1433,9 +1428,7 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .HasColumnName("OBJECT_LEVEL");
 
-                entity.Property(e => e.ParamCondition)
-                    .HasMaxLength(1000)
-                    .HasColumnName("PARAM_CONDITION");
+                entity.Property(e => e.ParamCondition).HasColumnName("PARAM_CONDITION");
 
                 entity.Property(e => e.ParmDesc)
                     .HasMaxLength(255)
@@ -1459,7 +1452,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.RiskFact)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("RISK_FACT")
                     .IsFixedLength();
 
@@ -1480,11 +1472,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("SCENARIO_MESSAGE");
 
                 entity.Property(e => e.ScenarioName)
-                    .HasMaxLength(32)
+                    .HasMaxLength(500)
                     .HasColumnName("SCENARIO_NAME");
 
                 entity.Property(e => e.ScenarioShortDesc)
-                    .HasMaxLength(100)
+                    .HasMaxLength(500)
                     .HasColumnName("SCENARIO_SHORT_DESC");
 
                 entity.Property(e => e.ScenarioStatus)
@@ -1508,7 +1500,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SCENARIO_HISTORY_VIEW", "ART_DB");
+                entity.ToView("art_scenario_history_view");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -1523,11 +1515,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Event_Desc");
 
                 entity.Property(e => e.RoutineName)
-                    .HasMaxLength(32)
+                    .HasMaxLength(500)
                     .HasColumnName("Routine_Name");
 
                 entity.Property(e => e.RoutineShortDesc)
-                    .HasMaxLength(100)
+                    .HasMaxLength(500)
                     .HasColumnName("Routine_Short_Desc");
             });
 
@@ -1535,9 +1527,11 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SUSPECT_DETAIL_VIEW", "ART_DB");
+                entity.ToView("art_suspect_detail_view");
 
-                entity.Property(e => e.AgeOfOldestAlert).HasColumnName("AGE_OF_OLDEST_ALERT");
+                entity.Property(e => e.AgeOfOldestAlert)
+                    .HasPrecision(10)
+                    .HasColumnName("AGE_OF_OLDEST_ALERT");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(35)
@@ -1572,13 +1566,15 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Cust_Since_Date");
 
                 entity.Property(e => e.EmprName)
-                    .HasMaxLength(35)
+                    .HasMaxLength(100)
                     .HasColumnName("Empr_Name");
 
-                entity.Property(e => e.NumberOfAlarms).HasColumnName("NUMBER_OF_ALARMS");
+                entity.Property(e => e.NumberOfAlarms)
+                    .HasPrecision(10)
+                    .HasColumnName("NUMBER_OF_ALARMS");
 
                 entity.Property(e => e.OccupDesc)
-                    .HasMaxLength(35)
+                    .HasMaxLength(100)
                     .HasColumnName("Occup_Desc");
 
                 entity.Property(e => e.OwnerUserId)
@@ -1587,7 +1583,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.PoliticalExpPrsnInd)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
                     .HasColumnName("Political_Exp_Prsn_Ind")
                     .IsFixedLength();
 
@@ -1595,7 +1590,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(32)
                     .HasColumnName("PROFILE_RISK");
 
-                entity.Property(e => e.RiskClassification).HasColumnName("risk_classification");
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(10)
+                    .HasColumnName("risk_classification");
 
                 entity.Property(e => e.SuspectName)
                     .HasMaxLength(100)
@@ -1609,36 +1606,34 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(25)
                     .HasColumnName("Tel_No_1");
             });
-            //DGAML HOME
+
+            // DG AML home
             modelBuilder.Entity<ArtHomeDgamlAlertsPerDate>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_ALERTS_PER_DATE", "ART_DB");
+                entity.ToView("art_home_dgaml_alerts_per_date");
 
-                entity.Property(e => e.Month).HasMaxLength(4000);
-
-                entity.Property(e => e.NumberOfAlerts).HasColumnName("Number_Of_ALerts");
+                entity.Property(e => e.NumberOfAlerts).HasColumnName("Number_Of_Alerts");
             });
-
             modelBuilder.Entity<ArtHomeDgamlAlertsPerStatus>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_ALERTS_PER_STATUS", "ART_DB");
+                entity.ToView("art_home_dgaml_alerts_per_status");
 
                 entity.Property(e => e.AlertStatus)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("ALERT_STATUS");
-                entity.Property(e => e.Year).HasColumnName("Year");
-                entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count");
+
+                entity.Property(e => e.AlertsCount).HasColumnName("ALERTS_COUNT");
             });
 
             modelBuilder.Entity<ArtHomeDgamlNumberOfAccount>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_NUMBER_OF_ACCOUNTS", "ART_DB");
+                entity.ToView("art_home_dgaml_number_of_accounts");
 
                 entity.Property(e => e.NumberOfAccounts).HasColumnName("NUMBER_OF_ACCOUNTS");
             });
@@ -1647,7 +1642,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_NUMBER_OF_CUSTOMERS", "ART_DB");
+                entity.ToView("art_home_dgaml_number_of_customers");
 
                 entity.Property(e => e.NumberOfCustomers).HasColumnName("NUMBER_OF_CUSTOMERS");
             });
@@ -1656,7 +1651,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_NUMBER_OF_HIGH_RISK_CUSTOMERS", "ART_DB");
+                entity.ToView("art_home_dgaml_number_of_high_risk_customers");
 
                 entity.Property(e => e.NumberOfHighRiskCustomers).HasColumnName("NUMBER_OF_HIGH_RISK_CUSTOMERS");
             });
@@ -1665,10 +1660,11 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_DGAML_NUMBER_OF_PEP_CUSTOMERS", "ART_DB");
+                entity.ToView("art_home_dgaml_number_of_pep_customers");
 
                 entity.Property(e => e.NumberOfPepCustomers).HasColumnName("NUMBER_OF_PEP_CUSTOMERS");
             });
+
         }
 
         public void OnEcmModelCreating(ModelBuilder modelBuilder)
