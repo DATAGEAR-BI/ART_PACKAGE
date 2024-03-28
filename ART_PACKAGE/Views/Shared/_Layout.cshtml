@@ -8,7 +8,8 @@
     </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
+    <link href="~/lib/smartcomponents/source/styles/smart.default.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="~/lib/bootstrap-select/css/bootstrap-select.min.css">
     <link href="~/css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true">
@@ -82,8 +83,12 @@
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script type="module" defer src="~/js/ExportListener.js"></script>
+    <input type='hidden' id='uid' readonly="readonly" runat='server' value="@User.Identity.Name">
+
+
     <partial name="aml_analysisScript" />
     <script src="~/js/activelink.js"></script>
+    @RenderSection("KendoScripts", required: false)
     @RenderSection("scripts", required: false)
    
     <script>
