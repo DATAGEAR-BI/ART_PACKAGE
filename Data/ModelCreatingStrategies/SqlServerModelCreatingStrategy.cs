@@ -8,6 +8,7 @@ using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.Data.TRADE_BASE;
 using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
@@ -2016,6 +2017,34 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ActionDetail)
                     .HasColumnName("Action_Detail")
                     .HasColumnType("nvarchar(max)");
+            });
+
+            modelBuilder.Entity<ArtClearDetect>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CLEAR_DETECT", "ART_DB");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("Case_Id")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RequestDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("REQUEST_DATE");
+
+                entity.Property(e => e.RequestUid).HasColumnName("REQUEST_UID");
+
+                entity.Property(e => e.SearchMatch)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("SEARCH_MATCH");
+
+                entity.Property(e => e.SourceType)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("SOURCE_TYPE");
             });
         }
 
@@ -7914,6 +7943,33 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_CI_AS");
             });
 
+        }
+
+        public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<ArtTradeBaseSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TRADE_BASE_SUMMARY", "ART_DB");
+
+                entity.Property(e => e.Active).HasColumnName("ACTIVE");
+
+                entity.Property(e => e.AddedToCase).HasColumnName("ADDED_TO_CASE");
+
+                entity.Property(e => e.Closed).HasColumnName("CLOSED");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(100)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.SuppressedAlert).HasColumnName("SUPPRESSED_ALERT");
+            });
         }
     }
 }

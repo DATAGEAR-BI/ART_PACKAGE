@@ -136,6 +136,9 @@
 
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
+    ClearDetect: "/ClearDetect/GetData",
 
+    //TRADE_BASE
+    TradeBaseAMLSummary:"TradeBaseAMLSummary/GetData",
 
 };

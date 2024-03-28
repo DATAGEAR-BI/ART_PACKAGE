@@ -8,6 +8,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.TRADE_BASE;
 using ART_PACKAGE.Helpers.CustomReport;
 using Data.Data.Audit;
 
@@ -18,7 +19,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
 
-
+            //ECM
             { nameof(AlertDetailsController).ToLower(), new ReportConfig {
                SkipList =  new List<string>
                 {
@@ -46,6 +47,20 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"ActualValuesText",new DisplayNameAndFormat { DisplayName ="Scenario Description"}},
                     {"OwnerUserid",new DisplayNameAndFormat { DisplayName ="Owner "}},
                     {"InvestigationDays",new DisplayNameAndFormat { DisplayName ="Investigation Days"}}
+
+            }
+               }
+            },
+            { nameof(ClearDetectController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"RequestUid", new DisplayNameAndFormat { DisplayName ="Request ID"}},
+                    {"RequestDate", new DisplayNameAndFormat { DisplayName ="Request Date"}},
+                    {"SearchMatch", new DisplayNameAndFormat { DisplayName ="Search Match"}},
+                    {"SourceType", new DisplayNameAndFormat { DisplayName ="Source Type"}},
+                    {"CaseId", new DisplayNameAndFormat { DisplayName ="Case ID"}},
 
             }
                }
@@ -2842,7 +2857,22 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                }
             },
 
+            //TRADE_BASE
+            { nameof(TradeBaseAMLSummaryController).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {},
+               DisplayNames = new Dictionary<string, DisplayNameAndFormat>
+            {
+                    {"EntityNumber", new DisplayNameAndFormat { DisplayName ="Entity Number"}},
+                    {"EntityName", new DisplayNameAndFormat { DisplayName ="Entity Name"}},
+                    {"Active", new DisplayNameAndFormat { DisplayName ="Active"}},
+                    {"AddedToCase", new DisplayNameAndFormat { DisplayName ="Added To Case"}},
+                    {"Closed", new DisplayNameAndFormat { DisplayName ="Closed"}},
+                    {"SuppressedAlert", new DisplayNameAndFormat { DisplayName ="SuppressedAlert"}},
 
+            }
+               }
+            },
 
         };
 

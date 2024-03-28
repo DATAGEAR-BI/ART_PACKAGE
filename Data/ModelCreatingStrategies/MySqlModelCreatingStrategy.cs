@@ -7911,5 +7911,11 @@ namespace Data.ModelCreatingStrategies
             });
 
         }
+
+        public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+        }
     }
 }

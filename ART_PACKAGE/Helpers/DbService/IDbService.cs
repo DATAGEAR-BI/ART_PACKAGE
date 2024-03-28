@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
@@ -22,5 +23,6 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGAMLContext DGAML { get; }
         public TIZONE2Context TI { get; }
+        public TRADE_BASEContext TB { get; }
     }
 }

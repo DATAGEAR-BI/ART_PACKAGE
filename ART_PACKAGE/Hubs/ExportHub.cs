@@ -11,6 +11,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.SEG;
+using ART_PACKAGE.Controllers.TRADE_BASE;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
@@ -25,6 +26,7 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.Data.TRADE_BASE;
 using Data.DATA.FATCA;
 using Data.TIZONE2;
 using Microsoft.AspNetCore.SignalR;
@@ -53,6 +55,7 @@ namespace ART_PACKAGE.Hubs
         private readonly List<string>? modules;
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
+        private readonly TRADE_BASEContext _tb;
         private readonly KYCContext _kyc;
         private readonly CRPContext _crp;
         private readonly DBFactory dBFactory;
@@ -144,6 +147,13 @@ namespace ART_PACKAGE.Hubs
                     CRPContext crp = scope.ServiceProvider.GetRequiredService<CRPContext>();
                     _crp = crp;
                 }
+
+                if (modules.Contains("TRADE_BASE"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
+                    _tb = tb;
+                }
             }
             this.db = db;
             this.dBFactory = dBFactory;
@@ -187,10 +197,13 @@ namespace ART_PACKAGE.Hubs
             if (nameof(HighRiskController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtAmlHighRiskCustView, HighRiskController>(_dbAml, Context.User.Identity.Name, para);
 
             #endregion
-
+            #region Fatca
+            if (nameof(FATCAIrsReportController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtFatcaIrsReport, FATCAIrsReportController>(_fatca, Context.User.Identity.Name, para);
+            #endregion
             #region ECM
             if (nameof(SystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtSystemPerformance, SystemPerformanceController>(_ecm, Context.User.Identity.Name, para);
             if (nameof(UserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtUserPerformance, UserPerformanceController>(_ecm, Context.User.Identity.Name, para);
+            if (nameof(ClearDetectController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtClearDetect, ClearDetectController>(_ecm, Context.User.Identity.Name, para);
             #endregion
 
             #region DGAML
@@ -285,6 +298,9 @@ namespace ART_PACKAGE.Hubs
             if (nameof(CrpCasesController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpCase, CrpCasesController>(_crp, Context.User.Identity.Name, para);
             if (nameof(CrpSystemPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpSystemPerformance, CrpSystemPerformanceController>(_crp, Context.User.Identity.Name, para);
             if (nameof(CrpUserPerformanceController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtCrpUserPerformance, CrpUserPerformanceController>(_crp, Context.User.Identity.Name, para);
+
+            //TRADE_BASE
+            if (nameof(TradeBaseAMLSummaryController).ToLower().Replace("controller", "") == controller.ToLower()) await _csvSrv.Export<ArtTradeBaseSummary, TradeBaseAMLSummaryController>(_tb, Context.User.Identity.Name, para);
 
 
         }

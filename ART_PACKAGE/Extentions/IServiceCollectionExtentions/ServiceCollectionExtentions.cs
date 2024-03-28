@@ -19,6 +19,7 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.Data.TRADE_BASE;
 using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
@@ -55,7 +56,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         ),
                     DbTypes.MySql => options.UseMySql(
                         conn,
-                        new MySqlServerVersion(new Version( 8,0,36)),//ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
+                        new MySqlServerVersion(new Version(8, 0, 36)),//ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
                         x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
@@ -144,6 +145,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
             }
+            if (modulesToApply.Contains("TRADE_BASE"))
+            {
+                _ = services.AddDbContext<TRADE_BASEContext>(opt => contextBuilder(opt, connectionString));
+            }
+
             _ = services.AddScoped<IDbService, DBService>();
             return services;
         }

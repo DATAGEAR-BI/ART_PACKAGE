@@ -35,6 +35,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnEcmModelCreating(modelBuilder);
         }
+        public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnTRADE_BASEModelCreating(modelBuilder);
+        }
         public void OnFATCAModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnFATCAModelCreating(modelBuilder);
