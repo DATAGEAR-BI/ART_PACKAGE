@@ -1,8 +1,6 @@
 ﻿using Data.Constants.db;
 using Microsoft.Data.SqlClient;
 using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 

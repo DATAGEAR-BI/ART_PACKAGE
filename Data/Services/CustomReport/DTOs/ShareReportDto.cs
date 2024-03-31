@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Data.Services.CustomReport
+﻿namespace Data.Services.CustomReport
 {
     public class ShareReportDto
     {

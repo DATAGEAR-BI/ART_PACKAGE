@@ -12,17 +12,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseChartController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/CustomReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/CustomReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/SystemPerformanceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/SystemPerformanceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformanceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformanceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Extentions/IServiceCollectionExtentions/ServiceCollectionExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Extentions/IServiceCollectionExtentions/ServiceCollectionExtentions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Extentions/WebApplicationExttentions/WebAppExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Extentions/WebApplicationExttentions/WebAppExtentions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/DBService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DbService/DBService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/aml_analysisScript.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/aml_analysisScript.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Data/AuthContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/AuthContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/UserRoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/UserRoleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/AmlAnalysis/AmlAnalysisRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/AmlAnalysis/AmlAnalysisRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/AmlAnalysis/IAmlAnalysisRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/AmlAnalysis/IAmlAnalysisRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/ShareReportDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/ShareReportDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/UnShareDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/UnShareDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/DbContextExtentions/ProcExtention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/DbContextExtentions/ProcExtention.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/FilterExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/FilterExtentions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridColumn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridColumn.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridHelprs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridHelprs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridResult.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/SortExtention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/SortExtention.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/QueryBuilder/BuilderFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/QueryBuilder/BuilderFilter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/QueryBuilder/StoredProcFiltersExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/QueryBuilder/StoredProcFiltersExtentions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +72,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Diagnostics.DiagnosticSource/src/System/Diagnostics/DiagnosticListener.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Future.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/083d812d36874057b3d71d1da1898aa4a23e80/92/258d7a13/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/13/cf213c7a/OracleDataReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/d7/aed28299/OracleCommand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56177b963230e2aa38217bfe7bfe8faf7b986d936de0608d999eba7335aa48d/SerilogLoggingBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -62,9 +82,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f623736f2488a11716f7a03aa1d499eeece3df015251a70468a5f72c2db27/JArray.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73462a4a9394ff73b345712598c94965b0f6032ce187cd124f118b498662d1/MimeMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -82,32 +103,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ART_PACKAGE.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "MAIL__TEST__FATCA",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ART_PACKAGE.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MAIL__TEST__FATCA&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver&quot;,
+      &quot;mysql&quot;
     ],
-    "rider.external.source.directories": [
-      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\eslam\\AppData\\Local\\Symbols\\src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\eslam\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ART_PACKAGE">
     <configuration name="ART_PACKAGE: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/ART_PACKAGE/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-622866090572625215" uuid_low="-6395489615877505628" />
@@ -164,25 +185,5 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ART_PACKAGE/Views/Home/Index.cshtml</url>
-          <line>10</line>
-          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Views\Home\Index.cshtml" initialLine="9" isMultiMethodBreakpoint="true">
-            <option name="multiMethodBreakpoint" value="true" />
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using System.Reflection;
+using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services.CustomReport;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Reflection;
 
 namespace ART_PACKAGE.Controllers
 {

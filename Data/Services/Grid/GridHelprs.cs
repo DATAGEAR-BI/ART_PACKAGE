@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Data.Services.Grid
 {
@@ -84,7 +81,7 @@ namespace Data.Services.Grid
 
             return columns;
         }
-        private static bool IsNumericType(this Type o)
+        public static bool IsNumericType(this Type o)
         {
             return Type.GetTypeCode(o) switch
             {

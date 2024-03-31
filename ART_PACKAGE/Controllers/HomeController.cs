@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Helpers.DBService;
-using ART_PACKAGE.Models;
+﻿using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
@@ -9,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
+using ART_PACKAGE.Helpers.DBService;
+using Data.FCFKC.AmlAnalysis;
+using Data.Services;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -23,7 +25,10 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
+
+
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo)
         {
 
             _logger = logger;
@@ -31,11 +36,6 @@ namespace ART_PACKAGE.Controllers
             _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
             modules = _configuration.GetSection("Modules").Get<List<string>>();
-
-            if (modules is not null)
-            {
-                
-         
             if (modules.Contains("SASAML"))
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -54,13 +54,21 @@ namespace ART_PACKAGE.Controllers
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
-            
-            }
+
+            this.repo = repo;
         }
 
 
 
+        public IActionResult Test()
+        {
 
+
+            return Ok(repo.GetAll().Take(200));
+
+
+
+        }
 
 
 
@@ -126,10 +134,7 @@ namespace ART_PACKAGE.Controllers
 
         }
 
-        public IActionResult Queues()
-        {
-            return View();
-        }
+
 
         public IActionResult GetAmlChartsData()
         {

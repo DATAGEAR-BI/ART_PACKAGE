@@ -1,8 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
-using Data.Services;
-using Data.Services.Grid;
-using Microsoft.AspNetCore.Identity;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -14,7 +10,6 @@ namespace ART_PACKAGE.Controllers
     public abstract class BaseReportController<TGridConstuctor, TRepo, TContext, TModel> : BaseController
         where TContext : DbContext
         where TModel : class
-        where TRepo : IBaseRepo<TContext, TModel>
         where TGridConstuctor : IGridConstructor<TRepo, TContext, TModel>
     {
         protected readonly TGridConstuctor _gridConstructor;
@@ -28,6 +23,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         public abstract IActionResult Index();
+        
         [HttpPost]
         public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
         {
@@ -35,7 +31,7 @@ namespace ART_PACKAGE.Controllers
             if (request.IsIntialize)
             {
 
-                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(typeof(TModel).Name, User);
+                GridIntializationConfiguration res = _gridConstructor.IntializeGrid((typeof(TModel).Name + "Config").ToLower(), User);
                 return new ContentResult
                 {
                     ContentType = "application/json",

@@ -56,7 +56,7 @@ namespace ART_PACKAGE.Helpers.Csv
             {
                 string columnName = tableData.GetProperty(idColumn).GetColumnName();
                 IEnumerable<TColumn> idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
-                string idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
+                string idzForSql = !GridHelprs.IsNumericType(typeof(TColumn)) ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
                 data = _db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchema()}.{tbName}
                                                         WHERE {columnName} IN ({idzForSql})");
             }

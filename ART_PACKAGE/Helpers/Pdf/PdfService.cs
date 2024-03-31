@@ -235,7 +235,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                         Type? nullableType = Nullable.GetUnderlyingType(propType);
 
-                        object val = nullableType != null && nullableType.IsNumericType() ? 0m : propType.IsNumericType() ? 0 : "-";
+                        object val = nullableType != null && GridHelprs.IsNumericType(nullableType) ? 0m : GridHelprs.IsNumericType(propType) ? 0 : "-";
                         itemDict.Add(column, prop.GetValue(item) ?? val);
                     }
 

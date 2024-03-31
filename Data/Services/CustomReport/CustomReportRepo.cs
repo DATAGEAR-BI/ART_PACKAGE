@@ -1,15 +1,15 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿using System.Text.Json;
+using ART_PACKAGE.Areas.Identity.Data;
 using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 
 
 namespace Data.Services.CustomReport;
 
-public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>>, ICustomReportRepo
+public class CustomReportRepo : BaseRepo<AuthContext,Dictionary<string, object>> , ICustomReportRepo
 {
-
-    private static readonly Dictionary<string, (string op, bool isShared)> OPS = new()
+    
+    private static readonly Dictionary<string, (string op ,bool isShared)> OPS = new()
     {
         { "eq"              , ("{0} = {1}"           ,true) },
         { "neq"             , ("{0} <> {1}"          ,true) },
@@ -38,13 +38,13 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         ArtSavedCustomReport? Report = _context.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == reportId);
         return Report.Columns.Select(x => new GridColumn
         {
-            name = x.Column,
+            name = x.Column, 
             isNullable = x.IsNullable,
             type = x.JsType
         });
     }
 
-    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext,ArtSavedCustomReport report,GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? "oracle" : "sqlserver";
         var connection = schemaContext.Database.GetDbConnection();
@@ -54,9 +54,9 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                 connection.Open();
             var result = new List<Dictionary<string, object>>();
             using var command = connection.CreateCommand();
-            command.CommandText = GenerateSql(report, request, dbType);
+            command.CommandText = GenerateSql(report,request,dbType);
             using var reader = command.ExecuteReader();
-
+            
             while (reader.Read())
             {
                 var obj = new Dictionary<string, object>();
@@ -68,7 +68,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                 result.Add(obj);
             }
 
-            var count = GetDataCount(schemaContext, report, request);
+            var count = GetDataCount(schemaContext,report,request);
             return new GridResult<Dictionary<string, object>>
             {
                 data = result.AsQueryable(),
@@ -100,14 +100,14 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             if (connection.State == System.Data.ConnectionState.Open)
                 connection.Close();
         }
-
+       
     }
-    private string GenerateSql(ArtSavedCustomReport report, GridRequest request, string dbType, bool isCount = false)
+    private string GenerateSql(ArtSavedCustomReport report, GridRequest request,string dbType,bool isCount = false)
     {
-        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""" : "[{0}]";
-        var selectLine = isCount ? $"SELECT COUNT(*)" : $"SELECT {string.Join(",", report.Columns.Select(x => string.Format(dbLitral, x.Column)))}";
-        var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x => string.Format(dbLitral, x)))}";
-        var whereLine = GenerateWhere(request.Filter, dbType, report.Columns);
+        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""":"[{0}]";
+        var selectLine = isCount ? $"SELECT COUNT(*)":$"SELECT {string.Join(",", report.Columns.Select(x => string.Format(dbLitral, x.Column)))}";
+        var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x=>string.Format(dbLitral,x)))}";
+        var whereLine = GenerateWhere(request.Filter,dbType,report.Columns);
         whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
         var oderByLine = GenerateOderby(request.Sort);
         var skipLine = isCount ? $"" : $"OFFSET {request.Skip} ROWS ";
@@ -119,24 +119,24 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                   {skipLine}
                   {takeLine}";
     }
-
-    private string GenerateWhere(Filter filter, string dbType, IEnumerable<ArtSavedReportsColumns> columns)
+    
+    private string GenerateWhere(Filter filter, string dbType,IEnumerable<ArtSavedReportsColumns> columns)
     {
-        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""" : "[{0}]";
-
+        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""":"[{0}]";
+        
         if (filter is null)
             return string.Empty;
-
-
+        
+        
         if (filter.logic is not null)
         {
             List<string> fs = new();
             foreach (var f in filter.filters)
             {
-                fs.Add(GenerateWhere(f, dbType, columns));
+                fs.Add(GenerateWhere(f,dbType,columns));
             }
 
-            return "(" + string.Join($" {filter.logic} ", fs) + ")";
+            return "(" + string.Join($" {filter.logic} ", fs)+ ")";
         }
         else
         {
@@ -145,33 +145,33 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             if (!op.isShared)
             {
                 var value = ((JsonElement)filter.value).ToObject<string>();
-                return string.Format(op.op, string.Format(dbLitral, filter.field), value);
+                return string.Format(op.op, string.Format(dbLitral,filter.field), value);
             }
 
             if (column.JsType.ToLower() == "string")
             {
                 var value = ((JsonElement)filter.value).ToObject<string>();
-                return string.Format(op.op, string.Format(dbLitral, filter.field), "'" + value + "'");
+                return string.Format(op.op, string.Format(dbLitral,filter.field), "'"+value+"'");
             }
 
             if (column.JsType.ToLower() == "number")
             {
                 var value = ((JsonElement)filter.value).ToObject<decimal>();
-                return string.Format(op.op, string.Format(dbLitral, filter.field), value);
+                return string.Format(op.op, string.Format(dbLitral,filter.field), value);
             }
-
+            
             if (column.JsType.ToLower() == "date")
             {
-                var dbDateTruncation = dbType == "oracle" ? "TRUNC({0}) " : "Convert(date,{0},105)";
+                var dbDateTruncation = dbType == "oracle" ? "TRUNC({0}) " : "Convert(date,{0},105)"; 
                 var value = "'" + ((JsonElement)filter.value).ToObject<DateTime>().ToLocalTime().Date.ToString("dd-MM-yyyy") + "'";
-                value = dbType == "oracle" ? string.Format(dbDateTruncation, string.Format("to_date({0},'dd-MM-yyyy')", value)) : string.Format(dbDateTruncation, value);
+                value = dbType == "oracle" ? string.Format(dbDateTruncation,string.Format("to_date({0},'dd-MM-yyyy')",value)) : string.Format(dbDateTruncation,value);
                 var field = string.Format(dbDateTruncation, string.Format(dbLitral, filter.field));
-                return string.Format(op.op, field, value);
+                return string.Format(op.op,field , value);
             }
 
             return string.Empty;
         }
-
+            
     }
 
     private string GenerateOderby(List<SortOption> sortOptions)
@@ -194,7 +194,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             List<DbObject> dbObjects = new();
             if (connection.State != System.Data.ConnectionState.Open)
                 connection.Open();
-
+            
             using var command = connection.CreateCommand();
             command.CommandText = GetDbObjectSql(dbType);
             using var reader = command.ExecuteReader();
@@ -222,22 +222,22 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         var schemaObjectArr = view.Split(".");
         string schemaSqlName = string.Empty;
         string objectSqlName = string.Empty;
-
-
+        
+        
         schemaSqlName = schemaObjectArr[0];
         objectSqlName = schemaObjectArr.Length == 2 ? schemaObjectArr[1] : schemaObjectArr[0];
-        var sql = string.Format(getColumnsSql, objectSqlName, type, schemaSqlName);
+        var sql = string.Format(getColumnsSql,objectSqlName,type,schemaSqlName);
         var connection = schemaContext.Database.GetDbConnection();
         try
         {
             List<ColumnDto> dbObjectColumns = new();
             if (connection.State != System.Data.ConnectionState.Open)
                 connection.Open();
-
+            
             using var command = connection.CreateCommand();
             command.CommandText = sql;
             using var reader = command.ExecuteReader();
-
+            
             while (reader.Read())
             {
                 var column = new ColumnDto();
@@ -263,11 +263,11 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
     public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? "oracle" : "sqlserver";
-        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""" : "[{0}]";
-        var whereLine = GenerateWhere(request.Filter, dbType, report.Columns);
+        string dbLitral = dbType.ToLower() == "oracle" ? @"""{0}""":"[{0}]";
+        var whereLine = GenerateWhere(request.Filter,dbType,report.Columns);
         whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
-        var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x => string.Format(dbLitral, x)))}";
-        var sql = $@"SELECT COUNT(*) AS {string.Format(dbLitral, "ValField")} , {{0}} AS {string.Format(dbLitral, "CatField")}
+        var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x=>string.Format(dbLitral,x)))}";
+        var sql = $@"SELECT COUNT(*) AS {string.Format(dbLitral,"ValField")} , {{0}} AS {string.Format(dbLitral,"CatField")}
                      {fromLine}
                      {whereLine}
                      GROUP BY {{0}}";
@@ -316,10 +316,10 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         {
             connection.Close();
         }
-
+        
     }
 
-
+    
 
     private string GetObjectColumnsSql(string dbType)
     {
@@ -364,7 +364,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             _ => throw new Exception()
         };
     }
-
+    
     public ArtSavedCustomReport GetReport(int id)
     {
         var report = _context.ArtSavedCustomReports.Find(id); // Find does not include related data

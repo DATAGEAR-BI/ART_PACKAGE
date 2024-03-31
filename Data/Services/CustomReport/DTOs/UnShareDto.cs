@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
+﻿namespace Data.Services.CustomReport;
 
-namespace Data.Services.CustomReport
+public class UnShareDto
 {
-
-    public class UnShareDto
-    {
-        public List<string> Holders { get; set; }
-        public int ReportId { get; set; }
-    }
+    public List<string> Holders { get; set; }
+    public int ReportId { get; set; }
 }

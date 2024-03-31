@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Data.Services.Grid
+﻿namespace Data.Services.Grid
 {
     public class GridColumn
     {
