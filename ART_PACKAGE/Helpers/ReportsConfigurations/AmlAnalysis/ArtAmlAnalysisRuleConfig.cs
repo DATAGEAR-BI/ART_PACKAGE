@@ -1,4 +1,7 @@
-﻿namespace ART_PACKAGE.Helpers.ReportsConfigurations
+﻿using Data.Data.AmlAnalysis;
+using Data.Services.Grid;
+
+namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
     public class ArtAmlAnalysisRuleConfig : ReportConfig
     {

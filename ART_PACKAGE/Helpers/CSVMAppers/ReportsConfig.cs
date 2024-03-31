@@ -11,6 +11,7 @@ using Data.Data.Audit;
 using Data.Data.TRADE_BASE;
 using Data.Services.Grid;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {

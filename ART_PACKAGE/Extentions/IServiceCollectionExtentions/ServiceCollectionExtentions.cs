@@ -1,8 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.BackGroundServices;
-using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.License;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Middlewares.License;
 using ART_PACKAGE.Middlewares.Security;
 using Data.Audit.DGMGMT;
@@ -13,26 +13,24 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
-using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
-using Data.Data.TRADE_BASE;
-using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
-using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
+using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
+    public delegate ReportConfig ReportConfigResolver(string key);
     public static class ServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
@@ -54,23 +52,23 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         conn,
                         x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
-                    DbTypes.MySql => options.UseMySql(
-                        conn,
-                        new MySqlServerVersion(new Version(8, 0, 36)),//ServerVersion.AutoDetect(config.GetValue<string>("MySqlVersion")),//new MySqlServerVersion(new Version( config.GetValue<string>("dbType"))),
-                        x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
-                        ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+
+
             if (modulesToApply is null)
             {
                 _ = services.AddScoped<IDbService, DBService>();
                 return services;
             }
+
             if (modulesToApply.Contains("SEG"))
             {
+                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                //_ = services.AddDbContext<SEGFCFKCContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
             }
 
@@ -100,12 +98,6 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
-            }
-            if (modulesToApply.Contains("FATCA"))
-            {
-                string DGFATCAContextConnection = config.GetConnectionString("DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
-                _ = services.AddDbContext<DGFATCAContext>(opt => contextBuilder(opt, DGFATCAContextConnection));
-                _ = services.AddDbContext<FATCAContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("SASAML"))
@@ -141,15 +133,42 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
             }
 
-            if (modulesToApply.Contains("CRP"))
-            {
-                _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
-            }
-            if (modulesToApply.Contains("TRADE_BASE"))
-            {
-                _ = services.AddDbContext<TRADE_BASEContext>(opt => contextBuilder(opt, connectionString));
-            }
-
+            // if (modulesToApply.Contains("EXPORT_SCHEDULAR"))
+            // {
+            //
+            //     _ = services.AddDbContext<ExportSchedularContext>(opt => contextBuilder(opt, connectionString));
+            //     _ = services.AddScoped<ITaskPerformer, TaskPerformer>();
+            //
+            //
+            //     _ = services.AddHangfire(
+            //     configuration =>
+            //     {
+            //         _ = configuration
+            //                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            //                     .UseSimpleAssemblyNameTypeSerializer()
+            //                     .UseRecommendedSerializerSettings();
+            //         switch (dbType)
+            //         {
+            //             case DbTypes.SqlServer:
+            //                 _ = configuration.UseSqlServerStorage(connectionString);
+            //                 break;
+            //             default:
+            //                 _ = configuration.UseStorage(new OracleStorage(connectionString,
+            //                      new OracleStorageOptions
+            //                      {
+            //                          // Optional settings
+            //                          QueuePollInterval = TimeSpan.FromSeconds(15),
+            //                          JobExpirationCheckInterval = TimeSpan.FromHours(1),
+            //                          SchemaName = "ART"
+            //                      }
+            //                  )
+            //                                                             );
+            //                 break;
+            //         }
+            //     });
+            //
+            //     _ = services.AddHangfireServer();
+            // }
             _ = services.AddScoped<IDbService, DBService>();
             return services;
         }
@@ -167,9 +186,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                     {
                         req.Modules = LicenseModules;
                     }
-
                     _ = p.AddRequirements(req);
-
                 }
                 );
             });
@@ -184,12 +201,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 opt.AddPolicy("CustomAuthorization", p =>
                 {
                     CustomAuthorizationRequirment req = new();
-
-
                     _ = p.AddRequirements(req);
-
-                }
-                );
+                });
             });
             _ = services.AddScoped<IAuthorizationHandler, CustomAuthorizationRequirmentHandler>();
             return services;
@@ -200,7 +213,25 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
             _ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
+            return services;
+        }
 
+
+        public static IServiceCollection AddReportsConfiguratons(this IServiceCollection services)
+        {
+            IEnumerable<Type> configTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass && t.Namespace == "ART_PACKAGE.Helpers.ReportsConfigurations");
+            foreach (Type? type in configTypes)
+            {
+                _ = services.AddSingleton(type);
+            }
+
+            _ = services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
+            {
+                Type? configType = configTypes.FirstOrDefault(x => x.Name.ToLower() == key.ToLower());
+                return (ReportConfig)serviceProvider.GetService(configType);
+            });
             return services;
         }
 

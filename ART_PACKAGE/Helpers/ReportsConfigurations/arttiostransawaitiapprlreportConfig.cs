@@ -1,3 +1,5 @@
+using Data.Services.Grid;
+
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
     public class arttiostransawaitiapprlreportConfig : ReportConfig

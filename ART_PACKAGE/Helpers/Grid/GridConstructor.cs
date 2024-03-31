@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Services;
 using Data.Services.Grid;
 

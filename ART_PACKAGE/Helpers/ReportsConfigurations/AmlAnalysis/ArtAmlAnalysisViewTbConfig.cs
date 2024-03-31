@@ -1,4 +1,5 @@
 ﻿using Data.Data.AmlAnalysis;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {

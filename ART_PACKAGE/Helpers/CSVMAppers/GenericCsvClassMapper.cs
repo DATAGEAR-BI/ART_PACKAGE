@@ -4,6 +4,7 @@ using CsvHelper.TypeConversion;
 using Data.Services.Grid;
 using System.Linq.Expressions;
 using System.Reflection;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
