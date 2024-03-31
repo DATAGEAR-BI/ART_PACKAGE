@@ -1,8 +1,12 @@
-﻿
+﻿using ART_PACKAGE.Helpers.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using ART_PACKAGE.Areas.Identity.Data;
+using Data.Services;
+using Data.Services.Grid;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace ART_PACKAGE.Controllers
@@ -10,6 +14,7 @@ namespace ART_PACKAGE.Controllers
     public abstract class BaseReportController<TGridConstuctor, TRepo, TContext, TModel> : BaseController
         where TContext : DbContext
         where TModel : class
+        where TRepo : IBaseRepo<TContext, TModel>
         where TGridConstuctor : IGridConstructor<TRepo, TContext, TModel>
     {
         protected readonly TGridConstuctor _gridConstructor;
@@ -23,7 +28,6 @@ namespace ART_PACKAGE.Controllers
         }
 
         public abstract IActionResult Index();
-        
         [HttpPost]
         public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
         {

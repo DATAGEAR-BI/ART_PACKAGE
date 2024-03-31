@@ -12,36 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/dataSources.local.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseChartController.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/CustomReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/CustomReportController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/SystemPerformanceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/SystemPerformanceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformanceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformanceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/UserRoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/UserRoleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/AmlAnalysis/AmlAnalysisRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/AmlAnalysis/AmlAnalysisRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/AmlAnalysis/IAmlAnalysisRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/AmlAnalysis/IAmlAnalysisRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/ShareReportDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/ShareReportDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/UnShareDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/DTOs/UnShareDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/DbContextExtentions/ProcExtention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/DbContextExtentions/ProcExtention.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/FilterExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/FilterExtentions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridColumn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridColumn.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridHelprs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridHelprs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/SortExtention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/SortExtention.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/QueryBuilder/BuilderFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/QueryBuilder/BuilderFilter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/QueryBuilder/StoredProcFiltersExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/QueryBuilder/StoredProcFiltersExtentions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/IGridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/IGridConstructor.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +60,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73462a4a9394ff73b345712598c94965b0f6032ce187cd124f118b498662d1/MimeMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/eslam/source/repos/ART_PACKAGE/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />

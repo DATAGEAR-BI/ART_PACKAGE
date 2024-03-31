@@ -1,8 +1,8 @@
-﻿using Data.Services;
-using Data.Services.Grid;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using Data.Services;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.Grid
 {

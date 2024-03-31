@@ -1,13 +1,14 @@
 ﻿using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Hubs;
-using Data.Services;
-using Data.Services.Grid;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers.CSVMAppers;
+using Data.Services;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -20,7 +21,8 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private static readonly Dictionary<int, int> fileProgress = new();
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        private readonly ReportConfigResolver _reportsConfigResolver;
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -28,6 +30,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _csvSrv = csvSrv;
             _exportHub = exportHub;
             this.connections = connections;
+            _reportsConfigResolver = reportsConfigResolver;
         }
         public TRepo Repo { get; private set; }
 
@@ -78,7 +81,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
         {
-            ReportConfig? reportConfig = ReportsConfig.CONFIG.ContainsKey(controller.ToLower()) ? ReportsConfig.CONFIG[controller.ToLower()] : null;
+            ReportConfig? reportConfig = _reportsConfigResolver(controller);
             bool hasConfig = reportConfig != null;
             Dictionary<string, List<SelectItem>> DropDownColumn = _dropDownMap.GetDorpDownForReport(controller);
             List<string>? ColumnsToSkip = reportConfig?.SkipList;
