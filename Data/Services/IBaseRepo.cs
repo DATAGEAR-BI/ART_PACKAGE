@@ -1,9 +1,6 @@
 ﻿using Data.Services.Grid;
 using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Data.Services
@@ -12,8 +9,9 @@ namespace Data.Services
         where TContext : DbContext
         where TModel : class
     {
-        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel, object>>>? includes = null);
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null,SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null);
 
+        public IQueryable<TModel> GetScheduleData(List<object> @params);
 
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters);
 

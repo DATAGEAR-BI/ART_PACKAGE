@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Data.CRP;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -40,7 +41,7 @@ namespace ART_PACKAGE.Controllers.CRP
         {
             IQueryable<ArtCrpConfig> data = _crp.ArtCrpConfigs.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -73,7 +74,7 @@ namespace ART_PACKAGE.Controllers.CRP
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpConfigController).ToLower()].SkipList;
             List<ArtCrpConfig> data = _crp.ArtCrpConfigs.CallData(req).Data.ToList();
             ViewData["title"] = "CRP Configs ";

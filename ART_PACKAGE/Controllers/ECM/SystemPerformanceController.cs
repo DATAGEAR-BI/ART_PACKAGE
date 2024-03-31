@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
 using Data.DGECM;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -44,7 +45,7 @@ namespace ART_PACKAGE.Controllers.ECM
         {
             IQueryable<ArtSystemPerformance> data = context.ArtSystemPerformances.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -91,7 +92,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(SystemPerformanceController).ToLower()].SkipList;
             List<ArtSystemPerformance> data = context.ArtSystemPerformances.CallData(req).Data.ToList();
             ViewData["title"] = "System Performance Report";

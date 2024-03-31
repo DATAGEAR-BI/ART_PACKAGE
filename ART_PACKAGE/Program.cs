@@ -2,15 +2,20 @@
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
+using ART_PACKAGE.Helpers.Chart;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using Data.Services;
+using Data.Services.CustomReport;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -23,6 +28,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 
 builder.Services.AddDbs(builder.Configuration);
+
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 builder.Services.AddScoped<IDropDownService, DropDownService>();
@@ -32,6 +38,18 @@ builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
+builder.Services.AddSingleton<Module>();
+
+
+builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
+builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
+builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
+builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
+builder.Services.AddTransient(typeof(ICustomReportGridConstructor), typeof(CustomReportGridConstructor));
+
+builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
+builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
+
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()

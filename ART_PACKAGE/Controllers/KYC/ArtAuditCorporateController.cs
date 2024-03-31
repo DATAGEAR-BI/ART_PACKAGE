@@ -3,6 +3,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.KYC;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -26,7 +27,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -61,13 +62,13 @@ namespace ART_PACKAGE.Controllers.KYC
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtAuditCorporateView, GenericCsvClassMapper<ArtAuditCorporateView, ArtAuditCorporateController>>(para.Req);
+            byte[] bytes = await data.ExportToCSV<ArtAuditCorporateView, GenericCsvClassMapper<ArtAuditCorporateView>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].SkipList;
             List<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.CallData(req).Data.ToList();
             ViewData["title"] = "Audit For Corporates Report";

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -56,7 +57,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.AsQueryable();
             //IQueryable<CaseLive> filter = DGCMGMT_FTI.CaseLives.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -107,7 +108,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].DisplayNames;
 
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(EcmAuditTrialController).ToLower()].SkipList;
 

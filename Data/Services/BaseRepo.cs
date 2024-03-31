@@ -4,10 +4,7 @@ using Data.Services.DbContextExtentions;
 using Data.Services.Grid;
 using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 
 
@@ -44,7 +41,7 @@ namespace Data.Services
 
 
 
-        public GridResult<TModel> GetGridData(GridRequest request, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
+        public virtual GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)
@@ -60,6 +57,10 @@ namespace Data.Services
                 }
             }
 
+            if (baseCondition is not null)
+            {
+                data = data.Where(baseCondition);
+            }
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
 
             data = data.Where(ex);
@@ -123,6 +124,13 @@ namespace Data.Services
             };
         }
 
+        public IQueryable<TModel> GetScheduleData(List<object> @params)
+        {
+            Expression<Func<TModel, bool>> clause = FilterExtensions.GenerateExpression<TModel>(@params);
+            return _context.Set<TModel>().Where(clause);
+        }
+        
+        
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)
         {
             var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;

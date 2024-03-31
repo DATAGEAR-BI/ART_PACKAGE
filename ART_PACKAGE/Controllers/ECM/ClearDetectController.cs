@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.ECM;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -27,7 +28,7 @@ namespace ART_PACKAGE.Controllers.ECM
         {
             IQueryable<ArtClearDetect> data = context.ArtClearDetects.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -69,7 +70,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ClearDetectController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ClearDetectController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ClearDetectController).ToLower()].SkipList;
             List<ArtClearDetect> data = context.ArtClearDetects.CallData(req).Data.ToList();
             ViewData["title"] = "Clear Detect Report";

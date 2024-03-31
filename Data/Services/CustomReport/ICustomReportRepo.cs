@@ -1,17 +1,23 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
-using Data.Services;
-using Data.Services.CustomReport;
+using Data.Services.Grid;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataGear_RV_Ver_1._7.Services.CustomReport
+namespace Data.Services.CustomReport;
+
+public interface ICustomReportRepo : IBaseRepo<AuthContext,Dictionary<string, object>>
 {
+    public IEnumerable<GridColumn> GetReportColumns(int reportId);
+    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext,ArtSavedCustomReport report,GridRequest request);
+    public DbSchema GetReportSchema(int reportId);
 
-    public interface ICustomReportRepo : IBaseRepo<AuthContext, ArtSavedCustomReport>
-    {
-        public Task<bool> ShareReport(ShareReportDto shareRequest, AppUser currentUser, IEnumerable<AppUser> shareToUsers);
+    public IEnumerable<DbObject> GetDbObjectsOf(DbContext schemaContext);
 
-        public Task<bool> UnShareReport(UnShareDto unShareRequest, AppUser cuAppUser,
-            IEnumerable<AppUser> unshareFromUsers);
+    public IEnumerable<ColumnDto> GetObjectColumns(DbContext schemaContext, string view, string type);
 
-        public Task<IEnumerable<AppUser>> GetReportUsers(int reportId);
-    }
+    public bool IsReportExist(int reportId);
+    public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request);
+
+    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext,ArtSavedCustomReport report,GridRequest request);
+    
+    public ArtSavedCustomReport GetReport(int id);
 }

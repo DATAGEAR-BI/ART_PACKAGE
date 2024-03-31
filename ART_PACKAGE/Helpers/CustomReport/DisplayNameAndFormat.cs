@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Helpers.CustomReport
+﻿using Data.Services.Grid;
+
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class DisplayNameAndFormat
     {

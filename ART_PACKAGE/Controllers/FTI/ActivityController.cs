@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -31,7 +32,7 @@ namespace ART_PACKAGE.Controllers.FTI
             IQueryable<ArtTiActivityReport> data = fti.ArtTiActivityReports.AsQueryable();
 
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -87,7 +88,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "Activity Report";
             ViewData["desc"] = "This report produces information for a single master record or for all master records, showing what events have been initiated for each master record and the status of the current active steps for each event within it";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ActivityController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ActivityController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new()
             { nameof(ArtTiActivityReport.MasterRef)
             , nameof(ArtTiActivityReport.Address1)

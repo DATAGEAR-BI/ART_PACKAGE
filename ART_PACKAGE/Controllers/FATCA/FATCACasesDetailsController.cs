@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.DATA.FATCA;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -29,7 +30,7 @@ namespace ART_PACKAGE.Controllers.ECM
         {
             IQueryable<ArtFatcaCace> data = context.ArtFatcaCaces.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -72,7 +73,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(FATCACasesDetailsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(FATCACasesDetailsController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(FATCACasesDetailsController).ToLower()].SkipList;
             List<ArtFatcaCace> data = context.ArtFatcaCaces.CallData(req).Data.ToList();
             ViewData["title"] = "FATCA Caces Report";

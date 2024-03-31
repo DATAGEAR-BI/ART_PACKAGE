@@ -1,15 +1,20 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Hubs;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Data.Services;
+using Data.Services.CustomReport;
 using Data.Services.Grid;
-using DataGear_RV_Ver_1._7.Services.CustomReport;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.Json;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
@@ -18,16 +23,48 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly ILogger<ICsvExport> _logger;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly object _locker = new();
+        private readonly IHubContext<ExportHub> _exportHub;
+        private readonly UsersConnectionIds connections;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
 
 
 
         public event Action<int, int> OnProgressChanged;
 
-        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger)
+        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
             OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
+            this.connections = connections;
+            _webHostEnvironment = webHostEnvironment;
+            _exportHub = exportHub;
+
+        }
+        public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
+        {
+            await Export<TModel, TController, object>(_db, userName, obj);
+        }
+
+        public async Task Export<TModel, TController, TColumn>(DbContext _db, string userName, ExportDto<object> obj, string idColumn = null) where TModel : class
+        {
+            IEntityType? tableData = _db.Model.FindEntityType(typeof(TModel));
+            string? tbName = tableData.GetTableName() ?? tableData.GetViewName();
+            IQueryable<TModel> data = null;
+            if (idColumn is not null && obj.SelectedIdz is not null && obj.SelectedIdz.Count() > 0)
+            {
+                string columnName = tableData.GetProperty(idColumn).GetColumnName();
+                IEnumerable<TColumn> idz = obj.SelectedIdz.Select(x => ((JsonElement)x).ToObject<TColumn>());
+                string idzForSql = !typeof(TColumn).IsNumericType() ? string.Join(",", idz.Select(x => $"'{x}'")) : string.Join(",", idz);
+                data = _db.Set<TModel>().FromSqlRaw($@"SELECT * FROM {tableData.GetSchema()}.{tbName}
+                                                        WHERE {columnName} IN ({idzForSql})");
+            }
+            else
+            {
+                data = _db.Set<TModel>();
+            }
+            await ExportAllCsv<TModel, TController, object>(data, userName, obj);
 
         }
 
@@ -209,5 +246,56 @@ namespace ART_PACKAGE.Helpers.Csv
             }
         }
 
+        public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
+        {
+            int i = 0;
+            string reqId = Guid.NewGuid().ToString();
+            string Date = DateTime.UtcNow.ToString("dd-MM-yyyy-HH-mm");
+            foreach (Task<byte[]> item in data.ExportToCSVE<T, GenericCsvClassMapper<T>>(obj.Req))
+            {
+                try
+                {
+
+                    byte[] bytes = await item;
+                    string FileName = i + 1 + "." + typeof(T1).Name.Replace("Controller", "") + "_" + Date + ".csv";
+                    SaveByteArrayAsCsv(bytes, FileName, reqId);
+
+
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
+                                .SendAsync("csvRecevied", bytes, FileName, i, reqId);
+                    i++;
+                }
+                catch (Exception)
+                {
+                    await _exportHub.Clients.Clients(connections.GetConnections(userName))
+                                .SendAsync("csvErrorRecevied", i);
+                }
+
+            }
+            await _exportHub.Clients.Clients(connections.GetConnections(userName))
+                               .SendAsync("FinishedExportFor", reqId, i);
+        }
+        private void SaveByteArrayAsCsv(byte[] byteArray, string fileName, string folderGuid)
+        {
+            try
+            {
+                // Create a directory with the GUID as its name
+                string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
+                if (!Directory.Exists(folderPath))
+                    _ = Directory.CreateDirectory(folderPath);
+
+                // Create a file path within the directory using the provided file name
+                string filePath = Path.Combine(folderPath, fileName);
+
+                // Write the byte array to the CSV file
+                File.WriteAllBytes(filePath, byteArray);
+
+                Console.WriteLine($"Byte array saved as '{fileName}' in folder '{folderGuid}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
     }
 }

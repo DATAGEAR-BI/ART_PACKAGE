@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
+using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
@@ -502,7 +503,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
 
 
-        public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
+        public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
 
@@ -588,7 +589,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 _ => false,
             };
         }
-        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, DisplayNameAndFormat> DisplayNames = null, List<string> propertiesToSkip = null)
+        public static KendoDataDesc<T> CallData<T>(this IQueryable<T> data, KendoRequest obj, Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNames = null, List<string> propertiesToSkip = null)
         {
             string filter = obj.Filter.GetFiltersString<T>();
 
@@ -871,31 +872,32 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static IEnumerable<Task<byte[]>> ExportToCSVE<T, T1>(this IQueryable<T> data, KendoRequest obj = null, bool all = true) where T1 : ClassMap
         {
-            List<List<object>> filterCells = GetFilterTextForCsv(obj.Filter);
+            int batch = 100000;
             decimal total = 0;
             if (all)
             {
                 KendoDataDesc<T> calldata = data.CallData(obj);
                 data = calldata.Data;
                 total = calldata.Total;
+
             }
             else
             {
                 total = data.Count();
             }
 
+
             CsvConfiguration config = new(CultureInfo.CurrentCulture)
             {
-                Encoding = Encoding.UTF8,
-                IgnoreBlankLines = true,
-                AllowComments = true,
+                Encoding = new UTF8Encoding(false)
             };
-
-            int batch = 100000;
             int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
             while (total > 0)
             {
+                string datasql = data.ToQueryString();
                 IQueryable<T> tempDData = data.Skip(skip).Take(batch);
+                string sql = tempDData.ToQueryString();
                 List<T> tempData = tempDData.ToList();
                 yield return Task.Run(() =>
                 {
@@ -903,34 +905,9 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
-                        // Register custom class map
                         _ = cw.Context.RegisterClassMap<T1>();
-
-                        if (filterCells is not null && filterCells.Count != 0)
-                        {
-                            foreach (List<object> item in filterCells)
-                            {
-                                cw.WriteComment(string.Join(",", item));
-                            }
-                            cw.NextRecord();
-                        }
-
-                        // Manually configure headers
-                        ClassMap<T>? headerMap = cw.Context.Maps.Find<T>();
-                        foreach (MemberMap? memberMap in headerMap.MemberMaps)
-                        {
-                            MemberInfo? property = memberMap.Data.Member;
-                            // Add custom type converters for specific properties
-                            if (property.GetType() == typeof(double))
-                            {
-                                _ = memberMap.TypeConverter<CurrencyTypeConverter>();
-                            }
-
-                            cw.WriteField(property.Name); // Write custom headers if needed
-                        }
+                        cw.WriteHeader<T>();
                         cw.NextRecord();
-
-                        // Write records
                         foreach (T? elm in tempData)
                         {
                             cw.WriteRecord(elm);
@@ -940,11 +917,20 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     byte[] b = stream.ToArray();
                     return b;
                 });
-
+                //tasks.Add(task);
                 total -= batch;
                 skip += batch;
             }
+            //var results = await Task.WhenAll(tasks);
+            //tasks.ForEach(x =>
+            //{
+            //    bytes = bytes.Concat(x.Result).ToArray();
+            //}
+            //);
+            //return bytes;
+
         }
+
 
         public class CurrencyTypeConverter : DefaultTypeConverter
         {

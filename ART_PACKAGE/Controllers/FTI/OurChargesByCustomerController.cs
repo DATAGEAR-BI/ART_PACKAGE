@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -26,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         public IActionResult GetData([FromBody] KendoRequest request)
         {
             IQueryable<ArtTiChargesByCustReport> data = fti.ArtTiChargesByCustReports.AsQueryable();
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -75,7 +76,7 @@ namespace ART_PACKAGE.Controllers.FTI
             List<ArtTiChargesByCustReport> data = fti.ArtTiChargesByCustReports.CallData(req).Data.ToList();
             ViewData["title"] = "Our Charges By Customer";
             ViewData["desc"] = "This report produces a list of charges by the customer paying the charges";
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OurChargesByCustomerController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new() {
                 nameof(ArtTiChargesByCustReport.MasterRef)
                ,nameof(ArtTiChargesByCustReport.Gfcun)

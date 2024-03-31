@@ -3,6 +3,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.KYC;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -26,7 +27,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtKycMediumThreeMonth> data = dbfcfkc.ArtKycMediumThreeMonths.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -60,13 +61,13 @@ namespace ART_PACKAGE.Controllers.KYC
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtKycMediumThreeMonth> data = dbfcfkc.ArtKycMediumThreeMonths.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtKycMediumThreeMonth, GenericCsvClassMapper<ArtKycMediumThreeMonth, ArtKycMediumThreeMonthController>>(para.Req);
+            byte[] bytes = await data.ExportToCSV<ArtKycMediumThreeMonth, GenericCsvClassMapper<ArtKycMediumThreeMonth>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumThreeMonthController).ToLower()].SkipList;
             List<ArtKycMediumThreeMonth> data = dbfcfkc.ArtKycMediumThreeMonths.CallData(req).Data.ToList();
             ViewData["title"] = "Medium risk within 3 months customers Report";

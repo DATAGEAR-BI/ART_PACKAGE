@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.License
 
 
         private static readonly List<string> BaseControllers = new() { nameof(HomeController).ToLower(),
-                                                                                    nameof(ReportController).ToLower(),
+                                                                                    //nameof(ReportController).ToLower(),
                                                                                     };
         public static bool isBaseModule(string controllerName)
         {

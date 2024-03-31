@@ -6,6 +6,7 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -28,7 +29,7 @@ namespace ART_PACKAGE.Controllers.SASAML
         {
             IQueryable<ArtAmlCaseDetailsView> data = dbfcfkc.ArtAmlCaseDetailsViews.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -91,7 +92,7 @@ namespace ART_PACKAGE.Controllers.SASAML
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CasesDetailsController).ToLower()].SkipList;
             List<ArtAmlCaseDetailsView> data = dbfcfkc.ArtAmlCaseDetailsViews.CallData(req).Data.ToList();
             ViewData["title"] = "Cases Details";

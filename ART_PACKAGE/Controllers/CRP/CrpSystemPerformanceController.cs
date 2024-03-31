@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Data.CRP;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -41,7 +42,7 @@ namespace ART_PACKAGE.Controllers.CRP
         {
             IQueryable<ArtCrpSystemPerformance> data = _crp.ArtCrpSystemPerformances.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
             if (request.IsIntialize)
@@ -79,7 +80,7 @@ namespace ART_PACKAGE.Controllers.CRP
         }
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(CrpSystemPerformanceController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(CrpSystemPerformanceController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(CrpSystemPerformanceController).ToLower()].SkipList;
             List<ArtCrpSystemPerformance> data = _crp.ArtCrpSystemPerformances.CallData(req).Data.ToList();
             ViewData["title"] = "CRP System Performance Details";

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.DropDown;
-using Data.Data.KYC;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Pdf;
+using Data.Data.KYC;
+using Data.Services.Grid;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
@@ -26,7 +27,7 @@ namespace ART_PACKAGE.Controllers.KYC
         {
             IQueryable<ArtKycSummaryByRisk> data = dbfcfkc.ArtKycSummaryByRisks.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -60,13 +61,13 @@ namespace ART_PACKAGE.Controllers.KYC
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtKycSummaryByRisk> data = dbfcfkc.ArtKycSummaryByRisks.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtKycSummaryByRisk, GenericCsvClassMapper<ArtKycSummaryByRisk, ArtKycSummaryByRiskController>>(para.Req);
+            byte[] bytes = await data.ExportToCSV<ArtKycSummaryByRisk, GenericCsvClassMapper<ArtKycSummaryByRisk>>(para.Req);
             return File(bytes, "text/csv");
         }
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycSummaryByRiskController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycSummaryByRiskController).ToLower()].DisplayNames;
             List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycSummaryByRiskController).ToLower()].SkipList;
             List<ArtKycSummaryByRisk> data = dbfcfkc.ArtKycSummaryByRisks.CallData(req).Data.ToList();
             ViewData["title"] = "KYC Summary By Risk Report";

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -28,7 +29,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsLiabilityReport> data = fti.ArtTiOsLiabilityReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -83,7 +84,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "OS Liability Report";
             ViewData["desc"] = "This report produces totals for outstanding liability";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSLiabilityController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSLiabilityController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new() {nameof(ArtTiOsLiabilityReport.Gfcun)
                 , nameof(ArtTiOsLiabilityReport.Sovalue) ,
             nameof(ArtTiOsLiabilityReport.LiabCcy) , nameof(ArtTiOsLiabilityReport.Totliabamt)    };

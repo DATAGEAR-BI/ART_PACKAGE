@@ -1,5 +1,6 @@
 ﻿
 using ART_PACKAGE.Helpers.CustomReport;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Rotativa.AspNetCore;
@@ -75,7 +76,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             , int ColumnsPerPage
             , string UserName
             , List<string> ColumnsToSkip = null
-            , Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+            , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
             ViewData["user"] = UserName;
             List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
@@ -153,7 +154,7 @@ namespace ART_PACKAGE.Helpers.Pdf
         public async Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data,
                 ViewDataDictionary ViewData, ActionContext ControllerContext,
                 string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
-                Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+                Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
             IEnumerable<GroupedData> grouped = data.AsQueryable()
                .GroupBy($"new ({string.Join(",", GroupColumns.Select(x => x.field))})", "it")
@@ -172,7 +173,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
         private IEnumerable<Dictionary<string, object>> GetDataPArtitionedByColumnsForCustom(IEnumerable<dynamic> list,
          IEnumerable<string> propertyNames,
-         Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+         Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
             List<Dictionary<string, object>> res = new();
             list.ToList().ForEach(x =>
@@ -182,7 +183,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             return res;
         }
         private GroupedData DynamicGroupToDict<T>(dynamic dobj, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,
-          Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+          Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
             //Dictionary<string, List<Dictionary<string, object>>> res = new Dictionary<string, List<Dictionary<string, object>>>();
             List<string> key = new();
@@ -267,7 +268,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
         private IEnumerable<Dictionary<string, object>> GetDataPArtitionedByColumns<T>(IEnumerable<T> list,
            IEnumerable<string> propertyNames,
-           Dictionary<string, DisplayNameAndFormat> DisplayNamesAndFormat = null)
+           Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
 
             return list.Select(x =>

@@ -56,7 +56,9 @@ export const Handlers = {
         console.log(getQueryParameters(url));
         var Method = isMyreports ? "MyReports" : "";
         console.log(Method);
-        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method, [...getQueryParameters(url)]);
+        //invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller, Method, [...getQueryParameters(url)]);
+        invokeExport({ Req: para, All: all, SelectedIdz: selectedrecords }, controller);
+
         localStorage.removeItem("selectedidz");
 
     },

@@ -6,6 +6,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Models;
 using Data.Data.AmlAnalysis;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -143,12 +144,12 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
 
 
             List<string> skipList = null;//_config.GetSection($"{controllerName}:skipList").Get<List<string>>();
-            Dictionary<string, DisplayNameAndFormat> displayNameAndFormat = null;
+            Dictionary<string, GridColumnConfiguration> displayNameAndFormat = null;
             Dictionary<string, List<dynamic>> dropdown = null;
             if (obj.IsIntialize)
             {
                 skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+                displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, GridColumnConfiguration>>();
                 dropdown = new Dictionary<string, List<dynamic>>{
                     { "IndustryCode".ToLower(), _context.ArtAmlAnalysisViewTbs.Select(x=>x.IndustryCode).Where(x=> !string.IsNullOrEmpty(x)).Distinct().ToDynamicList()},
                     };
@@ -250,7 +251,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
                 "IndustryCode"
             };
             List<string> skipList = typeof(ArtAmlAnalysisView).GetProperties().Where(x => !temp.Contains(x.Name)).Select(x => x.Name).ToList();
-            Dictionary<string, DisplayNameAndFormat>? displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, DisplayNameAndFormat>>();
+            Dictionary<string, GridColumnConfiguration>? displayNameAndFormat = _config.GetSection($"{controllerName}:displayAndFormat").Get<Dictionary<string, GridColumnConfiguration>>();
             List<ArtAmlAnalysisViewTb> data = _context.ArtAmlAnalysisViewTbs.CallData(req).Data.ToList();
             ViewData["title"] = "AML Analysis";
             ViewData["desc"] = "";

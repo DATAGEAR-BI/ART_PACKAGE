@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -26,7 +27,7 @@ namespace ART_PACKAGE.Controllers.FTI
         {
             IQueryable<ArtTiOsTransByGatewayReport> data = fti.ArtTiOsTransByGatewayReports.AsQueryable();
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
@@ -82,7 +83,7 @@ namespace ART_PACKAGE.Controllers.FTI
             ViewData["title"] = "OS Transactions By Gateway Report";
             ViewData["desc"] = "This report produces information for master records that are not yet booked off or cancelled for only those transactions relating to customer gateway customers";
 
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByGatewayController).ToLower()].DisplayNames;
+            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(OSTransactionsByGatewayController).ToLower()].DisplayNames;
             List<string> columnsToPrint = new() {nameof(ArtTiOsTransByGatewayReport.MasterRef)
                 , nameof(ArtTiOsTransByGatewayReport.CtrctDate) ,
             nameof(ArtTiOsTransByGatewayReport.ExpiryDat) , nameof(ArtTiOsTransByGatewayReport.Amount) , nameof(ArtTiOsTransByGatewayReport.Ccy),

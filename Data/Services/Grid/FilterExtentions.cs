@@ -1,12 +1,36 @@
-﻿using System;
-using System.Linq;
+﻿
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
 {
+    private static readonly Dictionary<string, string> QueryBuilderOperationsMap = new()
+    {
+        { "="              , "eq" },
+        { "<>"             , "neq" },
+        { "isblank"          , "isnull" },
+        { "isnotblank"       , "isnotnull" },
+        { "is_empty"         , $@"isempty" },
+        { "is_not_empty"      , $@"isnotempty" },
+        { "startswith"      , "startswith" },
+        { "not_begins_with", "doesnotstartwith" },
+        { "contains"        , "contains" },
+        { "notcontains"  , "doesnotcontain" },
+        { "endswith"        , "endswith" },
+        { "not_ends_with"  , "doesnotendwith" },
+        { "in"  , "in" },
+        { "not_in"  , "not_in" },
+        {">="  ,"gte"},
+        {">"   ,"gt"},
+        {"<="  ,"lte"},
+        { "<"  , "lt" },
+    };
     public static Expression<Func<T, bool>> ToExpression<T>(this Filter filter)
     {
         if (filter == null)
@@ -65,18 +89,35 @@ public static class FilterExtensions
         return exp;
     }
 
-    private static Expression BuildIndividualExpression<T>(ParameterExpression param, Filter filter)
+    public static Expression BuildIndividualExpression<T>(ParameterExpression param, Filter filter)
     {
 
         MemberExpression member = Expression.Property(param, filter.field);
         Type memType = member.Type;
-        ConstantExpression constant = BuildConstantExpression(memType, filter.value);//Expression.Constant(Convert.ChangeType(filter.value, member.Type));
+        ConstantExpression constant = null;
+       
+        //Expression.Constant(Convert.ChangeType(filter.value, member.Type));
+        filter.@operator = QueryBuilderOperationsMap.TryGetValue(filter.@operator, out string op)
+            ? op
+            : filter.@operator;
+        MethodInfo? inFunc = null;
+        if (filter.@operator == "in" || filter.@operator ==  "not_in")
+        {
+            var listType = typeof(List<>).MakeGenericType(memType);
+            constant = BuildConstantExpression(listType, filter.value);
+            inFunc = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.BuildInExpression))?.MakeGenericMethod(listType);
+        }
+        else
+        {
+            constant = BuildConstantExpression(memType, filter.value);
+        }
+        
         return filter.@operator switch
         {
             "eq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.Equal(member, constant) : Expression.Equal(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "neq" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.NotEqual(member, constant) : Expression.NotEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "isnull" => Expression.Equal(member, Expression.Constant(null, member.Type)),
-            "isnotnull" => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
+            "isnotnull"  => Expression.NotEqual(member, Expression.Constant(null, member.Type)),
             "isempty" => Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type))),
             "isnotempty" => Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type))),
             "startswith" => BuildMethodExpression<string>(nameof(string.StartsWith), member, constant),
@@ -91,11 +132,21 @@ public static class FilterExtensions
             "lte" => !IsDateTimeOrNullableDateTime(member.Type) ? Expression.LessThanOrEqual(member, constant) : Expression.LessThanOrEqual(GetDatePropertyExpression(member), GetDatePropertyExpression(constant)),
             "isnullorempty" => Expression.Or(Expression.Equal(member, Expression.Constant(null, member.Type)), Expression.Equal(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
             "isnotnullorempty" => Expression.And(Expression.NotEqual(member, Expression.Constant(null, member.Type)), Expression.NotEqual(member, Expression.Constant(Convert.ChangeType("", member.Type)))),
+            "in" => (Expression) inFunc.Invoke(null,new object[]{member , constant , memType}),
+            "not_in" => Expression.Not((Expression) inFunc.Invoke(null,new object[]{member , constant , memType})),
             _ => throw new NotSupportedException($"Operator {filter.@operator} is not supported.")
         };
 
     }
 
+    public static Expression BuildInExpression<T>(MemberExpression member, ConstantExpression constant , Type valuesType)
+    {
+        // Get the MethodInfo for the 'Contains' method of List<TValue>. This is used to create the method call expression.
+        MethodInfo containsMethod = typeof(T).GetMethod("Contains", new[] { valuesType });
+        
+        // Create the method call expression 'list.Contains(x.PropertyName)'.
+        return Expression.Call(constant, containsMethod, member);
+    } 
     private static Expression BuildMethodExpression<T>(string methodname, MemberExpression member, ConstantExpression constant)
     {
         MethodInfo startsWithMethod = typeof(T).GetMethod(methodname, new[] { typeof(string) }) ?? throw new InvalidOperationException($"No suitable {methodname} method found on string type.");
@@ -139,18 +190,44 @@ public static class FilterExtensions
 
     private static ConstantExpression BuildConstantExpression(Type fieldType, object value)
     {
-        if (fieldType == typeof(DateTime) || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime))
+        object? @const = null;
+        if (value is not JsonElement)
         {
-            DateTime dateTime = value is DateTime
-                ? ((DateTime)value).ToLocalTime()
-                : value is JsonElement jsonElement && jsonElement.TryGetDateTime(out dateTime)
-                    ? dateTime.ToLocalTime()
-                    : throw new ArgumentException("Invalid date format or value.");
-            return Expression.Constant(dateTime.Date, fieldType);
+            if (fieldType == typeof(DateTime) || fieldType == typeof(Nullable<DateTime>))
+            {
+                DateTime dateTime;
+                if (DateTime.TryParseExact((string?)value, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out dateTime))
+                {
+                    @const = dateTime;
+                }
+            }
+            else
+            {
+                Type nonNullableType = Nullable.GetUnderlyingType(fieldType) ?? fieldType;
+                @const = Convert.ChangeType(value, nonNullableType);
+            }
+
+            return Expression.Constant( @const, fieldType);
         }
-        MethodInfo? method = typeof(FilterExtensions)?.GetMethod(nameof(FilterExtensions.ToObject))?.MakeGenericMethod(fieldType);
-        object? @const = method?.Invoke(null, new object[] { (JsonElement)value });
-        return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
+            
+        else
+        {
+            if (fieldType == typeof(DateTime) || Nullable.GetUnderlyingType(fieldType) == typeof(DateTime))
+            {
+                DateTime dateTime = value is DateTime
+                    ? ((DateTime)value).ToLocalTime()
+                    : value is JsonElement jsonElement && jsonElement.TryGetDateTime(out dateTime)
+                        ? dateTime.ToLocalTime()
+                        : throw new ArgumentException("Invalid date format or value.");
+                return Expression.Constant(dateTime.Date, fieldType);
+            }
+            MethodInfo? method = typeof(FilterExtensions)?.GetMethod(nameof(FilterExtensions.ToObject))?.MakeGenericMethod(fieldType);
+            @const = method?.Invoke(null, new object[] { (JsonElement)value });
+            return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
+        }
+        
+      
 
 
 
@@ -198,7 +275,86 @@ public static class FilterExtensions
         return Convert.ChangeType(value, nonNullableType);
     }
 
+    public static Expression<Func<TModel, bool>> GenerateExpression<TModel>(List<object> parameters)
+    {
 
+        ParameterExpression param = Expression.Parameter(typeof(TModel), "t");
+        Expression Exp = null;
+        for (int i = 0; i < parameters.Count; i++)
+        {
+            JArray f = (JArray)parameters[i];
+            if (i == 0 && TryParse(f, out List<object> filterList))
+                Exp = ProcessFilterGroup<TModel>(param, filterList);
+
+            if (TryParse(f, out string op))
+            {
+                _ = TryParse((JArray)parameters[i + 1], out List<object> nextFilterList);
+                Expression nextExp = ProcessFilterGroup<TModel>(param, nextFilterList);
+                Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+                i++;
+            }
+        }
+        return Exp is null ? x => true : Expression.Lambda<Func<TModel, bool>>(Exp, param);
+    }
+
+    private static bool  TryParse<T>(JArray jarr, out T output)
+    {
+        try
+        {
+        output = jarr.ToObject<T>();
+        return true;
+        }
+        catch (Exception e)
+        {
+        output = default;
+        return false;
+        }
+    }
+
+    private static Expression ProcessFilterGroup<TModel>(ParameterExpression param, List<object> filterGroup)
+    {
+        Expression Exp = null;
+        for (int i = 0; i < filterGroup.Count; i++)
+        {
+        if (filterGroup[i] is not string)
+        {
+            JArray f = (JArray)filterGroup[i];
+            if (i == 0 && TryParse(f, out List<string> filterList))
+                Exp = ProcessFilterList<TModel>(param, filterList);
+            continue;
+        }
+
+
+        if (filterGroup[i] is string op)
+        {
+            _ = TryParse((JArray)filterGroup[i + 1], out List<string> nextFilterList);
+            Expression nextExp = ProcessFilterList<TModel>(param, nextFilterList);
+            Exp = op == "and" ? Expression.AndAlso(Exp, nextExp) : Expression.OrElse(Exp, nextExp);
+            i++;
+        }
+        }
+
+        return Exp;
+    }
+
+    // Process filter when it's a list
+    private static Expression ProcessFilterList<TModel>(ParameterExpression param, List<string> filterList)
+        {
+
+            Filter filter = new()
+            {
+                @operator = filterList[1],
+                field = filterList[0],
+                value = filterList[2]
+            };
+            if (filterList[1].StartsWith("in", StringComparison.OrdinalIgnoreCase))
+            {
+                filter.@operator = "in";
+                filter.value = filterList[2].Split(",").ToList();
+            }
+
+            return FilterExtensions.BuildIndividualExpression<TModel>(param, filter);
+        }
     private static bool IsNumericType(Type type)
     {
         return Type.GetTypeCode(type) switch

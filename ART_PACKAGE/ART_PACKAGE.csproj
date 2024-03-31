@@ -51,6 +51,7 @@
 	<ItemGroup>
 		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 		<Compile Remove="Controllers\SystemPerformanceController.cs" />
+		<Compile Remove="Helpers\CustomReport\GridAggregateType.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -1783,6 +1784,12 @@
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderParametersSettings.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\jquery-1.12.4.min.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\jquery.min.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\jszip.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\jszip.min.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\kendo.all.min.js" />
+		<None Include="wwwroot\lib\Plugins\Kendo\kendo.ui.core.min.js" />
 		<None Include="wwwroot\lib\SmartComponents\source\components\font\smart-icons.woff2" />
 		<None Include="wwwroot\lib\SmartComponents\source\components\smart.ui.accordion.js" />
 		<None Include="wwwroot\lib\SmartComponents\source\components\smart.ui.accordionitem.js" />

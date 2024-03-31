@@ -631,7 +631,7 @@ class Grid extends HTMLElement {
                 },
                 resizable: true,
                 filterable: true,
-            columnMenu: {
+            /*columnMenu: {
                 componentType: "modern",
                 columns: {
                     sort: "asc",
@@ -639,7 +639,7 @@ class Grid extends HTMLElement {
                         { title: "Columns", columns: this.columns.map(x => x.title) }
                     ]
                 }
-                },
+                },*/
                 columns: this.columns,
                 noRecords: true,
                 persistSelection: true,
