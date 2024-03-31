@@ -12,6 +12,7 @@ using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 
 using ART_PACKAGE.Controllers.SEG;
+using Data.Constants.AppModules;
 
 namespace ART_PACKAGE.Helpers.License
 {
@@ -71,13 +72,13 @@ namespace ART_PACKAGE.Helpers.License
             nameof(SegmentationChartsController).ToLower() ,
 
         };
-        private static readonly List<string> SchedularControllers = new()
-        {
-
-            nameof(TasksController).ToLower() ,
-
-
-        };
+        // private static readonly List<string> SchedularControllers = new()
+        // {
+        //
+        //     nameof(TasksController).ToLower() ,
+        //
+        //
+        // };
         private static readonly List<string> AmlAnalysisControllers = new()
         {
 
@@ -182,7 +183,7 @@ namespace ART_PACKAGE.Helpers.License
                 : KYCControllers.Contains(controller) ? AppModules.KYC
                 : AuditControllers.Contains(controller) ? AppModules.DGAUDIT
                 : AmlAnalysisControllers.Contains(controller) ? AppModules.AMLANALYSIS
-                : SchedularControllers.Contains(controller) ? AppModules.EXPORT_SCHEDULAR
+                //: SchedularControllers.Contains(controller) ? AppModules.EXPORT_SCHEDULAR
                 : SEGControllers.Contains(controller) ? AppModules.SEG
                 : string.Empty;
         }

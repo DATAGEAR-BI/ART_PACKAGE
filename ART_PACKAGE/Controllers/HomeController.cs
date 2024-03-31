@@ -25,10 +25,9 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
 
 
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory, IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
 
             _logger = logger;
@@ -55,21 +54,11 @@ namespace ART_PACKAGE.Controllers
                 _dgaml = dgamlService;
             }
 
-            this.repo = repo;
+           
         }
 
 
-
-        public IActionResult Test()
-        {
-
-
-            return Ok(repo.GetAll().Take(200));
-
-
-
-        }
-
+        
 
 
         public IActionResult Index()

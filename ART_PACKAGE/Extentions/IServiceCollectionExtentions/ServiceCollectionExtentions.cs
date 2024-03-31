@@ -13,13 +13,17 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.CRP;
 using Data.Data.ECM;
+using Data.DATA.FATCA;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
+using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
@@ -100,6 +104,20 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
             }
 
+            if (modulesToApply.Contains("FATCA"))
+            {
+                string DGFATCAContextConnection = config.GetConnectionString("DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
+                _ = services.AddDbContext<DGFATCAContext>(opt => contextBuilder(opt, DGFATCAContextConnection));
+                _ = services.AddDbContext<FATCAContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("CRP"))
+            {
+                _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("TRADE_BASE"))
+            {
+                _ = services.AddDbContext<TRADE_BASEContext>(opt => contextBuilder(opt, connectionString));
+            }
             if (modulesToApply.Contains("SASAML"))
             {
                 string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
