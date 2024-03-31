@@ -1,8 +1,13 @@
-﻿using Data.Constants;
+﻿using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+using Data.Constants;
 using java.security;
 using java.security.spec;
 using javax.crypto;
 using System.Text;
+using Data.Services.QueryBuilder;
+using Microsoft.EntityFrameworkCore;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.License
 {
@@ -12,7 +17,7 @@ namespace ART_PACKAGE.Helpers.License
         private readonly PublicKey _publicKey;
         private readonly ILogger<LicenseReader> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private readonly IConfiguration _configuration;
         public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment)
         {
             _cipher = Cipher.getInstance("RSA");
@@ -87,6 +92,170 @@ namespace ART_PACKAGE.Helpers.License
             IEnumerable<string> licenseFilesNames = licensesFiles.Select(x => x.Replace(Path.Combine(_webHostEnvironment.ContentRootPath, "Licenses") + "\\", ""));
             IEnumerable<Middlewares.License.License> licenses = licenseFilesNames.Select(x => ReadFromPath(x));
             return licenses;
+        }
+
+        public async Task AddOrUpdateLicense(LicenseUpload lic)
+        {
+            string? client = _configuration.GetSection("Client")
+                .Get<string>()?.ToLower();
+            IEnumerable<string>? LicenseModules = _configuration.GetSection("Modules")
+                .Get<List<string>>()?.Select(x => x.ToLower());
+            using StreamReader reader = new(lic.License.OpenReadStream());
+            string licText = reader.ReadToEnd();
+
+            Middlewares.License.License license = ReadFromText(licText);
+
+            if (lic.Module == "base" && client != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && !LicenseModules.Contains(lic.Module.ToLower()))
+            {
+                throw new Exception();
+            }
+
+            if (!license.IsValid())
+            {
+                throw new Exception();
+            }
+
+            string licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
+            bool isLicExist = File.Exists(licPath);
+
+            if (isLicExist)
+            {
+                File.Delete(licPath);
+            }
+
+            using FileStream fileStream = new(licPath, FileMode.Create, FileAccess.ReadWrite);
+            await lic.License.CopyToAsync(fileStream);
+
+        }
+
+        public GridResult<Middlewares.License.License> GetGridData(GridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null,
+            IEnumerable<Expression<Func<Middlewares.License.License, object>>>? includes = null)
+        {
+
+            IQueryable<Middlewares.License.License> data = ReadAllAppLicenses().AsQueryable();
+            if (includes is not null)
+            {
+                foreach (Expression<Func<Middlewares.License.License, object>> inculde in includes)
+                {
+                    data = data.Include(inculde);
+                }
+            }
+
+            if (baseCondition is not null)
+            {
+                data = data.Where(baseCondition);
+            }
+            Expression<Func<Middlewares.License.License, bool>> ex = request.Filter.ToExpression<Middlewares.License.License>();
+
+            data = data.Where(ex);
+            if (!request.All)
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(Middlewares.License.License), "item");
+                MemberExpression property = Expression.Property(parameter, request.IdColumn);
+                IEnumerable<ConstantExpression> constantValues = request.SelectedValues.Select(value => Expression.Constant(Convert.ChangeType(value, property.Type)));
+
+                System.Reflection.MethodInfo containsMethod = typeof(Enumerable)
+                    .GetMethods()
+                    .Where(method => method.Name == "Contains")
+                    .Single(method => method.GetParameters().Length == 2)
+                    .MakeGenericMethod(property.Type);
+
+                MethodCallExpression containsExpression = Expression.Call(
+                    containsMethod,
+                    Expression.Constant(request.SelectedValues),
+                    property
+                );
+
+                Expression<Func<Middlewares.License.License, bool>> predicate = Expression.Lambda<Func<Middlewares.License.License, bool>>(containsExpression, parameter);
+                data = data.Where(predicate);
+            }
+            int count = data.Count();
+
+
+            if (request.Sort is not null && request.Sort.Any())
+            {
+                SortOption firtsOption = request.Sort[0];
+                Expression<Func<Middlewares.License.License, object>> sortEx = firtsOption.GetSortExpression<Middlewares.License.License>();
+
+                IOrderedQueryable<Middlewares.License.License>? sortedData = firtsOption.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
+                foreach (SortOption? item in request.Sort.Skip(1))
+                {
+                    sortEx = item.GetSortExpression<Middlewares.License.License>();
+                    sortedData = item.dir.ToLower().Contains("asc") ? sortedData.ThenBy(sortEx) : sortedData.ThenByDescending(sortEx);
+                }
+                data = sortedData;
+            }
+            else
+            {
+                if (defaultSort != null)
+                {
+                    Expression<Func<Middlewares.License.License, object>> sortEx = defaultSort.GetSortExpression<Middlewares.License.License>();
+                    data = defaultSort.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
+                }
+            }
+            if (request.Skip != 0)
+                data = data.Skip(request.Skip);
+
+
+            if (request.Take < count)
+                data = data.Take(request.Take);
+
+
+            return new GridResult<Middlewares.License.License>
+            {
+                data = data,
+                total = count,
+            };
+        }
+
+        public IQueryable<Middlewares.License.License> GetScheduleData(List<object> @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Middlewares.License.License> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool BulkInsert(IEnumerable<Middlewares.License.License> data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Middlewares.License.License> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Middlewares.License.License> GetByCondition(Expression<Func<Middlewares.License.License, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Middlewares.License.License? GetFirstWithCondition(Expression<Func<Middlewares.License.License, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<object?> GetDistinctValuesOf(Expression<Func<Middlewares.License.License, object>> propertySelector, Expression<Func<Middlewares.License.License, bool>>? condition = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }
