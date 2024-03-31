@@ -4,22 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-    <link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-    <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.js"></script>
-    <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-    <script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-    <script src="~/lib/Plugins/CustomPlugin/CustomKendoChartsScript.js"></script>
-    <script src="~/js/purecounter.js"></script>
-    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/candlestick-chart/index.css" />
-    <link rel="stylesheet" href="~/lib/Plugins/amcharts_4.10.18/amcharts4/examples/javascript/stacked-3D-column-chart/index.css" />
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-    <link href="~/css/segmentreport.css" rel="stylesheet" />
-    <script src="~/js/singlesegmentreport.js"></script>
+    
 
 
 <div id="report-header" style="text-align:center">
@@ -34,22 +19,165 @@
         }
     </script>
 </div>
+<ul class="nav nav-tabs nav-justified" role="tablist">
+    <li class="nav-item active" role="presentation">
+        <button class="nav-link " data-bs-toggle="tab" role="tab" data-aggCat="Wire" data-bs-target="#aggs">
+            Wire
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Cash" role="tab" data-bs-target="#aggs">
+            Cash
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Check" role="tab" data-bs-target="#aggs">
+            Check
+            <span class="ripple-surface"></span>
+        </button>
+    </li>  
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Internaltransfer" role="tab" data-bs-target="#aggs">
+            Interal Transfer
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Misc" role="tab" data-bs-target="#aggs">
+            Misc
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Withdrawal" role="tab" data-bs-target="#aggs">
+            Withdrawal
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-aggCat="Fees" role="tab" data-bs-target="#aggs">
+            Fees
+            <span class="ripple-surface"></span>
+        </button>
+    </li>
+</ul>
+<!-- Tab Panes -->
+<div class="tab-content">
+    <div class="tab-pane container-fluid active row" role="tabpanel" id="aggs">
+        <div class="row d-flex justify-content-around align-items-center my-3">
+            <p class="col-1 text-center text-uppercase fs-4" >Debit:</p>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Total</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="D-total"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Minimum</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="D-min"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Maximum</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="D-max"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Average</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="D-avg"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Total Count</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="D-Tcount"></p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr class="col-12 my-2">
+        <div class="row d-flex justify-content-around align-items-center my-3">
+            <p class="col-1 text-center text-uppercase fs-4" >Credit:</p>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Total</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="C-total"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Minimum</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="C-min"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Maximum</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="C-max"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Average</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div>
+                        <p class="aggText" id="C-avg"></p>
+                    </p>
+                </div>
+            </div>
+            <div class="card border border-primary col-2">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Total Count</h4>
+                    <p class="card-text">
+                        <div class="spinner-grow text-primary"></div><p class="aggText" id="C-Tcount"></p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
 
-<section id="segment-tags" class="content ">
-    <div id="TabsID">
-        <p>Click on the buttons inside the tabbed menu to get each feature's statistics</p>
-        <div id="TabsButtonsContainer" class="tab row" style="margin-left: 3px;margin-right: 0px;"></div>
-        <div id="tabContentContainer"></div>
-    </div>
-</section>
+
+
+
+
+
 <div id="charts-container" class="text-center">
     <div class="row top-buffer">
         <div>
-            <div id="chartdiv" style="height:600px" hidden></div>
+            <div id="chartdiv" style="height:600px"></div>
             <hr>
-            <div id="chartCountdiv" style="height:500px" hidden></div>
+            <div id="chartCountdiv" style="height:500px"></div>
             <hr>
-            <div id="IndustrySegmentChart" style="height:700px" hidden></div>
+            <div id="IndustrySegmentChart" style="height:700px"></div>
         </div>
         <br>
         <br>
@@ -57,11 +185,21 @@
     </div>
 </div>
 
-<script>
-    var monthkey = '@ViewBag.monthkey';
-    var segment_id = '@ViewBag.SegID';
-    var segType = '@ViewBag.SegType';
-</script>
+
+
+@section Scripts{
+    <script>
+        var monthkey = '@ViewBag.monthkey';
+        var segment_id = '@ViewBag.SegID';
+        var segType = '@ViewBag.SegType';
+        // Initialize Ripple
+        var tabs = [].slice.call(document.querySelectorAll('.nav-tabs'))
+        tabs.map(function (tab) {
+            new materialstyle.MaterialTab(tab)
+        })
+    </script>
+    <script src="~/js/singlesegmentreport.js" type="module"></script>
+}
 
 
 

@@ -49,7 +49,7 @@ builder.Services.AddTransient(typeof(ICustomReportGridConstructor), typeof(Custo
 
 builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
-
+builder.Services.AddReportsConfiguratons();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()

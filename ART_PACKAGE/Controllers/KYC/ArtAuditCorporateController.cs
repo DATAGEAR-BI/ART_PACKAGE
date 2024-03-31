@@ -1,87 +1,79 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.KYC;
-using Data.Services.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtAuditCorporateController : Controller
+    public class ArtAuditCorporateController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>, IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>
     {
-        private readonly KYCContext dbfcfkc;
-        private readonly IDropDownService _dropDown;
-        private readonly IPdfService _pdfSrv;
-        public ArtAuditCorporateController(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtAuditCorporateController(IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.dbfcfkc = dbfcfkc;
-            _dropDown = dropDown;
-            _pdfSrv = pdfSrv;
         }
 
 
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    List<string> ColumnsToSkip = null;
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    //commented untill resolve drop down 
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() }
-                };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].SkipList;
-            }
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            //commented untill resolve drop down 
+        //            //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+        //            //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() }
+        //        };
+        //        ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].SkipList;
+        //    }
 
-            KendoDataDesc<ArtAuditCorporateView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
+        //    KendoDataDesc<ArtAuditCorporateView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //    };
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtAuditCorporateView, GenericCsvClassMapper<ArtAuditCorporateView>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
+        //{
+        //    IQueryable<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.AsQueryable();
+        //    byte[] bytes = await data.ExportToCSV<ArtAuditCorporateView, GenericCsvClassMapper<ArtAuditCorporateView, ArtAuditCorporateController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].SkipList;
-            List<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.CallData(req).Data.ToList();
-            ViewData["title"] = "Audit For Corporates Report";
-            ViewData["desc"] = "Presents all Corporate customers with the related information as below";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        public IActionResult Test()
-        {
-            return Ok(dbfcfkc.ArtAuditCorporateViews.ToList());
-        }
-        public IActionResult Index()
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtAuditCorporateController).ToLower()].SkipList;
+        //    List<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.CallData(req).Data.ToList();
+        //    ViewData["title"] = "Audit For Corporates Report";
+        //    ViewData["desc"] = "Presents all Corporate customers with the related information as below";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
+        //public IActionResult Test()
+        //{
+        //    return Ok(dbfcfkc.ArtAuditCorporateViews.ToList());
+        //}
+        public override IActionResult Index()
         {
             return View();
         }

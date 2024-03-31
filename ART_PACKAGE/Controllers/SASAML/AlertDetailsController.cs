@@ -1,85 +1,20 @@
-﻿using ART_PACKAGE.Helpers;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
-using ART_PACKAGE.Hubs;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
-
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
-using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "AlertDetails")]
-    public class AlertDetailsController : Controller
+    public class AlertDetailsController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView>, IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView>
     {
-        private readonly SasAmlContext dbfcfkc;
-        private readonly IDropDownService _dropDown;
-        private readonly IPdfService _pdfSrv;
-        private readonly IHubContext<ExportHub> _exportHub;
-        private readonly UsersConnectionIds connections;
-
-        public AlertDetailsController(SasAmlContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        public AlertDetailsController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.dbfcfkc = dbfcfkc;
-
-            _dropDown = dropDown;
-            _pdfSrv = pdfSrv;
-
-            _exportHub = exportHub;
-            this.connections = connections;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.AsQueryable();
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
-                List<dynamic> PEPlist = new()
-                    {
-                        "Y","N"
-                    };
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown().ToDynamicList() },
-                    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown().ToDynamicList() },
-                    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    {"PoliticallyExposedPersonInd".ToLower(),PEPlist.ToDynamicList() },
-                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown().ToDynamicList() }
-                };
-
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
-            }
-
-
-
-            KendoDataDesc<ArtAmlAlertDetailView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-                selectable = true
-            };
-
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
 
         //public async Task<IActionResult> Export([FromBody] ExportDto<long?> req)
         //{
@@ -122,22 +57,24 @@ namespace ART_PACKAGE.Controllers.SASAML
         //    }
         //    return new EmptyResult();
         //}
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(AlertDetailsController).ToLower()].SkipList;
-            List<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.CallData(req).Data.ToList();
-            ViewData["title"] = "Alert Details";
-            ViewData["desc"] = "Presents the alerts details";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(GridController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(GridController).ToLower()].SkipList;
+        //    List<ArtAmlAlertDetailView> data = dbfcfkc.ArtAmlAlertDetailViews.CallData(req).Data.ToList();
+        //    ViewData["title"] = "Alert Details";
+        //    ViewData["desc"] = "Presents the alerts details";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
 
 
-        public IActionResult Index()
+        public override IActionResult Index()
         {
             return View();
         }
+
+
     }
 }

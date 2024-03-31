@@ -1,64 +1,65 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
-using Data.Services.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListGroupsRolesSummaryController : Controller
+    public class ListGroupsRolesSummaryController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, ListGroupsRolesSummary>, ArtAuditContext, ListGroupsRolesSummary>, IBaseRepo<ArtAuditContext, ListGroupsRolesSummary>, ArtAuditContext, ListGroupsRolesSummary>
     {
-        private readonly ArtAuditContext context;
-        private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService _dropSrv;
-        public ListGroupsRolesSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public ListGroupsRolesSummaryController(IGridConstructor<IBaseRepo<ArtAuditContext, ListGroupsRolesSummary>, ArtAuditContext, ListGroupsRolesSummary> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.context = context;
-            _pdfSrv = pdfSrv;
-            _dropSrv = dropSrv;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.AsQueryable();
+        //private readonly ArtAuditContext context;
+        //private readonly IPdfService _pdfSrv;
+        //private readonly IDropDownService _dropSrv;
+        //public ListGroupsRolesSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        //{
+        //    this.context = context;
+        //    _pdfSrv = pdfSrv;
+        //    _dropSrv = dropSrv;
+        //}
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.AsQueryable();
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    List<string> ColumnsToSkip = null;
 
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
-                    {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()         , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
 
-                };
-            }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            {nameof(ListGroupsRolesSummary.GroupName)  .ToLower()     , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
+        //            {nameof(ListGroupsRolesSummary.RoleName)   .ToLower()         , _dropSrv.GetRoleAudNameDropDown().ToDynamicList() },
 
-            KendoDataDesc<ListGroupsRolesSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
+        //        };
+        //    }
+        //    ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
+        //    KendoDataDesc<ListGroupsRolesSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //    };
+
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
 
         //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
         //{
@@ -68,18 +69,18 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //}
 
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
-            List<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.CallData(req).Data.ToList();
-            ViewData["title"] = "List Of Groups Roles Summary";
-            ViewData["desc"] = "This Report presents all groups with their roles";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        public IActionResult Index()
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsRolesSummaryController).ToLower()].SkipList;
+        //    List<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.CallData(req).Data.ToList();
+        //    ViewData["title"] = "List Of Groups Roles Summary";
+        //    ViewData["desc"] = "This Report presents all groups with their roles";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
+        public override IActionResult Index()
         {
             return View();
         }

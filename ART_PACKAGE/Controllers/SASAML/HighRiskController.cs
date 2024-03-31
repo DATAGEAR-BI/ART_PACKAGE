@@ -1,75 +1,63 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
-using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
     //////[Authorize(Roles = "HighRisk")]
-    public class HighRiskController : Controller
+    public class HighRiskController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView>, IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView>
     {
-        private readonly SasAmlContext dbfcfcore;
-        private readonly IMemoryCache _cache;
-        private readonly IDropDownService _dropDown;
-        private readonly IPdfService _pdfSrv;
-        public HighRiskController(SasAmlContext dbfcfcore, IMemoryCache cache/*, IDropDownService dropDown*/, IDropDownService dropDown, IPdfService pdfSrv)
+        public HighRiskController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.dbfcfcore = dbfcfcore;
-            _cache = cache;
-            _dropDown = dropDown;
-            _pdfSrv = pdfSrv;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.AsQueryable();
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    {"PartyIdentificationTypeDesc".ToLower(),_dropDown.GetPartyIdentificationTypeDropDown().ToDynamicList() },
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
-                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
-                    //{"PoliticallyExposedPersonInd".ToLower(),_dropDown.Getpo().ToDynamicList() },
-                    {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown().ToDynamicList() },
-                    {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown().ToDynamicList() },
-                    //{"MailingCityName".ToLower(),_dropDown.().ToDynamicList() },
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+        //            {"PartyIdentificationTypeDesc".ToLower(),_dropDown.GetPartyIdentificationTypeDropDown().ToDynamicList() },
+        //            {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown().ToDynamicList() },
+        //            {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown().ToDynamicList() },
+        //            //{"PoliticallyExposedPersonInd".ToLower(),_dropDown.Getpo().ToDynamicList() },
+        //            {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown().ToDynamicList() },
+        //            {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown().ToDynamicList() },
+        //            //{"MailingCityName".ToLower(),_dropDown.().ToDynamicList() },
 
-                };
-            }
+        //        };
+        //    }
 
 
-            List<string> ColumnsToSkip = new()
-            {
+        //    List<string> ColumnsToSkip = new()
+        //    {
 
-            };
-            KendoDataDesc<ArtAmlHighRiskCustView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
+        //    };
+        //    KendoDataDesc<ArtAmlHighRiskCustView> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //    };
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
 
 
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
@@ -79,20 +67,20 @@ namespace ART_PACKAGE.Controllers.SASAML
         //    return File(bytes, "text/csv");
         //}
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
-            List<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.CallData(req).Data.ToList();
-            ViewData["title"] = "High Risk Customers Details";
-            ViewData["desc"] = "Presents the High Risk Customers Details";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(HighRiskController).ToLower()].SkipList;
+        //    List<ArtAmlHighRiskCustView> data = dbfcfcore.ArtAmlHighRiskCustViews.CallData(req).Data.ToList();
+        //    ViewData["title"] = "High Risk Customers Details";
+        //    ViewData["desc"] = "Presents the High Risk Customers Details";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
 
 
-        public IActionResult Index()
+        public override IActionResult Index()
         {
             return View();
         }

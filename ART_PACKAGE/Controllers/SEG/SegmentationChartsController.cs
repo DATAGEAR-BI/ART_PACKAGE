@@ -15,10 +15,7 @@ namespace ART_PACKAGE.Controllers.SEG
         {
             this.db = db;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         public IActionResult SingleSegmentReport(int monthkey, string SegType, int SegID)
         {
             ViewBag.monthkey = monthkey;

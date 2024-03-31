@@ -1,86 +1,87 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
-using Data.Services.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
+
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
 {
 
-    public class ListGroupsSubGroupsSummaryController : Controller
+    public class ListGroupsSubGroupsSummaryController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, ListGroupsSubGroupsSummary>, ArtAuditContext, ListGroupsSubGroupsSummary>, IBaseRepo<ArtAuditContext, ListGroupsSubGroupsSummary>, ArtAuditContext, ListGroupsSubGroupsSummary>
     {
-
-        private readonly ArtAuditContext context;
-        private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService _dropSrv;
-        public ListGroupsSubGroupsSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        public ListGroupsSubGroupsSummaryController(IGridConstructor<IBaseRepo<ArtAuditContext, ListGroupsSubGroupsSummary>, ArtAuditContext, ListGroupsSubGroupsSummary> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.context = context;
-            _pdfSrv = pdfSrv;
-            _dropSrv = dropSrv;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.AsQueryable();
+        //private readonly ArtAuditContext context;
+        //private readonly IPdfService _pdfSrv;
+        //private readonly IDropDownService _dropSrv;
+        //public ListGroupsSubGroupsSummaryController(ArtAuditContext context, IPdfService pdfSrv, IDropDownService dropSrv)
+        //{
+        //    this.context = context;
+        //    _pdfSrv = pdfSrv;
+        //    _dropSrv = dropSrv;
+        //}
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.AsQueryable();
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    List<string> ColumnsToSkip = null;
 
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
-                    {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
 
-                };
-            }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            {nameof(ListGroupsSubGroupsSummary.GroupName)     .ToLower()      , _dropSrv.GetGroupNameDropDown().ToDynamicList() },
+        //            {nameof(ListGroupsSubGroupsSummary.SubGroupName)  .ToLower()      , _dropSrv.GetGroupAudNameDropDown().ToDynamicList() },
 
-            KendoDataDesc<ListGroupsSubGroupsSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
+        //        };
+        //    }
+        //    ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
+        //    KendoDataDesc<ListGroupsSubGroupsSummary> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false,
+        //    };
 
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries;
-            byte[] bytes = await data.ExportToCSV<ListGroupsSubGroupsSummary, GenericCsvClassMapper<ListGroupsSubGroupsSummary>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
+
+        //public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+        //{
+        //    Microsoft.EntityFrameworkCore.DbSet<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries;
+        //    byte[] bytes = await data.ExportToCSV<ListGroupsSubGroupsSummary, GenericCsvClassMapper<ListGroupsSubGroupsSummary, ListGroupsSubGroupsSummaryController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
-            List<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.CallData(req).Data.ToList();
-            ViewData["title"] = "List Of Groups Sub Groups Summary";
-            ViewData["desc"] = "This Report presents all groups with their sub-groups";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        public IActionResult Index()
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ListGroupsSubGroupsSummaryController).ToLower()].SkipList;
+        //    List<ListGroupsSubGroupsSummary> data = context.ListGroupsSubGroupsSummaries.CallData(req).Data.ToList();
+        //    ViewData["title"] = "List Of Groups Sub Groups Summary";
+        //    ViewData["desc"] = "This Report presents all groups with their sub-groups";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
+        public override IActionResult Index()
         {
             return View();
         }

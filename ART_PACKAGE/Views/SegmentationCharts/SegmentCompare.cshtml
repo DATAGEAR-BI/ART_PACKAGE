@@ -1,64 +1,40 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-
-@{
+﻿@{
     ViewData["Title"] = "Comparison Segments";
 }
 
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-    <script src="~/js/segmentcompare.js" asp-append-version="true"></script>
+
 
 
 <section class="content ">
     <div id="report-header" style="text-align:center">
         <h2>Comparison Customers's Segments</h2>
     </div>
-    <div id="report-spinners" class="text-center">
-        <div class="row top-buffer">
-
-            <div class="col-md-6">
-                <!-- <label style="display: block; text-align: center;">Hi</label> -->
-                <label>Run Month</label>
-                <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
-                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
-                    <option value="monthKey">-- Not Selected --</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <!-- <label style="display: block; text-align: center;">Hi</label> -->
-                <label>Segment Type</label>
-                <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
-                        class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
-                    <option value="segmentType">-- Not Selected --</option>
-                </select>
-            </div>
-
+    <div class="row">
+        <div class="col-6">
+            <m-select name="monthKey" id="month-key-spinner" data-searchable data-title="Month Key"></m-select>
+        </div>
+        <div class="col-6">
+            <m-select name="segmentTypes" id="segment-type" data-searchable data-title="SegmentType"></m-select>
         </div>
     </div>
-    <br>
-
-    <hr style="border:3px ;border-top: 3px solid #013459 ">
-    <div class="row">
-        <div class="col-md-12">
-           
-            
-            <div id="CustCountPerTypeChart" style="height:700px;padding-bottom:50px;"></div>
-
-        </div>
+    <div id="segmentsTypesChartContainer" hidden class="row mt-5">
+        <m-donut-chart  id="CustCountPerTypeChart" data-title="Number of Customers Per Type" data-category="PartyTypeDesc" data-value="NumberOfCustomers" style="height:700px;padding-bottom:50px;" class="col-12"></m-donut-chart>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div id="SegmentsCustCountChart" style="height:700px;padding-bottom:50px;"></div>
-        </div>
-        <div class="col-md-6">
-            <div id="SegmentsAlertCountChart" style="height:700px;padding-bottom:50px;"></div>
-        </div>
+    <div  id="segmentsChartsContainer" hidden class="row">
+        <m-donut-chart  class="col-6" id="SegmentsCustCountChart" data-title="Number of Customers Per Segment" data-category="SegmentSorted" data-value="NumberOfCustomers" style="height:700px;padding-bottom:50px;"></m-donut-chart>
+        <m-donut-chart  class="col-6" id="SegmentsAlertCountChart" data-title="Number of Alerts Per Segment" data-category="SegmentSorted" data-value="NumberOfAlerts" style="height:700px;padding-bottom:50px;"></m-donut-chart>
     </div>
 
-    <hr style="border:3px ;border-top: 3px solid #013459 ">
-    
+
     <div class="row">
-        <div id="SegmentsComparisonChart" class="col-md-12" style="height:1000px;padding-bottom:50px;"></div>
+        <div id="SegmentsComparisonChart" hidden  class="col-md-12" style="height:1000px;padding-bottom:50px;"></div>
     </div>
 </section>
+
+
+@section Scripts{
+    <script src="~/js/components/charts/charts.js" type="module"></script>
+    <script src="~/js/components/multiselect/select.js" type="module"></script>
+    <script src="~/js/segmentcompare.js" asp-append-version="true" type="module"  defer></script>
+}
+

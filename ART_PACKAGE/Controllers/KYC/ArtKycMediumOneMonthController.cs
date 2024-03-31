@@ -1,82 +1,74 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
-using Data.Data.KYC;
-using Data.Services.Grid;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Data.Data.KYC;
+using ART_PACKAGE.Helpers.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
-    public class ArtKycMediumOneMonthController : Controller
+    public class ArtKycMediumOneMonthController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtKycMediumOneMonth>, KYCContext, ArtKycMediumOneMonth>, IBaseRepo<KYCContext, ArtKycMediumOneMonth>, KYCContext, ArtKycMediumOneMonth>
     {
-        private readonly KYCContext dbfcfkc;
-        private readonly IDropDownService _dropDown;
-        private readonly IPdfService _pdfSrv;
-        public ArtKycMediumOneMonthController(KYCContext dbfcfkc, IDropDownService dropDown, IPdfService pdfSrv)
+        public ArtKycMediumOneMonthController(IGridConstructor<IBaseRepo<KYCContext, ArtKycMediumOneMonth>, KYCContext, ArtKycMediumOneMonth> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.dbfcfkc = dbfcfkc;
-            _dropDown = dropDown;
-            _pdfSrv = pdfSrv;
         }
 
 
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.AsQueryable();
+        //public IActionResult GetData([FromBody] KendoRequest request)
+        //{
+        //    IQueryable<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.AsQueryable();
 
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+        //    Dictionary<string, List<dynamic>> DropDownColumn = null;
+        //    List<string> ColumnsToSkip = null;
 
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].DisplayNames;
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    //commented untill resolve drop down 
-                    //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() }
-                };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].SkipList;
-            }
+        //    if (request.IsIntialize)
+        //    {
+        //        DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].DisplayNames;
+        //        DropDownColumn = new Dictionary<string, List<dynamic>>
+        //        {
+        //            //commented untill resolve drop down 
+        //            //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown().ToDynamicList() },
+        //            //{"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown().ToDynamicList() }
+        //        };
+        //        ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].SkipList;
+        //    }
 
-            KendoDataDesc<ArtKycMediumOneMonth> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false
-            };
+        //    KendoDataDesc<ArtKycMediumOneMonth> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+        //    var result = new
+        //    {
+        //        data = Data.Data,
+        //        columns = Data.Columns,
+        //        total = Data.Total,
+        //        containsActions = false
+        //    };
 
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
-        public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
-        {
-            IQueryable<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtKycMediumOneMonth, GenericCsvClassMapper<ArtKycMediumOneMonth>>(para.Req);
-            return File(bytes, "text/csv");
-        }
+        //    return new ContentResult
+        //    {
+        //        ContentType = "application/json",
+        //        Content = JsonConvert.SerializeObject(result)
+        //    };
+        //}
+        //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
+        //{
+        //    IQueryable<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.AsQueryable();
+        //    byte[] bytes = await data.ExportToCSV<ArtKycMediumOneMonth, GenericCsvClassMapper<ArtKycMediumOneMonth, ArtKycMediumOneMonthController>>(para.Req);
+        //    return File(bytes, "text/csv");
+        //}
 
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].SkipList;
-            List<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.CallData(req).Data.ToList();
-            ViewData["title"] = "Medium risk within 1 month customers Report";
-            ViewData["desc"] = "presents all medium-risk customers need to be update their KYCs within 1 month with the related information below";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-        public IActionResult Index()
+        //public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+        //{
+        //    Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].DisplayNames;
+        //    List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtKycMediumOneMonthController).ToLower()].SkipList;
+        //    List<ArtKycMediumOneMonth> data = dbfcfkc.ArtKycMediumOneMonths.CallData(req).Data.ToList();
+        //    ViewData["title"] = "Medium risk within 1 month customers Report";
+        //    ViewData["desc"] = "presents all medium-risk customers need to be update their KYCs within 1 month with the related information below";
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
+        //    return File(pdfBytes, "application/pdf");
+        //}
+        public override IActionResult Index()
         {
             return View();
         }

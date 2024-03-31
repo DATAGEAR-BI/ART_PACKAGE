@@ -1,22 +1,20 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTDGAML;
-using Data.Data.SASAml;
-using Data.Services.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
-using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    public class DGAMLCustomersDetailsController : Controller
+    public class DGAMLCustomersDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlCustomerDetailView>, ArtDgAmlContext, ArtDgAmlCustomerDetailView>, IBaseRepo<ArtDgAmlContext, ArtDgAmlCustomerDetailView>, ArtDgAmlContext, ArtDgAmlCustomerDetailView>
     {
+        public DGAMLCustomersDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlCustomerDetailView>, ArtDgAmlContext, ArtDgAmlCustomerDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        {
+        }
 
 
-        private readonly ArtDgAmlContext _context;
+        /*private readonly ArtDgAmlContext _context;
         private readonly IDropDownService _dropDown;
         private readonly IPdfService _pdfSrv;
         public DGAMLCustomersDetailsController(ArtDgAmlContext _context, IMemoryCache cache, IDropDownService dropDown, IPdfService pdfSrv)
@@ -81,7 +79,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         {
             IQueryable<ArtDgAmlCustomerDetailView> data = _context.ArtDGAMLCustomerDetailViews.AsQueryable();
-            byte[] bytes = await data.ExportToCSV<ArtDgAmlCustomerDetailView, GenericCsvClassMapper<ArtAmlCustomersDetailsView>>(para.Req);
+            byte[] bytes = await data.ExportToCSV<ArtDgAmlCustomerDetailView, GenericCsvClassMapper<ArtAmlCustomersDetailsView, DGAMLCustomersDetailsController>>(para.Req);
             return File(bytes, "text/csv");
         }
 
@@ -100,6 +98,10 @@ namespace ART_PACKAGE.Controllers.DGAML
 
 
         public IActionResult Index()
+        {
+            return View();
+        }*/
+        public override IActionResult Index()
         {
             return View();
         }

@@ -4,13 +4,14 @@ import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
-import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
-import {getChartType} from "../Charts/Charts.js"
+//import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
-import * as c from "../TextInput/TextInput.js";
+import * as t from "../TextInput/TextInput.js";
+import * as ta from "../TextAreaInput/TextAreaInput.js";
+import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
@@ -388,7 +389,7 @@ class Grid extends HTMLElement {
                     this.isDateField[column.name]
                         ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                         : "",
-
+                width : 150,
                 filterable: isCollection ? false : filter,
                 title: column.displayName ? column.displayName : column.name,
                 sortable: !isCollection,
@@ -459,6 +460,10 @@ class Grid extends HTMLElement {
                 {
                     name: this.gridDiv.id + "SaveOptions",
                     text: "Save Options"
+                },
+                {   
+                    name: this.gridDiv.id + "ResetOptions",
+                    text: "Reset Options"
                 }
             );
 
@@ -470,8 +475,6 @@ class Grid extends HTMLElement {
                 var btn = {
                     name: `${x.action}`,
                     text: `${x.text}`,
-
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
                 }
                 this.customtToolBarBtns.push(btn);
                 toolbar.push(btn);
@@ -631,7 +634,7 @@ class Grid extends HTMLElement {
                 },
                 resizable: true,
                 filterable: true,
-            /*columnMenu: {
+                columnMenu: {
                 componentType: "modern",
                 columns: {
                     sort: "asc",
@@ -639,7 +642,7 @@ class Grid extends HTMLElement {
                         { title: "Columns", columns: this.columns.map(x => x.title) }
                     ]
                 }
-                },*/
+                },
                 columns: this.columns,
                 noRecords: true,
                 persistSelection: true,
@@ -665,6 +668,7 @@ class Grid extends HTMLElement {
                 },
                 height: 700,
                 groupable: true,
+                scrollable: true,
                 //excelExport: function (e) {
                 //    e.preventDefault();
 
@@ -693,12 +697,22 @@ class Grid extends HTMLElement {
 
 
                     grid.tbody.find("tr").dblclick((e) => {
-
-                        var dataItem = grid.dataItem(e.target.parentElement);
-                        if (this.handlerkey && this.handlerkey != "") {
-                            var dbclickhandler = dbClickHandlers[this.handlerkey];
-                            dbclickhandler(dataItem).then(console.log("done"));
+                        let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
+                        let cell = e.target.closest("td");
+                        // Get the field name associated with the clicked cell
+                        var cellIndex = $(cell).index(); // Get the index of the clicked cell
+                        var column = grid.columns[cellIndex];
+                        if(column && CellHandlers[this.handlerkey][column.field]){
+                            CellHandlers[this.handlerkey][column.field]();
                         }
+                        else{
+                            if (this.handlerkey && this.handlerkey != "") {
+                                var dbclickhandler = dbClickHandlers[this.handlerkey];
+                                dbclickhandler(dataItem).then(console.log("done"));
+                            }
+                        }
+                       
+                        
 
                     });
                 },
@@ -818,28 +832,7 @@ class Grid extends HTMLElement {
 
             }
         });
-
-        // Assuming you have a Kendo Grid initialized with the ID 'myGrid'
-        grid.tbody.on("dblclick", "td", function (e) {
-
-
-            // Get the current item (row data)
-            var item = grid.dataItem($(e.currentTarget).closest("tr"));
-            console.log(e);
-            // Get the field name associated with the clicked cell
-            var cellIndex = $(e.target).index(); // Get the index of the clicked cell
-            var column = grid.columns[cellIndex];
-            console.log(item);
-            console.log(column.field);
-            // Check if the clicked cell is from a specific column
-            //if (fieldName === "yourColumnName") {
-            //    // Perform action specific to the column
-            //    console.log("Double-clicked on column", fieldName, "of", item);
-
-            //    // Example action: display a message, open a modal, etc.
-            //}
-        });
-
+        
 
 
 
@@ -869,6 +862,11 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}SaveOptions`).click(async (e) => {
             this.saveState();
         });
+        
+        
+        $(`.k-grid-${this.gridDiv.id}ResetOptions`).click(async (e) => {
+            this.resetState();
+        });
 
 
         $(`.k-grid-download`).click(async (e) => {
@@ -894,7 +892,7 @@ class Grid extends HTMLElement {
                 if (this.handlerkey) {
                     var reportHandlers = Handlers[this.handlerkey];
                     if (reportHandlers)
-                        reportHandlers[x.name](e, this.gridDiv);
+                        reportHandlers[x.name](e, this);
                     else
                         console.error("there is no Handlers for this report");
                 } else {
@@ -1065,7 +1063,6 @@ class Grid extends HTMLElement {
         if (res.ok)
             return await res.json();
         else {
-
             console.error(res.body);
             toastObj.icon = 'error';
             toastObj.text = "something wrong happend while getting data please try again";
@@ -1169,7 +1166,18 @@ class Grid extends HTMLElement {
     
     
     
-    
+    resetState(){
+        let key = `${this.gridDiv.id}-Options`;
+        if(this.isCustom)
+            key +=  `-${this.dataset.reportid}`;
+        
+        let options = localStorage.getItem(key);
+        if(options){
+            console.log("dddddddd")
+            localStorage.removeItem(key);
+            window.location.reload();
+        }
+    }
     saveState(){
             let key = `${this.gridDiv.id}-Options`;
             if(this.isCustom)
@@ -1241,6 +1249,10 @@ class Grid extends HTMLElement {
                         }
                        
                     }
+
+                    if(c.template)
+                        column.template = c.template;
+                    
                     serverOptionsColumns[index] = column;
                 }
                 
@@ -1249,7 +1261,6 @@ class Grid extends HTMLElement {
             savedOptions.columns = serverOptionsColumns;
             savedOptions.dataSource.transport = serverOptions.dataSource.transport;
             savedOptions.dataBound = serverOptions.dataBound;
-            console.log(savedOptions)
             return savedOptions;
         }
             
