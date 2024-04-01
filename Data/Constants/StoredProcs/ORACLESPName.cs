@@ -22,6 +22,8 @@
         public static readonly string ART_ST_CUST_PER_TYPE = "ART.ART_ST_CUST_PER_TYPE";
         public static readonly string ART_ST_AML_PROP_RISK_CLASS = "ART.ART_ST_AML_PROP_RISK_CLASS";
         public static readonly string ART_ST_AML_RISK_CLASS = "ART.ART_ST_AML_RISK_CLASS";
+        public static readonly string ART_ST_DGAML_ALERT_AGE_SUMMARY = "ART.ART_ST_ALERT_AGE_SUMMARY";
+
         //GoAml
         public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "ART.ART_ST_GOAML_REPORTS_PER_TYPE";
         public static readonly string ART_ST_GOAML_REPORTS_PER_STATUS = "ART.ART_ST_GOAML_REPORTS_PER_STATUS";

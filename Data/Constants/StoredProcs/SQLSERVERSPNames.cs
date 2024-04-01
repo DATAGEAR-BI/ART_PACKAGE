@@ -41,6 +41,7 @@
         public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_DGAML_CASES_PER_CATEGORY]";
         public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]";
         public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "[ART_DB].[ART_ST_DGAML_CASES_PER_STATUS]";
+        public static readonly string ART_ST_DGAML_ALERT_AGE_SUMMARY = "[ART_DB].[ART_ST_ALERT_AGE_SUMMARY]";
 
 
 

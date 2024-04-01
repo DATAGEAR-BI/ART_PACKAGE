@@ -2207,6 +2207,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ScenarioId)
                     .HasColumnType("decimal(12, 0)")
                     .HasColumnName("SCENARIO_ID");
+                entity.Property(e => e.Queue)
+                    .HasMaxLength(32)
+                    .HasColumnName("QUEUE");
 
                 entity.Property(e => e.ScenarioName)
                     .HasMaxLength(35)
@@ -2256,6 +2259,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
                     .HasColumnName("CREATE_DATE");
+                entity.Property(e => e.AlertRunDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ALERT_RUN_DATE");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(60)

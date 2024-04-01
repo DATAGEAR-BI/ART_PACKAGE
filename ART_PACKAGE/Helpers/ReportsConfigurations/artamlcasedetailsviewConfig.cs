@@ -21,7 +21,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"CreatedBy" , new GridColumnConfiguration { DisplayName = "Created By"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Owner" , new GridColumnConfiguration { DisplayName = "Owner"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"ClosedDate" , new GridColumnConfiguration { DisplayName = "Closed Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
+{"ClosedDate" , new GridColumnConfiguration { DisplayName = "Closed Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
+            { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+        };
 
 
 

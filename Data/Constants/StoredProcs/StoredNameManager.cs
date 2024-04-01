@@ -1,4 +1,5 @@
 ﻿using Data.Constants.db;
+using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
@@ -74,6 +75,9 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtUserPerformPerUserAndAction) && dbType == DbTypes.Oracle => ORACLESPName.ST_USER_PERFORMANCE_PER_USER_AND_ACTION,
                 Type t when t == typeof(ArtUserPerformPerAction) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION,
                 Type t when t == typeof(ArtUserPerformPerAction) && dbType == DbTypes.Oracle => ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION,
+                Type t when t == typeof(ArtStDgAmlAlertAgeSummery) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_DGAML_ALERT_AGE_SUMMARY,
+                Type t when t == typeof(ArtStDgAmlAlertAgeSummery) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_DGAML_ALERT_AGE_SUMMARY,
+
                 // Add more cases for other types if needed
                 _ => throw new ArgumentException("Invalid entity type or database type")
             };

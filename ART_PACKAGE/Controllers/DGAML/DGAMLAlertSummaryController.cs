@@ -29,22 +29,23 @@ namespace ART_PACKAGE.Controllers.DGAML
 
 
             IEnumerable<ArtStDgAmlAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStDgAmlAlertsPerStatus>().AsQueryable();
-            IEnumerable<ArtStDgAmlAlertPerOwner> chart2data = Enumerable.Empty<ArtStDgAmlAlertPerOwner>().AsQueryable();
-            IEnumerable<ArtStDgAmlAlertsPerBranch> chart3data = Enumerable.Empty<ArtStDgAmlAlertsPerBranch>().AsQueryable();
-            IEnumerable<ArtStDgAmlAlertsPerScenario> chart4data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerBranch> chart2data = Enumerable.Empty<ArtStDgAmlAlertsPerBranch>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerScenario> chart3data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertAgeSummery> chart4data = Enumerable.Empty<ArtStDgAmlAlertAgeSummery>().AsQueryable();
+
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
-                chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
-                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_BRANCH, chart3Params.ToArray());
-                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart4Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertAgeSummery>(SQLSERVERSPNames.ART_ST_DGAML_ALERT_PER_OWNER, chart4Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_BRANCH, chart2Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart3Params.ToArray());
 
             }
 
@@ -67,18 +68,10 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Val = "ALERTS_COUNT"
 
                 },
-                new ChartData<ArtStDgAmlAlertPerOwner>
-                {
-                    ChartId = "StAlertPerOwner",
-                    Data = chart2data.ToList(),
-                    Title = "Alerts Per Owner",
-                    Cat = "OWNER_QUEUE",
-                    Val = "ALERTS_CNT_SUM"
-                },
                 new ChartData<ArtStDgAmlAlertsPerBranch>
                 {
                     ChartId = "StAlertPerBranch",
-                    Data = chart3data.ToList(),
+                    Data = chart2data.ToList(),
                     Title = "Alerts Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "ALERTS_COUNT"
@@ -86,10 +79,18 @@ namespace ART_PACKAGE.Controllers.DGAML
                 new ChartData<ArtStDgAmlAlertsPerScenario>
                 {
                     ChartId = "StAlertPerScenario",
-                    Data = chart4data.ToList(),
+                    Data = chart3data.ToList(),
                     Title = "Alerts Per Scenario",
                     Cat = "SCENARIO_NAME",
                     Val = "ALERTS_COUNT"
+                },
+                new ChartData<ArtStDgAmlAlertAgeSummery>
+                {
+                    ChartId = "StAlertAgeSummer",
+                    Data = chart4data.ToList(),
+                    Title = "Alert Age Summery",
+                    Cat = "DataSource",
+                    Val = "Bucket1"
                 },
             };
 
