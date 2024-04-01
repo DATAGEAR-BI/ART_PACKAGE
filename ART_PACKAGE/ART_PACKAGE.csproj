@@ -166,6 +166,9 @@
 		<_ContentIncludedByDefault Remove="Controllers\DGAML\Views\WatchlistOSCheck\Index.cshtml" />
 		<_ContentIncludedByDefault Remove="Controllers\DGAML\Views\_ViewImports.cshtml" />
 		<_ContentIncludedByDefault Remove="Controllers\DGAML\Views\_ViewStart.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Report\Index.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Report\MyReports.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Report\ShowReport.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>

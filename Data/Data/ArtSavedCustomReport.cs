@@ -1,7 +1,6 @@
-﻿
-using Data.Data;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Data.Data;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 public class ArtSavedCustomReport
@@ -25,7 +24,7 @@ public class ArtSavedCustomReport
         get
         {
             var owner = UserReports.FirstOrDefault(u => u.ReportId == Id && u.isOwner);
-
+           
             return owner.User.Email;
         }
     }
@@ -35,4 +34,3 @@ public class ArtSavedCustomReport
 
 
 }
-

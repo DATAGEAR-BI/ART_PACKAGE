@@ -89,22 +89,22 @@ namespace ART_PACKAGE.Controllers
 
             return Ok(users.Where(x => x.Email != owner.Email).Select(x => x.Email));
         }
-        [HttpPost]
-        public override Task<IActionResult> GetData(GridRequest request)
-        {
-            return base.GetData(request);
-        }
-
-        // public override async Task<IActionResult> GetData(GridRequest request)
+        // [HttpPost]
+        // public override Task<IActionResult> GetData(GridRequest request)
         // {
-        //     AppUser user = await _um.GetUserAsync(User);
-        //     baseCondition = x => x.Users.Contains(user);
-        //     includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
-        //     {
-        //         x => x.Users,
-        //         x => x.UserReports
-        //     };
-        //     return await base.GetData(request);
+        //     return base.GetData(request);
         // }
+
+        public override async Task<IActionResult> GetData(GridRequest request)
+        {
+            AppUser user = await _um.GetUserAsync(User);
+            baseCondition = x => x.Users.Contains(user);
+            includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
+            {
+                x => x.Users,
+                x => x.UserReports
+            };
+            return await base.GetData(request);
+        }
     }
 }

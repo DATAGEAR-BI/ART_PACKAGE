@@ -11,15 +11,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaAlertConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaCaceConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaCustomerConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaIrsReportConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="adding configs">
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/CustomReport/CreateReport.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/CustomReport/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/MyReports/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/MyReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/MyReportsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationRequirmentHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationRequirmentHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/ReportScripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/ReportScripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Data/ArtAmlAnalysisRule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Data/ArtSavedCustomReport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/ArtSavedCustomReport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Data/Configrations/RolesConfigration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/Configrations/RolesConfigration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SqlServerMigrations/Migrations/AuthContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SqlServerMigrations/Migrations/AuthContextModelSnapshot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +57,10 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/coreclr/System.Private.CoreLib/src/System/RuntimeType.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Diagnostics.DiagnosticSource/src/System/Diagnostics/DiagnosticListener.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Future.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/083d812d36874057b3d71d1da1898aa4a23e80/92/258d7a13/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31fe1b309f4d4baba3621c111ea0755c18c7f8/40/a1e3175c/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/13/cf213c7a/OracleDataReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/d7/aed28299/OracleCommand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56177b963230e2aa38217bfe7bfe8faf7b986d936de0608d999eba7335aa48d/SerilogLoggingBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -158,7 +168,7 @@
       <updated>1708591628550</updated>
       <workItem from="1708591633278" duration="1628000" />
       <workItem from="1709159183091" duration="2006000" />
-      <workItem from="1711968051416" duration="1211000" />
+      <workItem from="1711968051416" duration="12422000" />
     </task>
     <task id="LOCAL-00001" summary="adding views">
       <option name="closed" value="true" />
@@ -168,7 +178,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711915613334</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="adding configs">
+      <option name="closed" value="true" />
+      <created>1711969840759</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711969840759</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,23 +196,37 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="adding views" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding views" />
+    <MESSAGE value="adding configs" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding configs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs</url>
-          <line>83</line>
-          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Helpers\Grid\GridConstructor.cs" initialLine="83" containingFunctionPresentation="Method 'IntializeGrid'">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Controllers/MyReportsController.cs</url>
+          <line>73</line>
+          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Controllers\MyReportsController.cs" initialLine="73" containingFunctionPresentation="Method 'SaveReport'">
             <startOffsets>
-              <option value="3900" />
+              <option value="2461" />
             </startOffsets>
             <endOffsets>
-              <option value="3901" />
+              <option value="2462" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs</url>
+          <line>47</line>
+          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\Data\Services\CustomReport\CustomReportRepo.cs" initialLine="47" containingFunctionPresentation="Method 'GetGridData'">
+            <startOffsets>
+              <option value="1909" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1910" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

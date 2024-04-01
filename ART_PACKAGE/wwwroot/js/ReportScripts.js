@@ -15,7 +15,7 @@ var ShcemaSelect = document.getElementById("Shcema");
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
-        Fetch(`/Report/GetViews/${value}`, null, "GET").then(d => {
+        Fetch(`/CustomReport/GetDbObjects/${value}`, null, "GET").then(d => {
             TableSelect.innerHTML = "";
             var opt = document.createElement("option");
             opt.innerText = "Select a Table";
@@ -44,7 +44,7 @@ TableSelect.onchange = async (e) => {
     var type = selected.dataset.type;
     var view = selected.value;
     var schemaVal = parseInt(ShcemaSelect.value);
-    var columns = await Fetch(`/Report/GetViewColumn/${schemaVal}/${view}/${type}`, null, "GET");
+    var columns = await Fetch(`/CustomReport/GetObjectColumnNames/${schemaVal}/${view}/${type}`, null, "GET");
 
     ColumnsSelect.innerHTML = "";
     ChartColumnSelect.innerHTML = "";
@@ -239,12 +239,9 @@ form.onsubmit = async (e) => {
         Schema: parseInt(ShcemaSelect.value)
     }
 
-    var d = await Fetch("/report/SaveReport", model, "POST").then(x => {
-
-        window.location = "/report/myreports";
-
-
-    });
+    var d = await Fetch("/MyReports/SaveReport/", model, "POST").then(x => {
+        window.location = "/MyReports";
+    }).catch(e => console.error(e));
 
 
 
@@ -287,7 +284,11 @@ async function Fetch(url, body, mthod) {
     else {
         var res = await fetch(url, req);
     }
-
-    const data = await res.json();
-    return data;
+    try {
+        const data = await res.json();
+        return data;
+    }catch (e ){
+        return;
+    }
+   
 }

@@ -9,9 +9,9 @@ import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.j
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
-import * as t from "../TextInput/TextInput.js";
-import * as ta from "../TextAreaInput/TextAreaInput.js";
-import * as s from "../MultiSelect/Select.js";
+//import * as t from "../TextInput/TextInput.js";
+//import * as ta from "../TextAreaInput/TextAreaInput.js";
+//import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
