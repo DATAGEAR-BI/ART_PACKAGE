@@ -15,9 +15,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             Type modelType = typeof(TModel);
             Type dictType = typeof(CustomReportRecord);
-
+            Type CFTConfig = typeof(ArtCFTConfigMapper);
             if (modelType == dictType)
                 return new CustomReportClassMapper(_inculdedColumns);
+            if (modelType == CFTConfig)
+                return new ArtCFTConfigMapper(_inculdedColumns);
 
             return new GenericCsvClassMapper<TModel>(_inculdedColumns);
         }
