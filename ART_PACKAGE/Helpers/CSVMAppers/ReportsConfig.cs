@@ -2681,7 +2681,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     }
                 }
              },
-             { nameof(CrpSystemPerformanceController).ToLower() , new ReportConfig
+
+#region CRP
+            { nameof(CrpSystemPerformanceController).ToLower() , new ReportConfig
             {
                 DisplayNames =  new Dictionary<string,GridColumnConfiguration>
             {
@@ -2744,7 +2746,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
              }
             },
 
-
+#endregion
             //FATCA
             { nameof(FATCAAlertsDetailsController).ToLower(), new ReportConfig {
                SkipList =  new List<string>
