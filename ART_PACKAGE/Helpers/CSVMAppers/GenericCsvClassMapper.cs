@@ -1,10 +1,10 @@
-﻿using CsvHelper;
+﻿using ART_PACKAGE.Helpers.ReportsConfigurations;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Data.Services.Grid;
 using System.Linq.Expressions;
 using System.Reflection;
-using ART_PACKAGE.Helpers.ReportsConfigurations;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -31,8 +31,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             string name = typeof(TModel).Name.ToLower();
             PropertyInfo[] props = typeof(TModel).GetProperties();
-            List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
-            Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
+            List<string> skip = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.SkipList : null;
+            Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.DisplayNames : null;
 
             if (skip is null)
             {
@@ -87,7 +87,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             if (includedColumns is null)
             {
                 List<string> skipList = null;
-                if (ReportsConfig.CONFIG.TryGetValue(modelName, out ReportConfig? config))
+                if (ReportsConfigm.CONFIG.TryGetValue(modelName, out ReportConfig? config))
                 {
                     skipList = config.SkipList;
                 }
@@ -108,7 +108,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     prop =>
                     {
                         string displayName = prop.Name;
-                        if (ReportsConfig.CONFIG.TryGetValue(modelName, out ReportConfig? config) && config.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
+                        if (ReportsConfigm.CONFIG.TryGetValue(modelName, out ReportConfig? config) && config.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
                         {
                             displayName = displayNameConfig.DisplayName;
                         }
@@ -148,8 +148,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             string name = typeof(TModel).Name.ToLower();
             PropertyInfo[] props = typeof(TModel).GetProperties();
-            List<string> skip = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.SkipList : null;
-            Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfig.CONFIG.ContainsKey(name) ? ReportsConfig.CONFIG[name]?.DisplayNames : null;
+            List<string> skip = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.SkipList : null;
+            Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.DisplayNames : null;
 
             if (skip is null)
             {

@@ -7,15 +7,15 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.TRADE_BASE;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Data.Audit;
 using Data.Data.TRADE_BASE;
 using Data.Services.Grid;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
-using ART_PACKAGE.Helpers.ReportsConfigurations;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
-    public class ReportsConfig
+    public class ReportsConfigm
     {
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
