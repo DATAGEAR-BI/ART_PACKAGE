@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.BackGroundServices;
 using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
@@ -16,6 +17,8 @@ using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
 using Data.Services;
 using Data.Services.CustomReport;
+using Hangfire;
+using Hangfire.LiteDB;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -88,6 +91,21 @@ builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
 
+builder.Services.AddHangfire(configuration =>
+{
+    _ = configuration
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings();
+
+    _ = configuration.UseLiteDbStorage();
+
+});
+builder.Services.AddScoped<CSVJobs>();
+var serviceProvider = builder.Services.BuildServiceProvider();
+var _recurringService = serviceProvider.GetRequiredService<IRecurringJobManager>();
+var csvJobs = serviceProvider.GetRequiredService<CSVJobs>();
+_recurringService.AddOrUpdate("clean-csv-directory", () =>
+    csvJobs.CleanDirectory(), $"0 0 * * *");
 
 WebApplication app = builder.Build();
 
@@ -118,7 +136,8 @@ app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.UseHangfireServer();
+app.UseHangfireDashboard();
 app.Run();
 
 
