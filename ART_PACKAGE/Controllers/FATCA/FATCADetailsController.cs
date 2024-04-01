@@ -1,92 +1,98 @@
-﻿using ART_PACKAGE.Helpers.Csv;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.CustomReport;
-using ART_PACKAGE.Helpers.DropDown;
-using ART_PACKAGE.Helpers.Pdf;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
 using Data.DATA.FATCA;
-using Data.Services.Grid;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
-    [AllowAnonymous]
+    /*[AllowAnonymous]*/
 
-    public class FATCADetailsController : Controller
+    public class FATCADetailsController : BaseReportController<IGridConstructor<IBaseRepo<FATCAContext, ArtFatcaCustomer>, FATCAContext, ArtFatcaCustomer>, IBaseRepo<FATCAContext, ArtFatcaCustomer>, FATCAContext, ArtFatcaCustomer>
     {
-        private readonly FATCAContext context;
-        private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService _dropSrv;
-        private readonly ICsvExport _csvSrv;
-        public FATCADetailsController(FATCAContext context, IPdfService pdfSrv, IDropDownService dropSrv, ICsvExport csvSrv)
+        public FATCADetailsController(IGridConstructor<IBaseRepo<FATCAContext, ArtFatcaCustomer>, FATCAContext, ArtFatcaCustomer> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-            this.context = context;
-            _pdfSrv = pdfSrv;
-            _dropSrv = dropSrv;
-            _csvSrv = csvSrv;
         }
 
-        public IActionResult GetData([FromBody] KendoRequest request)
-        {
-            IQueryable<ArtFatcaCustomer> data = context.ArtFatcaCustomers.AsQueryable();
-
-            Dictionary<string, GridColumnConfiguration> DisplayNames = null;
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
-            List<string> ColumnsToSkip = null;
-
-            if (request.IsIntialize)
-            {
-                DisplayNames = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].DisplayNames;
-
-                DropDownColumn = new Dictionary<string, List<dynamic>>
-                {
-                    //{"BranchName".ToLower(),_dropSrv.GetBranchNameDropDown().ToDynamicList() },
-
-                };
-            }
-            ColumnsToSkip = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].SkipList;
-
-            KendoDataDesc<ArtFatcaCustomer> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
-
-            var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                containsActions = false,
-            };
-
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(result)
-            };
-        }
-
-        public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
-        {
-            Microsoft.EntityFrameworkCore.DbSet<ArtFatcaCustomer> data = context.ArtFatcaCustomers;
-            await _csvSrv.ExportAllCsv<ArtFatcaCustomer, FATCADetailsController, decimal>(data, User.Identity.Name, para);
-            return new EmptyResult();
-        }
-
-
-        public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
-        {
-            Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].SkipList;
-            List<ArtFatcaCustomer> data = context.ArtFatcaCustomers.CallData(req).Data.ToList();
-            ViewData["title"] = "FATCA Customers Report";
-            ViewData["desc"] = "This report presents all Fatca Customers with the related information as below";
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name, ColumnsToSkip, DisplayNames);
-            return File(pdfBytes, "application/pdf");
-        }
-
-        public IActionResult Index()
+        public override IActionResult Index()
         {
             return View();
         }
+        /*
+private readonly FATCAContext context;
+private readonly IPdfService _pdfSrv;
+private readonly IDropDownService _dropSrv;
+private readonly ICsvExport _csvSrv;
+public FATCADetailsController(FATCAContext context, IPdfService pdfSrv, IDropDownService dropSrv, ICsvExport csvSrv)
+{
+   this.context = context;
+   _pdfSrv = pdfSrv;
+   _dropSrv = dropSrv;
+   _csvSrv = csvSrv;
+}
+
+public IActionResult GetData([FromBody] KendoRequest request)
+{
+   IQueryable<ArtFatcaCustomer> data = context.ArtFatcaCustomers.AsQueryable();
+
+   Dictionary<string, GridColumnConfiguration> DisplayNames = null;
+   Dictionary<string, List<dynamic>> DropDownColumn = null;
+   List<string> ColumnsToSkip = null;
+
+   if (request.IsIntialize)
+   {
+       DisplayNames = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].DisplayNames;
+
+       DropDownColumn = new Dictionary<string, List<dynamic>>
+       {
+           //{"BranchName".ToLower(),_dropSrv.GetBranchNameDropDown().ToDynamicList() },
+
+       };
+   }
+   ColumnsToSkip = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].SkipList;
+
+   KendoDataDesc<ArtFatcaCustomer> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+
+   var result = new
+   {
+       data = Data.Data,
+       columns = Data.Columns,
+       total = Data.Total,
+       containsActions = false,
+   };
+
+   return new ContentResult
+   {
+       ContentType = "application/json",
+       Content = JsonConvert.SerializeObject(result)
+   };
+}
+
+public async Task<IActionResult> Export([FromBody] ExportDto<decimal> para)
+{
+   Microsoft.EntityFrameworkCore.DbSet<ArtFatcaCustomer> data = context.ArtFatcaCustomers;
+   await _csvSrv.ExportAllCsv<ArtFatcaCustomer, FATCADetailsController, decimal>(data, User.Identity.Name, para);
+   return new EmptyResult();
+}
+
+
+public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
+{
+   Dictionary<string, GridColumnConfiguration> DisplayNames = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].DisplayNames;
+   List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(FATCADetailsController).ToLower()].SkipList;
+   List<ArtFatcaCustomer> data = context.ArtFatcaCustomers.CallData(req).Data.ToList();
+   ViewData["title"] = "FATCA Customers Report";
+   ViewData["desc"] = "This report presents all Fatca Customers with the related information as below";
+   byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+                                           , User.Identity.Name, ColumnsToSkip, DisplayNames);
+   return File(pdfBytes, "application/pdf");
+}
+
+public IActionResult Index()
+{
+   return View();
+}*/
     }
 }
 
