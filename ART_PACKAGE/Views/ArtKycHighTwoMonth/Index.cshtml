@@ -2,17 +2,9 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-loading-overlay/loadingoverlay.js"></script>
-<script src="~/js/FileExtraction.js" asp-append-version="true"></script>
-<script src="~/js/site.js"></script>
-<link href="~/css/site.css" rel="stylesheet" />
-
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
 @*confirm.js files*@
 <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
@@ -27,10 +19,11 @@
     </h1>
 </section>
 
+<m-grid id="ArtKycHighTwoMonth" data-urlkey="ArtKycHighTwoMonth" data-handlerkey="ArtKycHighTwoMonth"></m-grid>
 
-<div id="grid"></div>
+@*<div id="grid"></div>*@
 @section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
 
-
-    <script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="ArtKycHighTwoMonth" data-handlerkey="ArtKycHighTwoMonth"></script>
+    @*<script src="~/js/Dynamic.js" id="script" defer type="module" data-urlkey="ArtKycHighTwoMonth" data-handlerkey="ArtKycHighTwoMonth"></script>*@
 }
