@@ -1,4 +1,6 @@
 ﻿using CsvHelper.Configuration;
+using Data.Data.CRP;
+using Data.Data.ECM;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
 {
@@ -15,11 +17,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
         {
             Type modelType = typeof(TModel);
             Type dictType = typeof(CustomReportRecord);
-            Type CFTConfig = typeof(ArtCFTConfigMapper);
+            Type CFTConfig = typeof(ArtCFTConfig);
+            Type CRPConfig = typeof(ArtCrpConfig);
             if (modelType == dictType)
                 return new CustomReportClassMapper(_inculdedColumns);
             if (modelType == CFTConfig)
                 return new ArtCFTConfigMapper(_inculdedColumns);
+            if (modelType == CRPConfig)
+                return new ArtCRPConfigMapper(_inculdedColumns);
 
             return new GenericCsvClassMapper<TModel>(_inculdedColumns);
         }

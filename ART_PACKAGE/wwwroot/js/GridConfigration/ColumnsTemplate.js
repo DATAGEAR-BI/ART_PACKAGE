@@ -34,5 +34,8 @@ export const Templates = {
         return `<div class="d-flex justify-content-around flex-wrap align-content-between">
                                             ${template}        
                    </div>`;
+    },
+    actionDetailTable: (dataItem, column) => {
+        return dataItem.ActionDetail;
     }
 }

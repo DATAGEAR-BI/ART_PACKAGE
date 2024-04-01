@@ -14,7 +14,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "Checker", new GridColumnConfiguration { DisplayName = "Checker"}},
                     { "CheckerDate", new GridColumnConfiguration { DisplayName = "Checker Date"}},
                     { "CheckerAction", new GridColumnConfiguration { DisplayName = "Checker Action"}},
-                    { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail"}},
+                    { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail", Template = "actionDetailTable"}},
 
             };
         }
