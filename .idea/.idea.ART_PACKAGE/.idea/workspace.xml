@@ -12,118 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaAlertConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaCaceConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaCustomerConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/Fatca/ArtFatcaIrsReportConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_29_2024_12_04_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLAlertDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLAlertDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtExternalCustomerDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtExternalCustomerDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtScenarioAdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtScenarioAdminController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtScenarioHistoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtScenarioHistoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtSuspectDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLArtSuspectDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLCasesDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLCasesDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLCustomersDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLCustomersDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLTriageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAML/DGAMLTriageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditGroupsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditGroupsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditRolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditRolesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditUsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/AuditUsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/LastLoginPerDayController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/LastLoginPerDayController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListGroupsRolesSummaryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListGroupsRolesSummaryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListGroupsSubGroupsSummaryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListGroupsSubGroupsSummaryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfDeletedUsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfDeletedUsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfGroupsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfGroupsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfRoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfRoleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersAndGroupsRoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersAndGroupsRoleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersGroupController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersGroupController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersRolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/DGAUDIT/ListOfUsersRolesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformPerActionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformPerActionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerActionUserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerActionUserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerUserAndActionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerUserAndActionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ACPostingsAccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ACPostingsAccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ACPostingsCustomersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ACPostingsCustomersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ActivityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/ActivityController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/AdvancePaymentUtilizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/AdvancePaymentUtilizationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/AmortizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/AmortizationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/DiaryExceptionsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/DiaryExceptionsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmAuditTrialController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmAuditTrialController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmTransactionsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmTransactionsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmWorkflowProgController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/EcmWorkflowProgController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/FinancingInterestAccrualsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/FinancingInterestAccrualsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/FullJournalController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/FullJournalController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/InterfaceDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/InterfaceDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/MasterEventHistoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/MasterEventHistoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSActivityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSActivityController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSLiabilityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSLiabilityController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsAwaitiApprlController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsAwaitiApprlController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByGatewayController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByGatewayController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByNonPriController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByNonPriController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByPrincipalController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OSTransactionsByPrincipalController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesByCustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesByCustomerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesByMasterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesByMasterController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/OurChargesDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/PeriodicCHRGSPaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/PeriodicCHRGSPaymentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/PeriodicCHRGsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/PeriodicCHRGsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/SystemTailoringController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/SystemTailoringController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/WatchlistOSCheckController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/FTI/WatchlistOSCheckController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportIndicatorDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportIndicatorDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportsDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportsDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportsSuspectController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/GOAML/GOAMLReportsSuspectController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtAuditCorporateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtAuditCorporateController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtAuditIndividualsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtAuditIndividualsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycExpiredIdController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycExpiredIdController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighExpiredController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighExpiredController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighOneMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighOneMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighThreeMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighThreeMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighTwoMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycHighTwoMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowExpiredController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowExpiredController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowOneMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowOneMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowThreeMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowThreeMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowTwoMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycLowTwoMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumExpiredController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumExpiredController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumOneMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumOneMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumThreeMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumThreeMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumTwoMonthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycMediumTwoMonthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycSummaryByRiskController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/KYC/ArtKycSummaryByRiskController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/AlertDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/AlertDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CasesDetailsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CasesDetailsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CustomersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CustomersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/HighRiskController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/HighRiskController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/RiskAssessmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/RiskAssessmentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/TriageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/TriageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SEG/AllSegmentsOutliersNewController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SEG/AllSegmentsOutliersNewController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SEG/SegmentationChartsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/SEG/SegmentationChartsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/AllSegmentsOutliersNew/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/AllSegmentsOutliersNew/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditGroups/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditGroups/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditRoles/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditRoles/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditUsers/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/AuditUsers/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLAlertDetails/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLAlertDetails/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtExternalCustomerDetails/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtExternalCustomerDetails/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtScenarioAdmin/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtScenarioAdmin/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtScenarioHistory/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtScenarioHistory/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtSuspectDetails/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLArtSuspectDetails/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLCasesDetails/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLCasesDetails/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLCustomersDetails/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/DGAMLCustomersDetails/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/LastLoginPerDay/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/LastLoginPerDay/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListGroupsRolesSummary/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListGroupsRolesSummary/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListGroupsSubGroupsSummary/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListGroupsSubGroupsSummary/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfDeletedUsers/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfDeletedUsers/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfGroups/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfGroups/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfRole/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfRole/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUser/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUser/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersAndGroupsRole/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersAndGroupsRole/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersGroup/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersGroup/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersRoles/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/ListOfUsersRoles/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SegmentCompare.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SegmentCompare.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SegmentReport.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SegmentReport.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SingleSegmentReport.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/SegmentationCharts/SingleSegmentReport.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_GridScripts.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_GridScripts.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/SystemPerformance/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/SystemPerformance/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/MultiSelect/Select.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/MultiSelect/Select.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Switch/Switch.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Switch/Switch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,12 +61,12 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73462a4a9394ff73b345712598c94965b0f6032ce187cd124f118b498662d1/MimeMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/eslam/source/repos/ART_PACKAGE/ART_PACKAGE/Controllers/ECM/AlertedEntitiesController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamlcasedetailsviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -188,34 +84,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ART_PACKAGE.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.4980315",
-    "git-widget-placeholder": "MAIL__TEST__FATCA",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ART_PACKAGE.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.4980315&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MAIL__TEST__FATCA&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\JetBrains Rider 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver&quot;,
+      &quot;mysql&quot;
     ],
-    "rider.external.source.directories": [
-      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\eslam\\AppData\\Local\\Symbols\\src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\eslam\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\eslam\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ART_PACKAGE">
     <configuration name="ART_PACKAGE: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/ART_PACKAGE/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-622866090572625215" uuid_low="-6395489615877505628" />
@@ -262,7 +158,17 @@
       <updated>1708591628550</updated>
       <workItem from="1708591633278" duration="1628000" />
       <workItem from="1709159183091" duration="2006000" />
+      <workItem from="1711968051416" duration="1211000" />
     </task>
+    <task id="LOCAL-00001" summary="adding views">
+      <option name="closed" value="true" />
+      <created>1711915613334</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711915613334</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +177,26 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="adding views" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding views" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs</url>
+          <line>83</line>
+          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Helpers\Grid\GridConstructor.cs" initialLine="83" containingFunctionPresentation="Method 'IntializeGrid'">
+            <startOffsets>
+              <option value="3900" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3901" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
