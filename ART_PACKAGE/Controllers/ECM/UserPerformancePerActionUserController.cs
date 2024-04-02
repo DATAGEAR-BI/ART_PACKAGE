@@ -31,7 +31,8 @@ namespace ART_PACKAGE.Controllers.ECM
             _pdfSrv = pdfSrv;
             _dropSrv = dropSrv;
             _csvSrv = csvSrv;
-            dbType = _config.GetValue<string>("dbType").ToUpper();
+            _config = config;
+            dbType = config.GetValue<string>("dbType").ToUpper();
 
         }
 

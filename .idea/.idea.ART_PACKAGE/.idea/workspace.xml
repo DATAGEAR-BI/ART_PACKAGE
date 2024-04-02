@@ -11,23 +11,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="adding configs">
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/CustomReport/CreateReport.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/CustomReport/Index.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/MyReports/Index.cshtml" afterDir="false" />
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/MyReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/MyReportsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationRequirmentHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Middlewares/Security/CustomAuthorizationRequirmentHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Sidebar.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/ReportScripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/ReportScripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/URLConsts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Data/ArtAmlAnalysisRule.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Data/ArtSavedCustomReport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/ArtSavedCustomReport.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Data/Configrations/RolesConfigration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data/Configrations/RolesConfigration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SqlServerMigrations/Migrations/AuthContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SqlServerMigrations/Migrations/AuthContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerActionUserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/ECM/UserPerformancePerActionUserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Hangfire-log.db" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Hangfire-log.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Hangfire.db" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Hangfire.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +89,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.4980315&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;MAIL__TEST__FATCA&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MAIN__TEST&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -169,6 +158,7 @@
       <workItem from="1708591633278" duration="1628000" />
       <workItem from="1709159183091" duration="2006000" />
       <workItem from="1711968051416" duration="12422000" />
+      <workItem from="1712069064348" duration="643000" />
     </task>
     <task id="LOCAL-00001" summary="adding views">
       <option name="closed" value="true" />
