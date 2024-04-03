@@ -6,6 +6,7 @@ on:
       - main
       - ABK
       - MAIN_TEST
+      - MIDB
   pull_request:
     branches:
       - main
