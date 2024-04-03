@@ -1,8 +1,7 @@
-﻿@using ART_PACKAGE.Helpers.CustomReport;
-@using ART_PACKAGE.Helpers.HTMLHelpers;
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
@@ -14,7 +13,6 @@
 <link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
 <link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
 <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
 <script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
 <script src="~/lib/Plugins/Kendo/jszip.js"></script>
 <script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
@@ -28,40 +26,22 @@
 <script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
 <script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
 
-
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
-<script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
-@*<script src="~/js/FileExtraction.js"></script>
-    <script src="~/js/site.js"></script>
-    <link href="~/css/site.css" rel="stylesheet" />
-    <script src="~/lib/Plugins/CustomPlugin/CustomGridScript.js"></script>*@
-
 <section class="content-header">
     <h1>
-        Data Gear AML Alerts Summary Report
+        Alert Age Summery Report
         <small> </small>
         <br />
     </h1>
 </section>
 
 
-<filters-control data-key="DGAMLAlertSummary" data-chartsurl="DGAMLAlertSummary"></filters-control>
-@*<div id="grid"></div>*@
-<div id="charts">
-    <div id="StAlertsPerStatus" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>
-    <br />
-    <div id="StAlertPerBranch" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="8"></div>
-    <br />
-    <div id="StAlertPerScenario" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="8"></div>
-    <br />
-    @*<div id="StAlertAgeSummer" class="col-lg-12 col-md-12 col-sm-12" style="height:600px" data-type="2"></div>*@
-    @*<div id="grid" style="height:600px"></div>*@
+<filters-control data-key="AlertAgeSummery"></filters-control>
+<div id="grid"></div>
 
-</div>
 
 @section Scripts {
-    <script src="~/js/ConstructFilters.js" defer type="module"></script>
-    @*<script src="~/js/dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="DGAMLAlertSummary" data-handlerkey="DGAMLAlertSummary"></script>*@
 
+
+    <script src="~/js/constructfilters.js" defer type="module"></script>
+    <script src="~/js/dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="AlertAgeSummery" data-handlerkey="AlertAgeSummery"></script>
 }

@@ -8,12 +8,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         private readonly List<string>? _inculdedColumns;
 
+
+
         public CsvClassMapFactory(List<string>? inculdedColumns = null)
         {
             _inculdedColumns = inculdedColumns;
+
         }
 
-        public ClassMap CreateInstance<TModel>()
+        public ClassMap CreateInstance<TModel>(ReportConfigService reportsConfigResolver)
         {
             Type modelType = typeof(TModel);
             Type dictType = typeof(CustomReportRecord);
@@ -26,7 +29,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             if (modelType == CRPConfig)
                 return new ArtCRPConfigMapper(_inculdedColumns);
 
-            return new GenericCsvClassMapper<TModel>(_inculdedColumns);
+            return new GenericCsvClassMapper<TModel>(reportsConfigResolver, _inculdedColumns);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Data.Services.Grid;
+﻿using Data.Data.ECM;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
@@ -29,14 +30,19 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "DurationsInSeconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}},
+                    { "NumberOfComment", new GridColumnConfiguration { DisplayName = "Number of Comments"}},
+                    { "NumberOfAttachments", new GridColumnConfiguration { DisplayName = "Number Of Attachments"}},
+                    { "UpdatedDate", new GridColumnConfiguration { DisplayName = "Updated Date"}},
+                    { "CreatedBy", new GridColumnConfiguration { DisplayName = "Created By"}},
+                    { "LastComment", new GridColumnConfiguration { DisplayName = "Last Comment"}},
+                    { nameof(ArtSystemPerformance.CreateUserId), new GridColumnConfiguration { DisplayName = "Create User Id"}},
             };
             SkipList = new List<string>
             {
                    "CaseRk",
     "ValidFromDate",
-    "LastCommentSubject"
-            };
+    "LastCommentSubject"            };
         }
     }
 }

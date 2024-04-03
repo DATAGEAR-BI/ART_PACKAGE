@@ -37,6 +37,7 @@
     CustomersSummary: "/CustomersSummary/GetData",
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",
+    AlertAgeSummery: "/AlertAgeSummery/GetData",
     //GoAml
     GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
     GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",

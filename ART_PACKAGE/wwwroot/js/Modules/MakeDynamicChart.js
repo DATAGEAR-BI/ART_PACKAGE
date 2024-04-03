@@ -62,6 +62,8 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     chart.height = am4core.percent(100);
     chart.layout = "horizontal";
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = ctitle;
+
     chart.exporting.menu.items = exportMenu;
 
 
@@ -190,6 +192,8 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = curvtitle;
+
     chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -233,6 +237,8 @@ function callClyChart(data, clytitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = clytitle;
+
     chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -282,6 +288,8 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = pietitle;
+
     chart.exporting.menu.items = exportMenu;
 
     var pieSeries = chart.series.push(new am4charts.PieSeries());
@@ -315,6 +323,8 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     // Add data
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = hbartitle;
+
     chart.exporting.menu.items = exportMenu;
 
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
@@ -398,6 +408,8 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
     chart.data = data;
 
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = bartitle;
+
     chart.exporting.menu.items = exportMenu;
 
 
@@ -768,6 +780,8 @@ function callLineChart(data, lineTitle, divId, chartValue, chartCategory) {
     }
 
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = lineTitle;
+
     chart.exporting.menu.items = exportMenu;
 
     createSeries(chartValue, chartCategory);
@@ -812,6 +826,8 @@ function callDonutChart(data, donuttitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = donuttitle;
+
     chart.exporting.menu.items = exportMenu;
 
     var pieSeries = chart.series.push(new am4charts.PieSeries3D());
@@ -866,6 +882,8 @@ function callClusterd(data, clusterdtitle, chartId,) {
     chart.legend.paddingBottom = 20
     chart.legend.labels.template.maxWidth = 95
     chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.filePrefix = chartId;
+
     chart.exporting.menu.items = exportMenu;
 
     var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())

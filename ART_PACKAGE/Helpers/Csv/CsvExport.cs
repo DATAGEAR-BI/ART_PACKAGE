@@ -26,13 +26,14 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ReportConfigService _reportConfigService;
 
 
 
 
         public event Action<int, int> OnProgressChanged;
 
-        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
+        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment, ReportConfigService reportConfigService)
         {
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
@@ -40,6 +41,8 @@ namespace ART_PACKAGE.Helpers.Csv
             this.connections = connections;
             _webHostEnvironment = webHostEnvironment;
             _exportHub = exportHub;
+            _reportConfigService = reportConfigService;
+
 
         }
         public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
@@ -103,8 +106,8 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
-
-                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        var reC = _reportConfigService.GetConfigs(typeof(TModel).Name + "Config");
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>(_reportConfigService);
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -125,7 +128,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>(_reportConfigService);
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -180,7 +183,7 @@ namespace ART_PACKAGE.Helpers.Csv
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
 
-            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>();
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
 
             cw.Context.RegisterClassMap(mapperInstance);
 

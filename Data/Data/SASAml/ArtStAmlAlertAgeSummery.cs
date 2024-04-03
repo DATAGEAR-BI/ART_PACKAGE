@@ -1,6 +1,6 @@
 ﻿namespace Data.Data.ARTDGAML
 {
-    public class ArtStDgAmlAlertAgeSummery
+    public class ArtStAmlAlertAgeSummery
     {
         public string DataSource { get; set; }
         public int? Bucket1 { get; set; }

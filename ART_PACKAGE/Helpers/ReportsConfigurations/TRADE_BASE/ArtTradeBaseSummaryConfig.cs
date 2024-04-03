@@ -13,7 +13,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     {"Active", new GridColumnConfiguration { DisplayName ="Active"}},
                     {"AddedToCase", new GridColumnConfiguration { DisplayName ="Added To Case"}},
                     {"Closed", new GridColumnConfiguration { DisplayName ="Closed"}},
-                    {"SuppressedAlert", new GridColumnConfiguration { DisplayName ="SuppressedAlert"}},
+                    {"SuppressedAlert", new GridColumnConfiguration { DisplayName ="Suppressed Alert"}},
 
             };
         }

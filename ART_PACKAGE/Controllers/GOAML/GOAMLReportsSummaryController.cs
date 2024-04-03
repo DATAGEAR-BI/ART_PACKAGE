@@ -33,13 +33,13 @@ namespace ART_PACKAGE.Controllers.GOAML
 
             if (dbType == DbTypes.SqlServer)
             {
-                chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
+                // chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
+                // chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
             }
@@ -65,14 +65,14 @@ namespace ART_PACKAGE.Controllers.GOAML
                     Cat = "REPORT_STATUS",
                     Val = "NUMBER_OF_REPORTS"
                 },
-                new ChartData<ArtStGoAmlReportsPerCreator>
+                /*new ChartData<ArtStGoAmlReportsPerCreator>
                 {
                     ChartId = "StGoamlReportsPerCreator",
                     Data = chart3Data.ToList(),
                     Title = "Number of Reports Per Creator",
                     Cat = "CREATED_BY",
                     Val = "NUMBER_OF_REPORTS"
-                }
+                }*/
             };
 
 
