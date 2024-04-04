@@ -37,6 +37,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"InvestigationDays" , new GridColumnConfiguration { DisplayName = "Investigation Days"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
                                                                                 { "Queue" , new GridColumnConfiguration { DisplayName = "Queue", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
         };
+            ReportTitle = "Alert Details";
+            ReportDescription = "Presents the alerts details";
 
 
 

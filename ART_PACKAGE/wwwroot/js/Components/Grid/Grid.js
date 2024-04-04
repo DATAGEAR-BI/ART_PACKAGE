@@ -4,6 +4,7 @@ import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
+//import {getChartType} from "../Charts/ChartUtils.js"
 //import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
@@ -13,6 +14,7 @@ import { exportConnection } from "../../ExportListener.js";
 //import * as ta from "../TextAreaInput/TextAreaInput.js";
 //import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
+
 
 
 class Grid extends HTMLElement {
@@ -45,10 +47,33 @@ class Grid extends HTMLElement {
     isExporting = false;
     isDownloaded = true;
     selectProp = "";
+    excelFileName = "";
+
+     filtersDiv = document.createElement("div");
+ exRules = [];
+
+ ops = {
+    eq: "Is Equal To",
+    neq: "Not Equal To",
+    isnull: "Is Null",
+    isnotnull: "Is Not Null",
+    isempty: "Is Empty",
+    isnotempty: "Is Not Empty",
+    startswith: "Starts With",
+    doesnotstartwith: "Does Not Start With",
+    contains: "Contains",
+    doesnotcontain: "Does Not Contain",
+    endswith: "Ends With",
+    doesnotendwith: "Does Not End With",
+    gte: "Greater Than Or Equal",
+    gt: "Greater Than",
+    lte: "Less Than Or Equal",
+    lt: "Less Than",
+};
     constructor() {
         super();
 
-
+    
 
     }
     connectedCallback() {
@@ -81,6 +106,8 @@ class Grid extends HTMLElement {
             desc.id = this.id + "-desc";
             this.appendChild(title)
             this.appendChild(desc)
+            this.excelFileName = document.getElementById(title.id).innerText + "_" + new Date().toISOString().slice(0, 19).replace(/[-T:]/g, '');
+
             fetch("/CustomReport/GetReportCharts/"+parseInt(this.dataset.reportid))
                 .then(x => x.json())
                 .then(charts => {
@@ -101,8 +128,9 @@ class Grid extends HTMLElement {
             
             
         } else {
-
             this.url = URLS[this.dataset.urlkey];
+            this.excelFileName = this.dataset.urlkey + "_" + new Date().toISOString().slice(0, 19).replace(/[-T:]/g, '');;
+
         }
 
 
@@ -251,11 +279,12 @@ class Grid extends HTMLElement {
             .then((d) => {
                 this.total = d.total;
                 this.reportName = d.reportname;
+                
                 //if (isHierarchy == "true") {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-                console.log(d);
+                
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -500,7 +529,7 @@ class Grid extends HTMLElement {
         let options = {
                 excel: {
                     allPages: true, // Export all pages
-                    fileName: "KendoGridExport.xlsx",
+                fileName: this.excelFileName +".xlsx",
                     filterable: true,
                     // You can set other Excel export options here
                 },
@@ -589,6 +618,9 @@ class Grid extends HTMLElement {
                                         }, 0);
                                     }
                                 }
+                                var filter = options.data.filter;
+
+                                createFiltersDiv(this.gridDiv.id,filter,this.ops);
 
                                 if (this.isCustom) {
                                     console.log(this.dataset.reportid)
@@ -733,7 +765,13 @@ class Grid extends HTMLElement {
         var grid = $(this.gridDiv).kendoGrid(options);
 
         var grid = $(this.gridDiv).data("kendoGrid");
-        
+        this.filtersDiv.style = "margin-top:2%";
+        this.filtersDiv.id = "filters";
+        this.filtersDiv.innerHTML = ` <div class="collapse" style="margin-top:4%" id="filtersCollapse">
+                 
+                </div>`;
+        this.gridDiv.parentNode.insertBefore(this.filtersDiv, this.gridDiv);
+
         // let stringfiedoptions = localStorage.getItem(`${this.gridDiv.id}-Options`);
         // if(stringfiedoptions){
         //    grid.setOptions(JSON.parse(stringfiedoptions)); 
@@ -840,19 +878,43 @@ class Grid extends HTMLElement {
             this.clrfil(e, this.gridDiv);
         });
         $(`.k-grid-${this.gridDiv.id}sh_filters`).click((e) => {
-            this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
+           // this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
+            $('#filtersCollapse').collapse("toggle")
+
         });
 
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
+
+            var filters = grid.dataSource.filter();
+            var total = grid.dataSource.total();
+            var sort = grid.dataSource.sort();
+            let Request = {};
+            Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
+            var para = {}
+            para.Take = total;
+            para.Skip = 0;
+            para.Filter = filters;
+            para.Sort = sort;
+            if (!this.isAllSelected) {
+                var pagesWithSelectedRows = Object.keys(this.selectedRows);
+                if (pagesWithSelectedRows && pagesWithSelectedRows.length > 0)
+                    para.All = false;
+                else
+                    para.All = true;
+            }
+            para.IdColumn = this.selectProp;
+            para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
+
+            Request.DataReq = para;
             var pdfExportHandler = undefined;
             if (!this.isStoredProc)
-                pdfExportHandler = Handlers["PdExport"];
+                pdfExportHandler = Handlers["clientPdExport"];
             else
                 pdfExportHandler = Handlers["StoredPdExport"];
 
             var orgin = window.location.pathname.split("/");
             var controller = orgin[1];
-            pdfExportHandler(e, controller, this.url, this.gridDiv);
+            pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
         });
 
 
@@ -1037,8 +1099,11 @@ class Grid extends HTMLElement {
             filterDiv.appendChild(x);
         }
         //console.log(filters.filters.flat(Infinity));
-        $(Modal).modal("show");
+        //$(Modal).modal("show");
+        //$("#" + this.filtersModal.id).modal();
+        showModal(this.filtersModal.id);
     }
+    
     clrfil(e, gridDiv) {
 
         var grid = $(gridDiv).data("kendoGrid");
@@ -1300,4 +1365,79 @@ function areObjectEqual(obj1, obj2, leftedKeys) {
 
     // If all checks pass, the objects are equal
     return true;
+}
+function showModal(divId) {
+    // Retrieve the modal element
+    var modal = document.getElementById(divId);
+
+    // Add the "show" class to display the modal
+    modal.classList.add("show");
+
+    // Remove the "hide" class if present
+    modal.classList.remove("hide");
+}
+
+function getHeaderTextByField(gridId, field) {
+    var grid = $("#" + gridId).data("kendoGrid");
+    const columns = grid.columns;
+    for (let i = 0; i < columns.length; i++) {
+        if (columns[i].field === field) {
+            return columns[i].title;
+        }
+    }
+    return null;
+}
+function createFiltersDiv(dridId, obj,ops) {
+    var fDiv = document.getElementById("filtersCollapse");
+    fDiv.innerHTML = "";
+
+    if (obj == null || !obj) return null;
+
+    var logic = obj.logic;
+    var filters = obj.filters;
+
+    [...filters].forEach((x) => {
+        if (x.field) {
+            var existinp = document.getElementById(`${x.field}-0`);
+            var fieldXDisplayName = getHeaderTextByField(dridId, x.field);
+
+            if (existinp) {
+                var oldVal = existinp.value.split("=> ")[1];
+                existinp.value = `${fieldXDisplayName}=> ${oldVal},${ops[x.operator]} ${x.value}`;
+            } else {
+                var inp = document.createElement("input");
+                inp.id = x.field + "-0";
+                inp.type = "text";
+                inp.value = `${fieldXDisplayName}=> ${ops[x.operator]} ${x.value}`;
+                inp.classList = ["form-control"];
+                inp.readOnly = true;
+                fDiv.appendChild(inp);
+            }
+            //var lgc = document.createElement("div");
+            //lgc.innerText = logic;
+            //frag.appendChild(lgc);
+        } else {
+            [...x.filters].forEach((y) => {
+                var existinp = document.getElementById(`${y.field}-0`);
+                var fieldYDisplayName = getHeaderTextByField(dridId, y.field);
+
+                if (existinp) {
+                    var oldVal = existinp.value.split("=> ")[1];
+                    existinp.value = `${fieldYDisplayName}=> ${oldVal},${ops[y.operator]} ${y.value
+                        }`;
+                } else {
+                    var inp = document.createElement("input");
+                    inp.id = y.field + "-0";
+                    inp.type = "text";
+                    inp.value = `${fieldYDisplayName}=> ${ops[y.operator]} ${y.value}`;
+                    inp.classList = ["form-control"];
+                    inp.readOnly = true;
+                    fDiv.appendChild(inp);
+                }
+                //var lgc = document.createElement("div");
+                //lgc.innerText = x.logic;
+                //frag.appendChild(lgc);
+            });
+        }
+    });
 }

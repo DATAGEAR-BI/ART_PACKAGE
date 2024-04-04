@@ -25,6 +25,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
         };
 
+            ReportTitle = "Cases Details";
+            ReportDescription = "Presents the cases details in the table below";
 
 
 

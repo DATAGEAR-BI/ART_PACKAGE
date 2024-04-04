@@ -1,12 +1,14 @@
-﻿using System.Linq.Expressions;
-using System.Security.Claims;
-using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
 using Data.Services.CustomReport;
 using Data.Services.Grid;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
+using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -173,6 +175,13 @@ namespace ART_PACKAGE.Helpers.Grid
             }
 
             return folderGuid;
+        }
+
+
+
+        public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

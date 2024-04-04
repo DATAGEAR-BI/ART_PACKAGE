@@ -24,12 +24,14 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\js\components\ChartUtils.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\HubUtils.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\segmentReport.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\SingleSegmentReport.js" />
@@ -1902,6 +1904,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
 		<None Include="wwwroot\js\Components\Card\Card.js" />
 		<None Include="wwwroot\js\Components\Charts\Charts.js" />
+		<None Include="wwwroot\js\Components\Card\ChartUtils.js" />
 		<None Include="wwwroot\js\Components\EmailInput\EmailInput.js" />
 		<None Include="wwwroot\js\Components\Grid\Grid.js" />
 		<None Include="wwwroot\js\Components\MultiSelect\Select.js" />

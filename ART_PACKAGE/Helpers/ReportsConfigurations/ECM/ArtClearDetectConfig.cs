@@ -16,6 +16,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     {"CaseId", new GridColumnConfiguration { DisplayName ="Case ID"}},
 
             };
+            ReportTitle = "Clear Detect Report";
+            ReportDescription = "This report presents all Clear Detects";
         }
     }
 }

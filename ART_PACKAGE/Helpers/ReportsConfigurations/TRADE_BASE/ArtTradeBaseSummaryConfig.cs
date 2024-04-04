@@ -16,6 +16,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     {"SuppressedAlert", new GridColumnConfiguration { DisplayName ="Suppressed Alert"}},
 
             };
+            ReportTitle = "Trade Base Summary Report";
+            ReportDescription = "This report presents all Trade Base Summary";
         }
     }
 }

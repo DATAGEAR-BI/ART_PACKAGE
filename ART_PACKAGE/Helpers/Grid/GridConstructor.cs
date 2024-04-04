@@ -1,15 +1,17 @@
-﻿using ART_PACKAGE.Helpers.Csv;
+﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
+using ART_PACKAGE.Helpers.Pdf;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Hubs;
+using Data.Services;
+using Data.Services.Grid;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Claims;
-using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using ART_PACKAGE.Helpers.ReportsConfigurations;
-using Data.Services;
-using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -23,7 +25,9 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly UsersConnectionIds connections;
         private static readonly Dictionary<int, int> fileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver)
+        private readonly IPdfService _pdfSrv;
+
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -32,6 +36,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _exportHub = exportHub;
             this.connections = connections;
             _reportsConfigResolver = reportsConfigResolver;
+            _pdfSrv = pdfSrv;
         }
         public TRepo Repo { get; private set; }
 
@@ -105,6 +110,18 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             GridResult<TModel> dataRes = Repo.GetGridData(request, baseCondition: baseCondition, includes: includes);
             return dataRes;
+        }
+
+        public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<TModel, bool>>? baseCondition = null)
+        {
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+
+            ViewData["title"] = reportConfig.ReportTitle;
+            ViewData["desc"] = reportConfig.ReportDescription;
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data, ViewData, actionContext, 5
+                                                    , user, reportConfig.SkipList, reportConfig.DisplayNames);
+            return pdfBytes;
         }
     }
 }

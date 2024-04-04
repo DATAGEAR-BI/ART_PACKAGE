@@ -1,13 +1,12 @@
-﻿using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Grid;
+using Data.Services;
+using Data.Services.Grid;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
-using ART_PACKAGE.Areas.Identity.Data;
-using Data.Services;
-using Data.Services.Grid;
-using Microsoft.AspNetCore.Identity;
-
 
 namespace ART_PACKAGE.Controllers
 {
@@ -53,6 +52,12 @@ namespace ART_PACKAGE.Controllers
             }
         }
 
+        [HttpPost("[controller]/[action]")]
+        public async Task<IActionResult> ExportPdf([FromBody] ExportRequest req)
+        {
+            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData);
+            return File(pdfBytes, "application/pdf");
+        }
 
 
 

@@ -668,7 +668,7 @@
                         {
                             <li class="treeview  ">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-book"></i> <span>FATCA Reports</span>
+                                    <i class="glyphicon glyphicon-book"></i> <span>FATCA REPORTS</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -718,14 +718,14 @@
                         {
                             <li class="treeview">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> <span>Trade Base </span>
+                                    <i class="glyphicon glyphicon-user"></i> <span>TRADEBASE  REPORTS</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li class="active ">
-                                        <a href="@Url.Action("Index", "TradeBaseAMLSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Trade Base AML Summary </span></a>
+                                        <a href="@Url.Action("Index", "TradeBaseAMLSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary </span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -759,7 +759,8 @@
             }
             @if (User.IsInRole("art_customreport"))
             {
-                <li class="treeview ">
+                
+                @*<li class="treeview ">
                     <a href="#">
                         <i class="glyphicon glyphicon-book"></i> <span>Custom Report</span>
                         <span class="pull-right-container">
@@ -774,7 +775,7 @@
                             <a href="@Url.Action("Index", "MyReports")"><i class="glyphicon glyphicon-tasks"></i> <span>My Reports</span></a>
                         </li>
                     </ul>
-                </li>
+                </li>*@
             }
             @if (User.IsInRole("art_admin"))
             {

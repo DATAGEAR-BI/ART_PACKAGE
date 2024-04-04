@@ -26,6 +26,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
                                                                 { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
                                                                 { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
                                                         };
+            ReportTitle = "User Performance Report";
+            ReportDescription = "This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below";
+
         }
     }
 }

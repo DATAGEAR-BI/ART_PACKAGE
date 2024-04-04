@@ -56,7 +56,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
             var result = new
             {
-                data = Data.Data,
+                data = Data.Data.OrderBy(s => s.Total),
                 columns = Data.Columns,
                 total = Data.Total,
                 reportname = "AlertAgeSummery"

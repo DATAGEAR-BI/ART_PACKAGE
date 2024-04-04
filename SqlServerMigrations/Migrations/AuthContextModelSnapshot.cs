@@ -95,15 +95,15 @@ namespace SqlServerMigrations.Migrations
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
                             Active = true,
-                            ConcurrencyStamp = "c8d5fde3-3b4a-4bc0-9e0d-ae315aac3cb5",
+                            ConcurrencyStamp = "dc69a310-baa6-46f8-8a2a-22cc44e22913",
                             Email = "Art_Admin@datagearbi.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ART_ADMIN@DATAGEARBI.COM",
                             NormalizedUserName = "ART_ADMIN@DATAGEARBI.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENcMhRxwn7QLK+hce8KitV/pH2oaMpR4+10azt8oWW/eE5DmSnMD1aIfJoWOxuHwyg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENZEJDz1x5O3Ov6Wm0YI8sgPrleI2HZ7AGMIzBCkrTnryfnjombgKSggiv3GQnGKPA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4a2575f7-a887-43fd-9c47-2b715607ba3a",
+                            SecurityStamp = "5b4e360b-7d3d-4728-a922-1c1a198bca24",
                             TwoFactorEnabled = false,
                             UserName = "Art_Admin@datagearbi.com"
                         });
@@ -123,9 +123,6 @@ namespace SqlServerMigrations.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsShared")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -141,7 +138,13 @@ namespace SqlServerMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ArtSavedCustomReport", (string)null);
                 });
@@ -183,28 +186,941 @@ namespace SqlServerMigrations.Migrations
 
                     b.HasKey("ReportId", "Column");
 
-                    b.ToTable("ArtSavedReportsColumns");
+                    b.ToTable("ArtSavedReportsColumns", (string)null);
                 });
 
-            modelBuilder.Entity("Data.Data.UserReport", b =>
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertPerOwner", b =>
                 {
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("ALERTS_CNT_SUM")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SharedFromId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ShareMessage")
+                    b.Property<string>("OWNER_QUEUE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ReportId", "UserId", "SharedFromId");
+                    b.ToView(null);
+                });
 
-                    b.HasIndex("UserId");
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerBranch", b =>
+                {
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.ToTable("UserReport");
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerScenario", b =>
+                {
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SCENARIO_NAME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlAlertsPerStatus", b =>
+                {
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ALERT_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerCategory", b =>
+                {
+                    b.Property<string>("CASE_CATEGORY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerPriority", b =>
+                {
+                    b.Property<string>("CASE_PRIORITY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCasesPerStatus", b =>
+                {
+                    b.Property<string>("CASE_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCustomerPerBranch", b =>
+                {
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlCustomerPerType", b =>
+                {
+                    b.Property<string>("CUSTOMER_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlExternalCustomerPerBranch", b =>
+                {
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTDGAML.ArtStDgAmlExternalCustomerPerType", b =>
+                {
+                    b.Property<string>("CUSTOMER_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerCreator", b =>
+                {
+                    b.Property<string>("CREATED_BY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerIndicator", b =>
+                {
+                    b.Property<string>("INDICATOR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("int");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerStatus", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("REPORT_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ARTGOAML.ArtStGoAmlReportsPerType", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_REPORTS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("REPORT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtGroupsAuditView", b =>
+                {
+                    b.Property<string>("Action")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("action");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("GroupName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("group_name");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.Property<string>("MemberUsers")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("member_users");
+
+                    b.Property<string>("RoleNames")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("role_names");
+
+                    b.Property<string>("SubGroupNames")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("sub_group_names");
+
+                    b.ToView("ART_GROUPS_AUDIT_VIEW", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ArtRolesAuditView", b =>
+                {
+                    b.Property<string>("Action")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("action");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("GroupNames")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("group_names");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.Property<string>("MemberUsers")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("member_users");
+
+                    b.Property<string>("RoleName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("role_name");
+
+                    b.ToView("ART_ROLES_AUDIT_VIEW", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStAlertPerOwner", b =>
+                {
+                    b.Property<decimal?>("ALERTS_CNT_SUM")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OWNER_USERID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStAlertsPerStatus", b =>
+                {
+                    b.Property<decimal?>("ALERTS_COUNT")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ALERT_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStAmlPropRiskClass", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PROPOSED_RISK_CLASS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStAmlRiskClass", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RISK_CLASSIFICATION")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCasesPerCategory", b =>
+                {
+                    b.Property<string>("CASE_CATEGORY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCasesPerPriority", b =>
+                {
+                    b.Property<string>("CASE_PRIORITY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCasesPerStatus", b =>
+                {
+                    b.Property<string>("CASE_STATUS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCasesPerSubcat", b =>
+                {
+                    b.Property<string>("CASE_SUBCATEGORY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CASES")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCustPerBranch", b =>
+                {
+                    b.Property<string>("BRANCH_NAME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCustPerRisk", b =>
+                {
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RISK_CLASSIFICATION")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtStCustPerType", b =>
+                {
+                    b.Property<string>("CUSTOMER_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NUMBER_OF_CUSTOMERS")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToView(null);
+                });
+
+            modelBuilder.Entity("Data.Data.ArtUsersAuditView", b =>
+                {
+                    b.Property<string>("Action")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("action");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("address");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("DomainAccounts")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("domain_accounts");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
+
+                    b.Property<bool?>("Enable")
+                        .HasColumnType("bit")
+                        .HasColumnName("enable");
+
+                    b.Property<string>("GroupNames")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("group_names");
+
+                    b.Property<DateTime?>("LastFailedLogin")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_failed_login");
+
+                    b.Property<DateTime?>("LastLoginDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_login_date");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("phone");
+
+                    b.Property<string>("RoleNames")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("role_names");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_name");
+
+                    b.ToView("ART_USERS_AUDIT_VIEW", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.LastLoginPerDayView", b =>
+                {
+                    b.Property<string>("AppName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("APP_NAME");
+
+                    b.Property<string>("DeviceName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("DEVICE_NAME");
+
+                    b.Property<string>("DeviceType")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("DEVICE_TYPE");
+
+                    b.Property<string>("Ip")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("IP");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("LOCATION");
+
+                    b.Property<DateTime?>("Logindatetime")
+                        .HasColumnType("datetime")
+                        .HasColumnName("LOGINDATETIME");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_NAME");
+
+                    b.ToView("LAST_LOGIN_PER_DAY_VIEW", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListGroupsRolesSummary", b =>
+                {
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("GROUP_NAME");
+
+                    b.Property<string>("RoleName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("ROLE_NAME");
+
+                    b.ToView("LIST_GROUPS_ROLES_SUMMARY", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListGroupsSubGroupsSummary", b =>
+                {
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("GROUP_NAME");
+
+                    b.Property<string>("SubGroupName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("SUB_GROUP_NAME");
+
+                    b.ToView("LIST_GROUPS_SUB_GROUPS_SUMMARY", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfDeletedUser", b =>
+                {
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("address");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
+
+                    b.Property<DateTime?>("LastFailedLogin")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_failed_login");
+
+                    b.Property<DateTime?>("LastLoginDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_login_date");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("phone");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_NAME");
+
+                    b.Property<string>("UserType")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_type");
+
+                    b.ToView("LIST_OF_DELTED_USERS", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfGroup", b =>
+                {
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("group_name");
+
+                    b.Property<string>("GroupType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("group_type");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.ToView("LIST_OF_GROUPS", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfRole", b =>
+                {
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("role_name");
+
+                    b.Property<string>("RoleType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("role_type");
+
+                    b.ToView("LIST_OF_ROLES", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfUser", b =>
+                {
+                    b.Property<bool?>("Active")
+                        .HasColumnType("bit")
+                        .HasColumnName("active");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("address");
+
+                    b.Property<int?>("CounterLock")
+                        .HasColumnType("int")
+                        .HasColumnName("counter_lock");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("display_name");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
+
+                    b.Property<bool?>("Enable")
+                        .HasColumnType("bit")
+                        .HasColumnName("enable");
+
+                    b.Property<DateTime?>("LastFailedLogin")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_failed_login");
+
+                    b.Property<DateTime?>("LastLoginDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_login_date");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("last_updated_by");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("last_updated_date");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("phone");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_name");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_type");
+
+                    b.ToView("LIST_OF_USERS", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfUsersAndGroupsRole", b =>
+                {
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("DISPLAY_NAME");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
+
+                    b.Property<string>("MemberOfGroup")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("MEMBER_OF_GROUP");
+
+                    b.Property<string>("RoleOfGroup")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("ROLE_OF_GROUP");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_NAME");
+
+                    b.ToView("LIST_OF_USERS_AND_GROUPS_ROLES", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfUsersGroup", b =>
+                {
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("DISPLAY_NAME");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
+
+                    b.Property<string>("MemberOfGroup")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("MEMBER_OF_GROUP");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_NAME");
+
+                    b.ToView("LIST_OF_USERS_GROUPS", "ART_DB");
+                });
+
+            modelBuilder.Entity("Data.Data.ListOfUsersRole", b =>
+                {
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("DISPLAY_NAME");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_NAME");
+
+                    b.Property<string>("UserRole")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USER_ROLE");
+
+                    b.ToView("LIST_OF_USERS_ROLES", "ART_DB");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -237,30 +1153,23 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             Id = "e60411ee-1127-4f5e-8f03-367ef13017a6",
-                            ConcurrencyStamp = "3c3da18e-9180-4bc9-a096-ed07511f3fbe",
-                            Name = "art_home",
-                            NormalizedName = "ART_HOME"
+                            ConcurrencyStamp = "2bbf990a-6659-4b51-8e9a-5d7ff168a41c",
+                            Name = "Home",
+                            NormalizedName = "HOME"
                         },
                         new
                         {
                             Id = "83393df2-1bfa-471d-9a8a-8bf7c4b3f112",
-                            ConcurrencyStamp = "e2f25ef2-3ea6-4c1a-a74c-8c61f6d48865",
-                            Name = "art_customreport",
-                            NormalizedName = "ART_CUTOMREPORT"
+                            ConcurrencyStamp = "ba40e7d4-ddb9-4471-a7bf-399ea5c65d0d",
+                            Name = "CutomReport",
+                            NormalizedName = "CUTOMREPORT"
                         },
                         new
                         {
                             Id = "ae3a9d7a-5adf-4cd9-85c4-517e59d08513",
-                            ConcurrencyStamp = "d4da14a8-9193-4770-8655-18be17a88041",
-                            Name = "art_admin",
-                            NormalizedName = "ART_ADMIN"
-                        },
-                        new
-                        {
-                            Id = "f96288d4-8936-4fb1-8427-d5b45dd66023",
-                            ConcurrencyStamp = "f49554d9-4317-42b4-9753-1043254f4b09",
-                            Name = "art_superadmin",
-                            NormalizedName = "ART_SUPERADMIN"
+                            ConcurrencyStamp = "6d4bc811-f379-4676-8492-99d6a383b15f",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -366,11 +1275,6 @@ namespace SqlServerMigrations.Migrations
                         new
                         {
                             UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "f96288d4-8936-4fb1-8427-d5b45dd66023"
-                        },
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             RoleId = "e60411ee-1127-4f5e-8f03-367ef13017a6"
                         });
                 });
@@ -396,6 +1300,17 @@ namespace SqlServerMigrations.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", b =>
+                {
+                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.AppUser", "User")
+                        .WithMany("Reports")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedReportsChart", b =>
                 {
                     b.HasOne("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", "Report")
@@ -416,25 +1331,6 @@ namespace SqlServerMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("Data.Data.UserReport", b =>
-                {
-                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", "Report")
-                        .WithMany("UserReports")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ART_PACKAGE.Areas.Identity.Data.AppUser", "User")
-                        .WithMany("UserReports")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Report");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -490,7 +1386,7 @@ namespace SqlServerMigrations.Migrations
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.AppUser", b =>
                 {
-                    b.Navigation("UserReports");
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("ART_PACKAGE.Areas.Identity.Data.ArtSavedCustomReport", b =>
@@ -498,8 +1394,6 @@ namespace SqlServerMigrations.Migrations
                     b.Navigation("Charts");
 
                     b.Navigation("Columns");
-
-                    b.Navigation("UserReports");
                 });
 #pragma warning restore 612, 618
         }

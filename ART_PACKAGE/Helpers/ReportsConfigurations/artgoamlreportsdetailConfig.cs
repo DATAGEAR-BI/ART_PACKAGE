@@ -34,7 +34,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"Reportcloseddate" , new GridColumnConfiguration { DisplayName = "Report closed date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } }
             };
 
-
+            ReportTitle = " GOAML Reports Details";
+            ReportDescription = "Presents details about the GOAML reports";
 
 
 

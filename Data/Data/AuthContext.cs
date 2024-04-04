@@ -12,6 +12,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; } = null!;
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; } = null!;
     public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; } = null!;
+    //public virtual DbSet<UserReport> UserReports { get; set; } = null!;
 
 
 
@@ -59,7 +60,7 @@ public class AuthContext : IdentityDbContext<AppUser>
                 .WithMany(r => r.Reports)
                 .UsingEntity<UserReport>(ur =>
                 {
-                    ur.HasKey(i => new { i.ReportId, i.UserId  , i.SharedFromId});
+                    ur.HasKey(i => new { i.ReportId, i.UserId, i.SharedFromId });
                     ur.HasOne<AppUser>(e => e.User).WithMany(e => e.UserReports).HasForeignKey(e => e.UserId);
                     ur.HasOne<ArtSavedCustomReport>(e => e.Report).WithMany(e => e.UserReports).HasForeignKey(e => e.ReportId);
                 });
