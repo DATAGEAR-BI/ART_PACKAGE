@@ -44,6 +44,7 @@
 
         <div class="content-wrapper container-fluid" id="main-page" style="padding-top:5%">
             <!-- Content Header (Page header) -->
+            @RenderSection("KendoScripts", required: false)
             @RenderBody()
             <!-- /.content -->
         </div>
@@ -89,7 +90,10 @@
 
     <partial name="aml_analysisScript" />
     <script src="~/js/activelink.js"></script>
-    @RenderSection("KendoScripts", required: false)
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js"></script>
+    <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     @RenderSection("scripts", required: false)
    
     <script>

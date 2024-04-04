@@ -12,7 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Hangfire-log.db" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Hangfire-log.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Hangfire.db" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Hangfire.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_GridScripts.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_GridScripts.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +200,7 @@
     <MESSAGE value="adding views" />
     <MESSAGE value="adding configs" />
     <MESSAGE value="add cofig assigning" />
-    <option name="LAST_COMMIT_MESSAGE" value="add cofig assigning" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -211,19 +217,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Data/Services/CustomReport/CustomReportRepo.cs</url>
-          <line>47</line>
-          <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\Data\Services\CustomReport\CustomReportRepo.cs" initialLine="47" containingFunctionPresentation="Method 'GetGridData'">
-            <startOffsets>
-              <option value="1909" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1910" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -94,7 +94,7 @@ class Grid extends HTMLElement {
                         chart.dataset.category = c.categoryField;
                         chart.id = c.chartId;
                         chart.style.height = "700px"
-                        chart.classList.add("col-6")
+                        chart.classList.add("col-sm-6", "col-md-6", "col-xs-6");
                         chartsContainer.appendChild(chart);
                     })
                 }).catch(err => console.error(err));
@@ -131,7 +131,7 @@ class Grid extends HTMLElement {
                </div>
 
                <div class="modal-footer">
-                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                </div>
            </div>
        </div>`
@@ -194,7 +194,7 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-            console.log(gridId);
+            
 
             if (this.id !== gridId)
                 return;
@@ -213,7 +213,7 @@ class Grid extends HTMLElement {
             if (progress >= 100) {
                 progressBar.hidden = true;
                 var downloadButton = document.getElementById("ExportDownloadBtn");
-                downloadButton.hidden = false;
+                downloadButton.style.visibility = "";
                 this.isExporting = false;
                 this.isDownloaded = false;
             }
@@ -486,8 +486,8 @@ class Grid extends HTMLElement {
             template: `
             <span style="display: inline-block">
                 <span style="display:flex;align-items:center">
-                    <smart-progress-bar id="${this.id + "Progress"}" value="0" style="display: inline-block" hidden></smart-progress-bar>
-                    <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" hidden>Download Files</a>
+                    <smart-progress-bar id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
+                    <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
                 </span>
             </span>
             `,
