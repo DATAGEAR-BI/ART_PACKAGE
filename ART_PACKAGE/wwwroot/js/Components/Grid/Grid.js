@@ -4,7 +4,7 @@ import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
-//import {getChartType} from "../Charts/Charts.js"
+import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
