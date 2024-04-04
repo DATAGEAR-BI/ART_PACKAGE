@@ -1,8 +1,8 @@
 
-import * as core from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/core.js"
-import * as charts from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/charts.js";
-import * as matrial from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js";
-import * as animated from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
+// import * as core from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/core.js"
+// import * as charts from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/charts.js";
+// import * as matrial from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/material.js";
+// import * as animated from "../../../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
 import { URLS } from "../../URLConsts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
@@ -60,7 +60,8 @@ class BaseCatValChart extends HTMLElement {
     connectedCallback() {
         this.classList.add("d-flex", "justify-content-center", "align-items-center")
         this.loadingDiv.classList.add("spinner-grow", "text-primary");
-        this.chartDiv.classList.add("w-100", "h-100");
+        this.chartDiv.style.height = '100%';
+        this.chartDiv.style.width = '100%';
         this.appendChild(this.loadingDiv);
         this.appendChild(this.chartDiv);
 

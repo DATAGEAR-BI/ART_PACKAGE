@@ -4,8 +4,7 @@ import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
-//import {getChartType} from "../Charts/ChartUtils.js"
-//import {getChartType} from "../Charts/Charts.js"
+import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
@@ -48,28 +47,7 @@ class Grid extends HTMLElement {
     isDownloaded = true;
     selectProp = "";
     excelFileName = "";
-
-     filtersDiv = document.createElement("div");
- exRules = [];
-
- ops = {
-    eq: "Is Equal To",
-    neq: "Not Equal To",
-    isnull: "Is Null",
-    isnotnull: "Is Not Null",
-    isempty: "Is Empty",
-    isnotempty: "Is Not Empty",
-    startswith: "Starts With",
-    doesnotstartwith: "Does Not Start With",
-    contains: "Contains",
-    doesnotcontain: "Does Not Contain",
-    endswith: "Ends With",
-    doesnotendwith: "Does Not End With",
-    gte: "Greater Than Or Equal",
-    gt: "Greater Than",
-    lte: "Less Than Or Equal",
-    lt: "Less Than",
-};
+   
     constructor() {
         super();
 
@@ -121,7 +99,7 @@ class Grid extends HTMLElement {
                         chart.dataset.category = c.categoryField;
                         chart.id = c.chartId;
                         chart.style.height = "700px"
-                        chart.classList.add("col-6")
+                        chart.classList.add("col-sm-6", "col-md-6", "col-xs-6");
                         chartsContainer.appendChild(chart);
                     })
                 }).catch(err => console.error(err));
@@ -159,7 +137,7 @@ class Grid extends HTMLElement {
                </div>
 
                <div class="modal-footer">
-                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                </div>
            </div>
        </div>`
@@ -222,7 +200,7 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-            console.log(gridId);
+            
 
             if (this.id !== gridId)
                 return;
@@ -241,7 +219,7 @@ class Grid extends HTMLElement {
             if (progress >= 100) {
                 progressBar.hidden = true;
                 var downloadButton = document.getElementById("ExportDownloadBtn");
-                downloadButton.hidden = false;
+                downloadButton.style.visibility = "";
                 this.isExporting = false;
                 this.isDownloaded = false;
             }
@@ -515,8 +493,8 @@ class Grid extends HTMLElement {
             template: `
             <span style="display: inline-block">
                 <span style="display:flex;align-items:center">
-                    <smart-progress-bar id="${this.id + "Progress"}" value="0" style="display: inline-block" hidden></smart-progress-bar>
-                    <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" hidden>Download Files</a>
+                    <smart-progress-bar id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
+                    <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
                 </span>
             </span>
             `,
@@ -618,9 +596,6 @@ class Grid extends HTMLElement {
                                         }, 0);
                                     }
                                 }
-                                var filter = options.data.filter;
-
-                                createFiltersDiv(this.gridDiv.id,filter,this.ops);
 
                                 if (this.isCustom) {
                                     console.log(this.dataset.reportid)
@@ -765,13 +740,7 @@ class Grid extends HTMLElement {
         var grid = $(this.gridDiv).kendoGrid(options);
 
         var grid = $(this.gridDiv).data("kendoGrid");
-        this.filtersDiv.style = "margin-top:2%";
-        this.filtersDiv.id = "filters";
-        this.filtersDiv.innerHTML = ` <div class="collapse" style="margin-top:4%" id="filtersCollapse">
-                 
-                </div>`;
-        this.gridDiv.parentNode.insertBefore(this.filtersDiv, this.gridDiv);
-
+        
         // let stringfiedoptions = localStorage.getItem(`${this.gridDiv.id}-Options`);
         // if(stringfiedoptions){
         //    grid.setOptions(JSON.parse(stringfiedoptions)); 
@@ -878,9 +847,7 @@ class Grid extends HTMLElement {
             this.clrfil(e, this.gridDiv);
         });
         $(`.k-grid-${this.gridDiv.id}sh_filters`).click((e) => {
-           // this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
-            $('#filtersCollapse').collapse("toggle")
-
+            this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
         });
 
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
@@ -1099,9 +1066,7 @@ class Grid extends HTMLElement {
             filterDiv.appendChild(x);
         }
         //console.log(filters.filters.flat(Infinity));
-        //$(Modal).modal("show");
-        //$("#" + this.filtersModal.id).modal();
-        showModal(this.filtersModal.id);
+        $(Modal).modal("show");
     }
     
     clrfil(e, gridDiv) {
@@ -1365,79 +1330,4 @@ function areObjectEqual(obj1, obj2, leftedKeys) {
 
     // If all checks pass, the objects are equal
     return true;
-}
-function showModal(divId) {
-    // Retrieve the modal element
-    var modal = document.getElementById(divId);
-
-    // Add the "show" class to display the modal
-    modal.classList.add("show");
-
-    // Remove the "hide" class if present
-    modal.classList.remove("hide");
-}
-
-function getHeaderTextByField(gridId, field) {
-    var grid = $("#" + gridId).data("kendoGrid");
-    const columns = grid.columns;
-    for (let i = 0; i < columns.length; i++) {
-        if (columns[i].field === field) {
-            return columns[i].title;
-        }
-    }
-    return null;
-}
-function createFiltersDiv(dridId, obj,ops) {
-    var fDiv = document.getElementById("filtersCollapse");
-    fDiv.innerHTML = "";
-
-    if (obj == null || !obj) return null;
-
-    var logic = obj.logic;
-    var filters = obj.filters;
-
-    [...filters].forEach((x) => {
-        if (x.field) {
-            var existinp = document.getElementById(`${x.field}-0`);
-            var fieldXDisplayName = getHeaderTextByField(dridId, x.field);
-
-            if (existinp) {
-                var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${fieldXDisplayName}=> ${oldVal},${ops[x.operator]} ${x.value}`;
-            } else {
-                var inp = document.createElement("input");
-                inp.id = x.field + "-0";
-                inp.type = "text";
-                inp.value = `${fieldXDisplayName}=> ${ops[x.operator]} ${x.value}`;
-                inp.classList = ["form-control"];
-                inp.readOnly = true;
-                fDiv.appendChild(inp);
-            }
-            //var lgc = document.createElement("div");
-            //lgc.innerText = logic;
-            //frag.appendChild(lgc);
-        } else {
-            [...x.filters].forEach((y) => {
-                var existinp = document.getElementById(`${y.field}-0`);
-                var fieldYDisplayName = getHeaderTextByField(dridId, y.field);
-
-                if (existinp) {
-                    var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${fieldYDisplayName}=> ${oldVal},${ops[y.operator]} ${y.value
-                        }`;
-                } else {
-                    var inp = document.createElement("input");
-                    inp.id = y.field + "-0";
-                    inp.type = "text";
-                    inp.value = `${fieldYDisplayName}=> ${ops[y.operator]} ${y.value}`;
-                    inp.classList = ["form-control"];
-                    inp.readOnly = true;
-                    fDiv.appendChild(inp);
-                }
-                //var lgc = document.createElement("div");
-                //lgc.innerText = x.logic;
-                //frag.appendChild(lgc);
-            });
-        }
-    });
 }
