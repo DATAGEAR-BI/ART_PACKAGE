@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -64,7 +65,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart1Data.ToList(),
                     Title = "Cases Per Status",
                     Cat = "CASE_STATUS",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ArtStDgAmlCasesPerCategory>
@@ -73,7 +75,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart2data.ToList(),
                     Title = "Cases Per Category",
                     Cat = "CASE_CATEGORY",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 },
 
                 new ChartData<ArtStDgAmlCasesPerPriority>
@@ -82,7 +85,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart4Data.ToList(),
                     Title = "Cases Per Priority",
                     Cat = "CASE_PRIORITY",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 }
             };
 

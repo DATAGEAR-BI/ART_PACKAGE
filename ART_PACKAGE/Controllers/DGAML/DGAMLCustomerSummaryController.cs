@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -60,7 +61,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart1Data.ToList(),
                     Title = "Customer Per Type",
                     Cat = "CUSTOMER_TYPE",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
                 },
 
                 new ChartData<ArtStDgAmlCustomerPerBranch>
@@ -69,7 +71,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
                     Title = "Customer Per Branch",
                     Cat = "BRANCH_NAME",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.bar
                 }
             };
 

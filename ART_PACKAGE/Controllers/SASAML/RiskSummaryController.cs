@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -58,7 +59,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart1Data.ToList(),
                     Title = "Number OF Customers Per Risk Classification",
                     Cat = "RISK_CLASSIFICATION",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ArtStAmlPropRiskClass>
@@ -67,7 +69,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart2data.ToList(),
                     Title = "Number OF Customers Per Proposed Risk Classification",
                     Cat = "PROPOSED_RISK_CLASS",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
                 }
             };
 

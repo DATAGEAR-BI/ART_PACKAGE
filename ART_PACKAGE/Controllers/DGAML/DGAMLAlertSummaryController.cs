@@ -7,6 +7,7 @@ using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -64,8 +65,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart1Data.ToList(),
                     Title = "Alerts Per Status",
                     Cat = "ALERT_STATUS",
-                    Val = "ALERTS_COUNT"
-
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStDgAmlAlertPerOwner>
                 {
@@ -73,7 +74,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart2data.ToList(),
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
-                    Val = "ALERTS_CNT_SUM"
+                    Val = "ALERTS_CNT_SUM",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStDgAmlAlertsPerBranch>
                 {
@@ -81,7 +83,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart3data.ToList(),
                     Title = "Alerts Per Branch",
                     Cat = "BRANCH_NAME",
-                    Val = "ALERTS_COUNT"
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.bar
                 },
                 new ChartData<ArtStDgAmlAlertsPerScenario>
                 {
@@ -89,7 +92,8 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart4data.ToList(),
                     Title = "Alerts Per Scenario",
                     Cat = "SCENARIO_NAME",
-                    Val = "ALERTS_COUNT"
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.donut
                 },
             };
 

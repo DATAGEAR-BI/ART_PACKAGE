@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -113,7 +114,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart1Data.ToList(),
                     Title = "Alerts Per Branch",
                     Cat = "BRANCH_NAME",
-                    Val = "NUMBER_OF_ALERTS"
+                    Val = "NUMBER_OF_ALERTS",
+                    Type = ChartType.bar
 
                 },
                 new ChartData<ART_ST_FATCA_ALERTS_PER_TYPE>
@@ -122,7 +124,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart2Data.ToList(),
                     Title = "Alerts Per Type",
                     Cat = "TYPE",
-                    Val = "NUMBER_OF_ALERTS"
+                    Val = "NUMBER_OF_ALERTS",
+                    Type = ChartType.donut
                 },
                 new ChartData<ART_ST_FATCA_CASES_PER_BRANCH>
                 {
@@ -130,7 +133,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart3Data.ToList(),
                     Title = "Cases Per Branch",
                     Cat = "BRANCH_NAME",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.bar
                 },
                 new ChartData<ART_ST_FATCA_CASES_PER_TYPE>
                 {
@@ -138,7 +142,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart4Data.ToList(),
                     Title = "Cases Per Type",
                     Cat = "CASE_TYPE",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ART_ST_FATCA_CASES_PER_STATUS>
@@ -147,7 +152,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart5Data.ToList(),
                     Title = "Cases Per Status",
                     Cat = "CASE_STATUS",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ART_ST_FATCA_CUSTS_PER_NATION>
@@ -156,7 +162,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart6Data.ToList(),
                     Title = "Customers Per Nationality",
                     Cat = "MAIN_NATIONALITY",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
 
                 }
             };
