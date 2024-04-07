@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -7,7 +8,6 @@ using Data.Data.ARTGOAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
@@ -75,7 +75,7 @@ namespace ART_PACKAGE.Controllers.GOAML
                     Title = "Number of Reports Per Creator",
                     Cat = "CREATED_BY",
                     Val = "NUMBER_OF_REPORTS"
-                }
+                }*/
             };
 
 

@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -7,7 +8,6 @@ using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -70,14 +70,14 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Val = "ALERTS_COUNT",
                     Type = ChartType.donut
                 },
-                new ChartData<ArtStDgAmlAlertPerOwner>
+                /*new ChartData<ArtStDgAmlAlertPerOwner>
                 {
                     ChartId = "StAlertPerOwner",
                     Data = chart2data.ToList(),
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
                     Val = "ALERTS_CNT_SUM"
-                },
+                },*/
                 new ChartData<ArtStDgAmlAlertsPerBranch>
                 {
                     ChartId = "StAlertPerBranch",
