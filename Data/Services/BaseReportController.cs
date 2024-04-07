@@ -1,0 +1,66 @@
+﻿using ART_PACKAGE.Helpers.Grid;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Linq.Expressions;
+
+
+namespace ART_PACKAGE.Controllers
+{
+    public abstract class BaseReportController<TGridConstuctor, TRepo, TContext, TModel> : BaseController
+        where TContext : DbContext
+        where TModel : class
+        where TRepo : IBaseRepo<TContext, TModel>
+        where TGridConstuctor : IGridConstructor<TRepo, TContext, TModel>
+    {
+        protected readonly TGridConstuctor _gridConstructor;
+        protected Expression<Func<TModel, bool>>? baseCondition;
+        protected IEnumerable<Expression<Func<TModel, object>>>? includes;
+
+
+        protected BaseReportController(TGridConstuctor gridConstructor, UserManager<AppUser> um) : base(um)
+        {
+            _gridConstructor = gridConstructor;
+        }
+
+        public abstract IActionResult Index();
+        [HttpPost]
+        public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
+        {
+
+            if (request.IsIntialize)
+            {
+
+                GridIntializationConfiguration res = _gridConstructor.IntializeGrid(typeof(TModel).Name, User);
+                return new ContentResult
+                {
+                    ContentType = "application/json",
+                    Content = JsonConvert.SerializeObject(res)
+                };
+            }
+            else
+            {
+                GridResult<TModel> res = _gridConstructor.GetGridData(request, baseCondition, includes);
+                return new ContentResult
+                {
+                    ContentType = "application/json",
+                    Content = JsonConvert.SerializeObject(res, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                };
+            }
+        }
+
+
+
+
+        [HttpPost("[controller]/[action]/{gridId}")]
+
+        public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
+        {
+            AppUser user = await GetUser();
+            string folderGuid = _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+            return Ok(new { folder = folderGuid });
+        }
+
+
+    }
+}
