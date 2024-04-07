@@ -10,6 +10,7 @@ using System.Collections;
 using System.Data;
 using System.Linq.Dynamic.Core;
 using Data.Services.Grid;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -66,7 +67,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart1Data.ToList(),
                     Title = "Customer Per Type",
                     Cat = "CUSTOMER_TYPE",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStCustPerRisk>
                 {
@@ -74,7 +76,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart2data.ToList(),
                     Title = "Customer Per Risk Classification",
                     Cat = "RISK_CLASSIFICATION",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStCustPerBranch>
                 {
@@ -82,7 +85,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
                     Title = "Customer Per Branch",
                     Cat = "BRANCH_NAME",
-                    Val = "NUMBER_OF_CUSTOMERS"
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.bar
                 }
             };
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -67,7 +68,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart1Data.ToList(),
                     Title = "Cases Per Status",
                     Cat = "CASE_STATUS",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ArtStCasesPerCategory>
@@ -76,7 +78,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart2data.ToList(),
                     Title = "Cases Per Category",
                     Cat = "CASE_CATEGORY",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStCasesPerSubcat>
                 {
@@ -84,7 +87,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart3Data.ToList(),
                     Title = "Cases Per Sub Category",
                     Cat = "CASE_SUBCATEGORY",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 },
                 new ChartData<ArtStCasesPerPriority>
                 {
@@ -92,7 +96,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart4Data.ToList(),
                     Title = "Cases Per Priority",
                     Cat = "CASE_PRIORITY",
-                    Val = "NUMBER_OF_CASES"
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 }
             };
 

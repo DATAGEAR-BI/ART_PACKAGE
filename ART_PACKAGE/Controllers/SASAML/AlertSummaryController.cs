@@ -7,6 +7,7 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -65,7 +66,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart1Data.ToList(),
                     Title = "Alerts Per Status",
                     Cat = "ALERT_STATUS",
-                    Val = "ALERTS_COUNT"
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ArtStAmlAlertsPerBranch>
@@ -75,14 +77,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Title = "Alerts Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "ALERTS_COUNT"
-                }
-                , new ChartData<ArtStAmlAlertsPerScenario>
-                {
-                    ChartId = "StAmlAlertsPerScenario",
-                    Data = chart3data.ToList(),
-                    Title = "Alerts Per Scenario",
-                    Cat = "SCENARIO_NAME",
-                    Val = "ALERTS_COUNT"
+                    Type = ChartType.donut
+
                 }
             };
 

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Data;
 using System.Linq.Dynamic.Core;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -100,7 +101,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart1Data.ToList(),
                     Title = "Cases Per Status",
                     Cat = "CASE_STATUS",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "TOTAL_NUMBER_OF_CASES",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ArtSystemPerfPerType>
@@ -109,7 +111,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart2data.ToList(),
                     Title = "Cases Per Type",
                     Cat = "CASE_TYPE",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "TOTAL_NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 },
 
 
@@ -123,7 +126,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
                     Title = "Cases Per Trans Direction",
                     Cat = "Date",
-                    Val = "CASES"
+                    Val = "CASES",
+                    Type = ChartType.curvedline
                 });
             }
             if (dbType == DbTypes.SqlServer)
@@ -138,7 +142,8 @@ namespace ART_PACKAGE.Controllers.ECM
                     }).ToList(),
                     Title = "Cases Per Transaction Direction",
                     Cat = "TRANSACTION_DIRECTION",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "TOTAL_NUMBER_OF_CASES",
+                    Type = ChartType.donut
                 });
             }
             return new ContentResult

@@ -1,9 +1,10 @@
 ﻿import { Filters, GoToDeatailsUrls } from "./Modules/ExternalFilters.js"
-import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
+//import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
+import  {getChartType} from "./Components/Charts/Charts.js"
 import { URLS as Urls } from "./URLConsts.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 
-
+const charts = document.getElementById("charts");
 var exRules = [];
 class ExternalFilter extends HTMLElement {
     f = [];
@@ -210,7 +211,7 @@ class ExternalFilter extends HTMLElement {
 }
 
 function callDefinedCharts(url) {
-    var spinner = new Spinner().spin(document.getElementById("charts"));
+    var spinner = new Spinner().spin(charts);
     fetch(url, {
         method: "POST",
         headers: {
@@ -219,10 +220,27 @@ function callDefinedCharts(url) {
         },
         body: JSON.stringify({ req: null, procFilters: exRules }),
     }).then(x => x.json()).then(data => {
-        [...data].forEach(x => {
-            var charttype = document.getElementById(x.ChartId).dataset.type;
+        [...data].forEach(c => {
 
-            makedynamicChart(parseInt(charttype), x.Data, x.Title, x.ChartId, x.Val, x.Cat)
+            let chart = document.getElementById(c.ChartId);
+            
+            if(chart)
+            {
+                chart.setdata(c.Data);
+                $(".spinner").remove();
+                return;
+            }
+            
+            let type = getChartType(c.Type);
+            chart = document.createElement(type);
+            chart.dataset.value = c.Val;
+            chart.dataset.title = c.Title;
+            chart.dataset.category = c.Cat;
+            chart.id = c.ChartId;
+            chart.style.height = "700px"
+            chart.classList.add("col-sm-12", "col-md-12", "col-xs-12");
+            charts.appendChild(chart);
+            
 
         });
         $(".spinner").remove();
