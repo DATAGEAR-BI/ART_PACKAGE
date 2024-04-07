@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Helpers.CustomReport
+﻿using ART_PACKAGE.Areas.Identity.Data;
+
+namespace ART_PACKAGE.Helpers.CustomReport
 {
     public class ChartData<T>
     {
@@ -7,6 +9,8 @@
         public string Val { get; set; }
         public string Title { get; set; }
         public List<T> Data { get; set; }
+
+        public ChartType Type { get; set; }
 
     }
 }

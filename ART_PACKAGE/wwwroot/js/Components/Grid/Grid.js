@@ -976,6 +976,7 @@ class Grid extends HTMLElement {
         var filters = grid.dataSource.filter();
         var filterDiv = document.getElementById(filtersDivId);
         filterDiv.innerHTML = "";
+        filterDiv.classList.add("row")
         function buildInputs(filter) {
 
             if (!filter) return;
@@ -1001,7 +1002,7 @@ class Grid extends HTMLElement {
            
             if (filter.logic) {
                 var logicDiv = document.createElement("div");
-                logicDiv.classList.add("row");
+                logicDiv.classList.add("row" , "col-sm-12" , "col-md-12" , "col-xs-12");
                 var childFilter = [];
                 var res = [];
                 filter.filters.forEach(function (f) {
@@ -1011,8 +1012,8 @@ class Grid extends HTMLElement {
                     res.push(childFilter[i]); // Add the original element
                     // Add 'x' after each original element, except after the last one
                     if (i < childFilter.length - 1) {
-                        var logic = document.createElement("p");
-                        logic.classList.add("m-2");
+                        var logic = document.createElement("div");
+                        logic.classList.add("m-2" , "col-sm-12" , "col-md-12" , "col-xs-12" , "text-center");
                         logic.innerText = filter.logic;
                         res.push(logic);
                     }
@@ -1021,12 +1022,12 @@ class Grid extends HTMLElement {
                 return logicDiv;
             } else {
                 var div = document.createElement("div");
-                div.classList.add("col-12");
-                var filterInput = document.createElement("m-input");
-                filterInput.dataset.value = `${ops[filter.operator]} ${filter.value}`;
+                div.classList.add("row" ,"col-sm-12","col-md-12","col-xs-12");
+                var filterInput = document.createElement("input");
+                filterInput.classList.add("form-control")
                 var column = columns.find(x => x.field == filter.field);
-                filterInput.dataset.title = column.title;
-                filterInput.dataset.disabled = true;
+                filterInput.value = `${column.title} ${ops[filter.operator]} ${filter.value}`;
+                filterInput.disabled = true;
                 div.appendChild(filterInput);
                 return div;
             }
@@ -1034,6 +1035,7 @@ class Grid extends HTMLElement {
 
         if (filters) {
             var x = buildInputs(filters);
+            console.log(filters,x)
             filterDiv.appendChild(x);
         }
         //console.log(filters.filters.flat(Infinity));

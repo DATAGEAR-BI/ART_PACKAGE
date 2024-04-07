@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Rotativa.AspNetCore;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
+using Rotativa.AspNetCore.Options;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -31,7 +32,8 @@ namespace ART_PACKAGE.Helpers.Pdf
             {
                 ViewData = ViewData,
                 //CustomSwitches = footer,
-                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageSize = Size.B0
             };
 
 
