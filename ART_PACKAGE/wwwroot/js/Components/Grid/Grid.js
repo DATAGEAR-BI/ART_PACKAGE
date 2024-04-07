@@ -99,7 +99,7 @@ class Grid extends HTMLElement {
                         chart.dataset.category = c.categoryField;
                         chart.id = c.chartId;
                         chart.style.height = "700px"
-                        chart.classList.add("col-sm-6", "col-md-6", "col-xs-6");
+                        chart.classList.add("col-sm-12", "col-md-12", "col-xs-12");
                         chartsContainer.appendChild(chart);
                     })
                 }).catch(err => console.error(err));
@@ -1027,7 +1027,6 @@ class Grid extends HTMLElement {
                 lte: "Less Than Or Equal",
                 lt: "Less Than",
             };
-           
             if (filter.logic) {
                 var logicDiv = document.createElement("div");
                 logicDiv.classList.add("row");
@@ -1047,6 +1046,7 @@ class Grid extends HTMLElement {
                     }
                 }
                 res.forEach(x => logicDiv.appendChild(x));
+
                 return logicDiv;
             } else {
                 var div = document.createElement("div");
@@ -1057,6 +1057,7 @@ class Grid extends HTMLElement {
                 filterInput.dataset.title = column.title;
                 filterInput.dataset.disabled = true;
                 div.appendChild(filterInput);
+
                 return div;
             }
         }
@@ -1064,6 +1065,8 @@ class Grid extends HTMLElement {
         if (filters) {
             var x = buildInputs(filters);
             filterDiv.appendChild(x);
+            console.log("filter div ", filterDiv);
+
         }
         //console.log(filters.filters.flat(Infinity));
         $(Modal).modal("show");

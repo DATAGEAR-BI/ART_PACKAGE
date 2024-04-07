@@ -15,16 +15,22 @@ var isChartChanged = false;
 //})
 fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
     x => {
+        console.log("x.statuses", x.statuses);
+
        var statusData = x.statuses;
         var changeChart = (di) => {
-         /*   var year = di.year;
+            var year = di.year;
+            console.log("statuses", statusData);
             var yearedStatuseData = statusData.filter(x => x.year == year);
-            if (!isChartChanged) {
+            /*if (!isChartChanged) {
                 makedynamicChart(0, x.statuses, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
                 isChartChanged = true;
-            } else {
+            } else {*/
+
+            console.log(year);
+            console.log(yearedStatuseData);
                 makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
-            }*/
+            //}
 
         }
         makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month", changeChart);

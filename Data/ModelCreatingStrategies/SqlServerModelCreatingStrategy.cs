@@ -2073,6 +2073,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERT_STATUS");
 
                 entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count");
+                entity.Property(e => e.Year).HasColumnName("Year");
             });
 
             modelBuilder.Entity<ArtHomeNumberOfAccount>(entity =>

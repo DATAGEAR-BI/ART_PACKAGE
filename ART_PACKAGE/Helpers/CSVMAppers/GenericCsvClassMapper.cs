@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         public GenericCsvClassMapper(ReportConfigService reportsConfigResolver, List<string>? includedColumns = null)
         {
-            ReportConfig? reportConfig = reportsConfigResolver.GetConfigs(typeof(TModel).Name);
+            ReportConfig? reportConfig = ReportConfigService.GetConfigs<TModel>();
 
             Type modelType = typeof(TModel);
 
@@ -119,7 +119,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {
                             displayName = displayNameConfig.DisplayName;
                         }*/
-                        if (reportConfig.DisplayNames.ContainsKey(prop.Name) && reportConfig.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
+                        if (reportConfig is not null && reportConfig.DisplayNames.ContainsKey(prop.Name) && reportConfig.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
                         {
                             displayName = displayNameConfig.DisplayName;
 

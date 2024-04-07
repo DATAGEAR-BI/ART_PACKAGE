@@ -784,7 +784,7 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 } else {
-                    var exportUrl = params ? `/${controller}/ExportPdf` : `/${controller}/ExportPdf`;
+                    var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
                     res = await fetch(exportUrl, {
                         method: "POST",
                         headers: {

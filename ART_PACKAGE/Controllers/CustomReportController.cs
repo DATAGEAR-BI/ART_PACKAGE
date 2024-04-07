@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services.CustomReport;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -134,6 +134,13 @@ namespace ART_PACKAGE.Controllers
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, gridId);
             return Ok(new { folder = folderGuid });
+        }
+        [HttpPost("[controller]/[action]/{gridId}")]
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId)
+        {
+            int reportId = Convert.ToInt32(gridId.Split("-")[1]);
+            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
+            return File(pdfBytes, "application/pdf");
         }
 
         [HttpGet("[controller]/{reportId}")]

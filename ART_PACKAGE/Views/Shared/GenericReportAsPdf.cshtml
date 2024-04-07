@@ -99,7 +99,7 @@
 
                                         <td>
                                             <div>
-                                                @if (item[key].GetType() == typeof(double))
+                                                @if (item[key] is not null && item[key].GetType() == typeof(double))
                                                 {
                                                     @string.Format(CultureInfo.InvariantCulture, "{0:n2}", @item[key])
                                                 }
