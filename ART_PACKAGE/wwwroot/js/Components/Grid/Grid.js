@@ -54,6 +54,60 @@ class Grid extends HTMLElement {
     
 
     }
+    filterAction(e) {
+        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
+
+        var multiselects = document.querySelector(`[data-role=multiselect][data-field=${e.field}]`);
+        if (multiselects) {
+            e.preventDefault();
+            var filter = { logic: "or", filters: [] };
+            var values = $(multiselects).data("kendoMultiSelect").value();
+            var op = multiselects.parentElement.parentElement.querySelector("select[title='Operator']").value
+            if (values && values.length > 0) {
+                $.each(values, function (i, v) {
+                    filter.filters.push({
+                        field: e.field,
+                        operator: op,
+                        value: v,
+                    });
+                });
+            } else {
+               /* filter.filters.push({
+                    field: e.field,
+                    operator: op,
+                    value: "",
+                });*/
+            }
+
+            var filters = $(this.gridDiv).data("kendoGrid").dataSource.filter();
+            if (filters) {
+                var remainingFilters = filters.filters.filter((x) => {
+                    if (x.field && x.field != e.field) return true;
+                    if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                });
+
+                var newFilter = [];
+
+                if (filter.filters.length == 0) {
+                    newFilter = [...remainingFilters];
+                } else {
+                    newFilter = [...remainingFilters, filter];
+                }
+                var parentFilter = {
+                    logic: "and",
+                    filters: [...newFilter],
+                };
+                $(this.gridDiv).data("kendoGrid").dataSource.filter(parentFilter);
+            } else {
+                var parentFilter = {
+                    logic: "and",
+                    filters: [filter],
+                };
+                $(this.gridDiv).data("kendoGrid").dataSource.filter(parentFilter);
+            }
+        }
+
+    }
     connectedCallback() {
         
         if(this.dataset.prop){
@@ -333,7 +387,11 @@ class Grid extends HTMLElement {
         var cols = columnNames.map((column) => {
             var filter = {};
             if (column.isDropDown) {
-                filter = columnFilters.multiSelectFilter(column);
+                filter = columnFilters.multiSelectFilter(column, (y)=> { this.onChangeMultiselect(y) });
+                
+                filter["ui"].bind("change", (e) => {
+                    console.log("Ooo-090-09808989798786")
+                })
                 this.isMultiSelect.push(column.name);
                 this.MultiSelectWithMenu.push(column);
             }
@@ -676,6 +734,21 @@ class Grid extends HTMLElement {
                 height: 700,
                 groupable: true,
                 scrollable: true,
+            /*filter: (e) => {
+                this.filterAction(e);
+
+            },*/
+            /*filterMenuInit:  (e)=> {
+                console.log("ayaaaaaaaas")
+        // Attach an event handler to the filter menu's "filter" button click event
+        e.container.find('.k-filter-menu-update').click(function () {
+            // Call a function to handle the filter change event
+            handleFilterChange();
+        });*/
+    
+
+                //},
+
                 //excelExport: function (e) {
                 //    e.preventDefault();
 
@@ -691,6 +764,47 @@ class Grid extends HTMLElement {
                     for (var i = 0; i < this.columns.length; i++) {
                         grid.autoFitColumn(i);
                     }
+                    /*$('.k-action-buttons button[type="reset"]').on('click', function (eva) {
+                        // Call your function to handle clear filter button click
+                        //handleClearFilterButtonClick();
+                        console.log("reset", $(e.container));
+                        console.log("reset", $(e.container).data("kendoPopup"));
+
+                        // Your custom logic to handle the clear button event
+                        var multi = eva.target.parentElement.parentElement.querySelector(`[data-role=multiselect][data-field]`);
+
+                        if (multi) {
+                            var field = multi.dataset.field;
+                            e.preventDefault();
+
+                            $(multi).data("kendoMultiSelect").value(null);
+                            var filters = $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter();
+
+                            var filtersExceptThis = filters.filters.filter((x) => {
+                                if (x.field && x.field != field) return true;
+                                if (x.filters && x.filters.some((x) => x.field != field)) return true;
+                            });
+                            console.log("fxt", filtersExceptThis)
+                            console.log("fls", filters)
+                            var newfilterObject = [...filtersExceptThis].length > 0 ? [...filtersExceptThis] : []
+                            console.log(filtersExceptThis)
+                            if ([...filtersExceptThis].length > 0) {
+                                $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter({
+                                    logic: "or",
+                                    filters: [...filtersExceptThis],
+                                });
+                            } else {
+                                $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter(null);
+                            }
+                            console.log("ggg", $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter())
+
+                            //$(e.container).data("kendoPopup").close();
+
+                            return;
+
+                        }
+                        console.log("hamadaaaaaaaaaaaaaaaaaaaaaaa")
+                    });*/
 
                     //if (isColoredRows) {
                     //    var rows = e.sender.tbody.children();
@@ -737,19 +851,27 @@ class Grid extends HTMLElement {
 
             }
         options = this.loadState(options);
-        var grid = $(this.gridDiv).kendoGrid(options);
+        $(this.gridDiv).kendoGrid(options);
 
         var grid = $(this.gridDiv).data("kendoGrid");
         
         // let stringfiedoptions = localStorage.getItem(`${this.gridDiv.id}-Options`);
         // if(stringfiedoptions){
-        //    grid.setOptions(JSON.parse(stringfiedoptions)); 
+        //    grid.setOptions(JSON.parse(stringfiedoptions));
         // }
 
+        function grid_filterMenuInit(e) {
+        }
+       // grid.bind("filterMenuInit", grid_filterMenuInit);
+        $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
+            console.log("999999999999999999999999999")
+        })
+
+        
         // event for constructing the filters for multi select columns
-        grid.bind("filterMenuInit", (e) => {
+        grid.bind("columnMenuOpen", (e) => {
             if (this.isMultiSelect.includes(e.field)) {
-                console.log(e.field);
+                console.log("0000000000000000",e);
                 e.container.find("[type='submit']").click((ev) => {
                     ev.preventDefault();
                     var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
@@ -813,8 +935,7 @@ class Grid extends HTMLElement {
                 });
             }
         });
-
-
+        
 
         grid.thead.on("click", ".k-checkbox", this.ToggleSelectAll);
 
@@ -840,7 +961,31 @@ class Grid extends HTMLElement {
             }
         });
         
+        $('.k-action-buttons button[type="reset"]').click(function (e) {
+            console.log("reset")
+            // Your custom logic to handle the clear button event
+            var multi = e.target.parentElement.parentElement.querySelector(`[data-role=multiselect][data-field]`);
 
+            if (multi) {
+                var field = multi.dataset.field;
+                e.preventDefault();
+
+                $(multi).data("kendoMultiSelect").value(null);
+                var filters = $(this.gridDiv).data("kendoGrid").dataSource.filter();
+
+                var filtersExceptThis = filters.filters.filter((x) => {
+                    if (x.field && x.field != field) return true;
+                    if (x.filters && x.filters.some((x) => x.field != field)) return true;
+                });
+                $(this.gridDiv).data("kendoGrid").dataSource.filter({
+                    logic: "and",
+                    filters: [...filtersExceptThis],
+                });
+
+                return;
+
+            }
+        });
 
 
         $(`.k-grid-${this.gridDiv.id}clrfil`).click((e) => {
@@ -915,6 +1060,7 @@ class Grid extends HTMLElement {
             }
         });
 
+        $(".k-grid-clearfilters").click((e) => {console.log("4444444444444444444444") })
 
         this.customtToolBarBtns.forEach(x => {
             $(`.k-grid-${x.name}`).click((e) => {
@@ -1303,6 +1449,77 @@ class Grid extends HTMLElement {
     reload() {
         this.intializeColumns();
     }
+    
+    onChangeMultiselect(e) {
+        (e) => {
+            console.log("0000000000000000");
+        if (this.isMultiSelect.includes(e.field)) {
+            console.log("0000000000000000", e);
+            //e.container.find("[type='submit']").click((ev) => {
+                ev.preventDefault();
+                var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
+                var op = e.container.find("select[title='Operator']")[0].value;
+                var values = $(multiselects).data("kendoMultiSelect").value();
+
+                var filter = { logic: "or", filters: [] };
+
+                if (values && values.length > 0) {
+
+                    values.forEach(x => {
+                        var f = {
+                            field: e.field,
+                            operator: op,
+                            value: x,
+                        };
+                        filter.filters.push(f);
+                    });
+
+                } else {
+                    filter.filters.push({
+                        field: e.field,
+                        operator: op,
+                        value: "",
+                    });
+                }
+                console.log(filter);
+                var filters = grid.dataSource.filter();
+                if (filters) {
+
+                    var remainingFilters = filters.filters.filter((x) => {
+                        if (x.field && x.field != e.field) return true;
+                        if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                    });
+
+                    var newFilter = [];
+
+                    if (filter.filters.length == 0) {
+                        newFilter = [...remainingFilters];
+                    } else {
+                        newFilter = [...remainingFilters, filter];
+                    }
+                    var parentFilter = {
+                        logic: "and",
+                        filters: [...newFilter],
+                    };
+                    grid.dataSource.filter(parentFilter);
+                }
+                else {
+
+
+                    var parentFilter = {
+                        logic: "and",
+                        filters: [filter],
+                    };
+                    grid.dataSource.filter(parentFilter);
+                    console.log(parentFilter);
+                }
+
+                $(e.container).data("kendoPopup").close();
+            
+        }
+    }
+}
+
 }
 customElements.define("m-grid", Grid);
 function areObjectEqual(obj1, obj2, leftedKeys) {

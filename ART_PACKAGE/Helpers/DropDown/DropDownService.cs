@@ -223,20 +223,36 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetReportstatuscodeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportStatusCode == null || string.IsNullOrEmpty(x.ReportStatusCode.Trim()) ? "UNKNOWN" : x.ReportStatusCode).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(s => s.LookupName == "report_status").Select(x => x.LookupValue == null || string.IsNullOrEmpty(x.LookupValue.Trim()) ? "UNKNOWN" : x.LookupValue).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
 
         public List<SelectItem> GetReportTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportCode == null || string.IsNullOrEmpty(x.ReportCode.Trim()) ? "UNKNOWN" : x.ReportCode).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(s => s.LookupName == "report_type").Select(x => x.LookupValue == null || string.IsNullOrEmpty(x.LookupValue.Trim()) ? "UNKNOWN" : x.LookupValue).Select(x => new SelectItem { text = x, value = x }).ToList();
+
             return distinct_value;
 
         }
         public List<SelectItem> GetReportPriorityDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.Priority == null || string.IsNullOrEmpty(x.Priority.Trim()) ? "UNKNOWN" : x.Priority).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(s => s.LookupName == "report_priority").Select(x => x.LookupValue == null || string.IsNullOrEmpty(x.LookupValue.Trim()) ? "UNKNOWN" : x.LookupValue).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetCurrencyCodeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(s => s.LookupName == "currency_type").Select(x => x.LookupValue == null || string.IsNullOrEmpty(x.LookupValue.Trim()) ? "UNKNOWN" : x.LookupValue).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportPersonTypeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(s => s.LookupName == "reportingPersons").Select(x => x.LookupValue == null || string.IsNullOrEmpty(x.LookupValue.Trim()) ? "UNKNOWN" : x.LookupValue).Select(x => new SelectItem { text = x, value = x }).ToList();
+
             return distinct_value;
 
         }

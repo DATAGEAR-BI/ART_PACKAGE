@@ -733,7 +733,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.Action)
                     .HasColumnName("ACTION")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .UseCollation("Arabic_BIN");
 
                 entity.Property(e => e.Currencycodelocal)
                     .HasMaxLength(255)
@@ -771,7 +771,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.Reason)
                     .HasMaxLength(4000)
                     .HasColumnName("REASON")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .UseCollation("Arabic_BIN");
 
                 entity.Property(e => e.Rentitybranch)
                     .HasMaxLength(255)
@@ -6806,6 +6806,39 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .HasColumnName("version");
             });
+            modelBuilder.Entity<Lookup>(entity =>
+            {
+                entity.ToTable("LOOKUPS", "target");
+
+                entity.Property(e => e.BusinessUnit)
+                    .HasMaxLength(255)
+                    .HasColumnName("BUSINESS_UNIT");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("CREATED_BY");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(4000)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.LookupKey)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_KEY");
+
+                entity.Property(e => e.LookupName)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_NAME");
+
+                entity.Property(e => e.LookupValue)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_VALUE");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("MODIFIED_BY");
+            });
+
 
             modelBuilder.Entity<ReportIndicatorType>(entity =>
             {
