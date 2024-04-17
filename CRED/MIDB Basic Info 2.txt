@@ -1,0 +1,51 @@
+VPN for new env 
+
+Username: ameen.saeed
+
+Password: wf6rh$mV
+
+User : hisham.saeed
+Password : Asdf@2468
+
+Username: ehab.hafez
+Password : ehab.hafez
+
+Username: mohamed.eid
+Password: i9yerd%H
+
+
+remote gatway 41.222.172.198 , 154.236.173.2 , 41.33.141.186
+port 10443
+
+hqdomain\sasinst
+sasdemo@hqdomain.com		Pass:Welcome_123@2020
+sassrv@hqdomain.com
+
+Prod SAS  Servers
+    HostName				 Internal IP    External IP 
+SasMetadat.hqdomain.com 	172.16.135.10  10.213.213.110	2 Cores		Ram: 16GB		200GB only C 
+SAS-Compute.hqdomain.com    172.16.135.11  10.213.213.111	8 Cores		Ram: 64GB		500GB only C
+SasWeb.hqdomain.com     	172.16.135.12  10.213.213.112	4 Cores		Ram: 24GB		300GB only C
+SasVaar.hqdomain.com 		172.16.135.13  10.213.213.113	4 Cores		Ram: 48GB		500GB only C
+SAS-DB.hqdomain.com         172.16.135.14  10.213.213.114	8 Cores		Ram: 24GB		400GB only C 
+ServerName : SAS-DB\MSSQLSERVERDB		U:sa	P:sa1
+
+
+    HostName				 Internal IP    External IP 
+CloneSasMeta.hqdomain.com   172.16.136.10	10.213.213.210	2 Cores		Ram: 12GB		200GB only C 
+CLONESASCOMP.hqdomain.com   172.16.136.11   10.213.213.211	4 Cores		Ram: 32GB		300GB only C 
+CloneSasWeb.hqdomain.com    172.16.136.12   10.213.213.212	2 Cores		Ram: 32GB		300GB only C                                   
+CloneSasVar.hqdomain.com    172.16.136.13   10.213.213.213	4 Cores		Ram: 24GB		300GB only C                                   
+CloneSasDB.hqdomain.com     172.16.136.14   10.213.213.214	6 Cores		Ram: 24GB		250GB only C                                   
+U:sa	P:sa1
+
+
+Dev env:
+    HostName				 Internal IP    
+sas-meta-dev.hqdomain.com   172.16.136.20		4 Cores		Ram: 8GB		200GB only C 
+sas-comp-dev.hqdomain.com   172.16.136.21   	16 Cores	Ram: 32GB		300GB only C 
+sas-web-dev.hqdomain.com    172.16.136.24   	4 Cores		Ram: 24GB		300GB only C                                   
+sas-va-dev.hqdomain.com     172.16.136.23   	4 Cores		Ram: 24GB		300GB only C                                   
+sas-db-dev.hqdomain.com     172.16.136.22   	4 Cores		Ram: 32GB		250GB only C
+
+
