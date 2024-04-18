@@ -1174,7 +1174,7 @@ class Grid extends HTMLElement {
                 lte: "Less Than Or Equal",
                 lt: "Less Than",
             };
-            if (filter.logic) {
+            if (filter.logic && filter.logic!="or") {
                 var logicDiv = document.createElement("div");
                 logicDiv.classList.add("row" , "col-sm-12" , "col-md-12" , "col-xs-12");
                 var childFilter = [];
@@ -1200,8 +1200,25 @@ class Grid extends HTMLElement {
                 div.classList.add("row" ,"col-sm-12","col-md-12","col-xs-12");
                 var filterInput = document.createElement("input");
                 filterInput.classList.add("form-control")
-                var column = columns.find(x => x.field == filter.field);
-                filterInput.value = `${column.title} ${ops[filter.operator]} ${filter.value}`;
+                var column = {};
+                
+                if (filter.logic && filter.logic == "or") {
+                    column = columns.find(x => x.field == filter.filters[0].field)
+
+                    var filterValue = `${column.title}`;
+                    filter.filters.forEach((x, i) => {
+                        if (i == 0) filterValue += ` ${ops[x.operator]} "${x.value}"`;
+                        else filterValue += ` or ${ops[x.operator]} "${x.value}"`;
+                    })
+                    filterValue.replace(`${column.title} or`, `${column.title}`)
+                    filterInput.value =filterValue;
+
+                } else {
+                    column = columns.find(x => x.field == filter.field)
+                    filterInput.value = `${column.title} ${ops[filter.operator]} ${filter.value}`;
+
+                }
+                
                 filterInput.disabled = true;
                 div.appendChild(filterInput);
 
