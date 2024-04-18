@@ -24,6 +24,8 @@ namespace ART_PACKAGE.Extentions.CSV
             { "doesnotcontain"  , "{1} NOT LIKE '%{0}%'" },
             { "endswith"        , "{1} LIKE '%{0}'" },
             { "doesnotendwith"  , "{1} NOT LIKE '%{0}'" },
+            { "isnullorempty"  , $@"{{1}} = '' or {{1}} IS NULL" },
+            { "isnotnullorempty"  , $@"{{1}} != '' and {{1}} IS NOT NULL" },
         };
         private static readonly Dictionary<string, string> StringOpForC = new()
         {
@@ -39,6 +41,8 @@ namespace ART_PACKAGE.Extentions.CSV
             { "doesnotcontain"  , "!{0}.Contains(\"{1}\")" },
             { "endswith"        , "{0}.EndsWith(\"{1}\")" },
             { "doesnotendwith"  , "!{0}.EndsWith(\"{1}\")" },
+            { "isnullorempty"  , "{0}== null || {0}==\"\"" },
+            { "isnotnullorempty"  ,"{0}!= null && {0}!=\"\"" },
         };
         private static readonly Dictionary<string, string> NumberOp = new()
         {
@@ -91,6 +95,9 @@ namespace ART_PACKAGE.Extentions.CSV
             {"doesnotcontain" , "Doesn't Contain" },
             {"endswith" , "Ends With" },
             {"doesnotendwith" , "Doesn't End With" },
+            {"isnullorempty", "Has No Value" },
+            {"isnotnullorempty","Has Value" }
+
         };
 
         public static void WriteFilters<TModel>(this CsvWriter cw, Filter filters)

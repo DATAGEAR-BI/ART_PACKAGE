@@ -42,3 +42,10 @@ body {
         transform: rotate(360deg);
     }
 }
+
+#type-BarChart, #alert-status-BarChart, #alertsDateChart div[style*="height: 100%; width: 100%;"], #alertsDateChart div[style*="height: 100%; width: 100%;"], #dateChart div[style*="height: 100%; width: 100%;"]{
+    height: 600px !important;
+}
+#alertsDateChart div[style*="height: 100%; width: 100%;"]{
+    background-color:red;
+}

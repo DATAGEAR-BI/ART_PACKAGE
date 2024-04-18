@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {
-                /*_ = dbType switch
+                _ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
@@ -57,7 +57,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
-                };*/
+                };
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));

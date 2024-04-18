@@ -1118,3 +1118,25 @@ export function makedynamicChart(
             break;
     }
 }
+
+makeRotateButton(chart) {
+    let buttonContainer = chart.chartContainer.createChild(am4core.Container);
+    let button = buttonContainer.createChild(am4core.Button);
+    button.label.text = "Rotate Chart";
+    button.align = "left";
+    button.marginBottom = 15;
+    button.events.on("hit", () => {
+
+        this.toggleLoading();
+        if (this.isHorizontal) {
+            this.isHorizontal = false;
+            this.makeBar()
+        } else {
+            this.isHorizontal = true;
+            this.makeHBar();
+        }
+        setTimeout(() => {
+            this.toggleLoading();
+        }, 3000);
+    });
+}

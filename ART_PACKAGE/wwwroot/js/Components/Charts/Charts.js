@@ -991,7 +991,8 @@ class PieWithBarChart extends  HTMLElement
     connectedCallback(){
 
         try {
-            this.chartDiv.classList.add("h-100","w-100")
+            this.chartDiv.classList.add("h-100", "w-100")
+            this.chartDiv.style.height="600PX"
             this.chartTitle = this.dataset.title;
             this.donutCategory = this.dataset.donutcategory ?? "";
             this.donutValue = this.dataset.donutvalue ?? "";
@@ -1033,7 +1034,7 @@ class PieWithBarChart extends  HTMLElement
             columnSeries.dataFields.categoryY = this.barCategory;
             columnSeries.columns.template.strokeWidth = 0;
             columnSeries.columns.template.tooltipText = "{value}";
-
+            columnSeries.fill = "#5CC0DE" ;
 
 
             let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
@@ -1077,6 +1078,7 @@ class PieWithBarChart extends  HTMLElement
                 if (this.data.length > 0) {
                     console.log(pieSeries.slices);
                     pieSeries.slices.getIndex(0).isActive = true;
+
                 }
                     
             });

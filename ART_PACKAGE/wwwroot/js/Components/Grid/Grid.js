@@ -941,8 +941,11 @@ class Grid extends HTMLElement {
             console.log(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement)
 
             showOrHideInputElements(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement, false, "init")
-            showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
+            var s = e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0]
+            if (s) {
+                showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
 
+            } 
             
             e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]').change((ev) => {
                 console.log("here ")
