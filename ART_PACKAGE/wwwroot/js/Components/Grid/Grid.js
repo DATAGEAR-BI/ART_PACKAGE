@@ -15,7 +15,7 @@ import { exportConnection } from "../../ExportListener.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
-
+ var    onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -47,7 +47,8 @@ class Grid extends HTMLElement {
     isDownloaded = true;
     selectProp = "";
     excelFileName = "";
-   
+
+     
     constructor() {
         super();
 
@@ -870,8 +871,102 @@ class Grid extends HTMLElement {
         
         // event for constructing the filters for multi select columns
         grid.bind("columnMenuOpen", (e) => {
+            console.log("collumn menu hitted ")
+            var querySelectorsObj = {
+                multiSelectQuerySelector: {
+                    value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
+                    additional: 'div[class="k-widget k-multiselect k-multiselect-clearable"] > input[title="Additional value"] '
+                },
+                datePickerQuerySelector: {
+                    value: 'span[class="k-widget k-datepicker"] :has(input[title="Value"]',
+                    additional: 'span[class="k-widget k-datepicker"] :has(input[title="Additional value"])'
+                },
+                inputQuerySelector: {
+                    value: 'input[title="Value"]',
+                    additional: 'input[title="Additional value"]'
+                }
+            }
+            var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty","isnotempty"]
+
+            function showOrHideInputElements(element, show, filterType) {
+                if (filterType == "init") {
+                    //showOrHideInputElements(element, show, 'value');
+                    var opValue = element.querySelector('select[title = "Operator"]').value;
+                    var f = querySelectorsObj.datePickerQuerySelector['value'] + " " + querySelectorsObj.inputQuerySelector['value'];
+                    if (onePartitionOperators.includes(opValue)) {
+           
+                        element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
+                        showOrHideInputElements(element,false,'value')
+                    }
+                    
+                    return;
+                }
+                if (filterType == "initAdditional") {
+                    //showOrHideInputElements(element, show, 'value');
+                    var opValue = element.querySelector('select[title = "Additional operator"]').value;
+                    var f = querySelectorsObj.datePickerQuerySelector['additional'] + " " + querySelectorsObj.inputQuerySelector['additional'];
+                    if (onePartitionOperators.includes(opValue)) {
+
+                        element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
+                        showOrHideInputElements(element, false, 'additional')
+                    }
+
+                    console.log()
+                    return;
+                }
+                console.log(element);
+                if (element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType])) {
+                    if (show)
+                        element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "flex";
+                    else
+                        element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "none";
+
+                }
+                else if (element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType])) {
+                    if (show)
+                        element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "block";
+                    else
+                        element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "none";
+
+                }
+                else {
+                    if (show)
+                        element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "block";
+                    else
+                        element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "none";
+
+                }
+            }
+            
+            console.log(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement)
+
+            showOrHideInputElements(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement, false, "init")
+            showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
+
+            
+            e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]').change((ev) => {
+                console.log("here ")
+                if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false,"value")
+
+                }
+                else {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true,"value")
+                }
+            })
+            e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]').change((ev) => {
+                if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false,"additional")
+
+                }
+                else {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "additional")
+                }
+            })
+
             if (this.isMultiSelect.includes(e.field)) {
-                console.log("0000000000000000",e);
+                
+                
                 e.container.find("[type='submit']").click((ev) => {
                     ev.preventDefault();
                     var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
@@ -1173,6 +1268,8 @@ class Grid extends HTMLElement {
                 gt: "Greater Than",
                 lte: "Less Than Or Equal",
                 lt: "Less Than",
+                isnullorempty: "Has No Value",
+                isnotnullorempty:"Has Value"
             };
             if (filter.logic && filter.logic!="or") {
                 var logicDiv = document.createElement("div");
@@ -1188,7 +1285,7 @@ class Grid extends HTMLElement {
                     if (i < childFilter.length - 1) {
                         var logic = document.createElement("div");
                         logic.classList.add("m-2" , "col-sm-12" , "col-md-12" , "col-xs-12" , "text-center");
-                        logic.innerText = filter.logic;
+                 //       logic.innerText = filter.logic;
                         res.push(logic);
                     }
                 }
@@ -1207,15 +1304,14 @@ class Grid extends HTMLElement {
 
                     var filterValue = `${column.title}`;
                     filter.filters.forEach((x, i) => {
-                        if (i == 0) filterValue += ` ${ops[x.operator]} "${x.value}"`;
-                        else filterValue += ` or ${ops[x.operator]} "${x.value}"`;
+                        if (i == 0) filterValue += ` ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\""+x.value+"\"" }`;
+                        else filterValue += ` or ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\"" + x.value + "\""}`;
                     })
-                    filterValue.replace(`${column.title} or`, `${column.title}`)
                     filterInput.value =filterValue;
 
                 } else {
                     column = columns.find(x => x.field == filter.field)
-                    filterInput.value = `${column.title} ${ops[filter.operator]} ${filter.value}`;
+                    filterInput.value = `${column.title} ${ops[filter.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\"" + x.value + "\""}`;
 
                 }
                 
