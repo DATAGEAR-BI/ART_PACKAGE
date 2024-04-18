@@ -15,12 +15,12 @@ using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.CRP;
 using Data.Data.ECM;
-using Data.DATA.FATCA;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
+using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {
-                _ = dbType switch
+                /*_ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
                         conn,
@@ -57,7 +57,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                         x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                         ),
                     _ => throw new Exception($"Unsupported provider: {dbType}")
-                };
+                };*/
             }
 
             _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
