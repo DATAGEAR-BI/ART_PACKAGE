@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
-using ART_PACKAGE.Controllers.EXPORT_SCHEDULAR;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.FTI.DraftsReport;
 using ART_PACKAGE.Controllers.GOAML;
@@ -58,7 +57,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     { "C7CNM".ToLower() , new List<SelectItem> { new SelectItem  { text = "brrrrr" , value = "brrrrr" }, new SelectItem { text = "brrrrr", value = "brrrrr" }, } }
                 },
 
-                nameof(TasksController) => new Dictionary<string, List<SelectItem>> {
+                "exporttaskconfig" => new Dictionary<string, List<SelectItem>> {
                 { nameof(ExportTaskDto.Period).ToLower(), Enum.GetNames(typeof(TaskPeriod)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 { nameof(ExportTaskDto.DayOfWeek).ToLower(), Enum.GetNames(typeof(DayOfWeek)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 { nameof(ExportTaskDto.Month).ToLower(), Enum.GetNames(typeof(MonthsOfYear)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },

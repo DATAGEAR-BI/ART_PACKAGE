@@ -139,9 +139,6 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
 
             _ = _context.Add(report);
             _ = _context.SaveChanges();
-
-            ArtSavedCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Users).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
-
             return true;
         }
         catch (Exception e)

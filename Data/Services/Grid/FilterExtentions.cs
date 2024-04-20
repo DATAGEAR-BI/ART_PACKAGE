@@ -67,7 +67,7 @@ public static class FilterExtensions
                         childExp =
                             childExp == null
                                 ? nestedChildExp
-                                : item.logic == "or"
+                                : f.logic == "or"
                                     ? Expression.OrElse(childExp, nestedChildExp)
                                     : Expression.AndAlso(childExp, nestedChildExp);
                     }

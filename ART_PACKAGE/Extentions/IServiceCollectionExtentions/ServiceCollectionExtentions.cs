@@ -232,8 +232,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             _ = services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
             {
+
                 Type? configType = configTypes.FirstOrDefault(x => x.Name.ToLower() == key.ToLower());
-                return (ReportConfig)serviceProvider.GetService(configType);
+
+                return configType is null ? null : (ReportConfig)serviceProvider.GetService(configType);
             });
             return services;
         }

@@ -89,7 +89,7 @@ namespace ART_PACKAGE.Controllers
 
         public override async Task<IActionResult> GetData(GridRequest request)
         {
-            AppUser user = await _um.GetUserAsync(User);
+            AppUser user =await  GetUser();
             baseCondition = x => x.Users.Contains(user);
             includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
             {

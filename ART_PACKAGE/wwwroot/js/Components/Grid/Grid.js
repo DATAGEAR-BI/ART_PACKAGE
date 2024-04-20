@@ -48,21 +48,22 @@ class Grid extends HTMLElement {
     selectProp = "";
     constructor() {
         super();
-
-
-
     }
     connectedCallback() {
         
         if(this.dataset.prop){
             this.selectProp = this.dataset.prop;
         }
+        
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
+        
         this.isCustom = Object.keys(this.dataset).includes("custom");
+        
         if (this.dataset.handlerkey) {
             this.handlerkey = this.dataset.handlerkey;
         }
+        
         if (this.dataset.defaultfilters) {
             this.defaultfilters = JSON.parse(this.dataset.defaultfilters);
         }
@@ -72,7 +73,9 @@ class Grid extends HTMLElement {
         if (this.dataset.defaultgroup) {
             this.defaultGroup = JSON.parse(this.dataset.defaultgroup);
         }
+        
         this.ToggleSelectAll = this.ToggleSelectAll.bind(this);
+        
         if (this.isCustom) {
             this.id = this.id + "-" + parseInt(this.dataset.reportid);
             this.url = URLS.CustomReport + parseInt(this.dataset.reportid)
@@ -105,9 +108,9 @@ class Grid extends HTMLElement {
 
             this.url = URLS[this.dataset.urlkey];
         }
-
-
-
+        
+        
+        
         this.filtersModal.classList.add("modal", "fade");
         this.filtersModal.id = this.id + "-modal";
         this.filtersModal.tabIndex = -1;
@@ -148,8 +151,6 @@ class Grid extends HTMLElement {
 
 
         if (this.dataset.stored) {
-
-
             this.storedConfig.isStoredProc = true;
             this.storedConfig.builder = document.getElementById(this.dataset.stored);
             this.storedConfig.builder.dateFormat = 'yyyy-MM-dd'
@@ -190,8 +191,11 @@ class Grid extends HTMLElement {
             });
 
         }
+        
+        
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
+        
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
@@ -256,7 +260,6 @@ class Grid extends HTMLElement {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-                console.log(d);
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -390,7 +393,7 @@ class Grid extends HTMLElement {
                     this.isDateField[column.name]
                         ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                         : "",
-
+                width: 250,
                 filterable: isCollection ? false : filter,
                 title: column.displayName ? column.displayName : column.name,
                 sortable: !isCollection,
@@ -403,28 +406,31 @@ class Grid extends HTMLElement {
         });
 
         if (containsActions) {
-            console.log(ActionsConditions)
+            
             var actionsBtns = [];
              [...actions].forEach(x => {
                  let cond = ActionsConditions[x.action] ?? function (dt) {
                      return true
                  }
                  let act = {
-
                         name: x.text,
                         iconClass: `k-icon ${x.icon}`,
                         click: (e) => Actions[x.action](e, this.gridDiv),
                         visible: cond,
                 }
+                console.log(act)
                 actionsBtns.push(act);
              });
+             
             cols = [
                 ...cols,
                 {
                     title: "Actions",
                     command: actionsBtns,
+                    width: 400,
                 },
             ];
+           
         }
         if (selectable) cols = [selectCol, ...cols];
         return cols;
@@ -636,13 +642,13 @@ class Grid extends HTMLElement {
                 resizable: true,
                 filterable: true,
                 columnMenu: {
-                componentType: "modern",
-                columns: {
-                    sort: "asc",
-                    groups: [
-                        { title: "Columns", columns: this.columns.map(x => x.title) }
-                    ]
-                }
+                    componentType: "modern",
+                    columns: {
+                        sort: "asc",
+                        groups: [
+                            { title: "Columns", columns: this.columns.map(x => x.title) },
+                        ]
+                    }
                 },
                 columns: this.columns,
                 noRecords: true,
@@ -660,18 +666,12 @@ class Grid extends HTMLElement {
                         delete this.selectedRows[grid.dataSource.page()];
                     }
                 },
-                allowCopy: {
-                    delimeter: ",",
-                },
-                loaderType: "skeleton",
                 sortable: {
                     mode: "multiple",
                 },
                 height: 700,
                 groupable: true,
-                scrollable: {
-                    virtual: true
-                },
+                scrollable: true,
                 //excelExport: function (e) {
                 //    e.preventDefault();
 
@@ -684,9 +684,9 @@ class Grid extends HTMLElement {
                 //},
                 dataBound: (e) => {
 
-                    for (var i = 0; i < this.columns.length; i++) {
+                    /*for (var i = 0; i < this.columns.length; i++) {
                         grid.autoFitColumn(i);
-                    }
+                    }*/
 
                     //if (isColoredRows) {
                     //    var rows = e.sender.tbody.children();
@@ -1272,6 +1272,7 @@ class Grid extends HTMLElement {
         this.intializeColumns();
     }
 }
+
 customElements.define("m-grid", Grid);
 function areObjectEqual(obj1, obj2, leftedKeys) {
     const obj1Keys = Object.keys(obj1);

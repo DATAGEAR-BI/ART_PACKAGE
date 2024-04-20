@@ -31,9 +31,6 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
-
-
         }
     }
 }
