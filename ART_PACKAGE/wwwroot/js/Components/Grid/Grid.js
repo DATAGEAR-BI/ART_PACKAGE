@@ -1314,7 +1314,7 @@ class Grid extends HTMLElement {
 
                 } else {
                     column = columns.find(x => x.field == filter.field)
-                    filterInput.value = `${column.title} ${ops[filter.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\"" + x.value + "\""}`;
+                    filterInput.value = `${column.title} ${ops[filter.operator]} ${onePartitionOperators.includes(filter.operator) ? "" : "\"" + filter.operator + "\""}`;
 
                 }
                 
