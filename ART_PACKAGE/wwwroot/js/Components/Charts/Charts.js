@@ -983,6 +983,7 @@ class PieWithBarChart extends  HTMLElement
     donutValue ="";
     data = [];
     barDataKey = "";
+    exportValueName = "value";
     onseriesChanged = () => {};
     constructor() {
         super();
@@ -1001,6 +1002,7 @@ class PieWithBarChart extends  HTMLElement
             this.barValue = this.dataset.barvalue ?? "";
 
             this.barDataKey = this.dataset.bardatakey ?? "";
+            this.exportValueName = this.dataset.exportvaluename ?? "Value";
 
 
             this.chart = am4core.create(this.chartDiv, am4core.Container);
@@ -1122,6 +1124,7 @@ class PieWithBarChart extends  HTMLElement
         this.donutChart.data = data;
     }
     makeExportMenu(chart) {
+        var exportDataColumnHeader = this.exportValueName
         chart.exporting.menu = new am4core.ExportMenu();
         chart.exporting.menu.items = exportMenu;
         const monthOrder = {
@@ -1142,11 +1145,16 @@ class PieWithBarChart extends  HTMLElement
             var flatRecordsArray = chart.data.flatMap(function (obj) {
                 console.log(obj)
                 return obj.monthData.map(function (monthData) {
-                    return {
+                    var reternObj = {};
+                    reternObj["Year"] = obj.year;
+                    reternObj["Month"] = monthData.month;
+                    reternObj[exportDataColumnHeader] = Number(monthData.value);
+
+                    return reternObj/*{
                         year: obj.year,
                         month: monthData.month,
                         value: Number(monthData.value)
-                    };
+                    }*/;
                 });
             });
             flatRecordsArray.sort(function (a, b) {
