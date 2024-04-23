@@ -1669,11 +1669,23 @@ function copyText(textToCopy) {
     }
 }
 function GetValidCellValue(contentText) {
-    if (isValidDateTime(contentText)) return getDateOnly(contentText);
+
+    if (isValidDateTime(contentText)) return typeof (contentText) == 'object' ? convertDateString(contentText) : getDateOnly(contentText);
     else return contentText;
 }
+function convertDateString(dateStr) {
+    const date = new Date(dateStr);
+
+    // Get day, month, and year and format them with leading zeros
+    const day = String(date.getDate()).padStart(2, '0');  // Two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Two-digit month
+    const year = date.getFullYear();  // Four-digit year
+
+    return `${day}/${month}/${year}`;  // Return formatted date
+}
 function getDateOnly(dateString) {
-    return dateString.split(" ")[0];
+    console.log(typeof (dateString))
+    return typeof (dateString) == 'string' ? dateString.split(" ")[0] : dateString;
 }
 function isValidDateTime(string) {
     const timestamp = Date.parse(string);
