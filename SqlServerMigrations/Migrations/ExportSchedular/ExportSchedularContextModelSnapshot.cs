@@ -30,6 +30,10 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("CornExpression")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Day")
                         .HasColumnType("int");
 
@@ -44,6 +48,9 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("EndOfMonth")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("Hour")
                         .HasColumnType("int");
 
@@ -53,7 +60,13 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                     b.Property<bool>("IsSavedOnServer")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LastExceutionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("MailContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MailsSerialized")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Minute")
@@ -65,6 +78,9 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("NextExceutionDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ParametersJson")
                         .IsRequired()
@@ -92,35 +108,6 @@ namespace SqlServerMigrations.Migrations.ExportSchedular
                         .IsUnique();
 
                     b.ToTable("ExportsTasks");
-                });
-
-            modelBuilder.Entity("Data.Data.ExportSchedular.TaskMails", b =>
-                {
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("TaskId", "Mail");
-
-                    b.ToTable("TaskMails");
-                });
-
-            modelBuilder.Entity("Data.Data.ExportSchedular.TaskMails", b =>
-                {
-                    b.HasOne("Data.Data.ExportSchedular.ExportTask", "Task")
-                        .WithMany("Mails")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("Data.Data.ExportSchedular.ExportTask", b =>
-                {
-                    b.Navigation("Mails");
                 });
 #pragma warning restore 612, 618
         }

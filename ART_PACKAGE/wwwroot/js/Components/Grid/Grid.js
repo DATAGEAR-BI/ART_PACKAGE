@@ -2,7 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers  , CellHandlers} from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 //import {getChartType} from "../Charts/Charts.js"
@@ -10,7 +10,9 @@ import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
 import { exportConnection } from "../../ExportListener.js";
-import * as c from "../TextInput/TextInput.js";
+import * as t from "../TextInput/TextInput.js";
+import * as ta from "../TextAreaInput/TextAreaInput.js";
+import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
@@ -46,21 +48,22 @@ class Grid extends HTMLElement {
     selectProp = "";
     constructor() {
         super();
-
-
-
     }
     connectedCallback() {
         
         if(this.dataset.prop){
             this.selectProp = this.dataset.prop;
         }
+        
         if (Object.keys(this.dataset).includes("stored"))
             this.isStoredProc = true;
+        
         this.isCustom = Object.keys(this.dataset).includes("custom");
+        
         if (this.dataset.handlerkey) {
             this.handlerkey = this.dataset.handlerkey;
         }
+        
         if (this.dataset.defaultfilters) {
             this.defaultfilters = JSON.parse(this.dataset.defaultfilters);
         }
@@ -70,7 +73,9 @@ class Grid extends HTMLElement {
         if (this.dataset.defaultgroup) {
             this.defaultGroup = JSON.parse(this.dataset.defaultgroup);
         }
+        
         this.ToggleSelectAll = this.ToggleSelectAll.bind(this);
+        
         if (this.isCustom) {
             this.id = this.id + "-" + parseInt(this.dataset.reportid);
             this.url = URLS.CustomReport + parseInt(this.dataset.reportid)
@@ -103,9 +108,9 @@ class Grid extends HTMLElement {
 
             this.url = URLS[this.dataset.urlkey];
         }
-
-
-
+        
+        
+        
         this.filtersModal.classList.add("modal", "fade");
         this.filtersModal.id = this.id + "-modal";
         this.filtersModal.tabIndex = -1;
@@ -146,8 +151,6 @@ class Grid extends HTMLElement {
 
 
         if (this.dataset.stored) {
-
-
             this.storedConfig.isStoredProc = true;
             this.storedConfig.builder = document.getElementById(this.dataset.stored);
             this.storedConfig.builder.dateFormat = 'yyyy-MM-dd'
@@ -188,8 +191,11 @@ class Grid extends HTMLElement {
             });
 
         }
+        
+        
         this.gridDiv.id = this.id + "-Grid";
         this.appendChild(this.gridDiv);
+        
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
@@ -254,7 +260,6 @@ class Grid extends HTMLElement {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-                console.log(d);
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -388,7 +393,7 @@ class Grid extends HTMLElement {
                     this.isDateField[column.name]
                         ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                         : "",
-
+                width: 250,
                 filterable: isCollection ? false : filter,
                 title: column.displayName ? column.displayName : column.name,
                 sortable: !isCollection,
@@ -401,28 +406,31 @@ class Grid extends HTMLElement {
         });
 
         if (containsActions) {
-            console.log(ActionsConditions)
+            
             var actionsBtns = [];
              [...actions].forEach(x => {
                  let cond = ActionsConditions[x.action] ?? function (dt) {
                      return true
                  }
                  let act = {
-
                         name: x.text,
                         iconClass: `k-icon ${x.icon}`,
                         click: (e) => Actions[x.action](e, this.gridDiv),
                         visible: cond,
                 }
+                console.log(act)
                 actionsBtns.push(act);
              });
+             
             cols = [
                 ...cols,
                 {
                     title: "Actions",
                     command: actionsBtns,
+                    width: 400,
                 },
             ];
+           
         }
         if (selectable) cols = [selectCol, ...cols];
         return cols;
@@ -459,6 +467,10 @@ class Grid extends HTMLElement {
                 {
                     name: this.gridDiv.id + "SaveOptions",
                     text: "Save Options"
+                },
+                {   
+                    name: this.gridDiv.id + "ResetOptions",
+                    text: "Reset Options"
                 }
             );
 
@@ -470,8 +482,6 @@ class Grid extends HTMLElement {
                 var btn = {
                     name: `${x.action}`,
                     text: `${x.text}`,
-
-                    //template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
                 }
                 this.customtToolBarBtns.push(btn);
                 toolbar.push(btn);
@@ -631,14 +641,14 @@ class Grid extends HTMLElement {
                 },
                 resizable: true,
                 filterable: true,
-            columnMenu: {
-                componentType: "modern",
-                columns: {
-                    sort: "asc",
-                    groups: [
-                        { title: "Columns", columns: this.columns.map(x => x.title) }
-                    ]
-                }
+                columnMenu: {
+                    componentType: "modern",
+                    columns: {
+                        sort: "asc",
+                        groups: [
+                            { title: "Columns", columns: this.columns.map(x => x.title) },
+                        ]
+                    }
                 },
                 columns: this.columns,
                 noRecords: true,
@@ -656,15 +666,12 @@ class Grid extends HTMLElement {
                         delete this.selectedRows[grid.dataSource.page()];
                     }
                 },
-                allowCopy: {
-                    delimeter: ",",
-                },
-                loaderType: "skeleton",
                 sortable: {
                     mode: "multiple",
                 },
                 height: 700,
                 groupable: true,
+                scrollable: true,
                 //excelExport: function (e) {
                 //    e.preventDefault();
 
@@ -677,9 +684,9 @@ class Grid extends HTMLElement {
                 //},
                 dataBound: (e) => {
 
-                    for (var i = 0; i < this.columns.length; i++) {
+                    /*for (var i = 0; i < this.columns.length; i++) {
                         grid.autoFitColumn(i);
-                    }
+                    }*/
 
                     //if (isColoredRows) {
                     //    var rows = e.sender.tbody.children();
@@ -693,12 +700,22 @@ class Grid extends HTMLElement {
 
 
                     grid.tbody.find("tr").dblclick((e) => {
-
-                        var dataItem = grid.dataItem(e.target.parentElement);
-                        if (this.handlerkey && this.handlerkey != "") {
-                            var dbclickhandler = dbClickHandlers[this.handlerkey];
-                            dbclickhandler(dataItem).then(console.log("done"));
+                        let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
+                        let cell = e.target.closest("td");
+                        // Get the field name associated with the clicked cell
+                        var cellIndex = $(cell).index(); // Get the index of the clicked cell
+                        var column = grid.columns[cellIndex];
+                        if(column && CellHandlers[this.handlerkey][column.field]){
+                            CellHandlers[this.handlerkey][column.field]();
                         }
+                        else{
+                            if (this.handlerkey && this.handlerkey != "") {
+                                var dbclickhandler = dbClickHandlers[this.handlerkey];
+                                dbclickhandler(dataItem).then(console.log("done"));
+                            }
+                        }
+                       
+                        
 
                     });
                 },
@@ -819,28 +836,7 @@ class Grid extends HTMLElement {
 
             }
         });
-
-        // Assuming you have a Kendo Grid initialized with the ID 'myGrid'
-        grid.tbody.on("dblclick", "td", function (e) {
-
-
-            // Get the current item (row data)
-            var item = grid.dataItem($(e.currentTarget).closest("tr"));
-            console.log(e);
-            // Get the field name associated with the clicked cell
-            var cellIndex = $(e.target).index(); // Get the index of the clicked cell
-            var column = grid.columns[cellIndex];
-            console.log(item);
-            console.log(column.field);
-            // Check if the clicked cell is from a specific column
-            //if (fieldName === "yourColumnName") {
-            //    // Perform action specific to the column
-            //    console.log("Double-clicked on column", fieldName, "of", item);
-
-            //    // Example action: display a message, open a modal, etc.
-            //}
-        });
-
+        
 
 
 
@@ -870,6 +866,11 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}SaveOptions`).click(async (e) => {
             this.saveState();
         });
+        
+        
+        $(`.k-grid-${this.gridDiv.id}ResetOptions`).click(async (e) => {
+            this.resetState();
+        });
 
 
         $(`.k-grid-download`).click(async (e) => {
@@ -895,7 +896,7 @@ class Grid extends HTMLElement {
                 if (this.handlerkey) {
                     var reportHandlers = Handlers[this.handlerkey];
                     if (reportHandlers)
-                        reportHandlers[x.name](e, this.gridDiv);
+                        reportHandlers[x.name](e, this);
                     else
                         console.error("there is no Handlers for this report");
                 } else {
@@ -1066,7 +1067,6 @@ class Grid extends HTMLElement {
         if (res.ok)
             return await res.json();
         else {
-
             console.error(res.body);
             toastObj.icon = 'error';
             toastObj.text = "something wrong happend while getting data please try again";
@@ -1170,7 +1170,18 @@ class Grid extends HTMLElement {
     
     
     
-    
+    resetState(){
+        let key = `${this.gridDiv.id}-Options`;
+        if(this.isCustom)
+            key +=  `-${this.dataset.reportid}`;
+        
+        let options = localStorage.getItem(key);
+        if(options){
+            console.log("dddddddd")
+            localStorage.removeItem(key);
+            window.location.reload();
+        }
+    }
     saveState(){
             let key = `${this.gridDiv.id}-Options`;
             if(this.isCustom)
@@ -1242,6 +1253,10 @@ class Grid extends HTMLElement {
                         }
                        
                     }
+
+                    if(c.template)
+                        column.template = c.template;
+                    
                     serverOptionsColumns[index] = column;
                 }
                 
@@ -1250,7 +1265,6 @@ class Grid extends HTMLElement {
             savedOptions.columns = serverOptionsColumns;
             savedOptions.dataSource.transport = serverOptions.dataSource.transport;
             savedOptions.dataBound = serverOptions.dataBound;
-            console.log(savedOptions)
             return savedOptions;
         }
             
@@ -1259,6 +1273,7 @@ class Grid extends HTMLElement {
         this.intializeColumns();
     }
 }
+
 customElements.define("m-grid", Grid);
 function areObjectEqual(obj1, obj2, leftedKeys) {
     const obj1Keys = Object.keys(obj1);

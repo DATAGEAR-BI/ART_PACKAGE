@@ -28,6 +28,10 @@
                    
                             <div>
                                 <m-select id="licModule" data-title="Module" style="width:100%">
+                                    @foreach (var m in modules)
+                                    {
+                                        <option value="@m">@m</option>
+                                    }
                                 </m-select>
                             </div>
                             <div>
@@ -95,17 +99,5 @@
 
     <script src="lib/SmartComponents/source/modules/smart.fileupload.js"></script>
     <script src="js/Components/Grid/Grid.js" type="module" defer="defer"></script>
-    <script src ="js/Components/MultiSelect/Select.js"></script>
-    <script>
-            let modulesSelect = document.getElementById("licModule");
-            let modules = @Html.Raw(Json.Serialize(modules));
-            let opts = []
-            modules.forEach(m => {
-                let opt = document.createElement("option");
-                opt.value = m;
-                opt.innerText = m;
-                opts.push(opt);
-            });
-            modulesSelect.update([document.createElement("option") , ...opts]);
-    </script>
+  
 }

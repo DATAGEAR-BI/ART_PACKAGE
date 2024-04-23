@@ -21,11 +21,11 @@ export const parametersConfig = [
                 "type": "date"
             },
         ],
-        "defaultFilter": null //[
-        //    ["startdate", "=", today],
-        //    "and",
-        //    ["enddate", "=", yesterday]
-        //]
+        "defaultFilter": [
+            ["startdate", "=", today],
+            "and",
+            ["enddate", "=", yesterday]
+        ]
     },
 
     {
@@ -44,11 +44,11 @@ export const parametersConfig = [
                 "type": "date"
             },
         ],
-        "defaultFilter": null //[
-        //    ["startdate", "=", today],
-        //    "and",
-        //    ["enddate", "=", yesterday]
-        //]
+        "defaultFilter":  [
+            ["startdate", "=", today],
+            "and",
+            ["enddate", "=", yesterday]
+        ]
     },
     {
         "reportName": "UserPerformPerAction",
@@ -64,13 +64,13 @@ export const parametersConfig = [
                 "paraDisplayName": "End Date",
                 "isMulti": false,
                 "type": "date"
-            },
+            }
         ],
-        "defaultFilter": null //[
-        //    ["startdate", "=", today],
-        //    "and",
-        //    ["enddate", "=", yesterday]
-        //]
+        "defaultFilter":  [
+            ["startdate", "=", today],
+            "and",
+            ["enddate", "=", yesterday]
+        ]
     },
     {
         "reportName": "BasicParams",

@@ -28,12 +28,14 @@ class Switch extends HTMLElement {
     set onswitchchanged(onchange) {
         this.switchInput.onchange = (e) => onchange(e);
     }
-
+    
     check() {
         this.switchInput.checked = true;
+        this.dataset.checked = true;
     }
     unCheck() {
         this.switchInput.checked = false;
+        this.dataset.checked = false;
     }
 
     toggle() {

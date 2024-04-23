@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<section class="content-header">
+    <h1>
+        System Performance Report
+        <small class="h6">This report presents all sanction cases with the related information on case level as below</small>
+        <br />
+    </h1>
+</section>
+<div class="collapse mb-4" id="collapseExample">
+                    <div class="row d-flex align-items-center">
+                        <div class="offset-2 col-6" >
+                            <smart-query-builder id="querybuilder" data-applybtn="applyBtn" data-params="BasicParams"></smart-query-builder>
+                        </div>
+                        <div class="col-2">
+                            <m-select id="action" data-title="Rule Action">
+                                <option value="close">Close</option>
+                                <option value="route">Route</option>
+                            </m-select>
+                        </div>
+                        
+                        <div class="col-2 d-flex justify-content-center align-items-centers">
+                            <button id="applyBtn" class="btn btn-primary">Apply</button>
+                        </div>
+                    </div>
+                    <div class="collapse mb-4" id="queueUserCollapse">
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <m-select id="queues" data-title="َQueues"></m-select>
+                            </div>
+                            <div class="col-6">
+                                <m-select id="users" data-title="Users"></m-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<div class="modal fade" id="testRules" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+          <div id="testRulesGrid">
+              
+          </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="ApplyBtn" type="button" class="btn btn-primary">Ok</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<m-grid id="autorules" data-urlkey="autorules" data-handlerkey="autorules"></m-grid>
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+@section Scripts {
+    <script src="~/lib/smartcomponents/source/modules/smart.querybuilder.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+    <script  src="~/js/components/Switch/Switch.js"></script>
+    <script type="module" defer src="js/AmlAnalysisScripts/AutoRules.js"></script>
+}
+

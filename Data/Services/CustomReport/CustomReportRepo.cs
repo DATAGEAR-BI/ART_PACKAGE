@@ -109,7 +109,8 @@ public class CustomReportRepo : BaseRepo<AuthContext,Dictionary<string, object>>
         var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x=>string.Format(dbLitral,x)))}";
         var whereLine = GenerateWhere(request.Filter,dbType,report.Columns);
         whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
-        var oderByLine = GenerateOderby(request.Sort);
+        var order = GenerateOderby(request.Sort);
+        var oderByLine = string.IsNullOrEmpty(order) ? "ORDER BY 1 ASC" : "ORDER BY" + order;
         var skipLine = isCount ? $"" : $"OFFSET {request.Skip} ROWS ";
         var takeLine = isCount ? $"" : $"FETCH NEXT {request.Take} ROWS ONLY";
         return $@"{selectLine}

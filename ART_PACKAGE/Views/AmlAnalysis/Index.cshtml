@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Aml Analysis Report
+        <small class="h6"></small>
+        <br />
+    </h1>
+</section>
+<div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div id="number_of_entities_to_close" class="alert alert-primary" role="alert">
+                
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <m-select id="closeDesc" data-palceholder="Close Reason" data-title="Close Reason">
+                            <option label="False Positive" value="FPO" selected="selected">False Positive</option>
+                            <option label="Money Laundering - Investigated" value="MLI">Money Laundering - Investigated</option>
+                            <option label="Money Laundering - Report Filed" value="MLS">Money Laundering - Report Filed</option>
+                            <option label="Other" value="OTH">Other</option>
+                        </m-select>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <m-areainput id="comment" dat-palceholder="Comment" data-title="Comment"></m-areainput>
+                    </div>
+                    <span id="comment-validation" class="text-danger" hidden>you must enter a comment</span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="closeBtn" type="button" class="btn btn-primary">Ok</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="routeModal" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+          <div class="row">
+              <div id="number_of_entities_to_route" class="alert alert-primary" role="alert">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-6">
+                  <m-select id="queue" data-palceholder="Queue" data-title="Queue">
+                      
+                  </m-select>
+              </div>
+              <div class="col-6">
+                  <m-select id="user" data-palceholder="User" data-title="User">
+                      
+                  </m-select>
+              </div>
+              <div class="col-12 mt-4">
+                  <m-areainput id="routecomment" dat-palceholder="Comment" data-title="Comment"></m-areainput>
+              </div>
+              <span id="comment-validation-route" class="text-danger" hidden>you must enter a comment</span>
+          </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="routeBtn" type="button" class="btn btn-primary">Ok</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<m-grid id="AmlAnalysis" data-urlkey="AmlAnalysis" data-handlerkey="AmlAnalysis"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}

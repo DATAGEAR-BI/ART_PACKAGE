@@ -34,5 +34,17 @@ export const Templates = {
         return `<div class="d-flex justify-content-around flex-wrap align-content-between">
                                             ${template}        
                    </div>`;
-    }
+    },
+    activeSwitch : (dt) => {
+        let active = dt.Active ? "true" : "false"
+      
+        
+        return `<art-switch data-checked="${active}""></art-switch>`
+    },
+    Aml_Analysis_prediction :  (dataItem , column) =>  {
+        if (dataItem.Prediction < 0.39 && dataItem.Prediction >= 0) { return "<span class='glyphicon glyphicon-alert' style='color: dodgerblue'></span>" + "  " + kendo.format('{0:p}', dataItem.Prediction); }
+        if (dataItem.Prediction < 0.699 && dataItem.Prediction >= 0.4) { return "<span class='glyphicon glyphicon-alert' style='color: darkorange'></span>" + " " + kendo.format('{0:p}', dataItem.Prediction); }
+        if (dataItem.Prediction > 0.699) { return "<span class='glyphicon glyphicon-alert' style='color: red'></span>" + " " + kendo.format('{0:p}', dataItem.Prediction); }
+    },
 }
+

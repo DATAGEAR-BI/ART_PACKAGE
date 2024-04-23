@@ -1,5 +1,4 @@
 ﻿using ART_PACKAGE.BackGroundServices;
-using ART_PACKAGE.Helpers.Aml_Analysis;
 using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Helpers.ExportTasks;
 using ART_PACKAGE.Helpers.License;
@@ -26,6 +25,7 @@ using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.FCFKC.SEG;
 using Data.GOAML;
+using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Hangfire;
 using Hangfire.Oracle.Core;
@@ -33,6 +33,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
+    public delegate ReportConfig ReportConfigResolver(string key);
     public static class ServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
@@ -215,6 +216,27 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
             _ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
+            return services;
+        }
+
+
+        public static IServiceCollection AddReportsConfiguratons(this IServiceCollection services)
+        {
+            IEnumerable<Type> configTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass && t.Namespace == "ART_PACKAGE.Helpers.ReportsConfigurations");
+            foreach (Type? type in configTypes)
+            {
+                _ = services.AddSingleton(type);
+            }
+
+            _ = services.AddTransient<ReportConfigResolver>(serviceProvider => key =>
+            {
+
+                Type? configType = configTypes.FirstOrDefault(x => x.Name.ToLower() == key.ToLower());
+
+                return configType is null ? null : (ReportConfig)serviceProvider.GetService(configType);
+            });
             return services;
         }
 

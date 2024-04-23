@@ -19,7 +19,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
       {
         nameof(ExportTask).ToLower(), new ReportConfig {
           SkipList = new List < string > () {
-              nameof(ExportTaskDto.Mails),
+                nameof(ExportTaskDto.Mails),
                 nameof(ExportTaskDto.Name),
                 nameof(ExportTask.UserId),
                 nameof(ExportTask.Deleted),
