@@ -45,15 +45,72 @@ class Grid extends HTMLElement {
     isExporting = false;
     isDownloaded = true;
     selectProp = "";
+    excelFileName = "";
+
+
     constructor() {
         super();
 
 
 
     }
+    filterAction(e) {
+        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
+
+        var multiselects = document.querySelector(`[data-role=multiselect][data-field=${e.field}]`);
+        if (multiselects) {
+            e.preventDefault();
+            var filter = { logic: "or", filters: [] };
+            var values = $(multiselects).data("kendoMultiSelect").value();
+            var op = multiselects.parentElement.parentElement.querySelector("select[title='Operator']").value
+            if (values && values.length > 0) {
+                $.each(values, function (i, v) {
+                    filter.filters.push({
+                        field: e.field,
+                        operator: op,
+                        value: v,
+                    });
+                });
+            } else {
+                /* filter.filters.push({
+                     field: e.field,
+                     operator: op,
+                     value: "",
+                 });*/
+            }
+
+            var filters = $(this.gridDiv).data("kendoGrid").dataSource.filter();
+            if (filters) {
+                var remainingFilters = filters.filters.filter((x) => {
+                    if (x.field && x.field != e.field) return true;
+                    if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                });
+
+                var newFilter = [];
+
+                if (filter.filters.length == 0) {
+                    newFilter = [...remainingFilters];
+                } else {
+                    newFilter = [...remainingFilters, filter];
+                }
+                var parentFilter = {
+                    logic: "and",
+                    filters: [...newFilter],
+                };
+                $(this.gridDiv).data("kendoGrid").dataSource.filter(parentFilter);
+            } else {
+                var parentFilter = {
+                    logic: "and",
+                    filters: [filter],
+                };
+                $(this.gridDiv).data("kendoGrid").dataSource.filter(parentFilter);
+            }
+        }
+
+    }
     connectedCallback() {
-        
-        if(this.dataset.prop){
+
+        if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
         if (Object.keys(this.dataset).includes("stored"))
@@ -81,7 +138,9 @@ class Grid extends HTMLElement {
             desc.id = this.id + "-desc";
             this.appendChild(title)
             this.appendChild(desc)
-            fetch("/CustomReport/GetReportCharts/"+parseInt(this.dataset.reportid))
+            this.excelFileName = document.getElementById(title.id).innerText + "_" + new Date().toISOString().slice(0, 19).replace(/[-T:]/g, '');
+
+            fetch("/CustomReport/GetReportCharts/" + parseInt(this.dataset.reportid))
                 .then(x => x.json())
                 .then(charts => {
                     console.log(charts)
@@ -94,15 +153,16 @@ class Grid extends HTMLElement {
                         chart.dataset.category = c.categoryField;
                         chart.id = c.chartId;
                         chart.style.height = "700px"
-                        chart.classList.add("col-sm-6", "col-md-6", "col-xs-6");
+                        chart.classList.add("col-sm-12", "col-md-12", "col-xs-12");
                         chartsContainer.appendChild(chart);
                     })
                 }).catch(err => console.error(err));
-            
-            
-        } else {
 
+
+        } else {
             this.url = URLS[this.dataset.urlkey];
+            this.excelFileName = this.dataset.urlkey + "_" + new Date().toISOString().slice(0, 19).replace(/[-T:]/g, '');;
+
         }
 
 
@@ -194,7 +254,7 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-            
+
 
             if (this.id !== gridId)
                 return;
@@ -238,7 +298,7 @@ class Grid extends HTMLElement {
             });
             para.QueryBuilderFilters = val;
         }
-        console.log(this.url , para)
+        console.log(this.url, para)
         fetch(this.url, {
             method: "POST",
             headers: {
@@ -251,11 +311,12 @@ class Grid extends HTMLElement {
             .then((d) => {
                 this.total = d.total;
                 this.reportName = d.reportname;
+
                 //if (isHierarchy == "true") {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-                console.log(d);
+
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -326,7 +387,11 @@ class Grid extends HTMLElement {
         var cols = columnNames.map((column) => {
             var filter = {};
             if (column.isDropDown) {
-                filter = columnFilters.multiSelectFilter(column);
+                filter = columnFilters.multiSelectFilter(column, (y) => { this.onChangeMultiselect(y) });
+
+                filter["ui"].bind("change", (e) => {
+                    console.log("Ooo-090-09808989798786")
+                })
                 this.isMultiSelect.push(column.name);
                 this.MultiSelectWithMenu.push(column);
             }
@@ -404,19 +469,19 @@ class Grid extends HTMLElement {
         if (containsActions) {
             console.log(ActionsConditions)
             var actionsBtns = [];
-             [...actions].forEach(x => {
-                 let cond = ActionsConditions[x.action] ?? function (dt) {
-                     return true
-                 }
-                 let act = {
+            [...actions].forEach(x => {
+                let cond = ActionsConditions[x.action] ?? function (dt) {
+                    return true
+                }
+                let act = {
 
-                        name: x.text,
-                        iconClass: `k-icon ${x.icon}`,
-                        click: (e) => Actions[x.action](e, this.gridDiv),
-                        visible: cond,
+                    name: x.text,
+                    iconClass: `k-icon ${x.icon}`,
+                    click: (e) => Actions[x.action](e, this.gridDiv),
+                    visible: cond,
                 }
                 actionsBtns.push(act);
-             });
+            });
             cols = [
                 ...cols,
                 {
@@ -461,7 +526,7 @@ class Grid extends HTMLElement {
                     name: this.gridDiv.id + "SaveOptions",
                     text: "Save Options"
                 },
-                {   
+                {
                     name: this.gridDiv.id + "ResetOptions",
                     text: "Reset Options"
                 }
@@ -498,143 +563,143 @@ class Grid extends HTMLElement {
     generateGrid() {
         var para = {};
         let options = {
-                excel: {
-                    allPages: true, // Export all pages
-                    fileName: "KendoGridExport.xlsx",
-                    filterable: true,
-                    // You can set other Excel export options here
-                },
-
-
-                toolbar: this.toolbar,
-                dataSource: {
-                    transport: {
-                        read: async (options) => {
-                            para = {
-                                IsIntialize: false,
-                                Take: options.data.take,
-                                Skip: options.data.skip,
-                                Sort: options.data.sort,
-                                Group: options.data.group,
-                                Filter: options.data.filter,
-                                All: true
-                            };
-
-                            if (this.isStoredProc) {
-                                var flatted = this.storedConfig.builder.value.flat();
-                                if (flatted.includes("or")) {
-                                    toastObj.icon = 'error';
-                                    toastObj.text = "only and logic operators are allowed";
-                                    toastObj.heading = "Filters Status";
-                                    $.toast(toastObj);
-                                    kendo.ui.progress($(this.gridDiv), false);
-                                    return;
-                                }
-                                var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
-                                    var val = x[2];
-                                    return {
-                                        Field: x[0],
-                                        Operator: x[1],
-                                        Value: val
-                                    }
-
-                                });
-                                para.QueryBuilderFilters = val;
-                                para.IsStored = true;
-                            }
-
-
-
-                            var d = await this.readdata(para);
-                            if (d) {
-                                this.total = d.total;
-                                //if (isHierarchy == "true") {
-                                //    var temp = groupAndSum([...d.data], groupList[0], valList[0]);
-
-                                //    globaldata = [...d.data];
-
-                                //    options.success(temp);
-                                //}
-                                /*   else {*/
-                                options.success([...d.data]);
-                                /*   }*/
-
-
-                                //To perserve the select status
-                                if (this.isAllSelected) {
-                                    var select = [];
-                                    [...Array(100).keys()].forEach((x) => {
-                                        select.push(`tr:eq(${x})`);
-                                    });
-                                    var selectstr = select.join(", ");
-                                    grid.select(selectstr);
-                                }
-                                else {
-                                    var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
-                                    if (selectedInCurrentPage) {
-                                        selectedInCurrentPage.forEach((x) => {
-
-                                            var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
-                                            if (item && item.length > 0) {
-                                                var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
-                                                grid.select(row);
-                                            };
-                                        });
-                                        setTimeout(() => {
-                                            var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
-                                            selectall.classList.remove("k-checkbox:checked");
-                                            selectall.setAttribute("aria-checked", 'false');
-                                            selectall.checked = false;
-                                            selectall.ariaChecked = false;
-                                        }, 0);
-                                    }
-                                }
-
-                                if (this.isCustom) {
-                                    console.log(this.dataset.reportid)
-                                    fetch("/CustomReport/GetReportChartsData/"+this.dataset.reportid,{
-                                        method : "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                            Accept: "application/json",
-                                        },
-                                        body: JSON.stringify(para),
-                                    }).then(x => x.json()).then(chartsData => {
-                                        console.log(chartsData);
-                                        chartsData.forEach(c => {
-                                            let chart = document.getElementById(c.chartId);
-                                            chart.setdata(c.chartData);
-                                        })
-                                    });
-                                }
-                            }
-
-
-
-
-
-
-                        },
-                    },
-
-                    schema: {
-                        model: this.model,
-                        total: () => {
-                            return this.total;
-                        },
-                    },
-                    serverPaging: true,
-                    serverFiltering: true,
-                    ...(this.defaultfilters && { filter: this.defaultfilters }),
-                    ...(this.defaultGroup && { group: this.defaultGroup }),
-                    ...(this.defaultAggs && { aggregate: this.defaultAggs }),
-                    serverSorting: true,
-                    pageSize: 100 /*isHierarchy ? 1000 : 100,*/
-
-                },
-                resizable: true,
+            excel: {
+                allPages: true, // Export all pages
+                fileName: this.excelFileName + ".xlsx",
                 filterable: true,
-                columnMenu: {
+                // You can set other Excel export options here
+            },
+
+
+            toolbar: this.toolbar,
+            dataSource: {
+                transport: {
+                    read: async (options) => {
+                        para = {
+                            IsIntialize: false,
+                            Take: options.data.take,
+                            Skip: options.data.skip,
+                            Sort: options.data.sort,
+                            Group: options.data.group,
+                            Filter: options.data.filter,
+                            All: true
+                        };
+
+                        if (this.isStoredProc) {
+                            var flatted = this.storedConfig.builder.value.flat();
+                            if (flatted.includes("or")) {
+                                toastObj.icon = 'error';
+                                toastObj.text = "only and logic operators are allowed";
+                                toastObj.heading = "Filters Status";
+                                $.toast(toastObj);
+                                kendo.ui.progress($(this.gridDiv), false);
+                                return;
+                            }
+                            var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
+                                var val = x[2];
+                                return {
+                                    Field: x[0],
+                                    Operator: x[1],
+                                    Value: val
+                                }
+
+                            });
+                            para.QueryBuilderFilters = val;
+                            para.IsStored = true;
+                        }
+
+
+
+                        var d = await this.readdata(para);
+                        if (d) {
+                            this.total = d.total;
+                            //if (isHierarchy == "true") {
+                            //    var temp = groupAndSum([...d.data], groupList[0], valList[0]);
+
+                            //    globaldata = [...d.data];
+
+                            //    options.success(temp);
+                            //}
+                            /*   else {*/
+                            options.success([...d.data]);
+                            /*   }*/
+
+
+                            //To perserve the select status
+                            if (this.isAllSelected) {
+                                var select = [];
+                                [...Array(100).keys()].forEach((x) => {
+                                    select.push(`tr:eq(${x})`);
+                                });
+                                var selectstr = select.join(", ");
+                                grid.select(selectstr);
+                            }
+                            else {
+                                var selectedInCurrentPage = this.selectedRows[grid.dataSource.page()];
+                                if (selectedInCurrentPage) {
+                                    selectedInCurrentPage.forEach((x) => {
+
+                                        var item = grid.dataSource.data().filter(i => areObjectEqual(x, this.cleanDataItem(i)));
+                                        if (item && item.length > 0) {
+                                            var row = grid.tbody.find("tr[data-uid='" + item[0].uid + "']");
+                                            grid.select(row);
+                                        };
+                                    });
+                                    setTimeout(() => {
+                                        var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
+                                        selectall.classList.remove("k-checkbox:checked");
+                                        selectall.setAttribute("aria-checked", 'false');
+                                        selectall.checked = false;
+                                        selectall.ariaChecked = false;
+                                    }, 0);
+                                }
+                            }
+
+                            if (this.isCustom) {
+                                console.log(this.dataset.reportid)
+                                fetch("/CustomReport/GetReportChartsData/" + this.dataset.reportid, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Accept: "application/json",
+                                    },
+                                    body: JSON.stringify(para),
+                                }).then(x => x.json()).then(chartsData => {
+                                    console.log(chartsData);
+                                    chartsData.forEach(c => {
+                                        let chart = document.getElementById(c.chartId);
+                                        chart.setdata(c.chartData);
+                                    })
+                                });
+                            }
+                        }
+
+
+
+
+
+
+                    },
+                },
+
+                schema: {
+                    model: this.model,
+                    total: () => {
+                        return this.total;
+                    },
+                },
+                serverPaging: true,
+                serverFiltering: true,
+                ...(this.defaultfilters && { filter: this.defaultfilters }),
+                ...(this.defaultGroup && { group: this.defaultGroup }),
+                ...(this.defaultAggs && { aggregate: this.defaultAggs }),
+                serverSorting: true,
+                pageSize: 100 /*isHierarchy ? 1000 : 100,*/
+
+            },
+            resizable: true,
+            filterable: true,
+            columnMenu: {
                 componentType: "modern",
                 columns: {
                     sort: "asc",
@@ -642,107 +707,272 @@ class Grid extends HTMLElement {
                         { title: "Columns", columns: this.columns.map(x => x.title) }
                     ]
                 }
-                },
-                columns: this.columns,
-                noRecords: true,
-                persistSelection: true,
-                pageable: true,
-                reorderable: true,
-                change: (e) => {
-                    if ([...grid.select()].length > 0) {
-                        this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
-                            var dataItem = grid.dataItem(x);
-                            // Store relevant information dynamically
-                            return this.cleanDataItem(dataItem);
-                        });
-                    } else {
-                        delete this.selectedRows[grid.dataSource.page()];
-                    }
-                },
-                allowCopy: {
-                    delimeter: ",",
-                },
-                loaderType: "skeleton",
-                sortable: {
-                    mode: "multiple",
-                },
-                height: 700,
-                groupable: true,
-                scrollable: true,
-                //excelExport: function (e) {
-                //    e.preventDefault();
-
-                //    var options = grid.getOptions();
-                //    console.log(options);
-                //    //options.excel.allPages = true;
-                //    //grid.setOptions(options);
-                //    //grid.saveAsExcel();
-                //    // Handler for the excel export event
-                //},
-                dataBound: (e) => {
-
-                    for (var i = 0; i < this.columns.length; i++) {
-                        grid.autoFitColumn(i);
-                    }
-
-                    //if (isColoredRows) {
-                    //    var rows = e.sender.tbody.children();
-                    //    for (var j = 0; j < rows.length; j++) {
-                    //        var row = $(rows[j]);
-                    //        var dataItem = e.sender.dataItem(row);
-                    //        var colorHandler = changeRowColorHandlers[handlerkey];
-                    //        colorHandler(dataItem, row);
-                    //    }
-                    //}
-
-
-                    grid.tbody.find("tr").dblclick((e) => {
-                        let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
-                        let cell = e.target.closest("td");
-                        // Get the field name associated with the clicked cell
-                        var cellIndex = $(cell).index(); // Get the index of the clicked cell
-                        var column = grid.columns[cellIndex];
-                        if(column && CellHandlers[this.handlerkey][column.field]){
-                            CellHandlers[this.handlerkey][column.field]();
-                        }
-                        else{
-                            if (this.handlerkey && this.handlerkey != "") {
-                                var dbclickhandler = dbClickHandlers[this.handlerkey];
-                                dbclickhandler(dataItem).then(console.log("done"));
-                            }
-                        }
-                       
-                        
-
+            },
+            columns: this.columns,
+            noRecords: true,
+            persistSelection: true,
+            pageable: true,
+            reorderable: true,
+            change: (e) => {
+                if ([...grid.select()].length > 0) {
+                    this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
+                        var dataItem = grid.dataItem(x);
+                        // Store relevant information dynamically
+                        return this.cleanDataItem(dataItem);
                     });
-                },
-                //...(isHierarchy == "true" && {
-                //    detailInit: (e) => {
+                } else {
+                    delete this.selectedRows[grid.dataSource.page()];
+                }
+            },
+            allowCopy: {
+                delimeter: ",",
+            },
+            loaderType: "skeleton",
+            sortable: {
+                mode: "multiple",
+            },
+            height: 700,
+            groupable: true,
+            scrollable: true,
+            /*filter: (e) => {
+                this.filterAction(e);
 
-                //        var data = globaldata;
+            },*/
+            /*filterMenuInit:  (e)=> {
+                console.log("ayaaaaaaaas")
+        // Attach an event handler to the filter menu's "filter" button click event
+        e.container.find('.k-filter-menu-update').click(function () {
+            // Call a function to handle the filter change event
+            handleFilterChange();
+        });*/
 
-                //        data = data.filter(x => x[groupList[0]] == e.data[groupList[0]]);
-                //        console.log(data);
-                //        detailInit(e, data, groupList, groupList[1], valList, valList[1]);
 
+            //},
+
+            //excelExport: function (e) {
+            //    e.preventDefault();
+
+            //    var options = grid.getOptions();
+            //    console.log(options);
+            //    //options.excel.allPages = true;
+            //    //grid.setOptions(options);
+            //    //grid.saveAsExcel();
+            //    // Handler for the excel export event
+            //},
+            dataBound: (e) => {
+
+                for (var i = 0; i < this.columns.length; i++) {
+                    grid.autoFitColumn(i);
+                }
+                /*$('.k-action-buttons button[type="reset"]').on('click', function (eva) {
+                    // Call your function to handle clear filter button click
+                    //handleClearFilterButtonClick();
+                    console.log("reset", $(e.container));
+                    console.log("reset", $(e.container).data("kendoPopup"));
+
+                    // Your custom logic to handle the clear button event
+                    var multi = eva.target.parentElement.parentElement.querySelector(`[data-role=multiselect][data-field]`);
+
+                    if (multi) {
+                        var field = multi.dataset.field;
+                        e.preventDefault();
+
+                        $(multi).data("kendoMultiSelect").value(null);
+                        var filters = $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter();
+
+                        var filtersExceptThis = filters.filters.filter((x) => {
+                            if (x.field && x.field != field) return true;
+                            if (x.filters && x.filters.some((x) => x.field != field)) return true;
+                        });
+                        console.log("fxt", filtersExceptThis)
+                        console.log("fls", filters)
+                        var newfilterObject = [...filtersExceptThis].length > 0 ? [...filtersExceptThis] : []
+                        console.log(filtersExceptThis)
+                        if ([...filtersExceptThis].length > 0) {
+                            $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter({
+                                logic: "or",
+                                filters: [...filtersExceptThis],
+                            });
+                        } else {
+                            $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter(null);
+                        }
+                        console.log("ggg", $("#" + e.sender.wrapper.attr('id')).data("kendoGrid").dataSource.filter())
+
+                        //$(e.container).data("kendoPopup").close();
+
+                        return;
+
+                    }
+                    console.log("hamadaaaaaaaaaaaaaaaaaaaaaaa")
+                });*/
+
+                //if (isColoredRows) {
+                //    var rows = e.sender.tbody.children();
+                //    for (var j = 0; j < rows.length; j++) {
+                //        var row = $(rows[j]);
+                //        var dataItem = e.sender.dataItem(row);
+                //        var colorHandler = changeRowColorHandlers[handlerkey];
+                //        colorHandler(dataItem, row);
                 //    }
-                //})
+                //}
 
-            }
+
+                grid.tbody.find("tr").dblclick((e) => {
+                    let dataItem = grid.dataItem($(e.target.parentElement).closest("tr"));
+                    let cell = e.target.closest("td");
+                    // Get the field name associated with the clicked cell
+                    var cellIndex = $(cell).index(); // Get the index of the clicked cell
+                    var column = grid.columns[cellIndex];
+                    copyText(GetValidCellValue(e.target.textContent))
+                    //console.log(this.isValidDateTime(e.target.textContent))
+
+                    if (column && CellHandlers[this.handlerkey][column.field]) {
+                        CellHandlers[this.handlerkey][column.field]();
+                    }
+                    else {
+                        if (this.handlerkey && this.handlerkey != "") {
+                            var dbclickhandler = dbClickHandlers[this.handlerkey];
+                            dbclickhandler(dataItem).then(console.log("done"));
+                        }
+                    }
+
+
+
+
+                });
+            },
+            //...(isHierarchy == "true" && {
+            //    detailInit: (e) => {
+
+            //        var data = globaldata;
+
+            //        data = data.filter(x => x[groupList[0]] == e.data[groupList[0]]);
+            //        console.log(data);
+            //        detailInit(e, data, groupList, groupList[1], valList, valList[1]);
+
+            //    }
+            //})
+
+        }
         options = this.loadState(options);
-        var grid = $(this.gridDiv).kendoGrid(options);
+        $(this.gridDiv).kendoGrid(options);
 
         var grid = $(this.gridDiv).data("kendoGrid");
-        
+
         // let stringfiedoptions = localStorage.getItem(`${this.gridDiv.id}-Options`);
         // if(stringfiedoptions){
-        //    grid.setOptions(JSON.parse(stringfiedoptions)); 
+        //    grid.setOptions(JSON.parse(stringfiedoptions));
         // }
 
+        function grid_filterMenuInit(e) {
+        }
+        // grid.bind("filterMenuInit", grid_filterMenuInit);
+        $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
+            console.log("999999999999999999999999999")
+        })
+
+
         // event for constructing the filters for multi select columns
-        grid.bind("filterMenuInit", (e) => {
+        grid.bind("columnMenuOpen", (e) => {
+            console.log("collumn menu hitted ")
+            var querySelectorsObj = {
+                multiSelectQuerySelector: {
+                    value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
+                    additional: 'div[class="k-widget k-multiselect k-multiselect-clearable"] > input[title="Additional value"] '
+                },
+                datePickerQuerySelector: {
+                    value: 'span[class="k-widget k-datepicker"] :has(input[title="Value"]',
+                    additional: 'span[class="k-widget k-datepicker"] :has(input[title="Additional value"])'
+                },
+                inputQuerySelector: {
+                    value: 'input[title="Value"]',
+                    additional: 'input[title="Additional value"]'
+                }
+            }
+            var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+
+            function showOrHideInputElements(element, show, filterType) {
+                if (filterType == "init") {
+                    //showOrHideInputElements(element, show, 'value');
+                    var opValue = element.querySelector('select[title = "Operator"]').value;
+                    var f = querySelectorsObj.datePickerQuerySelector['value'] + " " + querySelectorsObj.inputQuerySelector['value'];
+                    if (onePartitionOperators.includes(opValue)) {
+
+                        element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
+                        showOrHideInputElements(element, false, 'value')
+                    }
+
+                    return;
+                }
+                if (filterType == "initAdditional") {
+                    //showOrHideInputElements(element, show, 'value');
+                    var opValue = element.querySelector('select[title = "Additional operator"]').value;
+                    var f = querySelectorsObj.datePickerQuerySelector['additional'] + " " + querySelectorsObj.inputQuerySelector['additional'];
+                    if (onePartitionOperators.includes(opValue)) {
+
+                        element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
+                        showOrHideInputElements(element, false, 'additional')
+                    }
+
+                    console.log()
+                    return;
+                }
+                console.log(element);
+                if (element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType])) {
+                    if (show)
+                        element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "flex";
+                    else
+                        element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "none";
+
+                }
+                else if (element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType])) {
+                    if (show)
+                        element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "block";
+                    else
+                        element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "none";
+
+                }
+                else {
+                    if (show)
+                        element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "block";
+                    else
+                        element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "none";
+
+                }
+            }
+
+            console.log(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement)
+
+            showOrHideInputElements(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement, false, "init")
+            var s = e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0]
+            if (s) {
+                showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
+
+            }
+
+            e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]').change((ev) => {
+                console.log("here ")
+                if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "value")
+
+                }
+                else {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "value")
+                }
+            })
+            e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]').change((ev) => {
+                if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "additional")
+
+                }
+                else {
+                    showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "additional")
+                }
+            })
+
             if (this.isMultiSelect.includes(e.field)) {
-                console.log(e.field);
+
+
                 e.container.find("[type='submit']").click((ev) => {
                     ev.preventDefault();
                     var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
@@ -808,7 +1038,6 @@ class Grid extends HTMLElement {
         });
 
 
-
         grid.thead.on("click", ".k-checkbox", this.ToggleSelectAll);
 
         grid.tbody.on("click", ".k-checkbox", (e) => {
@@ -832,8 +1061,32 @@ class Grid extends HTMLElement {
 
             }
         });
-        
 
+        $('.k-action-buttons button[type="reset"]').click(function (e) {
+            console.log("reset")
+            // Your custom logic to handle the clear button event
+            var multi = e.target.parentElement.parentElement.querySelector(`[data-role=multiselect][data-field]`);
+
+            if (multi) {
+                var field = multi.dataset.field;
+                e.preventDefault();
+
+                $(multi).data("kendoMultiSelect").value(null);
+                var filters = $(this.gridDiv).data("kendoGrid").dataSource.filter();
+
+                var filtersExceptThis = filters.filters.filter((x) => {
+                    if (x.field && x.field != field) return true;
+                    if (x.filters && x.filters.some((x) => x.field != field)) return true;
+                });
+                $(this.gridDiv).data("kendoGrid").dataSource.filter({
+                    logic: "and",
+                    filters: [...filtersExceptThis],
+                });
+
+                return;
+
+            }
+        });
 
 
         $(`.k-grid-${this.gridDiv.id}clrfil`).click((e) => {
@@ -844,15 +1097,37 @@ class Grid extends HTMLElement {
         });
 
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
+
+            var filters = grid.dataSource.filter();
+            var total = grid.dataSource.total();
+            var sort = grid.dataSource.sort();
+            let Request = {};
+            Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
+            var para = {}
+            para.Take = total;
+            para.Skip = 0;
+            para.Filter = filters;
+            para.Sort = sort;
+            if (!this.isAllSelected) {
+                var pagesWithSelectedRows = Object.keys(this.selectedRows);
+                if (pagesWithSelectedRows && pagesWithSelectedRows.length > 0)
+                    para.All = false;
+                else
+                    para.All = true;
+            }
+            para.IdColumn = this.selectProp;
+            para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
+
+            Request.DataReq = para;
             var pdfExportHandler = undefined;
             if (!this.isStoredProc)
-                pdfExportHandler = Handlers["PdExport"];
+                pdfExportHandler = Handlers["clientPdExport"];
             else
                 pdfExportHandler = Handlers["StoredPdExport"];
 
             var orgin = window.location.pathname.split("/");
             var controller = orgin[1];
-            pdfExportHandler(e, controller, this.url, this.gridDiv);
+            pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
         });
 
 
@@ -862,8 +1137,8 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}SaveOptions`).click(async (e) => {
             this.saveState();
         });
-        
-        
+
+
         $(`.k-grid-${this.gridDiv.id}ResetOptions`).click(async (e) => {
             this.resetState();
         });
@@ -886,6 +1161,7 @@ class Grid extends HTMLElement {
             }
         });
 
+        $(".k-grid-clearfilters").click((e) => { console.log("4444444444444444444444") })
 
         this.customtToolBarBtns.forEach(x => {
             $(`.k-grid-${x.name}`).click((e) => {
@@ -998,13 +1274,16 @@ class Grid extends HTMLElement {
                 gt: "Greater Than",
                 lte: "Less Than Or Equal",
                 lt: "Less Than",
+                isnullorempty: "Has No Value",
+                isnotnullorempty: "Has Value"
             };
-           
-            if (filter.logic) {
+            if (filter.logic && filter.logic != "or") {
                 var logicDiv = document.createElement("div");
-                logicDiv.classList.add("row" , "col-sm-12" , "col-md-12" , "col-xs-12");
+                logicDiv.classList.add("row", "col-sm-12", "col-md-12", "col-xs-12");
                 var childFilter = [];
                 var res = [];
+
+
                 filter.filters.forEach(function (f) {
                     childFilter.push(buildInputs(f)); // Recursively build inputs for nested filters
                 });
@@ -1013,34 +1292,58 @@ class Grid extends HTMLElement {
                     // Add 'x' after each original element, except after the last one
                     if (i < childFilter.length - 1) {
                         var logic = document.createElement("div");
-                        logic.classList.add("m-2" , "col-sm-12" , "col-md-12" , "col-xs-12" , "text-center");
-                        logic.innerText = filter.logic;
+                        logic.classList.add("m-2", "col-sm-12", "col-md-12", "col-xs-12", "text-center");
+                        //       logic.innerText = filter.logic;
                         res.push(logic);
                     }
                 }
                 res.forEach(x => logicDiv.appendChild(x));
+
                 return logicDiv;
             } else {
                 var div = document.createElement("div");
-                div.classList.add("row" ,"col-sm-12","col-md-12","col-xs-12");
-                var filterInput = document.createElement("input");
+                div.classList.add("row", "col-sm-12", "col-md-12", "col-xs-12");
+                var filterInput = document.createElement("textarea");
+                filterInput.style.resize = "vertical";
+                filterInput.style.minHeight = "22px";
+                filterInput.rows = 1
                 filterInput.classList.add("form-control")
-                var column = columns.find(x => x.field == filter.field);
-                filterInput.value = `${column.title} ${ops[filter.operator]} ${filter.value}`;
+                var column = {};
+                if (filter.logic && filter.logic == "or") {
+                    column = columns.find(x => x.field == filter.filters[0].field)
+
+                    var filterValue = `${column.title}`;
+                    filter.filters.forEach((x, i) => {
+                        if (i == 0) filterValue += ` ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\"" + GetValidCellValue(x.value) + "\""}`;
+                        else filterValue += ` or ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : "\"" + GetValidCellValue(x.value) + "\""}`;
+                    })
+                    filterInput.value = filterValue;
+
+                } else {
+                    column = columns.find(x => x.field == filter.field)
+                    filterInput.value = `${column.title} ${ops[filter.operator]} ${onePartitionOperators.includes(filter.operator) ? "" : "\"" + GetValidCellValue(filter.value) + "\""}`;
+
+                }
+
                 filterInput.disabled = true;
                 div.appendChild(filterInput);
+
                 return div;
             }
         }
 
         if (filters) {
-            var x = buildInputs(filters);
-            console.log(filters,x)
+            const boundBuildInputsFunction = buildInputs.bind(this);
+            var x = boundBuildInputsFunction(filters);
+            console.log(filters, x)
             filterDiv.appendChild(x);
+            console.log("filter div ", filterDiv);
+
         }
         //console.log(filters.filters.flat(Infinity));
         $(Modal).modal("show");
     }
+
     clrfil(e, gridDiv) {
 
         var grid = $(gridDiv).data("kendoGrid");
@@ -1077,7 +1380,7 @@ class Grid extends HTMLElement {
 
     }
     async ExportCsv(e) {
-        
+
         if (!this.isDownloaded) {
             toastObj.icon = 'error';
             toastObj.text = "you exported a file and haven't downloaded it yet.";
@@ -1097,12 +1400,12 @@ class Grid extends HTMLElement {
         this.isExporting = true;
         this.isDownloaded = false;
         var grid = $(this.gridDiv).data("kendoGrid");
-       
+
         var filters = grid.dataSource.filter();
         var total = grid.dataSource.total();
         var sort = grid.dataSource.sort();
         let Request = {};
-        Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x=>x.field);
+        Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
         var para = {}
         para.Take = total;
         para.Skip = 0;
@@ -1115,7 +1418,7 @@ class Grid extends HTMLElement {
             else
                 para.All = true;
         }
-        para.IdColumn =  this.selectProp;
+        para.IdColumn = this.selectProp;
         para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
 
         // This gets the full URL of the current page
@@ -1132,18 +1435,18 @@ class Grid extends HTMLElement {
         // Typically, the first segment is the controller, and the second is the action
         var controller = pathSegments[0];
         var action = pathSegments[1];
-        
-        let exportUrl = `/${controller}/ExportToCsv/`+ this.id;
-        
-        if(Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)){
+
+        let exportUrl = `/${controller}/ExportToCsv/` + this.id;
+
+        if (Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)) {
             let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
             exportUrl = urlParts[0] + `/${this.id}?` + urlParts[1];
         }
-        
-        
+
+
         Request.DataReq = para;
         try {
-            var exportRes = await fetch(exportUrl , {
+            var exportRes = await fetch(exportUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -1155,65 +1458,65 @@ class Grid extends HTMLElement {
                 var exportId = (await exportRes.json()).folder;
                 this.csvExportId = exportId;
             }
-        }catch (err) {
+        } catch (err) {
             this.isExporting = true;
             this.isDownloaded = true;
         }
-       
 
-       
-            
-        
+
+
+
+
     }
-    
-    
-    
-    resetState(){
+
+
+
+    resetState() {
         let key = `${this.gridDiv.id}-Options`;
-        if(this.isCustom)
-            key +=  `-${this.dataset.reportid}`;
-        
+        if (this.isCustom)
+            key += `-${this.dataset.reportid}`;
+
         let options = localStorage.getItem(key);
-        if(options){
+        if (options) {
             console.log("dddddddd")
             localStorage.removeItem(key);
             window.location.reload();
         }
     }
-    saveState(){
-            let key = `${this.gridDiv.id}-Options`;
-            if(this.isCustom)
-                key +=  `-${this.dataset.reportid}`;
-            
-            let grid = $(this.gridDiv).data("kendoGrid");
-            let state = grid.getOptions();
-            localStorage.setItem(key, JSON.stringify(state));
-    }
-    
-    loadState(serverOptions){
+    saveState() {
         let key = `${this.gridDiv.id}-Options`;
-        if(this.isCustom)
-            key +=  `-${this.dataset.reportid}`;
+        if (this.isCustom)
+            key += `-${this.dataset.reportid}`;
+
+        let grid = $(this.gridDiv).data("kendoGrid");
+        let state = grid.getOptions();
+        localStorage.setItem(key, JSON.stringify(state));
+    }
+
+    loadState(serverOptions) {
+        let key = `${this.gridDiv.id}-Options`;
+        if (this.isCustom)
+            key += `-${this.dataset.reportid}`;
         let savedOptionsString = localStorage.getItem(key);
-        if(!savedOptionsString){
+        if (!savedOptionsString) {
             return serverOptions;
-        }else {
+        } else {
             let savedOptions = JSON.parse(savedOptionsString);
             let serverOptionsColumns = [];
             let serverOptionColumnsnotSaved = [];
             let flattedFilters = [];
-            if(savedOptions.dataSource.filter.filters){
-                
+            if (savedOptions.dataSource.filter.filters) {
+
                 flattedFilters = savedOptions.dataSource.filter.filters.flat();
             }
-            
+
             serverOptions.columns.forEach(c => {
-                let column =  savedOptions.columns.find(x => c.field == x.field);
+                let column = savedOptions.columns.find(x => c.field == x.field);
                 let index = savedOptions.columns.indexOf(column);
-                if(!column)
+                if (!column)
                     serverOptionColumnsnotSaved.push(c)
-                else{
-                    if(this.isMultiSelect.includes(column.field)){
+                else {
+                    if (this.isMultiSelect.includes(column.field)) {
                         let ops = {};
                         let equal = { eq: "is equal to" };
                         if (column.type === "string") ops = { string: { ...equal, isnull: "is null" } };
@@ -1224,19 +1527,19 @@ class Grid extends HTMLElement {
                         flattedFilters.forEach(f => {
                             let filters = f.logic ? f.filters : [f];
                             filters.forEach(fil => {
-                                if(fil.field == column.field)
+                                if (fil.field == column.field)
                                     vals.push(fil.value)
                             })
-                           
+
                         })
-                        
+
                         column.filterable = {
                             ui: (element) => {
                                 element.removeAttr("data-bind");
                                 element[0].dataset.field = column.field;
 
-                                let menu = this.MultiSelectWithMenu.find(x=>x.name == column.field).menu;
-                               
+                                let menu = this.MultiSelectWithMenu.find(x => x.name == column.field).menu;
+
                                 element.kendoMultiSelect({
                                     dataSource: menu,
                                     dataTextField: "text",
@@ -1249,15 +1552,15 @@ class Grid extends HTMLElement {
                             operators: ops,
 
                         }
-                       
+
                     }
 
-                    if(c.template)
+                    if (c.template)
                         column.template = c.template;
-                    
+
                     serverOptionsColumns[index] = column;
                 }
-                
+
             });
             serverOptionsColumns.push(...serverOptionColumnsnotSaved);
             savedOptions.columns = serverOptionsColumns;
@@ -1265,11 +1568,127 @@ class Grid extends HTMLElement {
             savedOptions.dataBound = serverOptions.dataBound;
             return savedOptions;
         }
-            
+
     }
     reload() {
         this.intializeColumns();
     }
+
+    onChangeMultiselect(e) {
+        (e) => {
+            console.log("0000000000000000");
+            if (this.isMultiSelect.includes(e.field)) {
+                console.log("0000000000000000", e);
+                //e.container.find("[type='submit']").click((ev) => {
+                ev.preventDefault();
+                var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
+                var op = e.container.find("select[title='Operator']")[0].value;
+                var values = $(multiselects).data("kendoMultiSelect").value();
+
+                var filter = { logic: "or", filters: [] };
+
+                if (values && values.length > 0) {
+
+                    values.forEach(x => {
+                        var f = {
+                            field: e.field,
+                            operator: op,
+                            value: x,
+                        };
+                        filter.filters.push(f);
+                    });
+
+                } else {
+                    filter.filters.push({
+                        field: e.field,
+                        operator: op,
+                        value: "",
+                    });
+                }
+                console.log(filter);
+                var filters = grid.dataSource.filter();
+                if (filters) {
+
+                    var remainingFilters = filters.filters.filter((x) => {
+                        if (x.field && x.field != e.field) return true;
+                        if (x.filters && x.filters.some((x) => x.field != e.field)) return true;
+                    });
+
+                    var newFilter = [];
+
+                    if (filter.filters.length == 0) {
+                        newFilter = [...remainingFilters];
+                    } else {
+                        newFilter = [...remainingFilters, filter];
+                    }
+                    var parentFilter = {
+                        logic: "and",
+                        filters: [...newFilter],
+                    };
+                    grid.dataSource.filter(parentFilter);
+                }
+                else {
+
+
+                    var parentFilter = {
+                        logic: "and",
+                        filters: [filter],
+                    };
+                    grid.dataSource.filter(parentFilter);
+                    console.log(parentFilter);
+                }
+
+                $(e.container).data("kendoPopup").close();
+
+            }
+        }
+    }
+
+}
+function copyText(textToCopy) {
+    //const textToCopy = "This is the text to copy";
+
+    // Create a hidden textarea
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+    document.body.appendChild(textArea);
+
+    // Select the text
+    textArea.select();
+    textArea.setSelectionRange(0, textToCopy.length);  // For mobile devices
+
+    // Copy the text
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textArea);  // Clean up the textarea
+
+    if (successful) {
+        console.log("Text copied successfully");
+    } else {
+        console.error("Failed to copy text");
+    }
+}
+function GetValidCellValue(contentText) {
+
+    if (isValidDateTime(contentText)) return typeof (contentText) == 'object' ? convertDateString(contentText) : getDateOnly(contentText);
+    else return contentText;
+}
+function convertDateString(dateStr) {
+    const date = new Date(dateStr);
+
+    // Get day, month, and year and format them with leading zeros
+    const day = String(date.getDate()).padStart(2, '0');  // Two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Two-digit month
+    const year = date.getFullYear();  // Four-digit year
+
+    return `${day}/${month}/${year}`;  // Return formatted date
+}
+function getDateOnly(dateString) {
+    console.log(typeof (dateString))
+    return typeof (dateString) == 'string' ? dateString.split(" ")[0] : dateString;
+}
+function isValidDateTime(string) {
+    const timestamp = Date.parse(string);
+    return !isNaN(timestamp);  // Returns true if the string can be parsed into a valid date/time
 }
 customElements.define("m-grid", Grid);
 function areObjectEqual(obj1, obj2, leftedKeys) {
