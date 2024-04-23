@@ -49,3 +49,6 @@ body {
 #alertsDateChart div[style*="height: 100%; width: 100%;"]{
     background-color:red;
 }
+td[role="gridcell"] {
+    white-space: pre !important;
+}
