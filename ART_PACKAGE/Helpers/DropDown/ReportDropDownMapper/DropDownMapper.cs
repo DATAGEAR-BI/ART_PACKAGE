@@ -12,6 +12,7 @@ using Data.Data.ARTDGAML;
 using Data.Data.Audit;
 using Data.Data.ExportSchedular;
 using Data.Data.FTI;
+using Data.Data.SASAml;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
@@ -64,7 +65,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 { nameof(ExportTaskDto.Month).ToLower(), Enum.GetNames(typeof(MonthsOfYear)).Select((x, i) => new SelectItem { text = x, value = i.ToString() }).ToList() },
                 },
 
-                nameof(AlertDetailsController) => new Dictionary<string, List<SelectItem>>
+                nameof(ArtAmlAlertDetailView) => new Dictionary<string, List<SelectItem>>
                 {
                     {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
                     {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },

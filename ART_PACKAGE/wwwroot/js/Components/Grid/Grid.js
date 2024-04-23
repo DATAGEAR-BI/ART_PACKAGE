@@ -5,7 +5,7 @@ import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
 import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { makedynamicChart } from "../../Modules/MakeDynamicChart.js";
-import {getChartType} from "../Charts/Charts.js"
+//import {getChartType} from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
@@ -726,9 +726,10 @@ class Grid extends HTMLElement {
         // }
 
         // event for constructing the filters for multi select columns
-        grid.bind("filterMenuInit", (e) => {
+        grid.bind("columnMenuOpen", (e) => {
+            console.log(e);
             if (this.isMultiSelect.includes(e.field)) {
-                console.log(e.field);
+                console.log("field", e.container.find("[type='submit']"));
                 e.container.find("[type='submit']").click((ev) => {
                     ev.preventDefault();
                     var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
