@@ -613,6 +613,8 @@ class Grid extends HTMLElement {
 
                         var d = await this.readdata(para);
                         if (d) {
+                            options.data.total = d.total;
+
                             this.total = d.total;
                             //if (isHierarchy == "true") {
                             //    var temp = groupAndSum([...d.data], groupList[0], valList[0]);
@@ -623,6 +625,10 @@ class Grid extends HTMLElement {
                             //}
                             /*   else {*/
                             options.success([...d.data]);
+                            grid.dataSource._total = d.total;
+                            grid.pager.refresh();
+                            grid.refresh();
+
                             /*   }*/
 
 
@@ -855,7 +861,10 @@ class Grid extends HTMLElement {
             //})
 
         }
+        console.log("server", options)
         options = this.loadState(options);
+        console.log("saved", options)
+
         $(this.gridDiv).kendoGrid(options);
 
         var grid = $(this.gridDiv).data("kendoGrid");
@@ -1492,6 +1501,10 @@ class Grid extends HTMLElement {
         let grid = $(this.gridDiv).data("kendoGrid");
         let state = grid.getOptions();
         localStorage.setItem(key, JSON.stringify(state));
+        //localStorage.setItem(key, JSON.stringify(convertToStringWithFunctions(state)));
+
+        //localStorage.setItem("HamadaOb7", JSON.stringify(convertToStringWithFunctions(state)));
+        console.log()
     }
 
     loadState(serverOptions) {
@@ -1502,7 +1515,13 @@ class Grid extends HTMLElement {
         if (!savedOptionsString) {
             return serverOptions;
         } else {
+            console.log("11111111111", localStorage.getItem(key))
+            console.log("22222222222", JSON.parse(localStorage.getItem(key)))
+            console.log("33333333333",JSON.parse(localStorage.getItem(key)))
+
             let savedOptions = JSON.parse(savedOptionsString);
+            console.log("l-savedOp", savedOptions)
+
             let serverOptionsColumns = [];
             let serverOptionColumnsnotSaved = [];
             let flattedFilters = [];
@@ -1565,8 +1584,13 @@ class Grid extends HTMLElement {
             });
             serverOptionsColumns.push(...serverOptionColumnsnotSaved);
             savedOptions.columns = serverOptionsColumns;
+            savedOptions.dataSource.schema.model.fields = serverOptions.dataSource.schema.model.fields;
             savedOptions.dataSource.transport = serverOptions.dataSource.transport;
             savedOptions.dataBound = serverOptions.dataBound;
+            savedOptions.change = serverOptions.change;
+
+
+
             return savedOptions;
         }
 
@@ -1577,9 +1601,7 @@ class Grid extends HTMLElement {
 
     onChangeMultiselect(e) {
         (e) => {
-            console.log("0000000000000000");
             if (this.isMultiSelect.includes(e.field)) {
-                console.log("0000000000000000", e);
                 //e.container.find("[type='submit']").click((ev) => {
                 ev.preventDefault();
                 var multiselects = e.container.find(`input[data-role=multiselect][data-field=${e.field}]`);
@@ -1606,7 +1628,6 @@ class Grid extends HTMLElement {
                         value: "",
                     });
                 }
-                console.log(filter);
                 var filters = grid.dataSource.filter();
                 if (filters) {
 
@@ -1636,7 +1657,6 @@ class Grid extends HTMLElement {
                         filters: [filter],
                     };
                     grid.dataSource.filter(parentFilter);
-                    console.log(parentFilter);
                 }
 
                 $(e.container).data("kendoPopup").close();
@@ -1684,7 +1704,6 @@ function convertDateString(dateStr) {
     return `${day}/${month}/${year}`;  // Return formatted date
 }
 function getDateOnly(dateString) {
-    console.log(typeof (dateString))
     return typeof (dateString) == 'string' ? dateString.split(" ")[0] : dateString;
 }
 function isValidDateTime(string) {
@@ -1723,3 +1742,67 @@ function areObjectEqual(obj1, obj2, leftedKeys) {
     // If all checks pass, the objects are equal
     return true;
 }
+// Function to convert all properties to strings, serializing functions as code
+function convertToStringWithFunctions(obj) {
+    if (typeof obj !== 'object' || obj === null) {
+        return String(obj);
+    }
+
+    if (Array.isArray(obj)) {
+        return obj.map(convertToStringWithFunctions); // Recursively handle arrays
+    }
+
+    const convertedObject = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (typeof value === 'function') {
+                // Store function as a string
+                convertedObject[key] = value.toString();
+            } else {
+                convertedObject[key] = convertToStringWithFunctions(value); // Recursive for nested objects
+            }
+        }
+    }
+
+    return convertedObject;
+}
+function parseObjectWithFunctions(obj) {
+    // If the input is not an object or is null, return it as is
+    if (typeof obj !== 'object' || obj === null) {
+        return obj;
+    }
+
+    // If the input is an array, recursively parse each element
+    if (Array.isArray(obj)) {
+        return obj.map(parseObjectWithFunctions);
+    }
+
+    const parsedObject = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+           /* if (key == 'read') {
+                console.log("READ")
+                console.log(typeof value === 'string')
+                console.log(typeof value)
+                console.log(value)
+                console.log("READ", (typeof value === 'string' && (value.trim().startsWith('function') || value.trim().startsWith('(') || value.trim().startsWith('async'))))
+            }*/
+
+
+            // Check if the property is a string that represents a function
+            if (typeof value === 'string' && (value.trim().startsWith('function') || value.trim().startsWith('(') || value.trim().startsWith('async'))) {
+                // Re-create the function from the string representation
+                console.log(key, value);
+                parsedObject[key] = new Function(`return ${value}`)();
+            } else {
+                // Recursively parse nested objects
+                parsedObject[key] = parseObjectWithFunctions(value);
+            }
+        }
+    }
+
+    return parsedObject; // Return the object with parsed function properties
+}
+9
