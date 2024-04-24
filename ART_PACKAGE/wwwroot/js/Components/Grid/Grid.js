@@ -1501,6 +1501,10 @@ class Grid extends HTMLElement {
         let grid = $(this.gridDiv).data("kendoGrid");
         let state = grid.getOptions();
         localStorage.setItem(key, JSON.stringify(state));
+        toastObj.icon = 'success';
+        toastObj.text = "Options Saved successfully";
+        toastObj.heading = "Save Option Status";
+        $.toast(toastObj);
         //localStorage.setItem(key, JSON.stringify(convertToStringWithFunctions(state)));
 
         //localStorage.setItem("HamadaOb7", JSON.stringify(convertToStringWithFunctions(state)));
