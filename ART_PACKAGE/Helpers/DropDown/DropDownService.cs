@@ -24,7 +24,14 @@ namespace ART_PACKAGE.Helpers.DropDown
 
             return distinct_value;
         }
+        public List<SelectItem> GetAlertTypeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+               .Where(a => a.LovTypeName.StartsWith("RT_ALERT_STATUS"))
+               .Where(b => b.LovLanguageDesc.Contains("en")).Select(x => x.LovTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+        }
         public List<SelectItem> GetPartyTypeDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyTypeDesc == null || string.IsNullOrEmpty(x.PartyTypeDesc.Trim()) ? "UNKNOWN" : x.PartyTypeDesc.ToUpper()).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();

@@ -5,6 +5,7 @@ namespace ART_PACKAGE.Helpers.DropDown
     public interface IDropDownService
     {
         public List<SelectItem> GetAlertStatusDropDown();
+        public List<SelectItem> GetAlertTypeDropDown();
         public List<SelectItem> GetPartyTypeDropDown();
         public List<SelectItem> GetPartyIdentificationTypeDropDown();
         public List<SelectItem> GetScenarioNameDropDown();

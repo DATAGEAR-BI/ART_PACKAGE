@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace ART_PACKAGE.Controllers.ECM
 {
     //[Authorize(Roles = "AlertAgeSummery")]
-    public class AlertAgeSummeryController : Controller/* BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>, IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>*/
+    public class AlertAgeSummaryController : Controller/* BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>, IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>*/
     {
         /*public AlertAgeSummeryController(IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
 
 
-        public AlertAgeSummeryController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, SasAmlContext context, IConfiguration config)
+        public AlertAgeSummaryController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, SasAmlContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;

@@ -52,16 +52,20 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
 
             return controller switch
             {
+                //branch name,Alert status, Alert type, scenario name, queue, owner
 
                 nameof(AlertDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
-                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
-                    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },
-                    //{"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown().ToDynamicList() },
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
+
+                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown()},
+
+
+                    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },
                     {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
                     {"PoliticallyExposedPersonInd".ToLower(), pipList},
-                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() }
                 },
                 nameof(CasesDetailsController) => new Dictionary<string, List<SelectItem>>
                 {
