@@ -271,10 +271,15 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.NextRecord();
             int index = 0;
             float progress = 0;
+            _logger.LogCritical("csv debug " + data.Count().ToString());
             foreach (TModel item in data)
             {
+
+                //_logger.LogCritical("csv debug " + DateTime.Now.ToString());
                 cw.WriteRecord(item);
                 cw.NextRecord();
+                //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+
                 index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
