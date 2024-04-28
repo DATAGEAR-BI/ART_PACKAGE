@@ -10,6 +10,8 @@
         public string? ActualValuesText { get; set; }
 
         public string? AlertStatus { get; set; }
+        public string? CasesStatus { get; set; }
+
         public string? AlertTypeCd { get; set; }
 
         public string? AlertSubCat { get; set; }

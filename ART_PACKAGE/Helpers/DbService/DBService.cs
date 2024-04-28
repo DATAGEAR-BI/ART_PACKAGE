@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
@@ -25,11 +26,14 @@ namespace ART_PACKAGE.Helpers.DBService
             {
 
 
+
                 if (modules.Contains("SASAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     FCFKC kc = scope.ServiceProvider.GetRequiredService<FCFKC>();
                     fcf71Context core = scope.ServiceProvider.GetRequiredService<fcf71Context>();
+                    SasAmlContext sasAml = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                    SasAML = sasAml;
                     KC = kc;
                     CORE = core;
                 }
@@ -95,6 +99,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGMGMTContext DGMGMT { get; }
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
+        public SasAmlContext SasAML { get; }
 
     }
 }

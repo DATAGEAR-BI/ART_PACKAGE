@@ -2216,6 +2216,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .IsUnicode(false)
                     .HasColumnName("SCENARIO_NAME");
+                entity.Property(e => e.CasesStatus)
+                   .HasMaxLength(100)
+                   .HasColumnName("CASE_STATUS");
             });
 
             modelBuilder.Entity<ArtAmlCaseDetailsView>(entity =>
@@ -4232,6 +4235,44 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.VersionNumber)
                     .HasColumnType("decimal(10, 0)")
                     .HasColumnName("version_number");
+            });
+            modelBuilder.Entity<FskQueue>(entity =>
+            {
+                entity.ToTable("FSK_QUEUE", "FCFKC");
+                entity.HasKey(e => e.QueueKey);
+
+                entity.Property(e => e.QueueKey)
+                    .IsRequired();
+
+                entity.Property(e => e.QueueCode)
+                    .IsRequired()
+                    .HasMaxLength(32);
+
+                entity.Property(e => e.QueueDescription)
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.AccessRoleName)
+                    .IsRequired()
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.LastUpdateUser)
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.LogicalDeleteIndicator)
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.ActiveIndicator)
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .IsRequired();
+
+                entity.Property(e => e.ChangeEndDate)
+                    .IsRequired();
+
+                entity.Property(e => e.ChangeCurrentIndicator)
+                    .IsRequired()
+                    .HasMaxLength(1);
             });
         }
 
