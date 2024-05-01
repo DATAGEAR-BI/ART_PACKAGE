@@ -1,4 +1,5 @@
-﻿using Data.FCF71;
+﻿using Data.Data.ARTDGAML;
+using Data.FCF71;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -40,6 +41,11 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertAgeSummery>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertsPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertsPerScenario>().HasNoKey().ToView(null);
+
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);
         }

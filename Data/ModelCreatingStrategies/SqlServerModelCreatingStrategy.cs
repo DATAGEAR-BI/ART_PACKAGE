@@ -733,7 +733,7 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.Action)
                     .HasColumnName("ACTION")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .UseCollation("Arabic_BIN");
 
                 entity.Property(e => e.Currencycodelocal)
                     .HasMaxLength(255)
@@ -771,7 +771,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.Reason)
                     .HasMaxLength(4000)
                     .HasColumnName("REASON")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .UseCollation("Arabic_BIN");
 
                 entity.Property(e => e.Rentitybranch)
                     .HasMaxLength(255)
@@ -2073,6 +2073,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERT_STATUS");
 
                 entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count");
+                entity.Property(e => e.Year).HasColumnName("Year");
             });
 
             modelBuilder.Entity<ArtHomeNumberOfAccount>(entity =>
@@ -2207,6 +2208,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ScenarioId)
                     .HasColumnType("decimal(12, 0)")
                     .HasColumnName("SCENARIO_ID");
+                entity.Property(e => e.Queue)
+                    .HasMaxLength(32)
+                    .HasColumnName("QUEUE");
 
                 entity.Property(e => e.ScenarioName)
                     .HasMaxLength(35)
@@ -2256,6 +2260,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
                     .HasColumnName("CREATE_DATE");
+                entity.Property(e => e.AlertRunDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ALERT_RUN_DATE");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(60)
@@ -6799,6 +6806,39 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .HasColumnName("version");
             });
+            modelBuilder.Entity<Lookup>(entity =>
+            {
+                entity.ToTable("LOOKUPS", "target");
+
+                entity.Property(e => e.BusinessUnit)
+                    .HasMaxLength(255)
+                    .HasColumnName("BUSINESS_UNIT");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("CREATED_BY");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(4000)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.LookupKey)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_KEY");
+
+                entity.Property(e => e.LookupName)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_NAME");
+
+                entity.Property(e => e.LookupValue)
+                    .HasMaxLength(255)
+                    .HasColumnName("LOOKUP_VALUE");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("MODIFIED_BY");
+            });
+
 
             modelBuilder.Entity<ReportIndicatorType>(entity =>
             {

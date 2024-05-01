@@ -5,7 +5,7 @@ function getAllParentElementsUpToBody(element) {
     const parents = [];
     var firsttree = document.getElementById("reportsTree");
     let currentElement = element;
-    while (currentElement !== firsttree) {
+    while (currentElement !=null &&currentElement !== firsttree ){
         parents.push(currentElement);
         currentElement = currentElement.parentElement;
     }

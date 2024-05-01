@@ -3,8 +3,8 @@ import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
-import { Actions ,ActionsConditions } from "../../GridConfigration/GridActions.js"
-import {getChartType} from "../Charts/Charts.js"
+import { Actions, ActionsConditions } from "../../GridConfigration/GridActions.js"
+import { getChartType } from "../Charts/Charts.js"
 
 import { parametersConfig } from "../../QueryBuilderConfiguration/QuerybuilderParametersSettings.js"
 import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderConfiguration/QuerybuilderConfiguration.js"
@@ -15,6 +15,7 @@ import { exportConnection } from "../../ExportListener.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
 
 
+var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -454,7 +455,7 @@ class Grid extends HTMLElement {
                     this.isDateField[column.name]
                         ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                         : "",
-                width : 150,
+                width: 150,
                 filterable: isCollection ? false : filter,
                 title: column.displayName ? column.displayName : column.name,
                 sortable: !isCollection,

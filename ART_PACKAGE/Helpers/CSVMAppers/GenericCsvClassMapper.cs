@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.ReportsConfigurations;
+﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -26,10 +27,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         protected List<string> _inculdedColumns;
         protected readonly Dictionary<string, (string displayName, PropertyInfo propInfo)> propNameMap;
+        private readonly ReportConfigResolver _reportsConfigResolver;
 
         public GenericCsvClassMapper()
         {
+
             string name = typeof(TModel).Name.ToLower();
+
             PropertyInfo[] props = typeof(TModel).GetProperties();
             List<string> skip = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.SkipList : null;
             Dictionary<string, GridColumnConfiguration> displaynames = ReportsConfigm.CONFIG.ContainsKey(name) ? ReportsConfigm.CONFIG[name]?.DisplayNames : null;
@@ -78,6 +82,55 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         }
 
+        public GenericCsvClassMapper(ReportConfigService reportsConfigResolver, List<string>? includedColumns = null)
+        {
+            ReportConfig? reportConfig = ReportConfigService.GetConfigs<TModel>();
+
+            Type modelType = typeof(TModel);
+
+            string modelName = modelType.Name.ToLower();
+            PropertyInfo[] properties = modelType.GetProperties();
+
+            if (includedColumns is null)
+            {
+                /*List<string> skipList = null;
+                if (ReportsConfigm.CONFIG.TryGetValue(modelName, out ReportConfig? config))
+                {
+                    skipList = config.SkipList;
+                }*/
+
+                _inculdedColumns = typeof(TModel).GetProperties().Where(x => !reportConfig.SkipList.Contains(x.Name)).Select(x => x.Name)
+                    .ToList();
+            }
+            else
+            {
+                _inculdedColumns = includedColumns;
+
+            }
+            propNameMap = _inculdedColumns
+                .Select(columnName => properties.FirstOrDefault(prop => string.Equals(prop.Name, columnName, StringComparison.OrdinalIgnoreCase)))
+                .Where(prop => prop != null)
+                .ToDictionary(
+                    prop => prop.Name,
+                    prop =>
+                    {
+                        string displayName = prop.Name;
+                        /*if (ReportsConfigm.CONFIG.TryGetValue(modelName, out ReportConfig? config) && config.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
+                        {
+                            displayName = displayNameConfig.DisplayName;
+                        }*/
+                        if (reportConfig is not null && reportConfig.DisplayNames.ContainsKey(prop.Name) && reportConfig.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
+                        {
+                            displayName = displayNameConfig.DisplayName;
+
+                        }
+                        return (displayName, prop);
+                    }
+                );
+            ConfigureCsv();
+        }
+
+
         public GenericCsvClassMapper(List<string>? includedColumns = null)
         {
             Type modelType = typeof(TModel);
@@ -117,7 +170,6 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 );
             ConfigureCsv();
         }
-
 
 
         private Expression<Func<TModel, object>> GenerateExpression(PropertyInfo prop)

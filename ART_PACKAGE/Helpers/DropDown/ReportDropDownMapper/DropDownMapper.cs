@@ -5,6 +5,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Data.ARTDGAML;
 using Data.Data.Audit;
 using Data.Data.FTI;
@@ -47,6 +48,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
             Dictionary<string, List<SelectItem>>? ftiReportDropDown = GetFtiDropDowns(controller);
             if (ftiReportDropDown is not null)
                 return ftiReportDropDown;
+
 
             return controller switch
             {
@@ -199,6 +201,16 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
                     {"Priority".ToLower(),_dropDown.GetReportPriorityDropDown() },
                     {"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown() },
+                },
+                //report types, report status, Currency Code Local, priority, Reporting person type
+                var value when value == nameof(artgoamlreportsdetailConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown()},
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
+                    {"Priority".ToLower(),_dropDown.GetReportPriorityDropDown() },
+                    {"Currencycodelocal".ToLower(),_dropDown.GetCurrencyCodeDropDown() },
+                    {"Reportingpersontype".ToLower(),_dropDown.GetReportPersonTypeDropDown() },
+                    //{"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown() },
                 },
                 nameof(GOAMLReportsSuspectController) => new Dictionary<string, List<SelectItem>>
                 {

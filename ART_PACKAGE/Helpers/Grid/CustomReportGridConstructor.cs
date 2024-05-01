@@ -1,12 +1,17 @@
-﻿using System.Linq.Expressions;
-using System.Security.Claims;
-using ART_PACKAGE.Areas.Identity.Data;
+﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Services.CustomReport;
 using Data.Services.Grid;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
@@ -18,7 +23,9 @@ namespace ART_PACKAGE.Helpers.Grid
         private static readonly Dictionary<int, int> fileProgress = new();
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections)
+        private readonly IPdfService _pdfSrv;
+
+        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IPdfService pdfSrv)
         {
             Repo = repo;
             _dbFactory = dbFactory;
@@ -26,6 +33,8 @@ namespace ART_PACKAGE.Helpers.Grid
             _webHostEnvironment = webHostEnvironment;
             _exportHub = exportHub;
             this.connections = connections;
+            _pdfSrv = pdfSrv;
+
         }
         public ICustomReportRepo Repo { get; private set; }
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
@@ -173,6 +182,38 @@ namespace ART_PACKAGE.Helpers.Grid
             }
 
             return folderGuid;
+        }
+
+
+
+        public async Task<byte[]> ExportGridToPdf(int reportId, ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            ArtSavedCustomReport report = Repo.GetReport(reportId);
+
+            DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
+            GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
+            IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
+
+            byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(data, ViewData, actionContext, 5
+                                                     , user, report.Columns.Select(cols => cols.Column).ToList());
+
+            /* var  dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+             ViewData["title"] = report.Name;
+             ViewData["desc"] = report.Description;
+             byte[] pdfBytes = await _pdfSrv.ExportCustomReportToPdf(report, ViewData, actionContext, 5
+                                                     , user, reportConfig.SkipList, reportConfig.DisplayNames);
+             (IEnumerable<dynamic> data, ViewDataDictionary ViewData
+             , ActionContext ControllerContext
+             , int ColumnsPerPage
+             , string UserName
+             , List<string> DataColumns)*/
+            return pdfBytes;
+            //return pdfBytes;
+        }
+
+        public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

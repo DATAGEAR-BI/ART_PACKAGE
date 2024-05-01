@@ -5,6 +5,7 @@ using ART_PACKAGE.Extentions.WebApplicationExttentions;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Chart;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
@@ -79,7 +80,7 @@ builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
-
+builder.Services.AddSingleton<ReportConfigService>();
 
 // Get the IHttpContextAccessor instance
 Serilog.Core.Logger logger = new LoggerConfiguration()

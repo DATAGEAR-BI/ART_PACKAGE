@@ -983,6 +983,7 @@ class PieWithBarChart extends  HTMLElement
     donutValue ="";
     data = [];
     barDataKey = "";
+    exportValueName = "value";
     onseriesChanged = () => {};
     constructor() {
         super();
@@ -991,7 +992,8 @@ class PieWithBarChart extends  HTMLElement
     connectedCallback(){
 
         try {
-            this.chartDiv.classList.add("h-100","w-100")
+            this.chartDiv.classList.add("h-100", "w-100")
+            this.chartDiv.style.height="600PX"
             this.chartTitle = this.dataset.title;
             this.donutCategory = this.dataset.donutcategory ?? "";
             this.donutValue = this.dataset.donutvalue ?? "";
@@ -1000,6 +1002,7 @@ class PieWithBarChart extends  HTMLElement
             this.barValue = this.dataset.barvalue ?? "";
 
             this.barDataKey = this.dataset.bardatakey ?? "";
+            this.exportValueName = this.dataset.exportvaluename ?? "Value";
 
 
             this.chart = am4core.create(this.chartDiv, am4core.Container);
@@ -1007,8 +1010,8 @@ class PieWithBarChart extends  HTMLElement
             this.chart.height = am4core.percent(100);
             this.chart.layout = "horizontal";
 
-            this.chart.exporting.menu = new am4core.ExportMenu();
-            this.chart.exporting.menu.items = exportMenu;
+            /*this.chart.exporting.menu = new am4core.ExportMenu();
+            this.chart.exporting.menu.items = exportMenu;*/
 
             /**
              * Column chart
@@ -1033,7 +1036,7 @@ class PieWithBarChart extends  HTMLElement
             columnSeries.dataFields.categoryY = this.barCategory;
             columnSeries.columns.template.strokeWidth = 0;
             columnSeries.columns.template.tooltipText = "{value}";
-
+            columnSeries.fill = "#5CC0DE" ;
 
 
             let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
@@ -1077,10 +1080,11 @@ class PieWithBarChart extends  HTMLElement
                 if (this.data.length > 0) {
                     console.log(pieSeries.slices);
                     pieSeries.slices.getIndex(0).isActive = true;
+
                 }
                     
             });
-
+            
             pieSeries.slices.template.events.on("toggled", (ev) => {
                 console.log(ev.target.isActive);
                 if (ev.target.isActive) {
@@ -1102,6 +1106,11 @@ class PieWithBarChart extends  HTMLElement
 
                 }
             });
+           
+            //this.makeExportMenu();
+            this.makeExportMenu(this.donutChart);
+            //this.makeExportMenu(this.barChart);
+       
         }
         catch (e) {
             console.error(  e)
@@ -1114,10 +1123,58 @@ class PieWithBarChart extends  HTMLElement
         this.data = data;
         this.donutChart.data = data;
     }
+    makeExportMenu(chart) {
+        var exportDataColumnHeader = this.exportValueName
+        chart.exporting.menu = new am4core.ExportMenu();
+        chart.exporting.menu.items = exportMenu;
+        const monthOrder = {
+            "Jan": 1,
+            "Feb": 2,
+            "Mar": 3,
+            "Apr": 4,
+            "May": 5,
+            "Jun": 6,
+            "Jul": 7,
+            "Aug": 8,
+            "Sep": 9,
+            "Oct": 10,
+            "Nov": 11,
+            "Dec": 12
+        };
+        chart.exporting.adapter.add("data", function (data) {
+            var flatRecordsArray = chart.data.flatMap(function (obj) {
+                console.log(obj)
+                return obj.monthData.map(function (monthData) {
+                    var reternObj = {};
+                    reternObj["Year"] = obj.year;
+                    reternObj["Month"] = monthData.month;
+                    reternObj[exportDataColumnHeader] = Number(monthData.value);
 
+                    return reternObj/*{
+                        year: obj.year,
+                        month: monthData.month,
+                        value: Number(monthData.value)
+                    }*/;
+                });
+            });
+            flatRecordsArray.sort(function (a, b) {
+                // First, compare the years
+                if (a.year !== b.year) {
+                    return  b.year - a.year;;
+                } else {
+                    // If the years are the same, compare the months using the custom monthOrder map
+                    return monthOrder[b.month]-monthOrder[a.month] ;
+                }
+            });
+            data.data = [];
+            data.data = flatRecordsArray;
+            return data;
+        });
+    }
     set onSeriesChanged(callback){
         this.onseriesChanged = callback;
     }
+
 }
 
 customElements.define("m-pie-chart"                     , PieChart);

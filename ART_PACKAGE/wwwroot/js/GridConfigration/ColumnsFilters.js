@@ -1,6 +1,6 @@
 export const columnFilters = {
 
-    multiSelectFilter: (column) => {
+    multiSelectFilter: (column,grid) => {
         var ops = {};
         var equal = { eq: "is equal to" };
         if (column.type === "string") ops = { string: { ...equal, isnull: "is null" } };
@@ -12,13 +12,17 @@ export const columnFilters = {
             ui: (element) => {
                 element.removeAttr("data-bind");
                 element[0].dataset.field = column.name;
-
+                
 
                 element.kendoMultiSelect({
                     dataSource: column.menu,
                     dataTextField: "text",
                     dataValueField: "value",
-                    filter: "contains"
+                    filter: "contains",
+                    change: (r) => {
+                        console.log("rrrrrrrrrrrrrrrrrrrr")
+                        grid(r)
+                    }
                 });
             },
             extra: false,

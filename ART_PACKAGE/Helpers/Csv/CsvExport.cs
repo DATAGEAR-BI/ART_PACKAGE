@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.CSV;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Hubs;
@@ -15,6 +16,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
+using Filter = Data.Services.Grid.Filter;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
@@ -26,13 +28,14 @@ namespace ART_PACKAGE.Helpers.Csv
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ReportConfigService _reportConfigService;
 
 
 
 
         public event Action<int, int> OnProgressChanged;
 
-        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment)
+        public CsvExport(IServiceScopeFactory serviceScopeFactory, ILogger<ICsvExport> logger, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IWebHostEnvironment webHostEnvironment, ReportConfigService reportConfigService)
         {
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
@@ -40,6 +43,8 @@ namespace ART_PACKAGE.Helpers.Csv
             this.connections = connections;
             _webHostEnvironment = webHostEnvironment;
             _exportHub = exportHub;
+            _reportConfigService = reportConfigService;
+
 
         }
         public async Task Export<TModel, TController>(DbContext _db, string userName, ExportDto<object> obj) where TModel : class
@@ -103,8 +108,8 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (StreamWriter sw = new(stream, new UTF8Encoding(false)))
                     using (CsvWriter cw = new(sw, config))
                     {
-
-                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        var reC = ReportConfigService.GetConfigs<TModel>();
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>(_reportConfigService);
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -125,7 +130,7 @@ namespace ART_PACKAGE.Helpers.Csv
                     using (CsvWriter cw = new(sw, config))
                     {
 
-                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>();
+                        ClassMap mapperInstance = new CsvClassMapFactory().CreateInstance<TModel>(_reportConfigService);
 
                         cw.Context.RegisterClassMap(mapperInstance);
                         cw.WriteHeader<TModel>();
@@ -155,7 +160,7 @@ namespace ART_PACKAGE.Helpers.Csv
             TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
-            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, fileNumber);
+            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
         }
 
         public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
@@ -167,7 +172,7 @@ namespace ART_PACKAGE.Helpers.Csv
             GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
             IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
             return ExportToFolder(data, exportRequest.IncludedColumns,
-                dataRes.total, folderPath, fileName, fileNumber);
+                dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
 
         }
         private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, int fileNumber = 1)
@@ -180,7 +185,7 @@ namespace ART_PACKAGE.Helpers.Csv
             using StreamWriter sw = new(stream, new UTF8Encoding(true));
             using CsvWriter cw = new(sw, config);
 
-            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>();
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
 
             cw.Context.RegisterClassMap(mapperInstance);
 
@@ -245,6 +250,84 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
         }
+
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, Filter filters, int fileNumber = 1)
+        {
+
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
+
+            cw.Context.RegisterClassMap(mapperInstance);
+            cw.WriteFilters<TModel>(filters);
+            cw.WriteHeader<TModel>();
+
+            cw.NextRecord();
+            int index = 0;
+            float progress = 0;
+            foreach (TModel item in data)
+            {
+                cw.WriteRecord(item);
+                cw.NextRecord();
+                index++; // Increment the index for each item
+                if (dataCount > 100)
+                {
+                    if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                    {
+                        //progress = (float)(index / (float)total * 100);
+                        int recordsDone = index + 1;
+                        lock (_locker)
+                        {
+                            OnProgressChanged(recordsDone, fileNumber);
+                        }
+                    }
+                }
+                else
+                {
+                    int recordsDone = index + 1;
+                    lock (_locker)
+                    {
+                        OnProgressChanged(recordsDone, fileNumber);
+                    }
+                }
+
+            }
+
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
+
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
+
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
+
+
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+            try
+            {
+                File.WriteAllBytes(filePath, stream.ToArray());
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                return false;
+
+            }
+        }
+
 
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)
         {

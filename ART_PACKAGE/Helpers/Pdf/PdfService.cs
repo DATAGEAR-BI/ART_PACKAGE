@@ -250,17 +250,17 @@ namespace ART_PACKAGE.Helpers.Pdf
         private Dictionary<string, object> dynamicToDict(dynamic dobj, IEnumerable<string> propertyNames)
         {
             Dictionary<string, object> dictionary = new();
-            dynamic props = TypeDescriptor.GetProperties(dobj);
-            foreach (PropertyDescriptor propertyDescriptor in props)
+            //dynamic props = TypeDescriptor.GetProperties(dobj.Data);
+            foreach (string propertyDescriptor in dobj.Data.Keys)
             {
                 if (dictionary.Keys.Count == propertyNames.Count())
                 {
                     break;
                 }
-                if (propertyNames.Contains(propertyDescriptor.Name))
+                if (propertyNames.Contains(propertyDescriptor))
                 {
-                    object obj = propertyDescriptor.GetValue(dobj);
-                    dictionary.Add(propertyDescriptor.Name, obj);
+                    object obj = dobj.Data[propertyDescriptor];
+                    dictionary.Add(propertyDescriptor, obj);
                 }
 
             }
@@ -305,5 +305,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                                        .ToList();
             return props;
         }
+
+
     }
 }

@@ -837,7 +837,7 @@ function generateColumns(response) {
                     ? "{0:dd/MM/yyyy HH:mm:ss tt}"
                     : "",
             filterable: isCollection ? false : filter,
-            title: column.displayName ? column.displayName : column.name,
+            title: column.displayName ? column.displayName : column.name.replace(/_/g, " "),
             sortable: !isCollection,
             ...(column.AggType && { aggregates: [column.AggType], groupFooterTemplate: `${column.AggTitle} : #=kendo.toString(${column.AggType},'n2')#` }),
             template: isCollection

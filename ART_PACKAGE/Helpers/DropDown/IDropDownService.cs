@@ -34,6 +34,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetReportstatuscodeDropDown();
         public List<SelectItem> GetReportTypeDropDown();
         public List<SelectItem> GetReportPriorityDropDown();
+        public List<SelectItem> GetCurrencyCodeDropDown();
+        public List<SelectItem> GetReportPersonTypeDropDown();
         public List<SelectItem> GetNonREntityBranchDropDown();
         public List<SelectItem> GetReportAcctBranchDropDown();
         public List<SelectItem> GetAppLebalDropDown();

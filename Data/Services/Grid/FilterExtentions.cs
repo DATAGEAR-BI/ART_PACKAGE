@@ -1,10 +1,9 @@
-﻿using System.Globalization;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
@@ -67,7 +66,7 @@ public static class FilterExtensions
                         childExp =
                             childExp == null
                                 ? nestedChildExp
-                                : item.logic == "or"
+                                : f.logic == "or"
                                     ? Expression.OrElse(childExp, nestedChildExp)
                                     : Expression.AndAlso(childExp, nestedChildExp);
                     }

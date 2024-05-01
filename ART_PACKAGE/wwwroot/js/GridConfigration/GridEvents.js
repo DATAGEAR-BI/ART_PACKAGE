@@ -18,6 +18,7 @@ function getQueryParameters(urlString) {
     const searchParams = new URL("http://test.com" + urlString).searchParams;
     return [...searchParams.values()];
 }
+ 
 
 export const Handlers = {
     AlertSearch: {
@@ -740,7 +741,163 @@ export const Handlers = {
         test: async (e, gridDiv) => {
             console.log("test");
         }
-    }
+    },
+
+
+    clientPdExport: async (e, controller, url, gridDiv, Request) => {
+        var paramsArr = url.split("?");
+        var params = "";
+        if (paramsArr[1]) {
+            params = paramsArr[1];
+        }
+
+        kendo.ui.progress($("#"+gridDiv.id), true);
+        var ds = $("#"+gridDiv.id).data("kendoGrid");
+        var total = ds.dataSource.total();
+        var take = 20000;
+        var skip = 0;
+        var id = gridDiv.id; //document.getElementById("script").dataset.id;
+
+        var filters = ds.dataSource.filter();
+        var groups = ds.dataSource.group();
+        var promses = [];
+        while (total > 0) {
+            var promise = new Promise(async (resolve, reject) => {
+                var para = {}
+                if (id) {
+                    para.Id = id;
+                }
+                para.Take = take;
+                para.Skip = skip;
+                para.Filter = filters;
+                para.Group = groups;
+
+                var isMyreports = window.location.href.toLowerCase().includes('myreports');
+                var res;
+                if (isMyreports) {
+                    res = await fetch(`/${controller}/ExportPdfMyReports`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(para)
+                    });
+                } else {
+                    var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
+                    res = await fetch(exportUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(Request)
+                    });
+                }
+                var r = await res.blob();
+                resolve({
+                    blob: r
+
+                });
+            });
+            promses.push(promise);
+            skip += take;
+            total -= take;
+        }
+
+        var results = await Promise.all(promses);
+        results.forEach((x, i) => {
+            var a = document.createElement("a");
+            var dateNow = new Date();
+
+            a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".pdf");
+            a.href = window.URL.createObjectURL(x.blob);
+            a.click();
+        });
+        kendo.ui.progress($("#"+gridDiv.id), false);
+
+
+
+
+    },
+
+    clientStoredPdExport: async (e, controller) => {
+        kendo.ui.progress($('#grid'), true);
+        var ds = $("#grid").data("kendoGrid");
+        var id = document.getElementById("script").dataset.id;
+        var exRules = [];
+        var rules = $("#filters").queryBuilder('getRules');
+        var g = [...rules.rules].reduce((group, product) => {
+            const { id } = product;
+            group[id] = !group[id] ? [] : group[id];
+            group[id].push(product);
+            return group;
+        }, {});
+        var arr = [];
+        for (var prop in g) {
+            arr.push(g[prop]);
+        }
+        if (arr.some(x => x.length > 1)) {
+            console.log("error");
+        } else {
+            exRules = Array.prototype.concat.apply([], arr);
+            exRules = [...exRules].map(x => {
+                if (Array.isArray(x.value)) {
+                    x.value = [...x.value].join(",");
+                }
+                return x;
+            });
+        }
+        var total = ds.dataSource.total();
+        var take = 20000;
+        var skip = 0;
+        var id = document.getElementById("script").dataset.id;
+
+        var filters = ds.dataSource.filter();
+        var promses = [];
+        while (total > 0) {
+            var promise = new Promise(async (resolve, reject) => {
+                var para = {}
+                if (id) {
+                    para.Id = id;
+                }
+                para.Take = take;
+                para.Skip = skip;
+                para.Filter = filters;
+                var res = await fetch(`/${controller}/ExportPdf`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ req: para, procFilters: exRules })
+                });
+
+                console.log({ req: para, procFilters: exRules });
+                var r = await res.blob();
+                resolve(r);
+            });
+            promses.push(promise);
+            skip += take;
+            total -= take;
+        }
+
+        var results = await Promise.all(promses);
+        results.forEach((x, i) => {
+            console.log(i);
+            var a = document.createElement("a");
+            var dateNow = new Date().toLocaleDateString();
+
+            a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".pdf");
+            a.href = window.URL.createObjectURL(x);
+            a.click();
+        });
+        kendo.ui.progress($('#grid'), false);
+
+
+
+
+    },
 }
 export const dbClickHandlers = {
     EcmWorkflowProg: async (dataItem) => {
@@ -967,6 +1124,5 @@ async function Select(idcolumn) {
 
 
 }
-
 
 

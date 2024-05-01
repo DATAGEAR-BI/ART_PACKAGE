@@ -1,4 +1,4 @@
-﻿import { makedynamicChart, makeDatesChart } from "./Modules/MakeDynamicChart.js"
+﻿console.log("T7T Elbatannia")
 var dateData = [];
 var typeData = [];
 var statusData = [];
@@ -6,39 +6,18 @@ getData().then(x => {
 
 
 
-    function colorFunc(fill, target) {
-        var di = target.dataItem;
-        console.log(di);
-        if (di) {
-            var x = target.dataItem.dataContext;
-            console.log(x);
-            if (x.caseStatus == "Hit")
-                return am4core.color("#f08080")
-            else if (x.caseStatus == "NoHit")
-                return am4core.color("#20b2aa")
-            else if (x.caseStatus == "Postponed")
-                return am4core.color("#fafad2")
-            else {
-                return am4core.color("#ffffff");
-            }
-        }
-        else {
-            return fill;
-        }
+
+
+
+    var dateChart = document.getElementById("dateChart");
+    var typeChart = document.getElementById("type");
+    var statusChart = document.getElementById("status");
+    dateChart.setData(dateData);
+    dateChart.onSeriesChanged = (e) => {
+
+        typeChart.setdata(typeData.filter(x => x.year == e.year));
+        statusChart.setdata(statusData.filter(x => x.year == e.year));
     }
-
-    makeDatesChart(dateData, "date", "year", "value", "month", "value", "monthData", "Cases Per Year & Month", (di) => {
-        console.log(di.year);
-        console.log(typeData);
-        var year = di.year;
-        var yearedTypeData = typeData.filter(x => x.year == year);
-        var yearedStatuseData = statusData.filter(x => x.year == year);
-        makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", true);
-        makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
-    });
-   
-
-
 })
 
 

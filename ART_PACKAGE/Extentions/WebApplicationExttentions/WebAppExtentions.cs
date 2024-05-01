@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
             if (authContext.Database.GetPendingMigrations().Any())
             {
-                authContext.Database.Migrate();
+                //authContext.Database.Migrate();
             }
 
             //if (modules.Contains("ECM"))

@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Models;
+﻿using ART_PACKAGE.Helpers.DBService;
+using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.Data.ECM;
@@ -8,9 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
-using ART_PACKAGE.Helpers.DBService;
-using Data.FCFKC.AmlAnalysis;
-using Data.Services;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -25,9 +23,10 @@ namespace ART_PACKAGE.Controllers
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
+        //private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
 
 
-        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        public HomeController(ILogger<HomeController> logger, IDbService dbSrv, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory/*, IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo*/)
         {
 
             _logger = logger;
@@ -54,11 +53,21 @@ namespace ART_PACKAGE.Controllers
                 _dgaml = dgamlService;
             }
 
-           
+            //this.repo = repo;
         }
 
 
-        
+
+        public IActionResult Test()
+        {
+
+
+            return Ok(/*repo.GetAll().Take(200)*/);
+
+
+
+        }
+
 
 
         public IActionResult Index()

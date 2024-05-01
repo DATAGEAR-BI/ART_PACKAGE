@@ -115,12 +115,18 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInSeconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}},
+                    { "NumberOfComment", new GridColumnConfiguration { DisplayName = "Number of Comments"}},
+                    { "NumberOfAttachments", new GridColumnConfiguration { DisplayName = "Number Of Attachments"}},
+                    { "UpdatedDate", new GridColumnConfiguration { DisplayName = "Updated Date"}},
+                    { "CreatedBy", new GridColumnConfiguration { DisplayName = "Created By"}},
+                    { "LastComment", new GridColumnConfiguration { DisplayName = "Last Comment"}},
+                    { "CreateUserId", new GridColumnConfiguration { DisplayName = "Create User Id"}},
             },
                 SkipList = new List<string>
-            {
-                    "CaseRk",
-                "ValidFromDate",
+            {  "CaseRk",
+    "ValidFromDate",
+    "LastCommentSubject"
             }
             }
             },
@@ -2771,7 +2777,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     {"Active", new GridColumnConfiguration { DisplayName ="Active"}},
                     {"AddedToCase", new GridColumnConfiguration { DisplayName ="Added To Case"}},
                     {"Closed", new GridColumnConfiguration { DisplayName ="Closed"}},
-                    {"SuppressedAlert", new GridColumnConfiguration { DisplayName ="SuppressedAlert"}},
+                    {"SuppressedAlert", new GridColumnConfiguration { DisplayName ="Suppressed Alert"}},
 
             }
                ,
