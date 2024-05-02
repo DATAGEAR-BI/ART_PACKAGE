@@ -2116,7 +2116,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_AML_ALERT_DETAIL_VIEW_MIDB", "ART_DB");
+                entity.ToView("ART_AML_ALERT_DETAIL_VIEW", "ART_DB");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
