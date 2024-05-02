@@ -160,6 +160,10 @@ namespace ART_PACKAGE.Helpers.Csv
             TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
+            int total = dataRes.total;
+
+
+
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
         }
 
@@ -269,9 +273,21 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.WriteHeader<TModel>();
 
             cw.NextRecord();
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
             int index = 0;
             float progress = 0;
-            _logger.LogCritical("csv debug " + data.Count().ToString());
+            // _logger.LogCritical("csv debug " + data.Count().ToString());
+            /*int numberOfPartitions = (int)Math.Ceiling(dataCount / 100.00);
+
+            for (int i = 0; i < dataCount; i += 100)
+            {
+                cw.WriteRecords(data.Skip(i).Take(100));
+                lock (_locker)
+                {
+                    OnProgressChanged(i, fileNumber);
+                }
+            }*/
             foreach (TModel item in data)
             {
 
@@ -292,6 +308,7 @@ namespace ART_PACKAGE.Helpers.Csv
                             OnProgressChanged(recordsDone, fileNumber);
                         }
                     }
+
                 }
                 else
                 {
@@ -304,8 +321,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
 
-            if (!data.Any())
-                OnProgressChanged(0, fileNumber);
+
 
             cw.Flush();
             sw.Flush();
@@ -332,6 +348,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
         }
+
 
 
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)

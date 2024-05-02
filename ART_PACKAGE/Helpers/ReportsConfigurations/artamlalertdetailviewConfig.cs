@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {
 
             SkipList = new List<string>(){ "Val",
-"AlertsNotesFlag","PartyTypeDesc",
+"AlertsNotesFlag","PartyTypeDesc","AlertTypeCd",
     "BranchNumber",
     "AlertDescription",
     "ScenarioId",

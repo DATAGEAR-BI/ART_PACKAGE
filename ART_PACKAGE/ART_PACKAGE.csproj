@@ -2479,6 +2479,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Extentions\NewFolder\" />
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
