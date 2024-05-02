@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.Grid
             {
                 fileProgress[fileNumber] = recordsDone;
                 var done = fileProgress.Values.Sum();
-                float progress = done / (float)totalcopy;
+                decimal progress = done / (decimal)totalcopy;
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
             };
