@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly ICsvExport _csvSrv;
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        private static readonly Dictionary<int, int> fileProgress = new();
+        private static Dictionary<int, int> fileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
@@ -54,11 +54,13 @@ namespace ART_PACKAGE.Helpers.Grid
             int batch = d;
             //500_000:
             int round = 0;
+            fileProgress = new();
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
-                float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
+                var done = fileProgress.Values.Sum();
+                float progress = done / (float)totalcopy;
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
             };
