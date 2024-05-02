@@ -274,7 +274,7 @@ class Grid extends HTMLElement {
             console.log(folder, progress)
 
             progressBar.value = parseFloat(progress.toFixed(2));
-            if (progress >= 100 || reminder <= 100) {
+            if (progress >= 100) {//|| reminder <= 100
                 progressBar.hidden = true;
                 var downloadButton = document.getElementById("ExportDownloadBtn");
                 downloadButton.style.visibility = "";
@@ -1470,6 +1470,8 @@ class Grid extends HTMLElement {
             });
             if (exportRes.ok) {
                 var exportId = (await exportRes.json()).folder;
+                var progressBar = document.getElementById(this.id + "Progress");
+                progressBar.value = 0;
                 this.csvExportId = exportId;
             }
         } catch (err) {
