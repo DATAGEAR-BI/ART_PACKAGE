@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
@@ -9,8 +10,6 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Data;
 using System.Linq.Dynamic.Core;
-using Data.Services.Grid;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -82,7 +81,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                 new ChartData<ArtStCustPerBranch>
                 {
                     ChartId = "StCustomerPerBranch",
-                    Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
+                    Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).Select(s=>new ArtStCustPerBranch {BRANCH_NAME=s.BRANCH_NAME ==null ?"UnKnown":s.BRANCH_NAME,NUMBER_OF_CUSTOMERS=s.NUMBER_OF_CUSTOMERS}).ToList(),
                     Title = "Customer Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "NUMBER_OF_CUSTOMERS",
