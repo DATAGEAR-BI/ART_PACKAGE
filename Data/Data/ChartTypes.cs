@@ -8,7 +8,8 @@ public enum ChartType
     dragdrop,
     clynder,
     curvy,
-    curvedline
+    curvedline,
+    clusteredbarchart
 
 }
 

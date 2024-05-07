@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -79,8 +80,8 @@ namespace ART_PACKAGE.Controllers.CRP
                     Data = chart1Data.ToList(),
                     Title = "CUSTOMERS PER RISK CLASSIFICATION",
                     Cat = "RISK_CLASSIFICATION",
-                    Val = "NUMBER_OF_CUSTOMERS"
-
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type=ChartType.donut
                 },
                 new ChartData<ART_ST_CRP_PER_STATUS>
                 {
@@ -88,14 +89,18 @@ namespace ART_PACKAGE.Controllers.CRP
                     Data = chart2data.ToList(),
                     Title = "CRP CASES PER STATUS",
                     Cat = "case_status",
-                    Val = "TOTAL_NUMBER_OF_CASES"
+                    Val = "TOTAL_NUMBER_OF_CASES",
+
+                    Type=ChartType.bar
                 },
                 new ChartData<ART_ST_CRP_CASES_PER_RATE>
                 {
                     ChartId = "ART_ST_CRP_CASES_PER_RATE",
                     Data =chart3data.ToList(),
                     Title = "CRP CASES CURRENT VS TARGET RATE",
-                    Cat = "RATE"
+                    Cat = "RATE",
+                    Type=ChartType.clusteredbarchart
+
                 },
             };
 

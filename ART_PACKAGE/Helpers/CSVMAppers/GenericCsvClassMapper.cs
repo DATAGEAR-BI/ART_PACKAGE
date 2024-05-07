@@ -119,7 +119,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {
                             displayName = displayNameConfig.DisplayName;
                         }*/
-                        if (reportConfig is not null && reportConfig.DisplayNames.ContainsKey(prop.Name) && reportConfig.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
+                        if (reportConfig is not null && reportConfig.DisplayNames is not null && reportConfig.DisplayNames.ContainsKey(prop.Name) && reportConfig.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
                         {
                             displayName = displayNameConfig.DisplayName;
 

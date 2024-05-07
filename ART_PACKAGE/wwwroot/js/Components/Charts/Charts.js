@@ -164,6 +164,7 @@ class BaseCatValChart extends HTMLElement {
         this.chart.data = this.data;
         this.chart.validateData();
         this.toggleLoading();
+        console.log(this.chart.data)
 
     }
 
@@ -773,29 +774,116 @@ class CylnderChart extends BaseCatValChart {
     }
 }
 
-class ClusteredColumnChart extends  BaseCatValChart {
+class ClusteredColumnChart extends BaseCatValChart {
+    xAxis = {}
     connectedCallback() {
         super.connectedCallback();
+        this.chartDiv.hidden = false
          this.chart = am4core.create(this.chartDiv, am4charts.XYChart)
-        chart.colors.step = 2;
-        var xAxis = this.chart.xAxes.push(new am4charts.CategoryAxis())
-        xAxis.renderer.labels.template.fontSize = 20;
-        xAxis.dataFields.category = 'cat';
-        xAxis.renderer.cellStartLocation = 0.1;
-        xAxis.renderer.cellEndLocation = 0.9;
-        xAxis.renderer.grid.template.location = 0;
-        xAxis.renderer.labels.template.rotation = 90;
+        this.chart.colors.step = 2;
+        this.xAxis = this.chart.xAxes.push(new am4charts.CategoryAxis())
+        this.xAxis.renderer.labels.template.fontSize = 20;
+        this.xAxis.dataFields.category = this.chartCategory;
+        this.xAxis.renderer.cellStartLocation = 0.1;
+        this.xAxis.renderer.cellEndLocation = 0.9;
+        this.xAxis.renderer.grid.template.location = 0;
+        this.xAxis.renderer.labels.template.rotation = 90;
         var yAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
         yAxis.renderer.labels.template.fontSize = 20
         // Make the labels vertical
         yAxis.min = 0;
-    function createSeries(value, name) {
-        var series = chart.series.push(new am4charts.ColumnSeries())
+    
+        this.chart.data = this.data;
+        
+    /*createSeries('first', 'The First');
+    createSeries('second', 'The Second');
+    createSeries('third', 'The Third');*/
+    
+    var title = this.chart.titles.create();
+    title.text = this.chartTitle;
+    title.fontSize = 25;
+    title.marginBottom = 30;
+    this.chart.cursor = new am4charts.XYCursor();
+    this.chart.cursor.behavior = "zoomX";
+    var scrollbar = new am4charts.XYChartScrollbar();
+        this.chart.scrollbarX = scrollbar;
+        //this.chart.legend = new am4charts.Legend();
+    }
+    
+
+    createSeries(value, name) {
+         var series = this.chart.series.push(new am4charts.ColumnSeries())
         series.dataFields.valueY = value
-        series.dataFields.categoryX = 'cat'
+        series.dataFields.categoryX = this.chartCategory
         series.name = name
-        series.events.on("hidden", arrangeColumns);
-        series.events.on("shown", arrangeColumns);
+        console.log(this.chart.series)
+
+   /*     series.events.on("hidden", () =>{
+            console.log(this.chart)
+            var series = this.chart.series.getIndex(0);
+            var w = 1 - this.xAxis.renderer.cellStartLocation - (1 - this.xAxis.renderer.cellEndLocation);
+            if (series.dataItems.length > 1) {
+                var x0 = this.xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+                var x1 = this.xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+                var delta = ((x1 - x0) / this.chart.series.length) * w;
+                if (am4core.isNumber(delta)) {
+                    var middle = this.chart.series.length / 2;
+                    var newIndex = 0;
+                    this.chart.series.each(function (series) {
+                        if (!series.isHidden && !series.isHiding) {
+                            series.dummyData = newIndex;
+                            newIndex++;
+                        }
+                        else {
+                            series.dummyData = this.chart.series.indexOf(series);
+                        }
+                    })
+                    var visibleCount = newIndex;
+                    var newMiddle = visibleCount / 2;
+                    this.chart.series.each(function (series) {
+                        var trueIndex = this.chart.series.indexOf(series);
+                        var newIndex = series.dummyData;
+                        var dx = (newIndex - trueIndex + middle - newMiddle) * delta
+
+                        series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                        series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                    })
+                }
+            }
+        });
+        series.events.on("shown", () => {
+            console.log(this.chart)
+            var series = this.chart.series.getIndex(0);
+            var w = 1 - this.xAxis.renderer.cellStartLocation - (1 - this.xAxis.renderer.cellEndLocation);
+            if (series.dataItems.length > 1) {
+                var x0 = this.xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+                var x1 = this.xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+                var delta = ((x1 - x0) / this.chart.series.length) * w;
+                if (am4core.isNumber(delta)) {
+                    var middle = this.chart.series.length / 2;
+                    var newIndex = 0;
+                    this.chart.series.each(function (series) {
+                        if (!series.isHidden && !series.isHiding) {
+                            series.dummyData = newIndex;
+                            newIndex++;
+                        }
+                        else {
+                            series.dummyData = this.chart.series.indexOf(series);
+                        }
+                    })
+                    var visibleCount = newIndex;
+                    var newMiddle = visibleCount / 2;
+                    this.chart.series.each(function (series) {
+                        var trueIndex = this.chart.series.indexOf(series);
+                        var newIndex = series.dummyData;
+                        var dx = (newIndex - trueIndex + middle - newMiddle) * delta
+
+                        series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                        series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                    })
+                }
+            }
+        });*/
         //var labelBullet = series.bullets.push(new am4charts.LabelBullet());
         //labelBullet.label.text = "{valueY}";
         //labelBullet.adapter.add("y", function (y) {
@@ -808,58 +896,29 @@ class ClusteredColumnChart extends  BaseCatValChart {
         bullet.adapter.add("y", function (y) {
             return 15;
         });
+
         return series;
     }
-    chart.data = data;
-    if (data[0]) {
-        Object.keys(data[0]).forEach(item => {
-            if (item != "cat")
-                createSeries(item, item);
-        })
-    }
-    /*createSeries('first', 'The First');
-    createSeries('second', 'The Second');
-    createSeries('third', 'The Third');*/
-    function arrangeColumns() {
-        var series = chart.series.getIndex(0);
-        var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-        if (series.dataItems.length > 1) {
-            var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-            var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-            var delta = ((x1 - x0) / chart.series.length) * w;
-            if (am4core.isNumber(delta)) {
-                var middle = chart.series.length / 2;
-                var newIndex = 0;
-                chart.series.each(function (series) {
-                    if (!series.isHidden && !series.isHiding) {
-                        series.dummyData = newIndex;
-                        newIndex++;
-                    }
-                    else {
-                        series.dummyData = chart.series.indexOf(series);
-                    }
-                })
-                var visibleCount = newIndex;
-                var newMiddle = visibleCount / 2;
-                chart.series.each(function (series) {
-                    var trueIndex = chart.series.indexOf(series);
-                    var newIndex = series.dummyData;
-                    var dx = (newIndex - trueIndex + middle - newMiddle) * delta
-
-                    series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                    series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                })
+    setdata(data) {
+       //this.chart.series = [];
+        super.setdata(data);
+        
+        if (this.data[0]) {
+            while (this.chart.series.length) {
+                this.chart.series.removeIndex(0).dispose();
             }
+           Object.keys(this.data[0]).forEach(item => {
+               if (item != this.chartCategory)
+                   this.createSeries(item, item);
+           })
         }
-    }
-    var title = this.chart.titles.create();
-    title.text = this.chartTitle;
-    title.fontSize = 25;
-    title.marginBottom = 30;
-    this.chart.cursor = new am4charts.XYCursor();
-    this.chart.cursor.behavior = "zoomX";
-    var scrollbar = new am4charts.XYChartScrollbar();
-    chart.scrollbarX = scrollbar;
+        this.chart.legend = new am4charts.Legend();
+        console.log(this.chart)
+        console.log(this.chart.series)
+
+       
+       
+
     }
 }
 
@@ -1209,6 +1268,9 @@ export function getChartType(chartType) {
         case 'curvedline':
             // Assuming 'curvedline' refers to a line chart
             return "m-line-chart";
+        case 'clusteredbarchart':
+            // Assuming 'curvedline' refers to a line chart
+            return "m-clustered-chart";
         default:
             return "Invalid chart type";
     }
