@@ -22,6 +22,14 @@
         public static readonly string ART_ST_CUST_PER_TYPE = "ART_DB.ART_ST_CUST_PER_TYPE";
         public static readonly string ART_ST_AML_PROP_RISK_CLASS = "ART_DB.ART_ST_AML_PROP_RISK_CLASS";
         public static readonly string ART_ST_AML_RISK_CLASS = "ART_DB.ART_ST_AML_RISK_CLASS";
+
+        public static readonly string ART_ST_AML_ALERT_AGE_SUMMARY = "ART_DB.ART_ST_AML_ALERT_AGE_SUMMARY";
+        public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO = "ART_DB.ART_ST_AML_ALERTS_PER_SCENARIO";
+        public static readonly string ART_ST_AML_ALERTS_PER_BRANCH = "ART_DB.ART_ST_AML_ALERTS_PER_BRANCH";
+        public static readonly string ART_ST_AML_ALERTS_PER_STATUS = "ART_DB.ART_ST_AML_ALERTS_PER_STATUS";
+
+
+
         //GoAml
         public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "ART.ART_ST_GOAML_REPORTS_PER_TYPE";
         public static readonly string ART_ST_GOAML_REPORTS_PER_STATUS = "ART.ART_ST_GOAML_REPORTS_PER_STATUS";

@@ -10,7 +10,7 @@ namespace ART_PACKAGE.Extentions.DbContextExtentions
         {
             return db.Database.IsSqlServer()
                 ? db.SqlServerExecuteProc<T>(SPName, parameters)
-                : db.Database.IsOracle() ? db.OracleExecuteProc<T>(SPName, parameters) : Enumerable.Empty<T>();
+                : db.Database.IsOracle() ? db.OracleExecuteProc<T>(SPName, parameters) : db.Database.IsMySql() ? db.MySqlExecuteProc<T>(SPName, parameters) : Enumerable.Empty<T>();
         }
 
         private static IEnumerable<T> SqlServerExecuteProc<T>(this DbContext db, string SPName, params DbParameter[] parameters) where T : class
@@ -20,6 +20,46 @@ namespace ART_PACKAGE.Extentions.DbContextExtentions
         }
 
         private static IEnumerable<T> OracleExecuteProc<T>(this DbContext db, string SPName, params DbParameter[] parameters) where T : class
+        {
+            DbParameter? output = parameters.FirstOrDefault(x => x.Direction == ParameterDirection.Output) ?? throw new NullReferenceException("there is no output parameter");
+            DbCommand command = db.Database.GetDbConnection().CreateCommand();
+            command.CommandText = SPName;
+            command.CommandType = CommandType.StoredProcedure;
+
+            _ = command.Parameters.Add(output);
+            foreach (DbParameter param in parameters)
+            {
+                if (param.ParameterName == output.ParameterName)
+                {
+                    continue;
+                }
+
+                _ = command.Parameters.Add(param);
+            }
+            db.Database.OpenConnection();
+
+
+            using DbDataReader reader = command.ExecuteReader();
+            List<T> result = new();
+            System.Reflection.PropertyInfo[] properties = typeof(T).GetProperties();
+            while (reader.Read())
+            {
+                T item = Activator.CreateInstance<T>();
+                foreach (System.Reflection.PropertyInfo property in properties)
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
+                    {
+                        object value = reader[property.Name];
+                        property.SetValue(item, value);
+                    }
+                }
+                result.Add(item);
+            }
+            db.Database.CloseConnection();
+            return result;
+
+        }
+        private static IEnumerable<T> MySqlExecuteProc<T>(this DbContext db, string SPName, params DbParameter[] parameters) where T : class
         {
             DbParameter? output = parameters.FirstOrDefault(x => x.Direction == ParameterDirection.Output) ?? throw new NullReferenceException("there is no output parameter");
             DbCommand command = db.Database.GetDbConnection().CreateCommand();

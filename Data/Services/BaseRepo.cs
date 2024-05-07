@@ -41,7 +41,7 @@ namespace Data.Services
 
 
 
-        public virtual GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel,object>>>? includes = null)
+        public virtual GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)
@@ -129,11 +129,11 @@ namespace Data.Services
             Expression<Func<TModel, bool>> clause = FilterExtensions.GenerateExpression<TModel>(@params);
             return _context.Set<TModel>().Where(clause);
         }
-        
-        
+
+
         public IQueryable<TModel> ExcueteProc(List<BuilderFilter> QueryBuilderFilters)
         {
-            var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : DbTypes.SqlServer;
+            var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : _context.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
             var @params = QueryBuilderFilters.MapToParameters(dbType);
             var storedName = StoredNameManager.GetStoredName<TModel>(dbType);
             return _context.ExecuteProc<TModel>(storedName, @params.ToArray()).AsQueryable();
