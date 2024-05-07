@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
@@ -6,7 +7,6 @@ using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -38,7 +38,7 @@ namespace ART_PACKAGE.Controllers.SASAML
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(SQLSERVERSPNames.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
+                chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
 
             }
