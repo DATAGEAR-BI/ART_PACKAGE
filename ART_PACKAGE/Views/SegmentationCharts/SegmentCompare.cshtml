@@ -11,10 +11,22 @@
     </div>
     <div class="row">
         <div class="col-6">
-            <m-select name="monthKey" id="month-key-spinner" data-searchable data-title="Month Key"></m-select>
+            @*<m-select name="monthKey" id="month-key-spinner" data-searchable data-title="Month Key"></m-select>*@
+            <label>Month Key</label>
+            <select name="monthKey" id="month-key-spinner" onchange="onChangeMonthKey(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                <option value="monthKey">-- Not Selected --</option>
+
+            </select>
         </div>
         <div class="col-6">
-            <m-select name="segmentTypes" id="segment-type" data-searchable data-title="SegmentType"></m-select>
+            <label>Month Key</label>
+            <select name="segmentTypes" id="segment-type" onchange="onChangeSegmentType(this)"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                <option value="segmentTypes">-- Not Selected --</option>
+
+            </select>
+            @*<m-select name="segmentTypes" id="segment-type" data-searchable data-title="SegmentType"></m-select>*@
         </div>
     </div>
     <div id="segmentsTypesChartContainer" hidden class="row mt-5">

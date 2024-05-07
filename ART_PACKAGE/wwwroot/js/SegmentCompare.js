@@ -1,34 +1,36 @@
 ﻿var selectedMonthKey = "";
 var selectedSegmentType = "";
-makeSpinner("/SegmentationCharts/MonthKeys", "month-key-spinner", "monthKey");
+makeSpinner("/SegmentationCharts/MonthKeys", "month-key-spinner", "monthKey", (e) => onChangeMonthKey(e));
 function onChangeMonthKey(e) {
-    selectedMonthKey = e.value;
-    makeSpinner("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, "segment-type", "segmentType");
+    selectedMonthKey = e.target.value;
+
+    makeSpinner("/SegmentationCharts/SegTypesPerKey?monthkey=" + selectedMonthKey, "segment-type", "segmentType", (e) => onChangeSegmentType(e));
     DrawOnMonthCharts();
 }
 function onChangeSegmentType(e) {
-    selectedSegmentType = e.value;
-    makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + selectedSegmentType);
+    selectedSegmentType = e.target.value;
+    //makeSpinner("/SegmentationCharts/Segs?monthkey=" + selectedMonthKey + "&Type=" + selectedSegmentType);
     PrepDataDrawChart(selectedSegmentType);
     DrawCharts(selectedSegmentType);
 }
 
 
 
-function makeSpinner(url, divId, spinnerDefaultValue) {
+function makeSpinner(url, divId, spinnerDefaultValue,onOptChange) {
     $.ajax({
         type: "GET",
         url: url,
         data: {
         },
         success: function (data) {
-            queueList = data;
+            var queueList = data;
 
             var select = document.getElementById(divId);
             select.innerHTML = "";
             var fopt = document.createElement('option');
             fopt.value = spinnerDefaultValue;
             fopt.innerHTML = spinnerDefaultValue;
+            select.onchange = onOptChange;
             select.appendChild(fopt);
             queueList.forEach(q => {
                 var opt = document.createElement('option');
