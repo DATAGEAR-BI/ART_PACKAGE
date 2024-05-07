@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -161,8 +161,10 @@ namespace ART_PACKAGE.Controllers.ECM
                     ChartId = "StFatcaCustsPerNation",
                     Data = chart6Data.ToList(),
                     Title = "Customers Per Nationality",
-                    Cat = "MAIN_NATIONALITY",
-                    Val = "NUMBER_OF_CUSTOMERS",
+                    /*Cat = "MAIN_NATIONALITY",
+                    Val = "NUMBER_OF_CUSTOMERS",*/
+                    Cat = "BRANCH_NAME",
+                    Val = "NUMBER_OF_CUSTPOMERS",
                     Type = ChartType.donut
 
                 }
