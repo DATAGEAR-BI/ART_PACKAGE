@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
@@ -13,6 +14,7 @@ namespace ART_PACKAGE.Helpers.DBService
 {
     public interface IDbService
     {
+
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
@@ -24,5 +26,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGAMLContext DGAML { get; }
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
+        public SasAmlContext SasAML { get; }
+
     }
 }

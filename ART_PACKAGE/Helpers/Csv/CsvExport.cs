@@ -160,6 +160,10 @@ namespace ART_PACKAGE.Helpers.Csv
             TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
+            int total = dataRes.total;
+
+
+
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
         }
 
@@ -269,12 +273,29 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.WriteHeader<TModel>();
 
             cw.NextRecord();
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
             int index = 0;
             float progress = 0;
+            // _logger.LogCritical("csv debug " + data.Count().ToString());
+            /*int numberOfPartitions = (int)Math.Ceiling(dataCount / 100.00);
+
+            for (int i = 0; i < dataCount; i += 100)
+            {
+                cw.WriteRecords(data.Skip(i).Take(100));
+                lock (_locker)
+                {
+                    OnProgressChanged(i, fileNumber);
+                }
+            }*/
             foreach (TModel item in data)
             {
+
+                //_logger.LogCritical("csv debug " + DateTime.Now.ToString());
                 cw.WriteRecord(item);
                 cw.NextRecord();
+                //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+
                 index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
@@ -299,8 +320,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
 
-            if (!data.Any())
-                OnProgressChanged(0, fileNumber);
+
 
             cw.Flush();
             sw.Flush();
@@ -316,6 +336,10 @@ namespace ART_PACKAGE.Helpers.Csv
             string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
             try
             {
+                lock (_locker)
+                {
+                    OnProgressChanged(index, fileNumber);
+                }
                 File.WriteAllBytes(filePath, stream.ToArray());
                 return true;
             }
@@ -327,6 +351,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
         }
+
 
 
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)

@@ -34,7 +34,10 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetPartyTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyTypeDesc == null || string.IsNullOrEmpty(x.PartyTypeDesc.Trim()) ? "UNKNOWN" : x.PartyTypeDesc.ToUpper()).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+               .Where(a => a.LovTypeName.StartsWith("FCF_PARTY_TYPE"))
+               .Where(b => b.LovLanguageDesc.Contains("en")).Select(x => x.LovTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+
             return distinct_value;
         }
 
@@ -380,7 +383,18 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetAlertOwnerDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+        }
+        public List<SelectItem> GetQueuesDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskQueues.Select(x => x.QueueCode).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
 
         public List<SelectItem> GetAppLebalDropDown()
         {

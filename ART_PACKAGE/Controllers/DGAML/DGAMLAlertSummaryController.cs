@@ -1,5 +1,4 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -8,6 +7,7 @@ using Data.Data.ARTDGAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -30,23 +30,22 @@ namespace ART_PACKAGE.Controllers.DGAML
 
 
             IEnumerable<ArtStDgAmlAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStDgAmlAlertsPerStatus>().AsQueryable();
-            IEnumerable<ArtStDgAmlAlertsPerBranch> chart2data = Enumerable.Empty<ArtStDgAmlAlertsPerBranch>().AsQueryable();
-            IEnumerable<ArtStDgAmlAlertsPerScenario> chart3data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
-            IEnumerable<ArtStAmlAlertAgeSummery> data = Enumerable.Empty<ArtStAmlAlertAgeSummery>().AsQueryable();
-
+            IEnumerable<ArtStDgAmlAlertPerOwner> chart2data = Enumerable.Empty<ArtStDgAmlAlertPerOwner>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerBranch> chart3data = Enumerable.Empty<ArtStDgAmlAlertsPerBranch>().AsQueryable();
+            IEnumerable<ArtStDgAmlAlertsPerScenario> chart4data = Enumerable.Empty<ArtStDgAmlAlertsPerScenario>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> dataParams = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
-                //data = _context.ExecuteProc<ArtStDgAmlAlertAgeSummery>(SQLSERVERSPNames.ART_ST_DGAML_ALERT_AGE_SUMMARY, dataParams.ToArray());
-                chart2data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_BRANCH, chart2Params.ToArray());
-                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart3Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 
@@ -56,7 +55,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                 //chart2data = _context.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
 
             }
-            //KendoDataDesc<ArtStDgAmlAlertAgeSummery> Data = data.AsQueryable().CallData(para.req);
 
 
             ArrayList chartData = new()
@@ -70,18 +68,19 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Val = "ALERTS_COUNT",
                     Type = ChartType.donut
                 },
-                /*new ChartData<ArtStDgAmlAlertPerOwner>
+                new ChartData<ArtStDgAmlAlertPerOwner>
                 {
                     ChartId = "StAlertPerOwner",
                     Data = chart2data.ToList(),
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
-                    Val = "ALERTS_CNT_SUM"
-                },*/
+                    Val = "ALERTS_CNT_SUM",
+                    Type = ChartType.donut
+                },
                 new ChartData<ArtStDgAmlAlertsPerBranch>
                 {
                     ChartId = "StAlertPerBranch",
-                    Data = chart2data.ToList(),
+                    Data = chart3data.ToList(),
                     Title = "Alerts Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "ALERTS_COUNT",
@@ -90,7 +89,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                 new ChartData<ArtStDgAmlAlertsPerScenario>
                 {
                     ChartId = "StAlertPerScenario",
-                    Data = chart3data.ToList(),
+                    Data = chart4data.ToList(),
                     Title = "Alerts Per Scenario",
                     Cat = "SCENARIO_NAME",
                     Val = "ALERTS_COUNT",
@@ -98,15 +97,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                 },
             };
 
-            /*var result = new
-            {
-                data = Data.Data,
-                columns = Data.Columns,
-                total = Data.Total,
-                reportname = "UserPerformancePerActionUser",
-                chartdata = chartData
-
-            };*/
 
             return new ContentResult
             {

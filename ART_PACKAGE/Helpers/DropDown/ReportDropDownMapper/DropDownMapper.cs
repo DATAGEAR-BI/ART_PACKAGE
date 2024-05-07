@@ -54,18 +54,20 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
             {
                 //branch name,Alert status, Alert type, scenario name, queue, owner
 
-                nameof(AlertDetailsController) => new Dictionary<string, List<SelectItem>>
+                var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
+                    {"CasesStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
+                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
 
                     {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown()},
+                    {"OwnerUserid".ToLower(),_dropDown.GetAlertOwnerDropDown()},
+                    {"queue".ToLower(),_dropDown.GetQueuesDropDown()},
 
-
+/*
                     {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
-                    {"PoliticallyExposedPersonInd".ToLower(), pipList},
+                    {"PoliticallyExposedPersonInd".ToLower(), pipList},*/
                 },
                 nameof(CasesDetailsController) => new Dictionary<string, List<SelectItem>>
                 {

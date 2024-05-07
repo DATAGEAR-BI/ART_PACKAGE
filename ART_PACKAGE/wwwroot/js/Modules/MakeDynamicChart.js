@@ -1119,7 +1119,7 @@ export function makedynamicChart(
     }
 }
 
-makeRotateButton(chart) {
+function makeRotateButton(chart) {
     let buttonContainer = chart.chartContainer.createChild(am4core.Container);
     let button = buttonContainer.createChild(am4core.Button);
     button.label.text = "Rotate Chart";

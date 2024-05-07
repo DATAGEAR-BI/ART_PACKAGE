@@ -2216,6 +2216,7 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .IsUnicode(false)
                     .HasColumnName("SCENARIO_NAME");
+
             });
 
             modelBuilder.Entity<ArtAmlCaseDetailsView>(entity =>
@@ -2725,6 +2726,106 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.RiskScore)
                     .HasMaxLength(100)
                     .HasColumnName("RISK_SCORE");
+            });
+
+            modelBuilder.Entity<BigData>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("BIG_DATA", "ART_DB");
+                entity.Property(e => e.EntityWatchListKey)
+                .IsRequired()
+                .HasColumnName("entity_watch_list_key");
+
+                entity.Property(e => e.EntityWatchListNumber)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("entity_watch_list_number");
+
+                entity.Property(e => e.WatchListName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("watch_list_name");
+
+                entity.Property(e => e.CategoryDesc)
+                    .HasMaxLength(2000)
+                    .HasColumnName("category_desc"); // Nullable
+
+                entity.Property(e => e.TypeDesc)
+                    .HasMaxLength(20)
+                    .HasColumnName("type_desc"); // Nullable
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(350)
+                    .HasColumnName("first_name"); // Nullable
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(350)
+                    .HasColumnName("last_name"); // Nullable
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(800)
+                    .HasColumnName("entity_name"); // Nullable
+
+                entity.Property(e => e.EntityTitle)
+                    .HasMaxLength(1000)
+                    .HasColumnName("entity_title"); // Nullable
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasColumnName("occupation_desc"); // Nullable
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("city_name"); // Nullable
+
+                entity.Property(e => e.StateName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("state_name"); // Nullable
+
+                entity.Property(e => e.CountryCode)
+                    .HasMaxLength(1000)
+                    .HasColumnName("country_code"); // Nullable
+
+                entity.Property(e => e.CountryName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("country_name"); // Nullable
+
+                entity.Property(e => e.FullAddress)
+                    .HasColumnName("full_address"); // Nullable
+
+                entity.Property(e => e.NationalityCountryCode)
+                    .HasMaxLength(1000)
+                    .HasColumnName("nationality_country_code"); // Nullable
+
+                entity.Property(e => e.NationalityCountryName)
+                    .HasMaxLength(4000)
+                    .HasColumnName("nationality_country_name"); // Nullable
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasColumnName("politically_exposed_person_ind"); // Nullable
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("create_date"); // Nullable
+
+                entity.Property(e => e.UpdateDate)
+                    .HasColumnName("update_date"); // Nullable
+
+                entity.Property(e => e.ExcludeInd)
+                    .HasMaxLength(1)
+                    .HasColumnName("exclude_ind"); // Nullable
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .IsRequired()
+                    .HasColumnName("change_begin_date");
+
+                entity.Property(e => e.ChangeEndDate)
+                    .IsRequired()
+                    .HasColumnName("change_end_date");
+
+                entity.Property(e => e.ChangeCurrentInd)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .HasColumnName("change_current_ind");
             });
 
         }
@@ -4232,6 +4333,57 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.VersionNumber)
                     .HasColumnType("decimal(10, 0)")
                     .HasColumnName("version_number");
+            });
+            modelBuilder.Entity<FskQueue>(entity =>
+            {
+                entity.ToTable("FSK_QUEUE", "FCFKC");
+                // Set primary key
+                entity.HasKey(e => e.QueueKey);
+
+                // Set column names for properties
+                entity.Property(e => e.QueueKey)
+                    .IsRequired()
+                    .HasColumnName("queue_key"); // maps to "queue_key"
+
+                entity.Property(e => e.QueueCode)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("queue_code"); // maps to "queue_code"
+
+                entity.Property(e => e.QueueDescription)
+                    .HasMaxLength(100)
+                    .HasColumnName("queue_description"); // maps to "queue_description"
+
+                entity.Property(e => e.AccessRoleName)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .HasColumnName("access_role_name"); // maps to "access_role_name"
+
+                entity.Property(e => e.LastUpdateUser)
+                    .HasMaxLength(60)
+                    .HasColumnName("lstupdate_user"); // maps to "lstupdate_user"
+
+                entity.Property(e => e.LogicalDeleteIndicator)
+                    .HasMaxLength(1)
+                    .HasColumnName("logical_delete_ind"); // maps to "logical_delete_ind"
+
+                entity.Property(e => e.ActiveIndicator)
+                    .HasMaxLength(1)
+                    .HasColumnName("active_ind"); // maps to "active_ind"
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .IsRequired()
+                    .HasColumnName("change_begin_date"); // maps to "change_begin_date"
+
+                entity.Property(e => e.ChangeEndDate)
+                    .IsRequired()
+                    .HasColumnName("change_end_date"); // maps to "change_end_date"
+
+                entity.Property(e => e.ChangeCurrentIndicator)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .HasColumnName("change_current_ind"); // maps to "change_current_ind"
+
             });
         }
 

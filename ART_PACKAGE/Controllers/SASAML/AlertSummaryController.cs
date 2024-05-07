@@ -1,13 +1,12 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data.ARTDGAML;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -30,39 +29,33 @@ namespace ART_PACKAGE.Controllers.SASAML
         {
 
 
-            IEnumerable<ArtStAmlAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStAmlAlertsPerStatus>().AsQueryable();
-            IEnumerable<ArtStAmlAlertsPerBranch> chart2data = Enumerable.Empty<ArtStAmlAlertsPerBranch>().AsQueryable();
-            IEnumerable<ArtStAmlAlertsPerScenario> chart3data = Enumerable.Empty<ArtStAmlAlertsPerScenario>().AsQueryable();
+            IEnumerable<ArtStAlertsPerStatus> chart1Data = Enumerable.Empty<ArtStAlertsPerStatus>().AsQueryable();
+            IEnumerable<ArtStAlertPerOwner> chart2data = Enumerable.Empty<ArtStAlertPerOwner>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart1Data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerStatus>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_STATUS, chart1Params.ToArray());
-                chart2data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_BRANCH, chart2Params.ToArray());
-                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_SCENARIO, chart2Params.ToArray());
+                chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(SQLSERVERSPNames.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
+                chart2data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
 
             }
 
             if (dbType == DbTypes.Oracle)
             {
-
-                chart1Data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerStatus>(ORACLESPName.ART_ST_AML_ALERTS_PER_STATUS, chart1Params.ToArray());
-                chart2data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerBranch>(ORACLESPName.ART_ST_AML_ALERTS_PER_BRANCH, chart2Params.ToArray());
-                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(ORACLESPName.ART_ST_AML_ALERTS_PER_SCENARIO, chart2Params.ToArray());
-
+                chart1Data = dbfcfkc.ExecuteProc<ArtStAlertsPerStatus>(ORACLESPName.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
+                chart2data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
 
             }
 
 
             ArrayList chartData = new()
             {
-                new ChartData<ArtStAmlAlertsPerStatus>
+                new ChartData<ArtStAlertsPerStatus>
                 {
-                    ChartId = "StAmlAlertsPerStatus",
+                    ChartId = "StAlertsPerStatus",
                     Data = chart1Data.ToList(),
                     Title = "Alerts Per Status",
                     Cat = "ALERT_STATUS",
@@ -70,15 +63,14 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Type = ChartType.donut
 
                 },
-                new ChartData<ArtStAmlAlertsPerBranch>
+                new ChartData<ArtStAlertPerOwner>
                 {
-                    ChartId = "StAmlAlertsPerBranch",
+                    ChartId = "StAlertPerOwner",
                     Data = chart2data.ToList(),
-                    Title = "Alerts Per Branch",
-                    Cat = "BRANCH_NAME",
-                    Val = "ALERTS_COUNT",
-                    Type = ChartType.bar
-
+                    Title = "Alerts Per Owner",
+                    Cat = "OWNER_USERID",
+                    Val = "ALERTS_CNT_SUM",
+                    Type = ChartType.donut
                 }
             };
 

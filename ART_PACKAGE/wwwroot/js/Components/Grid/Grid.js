@@ -270,7 +270,7 @@ class Grid extends HTMLElement {
                 progressBar.hidden = false;
 
 
-            progressBar.value = progress;
+            progressBar.value = parseFloat( progress.toFixed(2));
             if (progress >= 100) {
                 progressBar.hidden = true;
                 var downloadButton = document.getElementById("ExportDownloadBtn");
@@ -552,7 +552,7 @@ class Grid extends HTMLElement {
             template: `
             <span style="display: inline-block">
                 <span style="display:flex;align-items:center">
-                    <smart-progress-bar id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
+                    <smart-progress-bar show-progress-value id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
                     <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
                 </span>
             </span>
@@ -1168,6 +1168,7 @@ class Grid extends HTMLElement {
                 e.target.hidden = true;
                 this.csvExportId = "";
                 this.isDownloaded = true;
+                e.target.style.visibility = "hidden";
             }
         });
 
@@ -1406,7 +1407,10 @@ class Grid extends HTMLElement {
             $.toast(toastObj);
             return;
         }
-
+        /*var progressBar = document.querySelector('smart-progress-bar');
+        progressBar.formatFunction = function (value) {
+            return value + ' ' + 'oz';
+        }*/
         this.isExporting = true;
         this.isDownloaded = false;
         var grid = $(this.gridDiv).data("kendoGrid");
@@ -1501,6 +1505,10 @@ class Grid extends HTMLElement {
         let grid = $(this.gridDiv).data("kendoGrid");
         let state = grid.getOptions();
         localStorage.setItem(key, JSON.stringify(state));
+        toastObj.icon = 'success';
+        toastObj.text = "Options Saved successfully";
+        toastObj.heading = "Save Option Status";
+        $.toast(toastObj);
         //localStorage.setItem(key, JSON.stringify(convertToStringWithFunctions(state)));
 
         //localStorage.setItem("HamadaOb7", JSON.stringify(convertToStringWithFunctions(state)));

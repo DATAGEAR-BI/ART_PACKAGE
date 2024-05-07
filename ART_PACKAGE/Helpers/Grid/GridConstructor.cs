@@ -26,8 +26,9 @@ namespace ART_PACKAGE.Helpers.Grid
         private static readonly Dictionary<int, int> fileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
         private readonly IPdfService _pdfSrv;
+        private readonly IConfiguration _config;
 
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv)
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, IConfiguration _config)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -37,6 +38,7 @@ namespace ART_PACKAGE.Helpers.Grid
             this.connections = connections;
             _reportsConfigResolver = reportsConfigResolver;
             _pdfSrv = pdfSrv;
+            this._config = _config;
         }
         public TRepo Repo { get; private set; }
 
@@ -47,7 +49,10 @@ namespace ART_PACKAGE.Helpers.Grid
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
             int total = dataRes.total;
             int totalcopy = total;
-            int batch = 500_000;
+            var d = _config.GetValue<int>("export_Patch", 50000);// is not null ? _config.GetSection("export_Patch").ToString() : "500_000";
+            //var saved_batch = Int32.Parse(_config.GetSection("export_Patch") is not null ? _config.GetSection("export_Patch").ToString() : "500_000");
+            int batch = d;
+            //500_000:
             int round = 0;
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
