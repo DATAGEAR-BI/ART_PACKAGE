@@ -56,8 +56,12 @@ namespace ART_PACKAGE.Controllers.CRP
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(ORACLESPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(ORACLESPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
                 chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(ORACLESPName.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
-
-
+            }
+            if (dbType == DbTypes.MySql) 
+            {
+                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
+                chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(MYSQLSPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
             }
             //List<Dictionary<string, object>> chartDictList = new();
             //foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())

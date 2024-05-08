@@ -55,7 +55,13 @@ namespace ART_PACKAGE.Controllers.DGAML
                 //chart2data = _context.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
 
             }
+            if (dbType == DbTypes.MySql)
+            {
 
+                //chart1Data = _context.ExecuteProc<ArtStAlertsPerStatus>(MYSQLSPName.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
+                //chart2data = _context.ExecuteProc<ArtStAlertPerOwner>(MYSQLSPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
+
+            }
 
             ArrayList chartData = new()
             {

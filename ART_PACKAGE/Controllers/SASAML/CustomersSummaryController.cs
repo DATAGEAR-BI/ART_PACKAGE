@@ -57,6 +57,13 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CUST_PER_BRANCH, chart3Params.ToArray());
 
             }
+            if (dbType == DbTypes.MySql)
+            {
+                chart1Data = dbfcfcore.ExecuteProc<ArtStCustPerType>(MYSQLSPName.ART_ST_CUST_PER_TYPE, chart1Params.ToArray());
+                chart2data = dbfcfcore.ExecuteProc<ArtStCustPerRisk>(MYSQLSPName.ART_ST_CUST_PER_RISK, chart2Params.ToArray());
+                chart3Data = dbfcfcore.ExecuteProc<ArtStCustPerBranch>(MYSQLSPName.ART_ST_CUST_PER_BRANCH, chart3Params.ToArray());
+
+            }
 
             ArrayList chartData = new()
             {

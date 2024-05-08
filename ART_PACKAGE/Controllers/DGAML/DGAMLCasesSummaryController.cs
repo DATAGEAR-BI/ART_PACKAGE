@@ -56,6 +56,14 @@ namespace ART_PACKAGE.Controllers.DGAML
                 //chart4Data = _context.ExecuteProc<ArtStCasesPerPriority>(ORACLESPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
 
             }
+            if (dbType == DbTypes.MySql)
+            {
+                //chart1Data = _context.ExecuteProc<ArtStCasesPerStatus>(MYSQLSPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
+                //chart2data = _context.ExecuteProc<ArtStCasesPerCategory>(MYSQLSPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
+                //chart3Data = _context.ExecuteProc<ArtStCasesPerSubcat>(MYSQLSPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
+                //chart4Data = _context.ExecuteProc<ArtStCasesPerPriority>(MYSQLSPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+
+            }
 
             ArrayList chartData = new()
             {

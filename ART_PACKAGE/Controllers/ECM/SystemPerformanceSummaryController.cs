@@ -90,7 +90,14 @@ namespace ART_PACKAGE.Controllers.ECM
                 chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
 
             }
+            if (dbType == DbTypes.MySql)
+            {
+                chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(MYSQLSPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
+                chart2data = context.ExecuteProc<ArtSystemPerfPerType>(MYSQLSPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
+                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(MYSQLSPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
 
+            }
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
             ArrayList chartData = new()

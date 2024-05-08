@@ -5,7 +5,7 @@ using Data.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ART_PACKAGE.Controllers.ECM
+namespace ART_PACKAGE.Controllers.FATCA
 {
     [AllowAnonymous]
 

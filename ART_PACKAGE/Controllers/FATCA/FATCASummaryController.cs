@@ -11,7 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
 
-namespace ART_PACKAGE.Controllers.ECM
+namespace ART_PACKAGE.Controllers.FATCA
 {
     [AllowAnonymous]
 
@@ -105,6 +105,15 @@ namespace ART_PACKAGE.Controllers.ECM
                 chart6Data = context.ExecuteProc<ART_ST_FATCA_CUSTS_PER_NATION>(ORACLESPName.ART_ST_FATCA_CUSTS_PER_NATION, chart6Params.ToArray());
 
 
+            }
+            if (dbType == DbTypes.MySql)
+            {
+                chart1Data = context.ExecuteProc<ART_ST_FATCA_ALERTS_PER_BRANCH>(MYSQLSPName.ART_ST_FATCA_ALERTS_PER_BRANCH, chart1Params.ToArray());
+                chart2Data = context.ExecuteProc<ART_ST_FATCA_ALERTS_PER_TYPE>(MYSQLSPName.ART_ST_FATCA_ALERTS_PER_TYPE, chart2Params.ToArray());
+                chart3Data = context.ExecuteProc<ART_ST_FATCA_CASES_PER_BRANCH>(MYSQLSPName.ART_ST_FATCA_CASES_PER_BRANCH, chart3Params.ToArray());
+                chart4Data = context.ExecuteProc<ART_ST_FATCA_CASES_PER_TYPE>(MYSQLSPName.ART_ST_FATCA_CASES_PER_TYPE, chart4Params.ToArray());
+                chart5Data = context.ExecuteProc<ART_ST_FATCA_CASES_PER_STATUS>(MYSQLSPName.ART_ST_FATCA_CASES_PER_STATUS, chart5Params.ToArray());
+                chart6Data = context.ExecuteProc<ART_ST_FATCA_CUSTS_PER_NATION>(MYSQLSPName.ART_ST_FATCA_CUSTS_PER_NATION, chart6Params.ToArray());
             }
             ArrayList chartData = new()
             {

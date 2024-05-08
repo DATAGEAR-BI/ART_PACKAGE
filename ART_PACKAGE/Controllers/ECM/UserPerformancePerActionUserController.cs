@@ -49,6 +49,10 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
+            else if (dbType == DbTypes.MySql)
+            {
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            }
 
 
             KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req);
@@ -86,6 +90,10 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
+            else if (dbType == DbTypes.MySql)
+            {
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
@@ -106,6 +114,10 @@ namespace ART_PACKAGE.Controllers.ECM
             else if (dbType == DbTypes.Oracle)
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+            }
+            else if (dbType == DbTypes.MySql)
+            {
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
             ViewData["title"] = "User Performance Per Action User Report";
             ViewData["desc"] = "";

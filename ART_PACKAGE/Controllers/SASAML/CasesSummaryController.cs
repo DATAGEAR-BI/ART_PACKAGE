@@ -59,7 +59,13 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart4Data = dbfcfkc.ExecuteProc<ArtStCasesPerPriority>(ORACLESPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
 
             }
-
+            if (dbType == DbTypes.MySql)
+            {
+                chart1Data = dbfcfkc.ExecuteProc<ArtStCasesPerStatus>(MYSQLSPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
+                chart2data = dbfcfkc.ExecuteProc<ArtStCasesPerCategory>(MYSQLSPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
+                chart3Data = dbfcfkc.ExecuteProc<ArtStCasesPerSubcat>(MYSQLSPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
+                chart4Data = dbfcfkc.ExecuteProc<ArtStCasesPerPriority>(MYSQLSPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+            }
             ArrayList chartData = new()
             {
                 new ChartData<ArtStCasesPerStatus>

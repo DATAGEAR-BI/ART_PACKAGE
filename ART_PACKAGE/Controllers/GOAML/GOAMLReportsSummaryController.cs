@@ -44,6 +44,12 @@ namespace ART_PACKAGE.Controllers.GOAML
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
             }
+            else if (dbType == DbTypes.MySql)
+            {
+                chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
+            }
 
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);

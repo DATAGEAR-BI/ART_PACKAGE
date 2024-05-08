@@ -50,7 +50,12 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(ORACLESPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
 
             }
+            if (dbType == DbTypes.MySql)
+            {
+                chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(MYSQLSPName.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
+                chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(MYSQLSPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
 
+            }
             ArrayList chartData = new()
             {
                 new ChartData<ArtStAmlRiskClass>
