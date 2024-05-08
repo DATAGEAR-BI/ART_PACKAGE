@@ -1,5 +1,6 @@
 ﻿using Data.Constants.db;
 using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Data.Common;
@@ -36,6 +37,22 @@ namespace Data.Services.QueryBuilder
                 else if (dbType == DbTypes.Oracle)
                 {
                     @params.Add(new OracleParameter(f.Field, OracleDbType.Varchar2, ParameterDirection.Input) { Value = strVal });
+                }
+                else if(dbType == DbTypes.MySql) 
+                {
+                    if (f.Field.ToLower() == "startdate")
+                    {
+                        @params.Add(new MySqlParameter("@V_START_DATE", MySqlDbType.Date) { Value = strVal });
+                    }
+                    else if (f.Field.ToLower() == "enddate")
+                    {
+                        @params.Add(new MySqlParameter("@V_END_DATE", MySqlDbType.Date) { Value = strVal });
+                    }
+                    else
+                    {
+                        @params.Add(new MySqlParameter(f.Field, MySqlDbType.Date) { Value = strVal });
+                    }
+
                 }
             });
 
