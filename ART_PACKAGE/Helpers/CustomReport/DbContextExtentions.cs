@@ -3,6 +3,7 @@ using Dapper;
 using Data.Constants.db;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 
 using System.Data;
@@ -110,13 +111,17 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             {1}"},
             {DbTypes.Oracle,@"select Count(*)
                             from {0}
-                            {1}"}
+                            {1}"},
+            {DbTypes.MySql,@"select Count(*)
+                            from {0}
+                            {1}" }
         };
         public static IEnumerable<View> GetViewsNames(this DbContext db)
 
         {
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
+            bool isMySql = db.Database.IsMySql();
             string sql = "";
             if (isSqlServer)
             {
@@ -126,9 +131,13 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 sql = viewsSql[DbTypes.Oracle];
             }
+            else if(isMySql)
+            {
+                sql = viewsSql[DbTypes.MySql];
+            }
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
-                                             : new OracleConnection(db.Database.GetConnectionString());
+                                             : isOracle ? new OracleConnection(db.Database.GetConnectionString()) : new MySqlConnection(db.Database.GetConnectionString());
 
 
             IEnumerable<View> views = conn.Query<View>(sql);
@@ -145,6 +154,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string viewName = view.Split('.')[1];
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
+            bool isMySql = db.Database.IsMySql();
             string sql = "";
             if (isSqlServer)
             {
@@ -154,9 +164,12 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 sql = string.Format(viewsColumnsSql[DbTypes.Oracle], viewName, type);
             }
-
+            else if(isMySql)
+            {
+                sql = string.Format(viewsColumnsSql[DbTypes.MySql], schema, viewName, type);
+            }
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
-                                             : new OracleConnection(db.Database.GetConnectionString());
+                                            : isOracle ? new OracleConnection(db.Database.GetConnectionString()) : new MySqlConnection(db.Database.GetConnectionString());
 
 
             IEnumerable<ViewColumn> columns = conn.Query<ViewColumn>(sql);
@@ -167,16 +180,14 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
+            bool isMySql = db.Database.IsMySql();
+
             string sql = "";
             string sqlCount = "";
             string NormalizedName = "";
             string progection = string.Join(", ", isOracle ? columns.Select(x => @$"""{x}""") : columns);
             string? restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
 
-            if (isOracle)
-            {
-
-            }
             if (isSqlServer)
             {
                 NormalizedName = string.Join(".", view.Split(".").Select(x => @$"[{x}]"));
@@ -186,10 +197,15 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 NormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
                 sqlCount = string.Format(DataCountSql[DbTypes.Oracle], NormalizedName, restriction);
-            };
+            }
+            else if (isMySql)
+            {
+                NormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
+                sqlCount = string.Format(DataCountSql[DbTypes.MySql], NormalizedName, restriction);
+            }
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
-                                             : new OracleConnection(db.Database.GetConnectionString());
+                                            : isOracle ? new OracleConnection(db.Database.GetConnectionString()) : new MySqlConnection(db.Database.GetConnectionString());
 
             long count = conn.Query<long>(sqlCount).Single();
 
@@ -202,10 +218,13 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {
                 orderBy = string.IsNullOrEmpty(orderBy) ? "ORDER BY(SELECT NULL)" : "ORDER BY " + orderBy;
             }
-
             if (isOracle)
             {
                 orderBy = string.IsNullOrEmpty(orderBy) ? "" : "ORDER BY " + orderBy;
+            }
+            if (isMySql)
+            {
+                orderBy = string.IsNullOrEmpty(orderBy) ? "ORDER BY(SELECT NULL)" : "ORDER BY " + orderBy;
             }
 
             if (isSqlServer)
@@ -215,6 +234,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
             else if (isOracle)
             {
                 sql = string.Format(DataSql[DbTypes.Oracle], progection, NormalizedName, restriction, orderBy, skip, take);
+            }
+            else if(isMySql)
+            {
+                sql = string.Format(DataSql[DbTypes.MySql], progection, NormalizedName, restriction, orderBy, skip, take);
             }
 
             List<dynamic> data = conn.Query(sql, commandTimeout: 120).ToList();
@@ -226,8 +249,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             string orclSql = @"OPEN {3} FOR SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
             string Sql = @"SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
+            string mySql = @"SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
+            bool isMySql = db.Database.IsMySql();
+
             string? restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
             StringBuilder _sb = new();
             GridReader result = null;
@@ -266,7 +292,19 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 }
             }
 
+            else if (isMySql)
+            {
+                charts.Select((x, i) => (x, i)).ToList().ForEach(rec =>
+                {
 
+                    _ = _sb.AppendLine(string.Format(Sql, rec.x.Column, rec.x.Report.Table, restriction));
+                });
+                query = _sb.ToString();
+                if (!string.IsNullOrEmpty(query))
+                {
+                    result = conn.QueryMultiple(query);
+                }
+            }
 
 
 

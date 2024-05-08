@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
+using Data.Constants.db;
 using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -134,6 +135,21 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"gt","TRUNC({1}) > to_date('{0}', 'dd-MM-yyyy')"},
             {"lte","TRUNC({1}) <= to_date('{0}', 'dd-MM-yyyy')"},
             { "lt", "TRUNC({1}) < to_date('{0}', 'dd-MM-yyyy')" },
+            }
+            },
+            {
+
+                DbTypes.MySql
+            ,
+                new Dictionary<string, string> {
+            { "eq", "DATE({1}) = STR_TO_DATE('{0}', '%d-%m-%Y')" },
+            { "neq", "DATE({1}) <> STR_TO_DATE('{0}', '%d-%m-%Y')" },
+            { "isnull", "{1} IS NULL" },
+            { "isnotnull", "{1} IS NOT NULL" },
+            {"gte","DATE({1}) >= STR_TO_DATE('{0}', '%d-%m-%Y')"},
+            {"gt","DATE({1}) > STR_TO_DATE('{0}', '%d-%m-%Y')"},
+            {"lte","DATE({1}) <= STR_TO_DATE('{0}', '%d-%m-%Y')"},
+            { "lt", "DATE({1}) < STR_TO_DATE('{0}', '%d-%m-%Y')" },
             }
             }
         };
