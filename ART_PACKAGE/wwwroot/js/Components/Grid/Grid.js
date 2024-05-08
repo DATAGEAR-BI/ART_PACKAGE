@@ -722,7 +722,8 @@ class Grid extends HTMLElement {
             noRecords: true,
             persistSelection: true,
             pageable: true,
-            reorderable: true,
+            re
+            able: true,
             change: (e) => {
                 if ([...grid.select()].length > 0) {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
@@ -913,6 +914,9 @@ class Grid extends HTMLElement {
 
                         element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
                         showOrHideInputElements(element, false, 'value')
+                    } else {
+                        showOrHideInputElements(element, true, 'value')
+
                     }
 
                     return;
@@ -925,6 +929,9 @@ class Grid extends HTMLElement {
 
                         element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
                         showOrHideInputElements(element, false, 'additional')
+                    } else {
+                        showOrHideInputElements(element, true, 'additional')
+
                     }
 
                     console.log()
