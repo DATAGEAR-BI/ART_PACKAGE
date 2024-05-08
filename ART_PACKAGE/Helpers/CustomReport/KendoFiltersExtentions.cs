@@ -105,7 +105,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             {
 
-                "sqlServer"
+                DbTypes.SqlServer
             ,
             new Dictionary<string, string> {
             { "eq", "Convert(date , {1} , 105) = Convert(date,'{0}',105)" },
@@ -123,7 +123,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             {
 
-                "oracle"
+                DbTypes.Oracle
             ,
                 new Dictionary<string, string> {
             { "eq", "TRUNC({1}) =  to_date('{0}', 'dd-MM-yyyy')" },

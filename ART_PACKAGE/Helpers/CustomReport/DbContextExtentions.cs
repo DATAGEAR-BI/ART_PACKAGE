@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Dapper;
+using Data.Constants.db;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
@@ -15,21 +16,38 @@ namespace ART_PACKAGE.Helpers.CustomReport
     {
         private static readonly Dictionary<string, string> viewsSql = new()
         {
-            {"sqlserver",@"SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME , type As [TYPE]
+            {DbTypes.SqlServer,@"SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME , type As [TYPE]
                             FROM 
 	                            sys.views as v
 						    union 
                             SELECT SCHEMA_NAME(v.schema_id)+ '.'+ v.name as VIEW_NAME  , type As [TYPE]
                             FROM 
 	                            sys.tables as v;"},
-            {"oracle",@"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
+            {DbTypes.Oracle,@"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
                         union  all
-                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME , 'U' as TYPE  FROM user_tables  "}
+                        SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),table_name) as VIEW_NAME , 'U' as TYPE  FROM user_tables  "},
+            {DbTypes.MySql,@"SELECT 
+                            CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) AS VIEW_NAME, 
+                            'VIEW' AS `TYPE`
+                        FROM 
+                            INFORMATION_SCHEMA.TABLES
+                        WHERE 
+                            TABLE_TYPE = 'VIEW'
+
+                        UNION
+
+                        SELECT 
+                            CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) AS VIEW_NAME, 
+                            'TABLE' AS `TYPE`
+                        FROM 
+                            INFORMATION_SCHEMA.TABLES
+                        WHERE 
+                            TABLE_TYPE = 'BASE TABLE'; "}
         };
 
         private static readonly Dictionary<string, string> viewsColumnsSql = new()
         {
-            {"sqlserver",@"SELECT COLUMN_NAME as [Name] ,
+            {DbTypes.SqlServer,@"SELECT COLUMN_NAME as [Name] ,
                                    DATA_TYPE [SqlDataType], 
                                    IS_NULLABLE [IsNullable]
                             FROM INFORMATION_SCHEMA.COLUMNS c
@@ -38,7 +56,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             WHERE c.TABLE_SCHEMA = N'{0}'
                                 AND c.TABLE_NAME = N'{1}'
                                 AND o.type = '{2}';"},
-            {"oracle",@"select
+            {DbTypes.Oracle,@"select
                                col.COLUMN_NAME as ""Name"", 
                                col.DATA_TYPE as ""SqlDataType"",
                                col.NULLABLE as ""IsNullable""
@@ -46,29 +64,47 @@ namespace ART_PACKAGE.Helpers.CustomReport
                         inner join (    SELECT view_name  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
                                         union  all
                                         SELECT table_name as VIEW_NAME , 'U' as TYPE  FROM user_tables  ) v
-                        on col.table_name = v.VIEW_NAME and v.view_name = '{0}' and v.TYPE = '{1}'"}
+                        on col.table_name = v.VIEW_NAME and v.view_name = '{0}' and v.TYPE = '{1}'"},
+             {DbTypes.MySql,@"SELECT 
+                        COLUMN_NAME AS `Name`,
+                        DATA_TYPE AS `SqlDataType`,
+                        IS_NULLABLE AS `IsNullable`
+                    FROM 
+                        INFORMATION_SCHEMA.COLUMNS
+                    WHERE 
+                        TABLE_SCHEMA = '{0}'  -- Schema name
+                        AND TABLE_NAME = '{1}'  -- Table or view name
+                        AND EXISTS (
+                            SELECT 1
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE 
+                                TABLE_SCHEMA = '{0}'
+                                AND TABLE_NAME = '{1}'
+                                AND TABLE_TYPE = '{2}'  -- 'BASE TABLE' for tables, 'VIEW' for views
+                        ); "}
         };
         private static readonly Dictionary<string, string> DataSql = new()
         {
-            {"sqlserver",@"select {0}
+            {DbTypes.SqlServer,@"select {0}
                             from {1}
                             {2}
                             {3}
                             OFFSET     {4} ROWS       
                             FETCH NEXT {5} ROWS ONLY"},
-            {"oracle",@"select {0}
+            {DbTypes.Oracle,@"select {0}
                             from {1}
                             {2}
                             {3}
                         OFFSET     {4} ROWS       
-                        FETCH NEXT {5} ROWS ONLY"}
+                        FETCH NEXT {5} ROWS ONLY"},
+
         };
         private static readonly Dictionary<string, string> DataCountSql = new()
         {
-            {"sqlserver",@"select Count(*)
+            {DbTypes.SqlServer,@"select Count(*)
                             from {0}
                             {1}"},
-            {"oracle",@"select Count(*)
+            {DbTypes.Oracle,@"select Count(*)
                             from {0}
                             {1}"}
         };
@@ -80,11 +116,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string sql = "";
             if (isSqlServer)
             {
-                sql = viewsSql["sqlserver"];
+                sql = viewsSql[DbTypes.SqlServer];
             }
             else if (isOracle)
             {
-                sql = viewsSql["oracle"];
+                sql = viewsSql[DbTypes.Oracle];
             }
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
@@ -108,11 +144,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string sql = "";
             if (isSqlServer)
             {
-                sql = string.Format(viewsColumnsSql["sqlserver"], schema, viewName, type);
+                sql = string.Format(viewsColumnsSql[DbTypes.SqlServer], schema, viewName, type);
             }
             else if (isOracle)
             {
-                sql = string.Format(viewsColumnsSql["oracle"], viewName, type);
+                sql = string.Format(viewsColumnsSql[DbTypes.Oracle], viewName, type);
             }
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
@@ -140,12 +176,12 @@ namespace ART_PACKAGE.Helpers.CustomReport
             if (isSqlServer)
             {
                 NormalizedName = string.Join(".", view.Split(".").Select(x => @$"[{x}]"));
-                sqlCount = string.Format(DataCountSql["sqlserver"], NormalizedName, restriction);
+                sqlCount = string.Format(DataCountSql[DbTypes.SqlServer], NormalizedName, restriction);
             }
             else if (isOracle)
             {
                 NormalizedName = string.Join(".", view.Split(".").Select(x => @$"""{x}"""));
-                sqlCount = string.Format(DataCountSql["oracle"], NormalizedName, restriction);
+                sqlCount = string.Format(DataCountSql[DbTypes.Oracle], NormalizedName, restriction);
             };
 
             IDbConnection conn = isSqlServer ? new SqlConnection(db.Database.GetConnectionString())
@@ -170,11 +206,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             if (isSqlServer)
             {
-                sql = string.Format(DataSql["sqlserver"], progection, NormalizedName, restriction, orderBy, skip, take);
+                sql = string.Format(DataSql[DbTypes.SqlServer], progection, NormalizedName, restriction, orderBy, skip, take);
             }
             else if (isOracle)
             {
-                sql = string.Format(DataSql["oracle"], progection, NormalizedName, restriction, orderBy, skip, take);
+                sql = string.Format(DataSql[DbTypes.Oracle], progection, NormalizedName, restriction, orderBy, skip, take);
             }
 
             List<dynamic> data = conn.Query(sql, commandTimeout: 120).ToList();

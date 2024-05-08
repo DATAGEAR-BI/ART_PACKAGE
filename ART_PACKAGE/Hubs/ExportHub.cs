@@ -289,7 +289,7 @@ namespace ART_PACKAGE.Hubs
         //     //ArtSavedCustomReport? Report = db.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == exportDto.Req.Id);
         //     //List<ArtSavedReportsChart> charts = db.ArtSavedReportsCharts.Include(x => x.Report).Where(x => x.ReportId == exportDto.Req.Id).OrderBy(x => x.Type).ThenBy(x => x.Column).ToList();
         //     //dbInstance = dBFactory.GetDbInstance(Report.Schema.ToString());
-        //     //string dbtype = dbInstance.Database.IsOracle() ? "oracle" : dbInstance.Database.IsSqlServer() ? "sqlServer" : "";
+        //     //string dbtype = dbInstance.Database.IsOracle() ? DbTypes.Oracle : dbInstance.Database.IsSqlServer() ? DbTypes.SqlServer : "";
         //     //ColumnsDto[] columns = Report.Columns.Select(x => new ColumnsDto
         //     //{
         //     //    name = x.Column,
