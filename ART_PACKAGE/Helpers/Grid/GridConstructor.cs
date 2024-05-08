@@ -18,17 +18,18 @@ namespace ART_PACKAGE.Helpers.Grid
     public class GridConstructor<TRepo, TContext, TModel> : IGridConstructor<TRepo, TContext, TModel> where TContext : DbContext
         where TModel : class where TRepo : IBaseRepo<TContext, TModel>
     {
+        private readonly ILogger<GridConstructor<TRepo, TContext, TModel>> _logger;
         private readonly IDropDownMapper _dropDownMap;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ICsvExport _csvSrv;
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
-        private static readonly Dictionary<int, int> fileProgress = new();
+        private static Dictionary<int, int> fileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
 
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, IConfiguration _config)
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -39,6 +40,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _reportsConfigResolver = reportsConfigResolver;
             _pdfSrv = pdfSrv;
             this._config = _config;
+            _logger = logger;
         }
         public TRepo Repo { get; private set; }
 
@@ -54,11 +56,13 @@ namespace ART_PACKAGE.Helpers.Grid
             int batch = d;
             //500_000:
             int round = 0;
+            fileProgress = new();
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
-                float progress = fileProgress.Sum(x => x.Value) / (float)totalcopy;
+                var done = fileProgress.Values.Sum();
+                decimal progress = done / (decimal)totalcopy;
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
             };

@@ -269,9 +269,12 @@ class Grid extends HTMLElement {
             if (progressBar.hidden)
                 progressBar.hidden = false;
 
+            var reminder = ((100 - progress) * this.total) / 100;
+            console.log(reminder)
+            console.log(folder, progress)
 
-            progressBar.value = progress;
-            if (progress >= 100) {
+            progressBar.value = parseFloat(progress.toFixed(2));
+            if (progress >= 100) {//|| reminder <= 100
                 progressBar.hidden = true;
                 var downloadButton = document.getElementById("ExportDownloadBtn");
                 downloadButton.style.visibility = "";
@@ -552,7 +555,7 @@ class Grid extends HTMLElement {
             template: `
             <span style="display: inline-block">
                 <span style="display:flex;align-items:center">
-                    <smart-progress-bar id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
+                    <smart-progress-bar show-progress-value id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
                     <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
                 </span>
             </span>
@@ -719,7 +722,8 @@ class Grid extends HTMLElement {
             noRecords: true,
             persistSelection: true,
             pageable: true,
-            reorderable: true,
+            re
+            able: true,
             change: (e) => {
                 if ([...grid.select()].length > 0) {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
@@ -910,6 +914,9 @@ class Grid extends HTMLElement {
 
                         element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
                         showOrHideInputElements(element, false, 'value')
+                    } else {
+                        showOrHideInputElements(element, true, 'value')
+
                     }
 
                     return;
@@ -922,6 +929,9 @@ class Grid extends HTMLElement {
 
                         element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
                         showOrHideInputElements(element, false, 'additional')
+                    } else {
+                        showOrHideInputElements(element, true, 'additional')
+
                     }
 
                     console.log()
@@ -1168,6 +1178,7 @@ class Grid extends HTMLElement {
                 e.target.hidden = true;
                 this.csvExportId = "";
                 this.isDownloaded = true;
+                e.target.style.visibility = "hidden";
             }
         });
 
@@ -1466,6 +1477,8 @@ class Grid extends HTMLElement {
             });
             if (exportRes.ok) {
                 var exportId = (await exportRes.json()).folder;
+                var progressBar = document.getElementById(this.id + "Progress");
+                progressBar.value = 0;
                 this.csvExportId = exportId;
             }
         } catch (err) {
@@ -1521,7 +1534,7 @@ class Grid extends HTMLElement {
         } else {
             console.log("11111111111", localStorage.getItem(key))
             console.log("22222222222", JSON.parse(localStorage.getItem(key)))
-            console.log("33333333333",JSON.parse(localStorage.getItem(key)))
+            console.log("33333333333", JSON.parse(localStorage.getItem(key)))
 
             let savedOptions = JSON.parse(savedOptionsString);
             console.log("l-savedOp", savedOptions)
@@ -1786,13 +1799,13 @@ function parseObjectWithFunctions(obj) {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             const value = obj[key];
-           /* if (key == 'read') {
-                console.log("READ")
-                console.log(typeof value === 'string')
-                console.log(typeof value)
-                console.log(value)
-                console.log("READ", (typeof value === 'string' && (value.trim().startsWith('function') || value.trim().startsWith('(') || value.trim().startsWith('async'))))
-            }*/
+            /* if (key == 'read') {
+                 console.log("READ")
+                 console.log(typeof value === 'string')
+                 console.log(typeof value)
+                 console.log(value)
+                 console.log("READ", (typeof value === 'string' && (value.trim().startsWith('function') || value.trim().startsWith('(') || value.trim().startsWith('async'))))
+             }*/
 
 
             // Check if the property is a string that represents a function
@@ -1809,4 +1822,3 @@ function parseObjectWithFunctions(obj) {
 
     return parsedObject; // Return the object with parsed function properties
 }
-9

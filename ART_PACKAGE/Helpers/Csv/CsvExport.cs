@@ -160,6 +160,10 @@ namespace ART_PACKAGE.Helpers.Csv
             TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition);
             IQueryable<TModel>? data = dataRes.data;
+            int total = dataRes.total;
+
+
+
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
         }
 
@@ -269,9 +273,12 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.WriteHeader<TModel>();
 
             cw.NextRecord();
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
             int index = 0;
+            int datacount = data.Count();
             float progress = 0;
-            _logger.LogCritical("csv debug " + data.Count().ToString());
+
             foreach (TModel item in data)
             {
 
@@ -283,8 +290,10 @@ namespace ART_PACKAGE.Helpers.Csv
                 index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
-                    if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+
+                    if (index % 100 == 0 || index == datacount) // Also check progress at the last item
                     {
+
                         //progress = (float)(index / (float)total * 100);
                         int recordsDone = index + 1;
                         lock (_locker)
@@ -292,6 +301,7 @@ namespace ART_PACKAGE.Helpers.Csv
                             OnProgressChanged(recordsDone, fileNumber);
                         }
                     }
+
                 }
                 else
                 {
@@ -304,8 +314,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
 
-            if (!data.Any())
-                OnProgressChanged(0, fileNumber);
+
 
             cw.Flush();
             sw.Flush();
@@ -332,6 +341,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
         }
+
 
 
         public async Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true)

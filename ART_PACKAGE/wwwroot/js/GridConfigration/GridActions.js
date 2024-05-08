@@ -220,9 +220,9 @@ export const Actions = {
 
 export const ActionsConditions = {
     shareReport : function (dt)  {
-        return dt.SharedFrom === localStorage.getItem("currentUser")
+        return false;//dt.SharedFrom === localStorage.getItem("currentUser")
     },
     unShareReport:  function (dt)  {
-        return dt.IsShared && dt.SharedFrom === localStorage.getItem("currentUser")
+        return false;//dt.IsShared && dt.SharedFrom === localStorage.getItem("currentUser")
     }
 }

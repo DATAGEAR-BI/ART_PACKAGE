@@ -4,9 +4,9 @@ using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Rotativa.AspNetCore;
+using Rotativa.AspNetCore.Options;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
-using Rotativa.AspNetCore.Options;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {

@@ -80,6 +80,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
+            para.req.Sort = new List<SortOptions>() { new() { field = "total", dir = "asc" } };
             IEnumerable<ArtStAmlAlertAgeSummery> data = Enumerable.Empty<ArtStAmlAlertAgeSummery>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
@@ -92,7 +93,7 @@ namespace ART_PACKAGE.Controllers.ECM
                 data = context.ExecuteProc<ArtStAmlAlertAgeSummery>(ORACLESPName.ART_ST_AML_ALERT_AGE_SUMMARY, summaryParams.ToArray());
             }
 
-            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
+            byte[] bytes = await data.OrderBy(s => s.Total).AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
 
@@ -111,7 +112,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             ViewData["title"] = "Alert Age Summery Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.OrderBy(s => s.Total), ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
         }

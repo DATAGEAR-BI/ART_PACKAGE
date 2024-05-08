@@ -5,6 +5,7 @@ using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
+
 namespace ART_PACKAGE.Helpers.Csv
 {
     public interface ICsvExport
@@ -23,5 +24,6 @@ namespace ART_PACKAGE.Helpers.Csv
         public Task ExportAllCsv<T, T1, T2>(IQueryable<T> data, string userName, ExportDto<T2> obj = null, bool all = true);
 
         public Task<IEnumerable<DataFile>> ExportForSchedulaedTask<TModel, TContext>(string parameterJson) where TModel : class where TContext : DbContext;
+
     }
 }

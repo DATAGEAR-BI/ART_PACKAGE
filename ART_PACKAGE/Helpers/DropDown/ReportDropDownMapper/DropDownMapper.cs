@@ -58,7 +58,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 {
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
+                    {"CasesStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
+                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
 
                     {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() },
                     {"OwnerUserid".ToLower(),_dropDown.GetAlertOwnerDropDown()},

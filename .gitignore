@@ -398,3 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 /ART_PACKAGE/wwwroot/CSV
+/ART_PACKAGE/Hangfire-log.db
+/ART_PACKAGE/Hangfire.db
+/ART_PACKAGE/Hangfire.db
+/ART_PACKAGE/Hangfire-log.db
