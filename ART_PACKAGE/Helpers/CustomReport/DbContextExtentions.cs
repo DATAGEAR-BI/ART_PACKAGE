@@ -97,7 +97,11 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             {3}
                         OFFSET     {4} ROWS       
                         FETCH NEXT {5} ROWS ONLY"},
-
+            {DbTypes.MySql,@"SELECT {0}  -- Columns to select
+                        FROM {1}  -- Table to select from
+                        {2}  -- Additional conditions (e.g., WHERE clauses)
+                        {3}  -- Grouping, ordering, or joins
+                        LIMIT {4}, {5}  -- Pagination (offset, row count)"}
         };
         private static readonly Dictionary<string, string> DataCountSql = new()
         {
