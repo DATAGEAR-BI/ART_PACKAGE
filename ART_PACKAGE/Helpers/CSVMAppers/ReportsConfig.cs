@@ -121,7 +121,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                     },
                                 SkipList =  new List<string>()
-                                {"CaseRk"
+                                {"CaseRk","CaseComments"
+
                             },
                                 DefaultSort = new()
                                 {
