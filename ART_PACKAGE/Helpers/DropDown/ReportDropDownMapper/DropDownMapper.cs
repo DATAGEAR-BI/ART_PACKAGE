@@ -69,16 +69,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },
                     {"PoliticallyExposedPersonInd".ToLower(), pipList},*/
                 },
-                nameof(CasesDetailsController) => new Dictionary<string, List<SelectItem>>
+                var value when value == nameof(artamlcasedetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                       {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
-                      {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
                       {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown() },
-                      {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown() },
-                      {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },
+                      {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
+                      {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown() },
                       {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown() },
                       {"Owner".ToLower(),_dropDown.GetOwnerDropDown() },
-                     {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown() }
+             /*         {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown() },
+                      {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },*/
+       
                 },
                 nameof(CustomersController) => new Dictionary<string, List<SelectItem>>
                 {
