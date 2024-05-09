@@ -722,8 +722,7 @@ class Grid extends HTMLElement {
             noRecords: true,
             persistSelection: true,
             pageable: true,
-            re
-            able: true,
+            reorderable: true,
             change: (e) => {
                 if ([...grid.select()].length > 0) {
                     this.selectedRows[grid.dataSource.page()] = [...grid.select()].map((x) => {
