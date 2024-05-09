@@ -1677,64 +1677,52 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_CASES_DATE", "ART_DB");
+                entity.ToView("art_home_cases_date");
 
-                entity.Property(e => e.Day)
-                    .HasColumnType("int")
-                    .HasColumnName("DAY");
+                entity.Property(e => e.Day).HasColumnName("DAY");
 
                 entity.Property(e => e.Month)
-                    .HasMaxLength(36)
-                    .IsUnicode(false)
+                    .HasMaxLength(3)
                     .HasColumnName("MONTH");
 
                 entity.Property(e => e.NumberOfCases)
-                    .HasColumnType("decimal")
+                    .HasPrecision(10)
                     .HasColumnName("NUMBER_OF_CASES");
 
-                entity.Property(e => e.Year)
-                    .HasColumnType("int")
-                    .HasColumnName("YEAR");
+                entity.Property(e => e.Year).HasColumnName("YEAR");
             });
 
             modelBuilder.Entity<ArtHomeCasesStatus>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_CASES_STATUS", "ART_DB");
+                entity.ToView("art_home_cases_status");
 
                 entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(9)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("CASE_STATUS");
 
-                entity.Property(e => e.NumberOfCases)
-                    .HasColumnType("int")
-                    .HasColumnName("NUMBER_OF_CASES");
+                entity.Property(e => e.NumberOfCases).HasColumnName("NUMBER_OF_CASES");
             });
 
             modelBuilder.Entity<ArtHomeCasesType>(entity =>
             {
-
                 entity.HasNoKey();
 
-                entity.ToView("ART_HOME_CASES_TYPES", "ART_DB");
+                entity.ToView("art_home_cases_types");
 
                 entity.Property(e => e.CaseType)
-                    .HasMaxLength(400)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("CASE_TYPE");
 
-                entity.Property(e => e.NumberOfCases)
-                    .HasColumnType("int")
-                    .HasColumnName("NUMBER_OF_CASES");
+                entity.Property(e => e.NumberOfCases).HasColumnName("NUMBER_OF_CASES");
             });
 
             modelBuilder.Entity<ArtUserPerformance>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_USER_PERFORMANCE", "ART_DB");
+                entity.ToView("art_user_performance");
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(256)
@@ -1745,7 +1733,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ACTION_USER");
 
                 entity.Property(e => e.AsssignedTime)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("ASSSIGNED_TIME");
 
                 entity.Property(e => e.CaseDesc)
@@ -1757,19 +1745,19 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("CASE_ID");
 
                 entity.Property(e => e.CaseRk)
-                    .HasColumnType("numeric(10, 0)")
+                    .HasPrecision(10)
                     .HasColumnName("CASE_RK");
 
                 entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("CASE_STATUS");
 
                 entity.Property(e => e.CaseTypeCd)
-                    .HasMaxLength(32)
+                    .HasColumnType("text")
                     .HasColumnName("CASE_TYPE_CD");
 
                 entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("CREATE_DATE");
 
                 entity.Property(e => e.CreateUserId)
@@ -1789,11 +1777,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("LOCKED_BY");
 
                 entity.Property(e => e.Priority)
-                    .HasMaxLength(4000)
+                    .HasColumnType("text")
                     .HasColumnName("PRIORITY");
 
                 entity.Property(e => e.ReleasedDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("RELEASED_DATE");
 
                 entity.Property(e => e.UpdateUserId)
@@ -1801,217 +1789,207 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("UPDATE_USER_ID");
 
                 entity.Property(e => e.ValidFromDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("VALID_FROM_DATE");
             });
             modelBuilder.Entity<ArtAlertedEntity>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_ALERTED_ENTITY");
+                entity.ToView("art_alerted_entity");
 
                 entity.Property(e => e.CaseId)
                     .HasMaxLength(64)
-                    .IsUnicode(false)
                     .HasColumnName("CASE_ID");
 
                 entity.Property(e => e.CreateDate)
-                    .HasPrecision(6)
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("CREATE_DATE");
 
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .HasColumnName("CREATED_BY");
+
+                entity.Property(e => e.LastComment).HasColumnName("LAST_COMMENT");
+
+                entity.Property(e => e.LastCommentSubject)
+                    .HasMaxLength(100)
+                    .HasColumnName("LAST_COMMENT_SUBJECT");
+
                 entity.Property(e => e.Name)
-                    .HasColumnType("CLOB")
+                    .HasColumnType("mediumtext")
                     .HasColumnName("NAME");
 
+                entity.Property(e => e.NumberOfAttachments)
+                    .HasColumnName("NUMBER_OF_ATTACHMENTS")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.NumberOfComments)
+                    .HasColumnName("NUMBER_OF_COMMENTS")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.PepInd)
-                    .HasColumnType("CLOB")
+                    .HasColumnType("mediumtext")
                     .HasColumnName("PEP_IND");
+
+                entity.Property(e => e.UpdatedDate)
+                    .HasColumnType("datetime(3)")
+                    .HasColumnName("UPDATED_DATE");
             });
 
             modelBuilder.Entity<ArtSystemPerformance>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SYSTEM_PERFORMANCE", "ART_DB");
+                entity.ToView("art_system_performance");
 
                 entity.Property(e => e.CaseDesc)
                     .HasMaxLength(100)
-                    .HasColumnName("CASE_DESC")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("CASE_DESC");
 
                 entity.Property(e => e.CaseId)
                     .HasMaxLength(64)
-                    .HasColumnName("CASE_ID")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("CASE_ID");
 
                 entity.Property(e => e.CaseRk)
-                    .HasColumnType("numeric(10, 0)")
+                    .HasPrecision(10)
                     .HasColumnName("CASE_RK");
 
                 entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CASE_STATUS")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("CASE_STATUS");
 
                 entity.Property(e => e.CaseType)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CASE_TYPE")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("Case_Type");
 
                 entity.Property(e => e.ClientName)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CLIENT_NAME")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("mediumtext")
+                    .HasColumnName("CLIENT_NAME");
 
                 entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("CREATE_DATE");
 
                 entity.Property(e => e.CreateUserId)
                     .HasMaxLength(60)
-                    .HasColumnName("CREATE_USER_ID")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("CREATE_USER_ID");
 
-                entity.Property(e => e.DurationsInDays)
-                    .HasColumnType("int")
-                    .HasColumnName("DURATIONS_IN_DAYS");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .HasColumnName("CREATED_By");
 
-                entity.Property(e => e.DurationsInHours)
-                    .HasColumnType("int")
-                    .HasColumnName("DURATIONS_IN_HOURS");
+                entity.Property(e => e.DurationsInDays).HasColumnName("DURATIONS_In_days");
 
-                entity.Property(e => e.DurationsInMinutes)
-                    .HasColumnType("int")
-                    .HasColumnName("DURATIONS_IN_MINUTES");
+                entity.Property(e => e.DurationsInHours).HasColumnName("DURATIONS_In_hours");
 
-                entity.Property(e => e.DurationsInSeconds)
-                    .HasColumnType("int")
-                    .HasColumnName("DURATIONS_IN_SECONDS");
+                entity.Property(e => e.DurationsInMinutes).HasColumnName("DURATIONS_In_minutes");
+
+                entity.Property(e => e.DurationsInSeconds).HasColumnName("DURATIONS_In_Seconds");
 
                 entity.Property(e => e.EcmLastStatusDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("ECM_LAST_STATUS_DATE");
 
                 entity.Property(e => e.HitsCount)
                     .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("HITS_COUNT")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("hits_count");
 
                 entity.Property(e => e.IdentityNum)
-                    .HasMaxLength(4000)
-                    .IsUnicode(false)
-                    .HasColumnName("IDENTITY_NUM")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("IDENTITY_NUM");
 
                 entity.Property(e => e.InvestrUserId)
                     .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("INVESTR_USER_ID")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("investr_user_id");
+
+                entity.Property(e => e.LastComment)
+                    .HasMaxLength(100)
+                    .HasColumnName("LAST_COMMENT");
+
+                entity.Property(e => e.LastCommentSubject)
+                    .HasMaxLength(100)
+                    .HasColumnName("last_comment_subject");
+
+                entity.Property(e => e.LastStatus)
+                    .HasMaxLength(256)
+                    .HasColumnName("LAST_STATUS");
 
                 entity.Property(e => e.LockedBy)
                     .HasMaxLength(60)
-                    .HasColumnName("LOCKED_BY")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("Locked_By");
+
+                entity.Property(e => e.NumberOfAttachments)
+                    .HasColumnName("number_of_attachments")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.NumberOfComments)
+                    .HasColumnName("number_of_comments")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Priority)
-                    .HasMaxLength(4000)
-                    .HasColumnName("PRIORITY")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("PRIORITY");
 
                 entity.Property(e => e.SwiftReference)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false)
-                    .HasColumnName("SWIFT_REFERENCE")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("swift_reference");
 
-                entity.Property(e => e.TransactionAmount).HasColumnName("TRANSACTION_AMOUNT");
+                entity.Property(e => e.TransactionAmount).HasColumnName("transaction_amount");
 
                 entity.Property(e => e.TransactionCurrency)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_CURRENCY")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("text")
+                    .HasColumnName("transaction_currency");
 
                 entity.Property(e => e.TransactionDirection)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_DIRECTION")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("mediumtext")
+                    .HasColumnName("transaction_direction");
 
                 entity.Property(e => e.TransactionType)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_TYPE")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnType("mediumtext")
+                    .HasColumnName("transaction_type");
 
                 entity.Property(e => e.UpdateUserId)
                     .HasMaxLength(60)
-                    .HasColumnName("UPDATE_USER_ID")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("UPDATE_USER_ID");
+
+                entity.Property(e => e.UpdatedDate)
+                    .HasColumnType("datetime(3)")
+                    .HasColumnName("UPDATED_DATE");
 
                 entity.Property(e => e.ValidFromDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("datetime(3)")
                     .HasColumnName("VALID_FROM_DATE");
-                entity.Property(e => e.LastComment)
-                   .HasMaxLength(4000)
-                   .IsUnicode(false)
-                   .HasColumnName("LAST_COMMENT")
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.LastCommentSubject)
-                   .HasMaxLength(100)
-                   .IsUnicode(false)
-                   .HasColumnName("last_comment_subject".ToUpper())
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("UPDATED_DATE");
-                entity.Property(e => e.CreatedBy)
-                   .HasMaxLength(100)
-                   .IsUnicode(false)
-                   .HasColumnName("CREATED_BY")
-                   .UseCollation("Arabic_100_CI_AI");
-                entity.Property(e => e.NumberOfComment)
-                    .HasColumnType("int")
-                    .HasColumnName("number_of_comments".ToUpper());
-                entity.Property(e => e.NumberOfAttachments)
-                    .HasColumnType("int")
-                    .HasColumnName("number_of_attachments".ToUpper());
             });
             modelBuilder.Entity<ArtCFTConfig>(entity =>
             {
-                entity.ToView("ART_CFT_CONFIG", "ART_DB");
                 entity.HasNoKey();
-                entity.Property(e => e.CaseId)
-                 .HasColumnName("case_id")
-                 .HasMaxLength(64)
-                 .IsRequired();
 
-                entity.Property(e => e.Maker)
-                    .HasColumnName("Maker")
-                    .HasMaxLength(60);
-
-                entity.Property(e => e.MakerDate)
-                    .HasColumnName("Maker_Date")
-                    .HasColumnType("datetime")
-                    .IsRequired();
-
-                entity.Property(e => e.Checker)
-                    .HasColumnName("Checker")
-                    .HasMaxLength(60);
-
-                entity.Property(e => e.CheckerDate)
-                    .HasColumnName("Checker_Date")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.CheckerAction)
-                    .HasColumnName("Checker_Action")
-                    .HasMaxLength(256);
+                entity.ToView("art_cft_config");
 
                 entity.Property(e => e.ActionDetail)
-                    .HasColumnName("Action_Detail")
-                    .HasColumnType("nvarchar(max)");
+                    .HasColumnType("text")
+                    .HasColumnName("Action_Detail");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .HasColumnName("case_id");
+
+                entity.Property(e => e.Checker).HasMaxLength(60);
+
+                entity.Property(e => e.CheckerAction)
+                    .HasMaxLength(256)
+                    .HasColumnName("Checker_Action");
+
+                entity.Property(e => e.CheckerDate)
+                    .HasColumnType("datetime(3)")
+                    .HasColumnName("Checker_Date");
+
+                entity.Property(e => e.Maker).HasMaxLength(60);
+
+                entity.Property(e => e.MakerDate)
+                    .HasColumnType("datetime(3)")
+                    .HasColumnName("Maker_Date");
             });
         }
 

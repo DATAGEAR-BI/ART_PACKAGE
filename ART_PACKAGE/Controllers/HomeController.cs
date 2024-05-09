@@ -34,23 +34,27 @@ namespace ART_PACKAGE.Controllers
             _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
             modules = _configuration.GetSection("Modules").Get<List<string>>();
-            if (modules.Contains("SASAML"))
+            if (modules is not null)
             {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
-                _dbAml = amlService;
-            }
-            if (modules.Contains("ECM"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
-                _db = ecmService;
-            }
-            if (modules.Contains("DGAML"))
-            {
-                IServiceScope scope = _serviceScopeFactory.CreateScope();
-                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
-                _dgaml = dgamlService;
+                if (modules.Contains("SASAML"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                    _dbAml = amlService;
+                }
+                if (modules.Contains("ECM"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                    _db = ecmService;
+                }
+                if (modules.Contains("DGAML"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                    _dgaml = dgamlService;
+                }
+
             }
 
             //this.repo = repo;

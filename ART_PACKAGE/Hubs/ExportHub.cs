@@ -2,6 +2,7 @@ using ART_PACKAGE.Controllers.CRP;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
+using ART_PACKAGE.Controllers.FATCA;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.TRADE_BASE;

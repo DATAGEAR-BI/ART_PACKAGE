@@ -10,7 +10,7 @@ namespace Data.Services.DbContextExtentions
         {
             return db.Database.IsSqlServer()
                 ? db.SqlServerExecuteProc<T>(SPName, parameters)
-                : db.Database.IsOracle() ? db.OracleExecuteProc<T>(SPName, parameters) : db.Database.IsMySql() ? db.MySqlExecuteProc<T>(SPName, parameters) : Enumerable.Empty<T>();
+                : db.Database.IsOracle() ? db.OracleExecuteProc<T>(SPName, parameters) : db.Database.IsMySqlDb() ? db.MySqlExecuteProc<T>(SPName, parameters) : Enumerable.Empty<T>();
         }
 
         private static IEnumerable<T> SqlServerExecuteProc<T>(this DbContext db, string SPName, params DbParameter[] parameters) where T : class

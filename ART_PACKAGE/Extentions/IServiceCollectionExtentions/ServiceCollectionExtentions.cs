@@ -42,7 +42,6 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
-            string migrationPath = dbType == DbTypes.SqlServer ? "SqlServerMigrations" : "OracleMigrations";
 
             void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {

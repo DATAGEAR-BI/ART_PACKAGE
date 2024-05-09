@@ -1,7 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -14,10 +13,10 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
 
 
-            if (authContext.Database.GetPendingMigrations().Any())
+            /*if (authContext.Database.GetPendingMigrations().Any())
             {
                 //authContext.Database.Migrate();
-            }
+            }*/
 
             //if (modules.Contains("ECM"))
             //{

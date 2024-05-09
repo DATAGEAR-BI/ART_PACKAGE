@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 
 using System.Data;
+using Data.Services.DbContextExtentions;
 
 using System.Text;
 using static Dapper.SqlMapper;
@@ -121,7 +122,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
-            bool isMySql = db.Database.IsMySql();
+            bool isMySql = db.Database.IsMySqlDb();
             string sql = "";
             if (isSqlServer)
             {
@@ -154,7 +155,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string viewName = view.Split('.')[1];
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
-            bool isMySql = db.Database.IsMySql();
+            bool isMySql = db.Database.IsMySqlDb();
             string sql = "";
             if (isSqlServer)
             {
@@ -180,7 +181,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
-            bool isMySql = db.Database.IsMySql();
+            bool isMySql = db.Database.IsMySqlDb();
 
             string sql = "";
             string sqlCount = "";
@@ -252,7 +253,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
             string mySql = @"SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
             bool isSqlServer = db.Database.IsSqlServer();
             bool isOracle = db.Database.IsOracle();
-            bool isMySql = db.Database.IsMySql();
+            bool isMySql = db.Database.IsMySqlDb();
 
             string? restriction = !string.IsNullOrEmpty(filters) ? "WHERE " + filters : null;
             StringBuilder _sb = new();
