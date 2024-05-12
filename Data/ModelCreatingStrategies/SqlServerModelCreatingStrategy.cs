@@ -4260,10 +4260,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.CaseComments)
-                    .HasColumnName("CASE_COMMENTS")
-                    .IsUnicode(false)
-                    .UseCollation("Arabic_100_CI_AI");
+                /* entity.Property(e => e.CaseComments)
+                     .HasColumnName("CASE_COMMENTS")
+                     .IsUnicode(false)
+                     .UseCollation("Arabic_100_CI_AI");*/
 
                 entity.Property(e => e.CaseCreationDate)
                     .HasColumnType("datetime")

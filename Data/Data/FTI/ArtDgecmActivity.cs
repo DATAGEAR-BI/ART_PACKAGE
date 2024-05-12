@@ -14,7 +14,7 @@
         public string? CustomerCIF { get; set; }
         public string? PrimaryOwner { get; set; }
         public string? CaseStatus { get; set; }
-        public string? CaseComments { get; set; }
+        //public string? CaseComments { get; set; }
         public string? Product { get; set; }
         public string? ProductType { get; set; }
         public string? EventName { get; set; }

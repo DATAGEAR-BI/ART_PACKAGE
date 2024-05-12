@@ -99,7 +99,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                             {"CustomerCIF",new DisplayNameAndFormat { DisplayName ="Customer CIF"}},
                             {"PrimaryOwner",new DisplayNameAndFormat { DisplayName ="Primary Owner"}},
                             {"CaseStatus",new DisplayNameAndFormat { DisplayName ="Case Status"}},
-                            {"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
+                            //{"CaseComments",new DisplayNameAndFormat { DisplayName ="Case Comments"}},
                             {"ProductType",new DisplayNameAndFormat { DisplayName ="Product Type"}},
                             {"EventName",new DisplayNameAndFormat { DisplayName ="Event Name"}},
                             {"ParentCaseId",new DisplayNameAndFormat { DisplayName ="Parent Case Id"}},
@@ -121,7 +121,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
                     },
                                 SkipList =  new List<string>()
-                                {"CaseRk","CaseComments"
+                                {"CaseRk",//"CaseComments"
 
                             },
                                 DefaultSort = new()
