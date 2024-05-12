@@ -16,7 +16,7 @@ using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
-using Data.DATA.FATCA;
+using Data.Data.FATCA;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ART_PACKAGE.Hubs

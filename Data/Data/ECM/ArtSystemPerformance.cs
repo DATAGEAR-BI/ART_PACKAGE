@@ -22,6 +22,7 @@
         public string? UpdateUserId { get; set; }
         public DateTime? EcmLastStatusDate { get; set; }
         public string? LastComment { get; set; }
+        public string? LastStatus { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? NumberOfComment { get; set; }

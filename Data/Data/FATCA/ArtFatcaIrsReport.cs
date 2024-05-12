@@ -1,4 +1,4 @@
-﻿namespace Data.DATA.FATCA
+﻿namespace Data.Data.FATCA
 {
     public partial class ArtFatcaIrsReport
     {

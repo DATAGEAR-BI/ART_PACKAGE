@@ -24,9 +24,9 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                 DbTypes.Oracle => filters.Select(x => new OracleParameter(x.id, OracleDbType.Varchar2, ParameterDirection.Input) { Value = x.value }).Append(new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)),
                 DbTypes.MySql => filters.Select(x => {
                     return x.id.ToLower() == "startdate"
-                                            ? new MySqlParameter("@V_START_DATE", MySqlDbType.Date) { Value = x.value }
+                                            ? new MySqlParameter("V_START_DATE", MySqlDbType.VarChar) { Value = x.value }
                                             : x.id.ToLower() == "enddate"
-                                            ? new MySqlParameter("@V_END_DATE", MySqlDbType.Date) { Value = x.value }
+                                            ? new MySqlParameter("V_END_DATE", MySqlDbType.VarChar) { Value = x.value }
                                             : new MySqlParameter(x.id, MySqlDbType.Date) { Value = x.value };
                 }),
                 _ => Enumerable.Empty<DbParameter>(),

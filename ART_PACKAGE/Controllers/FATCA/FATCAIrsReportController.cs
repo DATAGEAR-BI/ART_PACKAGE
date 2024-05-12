@@ -1,7 +1,7 @@
 ﻿
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Grid;
-using Data.DATA.FATCA;
+using Data.Data.FATCA;
 using Data.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

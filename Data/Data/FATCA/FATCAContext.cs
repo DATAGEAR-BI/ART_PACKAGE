@@ -2,7 +2,7 @@
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.DATA.FATCA
+namespace Data.Data.FATCA
 {
     public partial class FATCAContext : DbContext
     {

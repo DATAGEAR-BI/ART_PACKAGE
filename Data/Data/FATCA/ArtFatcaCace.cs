@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.DATA.FATCA
+namespace Data.Data.FATCA
 {
     public partial class ArtFatcaCace
     {

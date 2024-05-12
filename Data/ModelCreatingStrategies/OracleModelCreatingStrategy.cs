@@ -8,7 +8,7 @@ using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
-using Data.DATA.FATCA;
+using Data.Data.FATCA;
 using Data.DGECM;
 using Data.FCF71;
 using Data.FCFCORE;

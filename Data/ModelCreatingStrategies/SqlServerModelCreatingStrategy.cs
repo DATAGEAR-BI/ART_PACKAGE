@@ -9,7 +9,7 @@ using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
-using Data.DATA.FATCA;
+using Data.Data.FATCA;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCF71;

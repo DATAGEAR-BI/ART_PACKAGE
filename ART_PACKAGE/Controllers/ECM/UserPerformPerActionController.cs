@@ -52,7 +52,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
 
             KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
@@ -98,7 +98,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
@@ -119,7 +119,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
             ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";

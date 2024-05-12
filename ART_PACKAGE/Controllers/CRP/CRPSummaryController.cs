@@ -48,20 +48,20 @@ namespace ART_PACKAGE.Controllers.CRP
 
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(SQLSERVERSPNames.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
             }
 
             if (dbType == DbTypes.Oracle)
             {
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(ORACLESPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(ORACLESPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(ORACLESPName.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(ORACLESPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
             }
             if (dbType == DbTypes.MySql) 
             {
-                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
+                //chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(MYSQLSPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart2Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
             }
             //List<Dictionary<string, object>> chartDictList = new();
             //foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())
@@ -78,15 +78,6 @@ namespace ART_PACKAGE.Controllers.CRP
             //};
             ArrayList chartData = new()
             {
-                new ChartData<ART_ST_CRP_PER_RISK>
-                {
-                    ChartId = "ART_ST_CRP_PER_RISK",
-                    Data = chart1Data.ToList(),
-                    Title = "CUSTOMERS PER RISK CLASSIFICATION",
-                    Cat = "RISK_CLASSIFICATION",
-                    Val = "NUMBER_OF_CUSTOMERS",
-                    Type=ChartType.donut
-                },
                 new ChartData<ART_ST_CRP_PER_STATUS>
                 {
                     ChartId = "ART_ST_CRP_PER_STATUS",
@@ -108,7 +99,18 @@ namespace ART_PACKAGE.Controllers.CRP
                 },
             };
 
-
+            if (dbType is DbTypes.Oracle or DbTypes.SqlServer)
+            {
+                _ = chartData.Add(new ChartData<ART_ST_CRP_PER_RISK>
+                {
+                    ChartId = "ART_ST_CRP_PER_RISK",
+                    Data = chart1Data.ToList(),
+                    Title = "CUSTOMERS PER RISK CLASSIFICATION",
+                    Cat = "RISK_CLASSIFICATION",
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
+                });
+            }
 
 
 

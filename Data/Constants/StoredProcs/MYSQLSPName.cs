@@ -3,13 +3,13 @@
     public static class MYSQLSPName
     {
         //Sanction
-        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIR";
-        public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART.ART_ST_SYSTEM_PERF_PER_DATE";
-        public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART.ART_ST_SYSTEM_PERF_PER_STATUS";
-        public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART.ART_ST_SYSTEM_PERF_PER_TYPE";
-        public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERF_PER_ACT_USER";
-        public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERF_PER_ACTION";
-        public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
+        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART_DB.ART_ST_SYSTEM_PERF_PER_DIRECTION";
+        public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART_DB.ART_ST_SYSTEM_PERF_PER_DATE";
+        public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART_DB.ART_ST_SYSTEM_PERF_PER_STATUS";
+        public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART_DB.ART_ST_SYSTEM_PERF_PER_TYPE";
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_ACTION_USER = "ART_DB.ART_ST_USER_PERFORMANCE_PER_ACTION_USER";
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_ACTION = "ART_DB.ART_ST_USER_PERFORMANCE_PER_ACTION";
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART_DB.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION";
         //AML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART_DB.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART_DB.ART_ST_ALERTS_PER_STATUS";
@@ -38,9 +38,9 @@
 
 
         //crp
-        public static readonly string ART_ST_CRP_CUST_PER_RISK = "";
-        public static readonly string ART_ST_CRP_CASES_PER_STATUS = "";
-        public static readonly string ART_ST_CRP_CASES_PER_RATE = "";
+        public static readonly string ART_ST_CRP_CUST_PER_RISK = "ART_DB.";
+        public static readonly string ART_ST_CRP_CASES_PER_STATUS = "ART_DB.ART_ST_CRP_CASES_PER_STATUS";
+        public static readonly string ART_ST_CRP_CASES_PER_RATE = "ART_DB.ART_ST_CRP_CASES_PER_RATE";
 
 
         //FATCA

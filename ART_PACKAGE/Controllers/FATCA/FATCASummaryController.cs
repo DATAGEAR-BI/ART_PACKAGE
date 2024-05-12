@@ -5,7 +5,6 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.FATCA;
-using Data.DATA.FATCA;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;

@@ -51,7 +51,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
 
 
@@ -92,7 +92,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
@@ -117,7 +117,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
             ViewData["title"] = "User Performance Per Action User Report";
             ViewData["desc"] = "";
