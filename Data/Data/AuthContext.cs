@@ -12,7 +12,7 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; } = null!;
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; } = null!;
     public virtual DbSet<ArtSavedReportsChart> ArtSavedReportsCharts { get; set; } = null!;
-    //public virtual DbSet<UserReport> UserReports { get; set; } = null!;
+    public virtual DbSet<UserReport> UserReports { get; set; } = null!;
 
 
 
@@ -56,6 +56,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ArtSavedCustomReport>(e =>
         {
             e.ToTable("ArtSavedCustomReport");
+            
             e.HasMany<AppUser>(e => e.Users)
                 .WithMany(r => r.Reports)
                 .UsingEntity<UserReport>(ur =>

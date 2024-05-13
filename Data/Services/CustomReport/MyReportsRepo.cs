@@ -103,6 +103,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
                 Description = reportDto.Description,
                 CreateDate = DateTime.Now,
                 Schema = reportDto.Schema,
+             
             };
 
 
@@ -132,7 +133,8 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
                 SharedFromId = owner.Id,
                 Report = report
             };
-            report.Users.Add(owner);
+            report.UserId=owner.Id;
+            //report.Users.Add(owner);
             report.UserReports.Add(reportOwner);
             report.Charts = charts;
             report.Columns = columns;

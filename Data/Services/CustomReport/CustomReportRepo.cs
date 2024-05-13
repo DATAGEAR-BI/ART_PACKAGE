@@ -49,76 +49,99 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
 
-        var connection = schemaContext.Database.GetDbConnection();
-        try
+        using (var connection = schemaContext.Database.GetDbConnection())
         {
-            if (connection.State != System.Data.ConnectionState.Open)
-                connection.Open();
-            var result = new List<Dictionary<string, object>>();
-            using var command = connection.CreateCommand();
-            command.CommandText = GenerateSql(report, request, dbType);
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                var obj = new Dictionary<string, object>();
-
-                for (int i = 0; i < reader.FieldCount; i++)
+                if (connection.State != System.Data.ConnectionState.Open)
+                    connection.Open();
+                var result = new List<Dictionary<string, object>>();
+                using var command = connection.CreateCommand();
+                command.CommandText = GenerateSql(report, request, dbType);
+                IQueryable< Dictionary<string, object>> resultData ;
+                using (var reader = command.ExecuteReader())
                 {
-                    obj.Add(reader.GetName(i), reader.IsDBNull(i) ? null : reader.GetValue(i));
-                }
-                result.Add(obj);
-            }
 
-            var count = GetDataCount(schemaContext, report, request);
-            return new GridResult<Dictionary<string, object>>
+                    while (reader.Read())
+                    {
+                        var obj = new Dictionary<string, object>();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            obj.Add(reader.GetName(i), reader.IsDBNull(i) ? null : reader.GetValue(i));
+                        }
+                       result.Add(obj);
+                    }
+                    resultData = result.AsQueryable();
+                }
+                var count = GetDataCount(schemaContext, report, request);
+                return new GridResult<Dictionary<string, object>>
+                {
+                    data = resultData,
+                    total = count
+                };
+            }
+            finally
             {
-                data = result.AsQueryable(),
-                total = count
-            };
-        }
-        finally
-        {
-            if (connection.State == System.Data.ConnectionState.Open)
-                connection.Close();
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
         }
     }
 
     public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
+        using (var connection = schemaContext.Database.GetDbConnection())
+        {
 
-        var connection = schemaContext.Database.GetDbConnection();
+       
+            
         try
         {
             if (connection.State != System.Data.ConnectionState.Open)
                 connection.Open();
             using var countCommand = connection.CreateCommand();
             countCommand.CommandText = GenerateSql(report, request, dbType, true);
-            int count = Convert.ToInt32(countCommand.ExecuteScalar());
-            return count;
+            using (var reader = countCommand.ExecuteReader())
+            {
+                    var count = 0;
+                   
+
+                    if (reader.Read())
+                    {
+                         count = reader.GetInt32(0);
+                        // Now you have the count value, do whatever you need with it...
+                    }
+
+                    return count;
+            }
+            
         }
         finally
         {
             if (connection.State == System.Data.ConnectionState.Open)
                 connection.Close();
+        } 
+        
         }
 
     }
     private string GenerateSql(ArtSavedCustomReport report, GridRequest request, string dbType, bool isCount = false)
     {
 
-        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"'{0}'" : "[{0}]";
+        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
 
 
-        var selectLine = isCount ? $"SELECT COUNT(*)" : $"SELECT {string.Join(",", report.Columns.Select(x => string.Format(dbLitral, x.Column)))}";
+        var selectLine = isCount ? $"SELECT COUNT(*) " : $"SELECT {string.Join(",", report.Columns.Select(x => string.Format(dbLitral, x.Column)))}";
         var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x => string.Format(dbLitral, x)))}";
         var whereLine = GenerateWhere(request.Filter, dbType, report.Columns);
         whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
         var order = GenerateOderby(request.Sort);
-        var oderByLine = string.IsNullOrEmpty(order) ? "ORDER BY 1 ASC" : "ORDER BY" + order;
-        var skipLine = isCount ? $"" : $"OFFSET {request.Skip} ROWS ";
-        var takeLine = isCount ? $"" : $"FETCH NEXT {request.Take} ROWS ONLY";
+        var oderByLine = string.IsNullOrEmpty(order) ? "ORDER BY 1 ASC" : "ORDER BY " + order;
+ 
+        var skipLine = isCount ? $"" : dbType == DbTypes.MySql? $"LIMIT {request.Take}" : $"OFFSET {request.Skip} ROWS ";
+        var takeLine = isCount ? $"" : dbType == DbTypes.MySql ? $"OFFSET {request.Skip}" : $"FETCH NEXT {request.Take} ROWS ONLY";
         return $@"{selectLine}
                   {fromLine}
                   {whereLine}
@@ -129,7 +152,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
 
     private string GenerateWhere(Filter filter, string dbType, IEnumerable<ArtSavedReportsColumns> columns)
     {
-        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"'{0}'" : "[{0}]";
+        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
 
 
 
@@ -171,10 +194,10 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
 
             if (column.JsType.ToLower() == "date")
             {
-                string dbDateTruncation = dbType == DbTypes.Oracle ? "TRUNC({0}) " : dbType == DbTypes.MySql ? @"STR_TO_DATE('{0}', '%d-%m-%Y')" : "Convert(date,{0},105)";
+                string dbDateTruncation = dbType == DbTypes.Oracle ? "TRUNC({0}) " : dbType == DbTypes.MySql ? @"STR_TO_DATE(`{0}`, '%d-%m-%Y')" : "Convert(date,{0},105)";
 
                 var value = "'" + ((JsonElement)filter.value).ToObject<DateTime>().ToLocalTime().Date.ToString("dd-MM-yyyy") + "'";
-                value = dbType == DbTypes.Oracle ? string.Format(dbDateTruncation, string.Format("to_date({0},'dd-MM-yyyy')", value)) : dbType == DbTypes.MySql ? string.Format(dbDateTruncation, string.Format(@"STR_TO_DATE('{0}', '%d-%m-%Y')", value)) : string.Format(dbDateTruncation, value);
+                value = dbType == DbTypes.Oracle ? string.Format(dbDateTruncation, string.Format("to_date({0},'dd-MM-yyyy')", value)) : dbType == DbTypes.MySql ? string.Format(dbDateTruncation, string.Format(@"STR_TO_DATE(`{0}`, '%d-%m-%Y')", value)) : string.Format(dbDateTruncation, value);
                 var field = string.Format(dbDateTruncation, string.Format(dbLitral, filter.field));
                 return string.Format(op.op, field, value);
             }
@@ -197,7 +220,20 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
 
     public IEnumerable<DbObject> GetDbObjectsOf(DbContext schemaContext)
     {
+        List<string> databaseSchemas = new ();
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
+        if (dbType == DbTypes.MySql) { 
+            var entityTypes = schemaContext.Model.GetEntityTypes();
+            databaseSchemas.Add(schemaContext.Model.GetDefaultSchema());
+            foreach (var entityType in entityTypes)
+            {
+                // Get the schema name for each entity type
+                var schemaName = entityType.GetSchema();
+                databaseSchemas.Add(schemaName);
+                // Do something with the schema name
+            } 
+        }
+  
         var connection = schemaContext.Database.GetDbConnection();
         try
         {
@@ -206,7 +242,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                 connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = GetDbObjectSql(dbType);
+            command.CommandText = dbType==DbTypes.MySql? GetDbObjectSql(dbType, dbContextSchemas:databaseSchemas.Distinct().Select(s => "'" + s + "'").ToArray()) :  GetDbObjectSql(dbType);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -276,7 +312,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
 
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
 
-        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"'{0}'" : "[{0}]";
+        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
         var whereLine = GenerateWhere(request.Filter, dbType, report.Columns);
         whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
         var fromLine = $@"FROM {string.Join(".", report.Table.Split(".").Select(x => string.Format(dbLitral, x)))}";
@@ -377,8 +413,16 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         };
     }
 
-    private string GetDbObjectSql(string dbType)
+    private string GetDbObjectSql(string dbType, string[]? dbContextSchemas=null)
     {
+        string MySqlDbSchemas = "";
+        if (dbType==DbTypes.MySql)
+        {
+            if (dbContextSchemas!=null && dbContextSchemas.Count()>0)
+            {
+                MySqlDbSchemas = $"AND Table_Schema IN( { string.Join(",", dbContextSchemas)} )";
+            }
+        }
         return dbType switch
         {
             DbTypes.Oracle => @"SELECT CONCAT(CONCAT((sELECT USER FROM DUAL),'.'),view_name)  as VIEW_NAME  , 'V' as TYPE  FROM user_views 
@@ -395,9 +439,9 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                             CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) AS VIEW_NAME,
                             TABLE_TYPE AS `TYPE`
                         FROM 
-                            INFORMATION_SCHEMA.TABLES
+                            INFORMATION_SCHEMA.TABLES 
                         WHERE 
-                            TABLE_TYPE = 'VIEW'
+                            TABLE_TYPE = 'VIEW' {MySqlDbSchemas}
 
                         UNION 
 
@@ -407,7 +451,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                         FROM 
                             INFORMATION_SCHEMA.TABLES
                         WHERE 
-                            TABLE_TYPE = 'BASE TABLE';",
+                            TABLE_TYPE = 'BASE TABLE' {MySqlDbSchemas};",
             _ => throw new Exception()
         };
     }

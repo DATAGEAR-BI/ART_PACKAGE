@@ -22,19 +22,19 @@ namespace Data.Constants.StoredProcs
 */
                 Type t when t == typeof(ArtStAlertsPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_ALERTS_PER_STATUS,
                 Type t when t == typeof(ArtStAlertsPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_ALERTS_PER_STATUS,
-                Type t when t == typeof(ArtStAlertsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_ALERTS_PER_STATUS,
+                Type t when t == typeof(ArtStAlertsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_ALERTS_PER_STATUS,
 
                 Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_ALERT_PER_OWNER,
                 Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER,
-                Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_ALERT_PER_OWNER,
+                Type t when t == typeof(ArtStAlertPerOwner) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_ALERT_PER_OWNER,
 
                 Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_STATUS,
                 Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_STATUS,
-                Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_CASES_PER_STATUS,
+                Type t when t == typeof(ArtStCasesPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_STATUS,
 
                 Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_CATEGORY,
                 Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_CATEGORY,
-                Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_CASES_PER_CATEGORY,
+                Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_CATEGORY,
 
                 Type t when t == typeof(ArtStCasesPerSubcat) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_SUBCAT,
                 Type t when t == typeof(ArtStCasesPerSubcat) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_SUBCAT,
@@ -42,7 +42,7 @@ namespace Data.Constants.StoredProcs
 
                 Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_PRIORITY,
                 Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_PRIORITY,
-                Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_CASES_PER_PRIORITY,
+                Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_PRIORITY,
 
 
                 Type t when t == typeof(ArtStCustPerType) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CUST_PER_TYPE,
@@ -125,6 +125,30 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStAmlAlertsPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_AML_ALERTS_PER_STATUS,
                 Type t when t == typeof(ArtStAmlAlertsPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_STATUS,
                 Type t when t == typeof(ArtStAmlAlertsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_AML_ALERTS_PER_STATUS,
+
+                Type t when t == typeof(ArtStDgAmlAlertsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_ALERTS_PER_STATUS,
+
+                Type t when t == typeof(ArtStDgAmlAlertPerOwner) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_ALERT_PER_OWNER,
+
+                Type t when t == typeof(ArtStDgAmlAlertsPerBranch) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_ALERTS_PER_BRANCH,
+
+                Type t when t == typeof(ArtStDgAmlAlertsPerScenario) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_ALERTS_PER_SCENARIO,
+
+                Type t when t == typeof(ArtStDgAmlCasesPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_STATUS,
+
+                Type t when t == typeof(ArtStDgAmlCasesPerCategory) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_CATEGORY,
+
+                Type t when t == typeof(ArtStDgAmlCasesPerPriority) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CASES_PER_PRIORITY,
+
+
+                Type t when t == typeof(ArtStDgAmlCustomerPerType) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CUSTOMER_PER_TYPE,
+
+                Type t when t == typeof(ArtStDgAmlCustomerPerBranch) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_CUSTOMER_PER_BRANCH,
+
+                Type t when t == typeof(ArtStDgAmlExternalCustomerPerBranch) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH,
+
+                Type t when t == typeof(ArtStDgAmlExternalCustomerPerType) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE,
+
 
                 // Add more cases for other types if needed
                 _ => throw new ArgumentException("Invalid entity type or database type")

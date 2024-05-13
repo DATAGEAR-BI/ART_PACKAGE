@@ -54,9 +54,8 @@ namespace ART_PACKAGE.Controllers.DGAML
             }
             if (dbType == DbTypes.MySql)
             {
-                //chart1Data = _context.ExecuteProc<ArtStCustPerType>(MYSQLSPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStCustPerRisk>(MYSQLSPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
-                //chart3Data = _context.ExecuteProc<ArtStCustPerBranch>(MYSQLSPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
+                chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
 
             }
 

@@ -794,7 +794,7 @@ class ClusteredColumnChart extends BaseCatValChart {
         yAxis.min = 0;
     
         this.chart.data = this.data;
-        
+        this.chart.legend = new am4charts.Legend();
     /*createSeries('first', 'The First');
     createSeries('second', 'The Second');
     createSeries('third', 'The Third');*/
@@ -912,7 +912,6 @@ class ClusteredColumnChart extends BaseCatValChart {
                    this.createSeries(item, item);
            })
         }
-        this.chart.legend = new am4charts.Legend();
         console.log(this.chart)
         console.log(this.chart.series)
 

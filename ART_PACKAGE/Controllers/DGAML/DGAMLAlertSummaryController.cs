@@ -58,8 +58,10 @@ namespace ART_PACKAGE.Controllers.DGAML
             if (dbType == DbTypes.MySql)
             {
 
-                //chart1Data = _context.ExecuteProc<ArtStAlertsPerStatus>(MYSQLSPName.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStAlertPerOwner>(MYSQLSPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(MYSQLSPName.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(MYSQLSPName.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(MYSQLSPName.ART_ST_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(MYSQLSPName.ART_ST_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 

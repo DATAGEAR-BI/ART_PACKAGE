@@ -180,7 +180,7 @@ namespace MySqlMigrations.Migrations
 
                     b.HasKey("ReportId", "Column");
 
-                    b.ToTable("ArtSavedReportsColumns");
+                    b.ToTable("ArtSavedReportsColumns", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -63,19 +63,6 @@ namespace ART_PACKAGE.Controllers.CRP
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(MYSQLSPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
                 chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
             }
-            //List<Dictionary<string, object>> chartDictList = new();
-            //foreach (IGrouping<string, ART_ST_CRP_CASES_PER_RATE>? chartResult in chart3data.GroupBy(x => x.RATE).ToList())
-            //{
-            //    Dictionary<string, object> result = new()
-            //    {
-            //        { "RATE", chartResult.Key }
-            //    };
-            //    foreach (ART_ST_CRP_CASES_PER_RATE? list in chartResult)
-            //    {
-            //        result.Add(list.CASE_CURRENT_RATE.ToString(), list.CASE_TARGET_RATE);
-            //    }
-            //    chartDictList.Add(result);
-            //};
             ArrayList chartData = new()
             {
                 new ChartData<ART_ST_CRP_PER_STATUS>

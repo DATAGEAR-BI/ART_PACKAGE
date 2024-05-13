@@ -25,20 +25,6 @@ namespace Data.Data.Audit
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ArtGroupsAuditView>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtRolesAuditView>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtUsersAuditView>().HasNoKey().ToView(null);
-            modelBuilder.Entity<LastLoginPerDayView>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListGroupsRolesSummary>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListGroupsSubGroupsSummary>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfDeletedUser>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfGroup>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfRole>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfUser>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfUsersAndGroupsRole>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfUsersGroup>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ListOfUsersRole>().HasNoKey().ToView(null);
-
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnAuditModelCreating(modelBuilder);
         }

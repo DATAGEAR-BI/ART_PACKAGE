@@ -13,6 +13,7 @@ public class ArtSavedCustomReport
     public string Table { get; set; } = null!;
     public string Type { get; set; } = null!;
     public bool IsShared { get; set; }
+    public string UserId { get; set; }
     [JsonIgnore]
     public ICollection<AppUser> Users { get; set; } = new List<AppUser>();
     public ICollection<ArtSavedReportsColumns> Columns { get; set; }

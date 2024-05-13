@@ -58,10 +58,9 @@ namespace ART_PACKAGE.Controllers.DGAML
             }
             if (dbType == DbTypes.MySql)
             {
-                //chart1Data = _context.ExecuteProc<ArtStCasesPerStatus>(MYSQLSPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStCasesPerCategory>(MYSQLSPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
-                //chart3Data = _context.ExecuteProc<ArtStCasesPerSubcat>(MYSQLSPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
-                //chart4Data = _context.ExecuteProc<ArtStCasesPerPriority>(MYSQLSPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlCasesPerStatus>(MYSQLSPName.ART_ST_DGAML_CASES_PER_STATUS, chart1Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStDgAmlCasesPerCategory>(MYSQLSPName.ART_ST_DGAML_CASES_PER_CATEGORY, chart2Params.ToArray());
+                chart4Data = _context.ExecuteProc<ArtStDgAmlCasesPerPriority>(MYSQLSPName.ART_ST_DGAML_CASES_PER_PRIORITY, chart4Params.ToArray());
 
             }
 
