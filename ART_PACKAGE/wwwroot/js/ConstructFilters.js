@@ -70,38 +70,62 @@ class ExternalFilter extends HTMLElement {
 
 
         btn.onclick = () => {
-
+            
             var rules = $(filtercontrol).queryBuilder('getRules');
-            console.log(rules);
-            var g = [...rules.rules].reduce((group, product) => {
-                const { id } = product;
-                group[id] = !group[id] ? [] : group[id];
-                group[id].push(product);
-                return group;
-            }, {});
-            var arr = [];
-            for (var prop in g) {
-                arr.push(g[prop]);
+            var isValidFilters = true;
+            if (rules == null || rules.rules == null) {
+                isValidFilters = false;
+                toastObj.icon = 'error';
+                toastObj.text = `please add report filters`;
+                toastObj.heading = "Apply Filter Status";
+                $.toast(toastObj);
             }
-            if (arr.some(x => x.length > 1)) {
-                console.log("error");
-            } else {
-                exRules = Array.prototype.concat.apply([], arr);
-                exRules = [...exRules].map(x => {
-                    if (Array.isArray(x.value)) {
-                        x.value = [...x.value].join(",");
+            filters.forEach((f) => {
+                if (rules && rules.rules) {
+                    var IsRuleExist = rules.rules.some(item => item.id === f.id);
+                    if (!IsRuleExist) {
+                        isValidFilters = false;
+                        toastObj.icon = 'error';
+                        toastObj.text = `please add ${f.label} filter`;
+                        toastObj.heading = "Apply Filter Status";
+                        $.toast(toastObj);
                     }
-                    return x;
-                });
-                if (document.getElementById("grid")) {
-                    $("#grid").data("kendoGrid").dataSource.read();
-                    $("#grid").data("kendoGrid").dataSource.view();
-                } else if (document.getElementById("charts")) {
-                    var url = this.dataset.chartsurl;
-                    var chartsurl = Urls[url];
-                    callDefinedCharts(chartsurl);
+                }
+                
+            })
+            if (isValidFilters) {
+                console.log(rules);
+                var g = [...rules.rules].reduce((group, product) => {
+                    const { id } = product;
+                    group[id] = !group[id] ? [] : group[id];
+                    group[id].push(product);
+                    return group;
+                }, {});
+                var arr = [];
+                for (var prop in g) {
+                    arr.push(g[prop]);
+                }
+                if (arr.some(x => x.length > 1)) {
+                    console.log("error");
+                } else {
+                    exRules = Array.prototype.concat.apply([], arr);
+                    exRules = [...exRules].map(x => {
+                        if (Array.isArray(x.value)) {
+                            x.value = [...x.value].join(",");
+                        }
+                        return x;
+                    });
+                    if (document.getElementById("grid")) {
+                        $("#grid").data("kendoGrid").dataSource.read();
+                        $("#grid").data("kendoGrid").dataSource.view();
+                    } else if (document.getElementById("charts")) {
+                        var url = this.dataset.chartsurl;
+                        var chartsurl = Urls[url];
+                        callDefinedCharts(chartsurl);
+                    }
                 }
             }
+            
         }
         this.appendChild(spinnerstyle);
         this.appendChild(filtercontrol);
