@@ -1,4 +1,6 @@
-﻿using CsvHelper;
+﻿using ART_PACKAGE.Extentions.StringExtentions;
+using ART_PACKAGE.Helpers.CSVMAppers;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Data.Services.Grid;
@@ -505,6 +507,9 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
+            bool isDisplayNameExist = ReportsConfigm.CONFIG.Keys.Contains(typeof(T).Name.ToLower()) != null ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames != null ? true : false : false;
+            Dictionary<string, GridColumnConfiguration> displayNamesDectionary = isDisplayNameExist ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames : null;
+
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
 
             List<ColumnsDto> columns = props.Select(x =>
@@ -564,7 +569,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     name = name,
                     isDropDown = isDropDown,
                     menu = dropdownvalues,
-                    displayName = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].DisplayName : name : null,
+                    displayName = displayNamesDectionary is not null ? displayNamesDectionary.Keys.Contains(name) ? displayNamesDectionary[name].DisplayName : name.MapToHeaderName() : name.MapToHeaderName(),
+                    //displayName = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].DisplayName : name.MapToHeaderName() : name.MapToHeaderName(),
                     format = DisplayNamesAndFormat is not null ? DisplayNamesAndFormat.Keys.Contains(name) ? DisplayNamesAndFormat[name].Format : null : null,
                     isCollection = isCollection,
                     CollectionPropertyName = isCollection ? x.PropertyType.GetGenericArguments().First().GetProperties()[0].Name : null
@@ -615,6 +621,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
             List<ColumnsDto> columns = null;
             if (obj.IsIntialize)
+            {
+                columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
+            }
+            if (obj.IsExport != null && obj.IsExport.Value == true)
             {
                 columns = GetColumns<T>(columnsToDropDownd, DisplayNames, propertiesToSkip);
             }
@@ -789,8 +799,22 @@ namespace ART_PACKAGE.Helpers.CustomReport
             using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
             using (CsvWriter cw = new(sw, config))
             {
+
                 sw.Write("");
-                cw.WriteHeader<T>();
+                if (calldata.Columns != null && calldata.Columns.Any())
+                {
+                    foreach (var colDto in calldata.Columns)
+                    {
+                        cw.WriteField(colDto.displayName);
+                        cw.NextRecord();
+                    }
+                }
+                else
+                {
+                    cw.WriteHeader<T>();
+
+                }
+
                 bytes = stream.ToArray();
             }
             while (total > 0)
@@ -803,7 +827,18 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (CsvWriter cw = new(sw, config))
                     {
                         sw.Write("");
-                        cw.WriteHeader<T>();
+                        if (calldata.Columns != null && calldata.Columns.Any())
+                        {
+                            foreach (var colDto in calldata.Columns)
+                            {
+                                cw.WriteField(colDto.displayName);
+                            }
+                        }
+                        else
+                        {
+                            cw.WriteHeader<T>();
+
+                        }
                         cw.NextRecord();
                         foreach (T? elm in tempData)
                         {

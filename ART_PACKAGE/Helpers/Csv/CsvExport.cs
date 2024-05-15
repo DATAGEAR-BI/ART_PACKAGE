@@ -271,8 +271,9 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.Context.RegisterClassMap(mapperInstance);
             cw.WriteFilters<TModel>(filters);
             cw.WriteHeader<TModel>();
-
             cw.NextRecord();
+
+
             if (!data.Any())
                 OnProgressChanged(0, fileNumber);
             int index = 0;
