@@ -50,7 +50,10 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 //data = context.ExecuteProc<ArtStAmlAlertAgeSummery>(ORACLESPName.ART_ST_AML_ALERT_AGE_SUMMARY, summaryParams.ToArray());
             }
-
+            if (para.req.Sort == null)
+            {
+                para.req.Sort = new List<SortOptions> { new SortOptions { field = "Total", dir = "asc" } };
+            }
             KendoDataDesc<ArtStAmlAlertAgeSummery> Data = data.AsQueryable().CallData(para.req);
 
 

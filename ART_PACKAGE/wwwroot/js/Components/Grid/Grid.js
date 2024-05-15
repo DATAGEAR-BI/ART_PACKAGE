@@ -16,6 +16,9 @@ import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressb
 
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+var isExportingPDFNow = false;
+var currentPDFProcess = null;
+var isExportPdfHitted = false;
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -44,10 +47,11 @@ class Grid extends HTMLElement {
     filtersModal = document.createElement("div");
     csvExportId = "";
     isExporting = false;
+    isPDFExporting = false;
     isDownloaded = true;
     selectProp = "";
     excelFileName = "";
-
+    buttonExportClicked = false;
 
     constructor() {
         super();
@@ -55,6 +59,8 @@ class Grid extends HTMLElement {
 
 
     }
+
+    
     filterAction(e) {
         console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
 
@@ -110,7 +116,7 @@ class Grid extends HTMLElement {
 
     }
     connectedCallback() {
-
+      
         if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
@@ -282,7 +288,39 @@ class Grid extends HTMLElement {
                 this.isDownloaded = false;
             }
         });
+        exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
+            if (isExportPdfHitted) {
+                console.log(progress)
+                console.log(exportinProcess)
+                if (!currentPDFProcess) {
+                    currentPDFProcess = exportinProcess
+                }
+                if (new Date(currentPDFProcess) > new Date(exportinProcess)) {
+                    currentPDFProcess = exportinProcess;
+                }
 
+                var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
+
+                if (progress && progress > 0 && progress < 100 && currentPDFProcess == exportinProcess) {
+                    if (pdfProgressBar.hidden) {
+                        pdfProgressBar.hidden = false;
+                        pdfProgressBar.style.visibility = "";
+                    }
+                    pdfProgressBar.value = parseFloat(progress.toFixed(2));
+                    isExportingPDFNow = true;
+
+
+                } else {
+                    if (!pdfProgressBar.hidden) {
+                        pdfProgressBar.hidden = true;
+                        pdfProgressBar.style.visibility = "hidden";
+                    }
+                    isExportingPDFNow = false;
+                }
+            }
+        });
+
+        //beforeLeaveAction();
 
     }
 
@@ -557,6 +595,23 @@ class Grid extends HTMLElement {
                 <span style="display:flex;align-items:center">
                     <smart-progress-bar show-progress-value id="${this.id + "Progress"}" value="0"  hidden ></smart-progress-bar>
                     <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
+                </span>
+            </span>
+             <span style="display: inline-block">
+                <span style="display:flex;align-items:center">
+                    <smart-progress-bar show-progress-value id="${this.id + "PDFProgress"}" value="0"  hidden ></smart-progress-bar>
+                </span>
+            </span>
+            `,
+        });
+        toolbar.push({
+            name: "pdfbar",
+            //text: "Clear All Filters"
+            template: `
+            
+             <span style="display: inline-block">
+                <span style="display:flex;align-items:center">
+                    <smart-progress-bar show-progress-value id="${this.id + "PDFProgress"}" value="0"  hidden ></smart-progress-bar>
                 </span>
             </span>
             `,
@@ -1115,38 +1170,53 @@ class Grid extends HTMLElement {
             this.sh_filters(e, this.gridDiv, this.filtersModal, `${this.id}-filtersDiv`, this.columns);
         });
 
-        $(`.k-grid-${this.gridDiv.id}pdfExport`).click((e) => {
+        $(`.k-grid-${this.gridDiv.id}pdfExport`).click(async (e) => {
+            if (!isExportingPDFNow && !this.buttonExportClicked) {
+                toastObj.icon = 'warning';
+                toastObj.text = "Export PDF is started";
+                toastObj.heading = "PDF Status";
+                $.toast(toastObj);
 
-            var filters = grid.dataSource.filter();
-            var total = grid.dataSource.total();
-            var sort = grid.dataSource.sort();
-            let Request = {};
-            Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
-            var para = {}
-            para.Take = total;
-            para.Skip = 0;
-            para.Filter = filters;
-            para.Sort = sort;
-            if (!this.isAllSelected) {
-                var pagesWithSelectedRows = Object.keys(this.selectedRows);
-                if (pagesWithSelectedRows && pagesWithSelectedRows.length > 0)
-                    para.All = false;
+                isExportPdfHitted = true;
+                this.buttonExportClicked = true;
+                var filters = grid.dataSource.filter();
+                var total = grid.dataSource.total();
+                var sort = grid.dataSource.sort();
+                let Request = {};
+                Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
+                var para = {}
+                para.Take = total;
+                para.Skip = 0;
+                para.Filter = filters;
+                para.Sort = sort;
+                if (!this.isAllSelected) {
+                    var pagesWithSelectedRows = Object.keys(this.selectedRows);
+                    if (pagesWithSelectedRows && pagesWithSelectedRows.length > 0)
+                        para.All = false;
+                    else
+                        para.All = true;
+                }
+                para.IdColumn = this.selectProp;
+                para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
+
+                Request.DataReq = para;
+                var pdfExportHandler = undefined;
+                if (!this.isStoredProc)
+                    pdfExportHandler = Handlers["clientPdExport"];
                 else
-                    para.All = true;
+                    pdfExportHandler = Handlers["StoredPdExport"];
+
+                var orgin = window.location.pathname.split("/");
+                var controller = orgin[1];
+                pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
+
             }
-            para.IdColumn = this.selectProp;
-            para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
-
-            Request.DataReq = para;
-            var pdfExportHandler = undefined;
-            if (!this.isStoredProc)
-                pdfExportHandler = Handlers["clientPdExport"];
-            else
-                pdfExportHandler = Handlers["StoredPdExport"];
-
-            var orgin = window.location.pathname.split("/");
-            var controller = orgin[1];
-            pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
+            else {
+                toastObj.icon = 'error';
+                toastObj.text = "Already PDF exporting now";
+                toastObj.heading = "PDF Status";
+                $.toast(toastObj);
+            }
         });
 
 
@@ -1680,6 +1750,31 @@ class Grid extends HTMLElement {
             }
         }
     }
+    beforeLeaveAction() {
+        window.addEventListener('unload', function (e) {
+            // Your code here to perform an action when the page is closed
+            // For example, you can send an AJAX request or perform cleanup tasks
+            this.alert("estanaaa ya3aaaaaam")
+            console.log('Page is being closed.');
+        });
+        window.onbeforeunload = function () {
+            return "Are you sure you want to leave this page?";
+        };
+        window.addEventListener('beforeunload', function (e) {
+
+            if (isExportingPDFNow) {
+                // Cancel the event
+                e.preventDefault();
+                // Chrome requires returnValue to be set
+                e.returnValue = '';
+                // Display the confirmation dialog
+                var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
+                e.returnValue = confirmationMessage; // For older browsers
+                return confirmationMessage;
+            }
+            
+        });
+    }
 
 }
 function copyText(textToCopy) {
@@ -1821,3 +1916,27 @@ function parseObjectWithFunctions(obj) {
 
     return parsedObject; // Return the object with parsed function properties
 }
+window.addEventListener('beforeunload', function (e) {
+
+    if (isExportingPDFNow) {
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
+        // Display the confirmation dialog
+        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
+        e.returnValue = confirmationMessage; // For older browsers
+        return confirmationMessage;
+    }
+        
+    }
+
+);
+
+window.addEventListener('unload', function (e) {
+    exportConnection.invoke("CancelPdfExport", currentPDFProcess);
+    //invokeCanclePdfProcessExport(currentPDFProcess)
+    // Your code here to perform an action when the page is closed
+    // For example, you can send an AJAX request or perform cleanup tasks
+    console.log('Page is being closed.');
+});
