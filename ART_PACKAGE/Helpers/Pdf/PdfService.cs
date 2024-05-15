@@ -8,6 +8,7 @@ using Rotativa.AspNetCore.Options;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
 
+
 namespace ART_PACKAGE.Helpers.Pdf
 {
     public class PdfService : IPdfService
@@ -153,6 +154,52 @@ namespace ART_PACKAGE.Helpers.Pdf
             //return outputStream.ToArray();
 
         }
+
+        public async Task<byte[]> ExportToPdf<T>(IQueryable<T> data, KendoRequest obj
+          , ViewDataDictionary ViewData
+          , ActionContext ControllerContext
+          , int ColumnsPerPage
+          , string UserName
+          , List<string> ColumnsToSkip = null
+          , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
+        {
+
+            KendoDataDesc<T> calldata = data.CallData(obj);
+            data = calldata.Data;
+            decimal total = calldata.Total;
+
+            ViewData["user"] = UserName;
+            List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
+            List<List<string>> props = PartitionProPertiesOf<T>(ColumnsToSkip, ColumnsPerPage);
+            foreach (List<string> group in props)
+            {
+                dataColumnsParts.Add(GetDataPArtitionedByColumns(data, group, DisplayNamesAndFormat));
+            }
+            //string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
+            _ = new ViewAsPdf("ReportPdfCover")
+            {
+                ViewData = ViewData,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+
+
+            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
+            {
+                ViewData = ViewData,
+                //CustomSwitches = footer,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+
+
+
+
+
+            return await pdf.BuildFile(ControllerContext);
+
+
+        }
+
+
         public async Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data,
                 ViewDataDictionary ViewData, ActionContext ControllerContext,
                 string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null,

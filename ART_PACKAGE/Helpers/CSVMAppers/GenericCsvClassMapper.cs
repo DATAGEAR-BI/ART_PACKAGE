@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Extentions.StringExtentions;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -160,7 +161,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     prop => prop.Name,
                     prop =>
                     {
-                        string displayName = prop.Name;
+                        string displayName = prop.Name.MapToHeaderName();
                         if (ReportsConfigm.CONFIG.TryGetValue(modelName, out ReportConfig? config) && config.DisplayNames.TryGetValue(prop.Name, out GridColumnConfiguration? displayNameConfig))
                         {
                             displayName = displayNameConfig.DisplayName;

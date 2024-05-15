@@ -92,8 +92,12 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtStAmlAlertAgeSummery>(ORACLESPName.ART_ST_AML_ALERT_AGE_SUMMARY, summaryParams.ToArray());
             }
-
-            byte[] bytes = await data.OrderBy(s => s.Total).AsQueryable().ExportToCSV(para.req);
+            if (para.req.Sort == null)
+            {
+                para.req.Sort = new List<SortOptions> { new SortOptions { field = "Total", dir = "asc" } };
+            }
+            para.req.IsExport = true;
+            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
 
@@ -112,8 +116,13 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             ViewData["title"] = "Alert Age Summery Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data.OrderBy(s => s.Total), ViewData, ControllerContext, 5
-                                                    , User.Identity.Name);
+
+            if (para.req.Sort == null)
+            {
+                para.req.Sort = new List<SortOptions> { new SortOptions { field = "Total", dir = "asc" } };
+            }
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
+                                        , User.Identity.Name);
             return File(bytes, "text/csv");
         }
     }

@@ -1,5 +1,6 @@
 ﻿@model List<IEnumerable<Dictionary<string, object>>>
 @using System.Globalization;
+@using ART_PACKAGE.Extentions.StringExtentions;
 @{
     Layout = null;
     var recordPerPage = 17;
@@ -85,7 +86,7 @@
                             <tr>
                                 @foreach (var key in keys)
                                 {
-                                    <td>@key</td>
+                                    <td>@key.MapToHeaderName()</td>
                                 }
                             </tr>
                         </thead>
