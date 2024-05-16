@@ -10,6 +10,8 @@
         public string? ActualValuesText { get; set; }
 
         public string? AlertStatus { get; set; }
+        //        public string? CasesStatus { get; set; } this for MIDB only Ehab Azab 16-5-2024
+
         public string? AlertTypeCd { get; set; }
 
         public string? AlertSubCat { get; set; }

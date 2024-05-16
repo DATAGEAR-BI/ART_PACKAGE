@@ -9,6 +9,7 @@ using ART_PACKAGE.Controllers.TRADE_BASE;
 using ART_PACKAGE.Helpers;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Handlers;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -26,18 +27,18 @@ namespace ART_PACKAGE.Hubs
         private readonly ICsvExport _csvSrv;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly Module _module;
-
+        private readonly PDFProcessesHandler _pdfProcessHandler;
 
 
         private readonly UsersConnectionIds connections;
 
-        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, Module _module)
+        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, Module _module, PDFProcessesHandler pdfProcessHandler)
         {
             _csvSrv = csvSrv;
             this._module = _module;
             this.connections = connections;
             _serviceScopeFactory = serviceScopeFactory;
-
+            _pdfProcessHandler = pdfProcessHandler;
         }
 
         public override Task OnConnectedAsync()
@@ -212,7 +213,10 @@ namespace ART_PACKAGE.Hubs
 
         }
 
-
+        public async Task CancelPdfExport(string processId)
+        {
+            _pdfProcessHandler.CancelProcess(processId);
+        }
 
         //
         // private async Task ExportSegOutliers(ExportDto<object> para, List<string> @params)

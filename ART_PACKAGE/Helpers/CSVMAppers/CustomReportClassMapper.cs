@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using ART_PACKAGE.Extentions.StringExtentions;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 
@@ -19,6 +20,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         private readonly List<string> _includedColumns;
         private static int _rowNumber = 0;
+        private bool firstRecord = true;
         public DictionaryConverter(List<string> includedColumns)
         {
             _includedColumns = includedColumns;
@@ -33,13 +35,16 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            if (_rowNumber == 0)
+
+            if (firstRecord)
             {
                 foreach (string header in _includedColumns)
                 {
-                    row.WriteField(header);
+                    var headerFormatted = header.MapToHeaderName();
+                    row.WriteField(headerFormatted);
                 }
                 row.Context.Writer.NextRecord();
+                firstRecord = false;
             }
 
             _rowNumber++;

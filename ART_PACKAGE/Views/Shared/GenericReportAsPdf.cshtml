@@ -1,9 +1,17 @@
 ﻿@model List<IEnumerable<Dictionary<string, object>>>
 @using System.Globalization;
+@using ART_PACKAGE.Extentions.StringExtentions;
+@inject Microsoft.AspNetCore.SignalR.IHubContext<ART_PACKAGE.Hubs.ExportHub> _exportHub
+@inject ART_PACKAGE.Helpers.UsersConnectionIds connections
+@inject ART_PACKAGE.Helpers.Handlers.PDFProcessesHandler _pdfHAndler
+@using Microsoft.AspNetCore.Identity
+
 @{
     Layout = null;
     var recordPerPage = 17;
-
+    var user = User.Identity.Name;
+    var exportinProcess = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+    _pdfHAndler.AddProcess(exportinProcess);
 }
 
 
@@ -71,11 +79,15 @@
         {
             var length = Model.First().Count();
             var counter = 0;
-
+            var tcounter = 0;
+            var ttotal = Model.Count;
+            var tttotalRecords = length * ttotal;
+            
             for (int i = 0; i < length; i += recordPerPage)
             {
                 for (int j = 0; j < Model.Count; j++)
                 {
+                    Console.WriteLine(counter);
                     counter++;
                     var keys = Model[j].First().Keys;
                     var data = Model[j].Skip((i / recordPerPage) * recordPerPage).Take(recordPerPage);
@@ -85,20 +97,29 @@
                             <tr>
                                 @foreach (var key in keys)
                                 {
-                                    <td>@key</td>
+                                    <td>@key.MapToHeaderName()</td>
                                 }
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in data)
                             {
+                                tcounter++;
+                                var pregress = (Convert.ToDouble(tcounter) / Convert.ToDouble(tttotalRecords)) * 100;
+                                //Console.WriteLine(pregress);
+
+                                await _exportHub.Clients.Clients(connections.GetConnections(user))
+                                .SendCoreAsync("updateExportPDFProgress", new object[] { pregress, exportinProcess });
                                 <tr>
                                     @foreach (var key in keys)
                                     {
 
+                                        if (_pdfHAndler.isProcessCanceld(exportinProcess))
+                                            return;
 
                                         <td>
                                             <div>
+                                                
                                                 @if (item[key] is not null && item[key].GetType() == typeof(double))
                                                 {
                                                     @string.Format(CultureInfo.InvariantCulture, "{0:n2}", @item[key])
@@ -119,7 +140,7 @@
                     <div class="brk text-center"> Printed on: @DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
                 }
             }
-
+            _pdfHAndler.CancelProcess(exportinProcess);
         }
 
     </div>

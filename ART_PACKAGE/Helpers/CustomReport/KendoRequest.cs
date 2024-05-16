@@ -10,6 +10,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         public List<SortOptions> Sort { get; set; }
         public Filter Filter { get; set; }
         public bool IsIntialize { get; set; }
+        public bool? IsExport { get; set; } = false;
         public List<GridGroup>? Group { get; set; }
 
     }

@@ -271,23 +271,13 @@ namespace ART_PACKAGE.Helpers.Csv
             cw.Context.RegisterClassMap(mapperInstance);
             cw.WriteFilters<TModel>(filters);
             cw.WriteHeader<TModel>();
-
             cw.NextRecord();
             if (!data.Any())
                 OnProgressChanged(0, fileNumber);
             int index = 0;
+            int datacount = data.Count();
             float progress = 0;
-            // _logger.LogCritical("csv debug " + data.Count().ToString());
-            /*int numberOfPartitions = (int)Math.Ceiling(dataCount / 100.00);
 
-            for (int i = 0; i < dataCount; i += 100)
-            {
-                cw.WriteRecords(data.Skip(i).Take(100));
-                lock (_locker)
-                {
-                    OnProgressChanged(i, fileNumber);
-                }
-            }*/
             foreach (TModel item in data)
             {
 
@@ -299,8 +289,10 @@ namespace ART_PACKAGE.Helpers.Csv
                 index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
-                    if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+
+                    if (index % 100 == 0 || index == datacount) // Also check progress at the last item
                     {
+
                         //progress = (float)(index / (float)total * 100);
                         int recordsDone = index + 1;
                         lock (_locker)
@@ -308,6 +300,7 @@ namespace ART_PACKAGE.Helpers.Csv
                             OnProgressChanged(recordsDone, fileNumber);
                         }
                     }
+
                 }
                 else
                 {

@@ -99,6 +99,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
+            para.req.IsExport = true;
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
         }
@@ -122,7 +123,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
         }

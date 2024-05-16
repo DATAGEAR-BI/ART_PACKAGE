@@ -11,6 +11,7 @@ using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.Grid;
+using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
@@ -43,6 +44,7 @@ builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
+builder.Services.AddSingleton<PDFProcessesHandler>();
 
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));

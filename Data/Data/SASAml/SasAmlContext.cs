@@ -23,7 +23,7 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
         public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
-        public virtual DbSet<BigData> BigDatas { get; set; } = null!;
+        // public virtual DbSet<BigData> BigDatas { get; set; } = null!;
 
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 

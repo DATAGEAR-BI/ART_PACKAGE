@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {
 
             SkipList = new List<string>(){ "Val",
-"AlertsNotesFlag","PartyTypeDesc",
+"AlertsNotesFlag","PartyTypeDesc","AlertTypeCd",
     "BranchNumber",
     "AlertDescription",
     "ScenarioId",
@@ -29,6 +29,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"AlertTypeCd" , new GridColumnConfiguration { DisplayName = "Alert Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"AlertSubCat" , new GridColumnConfiguration { DisplayName = "Alert Sub-Category"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"AlertStatus" , new GridColumnConfiguration { DisplayName = "Alert Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+                                                                                {"CasesStatus" , new GridColumnConfiguration { DisplayName = "Case Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"AlertDescription" , new GridColumnConfiguration { DisplayName = "Alert Description"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"ScenarioName" , new GridColumnConfiguration { DisplayName = "Scenario Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"ReportCloseRsn" , new GridColumnConfiguration { DisplayName = "Report Close Reason"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },

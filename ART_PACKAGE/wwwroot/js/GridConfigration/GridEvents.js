@@ -751,7 +751,7 @@ export const Handlers = {
             params = paramsArr[1];
         }
 
-        kendo.ui.progress($("#"+gridDiv.id), true);
+       // kendo.ui.progress($("#"+gridDiv.id), true);
         var ds = $("#"+gridDiv.id).data("kendoGrid");
         var total = ds.dataSource.total();
         var take = 20000;
@@ -814,7 +814,7 @@ export const Handlers = {
             a.href = window.URL.createObjectURL(x.blob);
             a.click();
         });
-        kendo.ui.progress($("#"+gridDiv.id), false);
+        //kendo.ui.progress($("#"+gridDiv.id), false);
 
 
 
