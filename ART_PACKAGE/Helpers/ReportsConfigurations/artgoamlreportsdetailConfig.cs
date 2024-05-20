@@ -23,14 +23,14 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"Priority" , new GridColumnConfiguration { DisplayName = "Priority"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Reportuserlockid" , new GridColumnConfiguration { DisplayName = "Locked By"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Reportcreatedby" , new GridColumnConfiguration { DisplayName = "Created By"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"Action" , new GridColumnConfiguration { DisplayName = "Action"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"Action" , new GridColumnConfiguration { DisplayName = "Action"  , Format = ""  ,  Filter = "" , Template = "mixedArabicAndEnglish" , AggText = ""  , isLargeText = false   } },
 {"Currencycodelocal" , new GridColumnConfiguration { DisplayName = "Currency Code Local"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"LastUpdatedDate" , new GridColumnConfiguration { DisplayName = "Last Updated Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Entityreference" , new GridColumnConfiguration { DisplayName = "Entity Reference"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Fiurefnumber" , new GridColumnConfiguration { DisplayName = "FUI Reference Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Rentitybranch" , new GridColumnConfiguration { DisplayName = "Entity Branch"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"Reportingpersontype" , new GridColumnConfiguration { DisplayName = "Reporting Person Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"Reason" , new GridColumnConfiguration { DisplayName = "Reason"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
+{"Reason" , new GridColumnConfiguration { DisplayName = "Reason"  , Format = ""  ,  Filter = "" , Template = "mixedArabicAndEnglish" , AggText = ""  , isLargeText = false   } } ,
 {"Reportcloseddate" , new GridColumnConfiguration { DisplayName = "Report closed date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } }
             };
 
