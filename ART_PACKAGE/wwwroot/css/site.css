@@ -52,3 +52,14 @@ body {
 td[role="gridcell"] {
     white-space: pre !important;
 }
+/*
+.k-list-scroller {
+    height: auto !important;
+    max-height: 150px !important;
+}
+*/
+
+.k-list-container.k-popup.k-group.k-reset {
+    height: auto !important;
+    max-height: 150px !important;
+}
