@@ -26,12 +26,12 @@ namespace ART_PACKAGE.Hubs
         private readonly ICsvExport _csvSrv;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly Module _module;
-        private readonly PDFProcessesHandler _pdfProcessHandler;
+        private readonly ProcessesHandler _pdfProcessHandler;
 
 
         private readonly UsersConnectionIds connections;
 
-        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, Module _module, PDFProcessesHandler pdfProcessHandler)
+        public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, Module _module, ProcessesHandler pdfProcessHandler)
         {
             _csvSrv = csvSrv;
             this._module = _module;

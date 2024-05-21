@@ -18,7 +18,16 @@ function getQueryParameters(urlString) {
     const searchParams = new URL("http://test.com" + urlString).searchParams;
     return [...searchParams.values()];
 }
- 
+export function generateGUID() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+export var currentPDFReportId = '';
 
 export const Handlers = {
     AlertSearch: {
@@ -784,7 +793,8 @@ export const Handlers = {
                         body: JSON.stringify(para)
                     });
                 } else {
-                    var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
+                    currentPDFReportId = generateGUID();
+                    var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}` : `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}`;//`/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
                     res = await fetch(exportUrl, {
                         method: "POST",
                         headers: {
@@ -793,6 +803,7 @@ export const Handlers = {
                         },
                         body: JSON.stringify(Request)
                     });
+                    console.log("res",res)
                 }
                 var r = await res.blob();
                 resolve({

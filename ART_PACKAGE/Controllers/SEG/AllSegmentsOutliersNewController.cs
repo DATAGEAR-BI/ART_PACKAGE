@@ -32,14 +32,14 @@ namespace ART_PACKAGE.Controllers.SEG
             return await GetData(request);
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public async Task<IActionResult> ExportByParams([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment)
+        public async Task<IActionResult> ExportByParams([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment, [FromQuery] string? reportGUID)
         {
             bool hasParams = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;
             baseCondition = hasParams
                 ? (x => x.MonthKey == MonthKey.ToString() && x.PartyTypeDesc == PartyTypeDesc && x.SegmentSorted == Segment.ToString())
                 : (System.Linq.Expressions.Expression<Func<ArtAllSegmentsOutliersTb, bool>>?)(x => false);
 
-            return await ExportToCsv(req, gridId);
+            return await ExportToCsv(req, gridId, reportGUID: reportGUID);
         }
 
 

@@ -44,7 +44,7 @@ builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
-builder.Services.AddSingleton<PDFProcessesHandler>();
+builder.Services.AddSingleton<ProcessesHandler>();
 
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));

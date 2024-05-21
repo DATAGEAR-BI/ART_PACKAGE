@@ -2,6 +2,7 @@
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using Data.Services.CustomReport;
@@ -15,6 +16,7 @@ using System.Security.Claims;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
+
     public class CustomReportGridConstructor : ICustomReportGridConstructor
     {
         private readonly DBFactory _dbFactory;
@@ -23,9 +25,10 @@ namespace ART_PACKAGE.Helpers.Grid
         private static readonly Dictionary<int, int> fileProgress = new();
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
+        private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
 
-        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IPdfService pdfSrv)
+        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IPdfService pdfSrv, ProcessesHandler processesHandler)
         {
             Repo = repo;
             _dbFactory = dbFactory;
@@ -34,7 +37,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _exportHub = exportHub;
             this.connections = connections;
             _pdfSrv = pdfSrv;
-
+            _processesHandler = processesHandler;
         }
         public ICustomReportRepo Repo { get; private set; }
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
@@ -105,7 +108,8 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public string ExportGridToCsv(int reportId, ExportRequest exportRequest, string user, string gridId)
         {
-            string folderGuid = Guid.NewGuid().ToString();
+            string folderGuid = gridId;//Guid.NewGuid().ToString();
+            _processesHandler.AddProcess(gridId);
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
             ArtSavedCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
@@ -149,7 +153,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound));
+                _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid));
 
             }
             else
@@ -174,7 +178,7 @@ namespace ART_PACKAGE.Helpers.Grid
                     };
                     int localRound = round + 1;
 
-                    _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound));
+                    _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid));
 
                     total -= batch;
                     round++;
@@ -215,5 +219,17 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             throw new NotImplementedException();
         }
+
+        public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
