@@ -194,6 +194,7 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             ArtSavedCustomReport report = Repo.GetReport(reportId);
 
+            _processesHandler.AddProcess((string)ViewData["reportId"]);
             DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
             GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
             IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });

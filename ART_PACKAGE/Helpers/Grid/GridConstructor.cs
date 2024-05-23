@@ -188,6 +188,7 @@ namespace ART_PACKAGE.Helpers.Grid
         }
         public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null)
         {
+            _processesHandler.AddProcess(reportId);
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
 
