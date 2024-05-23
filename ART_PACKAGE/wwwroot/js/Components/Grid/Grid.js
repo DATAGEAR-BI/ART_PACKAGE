@@ -1195,6 +1195,23 @@ class Grid extends HTMLElement {
                 $.toast(toastObj);
 
                 isExportPdfHitted = true;
+                isExportingPDFNow = true;
+                if (isExportPdfHitted) {
+             
+                
+               
+
+                    var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
+                    if (pdfProgressBar.hidden) {
+                        pdfProgressBar.hidden = false;
+                        pdfProgressBar.style.visibility = "";
+                    }
+                    pdfProgressBar.value = parseFloat(0);
+
+                   
+                }
+
+
                 this.buttonExportClicked = true;
                 var filters = grid.dataSource.filter();
                 var total = grid.dataSource.total();
