@@ -62,7 +62,7 @@ class Grid extends HTMLElement {
 
     }
 
-    
+
     filterAction(e) {
         console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
 
@@ -118,7 +118,7 @@ class Grid extends HTMLElement {
 
     }
     connectedCallback() {
-      
+
         if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
@@ -263,14 +263,14 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-            
+
             if (currentCSVProcess != folder) {
                 exportConnection.invoke("CancelPdfExport", folder);
 
             }
             if (currentCSVProcess == folder) {
-              /*  if (this.id !== gridId)
-                    return;*/
+                /*  if (this.id !== gridId)
+                      return;*/
 
                 if (!this.isExporting) {
                     this.csvExportId = folder;
@@ -297,7 +297,7 @@ class Grid extends HTMLElement {
 
                 }
             }
-            
+
         });
         exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
             console.log("curr", currentPDFReportId)
@@ -338,7 +338,7 @@ class Grid extends HTMLElement {
                     }
                 }
             }
-         
+
         });
 
         //beforeLeaveAction();
@@ -618,11 +618,7 @@ class Grid extends HTMLElement {
                     <a class="k-button k-button-icontext k-grid-download" id="ExportDownloadBtn" style="visibility : hidden" hidden >Download Files</a>
                 </span>
             </span>
-             <span style="display: inline-block">
-                <span style="display:flex;align-items:center">
-                    <smart-progress-bar show-progress-value id="${this.id + "PDFProgress"}" value="0"  hidden ></smart-progress-bar>
-                </span>
-            </span>
+             
             `,
         });
         toolbar.push({
@@ -1199,6 +1195,23 @@ class Grid extends HTMLElement {
                 $.toast(toastObj);
 
                 isExportPdfHitted = true;
+                isExportingPDFNow = true;
+                if (isExportPdfHitted) {
+
+
+
+
+                    var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
+                    if (pdfProgressBar.hidden) {
+                        pdfProgressBar.hidden = false;
+                        pdfProgressBar.style.visibility = "";
+                    }
+                    pdfProgressBar.value = parseFloat(0);
+
+
+                }
+
+
                 this.buttonExportClicked = true;
                 var filters = grid.dataSource.filter();
                 var total = grid.dataSource.total();
@@ -1551,7 +1564,7 @@ class Grid extends HTMLElement {
         var reprtGUID = generateGUID();
         currentCSVProcess = reprtGUID;
         var reportGUTURLQuery = "&reportGUID=" + currentCSVProcess;
-        let exportUrl = `/${controller}/ExportToCsv/` + this.id+"?"+reportGUTURLQuery;
+        let exportUrl = `/${controller}/ExportToCsv/` + this.id + "?" + reportGUTURLQuery;
 
         if (Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)) {
             let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
@@ -1797,7 +1810,7 @@ class Grid extends HTMLElement {
                 e.returnValue = confirmationMessage; // For older browsers
                 return confirmationMessage;
             }
-            
+
         });
     }
 
@@ -1963,8 +1976,8 @@ window.addEventListener('beforeunload', function (e) {
         e.returnValue = confirmationMessage; // For older browsers
         return confirmationMessage;
     }
-        
-    }
+
+}
 
 );
 
