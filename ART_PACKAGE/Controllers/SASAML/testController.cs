@@ -1,9 +1,11 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Grid;
+using ART_PACKAGE.Helpers.Handlers;
 using Data.Data.SASAml;
 using Data.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.SASAML
 
@@ -11,8 +13,19 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "AlertDetails")]
     public class TestController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData>, IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData>
     {
-        public TestController(IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        private readonly ProcessesHandler _processesHandler;
+        public TestController(IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData> gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
         {
+            _processesHandler = processesHandler;
+        }
+        public IActionResult Processes()
+        {
+
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(_processesHandler.processes, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
         }
 
 

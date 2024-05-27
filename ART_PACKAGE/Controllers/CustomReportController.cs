@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
 using ART_PACKAGE.Helpers.Grid;
+using ART_PACKAGE.Helpers.Handlers;
 using Data.Services.CustomReport;
 using Data.Services.Grid;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +14,12 @@ namespace ART_PACKAGE.Controllers
 {
     public class CustomReportController : BaseReportController<ICustomReportGridConstructor, ICustomReportRepo, AuthContext, Dictionary<string, object>>
     {
+        private readonly ProcessesHandler _processHanandler;
 
 
-        public CustomReportController(ICustomReportGridConstructor gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public CustomReportController(ICustomReportGridConstructor gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
         {
+            _processHanandler = processesHandler;
         }
 
         [HttpPost("[controller]/[action]/{id}")]
@@ -128,20 +131,21 @@ namespace ART_PACKAGE.Controllers
             return Ok(result);
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
+        public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
             AppUser user = await GetUser();
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
-            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, gridId);
+            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, reportGUID);
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId)
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
+            ViewData["reportId"] = reportGUID;
             byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
             return File(pdfBytes, "application/pdf");
-        }
+        }// Task<IActionResult>
 
         [HttpGet("[controller]/{reportId}")]
         public async Task<IActionResult> ViewReport(int reportId)

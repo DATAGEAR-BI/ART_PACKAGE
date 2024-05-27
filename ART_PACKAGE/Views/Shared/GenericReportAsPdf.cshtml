@@ -3,15 +3,15 @@
 @using ART_PACKAGE.Extentions.StringExtentions;
 @inject Microsoft.AspNetCore.SignalR.IHubContext<ART_PACKAGE.Hubs.ExportHub> _exportHub
 @inject ART_PACKAGE.Helpers.UsersConnectionIds connections
-@inject ART_PACKAGE.Helpers.Handlers.PDFProcessesHandler _pdfHAndler
+@inject ART_PACKAGE.Helpers.Handlers.ProcessesHandler _pdfHAndler
 @using Microsoft.AspNetCore.Identity
 
 @{
     Layout = null;
     var recordPerPage = 17;
     var user = User.Identity.Name;
-    var exportinProcess = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-    _pdfHAndler.AddProcess(exportinProcess);
+    string exportinProcess =(string) ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+   
 }
 
 

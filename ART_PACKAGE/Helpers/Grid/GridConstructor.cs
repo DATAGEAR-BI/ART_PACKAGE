@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
+using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Hubs;
@@ -26,9 +27,11 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly UsersConnectionIds connections;
         private static Dictionary<int, int> fileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
+        private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger)
+
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, ProcessesHandler processesHandler, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -40,6 +43,7 @@ namespace ART_PACKAGE.Helpers.Grid
             _pdfSrv = pdfSrv;
             this._config = _config;
             _logger = logger;
+            _processesHandler = processesHandler;
         }
         public TRepo Repo { get; private set; }
 
@@ -93,6 +97,57 @@ namespace ART_PACKAGE.Helpers.Grid
             return folderGuid;
         }
 
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        {
+            string folderGuid = reportGUID;//Guid.NewGuid().ToString();
+            _processesHandler.AddProcess(reportGUID);
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+            int total = dataRes.total;
+            int totalcopy = total;
+            var d = _config.GetValue<int>("export_Patch", 50000);// is not null ? _config.GetSection("export_Patch").ToString() : "500_000";
+            //var saved_batch = Int32.Parse(_config.GetSection("export_Patch") is not null ? _config.GetSection("export_Patch").ToString() : "500_000");
+            int batch = d;
+            //500_000:
+            int round = 0;
+            fileProgress = new();
+
+            _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
+            {
+                fileProgress[fileNumber] = recordsDone;
+                var done = fileProgress.Values.Sum();
+                decimal progress = done / (decimal)totalcopy;
+                _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                               .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+            };
+            while (total > 0)
+            {
+                GridRequest dataReq = new()
+                {
+                    Skip = round * batch,
+                    Take = batch,
+                    Filter = exportRequest.DataReq.Filter,
+                    Sort = exportRequest.DataReq.Sort,
+                    Group = exportRequest.DataReq.Group,
+                    All = exportRequest.DataReq.All,
+                    IdColumn = exportRequest.DataReq.IdColumn,
+                    SelectedValues = exportRequest.DataReq.SelectedValues,
+                };
+                ExportRequest roundReq = new()
+                {
+                    DataReq = dataReq,
+                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                };
+                int localRound = round + 1;
+
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, baseCondition));
+
+                total -= batch;
+                round++;
+            }
+            return folderGuid;
+        }
+
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
         {
             ReportConfig? reportConfig = _reportsConfigResolver(controller);
@@ -129,6 +184,18 @@ namespace ART_PACKAGE.Helpers.Grid
             ViewData["desc"] = reportConfig.ReportDescription;
             byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data, ViewData, actionContext, 5
                                                     , user, reportConfig.SkipList, reportConfig.DisplayNames);
+            return pdfBytes;
+        }
+        public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null)
+        {
+            _processesHandler.AddProcess(reportId);
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+
+            ViewData["title"] = reportConfig.ReportTitle;
+            ViewData["desc"] = reportConfig.ReportDescription;
+            byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data, ViewData, actionContext, 5
+                                                    , user, reportId, reportConfig.SkipList, reportConfig.DisplayNames);
             return pdfBytes;
         }
     }

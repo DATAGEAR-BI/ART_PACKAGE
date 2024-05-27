@@ -1,9 +1,9 @@
 ﻿namespace ART_PACKAGE.Helpers.Handlers
 {
-    public class PDFProcessesHandler
+    public class ProcessesHandler
     {
         public List<ProcessessModel> processes = new List<ProcessessModel>();
-        public PDFProcessesHandler()
+        public ProcessesHandler()
         {
 
         }
@@ -35,6 +35,7 @@
                 processes.Remove(process);
             }
         }
+
 
 
     }

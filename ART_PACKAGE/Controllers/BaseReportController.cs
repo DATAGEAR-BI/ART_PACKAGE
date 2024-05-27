@@ -24,6 +24,8 @@ namespace ART_PACKAGE.Controllers
         protected BaseReportController(TGridConstuctor gridConstructor, UserManager<AppUser> um) : base(um)
         {
             _gridConstructor = gridConstructor;
+
+
         }
 
         public abstract IActionResult Index();
@@ -53,9 +55,10 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{gridId}")]
-        public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId)
+        public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData);
+
+            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
             return File(pdfBytes, "application/pdf");
         }
 
@@ -63,10 +66,12 @@ namespace ART_PACKAGE.Controllers
 
         [HttpPost("[controller]/[action]/{gridId}")]
 
-        public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId)
+        public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
+
             AppUser user = await GetUser();
-            string folderGuid = _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+
             return Ok(new { folder = folderGuid });
         }
 

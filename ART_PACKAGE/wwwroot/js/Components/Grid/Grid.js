@@ -2,7 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers } from "../../GridConfigration/GridEvents.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers, currentPDFReportId, generateGUID } from "../../GridConfigration/GridEvents.js"
 import { Actions, ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { getChartType } from "../Charts/Charts.js"
 
@@ -17,8 +17,10 @@ import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressb
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 var isExportingPDFNow = false;
-var currentPDFProcess = null;
+var isExportingCSVNow = false;
+//var currentPDFReportId = currentPDFReportId;
 var isExportPdfHitted = false;
+var currentCSVProcess = '';
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -60,7 +62,7 @@ class Grid extends HTMLElement {
 
     }
 
-    
+
     filterAction(e) {
         console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
 
@@ -116,7 +118,7 @@ class Grid extends HTMLElement {
 
     }
     connectedCallback() {
-      
+
         if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
@@ -262,62 +264,81 @@ class Grid extends HTMLElement {
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
 
+            if (currentCSVProcess != folder) {
+                exportConnection.invoke("CancelPdfExport", folder);
 
-            if (this.id !== gridId)
-                return;
+            }
+            if (currentCSVProcess == folder) {
+                /*  if (this.id !== gridId)
+                      return;*/
 
-            if (!this.isExporting) {
-                this.csvExportId = folder;
-                this.isExporting = true;
+                if (!this.isExporting) {
+                    this.csvExportId = folder;
+                    this.isExporting = true;
+                }
+
+                var progressBar = document.getElementById(this.id + "Progress");
+                if (progressBar.hidden)
+                    progressBar.hidden = false;
+
+                var reminder = ((100 - progress) * this.total) / 100;
+                console.log(reminder)
+                console.log(folder, progress)
+
+                progressBar.value = parseFloat(progress.toFixed(2));
+                if (progress >= 100) {//|| reminder <= 100
+                    progressBar.hidden = true;
+                    var downloadButton = document.getElementById("ExportDownloadBtn");
+                    downloadButton.style.visibility = "";
+                    this.isExporting = false;
+                    this.isDownloaded = false;
+                    isExportingCSVNow = false;
+                    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+
+                }
             }
 
-            var progressBar = document.getElementById(this.id + "Progress");
-            if (progressBar.hidden)
-                progressBar.hidden = false;
-
-            var reminder = ((100 - progress) * this.total) / 100;
-            console.log(reminder)
-            console.log(folder, progress)
-
-            progressBar.value = parseFloat(progress.toFixed(2));
-            if (progress >= 100) {//|| reminder <= 100
-                progressBar.hidden = true;
-                var downloadButton = document.getElementById("ExportDownloadBtn");
-                downloadButton.style.visibility = "";
-                this.isExporting = false;
-                this.isDownloaded = false;
-            }
         });
         exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
-            if (isExportPdfHitted) {
-                console.log(progress)
-                console.log(exportinProcess)
-                if (!currentPDFProcess) {
-                    currentPDFProcess = exportinProcess
-                }
-                if (new Date(currentPDFProcess) > new Date(exportinProcess)) {
-                    currentPDFProcess = exportinProcess;
-                }
+            console.log("curr", currentPDFReportId)
+            console.log("curr |", currentPDFReportId)
+            console.log("curr | e | P", exportinProcess)
+            if (currentPDFReportId != exportinProcess) {
+                exportConnection.invoke("CancelPdfExport", exportinProcess);
 
-                var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
-
-                if (progress && progress > 0 && progress < 100 && currentPDFProcess == exportinProcess) {
-                    if (pdfProgressBar.hidden) {
-                        pdfProgressBar.hidden = false;
-                        pdfProgressBar.style.visibility = "";
+            }
+            if (currentPDFReportId == exportinProcess) {
+                if (isExportPdfHitted) {
+                    console.log(progress)
+                    console.log(exportinProcess)
+                    if (!currentPDFReportId) {
+                        currentPDFReportId = exportinProcess
                     }
-                    pdfProgressBar.value = parseFloat(progress.toFixed(2));
-                    isExportingPDFNow = true;
-
-
-                } else {
-                    if (!pdfProgressBar.hidden) {
-                        pdfProgressBar.hidden = true;
-                        pdfProgressBar.style.visibility = "hidden";
+                    if (new Date(currentPDFReportId) > new Date(exportinProcess)) {
+                        currentPDFReportId = exportinProcess;
                     }
-                    isExportingPDFNow = false;
+
+                    var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
+
+                    if (progress && progress > 0 && progress < 100 && currentPDFReportId == exportinProcess) {
+                        if (pdfProgressBar.hidden) {
+                            pdfProgressBar.hidden = false;
+                            pdfProgressBar.style.visibility = "";
+                        }
+                        pdfProgressBar.value = parseFloat(progress.toFixed(2));
+                        isExportingPDFNow = true;
+
+
+                    } else {
+                        if (!pdfProgressBar.hidden) {
+                            pdfProgressBar.hidden = true;
+                            pdfProgressBar.style.visibility = "hidden";
+                        }
+                        isExportingPDFNow = false;
+                    }
                 }
             }
+
         });
 
         //beforeLeaveAction();
@@ -542,7 +563,7 @@ class Grid extends HTMLElement {
             //{ name: "customButton1",  },
             //{ name: "customButton2", text: "Custom Button 2" }
 
-            toolbar = ["excel"];
+            //toolbar = ["excel"];
             if (showCsvBtn) {
                 toolbar.push({
                     name: this.gridDiv.id + "csvExport",
@@ -1167,13 +1188,30 @@ class Grid extends HTMLElement {
         });
 
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click(async (e) => {
-            if (!isExportingPDFNow && !this.buttonExportClicked) {
+            if (!isExportingPDFNow /*&& !this.buttonExportClicked*/) {
                 toastObj.icon = 'warning';
                 toastObj.text = "Export PDF is started";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
 
                 isExportPdfHitted = true;
+                isExportingPDFNow = true;
+                if (isExportPdfHitted) {
+
+
+
+
+                    var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
+                    if (pdfProgressBar.hidden) {
+                        pdfProgressBar.hidden = false;
+                        pdfProgressBar.style.visibility = "";
+                    }
+                    pdfProgressBar.value = parseFloat(0);
+
+
+                }
+
+
                 this.buttonExportClicked = true;
                 var filters = grid.dataSource.filter();
                 var total = grid.dataSource.total();
@@ -1484,6 +1522,8 @@ class Grid extends HTMLElement {
         }
 
         this.isExporting = true;
+        isExportingCSVNow = true;
+
         this.isDownloaded = false;
         var grid = $(this.gridDiv).data("kendoGrid");
 
@@ -1521,12 +1561,14 @@ class Grid extends HTMLElement {
         // Typically, the first segment is the controller, and the second is the action
         var controller = pathSegments[0];
         var action = pathSegments[1];
-
-        let exportUrl = `/${controller}/ExportToCsv/` + this.id;
+        var reprtGUID = generateGUID();
+        currentCSVProcess = reprtGUID;
+        var reportGUTURLQuery = "&reportGUID=" + currentCSVProcess;
+        let exportUrl = `/${controller}/ExportToCsv/` + this.id + "?" + reportGUTURLQuery;
 
         if (Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)) {
             let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
-            exportUrl = urlParts[0] + `/${this.id}?` + urlParts[1];
+            exportUrl = urlParts[0] + `/${this.id}?` + urlParts[1] + "" + reportGUTURLQuery;
         }
 
 
@@ -1768,7 +1810,7 @@ class Grid extends HTMLElement {
                 e.returnValue = confirmationMessage; // For older browsers
                 return confirmationMessage;
             }
-            
+
         });
     }
 
@@ -1924,14 +1966,26 @@ window.addEventListener('beforeunload', function (e) {
         e.returnValue = confirmationMessage; // For older browsers
         return confirmationMessage;
     }
-        
+    if (isExportingCSVNow) {
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
+        // Display the confirmation dialog
+        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export CSV?';
+        e.returnValue = confirmationMessage; // For older browsers
+        return confirmationMessage;
     }
+
+}
 
 );
 
 window.addEventListener('unload', function (e) {
-    exportConnection.invoke("CancelPdfExport", currentPDFProcess);
-    //invokeCanclePdfProcessExport(currentPDFProcess)
+    exportConnection.invoke("CancelPdfExport", currentPDFReportId);
+    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+
+    //invokeCanclePdfProcessExport(currentPDFReportId)
     // Your code here to perform an action when the page is closed
     // For example, you can send an AJAX request or perform cleanup tasks
     console.log('Page is being closed.');
