@@ -563,7 +563,7 @@ class Grid extends HTMLElement {
             //{ name: "customButton1",  },
             //{ name: "customButton2", text: "Custom Button 2" }
 
-            toolbar = ["excel"];
+            //toolbar = ["excel"];
             if (showCsvBtn) {
                 toolbar.push({
                     name: this.gridDiv.id + "csvExport",
