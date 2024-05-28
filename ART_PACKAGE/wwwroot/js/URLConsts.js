@@ -127,6 +127,15 @@
     CrpUserPerformance: "/CrpUserPerformance/GetData",
     CRPSummary: "/CRPSummary/GetData",
 
+    //DGINTFRAUD
+    DgamlAchTransaction: "/DgamlAchTransaction/GetData",
+    DgamlAllTransaction: "/DgamlAllTransaction/GetData",
+    DgamlAllTransactionsWithReason: "/DgamlAllTransactionsWithReason/GetData",
+    DgamlCasesTransactionsDetail: "/DgamlCasesTransactionsDetail/GetData",
+    DgamlCrossedLimitTransaction: "/DgamlCrossedLimitTransaction/GetData",
+    DgamlEWalletRepeatedTransaction: "/DgamlEWalletRepeatedTransaction/GetData",
+    DgamlIpnTransaction: "/DgamlIpnTransaction/GetData",
+    DgamlStaffToStaffDailyTransaction: "/DgamlStaffToStaffDailyTransaction/GetData",
 
     //FATCA
     FATCAAlertsDetails: "/FATCAAlertsDetails/GetData",

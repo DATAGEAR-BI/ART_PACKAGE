@@ -31,6 +31,7 @@ using Data.GOAML;
 using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
+using Data.Data.DGINTFRAUD;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -116,6 +117,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("CRP"))
             {
                 _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("DGINTFRAUD"))
+            {
+                _ = services.AddDbContext<DGINTFRAUDContext>(opt => contextBuilder(opt, connectionString));
             }
             if (modulesToApply.Contains("TRADE_BASE"))
             {

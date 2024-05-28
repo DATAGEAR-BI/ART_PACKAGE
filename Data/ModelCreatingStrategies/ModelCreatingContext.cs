@@ -126,5 +126,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnCRPModelCreating(modelBuilder);
         }
+
+        public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGINTFRAUDModelCreating(modelBuilder);
+        }
     }
 }

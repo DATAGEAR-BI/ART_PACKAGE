@@ -17,6 +17,7 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
+using Data.Data.DGINTFRAUD;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -15630,6 +15631,638 @@ namespace Data.ModelCreatingStrategies
         public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
         {
 
+
+        }
+
+        public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("ART");
+
+            modelBuilder.Entity<ArtDgamlAchTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_ACH_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.SenderName)
+                    .HasMaxLength(200)
+                    .HasColumnName("SENDER_NAME");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReason)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_REASON");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlAllTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_ALL_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlAllTransactionsWithReason>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_ALL_TRANSACTIONS_WITH_REASONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.Source)
+                    .IsUnicode(false)
+                    .HasColumnName("SOURCE");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.Title)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlCasesTransactionsDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_CASES_TRANSACTIONS_DETAIL");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.RemitterName)
+                    .HasMaxLength(200)
+                    .HasColumnName("REMITTER_NAME");
+
+                entity.Property(e => e.RemitterNumber)
+                    .HasMaxLength(100)
+                    .HasColumnName("REMITTER_NUMBER");
+
+                entity.Property(e => e.Scenario)
+                    .HasMaxLength(500)
+                    .HasColumnName("SCENARIO");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlCrossedLimitTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_CROSSED_LIMIT_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Limit)
+                    .HasMaxLength(1024)
+                    .HasColumnName("LIMIT");
+
+                entity.Property(e => e.ThresholdCrossing)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("THRESHOLD_CROSSING");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlEWalletRepeatedTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_E_WALLET_REPEATED_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlIpnTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_IPN_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.SenderName)
+                    .HasMaxLength(200)
+                    .HasColumnName("SENDER_NAME");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReason)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_REASON");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
+
+            modelBuilder.Entity<ArtDgamlStaffToStaffDailyTransaction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_STAFF_TO_STAFF_DAILY_TRANSACTIONS");
+
+                entity.Property(e => e.BaseAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("BASE_AMOUNT");
+
+                entity.Property(e => e.BaseCurrency)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BASE_CURRENCY")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Division)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("DIVISION");
+
+                entity.Property(e => e.EmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("EMPLOYEE_NAME");
+
+                entity.Property(e => e.EmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.EquivalentAmount)
+                    .HasColumnType("NUMBER(18,5)")
+                    .HasColumnName("EQUIVALENT_AMOUNT");
+
+                entity.Property(e => e.EquivalentCurrency)
+                    .HasMaxLength(3)
+                    .HasColumnName("EQUIVALENT_CURRENCY");
+
+                entity.Property(e => e.Grad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("GRAD");
+
+                entity.Property(e => e.Job)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB");
+
+                entity.Property(e => e.OtherDepartment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_DEPARTMENT");
+
+                entity.Property(e => e.OtherDivision)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_DIVISION");
+
+                entity.Property(e => e.OtherEmployeeName)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_EMPLOYEE_NAME");
+
+                entity.Property(e => e.OtherEmployeeNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("OTHER_EMPLOYEE_NUMBER");
+
+                entity.Property(e => e.OtherGrad)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_GRAD");
+
+                entity.Property(e => e.OtherJob)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_JOB");
+
+                entity.Property(e => e.OtherStatus)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_STATUS");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(10)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionReference)
+                    .HasMaxLength(50)
+                    .HasColumnName("TRANSACTION_REFERENCE");
+
+                entity.Property(e => e.TransactionType)
+                    .HasMaxLength(100)
+                    .HasColumnName("TRANSACTION_TYPE");
+            });
 
         }
     }

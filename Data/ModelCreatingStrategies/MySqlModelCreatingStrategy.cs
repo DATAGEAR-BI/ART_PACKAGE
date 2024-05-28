@@ -18,7 +18,10 @@ namespace Data.ModelCreatingStrategies
     public class MySqlModelCreatingStrategy : IBaseModelCreatingStrategy
     {
 
-
+        public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
         public void OnModelCreating(ModelBuilder modelBuilder)
         {
 
