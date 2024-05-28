@@ -11,6 +11,7 @@ on:
     branches:
       - main
       - ABK 
+  workflow_dispatch:  # Allow manual triggers
 
 jobs:
   build:
