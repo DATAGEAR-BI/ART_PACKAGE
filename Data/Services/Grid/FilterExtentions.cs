@@ -297,6 +297,10 @@ public static class FilterExtensions
             else
             {
                 Type nonNullableType = Nullable.GetUnderlyingType(fieldType) ?? fieldType;
+                if (value is null)
+                {
+                    return Expression.Constant(null, fieldType);
+                }
                 @const = Convert.ChangeType(value, nonNullableType);
             }
 

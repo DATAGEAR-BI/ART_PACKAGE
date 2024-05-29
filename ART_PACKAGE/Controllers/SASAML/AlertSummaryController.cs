@@ -79,6 +79,16 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Val = "ALERTS_COUNT",
                     Type = ChartType.bar
 
+                },
+                  new ChartData<ArtStAmlAlertsPerScenario>
+                {
+                    ChartId = "StAmlAlertsPerScenario",
+                    Data = chart3data.ToList(),
+                    Title = "Alerts Per Scenario",
+                    Cat = "SCENARIO_NAME",
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.bar
+
                 }
             };
 
