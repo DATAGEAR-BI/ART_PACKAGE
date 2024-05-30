@@ -66,5 +66,9 @@
         public static readonly string ART_ST_FATCA_CUSTS_PER_NATION = "[ART_DB].[ART_ST_FATCA_CUSTS_PER_NATION]";
         public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "[ART_DB].[ART_ST_FATCA_CASES_PER_STATUS]";
 
+        //DGINTFRAUD
+        public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY = "";
+        public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_AMOUNT_VS_DIVISION = "";
+        public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED = "";
     }
 }

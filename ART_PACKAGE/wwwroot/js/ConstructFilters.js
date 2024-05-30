@@ -38,6 +38,7 @@ class ExternalFilter extends HTMLElement {
             },
             conditions: ["AND"],
             allow_groups: false,
+            allow_empty: true,
             operators: ['equal', 'in']
         });
 
@@ -254,16 +255,21 @@ function callDefinedCharts(url) {
                 $(".spinner").remove();
                 return;
             }
-            
+          
             let type = getChartType(c.Type);
             chart = document.createElement(type);
             chart.dataset.value = c.Val;
             chart.dataset.title = c.Title;
+            if (c.LeggendLabelTemplate) {
+                chart.dataset.leggendLabelTemplate = c.LeggendLabelTemplate;
+            }
             chart.dataset.category = c.Cat;
             chart.id = c.ChartId;
             chart.style.height = "700px"
+            chart.style.marginBottom = "3%"
             chart.classList.add("col-sm-12", "col-md-12", "col-xs-12");
             charts.appendChild(chart);
+            
             
 
         });

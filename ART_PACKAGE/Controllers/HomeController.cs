@@ -2,8 +2,9 @@
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
+using Fraud = Data.Data.DGINTFRAUD;
 using Data.Data.ECM;
-using Data.Data.SASAml;
+using SasAml = Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -18,7 +19,8 @@ namespace ART_PACKAGE.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDbService _dbSrv;
         private readonly EcmContext _db;
-        private readonly SasAmlContext _dbAml;
+        private readonly SasAml.SasAmlContext _dbAml;
+        private readonly Fraud.DGINTFRAUDContext _dbFraud;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
@@ -39,7 +41,7 @@ namespace ART_PACKAGE.Controllers
                 if (modules.Contains("SASAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
-                    SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                   SasAml.SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAml.SasAmlContext>();
                     _dbAml = amlService;
                 }
                 if (modules.Contains("ECM"))
@@ -53,6 +55,12 @@ namespace ART_PACKAGE.Controllers
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                     _dgaml = dgamlService;
+                }
+                if (modules.Contains("DGINTFRAUD"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    Fraud.DGINTFRAUDContext fraudService = scope.ServiceProvider.GetRequiredService<Fraud.DGINTFRAUDContext>();
+                    _dbFraud = fraudService;
                 }
 
             }
@@ -153,7 +161,28 @@ namespace ART_PACKAGE.Controllers
                     })
                 });
 
-                DbSet<ArtHomeAlertsPerStatus> alertsPerStatus = _dbAml.ArtHomeAlertsPerStatuses;
+                DbSet<SasAml.ArtHomeAlertsPerStatus> alertsPerStatus = _dbAml.ArtHomeAlertsPerStatuses;
+
+                return Ok(new
+                {
+                    dates = dateData,
+                    statuses = alertsPerStatus
+                });
+            }
+            else if (modules.Contains("DGINTFRAUD"))
+            {
+                var dateData = _dbFraud.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+                {
+                    year = x.Key.ToString(),
+                    value = x.Sum(x => x.NumberOfAlerts),
+                    monthData = x.GroupBy(m => m.Month).Select(m => new
+                    {
+                        Month = m.Key.ToString(),
+                        value = m.Sum(x => x.NumberOfAlerts)
+                    })
+                });
+
+                DbSet<Fraud.ArtHomeAlertsPerStatus> alertsPerStatus = _dbFraud.ArtHomeAlertsPerStatuses;
 
                 return Ok(new
                 {

@@ -932,19 +932,26 @@ class DonutChart extends BaseCatValChart{
         var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
         pieSeries.dataFields.value = this.chartValue;
         pieSeries.dataFields.category = this.chartCategory; // Disable ticks and labels
+      //  pieSeries.labels.template.text = "Cased Trans , {category}: Trans Count , {value}";
         // Disable ticks and labels
         pieSeries.labels.template.disabled = true;
         pieSeries.ticks.template.disabled = true;
         pieSeries.colors.step = 2;
 
-
+        
         this.chart.innerRadius = am4core.percent(40);
         this.chart.legend = new am4charts.Legend();
         this.chart.legend.maxHeight = 600;
         this.chart.legend.maxWidth = 300;
         this.chart.legend.scrollable = true;
         this.chart.legend.position = "bottom"; 
+        if (this.dataset.leggendLabelTemplate) {
+            this.chart.legend.labels.template.text = this.dataset.leggendLabelTemplate;
+        } else {
+
         this.chart.legend.labels.template.text = "{name} : ({value})";
+        }
+        //this.chart.legend.labels.template.text ="Cased Trans , {name}: Trans Count , {value}";
         this.makeTitle();
         this.makeExportMenu();
         setTimeout(() => {

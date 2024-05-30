@@ -53,8 +53,11 @@
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
 
+        //DGINTFRAUD
 
-
+        public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY = "ART.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY";
+        public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_AMOUNT_VS_DIVISION = "ART.ART_ST_DGAML_ALL_TRANSACTIONS_AMOUNT_VS_DIVISION";
+        public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED = "ART.ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED";
 
     }
 }

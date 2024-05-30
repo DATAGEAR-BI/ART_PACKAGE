@@ -6,18 +6,18 @@ using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
-using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.FATCA;
 using Data.DGECM;
-using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
+using Data.Data.SASAml;
 using Data.Data.DGINTFRAUD;
+
 
 namespace Data.ModelCreatingStrategies
 {
@@ -2163,7 +2163,7 @@ namespace Data.ModelCreatingStrategies
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
         {
             //AML
-            modelBuilder.Entity<ArtHomeAlertsPerDate>(entity =>
+            modelBuilder.Entity<Data.SASAml.ArtHomeAlertsPerDate>(entity =>
             {
                 entity.HasNoKey();
 
@@ -2186,7 +2186,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("YEAR");
             });
 
-            modelBuilder.Entity<ArtHomeAlertsPerStatus>(entity =>
+            modelBuilder.Entity<Data.SASAml.ArtHomeAlertsPerStatus>(entity =>
             {
                 entity.HasNoKey();
 
@@ -15637,6 +15637,41 @@ namespace Data.ModelCreatingStrategies
         public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ART");
+            modelBuilder.Entity<Data.DGINTFRAUD.ArtHomeAlertsPerDate >(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_ALERTS_PER_DATE".ToUpper(), "ART");
+
+                entity.Property(e => e.Month).HasMaxLength(4000);
+
+                entity.Property(e => e.NumberOfAlerts).HasColumnName("Number_Of_ALerts".ToUpper());
+                entity.Property(e => e.Day)
+                   .HasColumnName("DAY");
+
+                entity.Property(e => e.Month)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NumberOfAlerts)
+                    .HasColumnName("NUMBER_OF_ALERTS");
+                entity.Property(e => e.Year)
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<Data.DGINTFRAUD.ArtHomeAlertsPerStatus>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_ALERTS_PER_STATUS".ToUpper(), "ART");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(100)
+                    .HasColumnName("ALERT_STATUS");
+                entity.Property(e => e.Year).HasColumnName("Year".ToUpper());
+                entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count".ToUpper());
+            });
 
             modelBuilder.Entity<ArtDgamlAchTransaction>(entity =>
             {

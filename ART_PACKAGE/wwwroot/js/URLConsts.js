@@ -136,6 +136,8 @@
     DgamlEWalletRepeatedTransaction: "/DgamlEWalletRepeatedTransaction/GetData",
     DgamlIpnTransaction: "/DgamlIpnTransaction/GetData",
     DgamlStaffToStaffDailyTransaction: "/DgamlStaffToStaffDailyTransaction/GetData",
+    EmpSummaryPerMonth:"/EmpSummaryPerMonth/GetData",
+    EmpSummary:"/EmpSummary/GetData",
 
     //FATCA
     FATCAAlertsDetails: "/FATCAAlertsDetails/GetData",

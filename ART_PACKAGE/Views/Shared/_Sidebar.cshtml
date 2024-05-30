@@ -660,7 +660,61 @@
                             </li>
 
                         }
+                        @if (Modules.Contains("DGINTFRAUD"))
+                        {
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i> <span>Internal Fraud Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Cases Trans Summary</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "EmpSummaryPerMonth")"><i class="glyphicon glyphicon-tasks"></i> <span>Emp Summary Per Month</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "EmpSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Emp Summary</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlAchTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>Ach Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlAllTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>All Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlAllTransactionsWithReason")"><i class="glyphicon glyphicon-tasks"></i> <span>All Transactions With Reason</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlCasesTransactionsDetail")"><i class="glyphicon glyphicon-tasks"></i> <span>Cases Transactions Detail</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlCrossedLimitTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>Crossed Limit Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlEWalletRepeatedTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>EWallet Repeated Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlIpnTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>Ipn Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "DgamlStaffToStaffDailyTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>Staff To Staff Daily Transaction</span></a>
+                                    </li>
 
+                                </ul>
+                            </li>
+
+                        }
                         @if (Modules.Contains("FATCA"))
                         {
                             <li class="treeview  ">

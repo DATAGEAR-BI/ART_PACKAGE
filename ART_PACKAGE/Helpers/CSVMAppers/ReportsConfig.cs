@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Controllers.CRP;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
+using ART_PACKAGE.Controllers.DGINTFRAUD;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
@@ -10,6 +11,7 @@ using ART_PACKAGE.Controllers.TRADE_BASE;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Data.ARTDGAML;
 using Data.Data.Audit;
+using Data.Data.DGINTFRAUD;
 using Data.Data.ECM;
 using Data.Data.TRADE_BASE;
 using Data.Services.Grid;
@@ -21,6 +23,21 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
+            { nameof(ArtDgamlCasesTransactions).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                { "Employee_Number", new GridColumnConfiguration { DisplayName = "Employee Number (CIF)" } },
+                { "Employee_Name", new GridColumnConfiguration { DisplayName = "Employee Name" } },
+                { "Month", new GridColumnConfiguration { DisplayName = "Transaction Month" } },
+                { "Amount", new GridColumnConfiguration { DisplayName = "Transactions Amounts" } },
+                { "Count", new GridColumnConfiguration { DisplayName = "Transactions Count" } },
+                { "Alerts_Count", new GridColumnConfiguration { DisplayName = "Total Number Of Alerts" } },
+                { "Closed_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Closed Cases" } },
+                { "Cases_Count", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } }
+                }
+    }
+},
 
             //ECM
             { nameof(AlertDetailsController).ToLower(), new ReportConfig {

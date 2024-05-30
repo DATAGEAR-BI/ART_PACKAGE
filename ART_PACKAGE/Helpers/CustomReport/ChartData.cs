@@ -8,6 +8,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         public string Cat { get; set; }
         public string Val { get; set; }
         public string Title { get; set; }
+        public string? LeggendLabelTemplate { get; set; }
         public List<T> Data { get; set; }
 
         public ChartType Type { get; set; }

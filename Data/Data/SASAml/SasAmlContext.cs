@@ -1,5 +1,4 @@
 ﻿using Data.Data.ARTDGAML;
-using Data.FCF71;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 using System.Data;

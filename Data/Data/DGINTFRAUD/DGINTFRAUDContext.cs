@@ -16,7 +16,9 @@ namespace Data.Data.DGINTFRAUD
             : base(options)
         {
         }
+        public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
 
+        public virtual DbSet<ArtHomeAlertsPerStatus> ArtHomeAlertsPerStatuses { get; set; } = null!;
         public virtual DbSet<ArtDgamlAchTransaction> ArtDgamlAchTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlAllTransaction> ArtDgamlAllTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlAllTransactionsWithReason> ArtDgamlAllTransactionsWithReasons { get; set; } = null!;
@@ -29,6 +31,10 @@ namespace Data.Data.DGINTFRAUD
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ArtDgamlCasesTransactions>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgamlAllTransAmountVsDivision>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgamlAllTransVsCased>().HasNoKey().ToView(null);
+
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnDGINTFRAUDModelCreating(modelBuilder);
         }

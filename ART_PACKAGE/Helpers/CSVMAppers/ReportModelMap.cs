@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Controllers.AML_ANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
+using ART_PACKAGE.Controllers.DGINTFRAUD;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
@@ -10,6 +11,7 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.DGINTFRAUD;
 using Data.Data.ECM;
 
 using Data.Data.FTI;
@@ -129,6 +131,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           { nameof(AML_ANALYSISController).ToLower() ,                                   new List<Type>{ typeof(ArtAmlAnalysisViewTb)  , typeof(ArtAmlAnalysisRule) } }     ,
 
 
+          //DGINTFRAUD
+          { nameof(DgamlCasesTransactionsDetailController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCasesTransactionsDetail) } }     ,
+          { nameof(DgamlAchTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAchTransaction) } }     ,
+          { nameof(DgamlAllTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransaction) } }     ,
+          { nameof(DgamlAllTransactionsWithReasonController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransactionsWithReason) } }     ,
+          { nameof(DgamlCrossedLimitTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCrossedLimitTransaction) } }     ,
+          { nameof(DgamlEWalletRepeatedTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlEWalletRepeatedTransaction) } }     ,
+          { nameof(DgamlIpnTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlIpnTransaction) } }     ,
+          { nameof(DgamlStaffToStaffDailyTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlStaffToStaffDailyTransaction) } }     ,
           //TASK_SCHEDULER
 
         };

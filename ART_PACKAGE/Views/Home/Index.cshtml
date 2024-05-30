@@ -16,7 +16,7 @@
 }
 else
 {
-    @if (!modules.Contains("SASAML") && !modules.Contains("ECM") && !modules.Contains("DGAML"))
+    @if (!modules.Contains("SASAML") && !modules.Contains("ECM") && !modules.Contains("DGAML") && !modules.Contains("DGINTFRAUD"))
     {
         <h1> You Dont Have ECM OR SASAML Modules in the app </h1>
     }
@@ -31,7 +31,7 @@ else
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/kelly.js"></script>
     <script type="module" src="~/js/Components/Charts/Charts.js"></script>
 
-    @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
+    @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML") || modules.Contains("DGINTFRAUD")))
             {
                 <script src="~/js/amlhome.js" type="module" defer></script>
             }
@@ -42,7 +42,7 @@ else
             }
 
 }
-        @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
+        @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML") || modules.Contains("DGINTFRAUD")))
         {
 
             <section class="content-header">
