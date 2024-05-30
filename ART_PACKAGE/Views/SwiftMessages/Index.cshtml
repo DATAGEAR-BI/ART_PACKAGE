@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+
+<section class="content-header">
+    <h1>
+        Swift Messages Report
+        <small>This report presents all Swift Messages as below</small>
+    </h1>
+</section>
+
+<m-grid id="SwiftMessages" data-urlkey="SwiftMessages" data-handlerkey="SwiftMessages"></m-grid>
+
+@*<div id="grid"></div>*@
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+    @*<script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="SwiftMessages"></script>*@
+}
+
+

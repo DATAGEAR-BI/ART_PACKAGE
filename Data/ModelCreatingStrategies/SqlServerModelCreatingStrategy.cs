@@ -2046,6 +2046,124 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("SOURCE_TYPE");
             });
+
+            //only for MIDB
+            #region ONLY For MIDB
+            modelBuilder.Entity<MakerCheckerPerformanceView>(entity =>
+            {
+                entity.ToView("MAKER_CHECKER_PERFORMANCE_VIEW", "ART_DB");
+                entity.HasNoKey();  // Use if the view does not have a primary key
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnName("CASE_ID")
+                    .HasMaxLength(128)
+                    .IsRequired();
+                entity.Property(e => e.CaseTypeCd)
+                            .HasColumnName("CASE_TYPE_CD")
+                            .HasMaxLength(64)
+                            .IsRequired(false); // Ensure this matches your DB schema
+
+                entity.Property(e => e.Program)
+                    .HasColumnName("Program")
+                    .HasMaxLength(200)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.NewState)
+                    .HasColumnName("NEW_STATE")
+                    .HasMaxLength(512)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CaseUser)
+                    .HasColumnName("CASE_USER")
+                    .HasMaxLength(120)
+                    .IsRequired(false);
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("Status")
+                    .HasMaxLength(7)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NewCaseStatus)
+                    .HasColumnName("NEW_CASE_STATUS")
+                    .HasMaxLength(8000)
+                    .IsRequired(false);
+
+                entity.Property(e => e.ReleasedDate)
+                    .HasColumnName("RELEASED_DATE");
+            });
+
+            // Configure ArtSwiftMessagesView
+            modelBuilder.Entity<ArtSwiftMessagesView>(entity =>
+            {
+                entity.ToView("ART_SWIFT_MESSAGES_VIEW", "ART_DB");
+                entity.HasNoKey();  // Use if the view does not have a primary key
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnName("CASE_ID")
+                    .HasMaxLength(128)
+                    .IsRequired();
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasColumnName("CREATE_USER_ID")
+                    .HasMaxLength(120)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnName("CASE_STATUS")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Direction)
+                    .HasColumnName("DIRECTION")
+                    .HasMaxLength(6).IsRequired(false);
+
+                entity.Property(e => e.SwiftMessage)
+                    .HasColumnName("SWIFT_MESSAGE").IsRequired(false)
+                   /* .HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.IncidentsCount)
+                    .HasColumnName("INCIDENTS_COUNT")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.IncidentId)
+                    .HasColumnName("Incident_ID").IsRequired(false)
+                   /* .HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.IncidentName)
+                    .HasColumnName("Incident_Name").IsRequired(false)
+                    /*.HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.Sender)
+                    .HasColumnName("Sender")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Receiver)
+                    .HasColumnName("Receiver")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.TransType)
+                    .HasColumnName("Trans_Type")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.TransAmount)
+                    .HasColumnName("Trans_Amount")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Maker)
+                    .HasColumnName("Maker")
+                    .HasMaxLength(120).IsRequired(false);
+
+                entity.Property(e => e.Checker)
+                    .HasColumnName("Checker")
+                    .HasMaxLength(120).IsRequired(false);
+            });
+
+            #endregion
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)

@@ -9,6 +9,7 @@
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION_USER]";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_ACTION]";
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION]";
+        public static readonly string ST_MAKER_CHECKER_PERFORMANCE_SUMMARY = "[ART_DB].[ART_ST_MAKER_CHECKER_PERFORMANCE_SUMMARY]";
 
         //AML
         public static readonly string ART_ST_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";

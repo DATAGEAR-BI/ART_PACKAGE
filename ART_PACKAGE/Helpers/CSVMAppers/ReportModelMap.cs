@@ -90,6 +90,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             //ECM
            { nameof(SystemPerformanceController).ToLower() , new List<Type>{ typeof(ArtSystemPerformance) } }     ,
            { nameof(UserPerformanceController).ToLower()  ,new List<Type>{ typeof(ArtUserPerformance) } }     ,
+           { nameof(SwiftMessagesController).ToLower()  ,new List<Type>{ typeof(ArtSwiftMessagesView) } }     ,
+           { nameof(MakerCheckerPerformenceDetailController).ToLower()  ,new List<Type>{ typeof(MakerCheckerPerformanceView) } }     ,
 
 
 

@@ -85,8 +85,36 @@
 @*                                    <li class="active ">
                                         <a href="@Url.Action("Index", "CFTConfig")"><i class="glyphicon glyphicon-globe"></i> <span>CFT Config</span></a>
                                     </li>*@
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Maker Checker Performance</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            @*<li class="active ">
+                                    <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                    </li>*@
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "MakerCheckerPerformenceDetail")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                            @* <li class="active ">
+                                    <a href="@Url.Action("Index", "UserPerformPerAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action</span></a>
+                                    </li>
+                                    <li class="active ">
+                                    <a href="@Url.Action("Index", "UserPerformancePerActionUser")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action User</span></a>
+                                    </li>*@
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "MakerCheckerPerformenceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="active ">
                                         <a href="@Url.Action("Index", "ClearDetect")"><i class="glyphicon glyphicon-globe"></i> <span>Clear Detect</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SwiftMessages")"><i class="glyphicon glyphicon-globe"></i> <span>Swift Messages</span></a>
                                     </li>
                                    @* <li class="active ">
                                         <a href="@Url.Action("Index", "AlertedEntities")"><i class="glyphicon glyphicon-tasks"></i> <span>Alerted Entities</span></a>

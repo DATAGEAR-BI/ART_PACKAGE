@@ -141,6 +141,10 @@
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
-    test:"Test/GetData"
+    test: "Test/GetData",
+
+    MakerChecker: "/MakerCheckerPerformenceDetail/GetData",
+    MakerCheckerPerformenceSummary: "/MakerCheckerPerformenceSummary/GetData",
+    SwiftMessages: "/SwiftMessages/GetData",
 
 };
