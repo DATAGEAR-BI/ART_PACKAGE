@@ -15632,5 +15632,9 @@ namespace Data.ModelCreatingStrategies
 
 
         }
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
