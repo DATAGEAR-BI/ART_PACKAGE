@@ -130,5 +130,11 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnSasAuditModelCreating(modelBuilder);
         }
+
+        public void OnDGSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGSasAuditModelCreating(modelBuilder);
+
+        }
     }
 }

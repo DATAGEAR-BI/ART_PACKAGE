@@ -1,10 +1,12 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
+using Data.DGSASAUDIT;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -27,6 +29,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }
+        public SASAUDITContext SasAudit { get; }
+        public DGSASAUDITContext DGSasAudit { get; }
 
     }
 }

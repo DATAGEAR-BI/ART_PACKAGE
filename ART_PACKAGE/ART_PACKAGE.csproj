@@ -191,7 +191,6 @@
 		<Compile Remove="Controllers\SASAUDIT\SASAuditListAppController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailAccessGroupRoleController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailAccessRoleController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailActionController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailGroupsRolesSummaryController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailLastLoginController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersCreationLastLoginController.cs" />
@@ -2489,7 +2488,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\SASAUDIT\" />
 		<Folder Include="Extentions\NewFolder\" />
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />

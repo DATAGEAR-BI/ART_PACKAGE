@@ -1,10 +1,12 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
+using Data.DGSASAUDIT;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -81,6 +83,12 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
+                if (modules.Contains("SASAUDIT"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    DGSASAUDITContext sasAuditService = scope.ServiceProvider.GetRequiredService<DGSASAUDITContext>();
+                    DGSasAudit = sasAuditService;
+                }
             }
         }
 
@@ -100,6 +108,8 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
+        public SASAUDITContext SasAudit { get; }
+        public DGSASAUDITContext DGSasAudit { get; }
 
     }
 }

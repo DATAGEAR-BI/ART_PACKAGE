@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data.SASAUDIT
+namespace Data.DGSASAUDIT
 {
-    public partial class VaLicensedView
+    public partial class VaLicensed
     {
         public string? AppLebal { get; set; }
         public string? BeginDate { get; set; }
         public string? ProType { get; set; }
         public string? Fmtname { get; set; }
         public string? ProStart { get; set; }
-        public DateTime? Diedate { get; set; }
+        public string? Diedate { get; set; }
     }
 }

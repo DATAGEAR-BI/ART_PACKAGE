@@ -7922,5 +7922,10 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+
+        public void OnDGSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

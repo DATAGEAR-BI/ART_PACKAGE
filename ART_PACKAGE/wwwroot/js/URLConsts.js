@@ -147,4 +147,7 @@
     MakerCheckerPerformenceSummary: "/MakerCheckerPerformenceSummary/GetData",
     SwiftMessages: "/SwiftMessages/GetData",
 
+
+    //SASAUDIT
+    SASAuditTrailAction: "/SASAuditTrailAction/GetData"
 };

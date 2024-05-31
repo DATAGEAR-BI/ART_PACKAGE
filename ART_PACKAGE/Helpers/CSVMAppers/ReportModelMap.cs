@@ -6,6 +6,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SASAUDIT;
 using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
@@ -15,6 +16,7 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
@@ -110,7 +112,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           { nameof(AuditGroupsController).ToLower()                        ,              new List<Type>{ typeof(ArtGroupsAuditView) } }     ,
           { nameof(AuditRolesController).ToLower()                         ,              new List<Type>{ typeof(ArtRolesAuditView) } }     ,
 
-
+          //SASAUDIT
+          {nameof(SASAuditTrailActionController).ToLower()                         ,           new List<Type>{ typeof(SasAuditTrailReport) } }     ,
 
 
 
@@ -132,6 +135,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
           //TASK_SCHEDULER
+
+
+
 
         };
 
