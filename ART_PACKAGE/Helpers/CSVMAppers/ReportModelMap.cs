@@ -132,14 +132,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
           //DGINTFRAUD
-          { nameof(DgamlCasesTransactionsDetailController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCasesTransactionsDetail) } }     ,
-          { nameof(DgamlAchTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAchTransaction) } }     ,
-          { nameof(DgamlAllTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransaction) } }     ,
-          { nameof(DgamlAllTransactionsWithReasonController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransactionsWithReason) } }     ,
-          { nameof(DgamlCrossedLimitTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCrossedLimitTransaction) } }     ,
-          { nameof(DgamlEWalletRepeatedTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlEWalletRepeatedTransaction) } }     ,
-          { nameof(DgamlIpnTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlIpnTransaction) } }     ,
-          { nameof(DgamlStaffToStaffDailyTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlStaffToStaffDailyTransaction) } }     ,
+          { nameof(CasesTransactionsDetailController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCasesTransactionsDetail) } }     ,
+          { nameof(AchTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAchTransaction) } }     ,
+          { nameof(AllTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransaction) } }     ,
+          { nameof(AllTransactionsWithReasonController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransactionsWithReason) } }     ,
+          { nameof(CrossedLimitTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCrossedLimitTransaction) } }     ,
+          { nameof(EWalletRepeatedTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlEWalletRepeatedTransaction) } }     ,
+          { nameof(IpnTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlIpnTransaction) } }     ,
+          { nameof(StaffToStaffDailyTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlStaffToStaffDailyTransaction) } }     ,
           //TASK_SCHEDULER
 
         };

@@ -70,5 +70,6 @@
         public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY = "";
         public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_AMOUNT_VS_DIVISION = "";
         public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED = "";
+        public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL = "";
     }
 }

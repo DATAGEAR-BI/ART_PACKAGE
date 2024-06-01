@@ -22,7 +22,6 @@ namespace Data.Data.DGINTFRAUD
         public virtual DbSet<ArtDgamlAchTransaction> ArtDgamlAchTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlAllTransaction> ArtDgamlAllTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlAllTransactionsWithReason> ArtDgamlAllTransactionsWithReasons { get; set; } = null!;
-        public virtual DbSet<ArtDgamlCasesTransactionsDetail> ArtDgamlCasesTransactionsDetails { get; set; } = null!;
         public virtual DbSet<ArtDgamlCrossedLimitTransaction> ArtDgamlCrossedLimitTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlEWalletRepeatedTransaction> ArtDgamlEWalletRepeatedTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlIpnTransaction> ArtDgamlIpnTransactions { get; set; } = null!;
@@ -34,6 +33,7 @@ namespace Data.Data.DGINTFRAUD
             modelBuilder.Entity<ArtDgamlCasesTransactions>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgamlAllTransAmountVsDivision>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgamlAllTransVsCased>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgamlCasesTransactionsDetail>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnDGINTFRAUDModelCreating(modelBuilder);

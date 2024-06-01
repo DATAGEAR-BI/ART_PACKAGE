@@ -128,14 +128,14 @@
     CRPSummary: "/CRPSummary/GetData",
 
     //DGINTFRAUD
-    DgamlAchTransaction: "/DgamlAchTransaction/GetData",
-    DgamlAllTransaction: "/DgamlAllTransaction/GetData",
-    DgamlAllTransactionsWithReason: "/DgamlAllTransactionsWithReason/GetData",
-    DgamlCasesTransactionsDetail: "/DgamlCasesTransactionsDetail/GetData",
-    DgamlCrossedLimitTransaction: "/DgamlCrossedLimitTransaction/GetData",
-    DgamlEWalletRepeatedTransaction: "/DgamlEWalletRepeatedTransaction/GetData",
-    DgamlIpnTransaction: "/DgamlIpnTransaction/GetData",
-    DgamlStaffToStaffDailyTransaction: "/DgamlStaffToStaffDailyTransaction/GetData",
+    AchTransaction: "/AchTransaction/GetData",
+    AllTransaction: "/AllTransaction/GetData",
+    AllTransactionsWithReason: "/AllTransactionsWithReason/GetData",
+    CasesTransactionsDetail: "/CasesTransactionsDetail/GetData",
+    CrossedLimitTransaction: "/CrossedLimitTransaction/GetData",
+    EWalletRepeatedTransaction: "/EWalletRepeatedTransaction/GetData",
+    IpnTransaction: "/IpnTransaction/GetData",
+    StaffToStaffDailyTransaction: "/StaffToStaffDailyTransaction/GetData",
     EmpSummaryPerMonth:"/EmpSummaryPerMonth/GetData",
     EmpSummary:"/EmpSummary/GetData",
 

@@ -11,10 +11,8 @@ using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.DGINTFRAUD
 {
-    //[Authorize(Roles = "EmpSummaryPerMonth")]
-    public class EmpSummaryPerMonthController : Controller//BaseReportController<IGridConstructor<IBaseRepo<DGINTFRAUDContext, ArtDgamlCasesTransactions>, DGINTFRAUDContext, ArtDgamlCasesTransactions>, IBaseRepo<DGINTFRAUDContext, ArtDgamlCasesTransactions>, DGINTFRAUDContext, ArtDgamlCasesTransactions>
+    public class CasesTransactionsDetailController : Controller //BaseReportController<IGridConstructor<IBaseRepo<DGINTFRAUDContext, ArtDgamlCasesTransactionsDetail>, DGINTFRAUDContext, ArtDgamlCasesTransactionsDetail>, IBaseRepo<DGINTFRAUDContext, ArtDgamlCasesTransactionsDetail>, DGINTFRAUDContext, ArtDgamlCasesTransactionsDetail>
     {
-
         private readonly IMemoryCache _cache;
         private readonly DGINTFRAUDContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
@@ -24,7 +22,7 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
 
 
 
-        public EmpSummaryPerMonthController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, DGINTFRAUDContext context, IConfiguration config)
+        public CasesTransactionsDetailController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, DGINTFRAUDContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
@@ -36,23 +34,23 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgamlCasesTransactions> data = Enumerable.Empty<ArtDgamlCasesTransactions>().AsQueryable();
+            IEnumerable<ArtDgamlCasesTransactionsDetail> data = Enumerable.Empty<ArtDgamlCasesTransactionsDetail>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
 
-            KendoDataDesc<ArtDgamlCasesTransactions> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtDgamlCasesTransactionsDetail> Data = data.AsQueryable().CallData(para.req);
 
 
             var result = new
@@ -60,7 +58,7 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                reportname = "Cases Transactions Summary"
+                reportname = "Cases Transactions Detail"
             };
             return new ContentResult
             {
@@ -82,20 +80,20 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgamlCasesTransactions> data = Enumerable.Empty<ArtDgamlCasesTransactions>().AsQueryable();
+            IEnumerable<ArtDgamlCasesTransactionsDetail> data = Enumerable.Empty<ArtDgamlCasesTransactionsDetail>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
@@ -103,26 +101,27 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgamlCasesTransactions> data = Enumerable.Empty<ArtDgamlCasesTransactions>().AsQueryable();
+            IEnumerable<ArtDgamlCasesTransactionsDetail> data = Enumerable.Empty<ArtDgamlCasesTransactionsDetail>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(SQLSERVERSPNames.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(ORACLESPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgamlCasesTransactions>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_SUMMARY, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgamlCasesTransactionsDetail>(MYSQLSPName.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL, summaryParams.ToArray());
             }
-            ViewData["title"] = "Emp Summary Per Month";
-            ViewData["desc"] = "";
+            ViewData["title"] = "Cases Transactions Detail";
+            ViewData["desc"] = "Presents all credit transactions for specific staff for only created cases with the related information as below";
             byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
         }
+
     }
 }

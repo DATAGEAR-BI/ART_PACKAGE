@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+<section class="content-header">
+    <h1>
+        Staff To Staff Daily Transaction
+        <small>presents all credit transactions for only staff to staff and for only 6 months (i.e. from system date to 6 months back) with the related information as below.</small>
+        <br />
+    </h1>
+</section>
+
+
+<m-grid id="StaffToStaffDailyTransaction" data-urlkey="StaffToStaffDailyTransaction" data-handlerkey="StaffToStaffDailyTransaction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}

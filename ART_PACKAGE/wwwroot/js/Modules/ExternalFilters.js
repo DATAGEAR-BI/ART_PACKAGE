@@ -362,6 +362,19 @@ export const Filters = {
 
         ]
     },
+    CasesTransactionsDetail: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "customer_number", field: "customer_number", label: "Customer Number", operators: ['equal'], type: "string" },
+
+            ]
+        },
+        rules: [
+            { id: "customer_number", field: "customer_number", label: "Customer Number", type: "string", operator: "equal", value: "0" },
+
+        ]
+    }
 }
 
 

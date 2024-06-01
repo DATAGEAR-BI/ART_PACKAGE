@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+<section class="content-header">
+    <h1>
+        Crossed Limit Transaction
+        <small>Presents all credit crossed limit transactions on staff level for only 3 months which are related to alarm (i.e. from system date to 3 months back) with the related information as below</small>
+        <br />
+    </h1>
+</section>
+
+
+<m-grid id="CrossedLimitTransaction" data-urlkey="CrossedLimitTransaction" data-handlerkey="CrossedLimitTransaction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}

@@ -38,6 +38,32 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
     }
 },
+             { nameof(ArtDgamlCasesTransactionsDetail).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                { "Employee_Number", new GridColumnConfiguration { DisplayName = "Employee Number" } },
+                { "Employee_Name", new GridColumnConfiguration { DisplayName = "Employee Name" } },
+                { "Department", new GridColumnConfiguration { DisplayName = "Department" } },
+                { "Division", new GridColumnConfiguration { DisplayName = "Division" } },
+                { "Job", new GridColumnConfiguration { DisplayName = "Job" } },
+                { "Grad", new GridColumnConfiguration { DisplayName = "Grad" } },
+                { "Status", new GridColumnConfiguration { DisplayName = "Status" } },
+                { "Transaction_Reference", new GridColumnConfiguration { DisplayName = "Transaction Reference" } },
+                { "Transaction_Date", new GridColumnConfiguration { DisplayName = "Transaction Date" } },
+                { "Transaction_Type", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
+                { "Base_Amount", new GridColumnConfiguration { DisplayName = "Base Amount" } },
+                { "Base_Currency", new GridColumnConfiguration { DisplayName = "Base Currency" } },
+                { "Equivalent_Amount", new GridColumnConfiguration { DisplayName = "Equivalent Amount" } },
+                { "Equivalent_Currency", new GridColumnConfiguration { DisplayName = "Equivalent Currency" } },
+                { "case_id", new GridColumnConfiguration { DisplayName = "Case ID" } },
+                { "Case_Status", new GridColumnConfiguration { DisplayName = "Case Status" } },
+                { "Scenario", new GridColumnConfiguration { DisplayName = "Scenario" } },
+                { "Remitter_Name", new GridColumnConfiguration { DisplayName = "Remitter Name" } },
+                { "Remitter_Number", new GridColumnConfiguration { DisplayName = "Remitter Number" } },
+                }
+    }
+},
 
             //ECM
             { nameof(AlertDetailsController).ToLower(), new ReportConfig {
