@@ -32,7 +32,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         };
 
             ReportTitle = "ACH Transaction";
-            ReportDescription = "presents all ACH transactions for only staff with the related information as below";
+            ReportDescription = "Presents all ACH transactions (trans_type_key in (530, 532, 533, 534, 537, 893, 926, 89, 11001, 11002, 11003, 11008)) for only staff with the related information as below";
 
 
 

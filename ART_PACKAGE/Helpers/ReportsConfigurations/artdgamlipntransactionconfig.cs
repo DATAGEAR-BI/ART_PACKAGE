@@ -33,7 +33,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         };
 
             ReportTitle = "IPN Transaction";
-            ReportDescription = "presents all IPN transactions for only staff with the related information as below";
+            ReportDescription = "Presents all IPN transactions (trans_type_key IN (268, 274, 295, 11006)) for only staff with the related information as below";
 
 
 

@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         };
 
             ReportTitle = "E-Wallet Repeated Transaction";
-            ReportDescription = "presents all E-Wallet transactions for only staff with the related information as below";
+            ReportDescription = "Presents all E-Wallet transactions (trans_type_key in (10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10008, 10009, 10010, 795)) for only staff with the related information as below";
 
 
 
