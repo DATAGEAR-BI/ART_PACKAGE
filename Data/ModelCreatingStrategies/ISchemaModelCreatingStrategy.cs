@@ -16,6 +16,7 @@ namespace Data.ModelCreatingStrategies
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder);
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder);
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder);
+        public void OnDGSasAuditModelCreating(ModelBuilder modelBuilder);
 
 
     }

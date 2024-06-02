@@ -7,11 +7,13 @@ using Data.Data.Audit;
 using Data.Data.CRP;
 using Data.Data.ECM;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
 using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
+using Data.DGSASAUDIT;
 using Data.FCF71;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
@@ -2046,6 +2048,124 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("SOURCE_TYPE");
             });
+
+            //only for MIDB
+            #region ONLY For MIDB
+            modelBuilder.Entity<MakerCheckerPerformanceView>(entity =>
+            {
+                entity.ToView("MAKER_CHECKER_PERFORMANCE_VIEW", "ART_DB");
+                entity.HasNoKey();  // Use if the view does not have a primary key
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnName("CASE_ID")
+                    .HasMaxLength(128)
+                    .IsRequired();
+                entity.Property(e => e.CaseTypeCd)
+                            .HasColumnName("CASE_TYPE_CD")
+                            .HasMaxLength(64)
+                            .IsRequired(false); // Ensure this matches your DB schema
+
+                entity.Property(e => e.Program)
+                    .HasColumnName("Program")
+                    .HasMaxLength(200)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.NewState)
+                    .HasColumnName("NEW_STATE")
+                    .HasMaxLength(512)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CaseUser)
+                    .HasColumnName("CASE_USER")
+                    .HasMaxLength(120)
+                    .IsRequired(false);
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("Status")
+                    .HasMaxLength(7)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NewCaseStatus)
+                    .HasColumnName("NEW_CASE_STATUS")
+                    .HasMaxLength(8000)
+                    .IsRequired(false);
+
+                entity.Property(e => e.ReleasedDate)
+                    .HasColumnName("RELEASED_DATE");
+            });
+
+            // Configure ArtSwiftMessagesView
+            modelBuilder.Entity<ArtSwiftMessagesView>(entity =>
+            {
+                entity.ToView("ART_SWIFT_MESSAGES_VIEW", "ART_DB");
+                entity.HasNoKey();  // Use if the view does not have a primary key
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnName("CASE_ID")
+                    .HasMaxLength(128)
+                    .IsRequired();
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasColumnName("CREATE_USER_ID")
+                    .HasMaxLength(120)
+                    .IsRequired(false);
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnName("CASE_STATUS")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Direction)
+                    .HasColumnName("DIRECTION")
+                    .HasMaxLength(6).IsRequired(false);
+
+                entity.Property(e => e.SwiftMessage)
+                    .HasColumnName("SWIFT_MESSAGE").IsRequired(false)
+                   /* .HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.IncidentsCount)
+                    .HasColumnName("INCIDENTS_COUNT")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.IncidentId)
+                    .HasColumnName("Incident_ID").IsRequired(false)
+                   /* .HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.IncidentName)
+                    .HasColumnName("Incident_Name").IsRequired(false)
+                    /*.HasMaxLength(8000)*/;  // Assuming -1 for nvarchar(MAX)
+
+                entity.Property(e => e.Sender)
+                    .HasColumnName("Sender")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Receiver)
+                    .HasColumnName("Receiver")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.TransType)
+                    .HasColumnName("Trans_Type")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.TransAmount)
+                    .HasColumnName("Trans_Amount")
+                    .HasMaxLength(8000).IsRequired(false);
+
+                entity.Property(e => e.Maker)
+                    .HasColumnName("Maker")
+                    .HasMaxLength(120).IsRequired(false);
+
+                entity.Property(e => e.Checker)
+                    .HasColumnName("Checker")
+                    .HasMaxLength(120).IsRequired(false);
+            });
+
+            #endregion
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
@@ -8163,6 +8283,1128 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ENTITY_NUMBER");
 
                 entity.Property(e => e.SuppressedAlert).HasColumnName("SUPPRESSED_ALERT");
+            });
+        }
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SasAuditTrailReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_AUDIT_TRAIL_REPORT", "ART_DB");
+
+                entity.Property(e => e.ActionDate)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_DATE");
+
+                entity.Property(e => e.ActionOn)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_ON");
+
+                entity.Property(e => e.ActionType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_TYPE");
+
+                entity.Property(e => e.DateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DATE_TIME");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.ObjectName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_NAME");
+
+                entity.Property(e => e.ObjectType)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_TYPE");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerProfile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_PROFILE", "ART_DB");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.GroupDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DESCRIPTION");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_NAME");
+
+                entity.Property(e => e.Grouptype)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPTYPE");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_ROLE", "ART_DB");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE");
+
+                entity.Property(e => e.RoleDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DESCRIPTION");
+            });
+
+            modelBuilder.Entity<SasListAccessUsersGroupsCap>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_USERS_GROUPS_CAPS", "ART_DB");
+
+                entity.Property(e => e.Capabilities)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("Display_Name");
+
+                entity.Property(e => e.Ggroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GGroup");
+
+                entity.Property(e => e.Rrole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("RRole");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListGroupsRolesSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_GROUPS_ROLES_SUMMARY", "ART_DB");
+
+                entity.Property(e => e.Groups)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPS");
+
+                entity.Property(e => e.Roles)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLES");
+            });
+
+            modelBuilder.Entity<SasListOfUsersAndGroupsRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_OF_USERS_AND_GROUPS_ROLES", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("Display_Name");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DISPLAY_NAME");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Job_Title");
+
+                entity.Property(e => e.MemberOfGroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("MEMBER_OF_GROUP");
+
+                entity.Property(e => e.RoleDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.UserRole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("User_ROLE");
+            });
+
+            modelBuilder.Entity<SasListUsersDepartment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_USERS_DEPARTMENT", "ART_DB");
+
+                entity.Property(e => e.Appname)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
+                    .HasColumnName("APPNAME");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Logindatetime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LOGINDATETIME");
+
+                entity.Property(e => e.UserDesccription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DESCCRIPTION");
+
+                entity.Property(e => e.UserDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_TITLE");
+            });
+
+            modelBuilder.Entity<VaLastLoginView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VA_LAST_LOGIN_VIEW", "ART_DB");
+
+                entity.Property(e => e.Appname)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
+                    .HasColumnName("APPNAME");
+
+                entity.Property(e => e.Logindate)
+                    .HasColumnType("date")
+                    .HasColumnName("LOGINDATE");
+
+                entity.Property(e => e.Logindatetime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LOGINDATETIME");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(80)
+                    .IsUnicode(false)
+                    .HasColumnName("USERNAME");
+            });
+
+            modelBuilder.Entity<VaLicensedView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VA_LICENSED_VIEW", "ART_DB");
+
+                entity.Property(e => e.AppLebal)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("APP_LEBAL");
+
+                entity.Property(e => e.BeginDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("BEGIN_DATE");
+
+                entity.Property(e => e.Diedate)
+                    .HasColumnType("date")
+                    .HasColumnName("DIEDATE");
+
+                entity.Property(e => e.Fmtname)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("FMTNAME");
+
+                entity.Property(e => e.ProStart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_START");
+
+                entity.Property(e => e.ProType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_TYPE");
+            });
+        }
+        public void OnDGSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VaAuthdomain>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_AUTHDOMAIN", "ART_DB");
+
+                entity.Property(e => e.AuthDomName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("authDomName");
+
+                entity.Property(e => e.AuthDomOutboundOnly).HasColumnName("authDomOutboundOnly");
+
+                entity.Property(e => e.AuthDomTrustedOnly).HasColumnName("authDomTrustedOnly");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+            });
+
+            modelBuilder.Entity<VaEmail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_EMAIL", "ART_DB");
+
+                entity.Property(e => e.EmailAddr)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("emailAddr");
+
+                entity.Property(e => e.EmailType)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("emailType");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+            });
+
+            modelBuilder.Entity<VaEmailInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_EMAIL_INFO", "ART_DB");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.EmailType)
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PersonExtIdContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Context");
+
+                entity.Property(e => e.PersonExtIdIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Identifier");
+
+                entity.Property(e => e.PersonId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_Id");
+            });
+
+            modelBuilder.Entity<VaGroupInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GROUP_INFO", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ExtIdContext)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ExtId_Context");
+
+                entity.Property(e => e.ExtIdIdentifier)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ExtId_Identifier");
+
+                entity.Property(e => e.GroupType)
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaGrouploginsInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GROUPLOGINS_INFO", "ART_DB");
+
+                entity.Property(e => e.AuthDomExtIdContext)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_ExtId_Context");
+
+                entity.Property(e => e.AuthDomExtIdIdentifier)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_ExtId_Identifier");
+
+                entity.Property(e => e.AuthDomId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_Id");
+
+                entity.Property(e => e.AuthDomName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_Name");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.GroupExtIdContext)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("Group_ExtId_Context");
+
+                entity.Property(e => e.GroupExtIdIdentifier)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("Group_ExtId_Identifier");
+
+                entity.Property(e => e.GroupId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("Group_Id");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("UserID");
+            });
+
+            modelBuilder.Entity<VaGroupmemgroupsInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GROUPMEMGROUPS_INFO", "ART_DB");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MemDesc)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("memDesc");
+
+                entity.Property(e => e.MemId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("memId");
+
+                entity.Property(e => e.MemName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("memName");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaGroupmempersonsInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GROUPMEMPERSONS_INFO", "ART_DB");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MemDesc)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("memDesc");
+
+                entity.Property(e => e.MemId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("memId");
+
+                entity.Property(e => e.MemName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("memName");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaGrpmem>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GRPMEMS", "ART_DB");
+
+                entity.Property(e => e.Grpkeyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("grpkeyid");
+
+                entity.Property(e => e.Memkeyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("memkeyid");
+            });
+
+            modelBuilder.Entity<VaIdgrp>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_IDGRPS", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Displayname)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("displayname");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.GrpType)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("grpType");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+            });
+
+            modelBuilder.Entity<VaLicensed>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LICENSED", "ART_DB");
+
+                entity.Property(e => e.AppLebal)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("APP_LEBAL");
+
+                entity.Property(e => e.BeginDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("BEGIN_DATE");
+
+                entity.Property(e => e.Diedate)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("DIEDATE");
+
+                entity.Property(e => e.Fmtname)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("FMTNAME");
+
+                entity.Property(e => e.ProStart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_START");
+
+                entity.Property(e => e.ProType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_TYPE");
+            });
+
+            modelBuilder.Entity<VaLocation>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LOCATION", "ART_DB");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.Area)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("area");
+
+                entity.Property(e => e.City)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("city");
+
+                entity.Property(e => e.Country)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("country");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.LocationName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("locationName");
+
+                entity.Property(e => e.LocationType)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("locationType");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+
+                entity.Property(e => e.Postalcode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("postalcode");
+            });
+
+            modelBuilder.Entity<VaLocationInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LOCATION_INFO", "ART_DB");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Area)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.City)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Country)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LocationType)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PersonExtIdContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Context");
+
+                entity.Property(e => e.PersonExtIdIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Identifier");
+
+                entity.Property(e => e.PersonId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_Id");
+
+                entity.Property(e => e.PostCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaLogin>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LOGINS", "ART_DB");
+
+                entity.Property(e => e.Authdomkeyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("authdomkeyid");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Userid)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("userid");
+            });
+
+            modelBuilder.Entity<VaLoginsInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LOGINS_INFO", "ART_DB");
+
+                entity.Property(e => e.AuthDomExtIdContext)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_ExtId_Context");
+
+                entity.Property(e => e.AuthDomExtIdIdentifier)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_ExtId_Identifier");
+
+                entity.Property(e => e.AuthDomId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_Id");
+
+                entity.Property(e => e.AuthDomName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("AuthDom_Name");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PersonExtIdContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Context");
+
+                entity.Property(e => e.PersonExtIdIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Identifier");
+
+                entity.Property(e => e.PersonId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_Id");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("UserID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaPerson>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PERSON", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Displayname)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("displayname");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("title");
+            });
+
+            modelBuilder.Entity<VaPersonInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PERSON_INFO", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ExtIdContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ExtId_Context");
+
+                entity.Property(e => e.ExtIdId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("ExtId_Id");
+
+                entity.Property(e => e.ExtIdIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ExtId_Identifier");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaPhone>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PHONE", "ART_DB");
+
+                entity.Property(e => e.Externalkey).HasColumnName("externalkey");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("keyid");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("objid");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("phoneNumber");
+
+                entity.Property(e => e.PhoneType)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("phoneType");
+            });
+
+            modelBuilder.Entity<VaPhoneInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PHONE_INFO", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PersonExtIdContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Context");
+
+                entity.Property(e => e.PersonExtIdIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_ExtId_Identifier");
+
+                entity.Property(e => e.PersonId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("Person_Id");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("Phone_number");
+
+                entity.Property(e => e.PhoneType)
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VaUserCapability>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_UserCapability", "ART_DB");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("cap_name");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("capabilitiy_group_name");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("capability_id");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("component_name");
+
+                entity.Property(e => e.GroupType)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("group_type");
+
+                entity.Property(e => e.MemIdentityType)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("mem_identity_type");
+
+                entity.Property(e => e.RoleNm)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("role_nm");
+
+                entity.Property(e => e.UserGroupNm)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("user_group_nm");
+
+                entity.Property(e => e.UserLongId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("user_long_id");
             });
         }
     }

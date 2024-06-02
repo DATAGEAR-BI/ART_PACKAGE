@@ -33,6 +33,9 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStCasesPerCategory) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_CATEGORY,
                 Type t when t == typeof(ArtStCasesPerSubcat) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_SUBCAT,
                 Type t when t == typeof(ArtStCasesPerPriority) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_PRIORITY,
+                Type t when t == typeof(ArtStCasesPerBranch) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_CASES_PER_BRANCH,
+                Type t when t == typeof(ArtStCasesPerBranch) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CASES_PER_BRANCH,
+
 
 
                 Type t when t == typeof(ArtStCustPerType) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_CUST_PER_TYPE,

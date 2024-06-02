@@ -6,6 +6,7 @@ using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
+using ART_PACKAGE.Controllers.SASAUDIT;
 using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
@@ -15,6 +16,7 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
 namespace ART_PACKAGE.Helpers.CSVMAppers
@@ -90,6 +92,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             //ECM
            { nameof(SystemPerformanceController).ToLower() , new List<Type>{ typeof(ArtSystemPerformance) } }     ,
            { nameof(UserPerformanceController).ToLower()  ,new List<Type>{ typeof(ArtUserPerformance) } }     ,
+           { nameof(SwiftMessagesController).ToLower()  ,new List<Type>{ typeof(ArtSwiftMessagesView) } }     ,
+           { nameof(MakerCheckerPerformenceDetailController).ToLower()  ,new List<Type>{ typeof(MakerCheckerPerformanceView) } }     ,
 
 
 
@@ -108,7 +112,15 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           { nameof(AuditGroupsController).ToLower()                        ,              new List<Type>{ typeof(ArtGroupsAuditView) } }     ,
           { nameof(AuditRolesController).ToLower()                         ,              new List<Type>{ typeof(ArtRolesAuditView) } }     ,
 
-
+          //SASAUDIT
+          {nameof(SASAuditTrailActionController).ToLower()                         ,           new List<Type>{ typeof(SasAuditTrailReport) } }     ,
+          {nameof(SASAuditListAppController).ToLower()                         ,           new List<Type>{ typeof(VaLicensedView) } }     ,
+          {nameof(SASAuditTrailAccessGroupRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessRightPerProfile) } }     ,
+          {nameof(SASAuditTrailAccessRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessRightPerRole) } }     ,
+          {nameof(SASAuditTrailGroupsRolesSummaryController).ToLower()                         ,           new List<Type>{ typeof(SasListGroupsRolesSummary) } }     ,
+          {nameof(SASAuditTrailUsersGroupsCapsController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessUsersGroupsCap) } }     ,
+          {nameof(SASAuditTrailUsersGroupsRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListOfUsersAndGroupsRole) } }     ,
+          {nameof(SASAuditTrailLastLoginController).ToLower()                         ,           new List<Type>{ typeof(VaLastLoginView) } }     ,
 
 
 
@@ -130,6 +142,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
           //TASK_SCHEDULER
+
+
+
 
         };
 

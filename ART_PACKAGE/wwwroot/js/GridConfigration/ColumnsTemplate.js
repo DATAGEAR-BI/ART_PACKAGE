@@ -22,7 +22,7 @@ export const Templates = {
         return `<a class="custom-link">${dataItem[column]}</a>`
     },
     mixedArabicAndEnglish: (dataItem, column) => {
-        return `<div style='direction: rtl;'>${dataItem[column]}</div>`
+        return `<div style='direction: rtl;'>${dataItem[column] ? dataItem[column]:""}</div>`
     }
     ,
     TaskMails: (dataItem, column) => {

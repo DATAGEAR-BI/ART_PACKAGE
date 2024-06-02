@@ -188,6 +188,8 @@
 
 	<ItemGroup>
 		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
+		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersCreationLastLoginController.cs" />
+		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersGroupsController.cs" />
 		<Compile Remove="Controllers\SystemPerformanceController.cs" />
 		<Compile Remove="Helpers\CustomReport\GridAggregateType.cs" />
 	</ItemGroup>

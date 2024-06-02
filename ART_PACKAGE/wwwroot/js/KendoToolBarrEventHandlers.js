@@ -14,6 +14,18 @@ var chngeRowColor = (dataItem, row, colormapinng) => {
 
 }
 
+
+export function generateGUID() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+export var currentPDFReportId = '';
+
 function getQueryParameters(urlString) {
     const searchParams = new URL("http://test.com" + urlString).searchParams;
     return [...searchParams.values()];
@@ -63,6 +75,7 @@ export const Handlers = {
 
     },
     csvExportForStored: async (e, controller) => {
+        //currentPDFReportId = generateGUID();
         kendo.ui.progress($('#grid'), true);
         var id = document.getElementById("script").dataset.id;
         var ds = $("#grid").data("kendoGrid");
@@ -121,7 +134,8 @@ export const Handlers = {
         a.href = window.URL.createObjectURL(blob);
         a.click();
         kendo.ui.progress($('#grid'), false);
-    }, clrfil: (e) => {
+    },
+    clrfil: (e) => {
         var ds = $("#grid").data("kendoGrid");
         var multiSelects = document.querySelectorAll("[data-role=multiselect]");
         [...multiSelects].forEach(x => {

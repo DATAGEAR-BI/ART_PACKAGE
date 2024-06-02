@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections;
-using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.SASAML
 {
@@ -34,12 +34,14 @@ namespace ART_PACKAGE.Controllers.SASAML
             IEnumerable<ArtStCasesPerCategory> chart2data = Enumerable.Empty<ArtStCasesPerCategory>().AsQueryable();
             IEnumerable<ArtStCasesPerSubcat> chart3Data = Enumerable.Empty<ArtStCasesPerSubcat>().AsQueryable();
             IEnumerable<ArtStCasesPerPriority> chart4Data = Enumerable.Empty<ArtStCasesPerPriority>().AsQueryable();
+            IEnumerable<ArtStCasesPerBranch> chart5Data = Enumerable.Empty<ArtStCasesPerBranch>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart5Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -48,6 +50,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart2data = dbfcfkc.ExecuteProc<ArtStCasesPerCategory>(SQLSERVERSPNames.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
                 chart3Data = dbfcfkc.ExecuteProc<ArtStCasesPerSubcat>(SQLSERVERSPNames.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
                 chart4Data = dbfcfkc.ExecuteProc<ArtStCasesPerPriority>(SQLSERVERSPNames.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+                chart5Data = dbfcfkc.ExecuteProc<ArtStCasesPerBranch>(SQLSERVERSPNames.ART_ST_CASES_PER_BRANCH, chart5Params.ToArray());
 
             }
 
@@ -57,6 +60,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                 chart2data = dbfcfkc.ExecuteProc<ArtStCasesPerCategory>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
                 chart3Data = dbfcfkc.ExecuteProc<ArtStCasesPerSubcat>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
                 chart4Data = dbfcfkc.ExecuteProc<ArtStCasesPerPriority>(ORACLESPName.ART_ST_CASES_PER_PRIORITY, chart4Params.ToArray());
+                chart5Data = dbfcfkc.ExecuteProc<ArtStCasesPerBranch>(ORACLESPName.ART_ST_CASES_PER_BRANCH, chart5Params.ToArray());
 
             }
 
@@ -98,6 +102,15 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Cat = "CASE_PRIORITY",
                     Val = "NUMBER_OF_CASES",
                     Type = ChartType.donut
+                },
+                new ChartData<ArtStCasesPerBranch>
+                {
+                    ChartId = "StCasesPerBranch",
+                    Data = chart5Data.ToList(),
+                    Title = "Cases Per Branch",
+                    Cat = "BRANCH_NAME",
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.bar
                 }
             };
 

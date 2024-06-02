@@ -126,5 +126,15 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnCRPModelCreating(modelBuilder);
         }
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnSasAuditModelCreating(modelBuilder);
+        }
+
+        public void OnDGSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGSasAuditModelCreating(modelBuilder);
+
+        }
     }
 }

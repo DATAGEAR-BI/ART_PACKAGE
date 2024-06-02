@@ -62,7 +62,7 @@ class Grid extends HTMLElement {
 
     }
 
-    
+
     filterAction(e) {
         console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
 
@@ -118,7 +118,7 @@ class Grid extends HTMLElement {
 
     }
     connectedCallback() {
-      
+
         if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
@@ -263,14 +263,14 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-            
+
             if (currentCSVProcess != folder) {
                 exportConnection.invoke("CancelPdfExport", folder);
 
             }
             if (currentCSVProcess == folder) {
-              /*  if (this.id !== gridId)
-                    return;*/
+                /*  if (this.id !== gridId)
+                      return;*/
 
                 if (!this.isExporting) {
                     this.csvExportId = folder;
@@ -297,7 +297,7 @@ class Grid extends HTMLElement {
 
                 }
             }
-            
+
         });
         exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
             console.log("curr", currentPDFReportId)
@@ -338,7 +338,7 @@ class Grid extends HTMLElement {
                     }
                 }
             }
-         
+
         });
 
         //beforeLeaveAction();
@@ -563,7 +563,7 @@ class Grid extends HTMLElement {
             //{ name: "customButton1",  },
             //{ name: "customButton2", text: "Custom Button 2" }
 
-            toolbar = ["excel"];
+            //toolbar = ["excel"];
             if (showCsvBtn) {
                 toolbar.push({
                     name: this.gridDiv.id + "csvExport",
@@ -1197,9 +1197,9 @@ class Grid extends HTMLElement {
                 isExportPdfHitted = true;
                 isExportingPDFNow = true;
                 if (isExportPdfHitted) {
-             
-                
-               
+
+
+
 
                     var pdfProgressBar = document.getElementById(this.id + "PDFProgress");
                     if (pdfProgressBar.hidden) {
@@ -1208,7 +1208,7 @@ class Grid extends HTMLElement {
                     }
                     pdfProgressBar.value = parseFloat(0);
 
-                   
+
                 }
 
 
@@ -1564,7 +1564,7 @@ class Grid extends HTMLElement {
         var reprtGUID = generateGUID();
         currentCSVProcess = reprtGUID;
         var reportGUTURLQuery = "&reportGUID=" + currentCSVProcess;
-        let exportUrl = `/${controller}/ExportToCsv/` + this.id+"?"+reportGUTURLQuery;
+        let exportUrl = `/${controller}/ExportToCsv/` + this.id + "?" + reportGUTURLQuery;
 
         if (Object.keys(EXPORT_URLS).includes(this.dataset.urlkey)) {
             let urlParts = EXPORT_URLS[this.dataset.urlkey].split("?");
@@ -1810,7 +1810,7 @@ class Grid extends HTMLElement {
                 e.returnValue = confirmationMessage; // For older browsers
                 return confirmationMessage;
             }
-            
+
         });
     }
 
@@ -1976,8 +1976,8 @@ window.addEventListener('beforeunload', function (e) {
         e.returnValue = confirmationMessage; // For older browsers
         return confirmationMessage;
     }
-        
-    }
+
+}
 
 );
 

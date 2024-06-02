@@ -35,6 +35,7 @@ namespace Data.Data.ECM
             modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStMakerCheckerPerformenceSummary>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnEcmModelCreating(modelBuilder);

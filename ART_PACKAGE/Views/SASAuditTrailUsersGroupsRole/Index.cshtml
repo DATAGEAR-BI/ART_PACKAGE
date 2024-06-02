@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        List Users Groups and Roles Report
+        <small>Presents all SAS users with their groups and roles</small>
+        <br />
+    </h1>
+</section>
+
+
+<m-grid id="SASAuditTrailUsersGroupsRole" data-urlkey="SASAuditTrailUsersGroupsRole" data-handlerkey="SASAuditTrailUsersGroupsRole" @*data-prop="AlertId"*@></m-grid>
+
+@*<div id="grid"></div>*@
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+
+    @*<script src="~/js/Dynamic.js" id="script" defer type="module" data-prop="AlertId" data-urlkey="AlertDetails" data-handlerkey="AlertDetails"></script>*@
+}

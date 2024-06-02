@@ -18,12 +18,14 @@ using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
+using Data.Data.SASAUDIT;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
 using Data.DATA.FATCA;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
+using Data.DGSASAUDIT;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
@@ -134,6 +136,13 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
                 _ = services.AddDbContext<DGMGMTAUDContext>(opt => contextBuilder(opt, DGMGMTAUDContextConnection));
                 _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("SASAUDIT"))
+            {
+
+                string DGSASAUDITContextConnection = config.GetConnectionString("DGSASAUDITContextConnection") ?? throw new InvalidOperationException("Connection string 'DGSASAUDITContextConnection' not found.");
+                _ = services.AddDbContext<DGSASAUDITContext>(opt => contextBuilder(opt, DGSASAUDITContextConnection));
+                _ = services.AddDbContext<SASAUDITContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("AMLANALYSIS"))

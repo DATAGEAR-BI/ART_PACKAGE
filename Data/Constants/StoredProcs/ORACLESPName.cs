@@ -10,6 +10,7 @@
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERF_PER_ACT_USER";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERF_PER_ACTION";
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
+        public static readonly string ST_MAKER_CHECKER_PERFORMANCE_SUMMARY = "ART.ART_ST_MAKER_CHECKER_PERFORMANCE_SUMMARY";
         //AML
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART.ART_ST_CASES_PER_PRIORITY";
@@ -25,6 +26,7 @@
         public static readonly string ART_ST_AML_ALERTS_PER_BRANCH = "ART.ART_ST_AML_ALERTS_PER_BRANCH";
         public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO = "ART.ART_ST_AML_ALERTS_PER_SCENARIO";
         public static readonly string ART_ST_AML_ALERTS_PER_STATUS = "ART.ART_ST_AML_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_CASES_PER_BRANCH = "ART.ART_ST_CASES_PER_BRANCH";
 
 
         //GoAml

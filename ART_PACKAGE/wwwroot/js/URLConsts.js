@@ -141,6 +141,22 @@
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
-    test:"Test/GetData"
+    test: "Test/GetData",
+
+    MakerChecker: "/MakerCheckerPerformenceDetail/GetData",
+    MakerCheckerPerformenceSummary: "/MakerCheckerPerformenceSummary/GetData",
+    SwiftMessages: "/SwiftMessages/GetData",
+
+
+    //SASAUDIT
+    SASAuditTrailAction: "/SASAuditTrailAction/GetData",
+    SASAuditListApp: "/SASAuditListApp/GetData",
+    SASAuditTrailAccessGroupRole: "/SASAuditTrailAccessGroupRole/GetData",
+    SASAuditTrailAccessRole: "/SASAuditTrailAccessRole/GetData",
+    SASAuditTrailGroupsRolesSummary: "/SASAuditTrailGroupsRolesSummary/GetData",
+    SASAuditTrailUsersGroupsCaps: "/SASAuditTrailUsersGroupsCaps/GetData",
+    SASAuditTrailUsersGroupsRole: "/SASAuditTrailUsersGroupsRole/GetData",
+    SASAuditTrailLastLogin: "/SASAuditTrailLastLogin/GetData",
+
 
 };

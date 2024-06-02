@@ -25,6 +25,7 @@ namespace ART_PACKAGE.Controllers
         {
             _gridConstructor = gridConstructor;
 
+
         }
 
         public abstract IActionResult Index();
