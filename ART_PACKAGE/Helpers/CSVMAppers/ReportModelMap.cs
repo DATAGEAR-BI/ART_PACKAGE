@@ -114,6 +114,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
           //SASAUDIT
           {nameof(SASAuditTrailActionController).ToLower()                         ,           new List<Type>{ typeof(SasAuditTrailReport) } }     ,
+          {nameof(SASAuditListAppController).ToLower()                         ,           new List<Type>{ typeof(VaLicensedView) } }     ,
+          {nameof(SASAuditTrailAccessGroupRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessRightPerProfile) } }     ,
+          {nameof(SASAuditTrailAccessRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessRightPerRole) } }     ,
+          {nameof(SASAuditTrailGroupsRolesSummaryController).ToLower()                         ,           new List<Type>{ typeof(SasListGroupsRolesSummary) } }     ,
+          {nameof(SASAuditTrailUsersGroupsCapsController).ToLower()                         ,           new List<Type>{ typeof(SasListAccessUsersGroupsCap) } }     ,
+          {nameof(SASAuditTrailUsersGroupsRoleController).ToLower()                         ,           new List<Type>{ typeof(SasListOfUsersAndGroupsRole) } }     ,
+          {nameof(SASAuditTrailLastLoginController).ToLower()                         ,           new List<Type>{ typeof(VaLastLoginView) } }     ,
 
 
 

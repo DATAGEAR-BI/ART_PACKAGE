@@ -188,15 +188,8 @@
 
 	<ItemGroup>
 		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditListAppController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailAccessGroupRoleController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailAccessRoleController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailGroupsRolesSummaryController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailLastLoginController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersCreationLastLoginController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersGroupsCapsController.cs" />
 		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersGroupsController.cs" />
-		<Compile Remove="Controllers\SASAUDIT\SASAuditTrailUsersGroupsRoleController.cs" />
 		<Compile Remove="Controllers\SystemPerformanceController.cs" />
 		<Compile Remove="Helpers\CustomReport\GridAggregateType.cs" />
 	</ItemGroup>

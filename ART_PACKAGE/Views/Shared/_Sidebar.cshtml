@@ -383,6 +383,65 @@
                             </li>
                         }
 
+
+                        @if (Modules.Contains("SASAUDIT"))
+                        {
+                            <li class="treeview  ">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-book"></i> <span>SAS Audit Trail Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailAction")"><i class="glyphicon glyphicon-globe"></i> <span>Audit</span></a>
+                                    </li>
+                                    @*<li class="active ">
+                            <a href="@Url.Action("Index", "SASAuditTrailUsersGroups")"><i class="glyphicon glyphicon-globe"></i> <span>Users Groups</span></a>
+                            </li>*@
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailUsersGroupsRole")"><i class="glyphicon glyphicon-globe"></i> <span>Users Groups Roles</span></a>
+                                    </li>
+
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailUsersGroupsCaps")"><i class="glyphicon glyphicon-globe"></i> <span>Users Groups Roles Caps</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailAccessGroupRole")"><i class="glyphicon glyphicon-globe"></i> <span>Access Per Group & Role</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailGroupsRolesSummary")"><i class="glyphicon glyphicon-globe"></i> <span>Groups Roles Summary</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailAccessRole")"><i class="glyphicon glyphicon-globe"></i> <span>Roles & Caps Details</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditListApp")"><i class="glyphicon glyphicon-globe"></i> <span>Listing SAS Apps</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SASAuditTrailLastLogin")"><i class="glyphicon glyphicon-globe"></i> <span>Last Login</span></a>
+                                    </li>
+
+                                   @* <li class="treeview">
+
+
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Audit Trail Report</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            
+                                        </ul>
+                                    </li>*@
+                          
+                                </ul>
+                            </li>
+                        }
+
+
                         @if (Modules.Contains("GOAML"))
                         {
                             <li class="treeview ">

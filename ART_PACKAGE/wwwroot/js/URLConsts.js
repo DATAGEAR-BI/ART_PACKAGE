@@ -149,5 +149,14 @@
 
 
     //SASAUDIT
-    SASAuditTrailAction: "/SASAuditTrailAction/GetData"
+    SASAuditTrailAction: "/SASAuditTrailAction/GetData",
+    SASAuditListApp: "/SASAuditListApp/GetData",
+    SASAuditTrailAccessGroupRole: "/SASAuditTrailAccessGroupRole/GetData",
+    SASAuditTrailAccessRole: "/SASAuditTrailAccessRole/GetData",
+    SASAuditTrailGroupsRolesSummary: "/SASAuditTrailGroupsRolesSummary/GetData",
+    SASAuditTrailUsersGroupsCaps: "/SASAuditTrailUsersGroupsCaps/GetData",
+    SASAuditTrailUsersGroupsRole: "/SASAuditTrailUsersGroupsRole/GetData",
+    SASAuditTrailLastLogin: "/SASAuditTrailLastLogin/GetData",
+
+
 };

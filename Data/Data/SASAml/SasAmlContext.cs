@@ -46,6 +46,8 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStAmlAlertsPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerScenario>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerBranch>().HasNoKey().ToView(null);
+
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);

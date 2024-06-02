@@ -26,6 +26,7 @@
         public static readonly string ART_ST_AML_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_AML_ALERTS_PER_BRANCH]";
         public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_AML_ALERTS_PER_SCENARIO]";
         public static readonly string ART_ST_AML_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]";
+        public static readonly string ART_ST_CASES_PER_BRANCH = "[ART_DB].[ART_ST_CASES_PER_BRANCH]";
 
 
 
