@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using Data.Data.DGINTFRAUD;
 using ART_PACKAGE.Extentions.DbContextExtentions;
+using ART_PACKAGE.Models;
 
 namespace ART_PACKAGE.Controllers.DGINTFRAUD
 {
@@ -70,15 +71,27 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
                      LeggendLabelTemplate="(Customer Division ,{name}) : (Transaction Amount ,{value})"
 
                 },
-                new ChartData<ArtStDgamlAllTransVsCased>
+                new ChartData<GenaricChartDTO>
                 {
                     ChartId = "StDgamlAllTransVsCased",
-                    Data = chart2data.ToList(),
+                    Data =new List<GenaricChartDTO>(){
+                        new()
+                        {
+                            Category="Total Transactions",
+                            Value =chart2data.FirstOrDefault() == null ? 0 : chart2data.FirstOrDefault()?.Transactions_count
+                        },
+                        new()
+                        {
+                            Category="Cased Transactions",
+                            Value =  chart2data.FirstOrDefault() == null ? 0 : chart2data.FirstOrDefault()?.Cased_Transactions
+                        }
+                    }
+                        ,
                     Title = "Emp Trans VS Cased",
-                    Cat = "Cased_Transactions",
-                    Val = "Transactions_count",
+                    Cat = "Category",
+                    Val = "Value",
                     Type = ChartType.donut,
-                    LeggendLabelTemplate="(Cased Transactions ,{name}) : (Transaction Count ,{value})"
+                    //LeggendLabelTemplate="(Cased Transactions ,{name}) : (Transaction Count ,{value})"
                 }
             };
 
