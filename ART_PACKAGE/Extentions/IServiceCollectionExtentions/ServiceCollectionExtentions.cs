@@ -32,6 +32,7 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.DGINTFRAUD;
+using Data.AC;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -120,6 +121,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
             if (modulesToApply.Contains("DGINTFRAUD"))
             {
+                string DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
+                string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                string ACContextConnection = config.GetConnectionString("ACContextConnection") ?? throw new InvalidOperationException("Connection string 'ACContextConnection' not found.");
+                _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+                _ = services.AddDbContext<DGAMLContext>(opt => contextBuilder(opt, DGAMLContextConnection));
+                _ = services.AddDbContext<ACContext>(opt => contextBuilder(opt, ACContextConnection));
                 _ = services.AddDbContext<DGINTFRAUDContext>(opt => contextBuilder(opt, connectionString));
             }
             if (modulesToApply.Contains("TRADE_BASE"))

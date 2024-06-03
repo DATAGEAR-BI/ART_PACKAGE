@@ -1,4 +1,5 @@
-﻿using Data.Audit.DGMGMT;
+﻿using Data.AC;
+using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
@@ -24,6 +25,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGFATCAContext FATCA { get; }
 
         public DGAMLContext DGAML { get; }
+        public ACContext AC { get; }
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }

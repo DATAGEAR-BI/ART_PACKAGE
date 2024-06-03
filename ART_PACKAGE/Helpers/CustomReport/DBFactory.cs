@@ -24,6 +24,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 : schemaName == DbSchema.FTI.ToString() ? _db.TI
                 : schemaName == DbSchema.DGAML.ToString() ? _db.DGAML
                 : schemaName == DbSchema.GoAml.ToString() ? _db.GOAML
+                : schemaName == DbSchema.AC.ToString() ? _db.AC
                 : (DbContext?)null;
         }
     }

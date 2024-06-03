@@ -12,7 +12,7 @@ public enum DbSchema
     CORE,
     [Option(DisplayName = "KC", ModuleNames = "SASAML,AMLANALYSIS")]
     KC,
-    [Option(DisplayName = "DGCMGMT", ModuleNames = "ECM")]
+    [Option(DisplayName = "DGCMGMT", ModuleNames = "ECM,DGINTFRAUD")]
     DGCMGMT,
     [Option(DisplayName = "DGWLLOGS")]
     DGWLLOGS,
@@ -20,7 +20,9 @@ public enum DbSchema
     GoAml,
     [Option(DisplayName = "TI Zone", ModuleNames = "FTI")]
     FTI,
-    [Option(DisplayName = "DG AML", ModuleNames = "DGAML")]
-    DGAML
+    [Option(DisplayName = "DG AML", ModuleNames = "DGAML,DGINTFRAUD")]
+    DGAML,
+    [Option(DisplayName = "AC", ModuleNames = "DGINTFRAUD")]
+    AC,
 }
 

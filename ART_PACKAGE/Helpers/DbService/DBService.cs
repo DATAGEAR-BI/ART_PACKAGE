@@ -1,4 +1,5 @@
-﻿using Data.Audit.DGMGMT;
+﻿using Data.AC;
+using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
@@ -81,6 +82,16 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
+                if(modules.Contains("DGINTFRAUD"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+                    DGAMLContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLContext>();
+                    ACContext ac = scope.ServiceProvider.GetRequiredService<ACContext>();
+                    ECM = ecmService;
+                    DGAML = dgAml;
+                    AC = ac;
+                }
             }
         }
 
@@ -100,6 +111,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
+        public ACContext AC { get; }
 
     }
 }
