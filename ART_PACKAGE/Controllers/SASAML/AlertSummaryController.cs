@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
@@ -17,11 +18,14 @@ namespace ART_PACKAGE.Controllers.SASAML
         private readonly SasAmlContext dbfcfkc;
         private readonly IConfiguration _config;
         private readonly string dbType;
+        private readonly IDropDownService _dropDown;
 
-        public AlertSummaryController(SasAmlContext dbfcfkc, IConfiguration config)
+
+        public AlertSummaryController(SasAmlContext dbfcfkc, IConfiguration config, IDropDownService dropDown)
         {
             this.dbfcfkc = dbfcfkc;
             _config = config;
+            _dropDown = dropDown;
             dbType = _config.GetValue<string>("dbType").ToUpper();
 
         }
@@ -40,12 +44,14 @@ namespace ART_PACKAGE.Controllers.SASAML
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
+            //para.procFilters
+
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerStatus>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerBranch>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_BRANCH, chart2Params.ToArray());
-                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_SCENARIO, chart2Params.ToArray());
+                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(SQLSERVERSPNames.ART_ST_AML_ALERTS_PER_SCENARIO, chart3Params.ToArray());
                 chart4data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(SQLSERVERSPNames.ART_ST_ALERT_PER_OWNER, chart4Params.ToArray());
 
             }
@@ -55,7 +61,7 @@ namespace ART_PACKAGE.Controllers.SASAML
 
                 chart1Data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerStatus>(ORACLESPName.ART_ST_AML_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerBranch>(ORACLESPName.ART_ST_AML_ALERTS_PER_BRANCH, chart2Params.ToArray());
-                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(ORACLESPName.ART_ST_AML_ALERTS_PER_SCENARIO, chart2Params.ToArray());
+                chart3data = dbfcfkc.ExecuteProc<ArtStAmlAlertsPerScenario>(ORACLESPName.ART_ST_AML_ALERTS_PER_SCENARIO, chart3Params.ToArray());
                 chart4data = dbfcfkc.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart4Params.ToArray());
 
 
@@ -121,7 +127,16 @@ namespace ART_PACKAGE.Controllers.SASAML
 
 
         }
+        public IActionResult GetScenarioNamesDropDown()
+        {
 
+
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(_dropDown.GetScenarioNameDropDown(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+        }
         public IActionResult Index()
         {
             return View();

@@ -2,6 +2,7 @@
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace ART_PACKAGE.Controllers
         private readonly IDbService _dbSrv;
         private readonly EcmContext _db;
         private readonly SasAmlContext _dbAml;
+        private readonly ArtGoAmlContext _dbGoAml;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
         private readonly ArtDgAmlContext _dgaml;
@@ -52,7 +54,12 @@ namespace ART_PACKAGE.Controllers
                 ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                 _dgaml = dgamlService;
             }
-
+            if (modules.Contains("GOAML"))
+            {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtGoAmlContext goamlService = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+                _dbGoAml = goamlService;
+            }
             //this.repo = repo;
         }
 
@@ -178,6 +185,32 @@ namespace ART_PACKAGE.Controllers
                     statuses = alertsPerStatus
                 });
             }
+
+        }
+        public IActionResult GetGOAmlChartsData()
+        {
+
+            var dateData = _dbGoAml.ArtHomeGoamlReportsDates.ToList().GroupBy(x => x.Year).Select(x => new
+            {
+                year = x.Key.ToString(),
+                value = x.Sum(x => x.CountOfReportId),
+                monthData = x.GroupBy(m => m.Month).Select(m =>
+                new
+                {
+                    Month = m.Key.ToString(),
+                    value = m.Sum(x => x.CountOfReportId)
+                })
+            });
+            var typesData = _dbGoAml.ArtHomeGoamlReportsPerTypes.Select(x => new { ReportType = x.ReportType ?? "Unkown", x.NumberOfReports, year = x.Year }); ;
+
+
+
+            return Ok(new
+            {
+                dates = dateData,
+                types = typesData
+            });
+
 
         }
     }
