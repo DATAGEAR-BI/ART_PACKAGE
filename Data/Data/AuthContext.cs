@@ -3,6 +3,7 @@ using Data.Data;
 using Data.ModelCreatingStrategies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
@@ -33,6 +34,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelBuilder.ApplyConfiguration(new RolesConfigration());
         modelBuilder.ApplyConfiguration(new UserConfigration());
         modelBuilder.ApplyConfiguration(new UserRolesConfiguration());
+        modelBuilder.Entity<UserReport>().ToTable("UserReport");
         modelBuilder.Entity<ArtSavedReportsColumns>(
 
             e =>

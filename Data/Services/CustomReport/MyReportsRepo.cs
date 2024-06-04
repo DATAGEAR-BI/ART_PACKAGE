@@ -133,8 +133,8 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
                 SharedFromId = owner.Id,
                 Report = report
             };
-            report.UserId=owner.Id;
-            //report.Users.Add(owner);
+            //report.UserId=owner.Id;
+            report.Users.Add(owner);
             report.UserReports.Add(reportOwner);
             report.Charts = charts;
             report.Columns = columns;
