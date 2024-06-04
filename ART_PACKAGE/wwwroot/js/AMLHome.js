@@ -22,7 +22,7 @@ fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
             makedynamicChart(0, yearedStatuseData, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
 
         }
-        makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month", changeChart);
+        makeDatesChart(x.dates, "alertPerDate", "year", "value", "month", "value", "monthData", "Alerts Per Year & Month", changeChart,"Number Of Alerts");
         makedynamicChart(0, x.statuses, "Alerts Per Status", "alertPerStatus", "alertsCount", "alertStatus", true);
     }
 );
