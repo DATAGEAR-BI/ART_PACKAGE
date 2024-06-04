@@ -82,13 +82,17 @@ class ExternalFilter extends HTMLElement {
             }
             filters.forEach((f) => {
                 if (rules && rules.rules) {
-                    var IsRuleExist = rules.rules.some(item => item.id === f.id);
-                    if (!IsRuleExist) {
-                        isValidFilters = false;
-                        toastObj.icon = 'error';
-                        toastObj.text = `please add ${f.label} filter`;
-                        toastObj.heading = "Apply Filter Status";
-                        $.toast(toastObj);
+                    console.log("ruree", f);
+                    if (!f.optional) {
+
+                        var IsRuleExist = rules.rules.some(item => item.id === f.id );
+                        if (!IsRuleExist) {
+                            isValidFilters = false;
+                            toastObj.icon = 'error';
+                            toastObj.text = `please add ${f.label} filter`;
+                            toastObj.heading = "Apply Filter Status";
+                            $.toast(toastObj);
+                        }
                     }
                 }
                 

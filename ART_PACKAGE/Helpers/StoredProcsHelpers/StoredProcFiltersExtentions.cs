@@ -41,6 +41,15 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                     MySqlType = MySqlDbType.VarChar
 
                 }},
+                { "scenarioname",new(){
+                    SqlServerName="@V_scenario_name",
+                    OracleName="V_scenario_name",
+                    MySqlName="V_scenario_name",
+                    SqlServerType=SqlDbType.VarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+
+                }},
             };
             return dbType switch
             {

@@ -934,6 +934,51 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("TRANSACTIONNUMBER")
                     .UseCollation("Arabic_100_CI_AI");
             });
+
+            modelBuilder.Entity<ArtHomeGoamlReportsDate>(entity =>
+            {
+                entity.ToTable("ART_HOME_GOAML_REPORTS_DATE", "ART_DB"); // Specify the view name
+                entity.HasNoKey();
+
+                entity.Property(e => e.CountOfReportId)
+                    .HasColumnName("COUNT_OF_REPORT_ID")
+                    .HasColumnType("decimal(18, 2)") // Adjust precision as needed
+                    .HasMaxLength(10) // This may not be necessary for decimal types
+                    .IsRequired(false);
+
+                entity.Property(e => e.Year)
+                    .HasColumnName("YEAR")
+                    .HasColumnType("int")
+                    .HasMaxLength(10) // This may not be necessary for int types
+                    .IsRequired(false);
+
+                entity.Property(e => e.Month)
+                    .HasColumnName("MONTH")
+                    .HasColumnType("nvarchar")
+                    .HasMaxLength(4000)
+                    .IsRequired(false);
+            });
+            modelBuilder.Entity<ArtHomeGoamlReportsPerType>(entity =>
+            {
+                entity.ToTable("ART_HOME_GOAML_REPORTS_PER_TYPE", "ART_DB"); // Specify the view name
+                entity.HasNoKey();
+
+                entity.Property(e => e.ReportType)
+                    .HasColumnName("REPORT_TYPE")
+                    .HasColumnType("nvarchar")
+                    .HasMaxLength(255)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NumberOfReports)
+                    .HasColumnName("NUMBER_OF_REPORTS")
+                    .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                    .IsRequired(false);
+
+                entity.Property(e => e.Year)
+               .HasColumnName("YEAR")
+               .HasColumnType("int")
+               .IsRequired(false);
+            });
         }
 
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)

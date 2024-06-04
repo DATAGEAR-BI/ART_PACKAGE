@@ -49,6 +49,14 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) ? "UNKNOWN" : x.ScenarioName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetScenarioNamesDropDown()
+        {
+            //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
+            //return distinct_value;
+
+            List<SelectItem> distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) ? "UNKNOWN" : x.ScenarioName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
 
         public List<SelectItem> GetBranchNameDropDown()
         {
