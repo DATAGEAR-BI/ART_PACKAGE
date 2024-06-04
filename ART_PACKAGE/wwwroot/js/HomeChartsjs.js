@@ -33,9 +33,9 @@ getData().then(x => {
         var year = di.year;
         var yearedTypeData = typeData.filter(x => x.year == year);
         var yearedStatuseData = statusData.filter(x => x.year == year);
-        makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", true);
+        makedynamicChart(0, yearedTypeData, "Cases Per Type", "type", "numberOfCases", "caseType", false);
         makedynamicChart(0, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
-    });
+    },"Number Of Cases");
    
 
 

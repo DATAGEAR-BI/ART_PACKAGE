@@ -13,7 +13,30 @@ var types = {
     line: 10
 }
 
-export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange) {
+var isChartRotativeVerical = [];
+
+const exportMenu = [{
+    "label": "...",
+    "menu": [{
+        "label": "Image",
+        "menu": [
+            { "type": "svg", "label": "Save" },
+        ]
+    }, {
+        "label": "Data",
+        "menu": [
+
+            {
+                "type": "csv", "label": "CSV" },
+            { "type": "xlsx", "label": "XLSX" }
+
+        ]
+        }],
+    
+}];
+am4core.addLicense("ch-custom-attribution");
+
+export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange,exportValueName) {
     /**
   * ---------------------------------------
   * This demo was created using amCharts 4.
@@ -25,7 +48,8 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
   * https://www.amcharts.com/docs/v4/
   * ---------------------------------------
   */
-
+    var rotateButtonContainer = undefined;
+    var columnSeries = undefined;
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_kelly);
     /**
@@ -42,13 +66,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     chart.width = am4core.percent(100);
     chart.height = am4core.percent(100);
     chart.layout = "horizontal";
-    chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+ 
 
 
     /**
@@ -57,6 +75,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
 
     // Create chart instance
     var columnChart = chart.createChild(am4charts.XYChart);
+    //columnChart.svgContainer.htmlElement.id = divId ;
 
     // Create axes
     var categoryAxis = columnChart.yAxes.push(new am4charts.CategoryAxis());
@@ -168,7 +187,277 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     });
 
 
+    const monthOrder = {
+        "Jan": 1,
+        "Feb": 2,
+        "Mar": 3,
+        "Apr": 4,
+        "May": 5,
+        "Jun": 6,
+        "Jul": 7,
+        "Aug": 8,
+        "Sep": 9,
+        "Oct": 10,
+        "Nov": 11,
+        "Dec": 12
+    };
+    exportValueName = exportValueName ?? "Value";
+    pieChart.exporting.menu = new am4core.ExportMenu();
+    pieChart.exporting.menu.items = exportMenu;
+    pieChart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    pieChart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
+
+    pieChart.exporting.adapter.add("data", function (data) {
+        console.log("data", pieChart.data);
+        var flatRecordsArray = pieChart.data.flatMap(function (obj) {
+            console.log(obj)
+            return obj.monthData.map(function (monthData) {
+                var reternObj = {};
+                reternObj["Year"] = obj.year;
+                reternObj["Month"] = monthData.month;
+                reternObj[exportValueName] = Number(monthData.value);
+
+                return reternObj/*{
+                        year: obj.year,
+                        month: monthData.month,
+                        value: Number(monthData.value)
+                    }*/;
+            });
+        });
+        flatRecordsArray.sort(function (a, b) {
+            // First, compare the years
+            if (a.year !== b.year) {
+                return b.year - a.year;;
+            } else {
+                // If the years are the same, compare the months using the custom monthOrder map
+                return monthOrder[b.month] - monthOrder[a.month];
+            }
+        });
+        data.data = [];
+        data.data = flatRecordsArray;
+        return data;
+    });
+    // Create chart instance
+    if (!Object.keys(document.getElementById(divId).dataset).includes("horizontal")) {
+        isChartRotativeVerical[divId]= false;
+        makeVBar();
+
+
+    }
+    else {
+        isChartRotativeVerical[divId] = true;
+        makeBar();
+
+    }
+
+
+    function makeRotateButtonForDates(chart) {
+        let buttonContainer = chart.chartContainer.createChild(am4core.Container);
+        let button = buttonContainer.createChild(am4core.Button);
+        button.label.text = "Rotate Chart";
+        button.align = "left";
+        button.marginBottom = 15;
+        button.events.on("hit", () => {
+
+
+            // Get div ID
+            var divId = chart.svgContainer.htmlElement.id;
+
+            // Get chart data
+            var data = chart.data;
+
+            // Get chart title
+            var title = chart.titles.values.length > 0 ? chart.titles.values[0].text : "";
+
+
+            // Get the category axis from the chart
+            var categoryAxisFromChart = chart.xAxes.getIndex(0);
+            var categoryField = categoryAxisFromChart.dataFields.category;
+
+            // Get the series and its data field valueY
+            var seriesFromChart = chart.series.getIndex(0);
+            var valueYField = seriesFromChart.dataFields.valueY;
+
+
+            var HcategoryAxisFromChart = chart.yAxes.getIndex(0);
+            var HcategoryField = HcategoryAxisFromChart.dataFields.category;
+            // Get the series and its data field valueY
+            var HseriesFromChart = chart.series.getIndex(0);
+            var HvalueYField = HseriesFromChart.dataFields.valueX;
+
+
+            chart.dispose();
+            console.log(isChartRotativeVerical[divId])
+            if (!isChartRotativeVerical[divId]) {
+                isChartRotativeVerical[divId] = true
+                buttonContainer.dispose()
+
+                callBarChart(data, title, divId, HvalueYField, HcategoryField, true);
+
+            } else {
+                var HcategoryAxisFromChart = chart.yAxes.getIndex(0);
+                var HcategoryField = HcategoryAxisFromChart.dataFields.category;
+                isChartRotativeVerical[divId] = false;
+                buttonContainer.dispose()
+                callHBar(data, title, divId, valueYField, categoryField, true);
+
+            }
+        });
+    }
+
+
+
+   function makeBar() {
+        var barchartData = columnChart ? columnChart.data : [];
+
+        if (columnChart != undefined) {
+            columnChart.dispose();
+            if (rotateButtonContainer != undefined) {
+                rotateButtonContainer.dispose();
+            }
+        }
+
+        columnChart = chart.createChild(am4charts.XYChart);
+        columnChart.data = barchartData;
+        chart.children.moveValue(columnChart, 0);
+        // Create axes
+        let categoryAxis = columnChart.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20
+        categoryAxis.dataFields.category = subcat;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.inversed = true;
+       categoryAxis.renderer.minGridDistance = 20;
+        let valueAxis = columnChart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+        var lastColumnSeriesFill = columnSeries ? columnSeries.fill : "#5CC0DE";
+        // Create series
+        columnSeries = columnChart.series.push(new am4charts.ColumnSeries());
+        columnSeries.dataFields.valueX = subval;
+        columnSeries.dataFields.categoryY = subcat;
+        columnSeries.columns.template.strokeWidth = 0;
+        columnSeries.columns.template.tooltipText = "{value}";
+        columnSeries.fill = lastColumnSeriesFill;
+
+
+        let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{value}";
+        valueLabel.label.fontSize = 20;
+        valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.hideOversized = false;
+        valueLabel.label.truncate = false;
+        valueLabel.label.dx = 10;
+        columnChart.cursor = new am4charts.XYCursor();
+        columnChart.cursor.behavior = "zoomX";
+        let scrollbar = new am4charts.XYChartScrollbar();
+        columnChart.scrollbarX = scrollbar;
+       makeRotateButtonForDates();
+
+    }
+    function  makeVBar() {
+        var barchartData = columnChart ? columnChart.data : [];
+
+        console.log(chart)
+        if (columnChart != undefined) {
+            columnChart.dispose();
+            if (rotateButtonContainer!=undefined) {
+                rotateButtonContainer.dispose();
+            }
+            
+
+        }
+        columnChart = chart.createChild(am4charts.XYChart);
+        chart.children.moveValue(columnChart, 0);
+        columnChart.data = barchartData;
+
+
+        // Create axes
+        let categoryAxis = columnChart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20
+        categoryAxis.dataFields.category = subcat;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.minGridDistance = 20;
+
+        // Configure axis label
+        var label = categoryAxis.renderer.labels.template;
+        label.truncate = true;
+        label.maxWidth = 100;
+        label.tooltipText = "{category}";
+
+        //categoryAxis.renderer.inversed = true;
+
+        categoryAxis.events.on("sizechanged", function (ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            if (cellWidth < axis.renderer.labels.template.maxWidth) {
+                axis.renderer.labels.template.rotation = -45;
+                axis.renderer.labels.template.horizontalCenter = "right";
+                axis.renderer.labels.template.verticalCenter = "middle";
+            }
+            else {
+                axis.renderer.labels.template.rotation = 0;
+                axis.renderer.labels.template.horizontalCenter = "middle";
+                axis.renderer.labels.template.verticalCenter = "top";
+            }
+        });
+
+        let valueAxis = columnChart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+
+        var lastColumnSeriesFill = columnSeries ? columnSeries.fill : "#5CC0DE";
+        // Create series
+        columnSeries = columnChart.series.push(new am4charts.ColumnSeries());
+        columnSeries.dataFields.valueY = subval;
+        columnSeries.dataFields.categoryX = subcat;
+        columnSeries.columns.template.strokeWidth = 0;
+        columnSeries.columns.template.tooltipText = "{value}";
+        columnSeries.fill = lastColumnSeriesFill;
+
+
+        let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{value}";
+        valueLabel.label.fontSize = 20;
+        //valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.hideOversized = false;
+        valueLabel.label.truncate = false;
+        valueLabel.label.dy = -10;
+
+        columnChart.cursor = new am4charts.XYCursor();
+        columnChart.cursor.behavior = "zoomX";
+        let scrollbar = new am4charts.XYChartScrollbar();
+        columnChart.scrollbarX = scrollbar;
+        makeRotateButtonForDates();
+    }
+    function  makeRotateButtonForDates() {
+
+        rotateButtonContainer = columnChart.createChild(am4core.Container);
+        // this.chart.children.moveValue(this.rotateButtonContainer, 0);
+        let button = rotateButtonContainer.createChild(am4core.Button);
+        button.label.text = "Rotate Chart";
+        button.align = "left|bottom";
+        button.marginBottom = 15;
+        button.events.on("hit", () => {
+
+            //this.toggleLoading();
+            if (isChartRotativeVerical[divId]) {
+                isChartRotativeVerical[divId] = false;
+                makeVBar();
+
+            } else {
+                isChartRotativeVerical[divId] = true;
+                makeBar()
+
+            }
+            columnSeries.reinit();
+            setTimeout(() => {
+                //this.toggleLoading();
+            }, 3000);
+        });
+    }
 }
+  
+
+
+
 function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
     am4charts.
         am4core.useTheme(am4themes_animated);
@@ -176,13 +465,9 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
-
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 
     categoryAxis.renderer.labels.template.fontSize = 20;
@@ -224,12 +509,9 @@ function callClyChart(data, clytitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20;
@@ -278,13 +560,9 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
-
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
     var pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = chartValue;
     pieSeries.dataFields.category = chartCategory;
@@ -307,6 +585,7 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
 }
 function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
 
+    
     am4core.useTheme(am4themes_animated);
 
     // Create chart instance
@@ -316,12 +595,9 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
     // Add data
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.labels.template.fontSize = 20;
@@ -381,6 +657,9 @@ function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
         categoryAxis.zoomToIndexes([...data].length - 5, [...data].length);
     });
 
+    makeRotateButton(chart)
+
+
 }
 function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRototate, columnsColorFunc) {
     am4core.useTheme(am4themes_animated);
@@ -389,13 +668,9 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
     chart.data = data;
 
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
-
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 
@@ -446,7 +721,7 @@ function callBarChart(data, bartitle, divId, chartValue, chartCategory, dontRoto
     title.text = bartitle;
     title.fontSize = 25;
     title.marginBottom = 30;
-
+    makeRotateButton(chart)
     //chart.exporting.menu = new am4core.ExportMenu();
 }
 
@@ -764,12 +1039,9 @@ function callLineChart(data, lineTitle, divId, chartValue, chartCategory) {
     }
 
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     createSeries(chartValue, chartCategory);
     chart.legend = new am4charts.Legend();
@@ -813,12 +1085,9 @@ function callDonutChart(data, donuttitle, divId, chartValue, chartCategory) {
     var chart = am4core.create(divId, am4charts.PieChart);
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     var pieSeries = chart.series.push(new am4charts.PieSeries3D());
     pieSeries.dataFields.value = chartValue;
@@ -872,12 +1141,9 @@ function callClusterd(data, clusterdtitle, chartId,) {
     chart.legend.paddingBottom = 20
     chart.legend.labels.template.maxWidth = 95
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = "ART_Chart_Data_" + getFormattedDateTime();
 
     var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
     xAxis.renderer.labels.template.fontSize = 20;
@@ -978,6 +1244,19 @@ function callClusterd(data, clusterdtitle, chartId,) {
 
 
 }
+function getFormattedDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}${month}${day}_${hours}${minutes}${seconds}`;
+}
+
+console.log(getFormattedDateTime());
 
 export function makedynamicChart(
     chartType,
@@ -986,7 +1265,7 @@ export function makedynamicChart(
     divId,
     chartValue,
     chartCategory,
-    dontRotateCat,
+    isRotaive,
     columnsColorFunc
 ) {
     var chart = document.getElementById(divId);
@@ -995,12 +1274,22 @@ export function makedynamicChart(
         case types.pie:
             callPieChart(data, title, divId, chartValue, chartCategory);
             break;
-        case types.bar:
-            callBarChart(data, title, divId, chartValue, chartCategory, dontRotateCat, columnsColorFunc);
+        case types.bar: {
+            if (isRotaive) {
+                isChartRotativeVerical[divId] = true;
+            }
+            callBarChart(data, title, divId, chartValue, chartCategory, isRotaive, columnsColorFunc);
             break;
-        case types.hbar:
+        }
+            
+        case types.hbar: {
+            if (isRotaive) {
+                isChartRotativeVerical[divId] = false;
+            }
             callHBar(data, title, divId, chartValue, chartCategory);
             break;
+        }
+            
         case types.dragdrop:
             callDragDropChart(data, title, divId, chartValue, chartCategory);
             break;
@@ -1025,4 +1314,59 @@ export function makedynamicChart(
             console.log("eror");
             break;
     }
+}
+
+
+function makeRotateButton(chart) {
+    let buttonContainer = chart.chartContainer.createChild(am4core.Container);
+    let button = buttonContainer.createChild(am4core.Button);
+    button.label.text = "Rotate Chart";
+    button.align = "left";
+    button.marginBottom = 15;
+    button.events.on("hit", () => {
+
+
+        // Get div ID
+        var divId = chart.svgContainer.htmlElement.id;
+
+        // Get chart data
+        var data = chart.data;
+
+        // Get chart title
+        var title = chart.titles.values.length > 0 ? chart.titles.values[0].text : "";
+  
+
+        // Get the category axis from the chart
+        var categoryAxisFromChart = chart.xAxes.getIndex(0);
+        var categoryField = categoryAxisFromChart.dataFields.category;
+    
+        // Get the series and its data field valueY
+        var seriesFromChart = chart.series.getIndex(0);
+        var valueYField = seriesFromChart.dataFields.valueY;
+
+
+        var HcategoryAxisFromChart = chart.yAxes.getIndex(0);
+        var HcategoryField = HcategoryAxisFromChart.dataFields.category;
+        // Get the series and its data field valueY
+        var HseriesFromChart = chart.series.getIndex(0);
+        var HvalueYField = HseriesFromChart.dataFields.valueX;
+
+
+        chart.dispose();
+        console.log(isChartRotativeVerical[divId])
+        if (!isChartRotativeVerical[divId]) {
+            isChartRotativeVerical[divId] = true
+            buttonContainer.dispose()
+
+            callBarChart(data, title, divId, HvalueYField, HcategoryField, true);
+
+        } else {
+            var HcategoryAxisFromChart = chart.yAxes.getIndex(0);
+            var HcategoryField = HcategoryAxisFromChart.dataFields.category;
+            isChartRotativeVerical[divId] = false;
+            buttonContainer.dispose()
+            callHBar(data, title, divId, valueYField, categoryField, true);
+
+        }
+    });
 }
