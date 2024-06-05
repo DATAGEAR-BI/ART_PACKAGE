@@ -1,5 +1,4 @@
-﻿using Data.Data.ARTDGAML;
-using Data.FCF71;
+﻿using Data.FCF71;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -23,8 +22,7 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
         public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
-        // public virtual DbSet<BigData> BigDatas { get; set; } = null!;
-
+        public virtual DbSet<ArtAuditReportView> ArtAuditReportViews { get; set; } = null!;
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 
 
@@ -33,6 +31,8 @@ namespace Data.Data.SASAml
             //AML
             modelBuilder.Entity<ArtStAlertPerOwner>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAlertsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAlertPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAlertPerScenario>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerCategory>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerPriority>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerStatus>().HasNoKey().ToView(null);
@@ -40,13 +40,15 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStCustPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCustPerRisk>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCustPerType>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerIndustry>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerOccupation>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlPropRiskClass>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlRiskClass>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlAlertAgeSummery>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlAlertsPerStatus>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlAlertsPerBranch>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStAmlAlertsPerScenario>().HasNoKey().ToView(null);
-
+            modelBuilder.Entity<ArtStAmlRiskStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerDate>().HasNoKey().ToView(null);
+            
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);
         }

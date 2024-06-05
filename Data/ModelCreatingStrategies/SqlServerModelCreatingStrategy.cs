@@ -8065,5 +8065,10 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.SuppressedAlert).HasColumnName("SUPPRESSED_ALERT");
             });
         }
+
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
