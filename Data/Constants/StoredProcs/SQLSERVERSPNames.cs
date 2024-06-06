@@ -11,7 +11,6 @@
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "[ART_DB].[ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION]";
 
         //AML
-        public static readonly string ART_ST_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";
         public static readonly string ART_ST_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_CASES_PER_CATEGORY]";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_CASES_PER_PRIORITY]";
         public static readonly string ART_ST_CASES_PER_STATUS = "[ART_DB].[ART_ST_CASES_PER_STATUS]";
@@ -26,6 +25,8 @@
         public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_AML_ALERTS_PER_SCENARIO]";
         public static readonly string ART_ST_AML_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_AML_ALERTS_PER_STATUS]";
         public static readonly string ART_ST_ALERT_PER_OWNER = "[ART_DB].[ART_ST_ALERT_PER_OWNER]";
+        public static readonly string ART_ST_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_ALERTS_PER_BRANCH]";
+        public static readonly string ART_ST_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";
 
 
 

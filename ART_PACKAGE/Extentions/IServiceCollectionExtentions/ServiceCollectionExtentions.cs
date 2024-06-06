@@ -31,6 +31,7 @@ using Data.GOAML;
 using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
+using Data.Data.SASAudit;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -152,6 +153,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("KYC"))
             {
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("SASAUDIT"))
+            {
+                _ = services.AddDbContext<SasAuditContext>(opt => contextBuilder(opt, connectionString));
             }
 
             // if (modulesToApply.Contains("EXPORT_SCHEDULAR"))

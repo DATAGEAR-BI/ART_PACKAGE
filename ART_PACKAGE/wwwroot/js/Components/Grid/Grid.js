@@ -59,13 +59,11 @@ class Grid extends HTMLElement {
         super();
 
 
-
     }
 
 
     filterAction(e) {
-        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
-
+        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter());
         var multiselects = document.querySelector(`[data-role=multiselect][data-field=${e.field}]`);
         if (multiselects) {
             e.preventDefault();

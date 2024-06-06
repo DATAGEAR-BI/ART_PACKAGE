@@ -119,6 +119,23 @@
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
 
+    //SAS AMl
+
+    AmlAuditReport: "/AmlAuditReport/GetData",
+
+
+
+    // SAS Audit
+    SASAuditListApp: "/SASAuditListApp/GetData",
+    SASAuditTrailAccessGroupRole: "/SASAuditTrailAccessGroupRole/GetData",
+    SASAuditTrailAccessRole: "/SASAuditTrailAccessRole/GetData",
+    SASAuditTrailAction: "/SASAuditTrailAction/GetData",
+    SASAuditTrailGroupsRolesSummary: "/SASAuditTrailGroupsRolesSummary/GetData",
+    SASAuditTrailLastLogin: "/SASAuditTrailLastLogin/GetData",
+    SASAuditTrailUsersDepartment: "/SASAuditTrailUsersDepartment/GetData",
+    SASAuditTrailUsersGroupsCaps: "/SASAuditTrailUsersGroupsCaps/GetData",
+    SASAuditTrailUsersGroups: "/SASAuditTrailUsersGroups/GetData",
+
 
     //crp
     CRPCases: "/CrpCases/GetData",
@@ -138,6 +155,8 @@
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
     ClearDetect: "/ClearDetect/GetData",
+    SWIFTClearDetect: "/SWIFTClearDetect/GetData",
+    CasesBirthdate: "/CasesBirthdate/GetData",
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",

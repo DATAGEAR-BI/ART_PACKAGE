@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public artamltriageviewConfig()
         {
 
-            SkipList = new List<string>() { "AlertedEntityLevel" };
+            //SkipList = new List<string>() { "AlertedEntityLevel" };
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"AlertedEntityName" , new GridColumnConfiguration { DisplayName = "Alerted Entity Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AlertedEntityNumber" , new GridColumnConfiguration { DisplayName = "Alerted Entity Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -17,7 +17,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"OwnerUserid" , new GridColumnConfiguration { DisplayName = "Owner"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AggregateAmt" , new GridColumnConfiguration { DisplayName = "Aggregate Amount"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AgeOldestAlert" , new GridColumnConfiguration { DisplayName = "Alert Age"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"AlertsCntSum" , new GridColumnConfiguration { DisplayName = "Alerts Count"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
+{"AlertsCntSum" , new GridColumnConfiguration { DisplayName = "Alerts Count"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"AlertedEntityLevel" , new GridColumnConfiguration { DisplayName = "Alerted Entity Level"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+            };
 
 
 

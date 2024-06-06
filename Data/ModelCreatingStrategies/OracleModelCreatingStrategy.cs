@@ -4,6 +4,7 @@ using Data.Data.AmlAnalysis;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.FATCA;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
@@ -2534,7 +2535,10 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(26)
                     .IsUnicode(false)
                     .HasColumnName("NATIONALITY2");
-
+                entity.Property(e => e.Nationality3)
+                    .HasMaxLength(26)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY3");
                 entity.Property(e => e.BranchNumber)
                     .HasMaxLength(40)
                     .IsUnicode(false)
@@ -3653,6 +3657,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_ROLE");
             });
         }
+
+       
 
         public void OnAmlAnalysisModelCreating(ModelBuilder modelBuilder)
         {
@@ -15418,6 +15424,401 @@ namespace Data.ModelCreatingStrategies
             });
         }
 
+        public void OnDGFATCAModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("FAGPDB");
+
+
+        }
+        public void OnFATCAModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("ART")
+                .UseCollation("USING_NLS_COMP");
+
+            modelBuilder.Entity<ArtFatcaAlert>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FATCA_ALERTS");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CustomerId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_ID");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(1200)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NAME");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.IncidentId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("INCIDENT_ID");
+
+                entity.Property(e => e.Type)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtFatcaCace>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FATCA_CACES");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseType)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_TYPE");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CustomerId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_ID");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(1200)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NAME");
+            });
+
+            modelBuilder.Entity<ArtFatcaCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FATCA_CUSTOMERS");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CustClsFlag)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .HasColumnName("CUST_CLS_FLAG");
+
+                entity.Property(e => e.CustKey)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("CUST_KEY");
+
+                entity.Property(e => e.CustomerId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_ID");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(1200)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NAME");
+
+                entity.Property(e => e.MainNationality)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("MAIN_NATIONALITY");
+
+                entity.Property(e => e.SignW8)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SIGN_W8");
+
+                entity.Property(e => e.SignW9)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SIGN_W9");
+
+                entity.Property(e => e.W8SignDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("W8_SIGN_DATE");
+
+                entity.Property(e => e.W9SignDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("W9_SIGN_DATE");
+            });
+
+            modelBuilder.Entity<ArtFatcaDormantAccountsSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FATCA_DORMANT_ACCOUNTS_SUMMARY");
+
+                entity.Property(e => e.AmountInUsd)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("AMOUNT_IN_USD");
+
+                entity.Property(e => e.NumberOfAccounts)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_ACCOUNTS");
+            });
+
+            modelBuilder.Entity<ArtFatcaIrsReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FATCA_IRS_REPORT");
+
+                entity.Property(e => e.Accountbalance)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("ACCOUNTBALANCE");
+
+                entity.Property(e => e.Accountclosed)
+                    .HasMaxLength(12)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCLOSED");
+
+                entity.Property(e => e.AccountcountFatca201)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCOUNT_FATCA201")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AccountcountFatca202)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCOUNT_FATCA202")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AccountcountFatca203)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("ACCOUNTCOUNT_FATCA203");
+
+                entity.Property(e => e.AccountcountFatca204)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCOUNT_FATCA204")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AccountcountFatca205)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCOUNT_FATCA205")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AccountcountFatca206)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTCOUNT_FATCA206")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Accountholdertype)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTHOLDERTYPE");
+
+                entity.Property(e => e.Accountnumber)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTNUMBER");
+
+                entity.Property(e => e.Accounttype)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNTTYPE");
+
+                entity.Property(e => e.AddressfreeE)
+                    .HasMaxLength(1065)
+                    .IsUnicode(false)
+                    .HasColumnName("ADDRESSFREE_E");
+
+                entity.Property(e => e.AddressfreeI)
+                    .HasMaxLength(1065)
+                    .IsUnicode(false)
+                    .HasColumnName("ADDRESSFREE_I");
+
+                entity.Property(e => e.Birthdate)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("BIRTHDATE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Countrycode)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("COUNTRYCODE");
+
+                entity.Property(e => e.Countrycodeadd)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("COUNTRYCODEADD");
+
+                entity.Property(e => e.Firstname)
+                    .HasMaxLength(750)
+                    .IsUnicode(false)
+                    .HasColumnName("FIRSTNAME");
+
+                entity.Property(e => e.Lastname)
+                    .HasMaxLength(1200)
+                    .IsUnicode(false)
+                    .HasColumnName("LASTNAME");
+
+                entity.Property(e => e.Middlename)
+                    .HasMaxLength(750)
+                    .IsUnicode(false)
+                    .HasColumnName("MIDDLENAME");
+
+                entity.Property(e => e.Nationality)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY");
+
+                entity.Property(e => e.OwnerAddress)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_ADDRESS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerFirstName)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_FIRST_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerLastName)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_LAST_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerResCountryCode)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_RES_COUNTRY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerTin)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_TIN")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Paymentamnt501)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("PAYMENTAMNT_501");
+
+                entity.Property(e => e.Paymentamnt502)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("PAYMENTAMNT_502");
+
+                entity.Property(e => e.Paymentamnt503)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("PAYMENTAMNT_503");
+
+                entity.Property(e => e.Paymentamnt504)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("PAYMENTAMNT_504");
+
+                entity.Property(e => e.PoolbalanceFatca201)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("POOLBALANCE_FATCA201")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PoolbalanceFatca202)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("POOLBALANCE_FATCA202")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PoolbalanceFatca203)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("POOLBALANCE_FATCA203");
+
+                entity.Property(e => e.PoolbalanceFatca204)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("POOLBALANCE_FATCA204")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PoolbalanceFatca205)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("POOLBALANCE_FATCA205")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PoolbalanceFatca206)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("POOLBALANCE_FATCA206")
+                    .IsFixedLength();
+
+                entity.Property(e => e.SignW8)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SIGN_W8");
+
+                entity.Property(e => e.SignW9)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("SIGN_W9");
+
+                entity.Property(e => e.Tin)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("TIN");
+            });
+
+            modelBuilder.HasSequence("HF_JOB_ID_SEQ");
+
+            modelBuilder.HasSequence("HF_SEQUENCE");
+
+
+
+        }
+        public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+        }
+
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SasAuditTrailReport>(entity =>
@@ -15767,5 +16168,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PRO_TYPE");
             });
         }
+
     }
 }
+
+

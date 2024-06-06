@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        Cases BirthDate Report
+        <small>The related customer's date or year of birth as below</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="CasesBirthdate" data-urlkey="CasesBirthdate" data-handlerkey="CasesBirthdate"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+}

@@ -73,51 +73,43 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
     }
 },
-
-            { nameof(ArtStAmlAlertAgeSummery).ToLower(), new ReportConfig {
+            { nameof(ArtUserPerformPerAction).ToLower(), new ReportConfig {
 
                DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
-                   { "DataSource", new GridColumnConfiguration { DisplayName = "Data Source" } },
-                { "Bucket1", new GridColumnConfiguration { DisplayName = "Bucket 1" } },
-                { "Bucket2", new GridColumnConfiguration { DisplayName = "Bucket 2" } },
-                { "Bucket3", new GridColumnConfiguration { DisplayName = "Bucket 3" } },
-                { "Bucket4", new GridColumnConfiguration { DisplayName = "Bucket 4" } },
-                { "Total", new GridColumnConfiguration { DisplayName = "Total" } },
-                { "RISK_APPETITE", new GridColumnConfiguration { DisplayName = "Risk Appetite" } }
+                    //{ "ACTION_USER", new GridColumnConfiguration { DisplayName = "Action User" } },
+                    { "action", new GridColumnConfiguration { DisplayName = "Action" } },
+                    { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "durations_in_seconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_durations_in_seconds", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "durations_in_minutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_durations_in_minutes", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "durations_in_hours", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_durations_in_hours", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "durations_in_days", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_durations_in_days", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
                 }
     }
 },
-            {
-    nameof(ClearDetectController).ToLower(), new ReportConfig
-    {
-        SkipList = new List<string>
-        { },
-        DisplayNames = new Dictionary<string, GridColumnConfiguration>
-            {
-                    {"RequestUid", new GridColumnConfiguration { DisplayName ="Request ID"}},
-                    {"RequestDate", new GridColumnConfiguration { DisplayName ="Request Date"}},
-                    {"SearchMatch", new GridColumnConfiguration { DisplayName ="Search Match"}},
-                    {"SourceType", new GridColumnConfiguration { DisplayName ="Source Type"}},
-                    {"CaseId", new GridColumnConfiguration { DisplayName ="Case ID"}},
 
-            }
-    }
-            },
-            /*{
-                nameof(ReportController).ToLower(),new ReportConfig
+            { nameof(ArtUserPerformancePerActionUser).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
-                   SkipList =  new List<string>()
-            {
-                  nameof(ArtSavedCustomReport.User),
-                  nameof(ArtSavedCustomReport.UserId),
-                nameof(ArtSavedCustomReport.Schema),
-                nameof(ArtSavedCustomReport.Columns),
-                nameof(ArtSavedCustomReport.Charts),
-
-            }
+                    { "ACTION_USER", new GridColumnConfiguration { DisplayName = "Action User" } },
+                    //{ "ACTION", new GridColumnConfiguration { DisplayName = "Action" } },
+                    { "TOTAL_NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "DURATIONS_IN_MINUTES", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_DURATIONS_IN_MINUTES", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "DURATIONS_IN_HOURS", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_DURATIONS_IN_HOURS", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
+                }
     }
-            },*/
+},
             {
     nameof(AlertedEntitiesController).ToLower(),new ReportConfig
     {
@@ -170,26 +162,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     }
             },
             {
-    nameof(CFTConfigController).ToLower() , new ReportConfig
-    {
-        DisplayNames = new Dictionary<string, GridColumnConfiguration>
-            {
-                    { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
-                    { "Maker", new GridColumnConfiguration { DisplayName = "Maker"}},
-                    { "MakerDate", new GridColumnConfiguration { DisplayName = "Maker Date"}},
-                    { "Checker", new GridColumnConfiguration { DisplayName = "Checker"}},
-                    { "CheckerDate", new GridColumnConfiguration { DisplayName = "Checker Date"}},
-                    { "CheckerAction", new GridColumnConfiguration { DisplayName = "Checker Action"}},
-                    { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail"}},
-
-            }
-    }
-            },
-            {
     nameof(UserPerformanceController).ToLower(),
                 new ReportConfig
                 {
-                    SkipList = new List<string>() { "CaseRk", "ValidFromDate", "CreateUserId" },
+                    SkipList = new List<string>() { "CaseRk", "ValidFromDate", "Priority" },
                     DisplayNames = new Dictionary<string, GridColumnConfiguration>
                                                         {
                                                                 { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
@@ -207,7 +183,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                                                                 { "DurationsInSeconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds"}},
                                                                 { "DurationsInMinutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes"}},
                                                                 { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
-                                                                { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
+                                                                { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}},
+                                                                { "CreateUserId", new GridColumnConfiguration { DisplayName = "Create User"}},
                                                         }
                 }
             }

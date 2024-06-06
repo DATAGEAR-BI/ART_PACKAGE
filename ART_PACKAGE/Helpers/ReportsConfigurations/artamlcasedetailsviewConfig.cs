@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public artamlcasedetailsviewConfig()
         {
 
-            SkipList = new List<string>() { "BranchNumber" };
+            //SkipList = new List<string>() { "BranchNumber" };
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"CaseId" , new GridColumnConfiguration { DisplayName = "Case ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"EntityName" , new GridColumnConfiguration { DisplayName = "Entity Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -22,7 +22,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"Owner" , new GridColumnConfiguration { DisplayName = "Owner"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ClosedDate" , new GridColumnConfiguration { DisplayName = "Closed Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
-            { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+            { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+            { "BranchNumber" , new GridColumnConfiguration { DisplayName = "Branch Number", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
         };
 
             ReportTitle = "Cases Details";

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        AML Audit Report
+        <small>This report presents all users' actions with the related information below</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="AmlAuditReport" data-urlkey="AmlAuditReport" data-handlerkey="AmlAuditReport"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+}

@@ -10,7 +10,6 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             SkipList = new List<string>(){ "CustomerTaxId",
 "DoingBusinessAsName",
 "GovernorateName",
-"CustomerStatus",
 "StreetPostalCode",
 "StreetCountryCode",
 "StreetCountryName",
@@ -23,12 +22,13 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 "EmployerName",
 "EmployerPhoneNumber",
 "EmailAddress",
-"PhoneNumber1",
-"PhoneNumber2",
 "PhoneNumber3",
 "AnnualIncomeAmount",
 "NetWorthAmount",
-"LastRiskAssessmentDate",
+"CityName",
+"ResidenceCountryName",
+"CitizenshipCountryName",
+"NonProfitOrgInd",
 "ActiveFlg" };
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"CustomerName" , new GridColumnConfiguration { DisplayName = "Customer Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -49,7 +49,17 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"IndustryDesc" , new GridColumnConfiguration { DisplayName = "Industry Description"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"BranchNumber" , new GridColumnConfiguration { DisplayName = "Branch Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"BranchName" , new GridColumnConfiguration { DisplayName = "Branch Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"CustomerStatus" , new GridColumnConfiguration { DisplayName = "Customer Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"CustomerLevel" , new GridColumnConfiguration { DisplayName = "Customer Level"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"EntitySegmentId" , new GridColumnConfiguration { DisplayName = "Current Segment Id"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"LastSegmentId" , new GridColumnConfiguration { DisplayName = "Last Segment Id"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CustomerIdentificationId" , new GridColumnConfiguration { DisplayName = "Customer Identification ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"PhoneNumber1" , new GridColumnConfiguration { DisplayName = "Phone Number1"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"PhoneNumber2" , new GridColumnConfiguration { DisplayName ="Phone Number2"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"CustomerAge" , new GridColumnConfiguration { DisplayName = "Customer Age"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"Nationality2" , new GridColumnConfiguration { DisplayName = "Nationality 2"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"Nationality3" , new GridColumnConfiguration { DisplayName = "Nationality 3"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"LastRiskAssessmentDate" , new GridColumnConfiguration { DisplayName = "Last Risk Assessment Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CustomerIdentificationType" , new GridColumnConfiguration { DisplayName = "Customer Identification Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 

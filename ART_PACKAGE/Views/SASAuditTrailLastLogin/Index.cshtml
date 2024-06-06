@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SAS Last Login Report
+        <small>Presents each user with last login date</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SASAuditTrailLastLogin" data-urlkey="SASAuditTrailLastLogin" data-handlerkey="SASAuditTrailLastLogin"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+}

@@ -46,5 +46,5 @@ async function onChangeSegment(e) {
     URLS.AllSegmentsOutliersNew = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
     console.log(URLS.AllSegmentsOutliersNew);
 
-    $("#grid").data("kendoGrid").dataSource.read();
+    $("#outliers-Grid").data("kendoGrid").dataSource.read();
 }

@@ -32,28 +32,31 @@ namespace ART_PACKAGE.Controllers.SASAML
         {
 
             IEnumerable<ArtStAmlRiskClass> chart1Data = Enumerable.Empty<ArtStAmlRiskClass>().AsQueryable();
-            IEnumerable<ArtStAmlPropRiskClass> chart2data = Enumerable.Empty<ArtStAmlPropRiskClass>().AsQueryable();
+            //IEnumerable<ArtStAmlPropRiskClass> chart2data = Enumerable.Empty<ArtStAmlPropRiskClass>().AsQueryable();
+            IEnumerable<ArtStAmlRiskStatus> chart3data = Enumerable.Empty<ArtStAmlRiskStatus>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            //IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
                 chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(SQLSERVERSPNames.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
-                chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(SQLSERVERSPNames.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                //chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(SQLSERVERSPNames.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
             }
 
             if (dbType == DbTypes.Oracle)
             {
                 chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(ORACLESPName.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
-                chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(ORACLESPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                //chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(ORACLESPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                chart3data = dbfcfcore.ExecuteProc<ArtStAmlRiskStatus>(ORACLESPName.ART_ST_AML_RISK_STATUS, chart3Params.ToArray());
 
             }
             if (dbType == DbTypes.MySql)
             {
                 chart1Data = dbfcfcore.ExecuteProc<ArtStAmlRiskClass>(MYSQLSPName.ART_ST_AML_RISK_CLASS, chart1Params.ToArray());
-                chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(MYSQLSPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
+                //chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(MYSQLSPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
 
             }
             ArrayList chartData = new()
@@ -68,15 +71,23 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Type = ChartType.donut
 
                 },
-                new ChartData<ArtStAmlPropRiskClass>
+                //new ChartData<ArtStAmlPropRiskClass>
+                //{
+                //    ChartId = "StPropRiskClassSummary",
+                //    Data = chart2data.ToList(),
+                //    Title = "Number OF Customers Per Proposed Risk Classification",
+                //    Cat = "PROPOSED_RISK_CLASS",
+                //    Val = "NUMBER_OF_CUSTOMERS",
+                //    Type = ChartType.donut
+                //},
+                new ChartData<ArtStAmlRiskStatus>
                 {
-                    ChartId = "StPropRiskClassSummary",
-                    Data = chart2data.ToList(),
-                    Title = "Number OF Customers Per Proposed Risk Classification",
-                    Cat = "PROPOSED_RISK_CLASS",
-                    Val = "NUMBER_OF_CUSTOMERS",
-                    Type = ChartType.donut
-                }
+                    ChartId = "StRiskStatus",
+                    Data =chart3data.ToList(),
+                    Title = "Risk Assessment Per Risk Status",
+                    Cat = "RISK",
+                    Type = ChartType.clusteredbarchart
+                },
             };
 
 

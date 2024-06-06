@@ -36,6 +36,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "UpdatedDate", new GridColumnConfiguration { DisplayName = "Updated Date"}},
                     { "CreatedBy", new GridColumnConfiguration { DisplayName = "Created By"}},
                     { "LastComment", new GridColumnConfiguration { DisplayName = "Last Comment"}},
+                    { "LastStatus", new GridColumnConfiguration { DisplayName = "Last Status"}},
                     { nameof(ArtSystemPerformance.CreateUserId), new GridColumnConfiguration { DisplayName = "Create User Id"}},
             };
 

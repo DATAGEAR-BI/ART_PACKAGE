@@ -82,15 +82,33 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "CFTConfig")"><i class="glyphicon glyphicon-globe"></i> <span>CFT Config</span></a>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>SWIFT Clear Detect Report</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SWIFTClearDetect")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li class="active ">
-                                        <a href="@Url.Action("Index", "ClearDetect")"><i class="glyphicon glyphicon-globe"></i> <span>Clear Detect</span></a>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Cases Birthdate Report</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "CasesBirthdate")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+
+                                            </li>
+                                        </ul>
                                     </li>
-                                   @* <li class="active ">
-                                        <a href="@Url.Action("Index", "AlertedEntities")"><i class="glyphicon glyphicon-tasks"></i> <span>Alerted Entities</span></a>
-                                    </li>*@
                                 </ul>
                             </li>
 
@@ -180,7 +198,19 @@
                                             </li>
                                         </ul>
                                     </li>
-
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Aml Audit Report</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "AmlAuditReport")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
 
                                 </ul>
 
@@ -631,7 +661,106 @@
                             </li>
                         }
 
-
+                        @if (Modules.Contains("SASAUDIT"))
+                        {
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i> <span>SAS AUDIT REPORTS</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Actions Audit</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailAction")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailLastLogin")"><i class="glyphicon glyphicon-tasks"></i> <span>Last Login</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>List Of Applications</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditListApp")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Access Right Per Profile</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailGroupsRolesSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailAccessGroupRole")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Access Right Per Role</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailAccessRole")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Users Groups Caps</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailUsersGroups")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailUsersGroupsCaps")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>List of Users Department</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SASAuditTrailUsersDepartment")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
 
                         @if (Modules.Contains("CRP"))
                         {

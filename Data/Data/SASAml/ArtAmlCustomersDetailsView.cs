@@ -55,6 +55,7 @@ namespace Data.Data.SASAml
         public int? EntitySegmentId { get; set; }
         public int? LastSegmentId { get; set; }
         public string? Nationality2 { get; set; }
+        public string? Nationality3 { get; set; }
 
     }
 }
