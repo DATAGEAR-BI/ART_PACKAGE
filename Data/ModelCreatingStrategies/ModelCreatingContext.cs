@@ -131,5 +131,9 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGINTFRAUDModelCreating(modelBuilder);
         }
+        public void OnART_AUDITModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnART_AUDITModelCreating(modelBuilder);
+        }
     }
 }

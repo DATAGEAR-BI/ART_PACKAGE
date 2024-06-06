@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Data.Data;
+using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
-using Data.Data;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
@@ -12,6 +12,8 @@ public class AppUser : IdentityUser
     public ICollection<ArtSavedCustomReport>? Reports { get; set; }
     [JsonIgnore]
     public ICollection<UserReport>? UserReports { get; set; }
-    
+    public int? DgUserId { get; set; }
+    public DateTime? LastLoginDate { get; set; }
+
 }
 

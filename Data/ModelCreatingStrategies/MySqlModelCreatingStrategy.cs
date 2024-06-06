@@ -6808,5 +6808,10 @@ namespace Data.ModelCreatingStrategies
 
             throw new NotImplementedException();
         }
+        public void OnART_AUDITModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+        }
     }
 }

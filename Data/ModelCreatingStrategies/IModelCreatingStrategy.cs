@@ -17,6 +17,7 @@ namespace Data.ModelCreatingStrategies
         public void OnKYCModelCreating(ModelBuilder modelBuilder);
         public void OnCRPModelCreating(ModelBuilder modelBuilder);
         public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder);
+        public void OnART_AUDITModelCreating(ModelBuilder modelBuilder);
         public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder);
 
 

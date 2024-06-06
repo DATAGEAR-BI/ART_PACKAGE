@@ -12,5 +12,6 @@
         public const string FTI = "FTI";
         public const string AMLANALYSIS = "AMLANALYSIS";
         public const string KYC = "KYC";
+        public const string ARTAUDIT = "ARTAUDIT";
     }
 }

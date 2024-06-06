@@ -1,13 +1,16 @@
-﻿using Data.Audit.DGMGMT;
+﻿using Data.ARTAUDET_TEST;
+using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.AmlAnalysis;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
+using Data.Data.DGINTFRAUD;
 using Data.Data.ECM;
+using Data.Data.FATCA;
 using Data.Data.FTI;
 using Data.Data.KYC;
+using Data.Data.SASAml;
 using Data.Data.Segmentation;
-using Data.Data.FATCA;
 using Data.DGECM;
 using Data.FCFCORE;
 using Data.FCFKC.AmlAnalysis;
@@ -15,8 +18,6 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
-using Data.Data.SASAml;
-using Data.Data.DGINTFRAUD;
 
 
 namespace Data.ModelCreatingStrategies
@@ -15633,11 +15634,47 @@ namespace Data.ModelCreatingStrategies
 
 
         }
+        public void OnART_AUDITModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<ArtAuditUserAccessLog>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_AUDIT_USER_ACCESS_LOG");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.LastLoginDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_LOGIN_DATE");
+
+                entity.Property(e => e.ReportName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORT_NAME");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.UserNumber)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("USER_NUMBER");
+            });
+
+        }
+
+
 
         public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ART");
-            modelBuilder.Entity<Data.DGINTFRAUD.ArtHomeAlertsPerDate >(entity =>
+            modelBuilder.Entity<Data.DGINTFRAUD.ArtHomeAlertsPerDate>(entity =>
             {
                 entity.HasNoKey();
 

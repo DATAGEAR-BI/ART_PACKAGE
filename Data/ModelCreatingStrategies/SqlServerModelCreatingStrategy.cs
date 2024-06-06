@@ -6,14 +6,13 @@ using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.CRP;
 using Data.Data.ECM;
+using Data.Data.FATCA;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
-using Data.Data.FATCA;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCFCORE;
-using Data.Data.SASAml;
 using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
@@ -8069,6 +8068,11 @@ namespace Data.ModelCreatingStrategies
         public void OnDGINTFRAUDModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();
+        }
+        public void OnART_AUDITModelCreating(ModelBuilder modelBuilder)
+        {
+
+
         }
     }
 }
