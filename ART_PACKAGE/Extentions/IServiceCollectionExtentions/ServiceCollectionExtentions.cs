@@ -5,22 +5,25 @@ using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Middlewares.License;
 using ART_PACKAGE.Middlewares.Security;
+using Data.AC;
 using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Constants;
 using Data.Constants.db;
 using Data.Data.AmlAnalysis;
+using Data.Data.ARTAUDIT;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.CRP;
+using Data.Data.DGINTFRAUD;
 using Data.Data.ECM;
+using Data.Data.FATCA;
 using Data.Data.FTI;
 using Data.Data.KYC;
 using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
-using Data.Data.FATCA;
 using Data.DGAML;
 using Data.DGECM;
 using Data.DGFATCA;
@@ -31,8 +34,6 @@ using Data.GOAML;
 using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
-using Data.Data.DGINTFRAUD;
-using Data.AC;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -133,6 +134,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 _ = services.AddDbContext<TRADE_BASEContext>(opt => contextBuilder(opt, connectionString));
             }
+
+            if (modulesToApply.Contains("ARTAUDIT"))
+            {
+                _ = services.AddDbContext<ARTAUDITContext>(opt => contextBuilder(opt, connectionString));
+            }
+
             if (modulesToApply.Contains("SASAML"))
             {
                 string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");

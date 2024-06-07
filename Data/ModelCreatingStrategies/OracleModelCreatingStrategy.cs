@@ -1,7 +1,7 @@
-﻿using Data.ARTAUDET_TEST;
-using Data.Audit.DGMGMT;
+﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.AmlAnalysis;
+using Data.Data.ARTAUDIT;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.DGINTFRAUD;
@@ -15641,7 +15641,10 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToTable("ART_AUDIT_USER_ACCESS_LOG");
+                entity.ToTable("ART_AUDIT_USER_ACCESS_LOG", "ART");
+
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Department)
                     .HasMaxLength(100)
@@ -15663,7 +15666,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_NAME");
 
                 entity.Property(e => e.UserNumber)
-                    .HasColumnType("NUMBER")
+                    //.HasColumnType("NUMBER")
                     .HasColumnName("USER_NUMBER");
             });
 

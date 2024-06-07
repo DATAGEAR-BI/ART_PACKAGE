@@ -14,11 +14,13 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -109,6 +111,12 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                 Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+                        user.LastLoginDate = DateTime.UtcNow;
+                        await _userManager.UpdateAsync(user);
+                    }
                     _logger.LogWarning("user {Email} logged in sucessfully", Input.Email);
                     return LocalRedirect(returnUrl);
                 }

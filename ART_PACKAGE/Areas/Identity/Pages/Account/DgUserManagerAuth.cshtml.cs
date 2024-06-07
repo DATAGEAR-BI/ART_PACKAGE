@@ -103,7 +103,9 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                     user = new AppUser()
                                     {
                                         Email = email,
-                                        UserName = email
+                                        UserName = email,
+                                        DgUserId = info.DgUserManagementResponse.Id,
+                                        LastLoginDate = DateTime.Now,
                                     };
                                     IdentityResult createresult = await _userManager.CreateAsync(user);
                                     if (!createresult.Succeeded)
@@ -112,7 +114,11 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         return Page();
                                     }
                                 }
-
+                                if (user.DgUserId == null)
+                                {
+                                    user.DgUserId = info.DgUserManagementResponse.Id;
+                                }
+                                user.LastLoginDate = DateTime.Now;
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 _logger.LogWarning($"Adding roles to user");
                                 await AddRolesAndGroupsToUser(user.Email, artRoles);

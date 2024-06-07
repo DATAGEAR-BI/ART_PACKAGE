@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Controllers.AML_ANALYSIS;
+using ART_PACKAGE.Controllers.ARTAUDIT;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.DGINTFRAUD;
@@ -8,6 +9,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using Data.Data.AmlAnalysis;
+using Data.Data.ARTAUDIT;
 using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
@@ -140,6 +142,13 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           { nameof(EWalletRepeatedTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlEWalletRepeatedTransaction) } }     ,
           { nameof(IpnTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlIpnTransaction) } }     ,
           { nameof(StaffToStaffDailyTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlStaffToStaffDailyTransaction) } }     ,
+
+
+          //ARTAUDIT
+          { nameof(ArtAuditUserAccessController).ToLower()    ,              new List<Type>{ typeof(ArtAuditUserAccessLog) } }     ,
+
+
+
           //TASK_SCHEDULER
 
         };

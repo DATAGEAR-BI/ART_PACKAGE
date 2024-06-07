@@ -16,7 +16,9 @@ using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
+using ART_PACKAGE.Middlewares.Audit;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.CustomReport;
 using Hangfire;
@@ -42,7 +44,22 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
-builder.Services.AddSingleton<HttpClient>();
+//builder.Services.AddSingleton<HttpClient>();
+
+/*builder.Services.AddHttpClient("IgnoreSslClient")
+            .ConfigurePrimaryHttpMessageHandler(() => new IgnoreSslClientHandler());*/
+var certificate = Certificate.LoadCertificate("C:\\Users\\User\\source\\repos\\ART_PACKAGE\\ART_PACKAGE\\dgum_cer\\DG-DEMO.Datagearbi.local.crt", "changeit");
+
+builder.Services.AddHttpClient("CertificateClient")
+        .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
+
+builder.Services.AddDistributedMemoryCache(); // Use a distributed cache for session storage (in-memory for this example)
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only
+    options.Cookie.IsEssential = true; // Mark the session cookie as essential
+});
 builder.Services.AddSingleton<Module>();
 builder.Services.AddSingleton<ProcessesHandler>();
 
@@ -124,11 +141,13 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     _ = app.UseHsts();
 }
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
+app.UseMiddleware<ReportAuditMiddleware>();
 app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();

@@ -152,6 +152,7 @@
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
+    ArtAuditUserAccess: "ArtAuditUserAccess/GetData",
     test:"Test/GetData"
 
 };

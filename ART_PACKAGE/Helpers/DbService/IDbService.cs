@@ -1,6 +1,7 @@
 ﻿using Data.AC;
 using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.ARTAUDIT;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
@@ -29,6 +30,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }
+        public ARTAUDITContext ArtAudit { get; }
 
     }
 }
