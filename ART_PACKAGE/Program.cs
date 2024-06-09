@@ -17,6 +17,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares.Logging;
 using Data.Services;
+using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
 using Hangfire;
 using Hangfire.LiteDB;
@@ -45,7 +46,7 @@ builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
 builder.Services.AddSingleton<ProcessesHandler>();
 
-
+builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
 builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));

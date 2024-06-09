@@ -18,14 +18,14 @@ namespace Data.Services.AmlAnalysis
         public AmlAnalysis(
             ILogger<IAmlAnalysis> logger,
             FCFKCAmlAnalysisContext fcfkc,
-            AmlAnalysisContext context,
-            AmlAnalysisUpdateTableIndecator updateInd
+            AmlAnalysisContext context//,
+            /*AmlAnalysisUpdateTableIndecator updateInd*/
         )
         {
             _logger = logger;
             _fcfkc = fcfkc;
             _context = context;
-            _updateInd = updateInd;
+            //_updateInd = updateInd;
         }
 
         public async Task<(

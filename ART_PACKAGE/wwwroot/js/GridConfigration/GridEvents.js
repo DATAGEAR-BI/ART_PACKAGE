@@ -82,178 +82,219 @@ export const Handlers = {
         }
     },
     Aml_Analysis: {
-        closeAlerts: async (e) => {
+        closeAlerts: async (e, grid) => {
 
-            var selectedidz = await Select("PartyNumber");
+            let selectedidz = Object.values(grid.selectedRows).flat().map(x => x.PartyNumber);
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
                 toastObj.icon = "warning";
                 toastObj.heading = "Close Status";
                 $.toast(toastObj);
-                kendo.ui.progress($('#grid'), false);
+                kendo.ui.progress($(grid.gridDiv), false);
                 return;
             }
 
 
-            document.getElementById("selcted-div").innerText = `You Selected ${selectedidz.length} Entities`
+            document.getElementById("number_of_entities_to_close").innerText = `You are about to close alerts for ${selectedidz.length} ${selectedidz.length == 1 ? "entity" : "entities"}`
             $("#closeModal").modal("show");
             var closeBtn = document.getElementById("closeBtn");
-
+            var comment = document.getElementById("comment");
+            var errorspan = document.getElementById("comment-validation")
+            comment.onkeyup = () => {
+                if (!comment.value || comment.value == "")
+                    errorspan.hidden = false;
+                else
+                    errorspan.hidden = true;
+            }
+            errorspan.hidden = true;
             closeBtn.onclick = async (e) => {
-                var comment = document.getElementById("comment-box-close")
-                var errorspan = document.getElementById("comment-span")
-                if (!comment.value || comment.value == "") {
 
-                    errorspan.innerText = "You must type a comment";
+                if (!comment.value || comment.value == "") {
                     errorspan.hidden = false;
                     return;
                 }
-                errorspan.hidden = true;
+
                 var para = {
                     Entities: selectedidz.map(x => x.toString()),
                     Comment: comment.value,
-                    Desc: document.getElementById("close-desc").value,
+                    Desc: document.getElementById("closeDesc").value.value,
                 }
-                var res = fetch("/AML_ANALYSIS/Close", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify(para)
-                }).then(x => {
-                    comment.value = "";
-                    localStorage.removeItem("selectedidz");
-                });
-                $("#closeModal").modal("hide");
+
+                try {
+                    let res = await fetch("/Aml_Analysis/CloseAlerts", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(para)
+                    });
+                    if (res.ok) {
+                        $(grid.gridDiv).data('kendoGrid').dataSource.read();
+                        $(grid.gridDiv).data('kendoGrid').refresh();
+                        $("#closeModal").modal("hide");
+                    }
+
+                    else {
+                        toastObj.text = "something went wrong";
+                        toastObj.icon = "error";
+                        toastObj.heading = "Close Status";
+                        $.toast(toastObj);
+                    }
+
+                }
+                catch (e) {
+                    toastObj.text = "something went wrong";
+                    toastObj.icon = "error";
+                    toastObj.heading = "Close Status";
+                    $.toast(toastObj);
+                }
+
+
 
             }
         },
-        routeAlerts: async (e) => {
-            var selectedidz = await Select("PartyNumber");
+        routeAlerts: async (e, grid) => {
+            let selectedidz = Object.values(grid.selectedRows).flat().map(x => x.PartyNumber);
+            document.getElementById("number_of_entities_to_route").innerText = `You are about to route ${selectedidz.length} ${selectedidz.length == 1 ? "entity" : "entities"}`
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
                 toastObj.icon = "warning";
                 toastObj.heading = "Route Status";
                 $.toast(toastObj);
-                kendo.ui.progress($('#grid'), false);
+                kendo.ui.progress($(grid.gridDiv), false);
                 return;
             }
 
-            var queues = await (await fetch("/AML_ANALYSIS/GetQueues", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
-            })).json();
-            var queueSelect = document.getElementById("queueSelect");
-            var users = document.getElementById("userSelect");
+            $("#routeModal").modal("show");
 
-
-
-
-            queues.forEach(x => {
-                var opt = document.createElement("option");
-                opt.value = x;
-                opt.innerText = x;
-                queueSelect.append(opt);
-            });
-            $('#queueSelect').selectpicker('refresh');
-            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify("")
-            })).json();
-
-            [...queueUsers].forEach(x => {
-                var opt = document.createElement("option");
-                opt.value = x;
-                opt.innerText = x;
-                users.append(opt);
-            });
-            $('#userSelect').selectpicker('refresh');
-
-
-            document.getElementById("selcted-Route-div").innerText = `You Selected ${selectedidz.length} Entities`;
-
-            $("#RouteModal").modal("show");
-
-
-            queueSelect.onchange = async (e) => {
-
-                var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-                    method: "POST",
+            let queueS = document.getElementById("queue");
+            let userS = document.getElementById("user");
+            try {
+                let res = await fetch("/Aml_Analysis/GetQueues", {
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
-                    },
-                    body: JSON.stringify(e.target.value)
-                })).json();
-                users.innerHTML = "";
-                var opt = document.createElement("option");
-                opt.value = "";
-                opt.innerText = "Select An User";
-                users.append(opt);
-                queueUsers.forEach(x => {
-                    var opt = document.createElement("option");
-                    opt.value = x;
-                    opt.innerText = x;
-                    users.append(opt);
+                    }
                 });
 
-                $('#userSelect').selectpicker('refresh');
-            }
-
-            var routeBtn = document.getElementById("modalRoutBtn");
-            var comment = document.getElementById("comment-box-route");
-            var errorspan = document.getElementById("comment-span-route");
-            routeBtn.onclick = async (e) => {
-
-                if (!comment.value || comment.value == "") {
-
-                    errorspan.innerText = "You must type a comment";
-                    errorspan.hidden = false;
-                    return;
-                }
-
-                if ((!queueSelect.value || queueSelect.value == "") && (!users.value || users.value == "")) {
-                    errorspan.innerText = "You must select user, queue or both";
-                    errorspan.hidden = false;
-                    return;
-                }
-
-                errorspan.hidden = true;
-                var para = {
-                    Entities: selectedidz.map(x => x.toString()),
-                    Comment: comment.value,
-                    OwnerId: users.value,
-                    QueueCode: queueSelect.value
-
-                }
-
-                var res = fetch("/AML_ANALYSIS/Route", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify(para)
-                }).then(x => {
-                    comment.value = "";
-                    localStorage.removeItem("selectedidz");
+                let queues = await res.json();
+                let qOpts = queues.map(q => {
+                    let opt = document.createElement("option");
+                    opt.value = q.value;
+                    opt.innerText = q.text;
+                    return opt
                 });
+                let allOpt = document.createElement("option");
+                allOpt.value = "all";
+                queueS.update([allOpt, ...qOpts]);
+                await update_users("all");
+                async function update_users(queue) {
+                    res = await fetch("/Aml_Analysis/GetQeueUsers/" + queue, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                    });
+                    let users = await res.json();
 
-                $("#RouteModal").modal("hide");
+                    let quOpts = users.map(q => {
+                        let opt = document.createElement("option");
+                        opt.value = q.value;
+                        opt.innerText = q.text;
+                        return opt
+                    });
+                    userS.update([document.createElement("option"), ...quOpts]);
+
+                }
+
+
+                queueS.onchange = async (e) => {
+                    let queue = queueS.value.value;
+                    await update_users(queue);
+                }
+
+                let routeBtn = document.getElementById("routeBtn");
+                let comment = document.getElementById("routecomment");
+                let errorspan = document.getElementById("comment-validation-route");
+                comment.onkeyup = () => {
+                    if (!comment.value || comment.value == "") {
+                        errorspan.innerText = "you must enter a comment";
+                        errorspan.hidden = false;
+                    }
+                    else
+                        errorspan.hidden = true;
+                }
+
+
+
+                routeBtn.onclick = async (e) => {
+
+
+                    if ((queueS.value.value == "all") && (!userS.value.value)) {
+                        errorspan.innerText = "You must select user, queue or both";
+                        errorspan.hidden = false;
+                        return;
+                    }
+
+                    if (!comment.value || comment.value == "") {
+
+                        errorspan.innerText = "you must enter a comment";
+                        errorspan.hidden = false;
+                        return;
+                    }
+                    errorspan.hidden = true;
+                    let para = {
+                        Entities: selectedidz.map(x => x.toString()),
+                        Comment: comment.value,
+                        OwnerId: userS.value.value,
+                        QueueCode: queueS.value.value
+                    }
+
+                    let res = await fetch("/Aml_Analysis/RouteAlerts/", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify(para)
+                    });
+
+                    if (res.ok) {
+                        $("#routeModal").modal("hide");
+                    }
+                    else {
+                        toastObj.text = "somthing wrong happend please try again later";
+                        toastObj.icon = "error";
+                        toastObj.heading = "Route Status";
+                        $.toast(toastObj);
+                    }
+                }
+
+
+
+
+
+            } catch (err) {
+                console.error(err)
+                toastObj.text = "somthing wrong happend please try again later";
+                toastObj.icon = "error";
+                toastObj.heading = "Route Status";
+                $.toast(toastObj);
+                kendo.ui.progress($(grid.gridDiv), false);
+                return;
             }
+
+
+
+
 
         },
-        CloseAll: async (e) => {
+        CloseAll: async (e, grid) => {
             var Entities = await (await fetch("/AML_ANALYSIS/GetAllEntities", {
                 method: "GET",
                 headers: {

@@ -146,7 +146,7 @@ function DrawCharts(SegmentType) {
         },
         success: function (data) {
             //display elments
-           
+        
 
             am4core.useTheme(am4themes_animated);
             am4core.addLicense("ch-custom-attribution");

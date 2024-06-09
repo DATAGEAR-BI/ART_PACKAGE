@@ -1,173 +1,97 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@{
+﻿﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
 
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
-@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
-<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
 
-<div id="grid"></div>
-<div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-labelledby="closeModal" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:60%">
+
+<section class="content-header">
+    <h1>
+        Aml Analysis Report
+        <small class="h6"></small>
+        <br />
+    </h1>
+</section>
+<div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Closeing Alerted Entites...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body" id="ModelBodyHTML">
+            <div class="modal-body">
                 <div class="row">
-
-                    <div id="customerDetails" class="col-12 panel panel-primary customer-details medium-capped-width">
-                        <div class="panel-body">
-                            <div class="text-primary aml-panel-title text-bold">
-                                Do You Want to close this alrted entities ?
-                            </div>
-                            <div class="labelValueRows">
-                                <div class="labelValueRow">
-
-
-                                    <div id="selcted-div"></div>
-
-                                </div>
-                            </div>
-
-                        </div>
+                    <div id="number_of_entities_to_close" class="alert alert-primary" role="alert">
                     </div>
-
-
                 </div>
                 <div class="row">
-
-                    <div id="closeDrsc" class="col-12 panel panel-primary customer-details medium-capped-width">
-                        <div class="panel-body">
-                            <div class="text-primary aml-panel-title text-bold">
-                                Desc
-                            </div>
-
-
-                            <select id="close-desc" class="custom-select desc form-control col-md-6" size="4">
-                                <option label="False Positive" value="FPO" selected="selected">False Positive</option>
-                                <option label="Money Laundering - Investigated" value="MLI">Money Laundering - Investigated</option>
-                                <option label="Money Laundering - Report Filed" value="MLS">Money Laundering - Report Filed</option>
-                                <option label="Other" value="OTH">Other</option>
-                            </select>
-
-
-
-                        </div>
+                    <div class="col-12">
+                        <m-select id="closeDesc" data-palceholder="Close Reason" data-title="Close Reason">
+                            <option label="False Positive" value="FPO" selected="selected">False Positive</option>
+                            <option label="Money Laundering - Investigated" value="MLI">Money Laundering - Investigated</option>
+                            <option label="Money Laundering - Report Filed" value="MLS">Money Laundering - Report Filed</option>
+                            <option label="Other" value="OTH">Other</option>
+                        </m-select>
                     </div>
-
-
+                    <div class="col-12 mt-4">
+                        <m-areainput id="comment" dat-palceholder="Comment" data-title="Comment"></m-areainput>
+                    </div>
+                    <span id="comment-validation" class="text-danger" hidden>you must enter a comment</span>
                 </div>
-
-
             </div>
-            <label>Add Comment : </label>
-            <input type="text" id="comment-box-close" class="form-control" placeholder="Enter comment">
-            <span id="comment-span" class="text-danger" hidden></span>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="closeBtn" class="btn btn-primary">Ok</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="closeAllModal" tabindex="-1" role="dialog" aria-labelledby="closeAllModal" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:60%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Routing Alerted Entites...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="ModelBodyHTML">
-                <div class="row">
-                    <div id="customerDetails" class="col-12 panel panel-primary customer-details medium-capped-width">
-                        <div class="panel-body">
-                            <div class="text-primary aml-panel-title text-bold">
-                                Do You Want to Close this alerted entities ?
-                            </div>
-                            <div class="labelValueRows">
-                                <div class="labelValueRow">
-                                    <div id="closeAll-div"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <label>Add Comment</label>
-            <input type="text" id="comment-box-closeAll" class="form-control" placeholder="Enter comment">
-            <span id="comment-span-close-all" class="text-danger" hidden></span>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button id="Close-All" class="btn btn-success">Ok</button>
+                <button id="closeBtn" type="button" class="btn btn-primary">Ok</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="RouteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:60%">
+<div class="modal fade" id="routeModal" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Routing Alerted Entites...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="ModelBodyHTML">
+
+            <div class="modal-body">
                 <div class="row">
-                    <div id="customerDetails" class="col-12 panel panel-primary customer-details medium-capped-width">
-                        <div class="panel-body">
-                            <div class="text-primary aml-panel-title text-bold">
-                                Do You Want to Route this alrted entities ?
-                            </div>
-                            <div class="labelValueRows">
-                                <div class="labelValueRow">
-                                    <div id="selcted-Route-div"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="number_of_entities_to_route" class="alert alert-primary" role="alert">
                     </div>
                 </div>
                 <div class="row">
-                    <select id="queueSelect" style="width:100%" class="col-lg-6 col-md-6 col-sm-12 text-infol selectpicker" data-live-search="true">
-                        <option value="">Select A Queue</option>
-                    </select>
-                    <select id="userSelect" style="width:100%" class="col-lg-6 col-md-6 col-sm-12 text-infol selectpicker" data-live-search="true">
-                        <option value="">Select An User</option>
-                    </select>
+                    <div class="col-6">
+                        <m-select id="queue" data-palceholder="Queue" data-title="Queue">
+
+                        </m-select>
+                    </div>
+                    <div class="col-6">
+                        <m-select id="user" data-palceholder="User" data-title="User">
+
+                        </m-select>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <m-areainput id="routecomment" dat-palceholder="Comment" data-title="Comment"></m-areainput>
+                    </div>
+                    <span id="comment-validation-route" class="text-danger" hidden>you must enter a comment</span>
                 </div>
             </div>
-            <label>Add Comment</label>
-            <input type="text" id="comment-box-route" class="form-control" placeholder="Enter comment">
-            <span id="comment-span-route" class="text-danger" hidden></span>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button id="modalRoutBtn" class="btn btn-success ">Ok</button>
+                <button id="routeBtn" type="button" class="btn btn-primary">Ok</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+<m-grid id="Aml_Analysis" data-urlkey="Aml_Analysis" data-handlerkey="Aml_Analysis"></m-grid>
 
-@section scripts {
-
-    <script src="~/js/Dynamic.js" defer  type="module" id="script" data-prop="PartyNumber" data-urlkey="Aml_Analysis" data-handlerkey="Aml_Analysis"></script>
-
+@section Scripts{
+    <script src="~/js/components/multiselect/select.js"></script>
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
 }

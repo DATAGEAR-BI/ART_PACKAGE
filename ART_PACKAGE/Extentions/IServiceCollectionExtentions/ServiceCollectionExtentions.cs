@@ -146,7 +146,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
                 _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
                 _ = services.AddDbContext<FCFKCAmlAnalysisContext>(opt => contextBuilder(opt, FCFKCContextConnection));
-                _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));  
                 _ = services.AddAmlAnalysis();
             }
 
@@ -235,9 +235,9 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         }
         public static IServiceCollection AddAmlAnalysis(this IServiceCollection services)
         {
-            _ = services.AddScoped<IAmlAnalysis, AmlAnalysis>();
-            _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
-            _ = services.AddHostedService<AmlAnalysisWatcher>();
+            _ = services.AddTransient<IAmlAnalysis, AmlAnalysis>();
+          services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
+          //  _ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
             return services;
         }
