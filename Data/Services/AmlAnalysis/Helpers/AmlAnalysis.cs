@@ -287,9 +287,11 @@ namespace Data.Services.AmlAnalysis
                     CreateDate = DateTime.UtcNow,
                     CreateUserId = userName,
                     EventTypeCode = "CLP",
-                    EventDescription = desc
-                });
-                _fcfkc.AddRange(events);
+                    EventDescription = desc,
+                    Alert = _fcfkc.FskAlerts.Find(x)
+
+                }) ;
+                _fcfkc.FskAlertEvents.AddRange(events);
                 decimal res = _fcfkc.SaveChanges();
 
                 return res > 0;

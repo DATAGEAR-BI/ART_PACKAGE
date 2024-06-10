@@ -82,219 +82,200 @@ export const Handlers = {
         }
     },
     Aml_Analysis: {
-        closeAlerts: async (e, grid) => {
+        closeAlerts: async (e) => {
 
-            let selectedidz = Object.values(grid.selectedRows).flat().map(x => x.PartyNumber);
+            var selectedidz = await Select("PartyNumber");
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
                 toastObj.icon = "warning";
                 toastObj.heading = "Close Status";
                 $.toast(toastObj);
-                kendo.ui.progress($(grid.gridDiv), false);
+                kendo.ui.progress($('#grid'), false);
                 return;
             }
 
 
-            document.getElementById("number_of_entities_to_close").innerText = `You are about to close alerts for ${selectedidz.length} ${selectedidz.length == 1 ? "entity" : "entities"}`
+            document.getElementById("selcted-div").innerText = `You Selected ${selectedidz.length} Entities`
             $("#closeModal").modal("show");
             var closeBtn = document.getElementById("closeBtn");
-            var comment = document.getElementById("comment");
-            var errorspan = document.getElementById("comment-validation")
-            comment.onkeyup = () => {
-                if (!comment.value || comment.value == "")
-                    errorspan.hidden = false;
-                else
-                    errorspan.hidden = true;
-            }
-            errorspan.hidden = true;
-            closeBtn.onclick = async (e) => {
 
+            closeBtn.onclick = async (e) => {
+                var comment = document.getElementById("comment-box-close")
+                var errorspan = document.getElementById("comment-span")
                 if (!comment.value || comment.value == "") {
+
+                    errorspan.innerText = "You must type a comment";
                     errorspan.hidden = false;
                     return;
                 }
-
+                errorspan.hidden = true;
                 var para = {
                     Entities: selectedidz.map(x => x.toString()),
                     Comment: comment.value,
-                    Desc: document.getElementById("closeDesc").value.value,
+                    Desc: document.getElementById("close-desc").value,
                 }
-
-                try {
-                    let res = await fetch("/Aml_Analysis/CloseAlerts", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify(para)
-                    });
-                    if (res.ok) {
-                        $(grid.gridDiv).data('kendoGrid').dataSource.read();
-                        $(grid.gridDiv).data('kendoGrid').refresh();
-                        $("#closeModal").modal("hide");
-                    }
-
-                    else {
-                        toastObj.text = "something went wrong";
-                        toastObj.icon = "error";
-                        toastObj.heading = "Close Status";
-                        $.toast(toastObj);
-                    }
-
-                }
-                catch (e) {
-                    toastObj.text = "something went wrong";
-                    toastObj.icon = "error";
-                    toastObj.heading = "Close Status";
-                    $.toast(toastObj);
-                }
-
-
+                var res = fetch("/AML_ANALYSIS/CloseAlerts", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(para)
+                }).then(x => {
+                    comment.value = "";
+                    localStorage.removeItem("selectedidz");
+                    /* $("#grid").data("kendoGrid").dataSource.read();
+                     $("#grid").data("kendoGrid").refresh();
+                     toastObj.text = "Alert Closed Succesfully";
+                     toastObj.icon = "message";
+                     toastObj.heading = "Close Status";
+                     $.toast(toastObj);*/
+                });
+                $("#closeModal").modal("hide");
 
             }
         },
-        routeAlerts: async (e, grid) => {
-            let selectedidz = Object.values(grid.selectedRows).flat().map(x => x.PartyNumber);
-            document.getElementById("number_of_entities_to_route").innerText = `You are about to route ${selectedidz.length} ${selectedidz.length == 1 ? "entity" : "entities"}`
+        routeAlerts: async (e) => {
+            var selectedidz = await Select("PartyNumber");
 
             if ([...selectedidz].length == 0) {
                 toastObj.text = "please select at least one record";
                 toastObj.icon = "warning";
                 toastObj.heading = "Route Status";
                 $.toast(toastObj);
-                kendo.ui.progress($(grid.gridDiv), false);
+                kendo.ui.progress($('#grid'), false);
                 return;
             }
 
-            $("#routeModal").modal("show");
+            var queues = await (await fetch("/AML_ANALYSIS/GetQueues", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })).json();
+            var queueSelect = document.getElementById("queueSelect");
+            var users = document.getElementById("userSelect");
 
-            let queueS = document.getElementById("queue");
-            let userS = document.getElementById("user");
-            try {
-                let res = await fetch("/Aml_Analysis/GetQueues", {
+
+
+            queueSelect.innerHTML = "";
+            users.innerHTML = "";
+            var usersOpt = document.createElement("option");
+            usersOpt.value = "";
+            usersOpt.innerText = "Select An User";
+            users.append(usersOpt);
+            var queueSelectOpt = document.createElement("option");
+            queueSelectOpt.value = "";
+            queueSelectOpt.innerText = "Select An User";
+            queueSelect.append(queueSelectOpt);
+            queues.forEach(x => {
+                var opt = document.createElement("option");
+                opt.value = x.value;
+                opt.innerText = x.text;
+                queueSelect.append(opt);
+            });
+            $('#queueSelect').selectpicker('refresh');
+            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers/all", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                //body: JSON.stringify("")
+            })).json();
+
+            [...queueUsers].forEach(x => {
+                var opt = document.createElement("option");
+                opt.value = x.value;
+                opt.innerText = x.text;
+                users.append(opt);
+            });
+            $('#userSelect').selectpicker('refresh');
+
+
+            document.getElementById("selcted-Route-div").innerText = `You Selected ${selectedidz.length} Entities`;
+
+            $("#RouteModal").modal("show");
+
+
+            queueSelect.onchange = async (e) => {
+
+                var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers/" + e.target.value, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
-                    }
+                    },
+                    //body: JSON.stringify(e.target.value)
+                })).json();
+                users.innerHTML = "";
+                var opt = document.createElement("option");
+                opt.value = "";
+                opt.innerText = "Select An User";
+                users.append(opt);
+                queueUsers.forEach(x => {
+                    var opt = document.createElement("option");
+                    opt.value = x.value;
+                    opt.innerText = x.text;
+                    users.append(opt);
                 });
 
-                let queues = await res.json();
-                let qOpts = queues.map(q => {
-                    let opt = document.createElement("option");
-                    opt.value = q.value;
-                    opt.innerText = q.text;
-                    return opt
-                });
-                let allOpt = document.createElement("option");
-                allOpt.value = "all";
-                queueS.update([allOpt, ...qOpts]);
-                await update_users("all");
-                async function update_users(queue) {
-                    res = await fetch("/Aml_Analysis/GetQeueUsers/" + queue, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                    });
-                    let users = await res.json();
-
-                    let quOpts = users.map(q => {
-                        let opt = document.createElement("option");
-                        opt.value = q.value;
-                        opt.innerText = q.text;
-                        return opt
-                    });
-                    userS.update([document.createElement("option"), ...quOpts]);
-
-                }
-
-
-                queueS.onchange = async (e) => {
-                    let queue = queueS.value.value;
-                    await update_users(queue);
-                }
-
-                let routeBtn = document.getElementById("routeBtn");
-                let comment = document.getElementById("routecomment");
-                let errorspan = document.getElementById("comment-validation-route");
-                comment.onkeyup = () => {
-                    if (!comment.value || comment.value == "") {
-                        errorspan.innerText = "you must enter a comment";
-                        errorspan.hidden = false;
-                    }
-                    else
-                        errorspan.hidden = true;
-                }
-
-
-
-                routeBtn.onclick = async (e) => {
-
-
-                    if ((queueS.value.value == "all") && (!userS.value.value)) {
-                        errorspan.innerText = "You must select user, queue or both";
-                        errorspan.hidden = false;
-                        return;
-                    }
-
-                    if (!comment.value || comment.value == "") {
-
-                        errorspan.innerText = "you must enter a comment";
-                        errorspan.hidden = false;
-                        return;
-                    }
-                    errorspan.hidden = true;
-                    let para = {
-                        Entities: selectedidz.map(x => x.toString()),
-                        Comment: comment.value,
-                        OwnerId: userS.value.value,
-                        QueueCode: queueS.value.value
-                    }
-
-                    let res = await fetch("/Aml_Analysis/RouteAlerts/", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify(para)
-                    });
-
-                    if (res.ok) {
-                        $("#routeModal").modal("hide");
-                    }
-                    else {
-                        toastObj.text = "somthing wrong happend please try again later";
-                        toastObj.icon = "error";
-                        toastObj.heading = "Route Status";
-                        $.toast(toastObj);
-                    }
-                }
-
-
-
-
-
-            } catch (err) {
-                console.error(err)
-                toastObj.text = "somthing wrong happend please try again later";
-                toastObj.icon = "error";
-                toastObj.heading = "Route Status";
-                $.toast(toastObj);
-                kendo.ui.progress($(grid.gridDiv), false);
-                return;
+                $('#userSelect').selectpicker('refresh');
             }
 
+            var routeBtn = document.getElementById("modalRoutBtn");
+            var comment = document.getElementById("comment-box-route");
+            var errorspan = document.getElementById("comment-span-route");
+            routeBtn.onclick = async (e) => {
 
+                if (!comment.value || comment.value == "") {
 
+                    errorspan.innerText = "You must type a comment";
+                    errorspan.hidden = false;
+                    return;
+                }
 
+                if ((!queueSelect.value || queueSelect.value == "") && (!users.value || users.value == "")) {
+                    errorspan.innerText = "You must select user, queue or both";
+                    errorspan.hidden = false;
+                    return;
+                }
+
+                errorspan.hidden = true;
+                var para = {
+                    Entities: selectedidz.map(x => x.toString()),
+                    Comment: comment.value,
+                    OwnerId: users.value,
+                    QueueCode: queueSelect.value
+
+                }
+                kendo.ui.progress($('#grid'), true);
+                var res = fetch("/AML_ANALYSIS/RouteAlerts", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(para)
+                }).then(x => {
+                    comment.value = "";
+                    localStorage.removeItem("selectedidz");
+                    /*  $("#grid").data("kendoGrid").refresh();
+                      
+                      toastObj.text = "Alert Routed Succesfully";
+                      toastObj.icon = "message";
+                      toastObj.heading = "Route Status";
+                      $.toast(toastObj);*/
+                    kendo.ui.progress($('#grid'), false);
+                });
+
+                $("#RouteModal").modal("hide");
+            }
 
         },
-        CloseAll: async (e, grid) => {
+        CloseAll: async (e) => {
             var Entities = await (await fetch("/AML_ANALYSIS/GetAllEntities", {
                 method: "GET",
                 headers: {
@@ -337,6 +318,7 @@ export const Handlers = {
                                 },
                                 body: JSON.stringify(para)
                             });
+                            console, log(res);
                             if (res.ok) {
 
                                 toastObj.icon = 'success';
@@ -351,10 +333,11 @@ export const Handlers = {
                             toastObj.text = resText;
                             toastObj.heading = "Close Status";
                             $.toast(toastObj);
+                            $("#grid").data("kendoGrid").dataSource.read();
                             comment.value = "";
 
                             $("#closeAllModal").modal("hide");
-                            $("#grid").data("kendoGrid").refresh();
+                            // $("#grid").data("kendoGrid").refresh();
                         },
                         cancel: function () {
 
@@ -1166,6 +1149,7 @@ export const changeRowColorHandlers = {
 }
 async function Select(idcolumn) {
 
+    console.log(localStorage.getItem("selectedidz"))
     var idz = Object.values(JSON.parse(localStorage.getItem("selectedidz"))).flat().map(x => x[idcolumn]);
 
 

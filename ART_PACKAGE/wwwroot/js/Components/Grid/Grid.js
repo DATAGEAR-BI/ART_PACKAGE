@@ -1139,6 +1139,7 @@ class Grid extends HTMLElement {
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
                 setTimeout(() => {
+                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');

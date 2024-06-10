@@ -1,4 +1,5 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data.Audit;
+using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.AmlAnalysis
@@ -9,6 +10,11 @@ namespace Data.Data.AmlAnalysis
         public virtual DbSet<ArtAmlAnalysisView> ArtAmlAnalysisViews { get; set; } = null!;
         public virtual DbSet<ArtAmlAnalysisViewTb> ArtAmlAnalysisViewTbs { get; set; } = null!;
         public virtual DbSet<ArtAmlAnalysisRule> ArtAmlAnalysisRules { get; set; } = null!;
+
+        public virtual DbSet<VaGroupInfo> VaGroupInfos { get; set; }=null!;
+        public virtual DbSet<VaPersonInfo> VaPersonInfos { get; set; } = null!;
+        public virtual DbSet<LstOfUsersAndGroupsRole> LstOfUsersAndGroupsRoles { get; set; } = null!;
+
 
         public AmlAnalysisContext(DbContextOptions<AmlAnalysisContext> options)
       : base(options)
