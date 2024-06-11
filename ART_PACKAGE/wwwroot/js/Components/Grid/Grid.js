@@ -1136,6 +1136,7 @@ class Grid extends HTMLElement {
                 var pages = Object.keys(this.selectedRows);
 
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
+                localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
                 setTimeout(() => {

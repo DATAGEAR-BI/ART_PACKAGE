@@ -3053,6 +3053,70 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_");
             });
 
+            modelBuilder.Entity<ArtAlertsPerAlertedEntityView>(entity =>
+            {
+                entity.ToView("ART_ALERTS_PER_ALERTED_ENTETY_VIEW");
+
+                entity.HasNoKey();
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER")
+                    .HasMaxLength(26)
+                    /*.IsRequired(false)*/;
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasColumnName("ALERTED_ENTITY_NAME")
+                    .HasMaxLength(128)
+                    .IsRequired(false);
+
+                entity.Property(e => e.BranchName)
+                    .HasColumnName("BRANCH_NAME")
+                    .HasMaxLength(100)
+                    .IsRequired(false);
+
+                entity.Property(e => e.BranchNumber)
+                    .HasColumnName("BRANCH_NUMBER")
+                    .HasMaxLength(40)
+                    .IsRequired(false);
+
+                entity.Property(e => e.OwnerUserId)
+                    .HasColumnName("OWNER_USERID")
+                    .HasMaxLength(60)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NumberOfAlerts)
+                    .HasColumnName("NUMBER_OF_ALERTS")
+                    .HasColumnType("decimal(22,0)")
+                    .IsRequired(false);
+            });
+
+            modelBuilder.Entity<ArtMonthlySwiftView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_MONTHLY_SWIFT_VIEW");
+
+                entity.Property(e => e.Month)
+                    .HasColumnName("MONTH")
+                    .HasMaxLength(41)
+                    .IsRequired(false);
+
+                entity.Property(e => e.BankName)
+                    .HasColumnName("BANK_NAME")
+                    .HasMaxLength(35)
+                    .IsRequired(false);
+
+                entity.Property(e => e.Country)
+                    .HasColumnName("COUNTRY")
+                    .HasMaxLength(35)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NumberOfTransactions)
+                    .HasColumnName("NUMBER_OF_TRANSACTIONS")
+                    .HasColumnType("decimal(22,0)")
+                    .IsRequired(false);
+            });
+
         }
 
         public void OnAuditModelCreating(ModelBuilder modelBuilder)
@@ -5572,7 +5636,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("SAS_LST_OF_USERS_AND_GROUPS_ROLES");
+                entity.ToView("SAS_LIST_OF_USERS_AND_GROUPS_ROLES");//SAS_LST_USERS_AND_GROUPS_ROLES
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(200)

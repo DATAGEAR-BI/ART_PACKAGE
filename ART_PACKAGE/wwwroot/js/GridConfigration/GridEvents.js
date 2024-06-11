@@ -164,11 +164,11 @@ export const Handlers = {
             users.innerHTML = "";
             var usersOpt = document.createElement("option");
             usersOpt.value = "";
-            usersOpt.innerText = "Select An User";
+            usersOpt.innerText = "Select User";
             users.append(usersOpt);
             var queueSelectOpt = document.createElement("option");
             queueSelectOpt.value = "";
-            queueSelectOpt.innerText = "Select An User";
+            queueSelectOpt.innerText = "Select Queue";
             queueSelect.append(queueSelectOpt);
             queues.forEach(x => {
                 var opt = document.createElement("option");
@@ -177,7 +177,7 @@ export const Handlers = {
                 queueSelect.append(opt);
             });
             $('#queueSelect').selectpicker('refresh');
-            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers/all", {
+            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -213,7 +213,7 @@ export const Handlers = {
                 users.innerHTML = "";
                 var opt = document.createElement("option");
                 opt.value = "";
-                opt.innerText = "Select An User";
+                opt.innerText = "Select User";
                 users.append(opt);
                 queueUsers.forEach(x => {
                     var opt = document.createElement("option");

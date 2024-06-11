@@ -150,6 +150,125 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStDgAmlExternalCustomerPerType) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE,
 
 
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_SCENARIO) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_AML_PER_SCENARIO,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_SCENARIO) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_AML_PER_SCENARIO,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_SCENARIO) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_AML_PER_SCENARIO,
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME,
+
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT,
+
+
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION,
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT,
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION,
+
+
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE,
+
+                Type t when t == typeof(ART_ST_YEARLY_TOP_AML_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_TOP_AML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_AML_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_TOP_AML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_AML_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_TOP_AML_BRANCHES,
+
+                Type t when t == typeof(ART_ST_YEARLY_TOP_GOAML_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_TOP_GOAML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_GOAML_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_TOP_GOAML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_GOAML_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_TOP_GOAML_BRANCHES,
+
+                Type t when t == typeof(ART_ST_YEARLY_TOP_SANCTION_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_TOP_SANCTION_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_SANCTION_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_TOP_SANCTION_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_TOP_SANCTION_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_TOP_SANCTION_BRANCHES,
+
+
+                Type t when t == typeof(ART_ST_YEARLY_UNUSAL_ACTIVITIES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_UNUSAL_ACTIVITIES,
+                Type t when t == typeof(ART_ST_YEARLY_UNUSAL_ACTIVITIES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_UNUSAL_ACTIVITIES,
+                Type t when t == typeof(ART_ST_YEARLY_UNUSAL_ACTIVITIES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_UNUSAL_ACTIVITIES,
+
+
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_AML_PER_REGION,
+
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_AML_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_BOTTOM_AML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_AML_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_BOTTOM_AML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_AML_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_BOTTOM_AML_BRANCHES,
+
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES,
+
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES,
+                Type t when t == typeof(ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES,
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME,
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT,
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION,
+
+
+
+
+
+
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE,
+
+
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT,
+
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION,
+
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE,
+                Type t when t == typeof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE,
+
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_PRODUCT) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_PRODUCT) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_SANCTION_PER_PRODUCT,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_PRODUCT) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_SANCTION_PER_PRODUCT,
+
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_REGION) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_REGION) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_SANCTION_PER_REGION,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_REGION) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_SANCTION_PER_REGION,
+
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_YEAR) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_YEARLY_SANCTION_PER_YEAR,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_YEAR) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_YEARLY_SANCTION_PER_YEAR,
+                Type t when t == typeof(ART_ST_YEARLY_SANCTION_PER_YEAR) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_YEARLY_SANCTION_PER_YEAR,
+
+
                 // Add more cases for other types if needed
                 _ => throw new ArgumentException("Invalid entity type or database type")
             };

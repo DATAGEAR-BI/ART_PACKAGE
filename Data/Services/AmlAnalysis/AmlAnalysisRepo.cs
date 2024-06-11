@@ -17,13 +17,13 @@ public class AmlAnalysisRepo : BaseRepo<AmlAnalysisContext,ArtAmlAnalysisViewTb>
         //var result = fcfcore.ArtSasQueues.Select(Q => Q.Queuecode);
         var result = _context.VaGroupInfos.Where(x => x.Name.ToLower().StartsWith("branch_") && !x.Name.ToLower().EndsWith("_role")).Select(x => new { x.Name, x.Displayname });
         
-        return result.Select(s => new SelectItem(){text = s.Name, value = s.Name });
+        return result.Select(s => new SelectItem(){text = s.Name, value = s.Displayname });
     }
 
     public IEnumerable<SelectItem> GetUsers(string queue)
     {
 
-        if (string.IsNullOrEmpty(queue))
+        if (string.IsNullOrEmpty(queue) ||queue.Equals("all"))
         {
             var result = _context.VaPersonInfos.Select(U => string.IsNullOrEmpty(U.Displayname) ? U.Name : U.Name + " , " + U.Displayname).Distinct();
             return result.Select(s => new SelectItem() { text = s, value = s });

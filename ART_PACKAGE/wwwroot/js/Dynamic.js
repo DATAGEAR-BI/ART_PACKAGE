@@ -127,6 +127,8 @@ if (isStoredProc == "true") {
 }
 
 function intializeGrid() {
+    console.log(JSON.stringify(para))
+
     fetch(url, {
         method: "POST",
         headers: {
