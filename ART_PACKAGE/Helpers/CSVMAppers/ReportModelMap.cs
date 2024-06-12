@@ -30,6 +30,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             { nameof(HighRiskController).ToLower() , new List<Type> { typeof(ArtAmlHighRiskCustView)  } },
             { nameof(RiskAssessmentController).ToLower() , new List<Type> { typeof(ArtRiskAssessmentView)  } },
             { nameof(TriageController).ToLower() , new List<Type> { typeof(ArtAmlTriageView)  } },
+            { nameof(AlertedEntityDetailController).ToLower() , new List<Type> { typeof(ArtAlertsPerAlertedEntityView)  } },
+            { nameof(MonthlySwiftDetailController).ToLower() , new List<Type> { typeof(ArtMonthlySwiftView)  } },
 
 
             //KYC

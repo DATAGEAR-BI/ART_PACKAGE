@@ -625,6 +625,14 @@ export const Filters = {
         rules: [
             { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
         ]
+    },
+    UnusualAndSuspectedAlerts: {
+        filters: [
+            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() }
+        ]
     }
 
 }

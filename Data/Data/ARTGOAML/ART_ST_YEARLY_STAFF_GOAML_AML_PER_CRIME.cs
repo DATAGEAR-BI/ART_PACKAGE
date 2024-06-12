@@ -10,7 +10,7 @@ namespace Data.Data.ARTGOAML
     {
 
 
-        public int year { get; set; }
+        public decimal? year { get; set; }
         public string? CRIME { get; set; }
         public decimal? NUMBER_OF_REPORTS { get; set; }
     }

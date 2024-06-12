@@ -9,7 +9,7 @@ namespace Data.Data.ARTGOAML
     public partial class ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT
     {
 
-        public int year { get; set; }
+        public decimal? year { get; set; }
         public string? PRODUCT { get; set; }
         public decimal? NUMBER_OF_REPORTS { get; set; }
     }

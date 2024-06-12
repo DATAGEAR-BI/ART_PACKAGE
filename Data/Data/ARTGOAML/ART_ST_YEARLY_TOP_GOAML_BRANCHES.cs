@@ -8,7 +8,7 @@ namespace Data.Data.ARTGOAML
 {
     public partial class ART_ST_YEARLY_TOP_GOAML_BRANCHES
     {
-        public int YEAR { get; set; }
+        public decimal? YEAR { get; set; }
         public string? REPORT_TYPE { get; set; }
         public string? BRANCH_NAME { get; set; }
         public decimal? MONTHLY_AVG_OF_ALERTS_OR_CASES { get; set; }

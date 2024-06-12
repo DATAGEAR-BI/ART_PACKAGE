@@ -12,6 +12,7 @@ using Data.Data.ARTDGAML;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.Services.Grid;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
@@ -3058,7 +3059,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             ///////////////////
             ///
             
-            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT).ToLower(), new ReportConfig {
+          /*  { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT).ToLower(), new ReportConfig {
                SkipList =  new List<string>
                 {
                 },
@@ -3068,9 +3069,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
                     { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
                 }}
-            },
+            },*/
 
-            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION).ToLower(), new ReportConfig {
+           /* { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION).ToLower(), new ReportConfig {
                SkipList =  new List<string>
                 {
                 },
@@ -3080,7 +3081,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
             }}
-            },
+            },*/
 
             { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT).ToLower(), new ReportConfig {
                SkipList =  new List<string>
@@ -3206,6 +3207,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
 
 
+            { nameof(ART_ST_YEARLY_UNUSAL_ACTIVITIES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "NUMBER_OF_ALERTS", new GridColumnConfiguration { DisplayName = "Number Of Alerts" } },
+                { "TYPE_OF_ACTIVITY", new GridColumnConfiguration { DisplayName = "Type of Acivity" } }
+            }}
+            },
         };
 
     }

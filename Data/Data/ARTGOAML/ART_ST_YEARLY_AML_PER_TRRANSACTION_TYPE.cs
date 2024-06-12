@@ -9,7 +9,7 @@ namespace Data.Data.ARTGOAML
     public partial class ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE
     {
 
-        public int YEAR { get; set; }
+        public decimal? YEAR { get; set; }
         public string? TRRANSACTION_TYPE { get; set; }
         public decimal? NUMBER_OF_CASES { get; set; }
     }

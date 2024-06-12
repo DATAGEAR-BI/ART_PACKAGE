@@ -210,5 +210,10 @@
     StaffGOAMLSANCTIONSummary: "StaffGOAMLSANCTIONSummary/GetData",
 
 
+    UnusualAndSuspectedAlerts: "UnusualAndSuspectedAlerts/GetData",
+
+    AlertedEntityDetail: "AlertedEntityDetail/GetData",
+    MonthlySwiftDetail: "MonthlySwiftDetail/GetData",
+
 
 };
