@@ -214,6 +214,7 @@
 
     AlertedEntityDetail: "AlertedEntityDetail/GetData",
     MonthlySwiftDetail: "MonthlySwiftDetail/GetData",
+    autorules: "AutoRules/GetData",
 
 
 };

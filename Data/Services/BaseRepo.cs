@@ -64,7 +64,7 @@ namespace Data.Services
             System.Linq.Expressions.Expression<Func<TModel, bool>> ex = request.Filter.ToExpression<TModel>();
 
             data = data.Where(ex);
-            if (!request.All)
+            if (!request.All && request.IdColumn!=null)
             {
                 var parameter = Expression.Parameter(typeof(TModel), "item");
                 var property = Expression.Property(parameter, request.IdColumn);

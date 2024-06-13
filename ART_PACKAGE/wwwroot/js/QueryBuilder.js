@@ -1,18 +1,25 @@
 ﻿
 
 var action = document.getElementById("action");
-fetch("/AML_ANALYSIS/QueryBuilderData").
+fetch("/AutoRules/GetQueryBuilderParams").
     then(x => x.json())
     .then(x => {
+        var qd = [...x].map(item => ({
+            id: item.paraName,
+            field: item.paraName,
+            type: item.type == "number" ? "integer" : item.type,
+            label: item.paraDisplayName,
+            value_separator: ","
+        }));;
         $("#query").queryBuilder({
-            filters: [...x],
+            filters: qd,
         });
     })
 
 
 action.onchange = async (e) => {
     var container = document.getElementById("qeuryContainer");
-    if (e.target.value == "1") {
+    if (e.target.value == "Route") {
         var div = document.createElement("div");
         div.style.padding = "1%";
         div.classList = "row";
@@ -34,21 +41,21 @@ action.onchange = async (e) => {
         queueselect.append(opt);
         queues.forEach(x => {
             var opt = document.createElement("option");
-            opt.value = x;
-            opt.innerText = x;
+            opt.value = x.value;
+            opt.innerText = x.text;
             queueselect.append(opt);
         });
         var userselect = document.createElement("select");
         userselect.id = "userSelect";
         userselect.classList = "col-xs-6 col-md-6 col-sm-6 text-info selectpicker";
         userselect.setAttribute("data-live-search", true);
-        var users = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-            method: "POST",
+        var users = await (await fetch("/AML_ANALYSIS/GetQeueUsers/all", {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify("")
+            /*body: JSON.stringify("")*/
         })).json();
         var opt = document.createElement("option");
         opt.value = "";
@@ -56,8 +63,8 @@ action.onchange = async (e) => {
         userselect.append(opt);
         users.forEach(x => {
             var opt = document.createElement("option");
-            opt.value = x;
-            opt.innerText = x;
+            opt.value = x.value;
+            opt.innerText = x.text;
             userselect.append(opt);
         });
         div.appendChild(queueselect);
@@ -69,13 +76,13 @@ action.onchange = async (e) => {
 
         queueselect.onchange = async (ev) => {
             console.log(ev.target.value);
-            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
-                method: "POST",
+            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers/" + ev.target.value, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-                body: JSON.stringify(ev.target.value)
+                /*body: JSON.stringify(ev.target.value)*/
             })).json();
 
             userselect.innerHTML = "";
@@ -85,8 +92,8 @@ action.onchange = async (e) => {
             userselect.append(opt);
             queueUsers.forEach(x => {
                 var opt = document.createElement("option");
-                opt.value = x;
-                opt.innerText = x;
+                opt.value = x.value;
+                opt.innerText = x.text;
                 userselect.append(opt);
             });
 
@@ -119,7 +126,7 @@ document.getElementById("sql").onclick = async () => {
     var para = {};
     console.log(action.value);
 
-    if (action.value == 1) {
+    if (action.value == 'Route') {
         var queueSelect = document.getElementById("queueSelect");
         var users = document.getElementById("userSelect");
 
@@ -138,11 +145,11 @@ document.getElementById("sql").onclick = async () => {
         ReadableOutPut: getReadableRules(rules),
         TableName: "ART_AML_ANALYSIS_VIEW_TB",
         Sql: sql.sql,
-        Action: parseInt(action.value),
+        Action: action.value/*parseInt().toString()*/,
         ...para
     };
 
-    var res = await fetch("/AML_ANALYSIS/AddRule", {
+    var res = await fetch("/AutoRules/AddRule", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

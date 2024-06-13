@@ -191,7 +191,7 @@ function genrateToolBar(data, doesnotcontainsll) {
         data.forEach((x) => {
             toolbar.push({
                 name: "custom",
-                template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.id}" href="\\#"">${x.text}</a>`,
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
             });
         });
     }

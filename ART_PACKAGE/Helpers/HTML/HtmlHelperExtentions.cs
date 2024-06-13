@@ -41,5 +41,29 @@ namespace ART_PACKAGE.Helpers.HTMLHelpers
 
 
         }
+
+        public static IEnumerable<SelectListItem> GetEnumValuesAsDisplayName<T>(this IHtmlHelper helper) where T : Enum
+        {
+            IEnumerable<SelectListItem> result = typeof(T).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(T), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = text
+                };
+
+            });
+            return result;
+
+
+
+        }
     }
 }

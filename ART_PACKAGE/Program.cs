@@ -47,6 +47,7 @@ builder.Services.AddSingleton<Module>();
 builder.Services.AddSingleton<ProcessesHandler>();
 
 builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
+builder.Services.AddTransient(typeof(IAutoRulesRepo), typeof(AutoRulesRepo));
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
 builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));

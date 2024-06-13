@@ -2453,6 +2453,10 @@
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-sprite.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-stack.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\radial.svg" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.min.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.min.js" />
 	</ItemGroup>
 
 
@@ -2504,6 +2508,7 @@
 		<Folder Include="Extentions\NewFolder\" />
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\js\AmlAnalysisScripts\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 
