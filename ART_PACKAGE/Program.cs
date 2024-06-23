@@ -48,7 +48,8 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 
 /*builder.Services.AddHttpClient("IgnoreSslClient")
             .ConfigurePrimaryHttpMessageHandler(() => new IgnoreSslClientHandler());*/
-var certificate = Certificate.LoadCertificate("C:\\Users\\User\\source\\repos\\ART_PACKAGE\\ART_PACKAGE\\dgum_cer\\DG-DEMO.Datagearbi.local.crt", "changeit");
+var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
+var certificate = Certificate.LoadCertificate(cerPath, "changeit");
 
 builder.Services.AddHttpClient("CertificateClient")
         .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
