@@ -4843,7 +4843,7 @@ namespace Data.ModelCreatingStrategies
         public void OnDGFATCAModelCreating(ModelBuilder modelBuilder)
         {
 
-
+            throw new NotImplementedException();
         }
 
 

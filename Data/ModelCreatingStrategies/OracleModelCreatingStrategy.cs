@@ -1736,7 +1736,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
         {
-
+            throw new NotImplementedException();
         }
 
         public void OnEcmModelCreating(ModelBuilder modelBuilder)
@@ -15630,7 +15630,7 @@ namespace Data.ModelCreatingStrategies
         public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder)
         {
 
-
+            throw new NotImplementedException();
         }
     }
 }
