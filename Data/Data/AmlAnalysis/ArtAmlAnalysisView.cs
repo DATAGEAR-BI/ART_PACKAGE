@@ -223,5 +223,7 @@
         public decimal? Prediction { get; set; }
         public int? AlertsCount { get; set; }
         public decimal? ClosedAlertsCount { get; set; }
+        public double? Segment { get; set; }
+        public double? SegmentSorted { get; set; }
     }
 }
