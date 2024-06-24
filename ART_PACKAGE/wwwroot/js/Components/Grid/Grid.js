@@ -1,6 +1,7 @@
 import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
+import { CONFIG } from "../../GridConfigration/GridConfigs.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers, currentPDFReportId, generateGUID } from "../../GridConfigration/GridEvents.js"
 import { Actions, ActionsConditions } from "../../GridConfigration/GridActions.js"
@@ -842,10 +843,14 @@ class Grid extends HTMLElement {
             //    // Handler for the excel export event
             //},
             dataBound: (e) => {
-
-                for (var i = 0; i < this.columns.length; i++) {
-                    grid.autoFitColumn(i);
+                if (CONFIG[this.handlerkey] && !CONFIG[this.handlerkey].autofit) {
+                    //do some thing in the future
+                } else {
+                    for (var i = 0; i < this.columns.length; i++) {
+                        grid.autoFitColumn(i);
+                    }
                 }
+                
                 /*$('.k-action-buttons button[type="reset"]').on('click', function (eva) {
                     // Call your function to handle clear filter button click
                     //handleClearFilterButtonClick();
@@ -1138,9 +1143,12 @@ class Grid extends HTMLElement {
                 var pages = Object.keys(this.selectedRows);
 
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
+                localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
+
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
                 setTimeout(() => {
+                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');

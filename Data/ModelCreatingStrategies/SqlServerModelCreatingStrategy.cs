@@ -4276,6 +4276,151 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.TotalWireDCnt).HasColumnName("TOTAL_WIRE_D_CNT");
             });
+
+
+            modelBuilder.Entity<VaGroupInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_GROUP_INFO", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.Displayname)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAYNAME");
+
+                entity.Property(e => e.ExtidContext)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTID_CONTEXT");
+
+                entity.Property(e => e.ExtidIdentifier)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTID_IDENTIFIER");
+
+                entity.Property(e => e.Grouptype)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPTYPE");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("NAME");
+            });
+            modelBuilder.Entity<VaPersonInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PERSON_INFO", "ART_DB");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.Displayname)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAYNAME");
+
+                entity.Property(e => e.ExtidContext)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTID_CONTEXT");
+
+                entity.Property(e => e.ExtidId)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTID_ID");
+
+                entity.Property(e => e.ExtidIdentifier)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTID_IDENTIFIER");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(17)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("NAME");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+            });
+            modelBuilder.Entity<LstOfUsersAndGroupsRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_OF_USERS_AND_GROUPS_ROLES", "ART_DB");//SAS_LST_USERS_AND_GROUPS_ROLES
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.GroupDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DISPLAY_NAME");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_NAME");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB_TITLE");
+
+                entity.Property(e => e.RoleDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DISPLAY_NAME");
+
+                entity.Property(e => e.RoleName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
         }
 
         public void OnFcfkcAmlAnalysisModelCreating(ModelBuilder modelBuilder)
@@ -4285,7 +4430,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.AlertId)
                     .HasName("PK_ALERT");
 
-                entity.ToTable("FSK_ALERT", "dbo");
+                entity.ToTable("FSK_ALERT", "fcfkc");
 
                 entity.HasIndex(e => e.ScenarioId, "IDX_ALERT_SCENARIO");
 
@@ -4438,7 +4583,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.EventId)
                     .HasName("PK_ALERT_EVENT");
 
-                entity.ToTable("FSK_ALERT_EVENT", "dbo");
+                entity.ToTable("FSK_ALERT_EVENT", "fcfkc");
 
                 entity.HasIndex(e => e.AlertId, "IDX_ALERT_EVENT_ALERT");
 
@@ -4481,7 +4626,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToTable("FSK_ALERTED_ENTITY", "dbo");
+                entity.ToTable("FSK_ALERTED_ENTITY", "fcfkc");
                 entity.HasIndex(e => new { e.AlertedEntityNumber, e.AlertedEntityLevelCode }, "XAK1FSK_ALERTED_ENTITY")
        .IsUnique();
 
@@ -4652,7 +4797,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.CommentId)
                     .HasName("XPKFSK_COMMENT");
 
-                entity.ToTable("FSK_COMMENT", "dbo");
+                entity.ToTable("FSK_COMMENT", "fcfkc");
 
                 entity.HasIndex(e => new { e.ObjectTypeCd, e.ObjectId }, "XIE1FSK_COMMENT");
 
@@ -4710,7 +4855,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.EventId)
                     .HasName("XPKFSK_ENTITY_EVENT");
 
-                entity.ToTable("FSK_ENTITY_EVENT", "dbo");
+                entity.ToTable("FSK_ENTITY_EVENT", "fcfkc");
 
                 entity.HasIndex(e => e.CaseId, "XIE1FSK_ENTITY_EVENT");
 
@@ -4756,7 +4901,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToTable("FSK_ENTITY_QUEUE", "dbo");
+                entity.ToTable("FSK_ENTITY_QUEUE", "fcfkc");
 
                 entity.HasIndex(e => new { e.AlertedEntityLevelCode, e.AlertedEntityNumber, e.QueueCode, e.OwnerUserid }, "XEI1FSK_ENTITY_QUEUE");
 

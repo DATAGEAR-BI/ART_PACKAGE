@@ -19,6 +19,7 @@ using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
 using ART_PACKAGE.Services;
 using Data.Services;
+using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
 using Hangfire;
 using Hangfire.LiteDB;
@@ -46,6 +47,7 @@ builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
 builder.Services.AddSingleton<ProcessesHandler>();
+builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
 
 
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
