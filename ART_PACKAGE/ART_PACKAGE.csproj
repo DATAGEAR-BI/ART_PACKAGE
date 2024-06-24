@@ -2483,6 +2483,7 @@
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
+		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
 
 </Project>

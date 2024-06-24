@@ -71,7 +71,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     if (info == null || info.StatusCode != 200)
                     {
 
-                        _logger.LogInformation(info.StatusCode.ToString());
+                        _logger.LogInformation(info!=null?info.StatusCode.ToString():"response is null");
                         ModelState.AddModelError("", "something wrong happened while checking for your account");
                         return Page();
                     }
