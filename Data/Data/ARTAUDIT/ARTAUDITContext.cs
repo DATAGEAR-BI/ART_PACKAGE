@@ -1,4 +1,5 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data.ECM;
+using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.ARTAUDIT
@@ -20,6 +21,7 @@ namespace Data.Data.ARTAUDIT
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            modelBuilder.Entity<ArtStHierarchicalWorkFlow>().HasNoKey().ToView(null);
 
             OnModelCreatingPartial(modelBuilder);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());

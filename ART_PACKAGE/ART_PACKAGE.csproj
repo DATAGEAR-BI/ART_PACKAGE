@@ -26,6 +26,7 @@
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
+		<Content Remove="wwwroot\js\kendo.all.min.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -1919,6 +1920,7 @@
 		<None Include="wwwroot\js\GridConfigration\GridActions.js" />
 		<None Include="wwwroot\js\GridConfigration\GridEvents.js" />
 		<None Include="wwwroot\js\HubUtils.js" />
+		<None Include="wwwroot\js\kendo.all.min.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderConfiguration.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderParametersSettings.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
