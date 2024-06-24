@@ -13,11 +13,11 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
         private readonly ILogger<DgUserManager> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AuthContext authContext;
-        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, RoleManager<IdentityRole> roleManager, AuthContext authContext)
+        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, RoleManager<IdentityRole> roleManager, AuthContext authContext, IHttpClientFactory httpClientFactory)
         {
             authUrl = config.GetSection("DgUserManagementAuth:authUrl").Value;
 
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient("CertificateClient"); ;
             _logger = logger;
             _roleManager = roleManager;
             this.authContext = authContext;
