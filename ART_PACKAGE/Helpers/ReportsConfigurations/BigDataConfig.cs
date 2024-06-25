@@ -298,7 +298,14 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     isLargeText = false
                 }
             }
+
+
         };
+            defaultSortOption = new()
+            {
+                field = "EntityWatchListKey",
+                dir = "asc"
+            };
         }
     }
 }
