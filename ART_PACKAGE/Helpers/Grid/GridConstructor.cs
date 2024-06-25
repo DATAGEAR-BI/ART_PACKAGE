@@ -141,7 +141,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, baseCondition));
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, baseCondition,defaultSort:reportConfig.defaultSortOption));
 
                 total -= batch;
                 round++;
