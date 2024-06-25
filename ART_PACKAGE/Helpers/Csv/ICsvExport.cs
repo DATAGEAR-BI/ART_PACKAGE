@@ -12,11 +12,11 @@ namespace ART_PACKAGE.Helpers.Csv
     {
 
 
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, Expression<Func<TModel, bool>> baseCondition = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
                where TContext : DbContext
                where TModel : class
                where TRepo : IBaseRepo<TContext, TModel>;
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
                where TContext : DbContext
                where TModel : class
                where TRepo : IBaseRepo<TContext, TModel>;
