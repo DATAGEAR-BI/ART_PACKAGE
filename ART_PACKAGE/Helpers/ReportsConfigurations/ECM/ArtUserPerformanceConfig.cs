@@ -28,7 +28,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
                                                         };
             ReportTitle = "User Performance Report";
             ReportDescription = "This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below";
-
+            defaultSortOption = new()
+            {
+                field = "CaseRk",
+                dir = "asc"
+            };
         }
     }
 }

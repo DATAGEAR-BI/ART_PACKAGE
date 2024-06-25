@@ -46,6 +46,12 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                    "CaseRk",
     "ValidFromDate",
     "LastCommentSubject"            };
+
+            defaultSortOption = new()
+            {
+                field = "CaseRk",
+                dir = "asc"
+            };
         }
     }
 }

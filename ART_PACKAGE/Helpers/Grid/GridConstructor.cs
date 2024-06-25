@@ -99,10 +99,11 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
             _processesHandler.AddProcess(reportGUID);
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
             int total = dataRes.total;
             int totalcopy = total;
             var d = _config.GetValue<int>("export_Patch", 50000);// is not null ? _config.GetSection("export_Patch").ToString() : "500_000";
@@ -171,14 +172,16 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
-            GridResult<TModel> dataRes = Repo.GetGridData(request, baseCondition: baseCondition, includes: includes);
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
+
+            GridResult<TModel> dataRes = Repo.GetGridData(request, baseCondition: baseCondition, includes: includes,defaultSort:reportConfig.defaultSortOption);
             return dataRes;
         }
 
         public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<TModel, bool>>? baseCondition = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
 
             ViewData["title"] = reportConfig.ReportTitle;
             ViewData["desc"] = reportConfig.ReportDescription;
@@ -190,7 +193,7 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             _processesHandler.AddProcess(reportId);
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
 
             ViewData["title"] = reportConfig.ReportTitle;
             ViewData["desc"] = reportConfig.ReportDescription;

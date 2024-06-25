@@ -19,6 +19,12 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {"ObjectName", new GridColumnConfiguration { DisplayName = "Object Name", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false }},
         {"ObjectType", new GridColumnConfiguration { DisplayName = "Object Type", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false }},
     };
+            defaultSortOption = new()
+            {
+                field = "DateTime",
+                dir = "desc"
+            };
         }
+
     }
 }

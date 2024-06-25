@@ -16,5 +16,6 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public Type MapperType { get; set; }
         public string? ReportTitle { get; set; }
         public string? ReportDescription { get; set; }
+        public SortOption? defaultSortOption { get; set; }
     }
 }
