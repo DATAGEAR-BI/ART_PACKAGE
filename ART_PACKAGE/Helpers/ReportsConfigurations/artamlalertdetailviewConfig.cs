@@ -41,7 +41,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";
 
-
+            defaultSortOption = new SortOption()
+            {
+                dir= "asc",
+                field= "AlertId"
+            };
 
 
 

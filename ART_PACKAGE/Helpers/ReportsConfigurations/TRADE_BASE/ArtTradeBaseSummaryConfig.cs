@@ -18,6 +18,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             };
             ReportTitle = "Trade Base Summary Report";
             ReportDescription = "This report presents all Trade Base Summary";
+
+
         }
     }
 }

@@ -38,7 +38,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             ReportDescription = "Presents details about the GOAML reports";
 
 
-
+            defaultSortOption = new()
+            {
+                field = "Id",
+                dir = "asc"
+            };
 
 
         }

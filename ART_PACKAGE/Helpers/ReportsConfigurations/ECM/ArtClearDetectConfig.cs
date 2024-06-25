@@ -18,6 +18,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             };
             ReportTitle = "Clear Detect Report";
             ReportDescription = "This report presents all Clear Detects";
+            defaultSortOption = new()
+            {
+                field = "RequestUid",
+                dir = "asc"
+            };
         }
     }
 }

@@ -24,6 +24,12 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {"Maker", new GridColumnConfiguration { DisplayName = "Maker" } },
         {"Checker", new GridColumnConfiguration { DisplayName = "Checker" } }
     };
+
+            defaultSortOption = new()
+            {
+                field = "CreateDate",
+                dir = "asc"
+            };
         }
     }
 }

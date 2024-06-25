@@ -30,7 +30,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            defaultSortOption = new()
+            {
+                field = "CaseId",
+                dir = "asc"
+            };
 
 
         }
