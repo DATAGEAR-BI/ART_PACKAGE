@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+<section class="content-header">
+    <h1>
+        6 Month Transaction
+        <small>presents all transactions for only staff and only for 6 months back (i.e. from system date to 6 months back) with the related information as below</small>
+        <br />
+    </h1>
+</section>
+
+
+<m-grid id="SixMonthTransaction" data-urlkey="SixMonthTransaction" data-handlerkey="SixMonthTransaction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}

@@ -664,7 +664,87 @@
                         {
                             <li class="treeview">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> <span>Internal Fraud Reports</span>
+                                    <i class="glyphicon glyphicon-user"></i> <span>AML REPORTS</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+
+
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "AlertSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "AlertDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+
+
+                                </ul>
+
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i> <span>SANCTION REPORTS</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Sys Performance</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SystemPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "SystemPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>User Performance</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "UserPerformPerAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "UserPerformancePerActionUser")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per Action User</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "UserPerformancePerUserAndAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per User And Action</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i> <span>INTERNAL FRAUD REPORTS</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -690,7 +770,13 @@
                                         <a href="@Url.Action("Index", "AchTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>ACH Transaction</span></a>
                                     </li>
                                     <li class="active ">
-                                        <a href="@Url.Action("Index", "AllTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>All Transaction</span></a>
+                                        <a href="@Url.Action("Index", "AllTransactions")"><i class="glyphicon glyphicon-tasks"></i> <span>All Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "SixMonthTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>6 Month Transaction</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "HierarchicalTransaction")"><i class="glyphicon glyphicon-tasks"></i> <span>Hierarchical Transaction</span></a>
                                     </li>
                                     <li class="active ">
                                         <a href="@Url.Action("Index", "AllTransactionsWithReason")"><i class="glyphicon glyphicon-tasks"></i> <span>All Transactions With Reason</span></a>
@@ -786,7 +872,7 @@
                         {
                             <li class="treeview">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> <span>ART AUDIT </span>
+                                    <i class="glyphicon glyphicon-user"></i> <span>ART AUDIT REPORTS </span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -794,6 +880,9 @@
                                 <ul class="treeview-menu">
                                     <li class="active ">
                                         <a href="@Url.Action("Index", "ArtAuditUserAccess")"><i class="glyphicon glyphicon-tasks"></i> <span>User Access </span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "HierarchicalWorkflow")"><i class="glyphicon glyphicon-tasks"></i> <span>Hierarchical Workflow </span></a>
                                     </li>
                                 </ul>
                             </li>

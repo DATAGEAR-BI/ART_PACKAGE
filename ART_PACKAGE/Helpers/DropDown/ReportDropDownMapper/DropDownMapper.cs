@@ -225,22 +225,22 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
                     {"Branch".ToLower(),_dropDown.GetReportAcctBranchDropDown() },
                 },
-                nameof(SystemPerformanceController) => new Dictionary<string, List<SelectItem>>
-                {
-                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
-                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
-                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
-                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
-                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
-                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
-                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
-                },
-                nameof(UserPerformanceController) => new Dictionary<string, List<SelectItem>>
-                {
-                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
-                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
-                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
-                },
+                //nameof(SystemPerformanceController) => new Dictionary<string, List<SelectItem>>
+                //{
+                //    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
+                //    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                //    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
+                //    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
+                //    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
+                //    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
+                //    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                //},
+                //nameof(UserPerformanceController) => new Dictionary<string, List<SelectItem>>
+                //{
+                //    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                //    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                //    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                //},
                 nameof(AuditGroupsController) => new Dictionary<string, List<SelectItem>>
                 {
                  {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropDown.GetGroupAudNameDropDown() },

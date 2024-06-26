@@ -129,7 +129,7 @@
 
     //DGINTFRAUD
     AchTransaction: "/AchTransaction/GetData",
-    AllTransaction: "/AllTransaction/GetData",
+    AllTransactions: "/AllTransactions/GetData",
     AllTransactionsWithReason: "/AllTransactionsWithReason/GetData",
     CasesTransactionsDetail: "/CasesTransactionsDetail/GetData",
     CrossedLimitTransaction: "/CrossedLimitTransaction/GetData",
@@ -138,6 +138,8 @@
     StaffToStaffDailyTransaction: "/StaffToStaffDailyTransaction/GetData",
     EmpSummaryPerMonth:"/EmpSummaryPerMonth/GetData",
     EmpSummary:"/EmpSummary/GetData",
+    SixMonthTransaction:"/SixMonthTransaction/GetData",
+    HierarchicalTransaction:"/HierarchicalTransaction/GetData",
 
     //FATCA
     FATCAAlertsDetails: "/FATCAAlertsDetails/GetData",

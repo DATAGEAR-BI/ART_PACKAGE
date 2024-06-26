@@ -1,4 +1,4 @@
-﻿namespace Data.Data.ECM
+﻿namespace Data.Data.DGINTFRAUD
 {
     public class ArtUserPerformPerUserAndAction
     {

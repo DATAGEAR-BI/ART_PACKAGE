@@ -19,6 +19,7 @@ using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
 using Microsoft.AspNetCore.SignalR;
+using ART_PACKAGE.Controllers.DGINTFRAUD;
 
 namespace ART_PACKAGE.Hubs
 {

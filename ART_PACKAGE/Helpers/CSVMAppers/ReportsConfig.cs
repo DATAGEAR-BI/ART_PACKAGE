@@ -34,7 +34,9 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 { "Count", new GridColumnConfiguration { DisplayName = "Transactions Count" } },
                 { "Alerts_Count", new GridColumnConfiguration { DisplayName = "Total Number Of Alerts" } },
                 { "Closed_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Closed Cases" } },
-                { "Cases_Count", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } }
+                { "Cases_Count", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                { "Customer_ID", new GridColumnConfiguration { DisplayName = "Customer ID" } },
+                { "Transaction_Type", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
                 }
     }
 },
@@ -43,7 +45,10 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                DisplayNames = new Dictionary<string, GridColumnConfiguration>
                 {
                 { "Employee_Number", new GridColumnConfiguration { DisplayName = "Employee Number" } },
+                { "Customer_ID", new GridColumnConfiguration { DisplayName = "Customer Number" } },
                 { "Employee_Name", new GridColumnConfiguration { DisplayName = "Employee Name" } },
+                { "ACCOUNT_NUMBER", new GridColumnConfiguration { DisplayName = "Account Number" } },
+                { "ACCOUNT_NAME", new GridColumnConfiguration { DisplayName = "Account Name" } },
                 { "Department", new GridColumnConfiguration { DisplayName = "Department" } },
                 { "Division", new GridColumnConfiguration { DisplayName = "Division" } },
                 { "Job", new GridColumnConfiguration { DisplayName = "Job" } },
@@ -52,15 +57,37 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 { "Transaction_Reference", new GridColumnConfiguration { DisplayName = "Transaction Reference" } },
                 { "Transaction_Date", new GridColumnConfiguration { DisplayName = "Transaction Date" } },
                 { "Transaction_Type", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
-                { "Base_Amount", new GridColumnConfiguration { DisplayName = "Base Amount" } },
-                { "Base_Currency", new GridColumnConfiguration { DisplayName = "Base Currency" } },
-                { "Equivalent_Amount", new GridColumnConfiguration { DisplayName = "Equivalent Amount" } },
+                { "Base_Amount_EGP", new GridColumnConfiguration { DisplayName = "Base Amount(EGP)",Format="{0:n2}" } },
+                { "Equivalent_Amount", new GridColumnConfiguration { DisplayName = "Equivalent Amount" ,Format="{0:n2}"} },
                 { "Equivalent_Currency", new GridColumnConfiguration { DisplayName = "Equivalent Currency" } },
                 { "case_id", new GridColumnConfiguration { DisplayName = "Case ID" } },
                 { "Case_Status", new GridColumnConfiguration { DisplayName = "Case Status" } },
                 { "Scenario", new GridColumnConfiguration { DisplayName = "Scenario" } },
                 { "Remitter_Name", new GridColumnConfiguration { DisplayName = "Remitter Name" } },
                 { "Remitter_Number", new GridColumnConfiguration { DisplayName = "Remitter Number" } },
+                }
+    }
+},
+             { nameof(ArtDgamlAllTransaction).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                { "Employee_Number", new GridColumnConfiguration { DisplayName = "Employee Number" } },
+                { "Customer_ID", new GridColumnConfiguration { DisplayName = "Customer Number" } },
+                { "Employee_Name", new GridColumnConfiguration { DisplayName = "Employee Name" } },
+                { "ACCOUNT_NUMBER", new GridColumnConfiguration { DisplayName = "Account Number" } },
+                { "ACCOUNT_NAME", new GridColumnConfiguration { DisplayName = "Account Name" } },
+                { "Department", new GridColumnConfiguration { DisplayName = "Department" } },
+                { "Division", new GridColumnConfiguration { DisplayName = "Division" } },
+                { "Job", new GridColumnConfiguration { DisplayName = "Job" } },
+                { "Grad", new GridColumnConfiguration { DisplayName = "Grad" } },
+                { "Status", new GridColumnConfiguration { DisplayName = "Status" } },
+                { "Transaction_Reference", new GridColumnConfiguration { DisplayName = "Transaction Reference" } },
+                { "Transaction_Date", new GridColumnConfiguration { DisplayName = "Transaction Date" } },
+                { "Transaction_Type", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
+                { "Base_Amount_EGP", new GridColumnConfiguration { DisplayName = "Base Amount(EGP)",Format="{0:n2}" } },
+                { "Equivalent_Amount", new GridColumnConfiguration { DisplayName = "Equivalent Amount" ,Format="{0:n2}"} },
+                { "Equivalent_Currency", new GridColumnConfiguration { DisplayName = "Equivalent Currency" } },
                 }
     }
 },
@@ -113,6 +140,40 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "AVG_DURATIONS_IN_HOURS", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
                     { "DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
                     { "AVG_DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
+                }
+    }
+},
+            { nameof(ArtUserPerformancePerActionUser).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "action_user", new GridColumnConfiguration { DisplayName = "Action User" } },
+                    { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "durations_in_seconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_durations_in_seconds", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "durations_in_minutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_durations_in_minutes", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "durations_in_hours", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_durations_in_hours", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "durations_in_days", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_durations_in_days", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
+                }
+    }
+},
+             { nameof(ArtUserPerformPerAction).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "action", new GridColumnConfiguration { DisplayName = "Action User" } },
+                    { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "durations_in_seconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_durations_in_seconds", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "durations_in_minutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_durations_in_minutes", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "durations_in_hours", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_durations_in_hours", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "durations_in_days", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_durations_in_days", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
                 }
     }
 },

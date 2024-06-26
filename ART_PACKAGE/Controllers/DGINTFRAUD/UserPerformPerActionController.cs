@@ -4,12 +4,12 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data.ECM;
+using Data.Data.DGINTFRAUD;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers.ECM
+namespace ART_PACKAGE.Controllers.DGINTFRAUD
 {
     //[Authorize(Roles = "UserPerformPerAction")]
     public class UserPerformPerActionController : Controller//BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerAction>, EcmContext, ArtUserPerformPerAction>, IBaseRepo<EcmContext, ArtUserPerformPerAction>, EcmContext, ArtUserPerformPerAction>
@@ -19,7 +19,7 @@ namespace ART_PACKAGE.Controllers.ECM
         //}
 
         private readonly IMemoryCache _cache;
-        private readonly EcmContext context;
+        private readonly DGINTFRAUDContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, DGINTFRAUDContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
@@ -94,7 +94,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
@@ -115,7 +115,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {

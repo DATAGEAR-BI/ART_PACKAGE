@@ -10,6 +10,11 @@
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERF_PER_ACT_USER";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERF_PER_ACTION";
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
+
+
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION_USER";
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_ACTION";
+        public static readonly string ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION";
         //AML
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART.ART_ST_CASES_PER_PRIORITY";
@@ -52,6 +57,10 @@
         //DGAML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "ART.ART_ST_DGAML_ALERTS_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_OWNER = "ART.ART_ST_DGAML_ALERTS_PER_OWNER";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "ART.ART_ST_DGAML_ALERTS_PER_SCENARIO";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "ART.ART_ST_DGAML_ALERTS_PER_STATUS";
 
         //DGINTFRAUD
 
@@ -60,6 +69,13 @@
         public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED = "ART.ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED";
         public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL = "ART.ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL";
         public static readonly string ART_ST_DGAML_HIERARCHICAL_WORKFLOW = "ART.ART_ST_DGAML_HIERARCHICAL_WORKFLOW";
+        public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS = "ART.ART_ST_DGAML_ALL_TRANSACTIONS";
+
+
+        //
+        public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "ART.ART_ST_DGAML_CASES_PER_STATUS";
+        public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "ART.ART_ST_DGAML_CASES_PER_PRIORITY";
+        public static readonly string ART_ST_DGAML_CASES_PER_TYPE = "ART.ART_ST_DGAML_CASES_PER_TYPE";
 
     }
 }

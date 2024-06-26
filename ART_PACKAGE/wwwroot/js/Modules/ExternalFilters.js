@@ -374,6 +374,23 @@ export const Filters = {
             { id: "customer_number", field: "customer_number", label: "Customer Number", type: "string", operator: "equal", value: "0" },
 
         ]
+    },
+    AllTransactions: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "customer_number", field: "customer_number", label: "Customer Number", operators: ['equal'], type: "string" },
+
+            ]
+        },
+        rules: [
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+            { id: "customer_number", field: "customer_number", label: "Customer Number", type: "string", operator: "equal", value: "0" },
+
+        ]
     }
 }
 

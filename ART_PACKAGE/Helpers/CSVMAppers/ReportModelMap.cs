@@ -91,9 +91,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             { nameof(WatchlistOSCheckController               ).ToLower() ,    new List<Type>{ typeof(ArtTiWatchlistOsCheckReport) } }     ,
             { nameof(SystemTailoringController                ).ToLower() ,    new List<Type>{ typeof(ArtTiSystemTailoringReport) } }     ,
 
-            //ECM
-           { nameof(SystemPerformanceController).ToLower() , new List<Type>{ typeof(ArtSystemPerformance) } }     ,
-           { nameof(UserPerformanceController).ToLower()  ,new List<Type>{ typeof(ArtUserPerformance) } }     ,
+           
 
 
 
@@ -136,7 +134,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           //DGINTFRAUD
           { nameof(CasesTransactionsDetailController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCasesTransactionsDetail) } }     ,
           { nameof(AchTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAchTransaction) } }     ,
-          { nameof(AllTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransaction) } }     ,
+          { nameof(SixMonthTransactionController).ToLower()    ,              new List<Type>{ typeof(Art6MonthTransaction) } }     ,
           { nameof(AllTransactionsWithReasonController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlAllTransactionsWithReason) } }     ,
           { nameof(CrossedLimitTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlCrossedLimitTransaction) } }     ,
           { nameof(EWalletRepeatedTransactionController).ToLower()    ,              new List<Type>{ typeof(ArtDgamlEWalletRepeatedTransaction) } }     ,

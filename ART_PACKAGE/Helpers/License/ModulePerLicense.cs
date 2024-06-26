@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Controllers;
 using ART_PACKAGE.Controllers.DGAML;
+using ART_PACKAGE.Controllers.DGINTFRAUD;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.SASAML;
@@ -11,7 +12,6 @@ namespace ART_PACKAGE.Helpers.License
         private static readonly List<string> SASAMLControllers = new()
         {
             nameof(AlertDetailsController).ToLower() ,
-            nameof(AlertSummaryController).ToLower() ,
 
             nameof(TriageController).ToLower() ,
             nameof(HighRiskController).ToLower() ,
@@ -25,7 +25,6 @@ namespace ART_PACKAGE.Helpers.License
         private static readonly List<string> DGAMLControllers = new()
         {
             nameof(DGAMLAlertDetailsController).ToLower() ,
-            nameof(DGAMLAlertSummaryController).ToLower() ,
             nameof(DGAMLArtExternalCustomerDetailsController).ToLower() ,
             nameof(DGAMLArtScenarioAdminController).ToLower() ,
             nameof(DGAMLArtScenarioHistoryController).ToLower() ,
@@ -47,7 +46,6 @@ namespace ART_PACKAGE.Helpers.License
         private static readonly List<string> ECMControllers = new()
         {
             //nameof(SystemPerformanceController).ToLower() ,
-            nameof(SystemPerformanceSummaryController).ToLower() ,
             nameof(UserPerformanceController).ToLower() ,
             nameof(UserPerformancePerActionUserController).ToLower() ,
             nameof(UserPerformancePerUserAndActionController).ToLower() ,

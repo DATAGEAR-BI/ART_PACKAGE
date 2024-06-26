@@ -5,9 +5,9 @@
 
 
 @section KendoScripts{
-    <link href="~/css/kendo.common.min.css" rel="stylesheet" />
-    <link href="~/css/kendo.default.min.css" rel="stylesheet" />
-    <script src="~/js/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.3.914/styles/kendo.default-v2.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.all.min.js"></script>
     
 }
 
@@ -19,9 +19,21 @@
     </h1>
 </section>
 
+<div id="orgchart-container" style="position: relative;">
+    <div id="orgchart"></div>
+    <div id="loader" style="display:none;"></div>
+</div>
 
-<div id="orgchart"></div>
 
+<style>
+    #loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Ensures the loader is on top of other elements */
+    }
+</style>
 
 @section Scripts{
     <script type="module" defer src="~/js/hierarchicalworkflow.js"></script>

@@ -1,8 +1,8 @@
-﻿namespace Data.Data.ECM
+﻿namespace Data.Data.DGINTFRAUD
 {
-    public class ArtUserPerformPerAction
+    public class ArtUserPerformancePerActionUser
     {
-        public string action { get; set; }
+        public string action_user { get; set; }
         public decimal? Total_Number_Of_Cases { get; set; }
         public decimal? durations_in_seconds { get; set; }
         public decimal? AVG_durations_in_seconds { get; set; }

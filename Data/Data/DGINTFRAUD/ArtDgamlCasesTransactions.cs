@@ -3,6 +3,8 @@
     public class ArtDgamlCasesTransactions
     {
         public string Employee_Number { get; set; }
+        public string Customer_ID { get; set; }
+        public string Transaction_Type { get; set; }
         public string Employee_Name { get; set; }
         public string Month { get; set; }
         public decimal? Amount { get; set; }
