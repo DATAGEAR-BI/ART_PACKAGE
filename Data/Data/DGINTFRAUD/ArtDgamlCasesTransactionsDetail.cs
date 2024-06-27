@@ -19,7 +19,7 @@ namespace Data.Data.DGINTFRAUD
         public string? Transaction_Reference { get; set; }
         public long Transaction_Date { get; set; }
         public string? Transaction_Type { get; set; }
-        public string? Base_Amount_EGP { get; set; }
+        public decimal? Base_Amount_EGP { get; set; }
         public decimal? Equivalent_Amount { get; set; }
         public string? Equivalent_Currency { get; set; }
         public string? case_id { get; set; }
