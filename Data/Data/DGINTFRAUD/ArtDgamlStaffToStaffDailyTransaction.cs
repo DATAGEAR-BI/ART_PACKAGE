@@ -19,8 +19,8 @@ namespace Data.Data.DGINTFRAUD
         public string? TransactionReference { get; set; }
         public string? TransactionType { get; set; }
         public int TransactionDate { get; set; }
-        public string? BaseAmount { get; set; }
-        public string? EquivalentAmount { get; set; }
+        public decimal BaseAmount { get; set; }
+        public decimal EquivalentAmount { get; set; }
         public string? EquivalentCurrency { get; set; }
         public string? OtherEmployeeNumber { get; set; }
         public string? OtherEmployeeName { get; set; }

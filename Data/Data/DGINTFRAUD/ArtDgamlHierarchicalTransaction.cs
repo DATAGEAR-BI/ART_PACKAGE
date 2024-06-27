@@ -18,8 +18,8 @@ namespace Data.Data.DGINTFRAUD
         public string? TransactionReference { get; set; }
         public string? TransactionType { get; set; }
         public int? TransactionDate { get; set; }
-        public string? BaseAmountEgp { get; set; }
-        public string? EquivalentAmount { get; set; }
+        public decimal BaseAmountEgp { get; set; }
+        public decimal EquivalentAmount { get; set; }
         public string? EquivalentCurrency { get; set; }
     }
 }
