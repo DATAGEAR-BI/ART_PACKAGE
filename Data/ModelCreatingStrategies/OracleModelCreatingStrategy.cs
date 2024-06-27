@@ -15508,7 +15508,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_ACH_TRANSACTIONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
                 entity.Property(e => e.CustomerID)
@@ -15543,7 +15543,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYEE_NUMBER");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15593,7 +15593,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_6_MONTHS_TRANSACTIONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
                 entity.Property(e => e.CustomerID)
@@ -15627,7 +15627,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYEE_NUMBER");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15669,7 +15669,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_ALL_TRANSACTIONS_WITH_REASONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
                 entity.Property(e => e.CustomerID)
@@ -15702,7 +15702,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYEE_NUMBER");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15752,7 +15752,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_CROSSED_LIMIT_TRANSACTIONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
 
@@ -15781,7 +15781,7 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("ACCOUNT_NAME");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15813,7 +15813,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_E_WALLET_REPEATED_TRANSACTIONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
                 entity.Property(e => e.Department)
@@ -15846,7 +15846,7 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("ACCOUNT_NAME");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15888,7 +15888,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_DGAML_IPN_TRANSACTIONS");
 
                 entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
                 entity.Property(e => e.CustomerID)
@@ -15922,7 +15922,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("EMPLOYEE_NUMBER");
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
@@ -15971,8 +15971,8 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_DGAML_STAFF_TO_STAFF_DAILY_TRANSACTIONS");
 
-                entity.Property(e => e.BaseAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                entity.Proerty(e => e.BaseAmount)
+                    .HasMaxLength(20)
                     .HasColumnName("BASE_AMOUNT_EGP");
 
 
@@ -16007,7 +16007,7 @@ namespace Data.ModelCreatingStrategies
 
 
                 entity.Property(e => e.EquivalentAmount)
-                    .HasColumnType("NUMBER(18,5)")
+                    .HasMaxLength(20)
                     .HasColumnName("EQUIVALENT_AMOUNT");
 
                 entity.Property(e => e.EquivalentCurrency)
