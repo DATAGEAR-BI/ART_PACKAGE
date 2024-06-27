@@ -119,7 +119,7 @@ namespace ART_PACKAGE.Controllers.GOAML
             }
             ViewData["title"] = "Non-Staff GOAML Sanction Per Product Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "application/pdf");
         }

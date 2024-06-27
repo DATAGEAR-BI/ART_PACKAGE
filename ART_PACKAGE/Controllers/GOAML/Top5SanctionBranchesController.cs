@@ -119,7 +119,7 @@ namespace ART_PACKAGE.Controllers.GOAML
             }
             ViewData["title"] = "Top 5 Sanction Branches Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "application/pdf");
         }
