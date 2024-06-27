@@ -77,7 +77,13 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
             return View();
         }
 
+        [HttpGet("[controller]/[action]/{CaseID}")]
+        public IActionResult GetCasesDetailPopUpWindow(string CaseID)
+        {
+            var cases = context.ArtDgamlCasesTransactionsDetailPopUpWindows.Where(x => x.CaseId == CaseID).Select(x => new { x.CaseId, x.CreateDate, x.CreatedBy, x.EventDescription, x.EventType });
+            return Ok(cases);
 
+        }
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
             IEnumerable<ArtDgamlCasesTransactionsDetail> data = Enumerable.Empty<ArtDgamlCasesTransactionsDetail>().AsQueryable();

@@ -16435,6 +16435,36 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .HasColumnName("TRANSACTION_TYPE");
             });
+            modelBuilder.Entity<ArtDgamlCasesTransactionsDetailPopUpWindow>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_DGAML_CASES_TRANSACTIONS_DETAIL_POP_UP_WINDOW");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATED_BY");
+
+                entity.Property(e => e.EventDescription)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_DESCRIPTION");
+
+                entity.Property(e => e.EventType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_TYPE");
+            });
 
         }
     }

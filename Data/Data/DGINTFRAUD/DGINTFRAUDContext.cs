@@ -30,6 +30,7 @@ namespace Data.Data.DGINTFRAUD
         public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
         public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
         public virtual DbSet<ArtDgamlHierarchicalTransaction> ArtDgamlHierarchicalTransactions { get; set; } = null!;
+        public virtual DbSet<ArtDgamlCasesTransactionsDetailPopUpWindow> ArtDgamlCasesTransactionsDetailPopUpWindows { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

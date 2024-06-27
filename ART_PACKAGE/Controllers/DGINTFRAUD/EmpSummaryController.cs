@@ -68,7 +68,7 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
                     Cat = "customer_division",
                     Val = "trans_amount",
                     Type = ChartType.donut,
-                     LeggendLabelTemplate="(Customer Division ,{name}) : (Transaction Amount ,{value})"
+                     //LeggendLabelTemplate="(Customer Division ,{name}) : (Transaction Amount ,{value})"
 
                 },
                 new ChartData<GenaricChartDTO>

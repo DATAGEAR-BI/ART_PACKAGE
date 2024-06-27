@@ -1051,7 +1051,79 @@ export const dbClickHandlers = {
         kendo.ui.progress($('#grid'), false);
 
     },
+    CasesTransactionsDetail: async (dataItem) => {
+        kendo.ui.progress($('#grid'), true);
+        console.log(dataItem.CaseId);
+        var casesData = await (await fetch(`/CasesTransactionsDetail/GetCasesDetailPopUpWindow/${dataItem.CaseId}`)).json();
+        console.log(casesData);
+        var caseGrid = document.getElementById("CaseInfo");
+        caseGrid.innerText = "";
+        if (casesData && [...casesData].length > 0) {
+            var table = document.createElement("table");
+            table.className = "table";
+            var thead = document.createElement("thead");
+            var tr = document.createElement("tr");
+            var headers = ["#","Case ID" ,"Event Type", "Event Description", "Created By","Create Date"]
+            headers.forEach(x => {
+                var th = document.createElement("th");
+                th.setAttribute("scope", "col");
+                th.innerText = x;
+                tr.appendChild(th);
+            });
 
+            thead.appendChild(tr);
+            var tbody = document.createElement("tbody");
+            [...casesData].forEach((x, index) => {
+                console.log(x);
+                var tr = document.createElement("tr");
+
+                var rowNumberTd = document.createElement("th");
+                rowNumberTd.setAttribute("scope", "row");
+                rowNumberTd.innerText = index + 1;
+
+                var caseId = document.createElement("td");
+                caseId.innerText = x.caseId;
+
+
+                var eventType = document.createElement("td");
+                eventType.innerText = x.eventType;
+
+                var eventDescription = document.createElement("td");
+                eventDescription.innerText = x.eventDescription;
+
+                var createdBy = document.createElement("td");
+                createdBy.innerText = x.createdBy;
+
+                var createdDate = document.createElement("td");
+                createdDate.innerText = x.createdDate;
+
+                tr.appendChild(rowNumberTd);
+                tr.appendChild(caseId);
+                tr.appendChild(eventType);
+                tr.appendChild(eventDescription);
+                tr.appendChild(createdBy);
+                tr.appendChild(createdDate);
+
+                tbody.appendChild(tr);
+            });
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+            caseGrid.appendChild(table);
+        }
+        else {
+            var noCasesDiv = document.createElement("div");
+            noCasesDiv.innerText = "There is no Case History for the Case ID:" + dataItem.caseId
+            noCasesDiv.className = "text-center";
+            caseGrid.appendChild(noCasesDiv);
+        }
+
+        $("#caseModal").modal("show");
+
+
+        kendo.ui.progress($('#grid'), false);
+
+    },
     messagesDbHandler: async (item) => {
         kendo.ui.progress($('#grid'), true);
         var id = item.RequestUid;
