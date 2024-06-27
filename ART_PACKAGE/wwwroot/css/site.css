@@ -63,3 +63,6 @@ td[role="gridcell"] {
     height: auto !important;
     max-height: 150px !important;
 }
+.bootstrap-select .dropdown-menu {
+    min-width: 200px !important;
+}

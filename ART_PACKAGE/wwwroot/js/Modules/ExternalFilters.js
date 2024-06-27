@@ -67,7 +67,7 @@ function yearsMultiSelectSetting() {
 
     console.log(vals);
 
-
+  
     return {
         multiple: true,
         input: 'select',
@@ -388,13 +388,13 @@ export const Filters = {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ]
         }
         ,
         rules: [
 
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
 
         ]
     },
@@ -402,132 +402,132 @@ export const Filters = {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     AMLCasesPerTransactionType: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Bottom5AMLBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year", operators: ['in'], type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Bottom5GOAMLBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Bottom5SanctionBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     CasesPerProduct: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     CasesPerRegion: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     CasesPerYear: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     NonStaffGOAMLPerProduct: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Top5AMLBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Top5GOAMLBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
     Top5SanctionBranches: {
         filters: [],
         get filters() {
             return [
-                { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
             ];
         },
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() },
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
         ]
     },
 
@@ -540,98 +540,98 @@ export const Filters = {
 
     NonStaffGOAMLPerProduct: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     NonStaffGOAMLperRegion: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     NonStaffGOAMLSANCTIONPerProduct: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     NonStaffGOAMLSANCTIONPerRegion: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     NonStaffGOAMLSANCTIONSummary: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLperCrime: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLperProduct: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLperRegion: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLSANCTIONPerProduct: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLSANCTIONPerRegion: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     StaffGOAMLSANCTIONSummary: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal",value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
     UnusualAndSuspectedAlerts: {
         filters: [
-            { id: "year", field: "year", label: "Year", operators: ['equal'], type: "string", optional: false, ...yearsMultiSelectSetting() }
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],
         rules: [
-            { id: "year", field: "year", label: "Year", type: "string", operator: "equal", value: new Date().getFullYear().toString() }
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() }
         ]
     }
 

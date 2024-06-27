@@ -54,6 +54,7 @@ class ExternalFilter extends HTMLElement {
             }
         });
         $(filtercontrol).on('afterUpdateRuleValue.queryBuilder', (e, rule) => {
+            console.log(rule)
             var ruleinput = rule.$el[0].querySelector('.rule-value-container').querySelector(`[name = '${rule.id}_value_0']`);
 
 
@@ -70,8 +71,10 @@ class ExternalFilter extends HTMLElement {
 
 
         btn.onclick = () => {
-            
+            var mrules = $('#filters').queryBuilder('getRules');
             var rules = $(filtercontrol).queryBuilder('getRules');
+            console.log("rrrrrrrrrruuuuuuuuuuuuuuuuul", filtercontrol)
+            console.log("id", mrules)
             var isValidFilters = true;
             if (rules == null || rules.rules == null) {
                 isValidFilters = false;
@@ -163,6 +166,14 @@ class ExternalFilter extends HTMLElement {
             }
 
         }
+
+
+        $('.rule-value-container').css('width', '300px');
+        $('.form-inline .bootstrap-select, .form-inline .bootstrap-select.form-control:not([class*=col-])').css('width', '300px');
+        $('.form-inline .bootstrap-select, .form-inline .bootstrap-select.form-control:not([class*=col-])').css('max-width', '300px');
+        $('.bootstrap-select .dropdown-menu').css('max-width', '300px !important');
+        $('.dropdown-menu').css('min-width', '200px !important');
+
     }
     connectedCallback() { // this function is called when DOM is Created 
         this.initialFiltersRule();
