@@ -17,14 +17,14 @@
             },
             schema: {
                 model: {
-                    id: "node_id",
-                    parentId: "parent_id",
+                    id: "id",
+                    parentId: "parentId",
+                    expanded: true,
                     fields: {
-                        id: { field: "node_id", type: "string", nullable: false },
-                        parentId: { field: "parent_id", nullable: true },
-                        title: { field: "role", nullable: true },
-                        name: { field: "node_id" },
-                        expanded: true
+                        id: { field: "id", type: "string", nullable: false },
+                        parentId: { field: "parentId", nullable: true },
+                        title: { field: "title", nullable: true },
+                        name: { field: "id" }
                     }
                 }
             },

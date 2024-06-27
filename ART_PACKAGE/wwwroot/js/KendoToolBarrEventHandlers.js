@@ -1223,7 +1223,7 @@ export const dbClickHandlers = {
                 createdBy.innerText = x.createdBy;
 
                 var createdDate = document.createElement("td");
-                createdDate.innerText = x.createdDate;
+                createdDate.innerText = x.createDate;
 
                 tr.appendChild(rowNumberTd);
                 tr.appendChild(caseId);
