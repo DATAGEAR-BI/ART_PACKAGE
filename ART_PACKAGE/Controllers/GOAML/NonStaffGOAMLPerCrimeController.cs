@@ -10,7 +10,7 @@ using Data.Data.ARTGOAML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-
+using System.Linq.Dynamic.Core;
 namespace ART_PACKAGE.Controllers.GOAML
 {
     public class NonStaffGOAMLPerCrimeController : Controller
@@ -53,8 +53,13 @@ namespace ART_PACKAGE.Controllers.GOAML
                 data = context.ExecuteProc<ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME>(MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME, summaryParams.ToArray());
             }
 
+ Dictionary<string, List<dynamic>> DropDownColumn = null;
+DropDownColumn = new Dictionary<string, List<dynamic>>
+            {
+                {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
 
-            KendoDataDesc<ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME> Data = data.AsQueryable().CallData(para.req);
+            };
+            KendoDataDesc<ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new

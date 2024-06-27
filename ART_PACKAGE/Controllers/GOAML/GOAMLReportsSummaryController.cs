@@ -6,7 +6,7 @@ using Data.Constants.StoredProcs;
 using Data.Data.ARTGOAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections;
+using System.Linq.Dynamic.Core;using System.Collections;
 using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Controllers.GOAML

@@ -785,7 +785,7 @@ function generateColumns(response) {
             else if (column.type === "number") ops = { number: equal };
             else ops = { boolean: equal };
             filter = {
-                ui: (e) => createMultiSelect(e, column.menu, column.name),
+                ui: (e) => { console.log("help "); createMultiSelect(e, column.menu, column.name) },
                 extra: false,
                 operators: ops,
             };
@@ -876,7 +876,7 @@ function generateColumns(response) {
 }
 
 function createMultiSelect(element, data, field) {
-    //console.log(element);
+    console.log("hhhhhhhhhhhhhelp",element);
     element.removeAttr("data-bind");
     element[0].dataset.field = field;
     element.kendoMultiSelect({

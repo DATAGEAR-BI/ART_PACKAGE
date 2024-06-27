@@ -423,6 +423,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
                 },
 
+
                 _ => null
             };
         }

@@ -10,6 +10,7 @@ using Data.Data.ARTGOAML;
 using Data.GOAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
@@ -52,8 +53,14 @@ namespace ART_PACKAGE.Controllers.GOAML
                 data = context.ExecuteProc<ART_ST_YEARLY_SANCTION_PER_YEAR>(MYSQLSPName.ART_ST_YEARLY_SANCTION_PER_YEAR, summaryParams.ToArray());
             }
 
+            
+ Dictionary<string, List<dynamic>> DropDownColumn = null;
+DropDownColumn = new Dictionary<string, List<dynamic>>
+            {
+                {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
 
-            KendoDataDesc<ART_ST_YEARLY_SANCTION_PER_YEAR> Data = data.AsQueryable().CallData(para.req);
+            };
+            KendoDataDesc<ART_ST_YEARLY_SANCTION_PER_YEAR> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new

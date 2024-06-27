@@ -684,6 +684,15 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetLast10YearsDropDown()
+        {
+            var currentYear = DateTime.Now.Year;
+            var years = Enumerable.Range(currentYear - 9, 10).OrderByDescending(s=>s)
+                .Select(year => new SelectItem { text = year.ToString(), value = year.ToString() })
+                .ToList();
+
+            return years;
+        }
 
         public List<SelectItem> GetDGCustomerIdentificationTypeDropDown()
         {
