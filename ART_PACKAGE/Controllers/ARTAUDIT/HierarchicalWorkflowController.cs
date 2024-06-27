@@ -30,7 +30,7 @@ namespace ART_PACKAGE.Controllers.ARTAUDIT
 
 
             IEnumerable<ArtStHierarchicalWorkFlow> hierarchicalWorkFlowData = Enumerable.Empty<ArtStHierarchicalWorkFlow>().AsQueryable();
-            //List<HierarchicalWorkFlow> result = new();
+            List<HierarchicalWorkFlow> result = new();
 
             AppUser currentUser = await GetUser();
 
@@ -45,20 +45,20 @@ namespace ART_PACKAGE.Controllers.ARTAUDIT
 
                 hierarchicalWorkFlowData = ArtAudit.ExecuteProc<ArtStHierarchicalWorkFlow>(ORACLESPName.ART_ST_DGAML_HIERARCHICAL_WORKFLOW, Params.ToArray());
 
-            //foreach (ArtStHierarchicalWorkFlow data in hierarchicalWorkFlowData)
-            //{
-            //    if (data != null && data.node_id != null)
-            //    {
+            foreach (ArtStHierarchicalWorkFlow data in hierarchicalWorkFlowData)
+            {
+                if (data != null && data.node_id != null)
+                {
 
-            //        result.Add(new() { id = data.node_id, name = data.node_id, parentId = data.parent_id, title = data.role, expanded = true });
-            //    }
+                    result.Add(new() { id = data.node_id, name = data.node_id, parentId = data.parent_id, title = data.role, expanded = true });
+                }
 
-            //}
+            }
             //}
             return new ContentResult
             {
                 ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(hierarchicalWorkFlowData.ToList(), new JsonSerializerSettings
+                Content = JsonConvert.SerializeObject(result.ToList(), new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 

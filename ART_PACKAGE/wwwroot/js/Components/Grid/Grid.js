@@ -908,15 +908,17 @@ class Grid extends HTMLElement {
                     copyText(GetValidCellValue(e.target.textContent))
                     //console.log(this.isValidDateTime(e.target.textContent))
 
-                    if (column && CellHandlers[this.handlerkey][column.field]) {
-                        CellHandlers[this.handlerkey][column.field]();
-                    }
-                    else {
+                    //if (column && CellHandlers[this.handlerkey][column.field]) {
+                    //    CellHandlers[this.handlerkey][column.field]();
+                    //}
+                    //else {
                         if (this.handlerkey && this.handlerkey != "") {
                             var dbclickhandler = dbClickHandlers[this.handlerkey];
+                            console.log(this.handlerkey);
+                            console.log(dbclickhandler);
                             dbclickhandler(dataItem).then(console.log("done"));
                         }
-                    }
+                    //}
 
 
 

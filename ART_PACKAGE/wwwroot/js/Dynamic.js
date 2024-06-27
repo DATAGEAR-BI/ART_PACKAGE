@@ -532,8 +532,14 @@ function generateGrid() {
             this.tbody.find("tr").dblclick(function (e) {
                 var dataItem = grid.dataItem(this);
                 var dbclickhandler = dbClickHandlers[handlerkey];
-                dbclickhandler(dataItem).then(console.log("done"));
+                if (handlerkey && handlerkey != "") {
+                    var dbclickhandler = dbClickHandlers[handlerkey];
+                    console.log(handlerkey);
+                    console.log(dbclickhandler);
+                    dbclickhandler(dataItem).then(console.log("done"));
+                }
             });
+
         },
         ...(isHierarchy == "true" && {
             detailInit: (e) => {
@@ -587,7 +593,6 @@ function generateGrid() {
         }
 
     });
-
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
