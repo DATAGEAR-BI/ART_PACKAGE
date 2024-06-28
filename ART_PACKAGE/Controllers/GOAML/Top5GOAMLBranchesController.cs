@@ -57,7 +57,8 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
 
             };
-            KendoDataDesc<ART_ST_YEARLY_TOP_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
+
+            KendoDataDesc<ART_ST_YEARLY_TOP_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn, propertiesToSkip: new() { "RN"});
 
 
             var result = new

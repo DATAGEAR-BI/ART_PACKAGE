@@ -2978,6 +2978,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             { nameof(ART_ST_YEARLY_TOP_GOAML_BRANCHES).ToLower(), new ReportConfig {
                SkipList =  new List<string>
                 {
+                   "RN"
                 },
                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
                 {
@@ -2988,6 +2989,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                    { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
                 }}
+                
             },
 
 
