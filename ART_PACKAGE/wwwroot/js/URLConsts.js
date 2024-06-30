@@ -195,7 +195,7 @@
 
 
 
-    NonStaffGOAMLperRegion: "NonStaffGOAMLperRegion/GetData",
+    NonStaffGOAMLPerRegion: "NonStaffGOAMLperRegion/GetData",
 
     NonStaffGOAMLSANCTIONPerProduct: "NonStaffGOAMLSANCTIONPerProduct/GetData",
     NonStaffGOAMLSANCTIONPerRegion: "NonStaffGOAMLSANCTIONPerRegion/GetData",

@@ -546,7 +546,7 @@ export const Filters = {
             { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
         ]
     },
-    NonStaffGOAMLperRegion: {
+    NonStaffGOAMLPerRegion: {
         filters: [
             { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
         ],

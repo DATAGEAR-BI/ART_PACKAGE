@@ -246,6 +246,21 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "DTET, SARAF or STRTF", "SAR or STR" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportTypeForStaffAndNonStaffSummariesDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "DTET", "SARAF", "STRTF" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+
         public List<SelectItem> GetReportPriorityDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.Priority).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();

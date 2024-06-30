@@ -137,7 +137,7 @@
                     </table>
 
                     <hr style="  border: 1px solid black;" />
-                    <div class="brk text-center"> Printed on: @DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
+                    <div class="brk text-center"> Printed on: @DateTime.Now.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
                 }
             }
             _pdfHAndler.CancelProcess(exportinProcess);

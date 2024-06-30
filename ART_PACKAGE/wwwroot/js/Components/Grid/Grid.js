@@ -950,9 +950,9 @@ class Grid extends HTMLElement {
         function grid_filterMenuInit(e) {
         }
         // grid.bind("filterMenuInit", grid_filterMenuInit);
-        $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
+       /* $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
             console.log("999999999999999999999999999")
-        })
+        })*/
 
 
         // event for constructing the filters for multi select columns

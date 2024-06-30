@@ -55,6 +55,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                 {"REPORT_TYPE".ToLower(),_dropSrv.GetReportTypeForStaffAndNonStaffSummariesDropDown().Select(s=>s.value).ToDynamicList()},
 
             };
 

@@ -56,6 +56,8 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                                {"REPORT_TYPE".ToLower(),_dropSrv.GetReportTypeForStaffAndNonStaffSummariesDropDown().Select(s=>s.value).ToDynamicList()},
+
 
             };
             KendoDataDesc<ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);

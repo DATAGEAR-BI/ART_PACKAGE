@@ -2,6 +2,9 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+
+var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -589,7 +592,125 @@ function generateGrid() {
         }
 
     });
+    //class="k-grid-filter"   a[class="k-grid-filter"]
+   /* $(".k-grid-filter").click(function (e) {
 
+        console.log("grid filter hitted")
+        grid_filterMenuInit2(e);
+    })*/
+
+
+
+    function grid_filterMenuInit(e) {
+
+        console.log("collumn menu hitted ")
+        var querySelectorsObj = {
+            multiSelectQuerySelector: {
+                value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
+                additional: 'div[class="k-widget k-multiselect k-multiselect-clearable"] > input[title="Additional value"] '
+            },
+            datePickerQuerySelector: {
+                value: 'span[class="k-widget k-datepicker"] :has(input[title="Value"]',
+                additional: 'span[class="k-widget k-datepicker"] :has(input[title="Additional value"])'
+            },
+            inputQuerySelector: {
+                value: 'input[title="Value"]',
+                additional: 'input[title="Additional value"]'
+            }
+        }
+        var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+
+        function showOrHideInputElements(element, show, filterType) {
+            if (filterType == "init") {
+                //showOrHideInputElements(element, show, 'value');
+                var opValue = element.querySelector('select[title = "Operator"]').value;
+                var f = querySelectorsObj.datePickerQuerySelector['value'] + " " + querySelectorsObj.inputQuerySelector['value'];
+                if (onePartitionOperators.includes(opValue)) {
+
+                    element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
+                    showOrHideInputElements(element, false, 'value')
+                } else {
+                    showOrHideInputElements(element, true, 'value')
+
+                }
+
+                return;
+            }
+            if (filterType == "initAdditional") {
+                //showOrHideInputElements(element, show, 'value');
+                var opValue = element.querySelector('select[title = "Additional operator"]').value;
+                var f = querySelectorsObj.datePickerQuerySelector['additional'] + " " + querySelectorsObj.inputQuerySelector['additional'];
+                if (onePartitionOperators.includes(opValue)) {
+
+                    element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
+                    showOrHideInputElements(element, false, 'additional')
+                } else {
+                    showOrHideInputElements(element, true, 'additional')
+
+                }
+
+                console.log()
+                return;
+            }
+            console.log(element);
+            if (element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType])) {
+                if (show)
+                    element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "flex";
+                else
+                    element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "none";
+
+            }
+            else if (element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType])) {
+                if (show)
+                    element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "block";
+                else
+                    element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "none";
+
+            }
+            else {
+                if (show)
+                    element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "block";
+                else
+                    element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "none";
+
+            }
+        }
+
+        console.log(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement)
+
+        showOrHideInputElements(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement, false, "init")
+        var s = e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0]
+        if (s) {
+            showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
+
+        }
+
+        e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]').change((ev) => {
+            console.log("here ")
+            if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "value")
+
+            }
+            else {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "value")
+            }
+        })
+        e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]').change((ev) => {
+            if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "additional")
+
+            }
+            else {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "additional")
+            }
+        })
+
+    }
+
+    grid.bind("filterMenuOpen", (e) => {
+        grid_filterMenuInit(e) 
+    })
+    //grid.bind("filterMenuInit", grid_filterMenuInit2);
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
