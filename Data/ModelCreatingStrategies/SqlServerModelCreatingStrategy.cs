@@ -1983,6 +1983,11 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.NumberOfAttachments)
                     .HasColumnType("int")
                     .HasColumnName("number_of_attachments".ToUpper());
+                entity.Property(e => e.LastStatus)
+                   .HasMaxLength(256)
+                   .IsUnicode(false)
+                   .HasColumnName("LAST_STATUS".ToUpper())
+                   .UseCollation("Arabic_100_CI_AI");
             });
             modelBuilder.Entity<ArtCFTConfig>(entity =>
             {
