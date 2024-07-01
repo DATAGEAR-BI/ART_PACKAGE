@@ -11,7 +11,12 @@
     var recordPerPage = 17;
     var user = User.Identity.Name;
     string exportinProcess =(string) ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-   
+    if (exportinProcess is null || exportinProcess == "")
+    {
+        exportinProcess = new Guid().ToString();
+        _pdfHAndler.AddProcess(exportinProcess);
+    }
+
 }
 
 

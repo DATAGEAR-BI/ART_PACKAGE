@@ -75,7 +75,7 @@ namespace ART_PACKAGE.Controllers.CRP
 
                     Type=ChartType.bar
                 },
-                new ChartData<ART_ST_CRP_CASES_PER_RATE>
+         /*       new ChartData<ART_ST_CRP_CASES_PER_RATE>
                 {
                     ChartId = "ART_ST_CRP_CASES_PER_RATE",
                     Data =chart3data.ToList(),
@@ -83,7 +83,7 @@ namespace ART_PACKAGE.Controllers.CRP
                     Cat = "RATE",
                     Type=ChartType.clusteredbarchart
 
-                },
+                },*/
             };
 
             if (dbType is DbTypes.Oracle or DbTypes.SqlServer)

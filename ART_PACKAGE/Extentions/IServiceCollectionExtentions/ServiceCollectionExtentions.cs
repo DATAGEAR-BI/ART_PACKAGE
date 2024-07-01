@@ -232,7 +232,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         {
             _ = services.AddScoped<IAmlAnalysis, AmlAnalysis>();
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
-            _ = services.AddHostedService<AmlAnalysisWatcher>();
+            //_ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
             return services;
         }

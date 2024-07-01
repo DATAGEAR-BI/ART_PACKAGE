@@ -1076,6 +1076,9 @@
 		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
+		<None Include="Views\AML_ANALYSIS\Builder.cshtml" />
+		<None Include="Views\AML_ANALYSIS\Index.cshtml" />
+		<None Include="Views\AutoRules\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
@@ -1902,6 +1905,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\AmlAnalysisScripts\AutoRules.js" />
 		<None Include="wwwroot\js\Components\Card\Card.js" />
 		<None Include="wwwroot\js\Components\Charts\Charts.js" />
 		<None Include="wwwroot\js\Components\Card\ChartUtils.js" />
@@ -2483,6 +2487,7 @@
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
+		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
 
 </Project>

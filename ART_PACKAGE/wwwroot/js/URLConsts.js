@@ -141,6 +141,8 @@
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
-    test:"Test/GetData"
+    test: "Test/GetData",
+    autorules: "AutoRules/GetData",
+
 
 };

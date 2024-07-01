@@ -88,7 +88,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
+                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
 
             }
             if (dbType == DbTypes.MySql)
@@ -96,7 +96,6 @@ namespace ART_PACKAGE.Controllers.ECM
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(MYSQLSPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(MYSQLSPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
                 chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
-                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(MYSQLSPName.ST_SYSTEM_PERF_PER_DATE, chart4Params.ToArray());
 
             }
 
@@ -125,7 +124,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
 
             };
-            if (dbType is DbTypes.Oracle or DbTypes.MySql)
+           /* if (dbType is DbTypes.Oracle or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<dynamic>
                 {
@@ -137,7 +136,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Val = "CASES",
                     Type = ChartType.curvedline
                 });
-            }
+            }*/
             if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
