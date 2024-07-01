@@ -73,6 +73,40 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
     }
 },
+            { nameof(ArtUserPerformPerAction).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "action", new GridColumnConfiguration { DisplayName = "Action" } },
+                    { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "durations_in_seconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_durations_in_seconds", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "durations_in_minutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_durations_in_minutes", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "durations_in_hours", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_durations_in_hours", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "durations_in_days", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_durations_in_days", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
+                }
+    }
+},
+            { nameof(ArtUserPerformancePerActionUser).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "ACTION_USER", new GridColumnConfiguration { DisplayName = "Action User" } },
+                    { "TOTAL_NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                    { "DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
+                    { "AVG_DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
+                    { "DURATIONS_IN_MINUTES", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },
+                    { "AVG_DURATIONS_IN_MINUTES", new GridColumnConfiguration { DisplayName = "Avg Durations In Minutes" } },
+                    { "DURATIONS_IN_HOURS", new GridColumnConfiguration { DisplayName = "Durations In Hours" } },
+                    { "AVG_DURATIONS_IN_HOURS", new GridColumnConfiguration { DisplayName = "Avg Durations In Hours" } },
+                    { "DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
+                    { "AVG_DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
+                }
+    }
+},
 
             { nameof(ArtStAmlAlertAgeSummery).ToLower(), new ReportConfig {
 
