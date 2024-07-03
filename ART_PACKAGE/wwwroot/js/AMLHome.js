@@ -4,7 +4,7 @@ fetch("/Home/GetAmlChartsData").then(x => x.json()).then(
     x => {
         var statusData = x.statuses;
 
-        console.log(statusData);
+        console.log("status data ",statusData);
         var dateChart = document.getElementById("alertsDateChart");
         var statusChart = document.getElementById("alert-status");
         dateChart.setData(x.dates);

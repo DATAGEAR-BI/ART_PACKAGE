@@ -11,13 +11,16 @@ html {
 html {
     position: relative;
     min-height: 100%;
+    margin-right:50px;
 }
 
 body {
     margin-bottom: 60px;
 }
 
-
+.navbar{
+    display:block;
+}
 .load {
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;

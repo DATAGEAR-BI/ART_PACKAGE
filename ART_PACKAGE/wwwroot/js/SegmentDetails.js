@@ -45,6 +45,33 @@ async function onChangeSegment(e) {
     console.log(URLS.AllSegmentsOutliersNew);
     URLS.AllSegmentsOutliersNew = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
     console.log(URLS.AllSegmentsOutliersNew);
-
+    
     $("#outliers-Grid").data("kendoGrid").dataSource.read();
+    await fetch("/AllSegmentsOutliersNew/GetSegmentOutliersChartData"+`?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+/*        body: JSON.stringify(para),
+*/    }).then(res => res.json())
+        .then(data => {
+            console.log("seg data chart", data);
+            let chart = document.getElementById("ch1");
+            chart.setdata(data);
+        })
+    await fetch("/AllSegmentsOutliersNew/GetSegentCustomersChartData" + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+/*        body: JSON.stringify(para),
+*/    }).then(res => res.json())
+        .then(data => {
+            console.log("seg data chart", data);
+            let chart = document.getElementById("ch2");
+            chart.setdata(data);
+        })
+   /* */
 }
