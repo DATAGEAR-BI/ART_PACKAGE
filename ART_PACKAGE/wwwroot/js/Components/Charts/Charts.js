@@ -1029,30 +1029,32 @@ class LineChart extends BaseCatValChart {
     }
 }
 //class
-class PieWithBarChart extends  HTMLElement
-{
+class PieWithBarChart extends HTMLElement {
     chartDiv = document.createElement("div");
     donutChart = undefined;
     barChart = undefined;
     chart = undefined;
     chartTitle = "";
-    barCategory ="";
-    barValue ="";
-    donutCategory ="";
-    donutValue ="";
+    barCategory = "";
+    barValue = "";
+    donutCategory = "";
+    donutValue = "";
     data = [];
     barDataKey = "";
     exportValueName = "value";
-    onseriesChanged = () => {};
+    isHorizontal = true;
+    columnSeries = undefined;
+    rotateButtonContainer = undefined;
+    onseriesChanged = () => { };
     constructor() {
         super();
         this.appendChild(this.chartDiv)
     }
-    connectedCallback(){
+    connectedCallback() {
 
         try {
             this.chartDiv.classList.add("h-100", "w-100")
-            this.chartDiv.style.height="600PX"
+            this.chartDiv.style.height = "600PX"
             this.chartTitle = this.dataset.title;
             this.donutCategory = this.dataset.donutcategory ?? "";
             this.donutValue = this.dataset.donutvalue ?? "";
@@ -1077,38 +1079,18 @@ class PieWithBarChart extends  HTMLElement
              */
 
             // Create chart instance
-            this.barChart = this.chart.createChild(am4charts.XYChart);
-
-            // Create axes
-            let categoryAxis = this.barChart.yAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.renderer.labels.template.fontSize = 20
-            categoryAxis.dataFields.category = this.barCategory;
-            categoryAxis.renderer.grid.template.location = 0;
-            categoryAxis.renderer.inversed = true;
-
-            let valueAxis =   this.barChart .xAxes.push(new am4charts.ValueAxis());
-            valueAxis.renderer.labels.template.fontSize = 20;
-
-            // Create series
-            let columnSeries =   this.barChart.series.push(new am4charts.ColumnSeries());
-            columnSeries.dataFields.valueX = this.barValue;
-            columnSeries.dataFields.categoryY = this.barCategory;
-            columnSeries.columns.template.strokeWidth = 0;
-            columnSeries.columns.template.tooltipText = "{value}";
-            columnSeries.fill = "#5CC0DE" ;
+            if (!Object.keys(this.dataset).includes("horizontal")) {
+                this.isHorizontal = false;
+                this.makeVBar();
 
 
-            let valueLabel = columnSeries.bullets.push(new am4charts.LabelBullet());
-            valueLabel.label.text = "{value}";
-            valueLabel.label.fontSize = 20;
-            valueLabel.label.horizontalCenter = "left";
-            valueLabel.label.hideOversized = false;
-            valueLabel.label.truncate = false;
-            valueLabel.label.dx = 10;
-            this.barChart .cursor = new am4charts.XYCursor();
-            this.barChart .cursor.behavior = "zoomX";
-            let scrollbar = new am4charts.XYChartScrollbar();
-            this.barChart.scrollbarX = scrollbar;
+            }
+
+            else {
+                this.isHorizontal = true;
+                this.makeBar();
+
+            }
 
 
 
@@ -1119,7 +1101,7 @@ class PieWithBarChart extends  HTMLElement
             this.donutChart = this.chart.createChild(am4charts.PieChart);
             this.donutChart.data = this.data;
             this.donutChart.innerRadius = am4core.percent(50);
-            let title =   this.donutChart.titles.create();
+            let title = this.donutChart.titles.create();
             title.text = this.chartTitle;
             title.fontSize = 25;
             this.donutChart.legend = new am4charts.Legend();
@@ -1135,15 +1117,15 @@ class PieWithBarChart extends  HTMLElement
             pieSeries.labels.template.disabled = true;
 
 
-            this.donutChart.events.on("datavalidated",  (ev) => {
+            this.donutChart.events.on("datavalidated", (ev) => {
                 if (this.data.length > 0) {
                     console.log(pieSeries.slices);
                     pieSeries.slices.getIndex(0).isActive = true;
 
                 }
-                    
+
             });
-            
+
             pieSeries.slices.template.events.on("toggled", (ev) => {
                 console.log(ev.target.isActive);
                 if (ev.target.isActive) {
@@ -1156,28 +1138,145 @@ class PieWithBarChart extends  HTMLElement
                     });
 
                     // Update column chart
-                    columnSeries.appeared = false;
+                    this.columnSeries.appeared = false;
                     console.log(ev.target.dataItem.dataContext[this.barDataKey]);
                     this.barChart.data = ev.target.dataItem.dataContext[this.barDataKey];
-                    columnSeries.fill = ev.target.fill;
-                    columnSeries.reinit();
+                    this.columnSeries.fill = ev.target.fill;
+                    this.columnSeries.reinit();
                     this.onseriesChanged(ev.target.dataItem.dataContext);
 
                 }
             });
-           
+
             //this.makeExportMenu();
             this.makeExportMenu(this.donutChart);
             //this.makeExportMenu(this.barChart);
-       
+
         }
         catch (e) {
-            console.error(  e)
+            console.error(e)
         }
 
-    }
+    };
+    makeBar() {
+        var barchartData = this.barChart ? this.barChart.data : [];
 
-    setData(data){
+        if (this.barChart != undefined) {
+            this.barChart.dispose();
+            this.rotateButtonContainer.dispose();
+        }
+
+        this.barChart = this.chart.createChild(am4charts.XYChart);
+        this.barChart.data = barchartData;
+        this.chart.children.moveValue(this.barChart, 0);
+        // Create axes
+        let categoryAxis = this.barChart.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20
+        categoryAxis.dataFields.category = this.barCategory;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.inversed = true;
+
+        let valueAxis = this.barChart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+        var lastColumnSeriesFill = this.columnSeries ? this.columnSeries.fill : "#5CC0DE";
+        // Create series
+        this.columnSeries = this.barChart.series.push(new am4charts.ColumnSeries());
+        this.columnSeries.dataFields.valueX = this.barValue;
+        this.columnSeries.dataFields.categoryY = this.barCategory;
+        this.columnSeries.columns.template.strokeWidth = 0;
+        this.columnSeries.columns.template.tooltipText = "{value}";
+        this.columnSeries.fill = lastColumnSeriesFill;
+
+
+        let valueLabel = this.columnSeries.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{value}";
+        valueLabel.label.fontSize = 20;
+        valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.hideOversized = false;
+        valueLabel.label.truncate = false;
+        valueLabel.label.dx = 10;
+        this.barChart.cursor = new am4charts.XYCursor();
+        this.barChart.cursor.behavior = "zoomX";
+        let scrollbar = new am4charts.XYChartScrollbar();
+        this.barChart.scrollbarX = scrollbar;
+        this.makeRotateButton();
+
+    }
+    makeVBar() {
+        var barchartData = this.barChart ? this.barChart.data : [];
+
+        console.log(this.chart)
+        if (this.barChart != undefined) {
+            this.barChart.dispose();
+            this.rotateButtonContainer.dispose();
+
+        }
+        this.barChart = this.chart.createChild(am4charts.XYChart);
+        this.chart.children.moveValue(this.barChart, 0);
+        this.barChart.data = barchartData;
+
+
+        // Create axes
+        let categoryAxis = this.barChart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.labels.template.fontSize = 20
+        categoryAxis.dataFields.category = this.barCategory;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.inversed = true;
+
+        let valueAxis = this.barChart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.labels.template.fontSize = 20;
+
+        var lastColumnSeriesFill = this.columnSeries ? this.columnSeries.fill : "#5CC0DE";
+        // Create series
+        this.columnSeries = this.barChart.series.push(new am4charts.ColumnSeries());
+        this.columnSeries.dataFields.valueY = this.barValue;
+        this.columnSeries.dataFields.categoryX = this.barCategory;
+        this.columnSeries.columns.template.strokeWidth = 0;
+        this.columnSeries.columns.template.tooltipText = "{value}";
+        this.columnSeries.fill = lastColumnSeriesFill;
+
+
+        let valueLabel = this.columnSeries.bullets.push(new am4charts.LabelBullet());
+        valueLabel.label.text = "{value}";
+        valueLabel.label.fontSize = 20;
+        //valueLabel.label.horizontalCenter = "left";
+        valueLabel.label.hideOversized = false;
+        valueLabel.label.truncate = false;
+        valueLabel.label.dy = -10;
+
+        this.barChart.cursor = new am4charts.XYCursor();
+        this.barChart.cursor.behavior = "zoomX";
+        let scrollbar = new am4charts.XYChartScrollbar();
+        this.barChart.scrollbarX = scrollbar;
+        this.makeRotateButton();
+    }
+    makeRotateButton() {
+
+        this.rotateButtonContainer = this.barChart.createChild(am4core.Container);
+        // this.chart.children.moveValue(this.rotateButtonContainer, 0);
+        let button = this.rotateButtonContainer.createChild(am4core.Button);
+        button.label.text = "Rotate Chart";
+        button.align = "left|bottom";
+        button.marginBottom = 15;
+        button.events.on("hit", () => {
+
+            //this.toggleLoading();
+            if (this.isHorizontal) {
+                this.isHorizontal = false;
+                this.makeVBar();
+
+            } else {
+                this.isHorizontal = true;
+                this.makeBar()
+
+            }
+            this.columnSeries.reinit();
+            setTimeout(() => {
+                //this.toggleLoading();
+            }, 3000);
+        });
+    }
+    setData(data) {
         console.log(data);
         this.data = data;
         this.donutChart.data = data;
@@ -1221,10 +1320,10 @@ class PieWithBarChart extends  HTMLElement
             flatRecordsArray.sort(function (a, b) {
                 // First, compare the years
                 if (a.year !== b.year) {
-                    return  b.year - a.year;;
+                    return b.year - a.year;;
                 } else {
                     // If the years are the same, compare the months using the custom monthOrder map
-                    return monthOrder[b.month]-monthOrder[a.month] ;
+                    return monthOrder[b.month] - monthOrder[a.month];
                 }
             });
             data.data = [];
@@ -1232,11 +1331,12 @@ class PieWithBarChart extends  HTMLElement
             return data;
         });
     }
-    set onSeriesChanged(callback){
+    set onSeriesChanged(callback) {
         this.onseriesChanged = callback;
     }
 
 }
+
 
 customElements.define("m-pie-chart"                     , PieChart);
 customElements.define("m-bar-chart"                         , BarChart);

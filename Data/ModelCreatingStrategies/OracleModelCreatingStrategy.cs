@@ -2283,6 +2283,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.AlertStatus)
                     .HasMaxLength(100)
                     .HasColumnName("ALERT_STATUS");
+                entity.Property(e => e.Year)
+      .HasColumnType("int")
+      .HasColumnName("YEAR");
 
                 entity.Property(e => e.AlertsCount).HasColumnName("Alerts_Count".ToUpper());
             });
