@@ -15,7 +15,9 @@ using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
@@ -63,6 +65,13 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 
+var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
+var cerPass = builder.Configuration.GetSection("DgUserManagementAuth").GetSection("CertificatePassword").Value;
+var certificate = Certificate.LoadCertificate(cerPath, cerPass);
+
+builder.Services.AddHttpClient("CertificateClient")
+        .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
+
 builder.Services.ConfigureApplicationCookie(opt =>
  {
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
@@ -79,7 +88,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
-//builder.Services.AddCustomAuthorization();
+builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -131,7 +140,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 //app.UseAuthorization();
-//app.UseCustomAuthorization();
+app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
