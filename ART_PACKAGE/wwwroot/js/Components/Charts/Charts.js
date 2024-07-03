@@ -1105,7 +1105,7 @@ class PieWithBarChart extends HTMLElement {
             title.text = this.chartTitle;
             title.fontSize = 25;
             this.donutChart.legend = new am4charts.Legend();
-            this.donutChart.legend.maxHeight = 50;
+            this.donutChart.legend.maxHeight = 120;
             this.donutChart.legend.maxWidth = 300;
             this.donutChart.legend.scrollable = true;
             this.donutChart.legend.position = "bottom";
