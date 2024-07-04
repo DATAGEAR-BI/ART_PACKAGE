@@ -26,6 +26,7 @@
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
+		<Content Remove="wwwroot\js\segmentReport - Copy.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -1943,6 +1944,7 @@
 		<None Include="wwwroot\js\HubUtils.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderConfiguration.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderParametersSettings.js" />
+		<None Include="wwwroot\js\segmentReport - Copy.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
 		<None Include="wwwroot\lib\Plugins\Kendo\jquery-1.12.4.min.js" />
