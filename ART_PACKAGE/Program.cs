@@ -17,6 +17,7 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.CustomReport;
 using Hangfire;
@@ -61,6 +62,13 @@ builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
+
+var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
+var cerPass = builder.Configuration.GetSection("DgUserManagementAuth").GetSection("CertificatePassword").Value;
+var certificate = Certificate.LoadCertificate(cerPath, cerPass);
+
+builder.Services.AddHttpClient("CertificateClient")
+        .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
