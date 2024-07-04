@@ -60,7 +60,7 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
 
 
             };
-            KendoDataDesc<ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
+            KendoDataDesc<ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn, propertiesToSkip: new() { "RN" });
 
 
             var result = new

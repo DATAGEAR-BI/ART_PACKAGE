@@ -122,7 +122,7 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 data = context.ExecuteProc<ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION>(MYSQLSPName.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION, summaryParams.ToArray());
             }
-            ViewData["title"] = "Non-Staff GOAML per Region Report";
+            ViewData["title"] = "Non-Staff GOAML AML per Region Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
