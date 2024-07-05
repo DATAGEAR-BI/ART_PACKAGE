@@ -15,13 +15,13 @@ namespace ART_PACKAGE.Controllers.ARTAUDIT
     {
         private readonly ARTAUDITContext ArtAudit;
         private readonly IConfiguration _config;
-        private readonly string CustomerNumber;
+        //private readonly string CustomerNumber;
 
         public HierarchicalWorkflowController(ARTAUDITContext ArtAudit, UserManager<AppUser> um, IConfiguration config) : base(um)
         {
             this.ArtAudit = ArtAudit;
             _config = config;
-            CustomerNumber = _config.GetValue<string>("CustomerNumber").ToUpper();
+         //   CustomerNumber = _config.GetValue<string>("CustomerNumber").ToUpper();
 
         }
 
@@ -34,28 +34,28 @@ namespace ART_PACKAGE.Controllers.ARTAUDIT
 
             AppUser currentUser = await GetUser();
 
-            //if (currentUser.DgUserId != null)
-            //{
+            if (currentUser.DgUserId != null)
+            {
 
                 IEnumerable<System.Data.Common.DbParameter> Params = new List<System.Data.Common.DbParameter>()
                 {
                 new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output),
-                new OracleParameter("CUSTOMER_NUMBER", OracleDbType.Varchar2, ParameterDirection.Input) { Value = CustomerNumber }
+                new OracleParameter("CUSTOMER_NUMBER", OracleDbType.Varchar2, ParameterDirection.Input) { Value = currentUser.DgUserId.ToString() }
                 };
 
                 hierarchicalWorkFlowData = ArtAudit.ExecuteProc<ArtStHierarchicalWorkFlow>(ORACLESPName.ART_ST_DGAML_HIERARCHICAL_WORKFLOW, Params.ToArray());
 
-            foreach (ArtStHierarchicalWorkFlow data in hierarchicalWorkFlowData)
-            {
-                if (data != null && data.node_id != null)
+                foreach (ArtStHierarchicalWorkFlow data in hierarchicalWorkFlowData)
                 {
+                    if (data != null && data.node_id != null)
+                    {
 
-                    result.Add(new() { id = data.node_id, name = data.node_id, parentId = data.parent_id, title = data.role, expanded = true });
+                        result.Add(new() { id = data.node_id, name = data.node_id, parentId = data.parent_id, title = data.role, expanded = true });
+                    }
+
                 }
 
             }
-
-            //}
             return new ContentResult
             {
                 ContentType = "application/json",
