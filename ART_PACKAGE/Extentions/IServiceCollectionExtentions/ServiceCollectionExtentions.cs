@@ -25,6 +25,7 @@ using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
+using Data.DGAMLCORE;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
@@ -126,7 +127,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 string ACContextConnection = config.GetConnectionString("ACContextConnection") ?? throw new InvalidOperationException("Connection string 'ACContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
-                _ = services.AddDbContext<DGAMLContext>(opt => contextBuilder(opt, DGAMLContextConnection));
+                _ = services.AddDbContext<DGAMLCOREContext>(opt => contextBuilder(opt, DGAMLContextConnection));
                 _ = services.AddDbContext<ACContext>(opt => contextBuilder(opt, ACContextConnection));
                 _ = services.AddDbContext<DGINTFRAUDContext>(opt => contextBuilder(opt, connectionString));
             }

@@ -2,9 +2,11 @@
 using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.ARTAUDIT;
+using Data.Data.DGINTFRAUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.DGAML;
+using Data.DGAMLCORE;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
@@ -87,11 +89,13 @@ namespace ART_PACKAGE.Helpers.DBService
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
-                    DGAMLContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLContext>();
+                    DGAMLCOREContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
                     ACContext ac = scope.ServiceProvider.GetRequiredService<ACContext>();
+                    DGINTFRAUDContext artContext = scope.ServiceProvider.GetRequiredService<DGINTFRAUDContext>();
                     ECM = ecmService;
-                    DGAML = dgAml;
+                    DGAMLCORE = dgAml;
                     AC = ac;
+                    ArtContext = artContext; 
                 }
                 if (modules.Contains("ARTAUDIT"))
                 {
@@ -109,6 +113,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public GoAmlContext GOAML { get; }
 
+        public DGAMLCOREContext DGAMLCORE { get; }
         public DGAMLContext DGAML { get; }
 
         public TIZONE2Context TI { get; }
@@ -120,6 +125,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public SasAmlContext SasAML { get; }
         public ACContext AC { get; }
         public ARTAUDITContext ArtAudit { get; }
+        public DGINTFRAUDContext ArtContext { get; }
 
     }
 }
