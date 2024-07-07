@@ -44,8 +44,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
 
-            void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
+            void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 300)
             {
+                var timeout = config.GetValue<int>("dbCommendTimeOut", 300);
+                commandTimeOut = timeout;
                 _ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(
