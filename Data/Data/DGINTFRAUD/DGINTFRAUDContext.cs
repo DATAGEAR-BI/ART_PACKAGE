@@ -29,7 +29,6 @@ namespace Data.Data.DGINTFRAUD
         public virtual DbSet<ArtDgamlAlertDetailView> ArtDgAmlAlertDetailViews { get; set; } = null!;
         public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
         public virtual DbSet<ArtUserPerformance> ArtUserPerformances { get; set; } = null!;
-        public virtual DbSet<ArtDgamlHierarchicalTransaction> ArtDgamlHierarchicalTransactions { get; set; } = null!;
         public virtual DbSet<ArtDgamlCasesTransactionsDetailPopUpWindow> ArtDgamlCasesTransactionsDetailPopUpWindows { get; set; } = null!;
 
 
@@ -40,6 +39,7 @@ namespace Data.Data.DGINTFRAUD
             modelBuilder.Entity<ArtStDgamlAllTransVsCased>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtDgamlCasesTransactionsDetail>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtDgamlAllTransaction>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgamlHierarchicalTransaction>().HasNoKey().ToView(null);
 
             modelBuilder.Entity<ArtStDgAmlAlertPerOwner>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlAlertsPerStatus>().HasNoKey().ToView(null);

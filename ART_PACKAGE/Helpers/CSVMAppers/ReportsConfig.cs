@@ -23,6 +23,29 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     {
         public static readonly Dictionary<string, ReportConfig> CONFIG = new()
         {
+             { nameof(ArtDgamlHierarchicalTransaction).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                { "Employee_Number", new GridColumnConfiguration { DisplayName = "Employee Number (CIF)" } },
+                { "Employee_Name", new GridColumnConfiguration { DisplayName = "Employee Name" } },
+                { "Customer_ID", new GridColumnConfiguration { DisplayName = "Customer ID" } },
+                { "Role", new GridColumnConfiguration { DisplayName = "Transactions Amounts" } },
+                { "Staff_Relative_Ind", new GridColumnConfiguration { DisplayName = "Staff Relative Ind" } },
+                { "Department", new GridColumnConfiguration { DisplayName = "Department" } },
+                { "Division", new GridColumnConfiguration { DisplayName = "Division" } },
+                { "Job", new GridColumnConfiguration { DisplayName = "Job" } },
+                { "Grad", new GridColumnConfiguration { DisplayName = "Grad" } },
+                { "Status", new GridColumnConfiguration { DisplayName = "Status" } },
+                { "Transaction_Reference", new GridColumnConfiguration { DisplayName = "Transaction Reference" } },
+                { "Transaction_Type", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
+                { "Transaction_Date", new GridColumnConfiguration { DisplayName = "Transaction Date" } },
+                { "Base_Amount_EGP", new GridColumnConfiguration { DisplayName = "Base Amount (EGP)" } },
+                { "Equivalent_Amount", new GridColumnConfiguration { DisplayName = "Equivalent Amount" } },
+                { "Equivalent_Currency", new GridColumnConfiguration { DisplayName = "Equivalent Currency" } },
+                }
+    }
+},
             { nameof(ArtDgamlCasesTransactions).ToLower(), new ReportConfig {
 
                DisplayNames = new Dictionary<string, GridColumnConfiguration>

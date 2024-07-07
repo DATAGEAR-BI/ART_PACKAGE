@@ -1,9 +1,30 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section KendoScripts{
-    <partial name="_GridScripts" />
-}
+<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-querybuilder/css/query-builder.dark.css" rel="stylesheet" />
+<link href="~/lib/jquery-querybuilder/css/query-builder.dark.min.css" rel="stylesheet" />
+<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
+<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+@*<script src="~/lib/Plugins/Kendo/jquery-1.12.4.min.js"></script>*@
+<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.js"></script>
+<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
+<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
+<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
+<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.min.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.standalone.js"></script>
+<script src="~/lib/jquery-querybuilder/js/query-builder.js"></script>
+
 <section class="content-header">
     <h1>
         Hierarchical Transaction
@@ -13,8 +34,17 @@
 </section>
 
 
-<m-grid id="HierarchicalTransaction" data-urlkey="HierarchicalTransaction" data-handlerkey="HierarchicalTransaction"></m-grid>
 
-@section Scripts{
-    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+<filters-control data-key="HierarchicalTransaction"></filters-control>
+<div id="grid"></div>
+
+
+@section Scripts {
+    <script>
+        var currentDgUserID = '@ViewBag.currentDgUserID';
+        
+    </script>
+    <script src="~/js/constructfilters.js" defer type="module"></script>
+    <script src="~/js/dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="HierarchicalTransaction" data-handlerkey="HierarchicalTransaction"></script>
 }

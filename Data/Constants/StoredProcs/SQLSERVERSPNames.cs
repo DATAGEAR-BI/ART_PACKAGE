@@ -72,5 +72,6 @@
         public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS_VS_CASED = "";
         public static readonly string ART_ST_DGAML_CASES_TRANSACTIONS_DETAIL = "";
         public static readonly string ART_ST_DGAML_ALL_TRANSACTIONS = "";
+        public static readonly string ART_ST_DGAML_HIERARCHICAL_TRANSACTIONS = "";
     }
 }

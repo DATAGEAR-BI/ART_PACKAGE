@@ -53,6 +53,16 @@ function yesterday() {
     var d = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     return d.toISOString().slice(0, 10);
 }
+function getCurrentDgUserID() {
+    //fetch("/HierarchicalTransaction/GetCurrentDgUserID").then(x => x.json()).then(
+    //    x => {
+    //        console.log(x);
+    //        return x;
+    //    }
+    //);
+    console.log(currentDgUserID);
+    return currentDgUserID;
+}
 export const Filters = {
     UserPerformanceSummary: {
         filters: [],
@@ -389,6 +399,23 @@ export const Filters = {
             { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
             { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
             { id: "customer_number", field: "customer_number", label: "Customer Number", type: "string", operator: "equal", value: "0" },
+
+        ]
+    },
+    HierarchicalTransaction: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "customer_number", field: "customer_number", label: "Customer Number", operators: ['equal'], type: "string" },
+
+            ]
+        },
+        rules: [
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+            { id: "customer_number", field: "customer_number", label: "Customer Number", type: "string", operator: "equal", value: getCurrentDgUserID(),readonly: true, },
 
         ]
     }
