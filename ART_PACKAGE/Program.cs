@@ -139,7 +139,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
-//app.UseAuthorization();
+app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
