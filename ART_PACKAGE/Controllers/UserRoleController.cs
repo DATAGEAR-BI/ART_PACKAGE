@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace ART_PACKAGE.Controllers
 {
 
-
+    [AllowAnonymous]
     public class UserRoleController : Controller
     {
 
