@@ -34,13 +34,13 @@ namespace ART_PACKAGE.Controllers.ARTAUDIT
 
             AppUser currentUser = await GetUser();
 
-            if (currentUser.DgUserId != null)
+            if (currentUser.DgUserName != null)
             {
 
                 IEnumerable<System.Data.Common.DbParameter> Params = new List<System.Data.Common.DbParameter>()
                 {
                 new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output),
-                new OracleParameter("CUSTOMER_NUMBER", OracleDbType.Varchar2, ParameterDirection.Input) { Value = currentUser.DgUserId.ToString() }
+                new OracleParameter("CUSTOMER_NUMBER", OracleDbType.Varchar2, ParameterDirection.Input) { Value = currentUser.DgUserName }
                 };
 
                 hierarchicalWorkFlowData = ArtAudit.ExecuteProc<ArtStHierarchicalWorkFlow>(ORACLESPName.ART_ST_DGAML_HIERARCHICAL_WORKFLOW, Params.ToArray());
