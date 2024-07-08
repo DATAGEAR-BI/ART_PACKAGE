@@ -106,6 +106,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         UserName = email,
                                         DgUserId = info.DgUserManagementResponse.Id,
                                         LastLoginDate = DateTime.Now,
+                                        DgUserName = info.DgUserManagementResponse.Name
                                     };
                                     IdentityResult createresult = await _userManager.CreateAsync(user);
                                     if (!createresult.Succeeded)
@@ -114,10 +115,8 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         return Page();
                                     }
                                 }
-                                if (user.DgUserId == null)
-                                {
-                                    user.DgUserId = info.DgUserManagementResponse.Id;
-                                }
+                                user.DgUserId ??= info.DgUserManagementResponse.Id;
+                                user.DgUserName ??= info.DgUserManagementResponse.Name;
                                 user.LastLoginDate = DateTime.Now;
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 _logger.LogWarning($"Adding roles to user");

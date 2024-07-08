@@ -88,7 +88,7 @@ namespace ART_PACKAGE.Controllers.DGINTFRAUD
         public async Task<IActionResult> Index()
         {
             AppUser currentUser = await GetUser();
-            ViewBag.currentDgUserID = (currentUser != null && currentUser.DgUserId != null) ? currentUser.DgUserId.ToString() : "0";
+            ViewBag.currentDgUserID = (currentUser != null && currentUser.DgUserName != null) ? currentUser.DgUserName : "0";
             return View();
         }
 
