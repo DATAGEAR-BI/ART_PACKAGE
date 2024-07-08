@@ -1,6 +1,7 @@
 ﻿﻿using ART_PACKAGE.Areas.Identity.Data;
  using ART_PACKAGE.Controllers;
  using Microsoft.AspNetCore.Identity;
+using static iTextSharp.text.pdf.AcroFields;
 
  namespace ART_PACKAGE.Middlewares.Security
 {
@@ -52,6 +53,7 @@
             _logger.LogCritical("user name now is : " + user.Email);
             var isInRole = await _userManger.IsInRoleAsync(user, roleName);
             var roles =await _userManger.GetRolesAsync(user);
+            _logger.LogCritical("roleS------NUMBER : " + roles.Count()); 
             foreach (var item in roles)
             {
                 _logger.LogCritical("role------name : " + item);
