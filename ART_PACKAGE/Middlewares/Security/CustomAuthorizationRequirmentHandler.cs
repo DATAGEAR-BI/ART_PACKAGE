@@ -50,7 +50,13 @@
             _logger.LogCritical("controller name from header is : " + controller);
             _logger.LogCritical("roleName name of controller is : " + roleName);
             _logger.LogCritical("user name now is : " + user.Email);
-            _logger.LogCritical("user is in role : " + await _userManger.IsInRoleAsync(user, roleName));
+            var isInRole = await _userManger.IsInRoleAsync(user, roleName);
+            var roles =await _userManger.GetRolesAsync(user);
+            foreach (var item in roles)
+            {
+                _logger.LogCritical("role------name : " + item);
+            }
+            _logger.LogCritical("user is in role : " + isInRole);
 
             if (!await _userManger.IsInRoleAsync(user, roleName))
             {
