@@ -10,13 +10,17 @@
         private readonly RoleManager<IdentityRole> _roleManger;
         private readonly UserManager<AppUser> _userManger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<CustomAuthorizationRequirmentHandler> _logger;
 
-        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger)
+
+
+        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger,ILogger<CustomAuthorizationRequirmentHandler> log)
         {
 
             _roleManger = roleManger;
             _httpContextAccessor = httpContextAccessor;
             _userManger = userManger;
+            _logger= log;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirment requirement)
@@ -41,12 +45,19 @@
                 return;
             }
             
+           
             AppUser user = await _userManger.GetUserAsync(context.User);
+            _logger.LogCritical("controller name from header is : " + controller);
+            _logger.LogCritical("roleName name of controller is : " + roleName);
+            _logger.LogCritical("user name now is : " + user.Email);
+            _logger.LogCritical("user is in role : " + await _userManger.IsInRoleAsync(user, roleName));
+
             if (!await _userManger.IsInRoleAsync(user, roleName))
             {
                 context.Fail();
                 return;
             }
+
             context.Succeed(requirement);
         }
 
