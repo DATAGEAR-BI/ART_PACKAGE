@@ -58,6 +58,7 @@ using static iTextSharp.text.pdf.AcroFields;
             {
                 _logger.LogCritical("role------name : " + item);
             }
+            
             _logger.LogCritical("user is in role : " + isInRole);
 
             if (!await _userManger.IsInRoleAsync(user, roleName))
