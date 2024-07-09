@@ -1,6 +1,7 @@
 ﻿﻿using ART_PACKAGE.Areas.Identity.Data;
  using ART_PACKAGE.Controllers;
  using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using static iTextSharp.text.pdf.AcroFields;
 
  namespace ART_PACKAGE.Middlewares.Security
@@ -45,9 +46,19 @@ using static iTextSharp.text.pdf.AcroFields;
                 context.Succeed(requirement);
                 return;
             }
-            
-           
-            AppUser user = await _userManger.GetUserAsync(context.User);
+
+            var rolesWithUsers = new Dictionary<string,dynamic>();
+
+            var allRoles = _roleManger.Roles;
+            foreach (var role in allRoles)
+            {
+                var usersInRole = await _userManger.GetUsersInRoleAsync(role.Name);
+                rolesWithUsers[role.Name] = usersInRole;
+            }
+
+            _logger.LogCritical(" roles data :"+(JsonConvert.SerializeObject(rolesWithUsers)));
+        
+        AppUser user = await _userManger.GetUserAsync(context.User);
             _logger.LogCritical("controller name from header is : " + controller);
             _logger.LogCritical("roleName name of controller is : " + roleName);
             _logger.LogCritical("user name now is : " + user.Email);
