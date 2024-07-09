@@ -127,7 +127,21 @@ namespace ART_PACKAGE.Controllers.ECM
             };
             if (dbType is DbTypes.Oracle or DbTypes.MySql)
             {
-                _ = chartData.Add(new ChartData<dynamic>
+                _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
+                {
+                    ChartId = "StSystemPerfPerTransDir",
+                    Data = chart3Data.Select(x =>
+                    {
+                        x.TRANSACTION_DIRECTION ??= "UNKOWN";
+                        return x;
+                    }).ToList(),
+                    Title = "Swift Cases Per Direction",
+                    Cat = "TRANSACTION_DIRECTION",
+                    Val = "TOTAL_NUMBER_OF_CASES",
+                    Type = ChartType.donut
+                });
+
+                /*_ = chartData.Add(new ChartData<dynamic>
                 {
                     ChartId = "StSystemPerfPerDate",
                     //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
@@ -136,7 +150,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Cat = "Date",
                     Val = "CASES",
                     Type = ChartType.curvedline
-                });
+                });*/
             }
             if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
