@@ -47,30 +47,11 @@ using static iTextSharp.text.pdf.AcroFields;
                 return;
             }
 
-            var rolesWithUsers = new Dictionary<string,dynamic>();
-
-            var allRoles = _roleManger.Roles;
-            foreach (var role in allRoles)
-            {
-                var usersInRole = await _userManger.GetUsersInRoleAsync(role.Name);
-                rolesWithUsers[role.Name] = usersInRole;
-            }
-
-            _logger.LogCritical(" roles data :"+(JsonConvert.SerializeObject(rolesWithUsers)));
+            
         
         AppUser user = await _userManger.GetUserAsync(context.User);
-            _logger.LogCritical("controller name from header is : " + controller);
-            _logger.LogCritical("roleName name of controller is : " + roleName);
-            _logger.LogCritical("user name now is : " + user.Email);
-            var isInRole = await _userManger.IsInRoleAsync(user, roleName);
-            var roles =await _userManger.GetRolesAsync(user);
-            _logger.LogCritical("roleS------NUMBER : " + roles.Count()); 
-            foreach (var item in roles)
-            {
-                _logger.LogCritical("role------name : " + item);
-            }
-            
-            _logger.LogCritical("user is in role : " + isInRole);
+           
+           
 
             if (!await _userManger.IsInRoleAsync(user, roleName))
             {
