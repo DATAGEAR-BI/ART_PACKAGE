@@ -54,7 +54,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
                .Where(a => a.ChangeCurrentInd.Contains("Y"))
-               .Where(b => b.BranchTypeDesc.Contains("BRANCH")).Select(x => x.BranchName)
+               //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
+               .Select(x => x.BranchName)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
