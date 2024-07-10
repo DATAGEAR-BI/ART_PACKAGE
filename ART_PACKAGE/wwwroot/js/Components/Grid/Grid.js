@@ -288,6 +288,7 @@ class Grid extends HTMLElement {
                     progressBar.hidden = true;
                     var downloadButton = document.getElementById("ExportDownloadBtn");
                     downloadButton.style.visibility = "";
+                    downloadButton.hidden = false;
                     this.isExporting = false;
                     this.isDownloaded = false;
                     isExportingCSVNow = false;
@@ -338,6 +339,7 @@ class Grid extends HTMLElement {
             }
 
         });
+
 
         //beforeLeaveAction();
 
