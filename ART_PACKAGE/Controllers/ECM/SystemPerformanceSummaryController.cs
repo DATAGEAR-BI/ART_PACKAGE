@@ -88,7 +88,8 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart3Params.ToArray());
+                chart4Data = context.ExecuteProc<ArtSystemPerfPerDate>(ORACLESPName.ST_SYSTEM_PERF_PER_DATE, chart4Params.ToArray());
+                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
 
             }
             if (dbType == DbTypes.MySql)
