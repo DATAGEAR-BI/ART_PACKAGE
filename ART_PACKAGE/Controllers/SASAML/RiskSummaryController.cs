@@ -59,6 +59,19 @@ namespace ART_PACKAGE.Controllers.SASAML
                 //chart2data = dbfcfcore.ExecuteProc<ArtStAmlPropRiskClass>(MYSQLSPName.ART_ST_AML_PROP_RISK_CLASS, chart2Params.ToArray());
 
             }
+            List<Dictionary<string, object>> chartDictList = new List<Dictionary<string, object>>();
+            foreach (var chartResult in chart3data.GroupBy(x => x.RISK_STATUS).ToList())
+            {
+                Dictionary<string, object> result = new Dictionary<string, object>
+                {
+                    { "Risk_Status", chartResult.Key }
+                };
+                foreach (ArtStAmlRiskStatus? list in chartResult)
+                {
+                    result.Add(list.RISK, list.NUMBER_OF_CUSTOMERS);
+                }
+                chartDictList.Add(result);
+            };
             ArrayList chartData = new()
             {
                 new ChartData<ArtStAmlRiskClass>
@@ -80,12 +93,12 @@ namespace ART_PACKAGE.Controllers.SASAML
                 //    Val = "NUMBER_OF_CUSTOMERS",
                 //    Type = ChartType.donut
                 //},
-                new ChartData<ArtStAmlRiskStatus>
+                new ChartData<Dictionary<string,object>>
                 {
                     ChartId = "StRiskStatus",
-                    Data =chart3data.ToList(),
+                    Data =chartDictList,
                     Title = "Risk Assessment Per Risk Status",
-                    Cat = "RISK",
+                    Cat = "Risk_Status",
                     Type = ChartType.clusteredbarchart
                 },
             };
