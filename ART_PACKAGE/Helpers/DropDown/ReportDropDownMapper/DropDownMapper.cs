@@ -81,9 +81,12 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                       {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },*/
        
                 },
-                nameof(CustomersController) => new Dictionary<string, List<SelectItem>>
+                var value when value == nameof(artamlcustomersdetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
-                      {"CustomerType".ToLower(),_dropDown.GetPartyTypeDropDown() },
+                      {"CustomerType".ToLower(),_dropDown.GetCustomerTypeDropDown() },
+                      {"CustomerStatus".ToLower(),_dropDown.GetCustomerStatusDropDown() },
+                      {"MaritalStatusDesc".ToLower(),_dropDown.GetMaritalStatusDropDown() },
+                      {"CustomerLevel".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Other",value= "Other" }, new SelectItem() { text = "Customer", value = "Customer" } } },
                       {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                       {"NonProfitOrgInd".ToLower(),pipList },
                       {"PoliticallyExposedPersonInd".ToLower(),pipList },

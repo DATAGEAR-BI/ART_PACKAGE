@@ -1,6 +1,7 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
 using Data.Services.Grid;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ART_PACKAGE.Helpers.DropDown
 {
@@ -57,6 +58,7 @@ namespace ART_PACKAGE.Helpers.DropDown
                //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
                .Select(x => x.BranchName)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
+            distinct_value.Add(new SelectItem { text = "Unknown", value = "Unknown" });
             return distinct_value;
 
         }
@@ -142,7 +144,24 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetCustomerTypeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyTypeDesc != null && x.PartyTypeDesc != string.Empty).Select(x => x.PartyTypeDesc.ToUpper() ).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
 
+        }
+        public List<SelectItem> GetCustomerStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyStatusDesc != null && x.PartyStatusDesc != string.Empty).Select(x => x.PartyStatusDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetMaritalStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.MaritalStatusDesc != null && x.MaritalStatusDesc != string.Empty).Select(x => x.MaritalStatusDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
         public List<SelectItem> GetOccupationDescDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.OccupationDesc == null || string.IsNullOrEmpty(x.OccupationDesc.Trim()) ? "UNKNOWN" : x.OccupationDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
