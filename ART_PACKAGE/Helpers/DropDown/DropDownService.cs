@@ -192,6 +192,15 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetAlertedEntityLevelDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+                 .Where(a => a.LovTypeName.StartsWith("RT_ENTITY_LEVEL"))
+                 .Where(b => b.LovLanguageDesc.Contains("en")).Select(g => g.LovTypeDesc)
+                 .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
         public List<SelectItem> GetAssessmentCategoryCdDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentCategoryCd).Select(g => g.Key).Select(x => new SelectItem { text = x, value = x }).ToList();
