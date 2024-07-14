@@ -7,6 +7,7 @@
     }
 
     connectedCallback() {
+        console.log("m-select")
         var id = this.id;
         this.classList.add("form-floating", "form-floating-outline");
 

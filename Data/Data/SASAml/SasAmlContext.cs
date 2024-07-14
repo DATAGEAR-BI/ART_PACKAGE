@@ -1,4 +1,5 @@
-﻿using Data.FCF71;
+﻿using Data.Data.ARTGOAML;
+using Data.FCF71;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -23,6 +24,8 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
         public virtual DbSet<ArtAuditReportView> ArtAuditReportViews { get; set; } = null!;
+        public virtual DbSet<ArtAlertsPerAlertedEntityView> ArtAlertsPerAlertedEntityViews { get; set; } = null!;
+        public virtual DbSet<ArtMonthlySwiftView> ArtMonthlySwiftViews { get; set; } = null!;
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 
 
@@ -48,6 +51,7 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStAmlRiskStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStCasesPerDate>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ART_ST_YEARLY_UNUSAL_ACTIVITIES>().HasNoKey().ToView(null);
             
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);

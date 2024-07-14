@@ -54,7 +54,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
                .Where(a => a.ChangeCurrentInd.Contains("Y"))
-               .Where(b => b.BranchTypeDesc.Contains("BRANCH")).Select(x => x.BranchName)
+               //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
+               .Select(x => x.BranchName)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
@@ -246,6 +247,21 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "DTET, SARAF or STRTF", "SAR or STR" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportTypeForStaffAndNonStaffSummariesDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "DTET", "SARAF", "STRTF" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+
         public List<SelectItem> GetReportPriorityDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.Priority).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
@@ -683,6 +699,15 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
+        }
+        public List<SelectItem> GetLast10YearsDropDown()
+        {
+            var currentYear = DateTime.Now.Year;
+            var years = Enumerable.Range(currentYear - 9, 10).OrderByDescending(s=>s)
+                .Select(year => new SelectItem { text = year.ToString(), value = year.ToString() })
+                .ToList();
+
+            return years;
         }
 
         public List<SelectItem> GetDGCustomerIdentificationTypeDropDown()

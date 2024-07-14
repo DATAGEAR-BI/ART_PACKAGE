@@ -1,6 +1,8 @@
 ﻿﻿using ART_PACKAGE.Areas.Identity.Data;
  using ART_PACKAGE.Controllers;
  using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using static iTextSharp.text.pdf.AcroFields;
 
  namespace ART_PACKAGE.Middlewares.Security
 {
@@ -10,13 +12,17 @@
         private readonly RoleManager<IdentityRole> _roleManger;
         private readonly UserManager<AppUser> _userManger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<CustomAuthorizationRequirmentHandler> _logger;
 
-        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger)
+
+
+        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger,ILogger<CustomAuthorizationRequirmentHandler> log)
         {
 
             _roleManger = roleManger;
             _httpContextAccessor = httpContextAccessor;
             _userManger = userManger;
+            _logger= log;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirment requirement)
@@ -40,13 +46,19 @@
                 context.Succeed(requirement);
                 return;
             }
+
             
-            AppUser user = await _userManger.GetUserAsync(context.User);
+        
+        AppUser user = await _userManger.GetUserAsync(context.User);
+           
+           
+
             if (!await _userManger.IsInRoleAsync(user, roleName))
             {
                 context.Fail();
                 return;
             }
+
             context.Succeed(requirement);
         }
 

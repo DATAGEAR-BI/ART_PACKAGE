@@ -3,7 +3,7 @@
     public static class ORACLESPName
     {
         //Sanction
-        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIR";
+        public static readonly string ST_SYSTEM_PERF_PER_DIRECTION = "ART.ART_ST_SYSTEM_PERF_PER_DIRECTION";
         public static readonly string ST_SYSTEM_PERF_PER_DATE = "ART.ART_ST_SYSTEM_PERF_PER_DATE";
         public static readonly string ST_SYSTEM_PERF_PER_STATUS = "ART.ART_ST_SYSTEM_PERF_PER_STATUS";
         public static readonly string ST_SYSTEM_PERF_PER_TYPE = "ART.ART_ST_SYSTEM_PERF_PER_TYPE";
@@ -31,6 +31,7 @@
         public static readonly string ART_ST_AML_ALERTS_PER_BRANCH = "ART.ART_ST_AML_ALERTS_PER_BRANCH";
         public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO = "ART.ART_ST_AML_ALERTS_PER_SCENARIO";
         public static readonly string ART_ST_AML_ALERTS_PER_STATUS = "ART.ART_ST_AML_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_YEARLY_AML_PER_SCENARIO = "ART.ART_ST_YEARLY_AML_PER_SCENARIO";
 
 
         //GoAml
@@ -60,6 +61,45 @@
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
         public static readonly string ART_ST_ALERTS_PER_BRANCH = "ART.ART_ST_ALERTS_PER_BRANCH";
         public static readonly string ART_ST_ALERTS_PER_SCENARIO = "ART.ART_ST_ALERTS_PER_SCENARIO";
+
+
+        /// <summary>
+        /// /////////////////////////////////-----------------------
+        /// </summary>
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME = "ART.ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT = "ART.ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION = "ART.ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT = "ART.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION = "ART.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE = "ART.ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE";
+        public static readonly string ART_ST_YEARLY_TOP_AML_BRANCHES = "ART.ART_ST_YEARLY_TOP_AML_BRANCHES";
+        public static readonly string ART_ST_YEARLY_TOP_GOAML_BRANCHES = "ART.ART_ST_YEARLY_TOP_GOAML_BRANCHES";
+        public static readonly string ART_ST_YEARLY_TOP_SANCTION_BRANCHES = "ART.ART_ST_YEARLY_TOP_SANCTION_BRANCHES";
+        public static readonly string ART_ST_YEARLY_UNUSAL_ACTIVITIES = "ART.ART_ST_YEARLY_UNUSAL_ACTIVITIES";
+
+
+
+        //////////////////////////
+        ///
+        public static readonly string ART_ST_YEARLY_AML_PER_REGION = "ART.ART_ST_YEARLY_AML_PER_REGION";
+        public static readonly string ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE = "ART.ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE";
+        public static readonly string ART_ST_YEARLY_BOTTOM_AML_BRANCHES = "ART.ART_ST_YEARLY_BOTTOM_AML_BRANCHES";
+        public static readonly string ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES = "ART.ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES";
+        public static readonly string ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES = "ART.ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION";
+
+
+        //////////////////////////////////
+        ///
+
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION             = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE                                        = "ART.ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_PRODUCT                                                            = "ART.ART_ST_YEARLY_SANCTION_PER_PRODUCT";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_REGION                         = "ART.ART_ST_YEARLY_SANCTION_PER_REGION";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_YEAR                                        = "ART.ART_ST_YEARLY_SANCTION_PER_YEAR";
 
 
 

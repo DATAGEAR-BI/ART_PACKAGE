@@ -9,8 +9,10 @@ using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Controllers.TRADE_BASE;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
+using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.Services.Grid;
 using GridAggregateType = Data.Services.Grid.GridAggregateType;
@@ -2883,6 +2885,341 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
     }
             },
 
+
+
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "CRIME", new GridColumnConfiguration { DisplayName = "Crime" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }
+    }
+            },
+
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                    { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
+                    { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+
+             { nameof(ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "TRRANSACTION_TYPE", new GridColumnConfiguration { DisplayName = "Transaction Type" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_SANCTION_PER_YEAR).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "year", new GridColumnConfiguration { DisplayName = "Year" } },
+
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_SANCTION_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "year", new GridColumnConfiguration { DisplayName = "Year" } },
+
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_SANCTION_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "year", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_TOP_GOAML_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                   "RN"
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                     { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
+                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                  { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Of Cases" } },
+                   { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+                
+            },
+
+
+             { nameof(ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                     { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
+                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                  { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Of Cases" } },
+                   { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+             { nameof(ART_ST_YEARLY_TOP_AML_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                     { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_TOP_SANCTION_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                     { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_BOTTOM_AML_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                     { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                      { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+            ///////////////////
+            ///
+            
+          /*  { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                    { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
+                    { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },*/
+
+           /* { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },*/
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+                DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "CRIME", new GridColumnConfiguration { DisplayName = "Crime" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames =  new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                    { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
+                    { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "PRODUCT", new GridColumnConfiguration { DisplayName = "Product" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+            { nameof(ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+
+
+            { nameof(ART_ST_YEARLY_AML_PER_REGION).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                 { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+            }}
+            },
+
+
+
+            { nameof(ART_ST_YEARLY_UNUSAL_ACTIVITIES).ToLower(), new ReportConfig {
+               SkipList =  new List<string>
+                {
+                },
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+            {
+                    { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "NUMBER_OF_ALERTS", new GridColumnConfiguration { DisplayName = "Number Of Alerts" } },
+                { "TYPE_OF_ACTIVITY", new GridColumnConfiguration { DisplayName = "Type of Acivity" } }
+            }}
+            },
         };
 
     }

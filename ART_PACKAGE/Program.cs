@@ -15,7 +15,9 @@ using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
@@ -47,6 +49,7 @@ builder.Services.AddSingleton<Module>();
 builder.Services.AddSingleton<ProcessesHandler>();
 
 builder.Services.AddTransient(typeof(IAmlAnalysisRepo), typeof(AmlAnalysisRepo));
+builder.Services.AddTransient(typeof(IAutoRulesRepo), typeof(AutoRulesRepo));
 builder.Services.AddTransient(typeof(IBaseRepo<,>), typeof(BaseRepo<,>));
 builder.Services.AddTransient(typeof(ICustomReportRepo), typeof(CustomReportRepo));
 builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
@@ -61,6 +64,13 @@ builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
+
+var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
+var cerPass = builder.Configuration.GetSection("DgUserManagementAuth").GetSection("CertificatePassword").Value;
+var certificate = Certificate.LoadCertificate(cerPath, cerPass);
+
+builder.Services.AddHttpClient("CertificateClient")
+        .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
@@ -78,7 +88,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddLicense(builder.Configuration);
-//builder.Services.AddCustomAuthorization();
+builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
 
@@ -129,8 +139,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
-//app.UseAuthorization();
-//app.UseCustomAuthorization();
+app.UseAuthorization();
+app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");

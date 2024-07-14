@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        Alerted Entity Report
+        <small>Presents the Alerted Entity details</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="AlertedEntityDetail" data-urlkey="AlertedEntityDetail" data-handlerkey="AlertedEntityDetail" data-prop="AlertedEntityNumber"></m-grid>
+
+@*<div id="grid"></div>*@
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+
+    @*<script src="~/js/Dynamic.js" id="script" defer type="module" data-prop="AlertedEntityNumber" data-urlkey="AlertedEntityDetail" data-handlerkey="AlertedEntityDetail"></script>*@
+}

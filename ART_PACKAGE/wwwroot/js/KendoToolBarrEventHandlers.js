@@ -121,6 +121,11 @@ export const Handlers = {
         a.href = window.URL.createObjectURL(blob);
         a.click();
         kendo.ui.progress($('#grid'), false);
+        toastObj.text = "Data exported";
+        toastObj.heading = "export Status";
+        toastObj.icon = 'success';
+
+        $.toast(toastObj);
     }, clrfil: (e) => {
         var ds = $("#grid").data("kendoGrid");
         var multiSelects = document.querySelectorAll("[data-role=multiselect]");
@@ -280,7 +285,11 @@ export const Handlers = {
             a.click();
         });
         kendo.ui.progress($('#grid'), false);
+        toastObj.text = "Data exported";
+        toastObj.heading = "Export Status";
+        toastObj.icon = 'success';
 
+        $.toast(toastObj);
 
 
 
@@ -423,7 +432,7 @@ export const Handlers = {
                 queueSelect.append(opt);
             });
             $('#queueSelect').selectpicker('refresh');
-            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQueuesUsers", {
+            var queueUsers = await (await fetch("/AML_ANALYSIS/GetQeueUsers", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -586,7 +595,7 @@ export const Handlers = {
             }
         }
     },
-    Aml_AnalysisRules: {
+    AutoRules: {
         testRules: async (e) => {
             kendo.ui.progress($('#grid'), true);
             var selectedidz = await Select("Id")
@@ -598,7 +607,7 @@ export const Handlers = {
                 kendo.ui.progress($('#grid'), false);
                 return;
             }
-            var res = await fetch("/AML_ANALYSIS/TestRules", {
+            var res = await fetch("/AutoRules/TestRules", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

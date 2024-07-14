@@ -50,6 +50,24 @@ export const parametersConfig = [
         //    ["enddate", "=", yesterday]
         //]
     },
+
+    {
+        "reportName": "UserPerformancePerUserAndAction",
+        "parameters": [
+            {
+                "paraName": "year",
+                "paraDisplayName": "Year",
+                "isMulti": true,
+                "type": "string"
+            },
+            
+        ],
+        "defaultFilter": null //[
+        //    ["startdate", "=", today],
+        //    "and",
+        //    ["enddate", "=", yesterday]
+        //]
+    },
     {
         "reportName": "UserPerformPerAction",
         "parameters": [

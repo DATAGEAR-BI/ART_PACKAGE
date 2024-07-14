@@ -27,6 +27,7 @@
         public static readonly string ART_ST_ALERT_PER_OWNER = "[ART_DB].[ART_ST_ALERT_PER_OWNER]";
         public static readonly string ART_ST_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_ALERTS_PER_BRANCH]";
         public static readonly string ART_ST_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";
+        public static readonly string ART_ST_YEARLY_AML_PER_SCENARIO = "[ART_DB].[ART_ST_YEARLY_AML_PER_SCENARIO]";
 
 
 
@@ -66,6 +67,45 @@
         public static readonly string ART_ST_FATCA_CASES_PER_TYPE = "[ART_DB].[ART_ST_FATCA_CASES_PER_TYPE]";
         public static readonly string ART_ST_FATCA_CUSTS_PER_NATION = "[ART_DB].[ART_ST_FATCA_CUSTS_PER_NATION]";
         public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "[ART_DB].[ART_ST_FATCA_CASES_PER_STATUS]";
+
+
+        /// <summary>
+        /// ////---------------------------------------------------------
+        /// </summary>
+
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_AML_PER_CRIME]";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_AML_PER_PRODUCT]";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_AML_PER_REGION]";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_PRODUCT]";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_REGION]";
+        public static readonly string ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE = "[ART_DB].[ART_ST_YEARLY_STAFF_GOAML_SANCTION_PER_TYPE]";
+        public static readonly string ART_ST_YEARLY_TOP_AML_BRANCHES = "[ART_DB].[ART_ST_YEARLY_TOP_AML_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_TOP_GOAML_BRANCHES = "[ART_DB].[ART_ST_YEARLY_TOP_GOAML_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_TOP_SANCTION_BRANCHES = "[ART_DB].[ART_ST_YEARLY_TOP_SANCTION_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_UNUSAL_ACTIVITIES = "[ART_DB].[ART_ST_YEARLY_UNUSAL_ACTIVITIES]";
+
+        /// <summary>
+        /// /////////////
+        /// </summary>
+        public static readonly string ART_ST_YEARLY_AML_PER_REGION = "[ART_DB].[ART_ST_YEARLY_AML_PER_REGION]";
+        public static readonly string ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE = "[ART_DB].[ART_ST_YEARLY_AML_PER_TRRANSACTION_TYPE]";
+        public static readonly string ART_ST_YEARLY_BOTTOM_AML_BRANCHES = "[ART_DB].[ART_ST_YEARLY_BOTTOM_AML_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES = "[ART_DB].[ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES = "[ART_DB].[ART_ST_YEARLY_BOTTOM_SANCTION_BRANCHES]";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_CRIME]";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT]";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_REGION]";
+
+
+
+
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_PRODUCT]";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_REGION]";
+        public static readonly string ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE = "[ART_DB].[ART_ST_YEARLY_NON_STAFF_GOAML_SANCTION_PER_TYPE]";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_PRODUCT = "[ART_DB].[ART_ST_YEARLY_SANCTION_PER_PRODUCT]";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_REGION = "[ART_DB].[ART_ST_YEARLY_SANCTION_PER_REGION]";
+        public static readonly string ART_ST_YEARLY_SANCTION_PER_YEAR = "[ART_DB].[ART_ST_YEARLY_SANCTION_PER_YEAR]";
+
 
     }
 }

@@ -21,14 +21,21 @@ export const invokeExport = (para, controller) => exportConnection.invoke("Expor
 await start();
 
 exportConnection.onreconnecting(err => {
-    toastObj.icon = 'error';
-    toastObj.text = "connection with server lost trying to reconnect this might cause losing some files";
-    toastObj.heading = "Export Status";
-    $.toast(toastObj);
+    console.log("reconnecting to websocket");
+
+ /*   toastObj.icon = 'warning';
+    toastObj.text = "Connection with server interrupted"//"connection with server lost trying to reconnect this might cause losing some files";
+    toastObj.heading = "connection Status";
+    $.toast(toastObj);*/
 })
 
 exportConnection.on("iAmAlive", () => {
     console.log("iam alive");
+  /*  toastObj.icon = 'success';
+    toastObj.text = "Connection with server restored"//"connection with server lost trying to reconnect this might cause losing some files";
+    toastObj.heading = "connection Status";
+    toastObj.hideAfter = true;
+    $.toast(toastObj);*/
 });
 
 var toastObj = {

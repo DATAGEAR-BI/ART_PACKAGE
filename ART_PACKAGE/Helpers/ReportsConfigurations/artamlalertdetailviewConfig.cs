@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
     "Queue"};
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){   {"AlertId" , new GridColumnConfiguration { DisplayName = "Alert ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-                                                                                {"AlertedEntityName" , new GridColumnConfiguration { DisplayName = "Customer Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+                                                                                {"AlertedEntityName" , new GridColumnConfiguration { DisplayName = "Customer Name"  , Format = ""  ,  Filter = "" , Template = "mixedArabicAndEnglish" , AggText = ""  , isLargeText = false   } },
                                                                                 {"AlertedEntityNumber" , new GridColumnConfiguration { DisplayName = "Customer Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"BranchName" , new GridColumnConfiguration { DisplayName = "Branch Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"PartyTypeDesc" , new GridColumnConfiguration { DisplayName = "Party Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -39,6 +39,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         };
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";
+            defaultSortOption = new SortOption()
+            {
+                dir = "asc",
+                field = "AlertId"
+            };
 
 
 

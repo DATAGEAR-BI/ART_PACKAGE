@@ -101,7 +101,11 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetDGCreateUserIdDropDown();
         public List<SelectItem> GetAlertOwnerDropDown();
         public List<SelectItem> GetQueuesDropDown();
+        public List<SelectItem> GetLast10YearsDropDown();
 
+
+        public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown();
+        public List<SelectItem> GetReportTypeForStaffAndNonStaffSummariesDropDown();
         //
 
 

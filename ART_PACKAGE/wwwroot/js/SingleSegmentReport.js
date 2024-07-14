@@ -4,6 +4,23 @@ import * as matrial from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/mater
 import * as animated from "../lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js";
 
 let segData = {};
+const exportMenu = [{
+    "label": "...",
+    "menu": [{
+        "label": "Image",
+        "menu": [
+            { "type": "svg", "label": "Save" },
+        ]
+    }, {
+        "label": "Data",
+        "menu": [
+
+            { "type": "csv", "label": "CSV" },
+            { "type": "xlsx", "label": "XLSX" }
+
+        ]
+    }]
+}];
 
 function draw_Stacked_Col_Chart(data) {
 
@@ -17,12 +34,10 @@ function draw_Stacked_Col_Chart(data) {
     title.marginBottom = 30;
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = title.text + "_" + formatDate(new Date())
+
     chart.padding(30, 30, 10, 30);
     chart.legend = new am4charts.Legend();
 
@@ -133,12 +148,11 @@ function draw_Stacked_Col_Chart_Count(data) {
     title.marginBottom = 30;
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = title.text + "_" + formatDate(new Date())
+
+
     chart.padding(30, 30, 10, 30);
     chart.legend = new am4charts.Legend();
 
@@ -195,6 +209,13 @@ async function renderTabsCounter() {
         var industryData = await (await fetch("/SegmentationCharts/ArtIndustrySegments?monthKey=" + monthkey + "&segment=" + segment_id + "&type=" + segType)).json()
 
         segData = await res.json();
+
+        var tabButtonsContainer = document.getElementById("TabsButtonsContainer");
+        tabButtonsContainer.innerHTML = "";
+        segData.Types.forEach((type) => {
+            AddTab(type.name);
+        });
+
         var loaders = document.getElementsByClassName("spinner-grow");
         console.log(segData);
         [...loaders].forEach(l => {
@@ -280,6 +301,16 @@ async function renderTabsCounter() {
 
 
 }
+function AddTab(tabName) {
+    var tabButtonsContainer = document.getElementById("TabsButtonsContainer");
+    var temp = `<li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-aggCat="${tabName}" role="tab" data-bs-target="#aggs">
+                        ${tabName}
+                        <span class="ripple-surface"></span>
+                    </button>
+                </li>`;
+    tabButtonsContainer.innerHTML += temp;
+}
 function RenderDataForCharts(data) {
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_material);
@@ -297,12 +328,10 @@ function RenderDataForCharts(data) {
     title.marginBottom = 30;
     chart.data = data;
     chart.exporting.menu = new am4core.ExportMenu();
-    chart.exporting.menu.items = [{
-        "label": "...",
-        "menu": [
-            { "type": "svg", "label": "Save" },
-        ]
-    }];
+    chart.exporting.menu.items = exportMenu;
+    chart.exporting.menu.items[0].icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC03MjAuMDAwMDAwLCAtNDMyLjAwMDAwMCkiPjxwYXRoIGQ9Ik03MjEsNDQ2IEw3MzMsNDQ2IEw3MzMsNDQzIEw3MzUsNDQzIEw3MzUsNDQ2IEw3MzUsNDQ4IEw3MjEsNDQ4IFogTTcyMSw0NDMgTDcyMyw0NDMgTDcyMyw0NDYgTDcyMSw0NDYgWiBNNzI2LDQzMyBMNzMwLDQzMyBMNzMwLDQ0MCBMNzMyLDQ0MCBMNzI4LDQ0NSBMNzI0LDQ0MCBMNzI2LDQ0MCBaIE03MjYsNDMzIiBpZD0iUmVjdGFuZ2xlIDIxNyIvPjwvZz48L2c+PC9zdmc+";
+    chart.exporting.filePrefix = title.text + "_" + formatDate(new Date())
+
     chart.padding(30, 30, 10, 30);
     chart.legend = new am4charts.Legend();
 
@@ -358,3 +387,19 @@ function RenderDataForCharts(data) {
 
 }
 renderTabsCounter().then(x => console.log("done"));
+
+
+function formatDate(date) {
+    // Get hours, minutes, and seconds
+    let hours = String(date.getHours()).padStart(2, '0');
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+    let seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Get day, month, and year
+    let day = String(date.getDate()).padStart(2, '0');
+    let month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    let year = date.getFullYear();
+
+    // Combine into desired format
+    return `${hours}${minutes}${seconds}_${day}${month}${year}`;
+}

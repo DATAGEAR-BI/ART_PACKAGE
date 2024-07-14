@@ -1,5 +1,6 @@
 ﻿using Data.Data.AmlAnalysis;
 using Data.Services.Grid;
+using Newtonsoft.Json;
 
 namespace Data.Services.AmlAnalysis;
 
@@ -13,26 +14,27 @@ public class AmlAnalysisRepo : BaseRepo<AmlAnalysisContext,ArtAmlAnalysisViewTb>
 
     public IEnumerable<SelectItem> GetQueues()
     {
-        List<string> result = new() { "TestQ", "TestQ1", "TestQ2" };
-        return result.Select(s => new SelectItem(){text = s, value = s});
+        //var result = fcfcore.ArtSasQueues.Select(Q => Q.Queuecode);
+        var result = _context.VaGroupInfos.Where(x => x.Name.ToLower().StartsWith("branch_") && !x.Name.ToLower().EndsWith("_role")).Select(x => new { x.Name, x.Displayname });
+        
+        return result.Select(s => new SelectItem(){text = s.Name, value = s.Displayname });
     }
 
     public IEnumerable<SelectItem> GetUsers(string queue)
     {
-        List<string> Qs = new() { "TestQ", "TestQ1", "TestQ2" };
-        Dictionary<string, List<string>> usersDict = new()
+
+        if (string.IsNullOrEmpty(queue) ||queue.Equals("all"))
         {
-            { "TestQ" , new List<string> { "TestU1" , "TestU2" } },
-            { "TestQ1" , new List<string> { "TestU3" , "TestU4" } },
-            { "TestQ2" , new List<string> { "TestU5"  } },
-        };
-        if (queue == "all")
-            return usersDict.Values.SelectMany(x => x.Select(s => new SelectItem(){text = s, value = s}));
-        
-       
-            return usersDict[queue].Select(s => new SelectItem(){text = s, value = s});
-           
-        
+            var result = _context.VaPersonInfos.Select(U => string.IsNullOrEmpty(U.Displayname) ? U.Name : U.Name + " , " + U.Displayname).Distinct();
+            return result.Select(s => new SelectItem() { text = s, value = s });
+
+        }
+        else
+        {
+            var result = _context.LstOfUsersAndGroupsRoles.Where(Q => Q.GroupName.ToLower() == queue.ToLower()).Select(U => string.IsNullOrEmpty(U.DisplayName) ? U.UserName : U.UserName + " , " + U.DisplayName);
+            return result.Select(s => new SelectItem() { text = s, value = s });
+        }
+              
     }
 
     public async Task<(bool isSucceed, IEnumerable<string>? RouteFailedEntities)> RouteAllAlertsAsync(RouteRequest routeReq, string userName, string desc = "RTQ")

@@ -43,6 +43,48 @@ function multiSelectSetting(url) {
         },
     }
 }
+function getLastTenYearsAsStrings() {
+    const currentYear = new Date().getFullYear();
+    return Array.from({ length: 10 }, (_, i) => (currentYear - i).toString());
+}
+function getLastTenYears() {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+
+    // Generate the last 10 years
+    for (let i = 0; i < 10; i++) {
+        years.push(currentYear - i);
+    }
+
+    // Sort the years in descending order (not necessary as we already generated them in descending order)
+    years.sort((a, b) => b - a);
+
+    return years;
+}
+
+function yearsMultiSelectSetting() {
+    var vals = getLastTenYearsAsStrings();
+
+    console.log(vals);
+
+  
+    return {
+        multiple: true,
+        input: 'select',
+        validation: false,
+        operators: ['in'],
+        values: vals,
+        value_separator: ",",
+        plugin: 'selectpicker',
+        plugin_config: {
+            actionsBox: true,
+            liveSearch: true,
+            width: 'auto',
+            selectedTextFormat: 'count',
+            liveSearchStyle: 'contains',
+        },
+    }
+}
 function currentDate() {
     var d = new Date();
     return d.toISOString().slice(0, 10);
@@ -327,6 +369,272 @@ export const Filters = {
 
         ]
     },
+/*    NonStaffGOAMLPerCrime: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        },
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },*/
+    NonStaffGOAMLPerCrime: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+
+        ]
+    },
+    AMLCasesPerRegion: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    AMLCasesPerTransactionType: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Bottom5AMLBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year", operators: ['in'], type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Bottom5GOAMLBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Bottom5SanctionBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    CasesPerProduct: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    CasesPerRegion: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    CasesPerYear: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    NonStaffGOAMLPerProduct: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Top5AMLBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Top5GOAMLBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+    Top5SanctionBranches: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() },
+            ];
+        },
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() },
+        ]
+    },
+
+
+
+
+
+
+    ////////////////
+
+    NonStaffGOAMLPerProduct: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    NonStaffGOAMLPerRegion: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    NonStaffGOAMLSANCTIONPerProduct: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    NonStaffGOAMLSANCTIONPerRegion: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    NonStaffGOAMLSANCTIONSummary: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLperCrime: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLperProduct: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLperRegion: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLSANCTIONPerProduct: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLSANCTIONPerRegion: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    StaffGOAMLSANCTIONSummary: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in",value: new Date().getFullYear().toString() }
+        ]
+    },
+    UnusualAndSuspectedAlerts: {
+        filters: [
+            { id: "year", field: "year", label: "Year",  type: "string", optional: false, ...yearsMultiSelectSetting() }
+        ],
+        rules: [
+            { id: "year", field: "year", label: "Year", type: "string", operator: "in", value: new Date().getFullYear().toString() }
+        ]
+    }
+
 }
 
 

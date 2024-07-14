@@ -288,6 +288,7 @@ class Grid extends HTMLElement {
                     progressBar.hidden = true;
                     var downloadButton = document.getElementById("ExportDownloadBtn");
                     downloadButton.style.visibility = "";
+                    downloadButton.hidden = false;
                     this.isExporting = false;
                     this.isDownloaded = false;
                     isExportingCSVNow = false;
@@ -338,6 +339,7 @@ class Grid extends HTMLElement {
             }
 
         });
+
 
         //beforeLeaveAction();
 
@@ -950,9 +952,9 @@ class Grid extends HTMLElement {
         function grid_filterMenuInit(e) {
         }
         // grid.bind("filterMenuInit", grid_filterMenuInit);
-        $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
+       /* $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
             console.log("999999999999999999999999999")
-        })
+        })*/
 
 
         // event for constructing the filters for multi select columns
@@ -1136,9 +1138,11 @@ class Grid extends HTMLElement {
                 var pages = Object.keys(this.selectedRows);
 
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
+                localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
                 setTimeout(() => {
+                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');

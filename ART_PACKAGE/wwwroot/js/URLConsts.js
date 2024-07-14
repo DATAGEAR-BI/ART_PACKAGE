@@ -160,6 +160,61 @@
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
-    test:"Test/GetData"
+    test: "Test/GetData",
+    NonStaffGOAMLPerCrime: "NonStaffGOAMLPerCrime/GetData",
+
+
+
+
+    NonStaffGOAMLPerProduct: "NonStaffGOAMLPerProduct/GetData",
+
+    AMLCasesPerTransactionType: "AMLCasesPerTransactionType/GetData",
+
+    AMLCasesPerRegion: "AMLCasesPerRegion/GetData",
+
+    CasesPerYear: "CasesPerYear/GetData",
+
+    CasesPerProduct: "CasesPerProduct/GetData",
+
+    CasesPerRegion: "CasesPerRegion/GetData",
+
+    Top5GOAMLBranches: "Top5GOAMLBranches/GetData",
+
+    Bottom5GOAMLBranches: "Bottom5GOAMLBranches/GetData",
+
+    Top5AMLBranches: "Top5AMLBranches/GetData",
+    Bottom5AMLBranches: "Bottom5AMLBranches/GetData",
+
+    Top5SanctionBranches: "Top5SanctionBranches/GetData",
+    Bottom5SanctionBranches: "Bottom5SanctionBranches/GetData",
+
+
+
+
+    /////////////////
+
+
+
+    NonStaffGOAMLPerRegion: "NonStaffGOAMLperRegion/GetData",
+
+    NonStaffGOAMLSANCTIONPerProduct: "NonStaffGOAMLSANCTIONPerProduct/GetData",
+    NonStaffGOAMLSANCTIONPerRegion: "NonStaffGOAMLSANCTIONPerRegion/GetData",
+    NonStaffGOAMLSANCTIONSummary: "NonStaffGOAMLSANCTIONSummary/GetData",
+
+    StaffGOAMLperCrime: "StaffGOAMLperCrime/GetData",
+    StaffGOAMLperProduct: "StaffGOAMLperProduct/GetData",
+    StaffGOAMLperRegion: "StaffGOAMLperRegion/GetData",
+
+    StaffGOAMLSANCTIONPerProduct: "StaffGOAMLSANCTIONPerProduct/GetData",
+    StaffGOAMLSANCTIONPerRegion: "StaffGOAMLSANCTIONPerRegion/GetData",
+    StaffGOAMLSANCTIONSummary: "StaffGOAMLSANCTIONSummary/GetData",
+
+
+    UnusualAndSuspectedAlerts: "UnusualAndSuspectedAlerts/GetData",
+
+    AlertedEntityDetail: "AlertedEntityDetail/GetData",
+    MonthlySwiftDetail: "MonthlySwiftDetail/GetData",
+    autorules: "AutoRules/GetData",
+
 
 };

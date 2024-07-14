@@ -26,6 +26,7 @@
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
+		<Content Remove="wwwroot\js\segmentReport - Copy.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
 		<Content Remove="wwwroot\js\SingleSegmentReport.js" />
 	</ItemGroup>
@@ -1076,7 +1077,15 @@
 		<None Include="Views\Activity\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
+		<None Include="Views\AMLCasesPerRegion\Index.cshtml" />
+		<None Include="Views\AMLCasesPerTransactionType\Index.cshtml" />
+		<None Include="Views\Bottom5AMLBranches\Index.cshtml" />
+		<None Include="Views\Bottom5GOAMLBranches\Index.cshtml" />
+		<None Include="Views\Bottom5SanctionBranches\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
+		<None Include="Views\CasesPerProduct\Index.cshtml" />
+		<None Include="Views\CasesPerRegion\Index.cshtml" />
+		<None Include="Views\CasesPerYear\Index.cshtml" />
 		<None Include="Views\CasesSummary\Index.cshtml" />
 		<None Include="Views\CustomersSummary\Index.cshtml" />
 		<None Include="Views\Customers\Index.cshtml" />
@@ -1104,6 +1113,11 @@
 		<None Include="Views\HighRisk\Index.cshtml" />
 		<None Include="Views\InterfaceDetails\Index.cshtml" />
 		<None Include="Views\MasterEventHistory\Index.cshtml" />
+		<None Include="Views\NonStaffGOAMLPerProduct\Index.cshtml" />
+		<None Include="Views\NonStaffGOAMLperRegion\Index.cshtml" />
+		<None Include="Views\NonStaffGOAMLSANCTIONPerProduct\Index.cshtml" />
+		<None Include="Views\NonStaffGOAMLSANCTIONPerRegion\Index.cshtml" />
+		<None Include="Views\NonStaffGOAMLSANCTIONSummary\Index.cshtml" />
 		<None Include="Views\OSActivity\Index.cshtml" />
 		<None Include="Views\OSLiability\Index.cshtml" />
 		<None Include="Views\OSTransactionsAwaitiApprl\Index.cshtml" />
@@ -1117,7 +1131,16 @@
 		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\StaffGOAMLperCrime\Index.cshtml" />
+		<None Include="Views\StaffGOAMLperProduct\Index.cshtml" />
+		<None Include="Views\StaffGOAMLperRegion\Index.cshtml" />
+		<None Include="Views\StaffGOAMLSANCTIONPerProduct\Index.cshtml" />
+		<None Include="Views\StaffGOAMLSANCTIONPerRegion\Index.cshtml" />
+		<None Include="Views\StaffGOAMLSANCTIONSummary\Index.cshtml" />
 		<None Include="Views\SystemTailoring\Index.cshtml" />
+		<None Include="Views\Top5AMLBranches\Index.cshtml" />
+		<None Include="Views\Top5GOAMLBranches\Index.cshtml" />
+		<None Include="Views\Top5SanctionBranches\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
 
 		<None Include="Views\WatchlistOSCheck\Index.cshtml" />
@@ -1921,6 +1944,7 @@
 		<None Include="wwwroot\js\HubUtils.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderConfiguration.js" />
 		<None Include="wwwroot\js\QueryBuilderConfiguration\QuerybuilderParametersSettings.js" />
+		<None Include="wwwroot\js\segmentReport - Copy.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
 		<None Include="wwwroot\lib\Plugins\Kendo\jquery-1.12.4.min.js" />
@@ -2431,6 +2455,10 @@
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-sprite.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-stack.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\radial.svg" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.min.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.js" />
+		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.min.js" />
 	</ItemGroup>
 
 
@@ -2482,6 +2510,7 @@
 		<Folder Include="Extentions\NewFolder\" />
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\js\AmlAnalysisScripts\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 	</ItemGroup>
 
