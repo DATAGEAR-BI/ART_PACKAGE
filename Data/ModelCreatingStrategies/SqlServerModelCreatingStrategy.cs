@@ -2145,7 +2145,7 @@ namespace Data.ModelCreatingStrategies
             // Configure ArtSwiftMessagesView
             modelBuilder.Entity<ArtSwiftMessagesView>(entity =>
             {
-                entity.ToView("ART_SWIFT_MESSAGES_VIEW", "ART_DB");
+                entity.ToView("ART_SWIFT_MESSAGES_VIEW_TB", "ART_DB");
                 entity.HasNoKey();  // Use if the view does not have a primary key
 
                 entity.Property(e => e.CaseId)
