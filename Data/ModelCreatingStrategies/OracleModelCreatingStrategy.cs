@@ -14432,6 +14432,52 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(10)
                     .HasColumnName("REPORT_ID");
             });
+            modelBuilder.Entity<Lookup>(entity =>
+            {
+                entity.ToTable("LOOKUPS");
+
+                entity.HasKey(e => e.Id)
+                      .HasName("PK_LOOKUPS");
+
+                entity.Property(e => e.Id)
+                      .HasColumnName("ID")
+                      .IsRequired();
+
+                entity.Property(e => e.BusinessUnit)
+                      .HasColumnName("BUSINESS_UNIT")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+
+                entity.Property(e => e.CreatedBy)
+                      .HasColumnName("CREATED_BY")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+
+                entity.Property(e => e.Description)
+                      .HasColumnName("DESCRIPTION")
+                      .HasMaxLength(4000)
+                      .IsRequired(false);
+
+                entity.Property(e => e.LookupKey)
+                      .HasColumnName("LOOKUP_KEY")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+
+                entity.Property(e => e.LookupName)
+                      .HasColumnName("LOOKUP_NAME")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+
+                entity.Property(e => e.LookupValue)
+                      .HasColumnName("LOOKUP_VALUE")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+
+                entity.Property(e => e.ModifiedBy)
+                      .HasColumnName("MODIFIED_BY")
+                      .HasMaxLength(250)
+                      .IsRequired(false);
+            });
 
         }
 
