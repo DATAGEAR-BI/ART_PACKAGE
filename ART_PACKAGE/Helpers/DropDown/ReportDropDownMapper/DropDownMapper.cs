@@ -109,9 +109,10 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() },
                     //{"MailingCityName".ToLower(),_dropDown.().ToDynamicList() },
                 },
-                nameof(RiskAssessmentController) => new Dictionary<string, List<SelectItem>>
+                var value when value == nameof(artriskassessmentviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
                     {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown() },
                     {"CreateUserId".ToLower(),_dropDown.GetOwnerDropDown() },
                     {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown() },

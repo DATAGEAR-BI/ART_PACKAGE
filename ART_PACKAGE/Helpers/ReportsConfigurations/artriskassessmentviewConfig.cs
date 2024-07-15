@@ -22,6 +22,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"CreateUserId" , new GridColumnConfiguration { DisplayName = "Create By"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"RiskStatus" , new GridColumnConfiguration { DisplayName = "Risk Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"RiskClass" , new GridColumnConfiguration { DisplayName = "Risk Classification"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"BranchNumber" , new GridColumnConfiguration { DisplayName = "Branch Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ProposedRiskClass" , new GridColumnConfiguration { DisplayName = "Proposed Risk Classification"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 

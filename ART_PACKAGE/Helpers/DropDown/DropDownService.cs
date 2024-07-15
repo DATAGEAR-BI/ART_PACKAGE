@@ -62,7 +62,16 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetBranchNumberDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
+               .Where(a => a.ChangeCurrentInd.Contains("Y"))
+               //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
+               .Select(x => x.BranchNumber)
+              .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
 
+        }
         public List<SelectItem> GetCasePriorityDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
