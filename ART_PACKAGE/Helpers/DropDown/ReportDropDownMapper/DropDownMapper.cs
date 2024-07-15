@@ -120,6 +120,12 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown() }
                 },
+                var value when value == nameof(ArtAlertsPerAlertedEntityViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                    {"OwnerUserId".ToLower(),_dropDown.GetOwnerDropDown() }
+                },
                 var value when value == nameof(artamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
