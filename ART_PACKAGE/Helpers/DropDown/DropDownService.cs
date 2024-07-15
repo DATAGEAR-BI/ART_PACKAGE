@@ -286,14 +286,14 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName=="report_type").Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName=="report_type" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
 
         }
         public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName == "report_status").Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName == "report_status" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
 
