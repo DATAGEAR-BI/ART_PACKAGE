@@ -74,6 +74,8 @@ var ops = {
     gt: "Greater Than",
     lte: "Less Than Or Equal",
     lt: "Less Than",
+    isnotnullorempty: "Has Value",
+    isnullorempty:"Has No Value"
 };
 var isHierarchy = document.getElementById("script").dataset.hierarchy;
 var reportName = "";

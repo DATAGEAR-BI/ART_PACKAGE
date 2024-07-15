@@ -107,6 +107,10 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetBranchNumberDropDown();
         public List<SelectItem> GetQueuesDropDown();
         public List<SelectItem> GetLast10YearsDropDown();
+        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown();
+        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown();
+        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown();
+
 
 
         public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown();

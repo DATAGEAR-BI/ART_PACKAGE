@@ -284,6 +284,35 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName=="report_type").Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName == "report_status").Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "To Person",
+"Account",
+"Entity",
+"From Account",
+"From Entity",
+"To Account",
+"From Person",
+"Person",
+"To Entity" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
         public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown()
         {
             List<SelectItem> distinct_value = new List<string>() { "DTET, SARAF or STRTF", "SAR or STR" }.Select(x => new SelectItem { text = x, value = x }).ToList();
