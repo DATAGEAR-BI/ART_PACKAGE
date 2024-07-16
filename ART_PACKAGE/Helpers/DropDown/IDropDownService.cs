@@ -104,6 +104,9 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCustomerStatusDropDown();
         public List<SelectItem> GetMaritalStatusDropDown();
         public List<SelectItem> GetAlertedEntityLevelDropDown();
+        public List<SelectItem> GetOwner_AlertedEntityDropDown();
+        public List<SelectItem> GetCreatedByDropDown();
+        public List<SelectItem> GetOwner_RiskAssessmentDropDown();
         public List<SelectItem> GetBranchNumberDropDown();
         public List<SelectItem> GetQueuesDropDown();
         public List<SelectItem> GetLast10YearsDropDown();

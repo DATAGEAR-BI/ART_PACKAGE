@@ -6626,6 +6626,132 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("VSD_WINDOW_NAME");
             });
+            modelBuilder.Entity<Fsk_EntityQueue>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("FSK_ENTITY_QUEUE");
+
+                entity.HasIndex(e => new { e.AlertedEntityLevelCode, e.AlertedEntityNumber, e.QueueCode, e.OwnerUserid }, "XEIQFSK_ENTITY_QUEUE");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_LEVEL_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.OwnerUserid)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USERID");
+
+                entity.Property(e => e.QueueCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("QUEUE_CODE");
+            });
+            modelBuilder.Entity<FskRiskAssessment>(entity =>
+            {
+                entity.HasKey(e => e.RiskAssessmentId)
+                    .HasName("PK_RISK_ASMNT");
+
+                entity.ToTable("FSK_RISK_ASSESSMENT");
+
+                entity.HasIndex(e => e.PartyKey, "XIE5FSK_RISK_ASMNT");
+
+                entity.HasIndex(e => e.PartyNumber, "XIE9FSK_RISK_ASMNT");
+
+                entity.Property(e => e.RiskAssessmentId)
+                    .HasPrecision(12)
+                    .ValueGeneratedNever()
+                    .HasColumnName("RISK_ASSESSMENT_ID");
+
+                entity.Property(e => e.AssessmentCategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_CATEGORY_CD");
+
+                entity.Property(e => e.AssessmentSubcategoryCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_SUBCATEGORY_CD");
+
+                entity.Property(e => e.AssessmentTypeCd)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSESSMENT_TYPE_CD");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.EmployeeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYEE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LogicalDeleteInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("LOGICAL_DELETE_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OwnerUserLongId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USER_LONG_ID");
+
+                entity.Property(e => e.PartyKey)
+                    .HasPrecision(12)
+                    .HasColumnName("PARTY_KEY");
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.ProposedRiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("PROPOSED_RISK_CLASSIFICATION");
+
+                entity.Property(e => e.RiskAssessmentDuration)
+                    .HasPrecision(3)
+                    .HasColumnName("RISK_ASSESSMENT_DURATION");
+
+                entity.Property(e => e.RiskAssessmentStatusCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_ASSESSMENT_STATUS_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RiskClassification)
+                    .HasPrecision(1)
+                    .HasColumnName("RISK_CLASSIFICATION");
+
+                entity.Property(e => e.StartingMonthKey)
+                    .HasPrecision(6)
+                    .HasColumnName("STARTING_MONTH_KEY");
+
+                entity.Property(e => e.VersionNumber)
+                    .HasPrecision(10)
+                    .HasColumnName("VERSION_NUMBER");
+            });
         }
 
         public void OnFTIModelCreating(ModelBuilder modelBuilder)
