@@ -2207,7 +2207,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_ECM_CASES_BIRTHDATE_VIEW");
+                entity.ToView("ART_ECM_CASES_BIRTHDATE_TB");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(100)
