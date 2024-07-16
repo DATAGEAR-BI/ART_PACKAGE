@@ -1821,7 +1821,7 @@ function copyText(textToCopy) {
     //const textToCopy = "This is the text to copy";
 
     // Create a hidden textarea
-    const convertedText = textToCopy.split('\n').map(line => `${line} \\n`).join('\n');
+    const convertedText = textToCopy.split('\n').map(line => `${line}`).join('\n');
 
     const textArea = document.createElement("textarea");
     textArea.value = convertedText;
