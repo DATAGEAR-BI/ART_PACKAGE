@@ -16,7 +16,7 @@ namespace Data.FCFCORE
         public virtual DbSet<FscPartyDim> FscPartyDims { get; set; } = null!;
         public virtual DbSet<FscBranchDim> FscBranchDims { get; set; } = null!;
 
-
+        public virtual DbSet<FscBankDim> FscBankDims { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

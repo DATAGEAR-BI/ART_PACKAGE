@@ -14300,7 +14300,104 @@ namespace Data.ModelCreatingStrategies
                 //    .IsUnicode(false)
                 //    .HasColumnName("URL");
             });
+            modelBuilder.Entity<FscBankDim>(entity =>
+            {
+                entity.HasKey(e => e.BankKey)
+                    .HasName("XPKFSC_BANK_DIM");
 
+                entity.ToTable("FSC_BANK_DIM");
+
+                entity.HasIndex(e => e.BankNumber, "XIE1FSC_BANK_DIM");
+
+                entity.Property(e => e.BankKey)
+                    .HasPrecision(12)
+                    .ValueGeneratedNever()
+                    .HasColumnName("BANK_KEY");
+
+                entity.Property(e => e.BankAddress1)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_ADDRESS_1");
+
+                entity.Property(e => e.BankAddress2)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_ADDRESS_2");
+
+                entity.Property(e => e.BankChipsNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_CHIPS_NUMBER");
+
+                entity.Property(e => e.BankCityName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_CITY_NAME");
+
+                entity.Property(e => e.BankCountryCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_COUNTRY_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.BankCountryName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_COUNTRY_NAME")
+                    .IsFixedLength();
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_NAME");
+
+                entity.Property(e => e.BankNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_NUMBER");
+
+                entity.Property(e => e.BankPhoneNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_PHONE_NUMBER");
+
+                entity.Property(e => e.BankPostalCode)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_POSTAL_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.BankStateCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_STATE_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.BankStateName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_STATE_NAME");
+
+                entity.Property(e => e.BankSwiftNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_SWIFT_NUMBER");
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CHANGE_BEGIN_DATE");
+
+                entity.Property(e => e.ChangeCurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CHANGE_CURRENT_IND")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ChangeEndDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CHANGE_END_DATE")
+                    .HasDefaultValueSql("to_date('59990101','YYYYMMDD')\n		");
+            });
         }
 
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder)
