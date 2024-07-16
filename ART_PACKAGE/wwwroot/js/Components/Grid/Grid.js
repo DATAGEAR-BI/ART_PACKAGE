@@ -1821,13 +1821,15 @@ function copyText(textToCopy) {
     //const textToCopy = "This is the text to copy";
 
     // Create a hidden textarea
+    const convertedText = textToCopy.split('\n').map(line => `${line} \\n`).join('\n');
+
     const textArea = document.createElement("textarea");
-    textArea.value = textToCopy;
+    textArea.value = convertedText;
     document.body.appendChild(textArea);
 
     // Select the text
     textArea.select();
-    textArea.setSelectionRange(0, textToCopy.length);  // For mobile devices
+    textArea.setSelectionRange(0, convertedText.length);  // For mobile devices
 
     // Copy the text
     const successful = document.execCommand("copy");
