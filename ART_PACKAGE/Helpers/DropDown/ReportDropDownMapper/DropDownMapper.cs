@@ -130,6 +130,14 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 {
                     {"Country".ToLower(),_dropDown.GetCountryNameDropDown() },
                 },
+                var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyType_AlertDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                    {"ReportCloseRsn".ToLower(),_dropDown.GetCloseRsnDropDown() },
+                    {"EmployeeInd".ToLower(),_dropDown.GetEmployeeIndDropDown() },
+                },
                 var value when value == nameof(artamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },

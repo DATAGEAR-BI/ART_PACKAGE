@@ -53,7 +53,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetBranchNameDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
-               .Where(a => a.ChangeCurrentInd.Contains("Y") &&  !string.IsNullOrEmpty(a.BranchName.Trim()) )
+               .Where(a => a.ChangeCurrentInd.Contains("Y") && a.BranchName != null &&!string.IsNullOrEmpty(a.BranchName.Trim()))
                //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
                .Select(x => x.BranchName)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
@@ -64,7 +64,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetBranchNumberDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
-               .Where(a => a.ChangeCurrentInd.Contains("Y"))
+               .Where(a => a.ChangeCurrentInd.Contains("Y") && a.BranchNumber != null && !string.IsNullOrEmpty(a.BranchNumber.Trim()))
                //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
                .Select(x => x.BranchNumber)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
@@ -102,6 +102,15 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
                 .Where(a => a.LovTypeName.StartsWith("RT_CASE_SUBCATEGORY"))
                 .Where(b => b.LovLanguageDesc.Contains("en")).Select(x => x.LovTypeDesc)
+               .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetCloseRsnDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+                .Where(a => a.LovTypeName.StartsWith("RT_CLOSE_REASON") && a.LovLanguageDesc.Contains("en") && a.LovTypeDesc != null && !string.IsNullOrEmpty(a.LovTypeDesc.Trim()))
+                .Select(x => x.LovTypeDesc)
                .Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
@@ -158,15 +167,27 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetPartyType_AlertDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.PartyTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetEmployeeIndDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.ChangeCurrentInd == "Y").Select(x => x.EmployeeInd).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
         public List<SelectItem> GetCustomerStatusDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyStatusDesc != null && x.PartyStatusDesc != string.Empty).Select(x => x.PartyStatusDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
         public List<SelectItem> GetMaritalStatusDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.MaritalStatusDesc != null && x.MaritalStatusDesc != string.Empty).Select(x => x.MaritalStatusDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.MaritalStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
@@ -271,14 +292,14 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetReportstatuscodeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportStatusCode).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportStatusCode).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
 
         public List<SelectItem> GetReportTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportCode).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Reports.Select(x => x.ReportCode).Distinct().Where(x => x!=null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
 
@@ -466,17 +487,17 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetOwner_AlertedEntityDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskEntityQueues.Select(x => x.OwnerUserid).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskEntityQueues.Select(x => x.OwnerUserid).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetOwner_RiskAssessmentDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetAlertOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }
@@ -488,7 +509,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCreatedByDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetQueuesDropDown()
