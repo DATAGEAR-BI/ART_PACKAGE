@@ -480,6 +480,12 @@ namespace ART_PACKAGE.Helpers.DropDown
 
             return distinct_value;
         }
+        public List<SelectItem> GetCountryNameDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscBankDims.Select(x => x.BankCountryName != null ? x.BankCountryName.Trim() : null).Distinct().Where(x => !string.IsNullOrEmpty(x)).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
         public List<SelectItem> GetCreatedByDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();

@@ -126,6 +126,10 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
                     {"OwnerUserId".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() }
                 },
+                var value when value == nameof(ArtMonthlySwiftViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Country".ToLower(),_dropDown.GetCountryNameDropDown() },
+                },
                 var value when value == nameof(artamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
