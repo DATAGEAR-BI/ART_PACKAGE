@@ -114,17 +114,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
                     {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown() },
-                    {"CreateUserId".ToLower(),_dropDown.GetOwnerDropDown() },
+                    {"CreateUserId".ToLower(),_dropDown.GetCreatedByDropDown() },
                     {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown() },
                     {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
-                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown() }
+                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwner_RiskAssessmentDropDown() }
                 },
                 var value when value == nameof(ArtAlertsPerAlertedEntityViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
-                    {"OwnerUserId".ToLower(),_dropDown.GetOwnerDropDown() }
+                    {"OwnerUserId".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() }
                 },
                 var value when value == nameof(artamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

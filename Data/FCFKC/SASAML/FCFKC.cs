@@ -13,7 +13,8 @@ namespace Data.FCFKC.SASAML
         public virtual DbSet<FskRiskAssessment> FskRiskAssessments { get; set; } = null!;
         public virtual DbSet<FskScenario> FskScenarios { get; set; } = null!;
         public virtual DbSet<FskCase> FskCases { get; set; } = null!;
-      // public virtual DbSet<FskQueue> FskQueues { get; set; } = null!;
+        // public virtual DbSet<FskQueue> FskQueues { get; set; } = null!;
+        public virtual DbSet<Fsk_EntityQueue> FskEntityQueues { get; set; } = null!;
 
 
 
