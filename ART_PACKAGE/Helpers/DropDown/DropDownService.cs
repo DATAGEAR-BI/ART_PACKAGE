@@ -154,7 +154,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCustomerTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyTypeDesc.ToUpper() == "ORGNIZATION" ? "ORGANIZATION" : x.PartyTypeDesc.ToUpper()).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyKey != -1).Select(x => x.PartyTypeDesc.ToUpper() == "ORGNIZATION" ? "ORGANIZATION" : x.PartyTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
