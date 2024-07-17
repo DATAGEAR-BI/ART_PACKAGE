@@ -1518,7 +1518,7 @@ class Grid extends HTMLElement {
     async ExportCsv(e) {
 
         if (!this.isDownloaded) {
-            toastObj.icon = 'error';
+            toastObj.icon = 'warning';
             toastObj.text = "you exported a file and haven't downloaded it yet.";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
