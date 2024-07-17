@@ -6,7 +6,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
     {
         public artamlcustomersdetailsviewConfig()
         {
-
+            HasFixedWidth = true;
             SkipList = new List<string>(){ "CustomerTaxId",
 "DoingBusinessAsName",
 "GovernorateName",
