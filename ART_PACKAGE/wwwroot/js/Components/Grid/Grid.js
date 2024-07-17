@@ -264,10 +264,11 @@ class Grid extends HTMLElement {
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
 
             if (currentCSVProcess != folder) {
-                exportConnection.invoke("CancelPdfExport", folder);
-               // return;
+                //exportConnection.invoke("CancelPdfExport", folder);
+                return;
 
             }
+
             if (currentCSVProcess == folder) {
                 /*  if (this.id !== gridId)
                       return;*/
@@ -282,7 +283,7 @@ class Grid extends HTMLElement {
                     progressBar.hidden = false;
 
                 var reminder = ((100 - progress) * this.total) / 100;
-                console.log(reminder)
+               // console.log(reminder)
                 console.log(folder, progress)
 
                 progressBar.value = parseFloat(progress.toFixed(2));
@@ -301,14 +302,15 @@ class Grid extends HTMLElement {
 
         });
         exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
-            console.log("curr", currentPDFReportId)
+  /*          console.log("curr", currentPDFReportId)
             console.log("curr |", currentPDFReportId)
-            console.log("curr | e | P", exportinProcess)
+            console.log("curr | e | P", exportinProcess)*/
             if (currentPDFReportId != exportinProcess) {
-                exportConnection.invoke("CancelPdfExport", exportinProcess);
-                //return;
+                //exportConnection.invoke("CancelPdfExport", exportinProcess);
+                return;
             }
             if (currentPDFReportId == exportinProcess) {
+                console.log(currentPDFReportId, progress)
                 if (isExportPdfHitted) {
                     console.log(progress)
                     console.log(exportinProcess)
@@ -1205,7 +1207,7 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click(async (e) => {
             if (!isExportingPDFNow /*&& !this.buttonExportClicked*/) {
                 toastObj.icon = 'warning';
-                toastObj.text = "Export PDF is started";
+                toastObj.text = "Export PDF is started ,\n Please be patient as this may take some time to complete.";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
 

@@ -729,6 +729,11 @@ function generateGrid() {
 
         else if (e.target.id == "clientPdExport") {
 
+            toastObj.icon = 'warning';
+            toastObj.text = "Export PDF is started ,\n Please be patient as this may take some time to complete.";
+            toastObj.heading = "PDF Status";
+            $.toast(toastObj);
+
             if (isStoredProc) {
                 var csvhandler = Handlers["clientStoredPdExport"];
                 csvhandler(e, controller, reportName);
