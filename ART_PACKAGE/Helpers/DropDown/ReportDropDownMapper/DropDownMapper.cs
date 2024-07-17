@@ -56,18 +56,11 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
 
                 var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
+                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyType_AlertDropDown() },
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
-                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
-                    {"CasesStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
-                    //{"PartyTypeDesc".ToLower(),_dropDown.GetPartyTypeDropDown() },
-
-                    {"ScenarioName".ToLower(),_dropDown.GetScenarioNameDropDown() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetAlertOwnerDropDown()},
-                    {"queue".ToLower(),_dropDown.GetQueuesDropDown()},
-
-/*
-                    {"AlertSubCat".ToLower(),_dropDown.GetCaseSubCategoryDropDown()    },
-                    {"PoliticallyExposedPersonInd".ToLower(), pipList},*/
+                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                    {"ReportCloseRsn".ToLower(),_dropDown.GetCloseRsnDropDown() },
+                    {"EmployeeInd".ToLower(),_dropDown.GetEmployeeIndDropDown() },
                 },
                 var value when value == nameof(artamlcasedetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
@@ -129,15 +122,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 var value when value == nameof(ArtMonthlySwiftViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"Country".ToLower(),_dropDown.GetCountryNameDropDown() },
-                },
-                var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
-                {
-                    {"PartyTypeDesc".ToLower(),_dropDown.GetPartyType_AlertDropDown() },
-                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
-                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
-                    {"ReportCloseRsn".ToLower(),_dropDown.GetCloseRsnDropDown() },
-                    {"EmployeeInd".ToLower(),_dropDown.GetEmployeeIndDropDown() },
-                },
+                }
+                ,
                 var value when value == nameof(artamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
