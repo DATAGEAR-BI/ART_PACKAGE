@@ -264,6 +264,7 @@ class Grid extends HTMLElement {
 
             if (currentCSVProcess != folder) {
                 exportConnection.invoke("CancelPdfExport", folder);
+               // return;
 
             }
             if (currentCSVProcess == folder) {
@@ -304,7 +305,7 @@ class Grid extends HTMLElement {
             console.log("curr | e | P", exportinProcess)
             if (currentPDFReportId != exportinProcess) {
                 exportConnection.invoke("CancelPdfExport", exportinProcess);
-
+                //return;
             }
             if (currentPDFReportId == exportinProcess) {
                 if (isExportPdfHitted) {

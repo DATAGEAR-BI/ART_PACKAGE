@@ -2,10 +2,13 @@
 {
     public class ProcessesHandler
     {
+        private readonly UsersConnectionIds connections;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public List<ProcessessModel> processes = new List<ProcessessModel>();
-        public ProcessesHandler()
+        public ProcessesHandler(UsersConnectionIds connections, IHttpContextAccessor httpContextAccessor)
         {
-
+            this.connections = connections;
+            this._httpContextAccessor = httpContextAccessor;
         }
         public bool isProcessRunning(string processId)
         {
@@ -19,10 +22,12 @@
         }
         public bool AddProcess(string processId)
         {
+            var currentUser = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+            
             var process = processes.Where(p => p.Id == processId).FirstOrDefault();
-            if (process == null)
+            if (process == null&&currentUser!=null)
             {
-                processes.Add(new() { Id = processId });
+                processes.Add(new() { Id = processId ,UserName=currentUser,UserConnectioId=connections.GetConnections(currentUser) });
                 return true;
             }
             return false;
@@ -55,5 +60,7 @@
         public string Id { get; set; }
         public bool canceld { get; set; } = false;
         public decimal? CompletionPercentage { get; set; }
+        public string UserName { get;set; }
+        public List<string> UserConnectioId { get; set; }
 }
 }
