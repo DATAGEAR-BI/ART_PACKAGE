@@ -52,11 +52,11 @@ namespace ART_PACKAGE.Controllers.SASAML
                 data = context.ExecuteProc<ART_ST_YEARLY_UNUSAL_ACTIVITIES>(MYSQLSPName.ART_ST_YEARLY_UNUSAL_ACTIVITIES, summaryParams.ToArray());
             }
 
-            Dictionary<string, List<dynamic>> DropDownColumn = null;
+            Dictionary<string, List<dynamic>>? DropDownColumn = null;
             DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"YEAR".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
-                {"TYPE_OF_ACTIVITY".ToLower(),new List<SelectItem>{ new SelectItem { value = "Unusual Activities",text= "Unusual Activities" },new SelectItem { value = "Examined Alerts", text= "Examined Alerts" },new SelectItem { value = "Saved Alerts", text= "Saved Alerts" },new SelectItem { value = "Continued Monitoring Alerts", text= "Continued Monitoring Alerts" },new SelectItem { value = "GOAML Reports", text= "GOAML Reports" }, }.ToDynamicList() },
+                {"TYPE_OF_ACTIVITY".ToLower(),new List<dynamic>{ { "Unusual Activities" }, { "Examined Alerts" },{"Saved Alerts" },{ "Continued Monitoring Alerts" },{ "GOAML Reports" }, }.ToDynamicList() },
 
             };
             KendoDataDesc<ART_ST_YEARLY_UNUSAL_ACTIVITIES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
