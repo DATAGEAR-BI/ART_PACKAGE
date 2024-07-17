@@ -107,6 +107,7 @@
                                 tcounter++;
                                 var pregress = (Convert.ToDouble(tcounter) / Convert.ToDouble(tttotalRecords)) * 100;
                                 //Console.WriteLine(pregress);
+                                _pdfHAndler.UpdateCompletionPercentage(exportinProcess, Convert.ToDecimal(pregress));
 
                                 await _exportHub.Clients.Clients(connections.GetConnections(user))
                                 .SendCoreAsync("updateExportPDFProgress", new object[] { pregress, exportinProcess });

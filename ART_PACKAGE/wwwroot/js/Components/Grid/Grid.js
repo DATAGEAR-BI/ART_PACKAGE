@@ -328,11 +328,20 @@ class Grid extends HTMLElement {
                         isExportingPDFNow = true;
 
 
+                    } else if (progress && progress > 0 && progress >= 100 && currentPDFReportId == exportinProcess) {
+                        if (!pdfProgressBar.hidden) {
+                            pdfProgressBar.hidden = true;
+                            pdfProgressBar.style.visibility = "hidden";
+                        }
+                        exportConnection.invoke("CancelPdfExport", currentPDFReportId);
+
+                        isExportingPDFNow = false;
                     } else {
                         if (!pdfProgressBar.hidden) {
                             pdfProgressBar.hidden = true;
                             pdfProgressBar.style.visibility = "hidden";
                         }
+
                         isExportingPDFNow = false;
                     }
                 }
@@ -1248,7 +1257,7 @@ class Grid extends HTMLElement {
 
             }
             else {
-                toastObj.icon = 'error';
+                toastObj.icon = 'warning';
                 toastObj.text = "Already PDF exporting now";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
