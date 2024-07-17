@@ -20,7 +20,6 @@ namespace Data.GOAML
         public virtual DbSet<Lookup> Lookups { get; set; } = null!;
 
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());

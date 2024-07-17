@@ -15,6 +15,7 @@ namespace Data.FCFKC.SASAML
         public virtual DbSet<FskCase> FskCases { get; set; } = null!;
         // public virtual DbSet<FskQueue> FskQueues { get; set; } = null!;
         public virtual DbSet<Fsk_EntityQueue> FskEntityQueues { get; set; } = null!;
+        public virtual DbSet<FskCaseTransaction> FskCaseTransactions { get; set; } = null!;
 
 
 

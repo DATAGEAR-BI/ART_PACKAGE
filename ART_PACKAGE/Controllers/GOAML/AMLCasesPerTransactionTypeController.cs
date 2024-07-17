@@ -7,7 +7,6 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ARTGOAML;
-using Data.GOAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -55,6 +54,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                {"TRRANSACTION_TYPE".ToLower(),_dropSrv.GetTransactionTypeDropDown().Select(s=>s.value).ToDynamicList()},
 
             };
 
