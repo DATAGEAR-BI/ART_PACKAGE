@@ -45,6 +45,7 @@ class Grid extends HTMLElement {
         builder: undefined,
         applyBtn: undefined
     }
+    hasFixedColumn = false;
     customtToolBarBtns = [];
     filtersModal = document.createElement("div");
     csvExportId = "";
@@ -389,7 +390,7 @@ class Grid extends HTMLElement {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-
+                this.hasFixedColumn = d.hasFixedWidth; 
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -852,10 +853,12 @@ class Grid extends HTMLElement {
             //    // Handler for the excel export event
             //},
             dataBound: (e) => {
-
-                for (var i = 0; i < this.columns.length; i++) {
-                    grid.autoFitColumn(i);
+                if (!this.hasFixedColumn) {
+                    for (var i = 0; i < this.columns.length; i++) {
+                        grid.autoFitColumn(i);
+                    }
                 }
+                
                 /*$('.k-action-buttons button[type="reset"]').on('click', function (eva) {
                     // Call your function to handle clear filter button click
                     //handleClearFilterButtonClick();

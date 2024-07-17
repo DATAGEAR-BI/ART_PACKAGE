@@ -6,6 +6,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
     {
         public artswiftcleardetectconfig()
         {
+            HasFixedWidth = true;
             ReportTitle = "SWIFT Clear Detect Report";
             ReportDescription = "This report presents all success and not matched SWIFT requests with the related information as below";
 

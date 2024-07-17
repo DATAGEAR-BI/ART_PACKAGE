@@ -81,15 +81,15 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                       {"MaritalStatusDesc".ToLower(),_dropDown.GetMaritalStatusDropDown() },
                       {"CustomerLevel".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Other",value= "Other" }, new SelectItem() { text = "Customer", value = "Customer" } } },
                       {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
-                      {"NonProfitOrgInd".ToLower(),pipList },
-                      {"PoliticallyExposedPersonInd".ToLower(),pipList },
-                      {"CharityDonationsInd".ToLower(),pipList },
-                      {"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
+                      //{"NonProfitOrgInd".ToLower(),pipList },
+                      //{"PoliticallyExposedPersonInd".ToLower(),pipList },
+                      //{"CharityDonationsInd".ToLower(),pipList },
+                      //{"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
                       {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
-                      {"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown() },
-                      {"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown() },
-                      {"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown() },
-                      {"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() }
+                      //{"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown() },
+                      //{"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown() },
+                      //{"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown() },
+                      //{"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() }
                 },
                 nameof(HighRiskController) => new Dictionary<string, List<SelectItem>>
                 {
