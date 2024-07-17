@@ -35,6 +35,17 @@
                 processes.Remove(process);
             }
         }
+        public decimal? GetCompletionPercentage(string processId)=> processes.Where(p => p.Id == processId).FirstOrDefault().CompletionPercentage;
+
+        public void UpdateCompletionPercentage(string processId, decimal value) {
+
+            var process = processes.Where(p => p.Id == processId).FirstOrDefault();
+            if (process!=null)
+            {
+                process.CompletionPercentage = value;
+            }
+
+        }
 
 
 
@@ -43,5 +54,6 @@
     {
         public string Id { get; set; }
         public bool canceld { get; set; } = false;
-    }
+        public decimal? CompletionPercentage { get; set; }
+}
 }

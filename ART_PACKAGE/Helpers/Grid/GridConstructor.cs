@@ -118,6 +118,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 fileProgress[fileNumber] = recordsDone;
                 var done = fileProgress.Values.Sum();
                 decimal progress = done / (decimal)totalcopy;
+                _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
             };

@@ -19,6 +19,7 @@ using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
 using Microsoft.AspNetCore.SignalR;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 namespace ART_PACKAGE.Hubs
 {
@@ -47,11 +48,18 @@ namespace ART_PACKAGE.Hubs
             connections.AddConnctionIdFor(user, Context.ConnectionId);
             return base.OnConnectedAsync();
         }
+       
 
         public async Task KeepAlive()
         {
+            foreach (var process in _pdfProcessHandler.processes)
+            {
+                await Clients.Caller.SendCoreAsync("updateExportPDFProgress", new object[] { process.CompletionPercentage, process.Id});
+
+            }
             await Clients.Caller.SendAsync("iAmAlive");
         }
+        
         public async Task Export(ExportDto<object> para, string controller)
         {
 
