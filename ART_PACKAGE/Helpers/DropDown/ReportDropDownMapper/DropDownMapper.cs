@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
                     {"ReportCloseRsn".ToLower(),_dropDown.GetCloseRsnDropDown() },
-                    {"EmployeeInd".ToLower(),_dropDown.GetEmployeeIndDropDown() },
+                    {"EmployeeInd".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Y",value= "Y" }, new SelectItem() { text = "N", value = "N" } } } },
                 },
                 var value when value == nameof(artamlcasedetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
