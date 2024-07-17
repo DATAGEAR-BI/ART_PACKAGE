@@ -1,4 +1,3 @@
-using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
@@ -6,13 +5,13 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data.ARTGOAML;
 using Data.Data.SASAml;
-using Data.GOAML;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers.GOAML
+namespace ART_PACKAGE.Controllers.SASAML
 {
     public class UnusualAndSuspectedAlertsController : Controller
     {
@@ -53,8 +52,14 @@ namespace ART_PACKAGE.Controllers.GOAML
                 data = context.ExecuteProc<ART_ST_YEARLY_UNUSAL_ACTIVITIES>(MYSQLSPName.ART_ST_YEARLY_UNUSAL_ACTIVITIES, summaryParams.ToArray());
             }
 
+            Dictionary<string, List<dynamic>> DropDownColumn = null;
+            DropDownColumn = new Dictionary<string, List<dynamic>>
+            {
+                {"YEAR".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                {"TYPE_OF_ACTIVITY".ToLower(),new List<SelectItem>{ new SelectItem { value = "Unusual Activities",text= "Unusual Activities" },new SelectItem { value = "Examined Alerts", text= "Examined Alerts" },new SelectItem { value = "Saved Alerts", text= "Saved Alerts" },new SelectItem { value = "Continued Monitoring Alerts", text= "Continued Monitoring Alerts" },new SelectItem { value = "GOAML Reports", text= "GOAML Reports" }, }.ToDynamicList() },
 
-            KendoDataDesc<ART_ST_YEARLY_UNUSAL_ACTIVITIES> Data = data.AsQueryable().CallData(para.req);
+            };
+            KendoDataDesc<ART_ST_YEARLY_UNUSAL_ACTIVITIES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new
