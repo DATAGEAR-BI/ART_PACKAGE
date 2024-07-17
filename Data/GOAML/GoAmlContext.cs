@@ -1,5 +1,4 @@
-﻿using Data.FCFKC.GOAML;
-using Data.ModelCreatingStrategies;
+﻿using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.GOAML
