@@ -128,7 +128,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 {
                     {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
-                    {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() },
                     {"AlertedEntityLevel".ToLower(),_dropDown.GetAlertedEntityLevelDropDown() },
                 },
                 nameof(ArtAuditCorporateController) => new Dictionary<string, List<SelectItem>>
