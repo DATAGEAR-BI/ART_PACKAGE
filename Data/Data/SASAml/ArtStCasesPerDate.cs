@@ -9,7 +9,6 @@ namespace Data.Data.SASAml
     public class ArtStCasesPerDate
     {
         public string? MONTH { get; set; }
-        public string? CASE_STATUS { get; set; }
         public decimal? NUMBER_OF_CASES { get; set; }
     }
 }
