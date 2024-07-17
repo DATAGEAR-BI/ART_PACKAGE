@@ -101,7 +101,7 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
-            _processesHandler.AddProcess(reportGUID);
+            _processesHandler.AddProcess(reportGUID, "CSV");
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
             int total = dataRes.total;
@@ -193,7 +193,7 @@ namespace ART_PACKAGE.Helpers.Grid
         }
         public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null)
         {
-            _processesHandler.AddProcess(reportId);
+            _processesHandler.AddProcess(reportId,"PDF");
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
 
