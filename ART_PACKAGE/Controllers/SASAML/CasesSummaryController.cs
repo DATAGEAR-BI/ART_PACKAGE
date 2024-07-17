@@ -126,7 +126,8 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Data = chart6Data.ToList(),
                     Title = "Cases Per Date",
                     Cat = "MONTH",
-                    Type = ChartType.clusteredbarchart
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.curvedline
                 },
             };
 
