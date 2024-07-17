@@ -112,6 +112,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetPartyType_AlertDropDown();
         public List<SelectItem> GetCloseRsnDropDown();
         public List<SelectItem> GetEmployeeIndDropDown();
+        public List<SelectItem> GetTransactionTypeDropDown();
         public List<SelectItem> GetQueuesDropDown();
         public List<SelectItem> GetLast10YearsDropDown();
         public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown();

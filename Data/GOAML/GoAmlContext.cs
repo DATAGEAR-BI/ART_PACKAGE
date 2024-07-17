@@ -18,7 +18,7 @@ namespace Data.GOAML
         public virtual DbSet<ReportIndicatorType> ReportIndicatorTypes { get; set; } = null!;
         public virtual DbSet<Taccount> Taccounts { get; set; } = null!;
         public virtual DbSet<Lookup> Lookups { get; set; } = null!;
-
+       public virtual DbSet<FskCaseTransaction> FskCaseTransactions { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

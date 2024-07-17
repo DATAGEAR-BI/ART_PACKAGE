@@ -14701,7 +14701,111 @@ namespace Data.ModelCreatingStrategies
                       .HasMaxLength(250)
                       .IsRequired(false);
             });
+            modelBuilder.Entity<FskCaseTransaction>(entity =>
+            {
+                entity.HasKey(e => new { e.CaseId, e.AlertId, e.TransactionId })
+                    .HasName("XPKFSK_CASE_TRANSACTION");
 
+                entity.ToTable("FSK_CASE_TRANSACTION");
+
+                entity.Property(e => e.CaseId)
+                    .HasPrecision(12)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.AlertId)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.TransactionId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_ID");
+
+                entity.Property(e => e.AccountNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNT_NUMBER");
+
+                entity.Property(e => e.AlertedEntityKey)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERTED_ENTITY_KEY");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_LEVEL_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AssociateName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSOCIATE_NAME");
+
+                entity.Property(e => e.BeneficiaryName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("BENEFICIARY_NAME");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CreatedTimestamp)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATED_TIMESTAMP");
+
+                entity.Property(e => e.DateKey)
+                    .HasPrecision(8)
+                    .HasColumnName("DATE_KEY");
+
+                entity.Property(e => e.PrimaryMediumDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_MEDIUM_DESC");
+
+                entity.Property(e => e.SecondaryMediumDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SECONDARY_MEDIUM_DESC");
+
+                entity.Property(e => e.TimeKey)
+                    .HasPrecision(6)
+                    .HasColumnName("TIME_KEY");
+
+                entity.Property(e => e.TransactionAmt)
+                    .HasColumnType("NUMBER(15,3)")
+                    .HasColumnName("TRANSACTION_AMT");
+
+                entity.Property(e => e.TransactionCdiDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CDI_DESC");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(6)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_DESC");
+
+                entity.Property(e => e.TransactionMechanism)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_MECHANISM");
+
+                entity.Property(e => e.TransactionStatus)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_STATUS");
+
+                entity.Property(e => e.TriggeringIndicatorCd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRIGGERING_INDICATOR_CD");
+            });
         }
 
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder)

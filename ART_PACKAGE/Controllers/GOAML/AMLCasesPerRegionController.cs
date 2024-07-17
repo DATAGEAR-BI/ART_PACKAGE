@@ -56,6 +56,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                {"REGION".ToLower(),_dropSrv.GetBranchNameDropDown().Where(x => x.value != "Unknown").Select(s=> s.value).ToDynamicList()},
 
             };
             KendoDataDesc<ART_ST_YEARLY_AML_PER_REGION> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
