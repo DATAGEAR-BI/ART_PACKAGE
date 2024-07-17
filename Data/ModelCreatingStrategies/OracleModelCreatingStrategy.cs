@@ -6655,102 +6655,110 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("QUEUE_CODE");
             });
-            modelBuilder.Entity<FskRiskAssessment>(entity =>
+            modelBuilder.Entity<FskCaseTransaction>(entity =>
             {
-                entity.HasKey(e => e.RiskAssessmentId)
-                    .HasName("PK_RISK_ASMNT");
+                entity.HasKey(e => new { e.CaseId, e.AlertId, e.TransactionId })
+                    .HasName("XPKFSK_CASE_TRANSACTION");
 
-                entity.ToTable("FSK_RISK_ASSESSMENT");
+                entity.ToTable("FSK_CASE_TRANSACTION");
 
-                entity.HasIndex(e => e.PartyKey, "XIE5FSK_RISK_ASMNT");
-
-                entity.HasIndex(e => e.PartyNumber, "XIE9FSK_RISK_ASMNT");
-
-                entity.Property(e => e.RiskAssessmentId)
+                entity.Property(e => e.CaseId)
                     .HasPrecision(12)
-                    .ValueGeneratedNever()
-                    .HasColumnName("RISK_ASSESSMENT_ID");
+                    .HasColumnName("CASE_ID");
 
-                entity.Property(e => e.AssessmentCategoryCd)
-                    .HasMaxLength(32)
-                    .IsUnicode(false)
-                    .HasColumnName("ASSESSMENT_CATEGORY_CD");
-
-                entity.Property(e => e.AssessmentSubcategoryCd)
-                    .HasMaxLength(32)
-                    .IsUnicode(false)
-                    .HasColumnName("ASSESSMENT_SUBCATEGORY_CD");
-
-                entity.Property(e => e.AssessmentTypeCd)
-                    .HasMaxLength(32)
-                    .IsUnicode(false)
-                    .HasColumnName("ASSESSMENT_TYPE_CD");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("DATE")
-                    .HasColumnName("CREATE_DATE");
-
-                entity.Property(e => e.CreateUserId)
-                    .HasMaxLength(60)
-                    .IsUnicode(false)
-                    .HasColumnName("CREATE_USER_ID");
-
-                entity.Property(e => e.EmployeeInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("EMPLOYEE_IND")
-                    .IsFixedLength();
-
-                entity.Property(e => e.LogicalDeleteInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("LOGICAL_DELETE_IND")
-                    .IsFixedLength();
-
-                entity.Property(e => e.OwnerUserLongId)
-                    .HasMaxLength(60)
-                    .IsUnicode(false)
-                    .HasColumnName("OWNER_USER_LONG_ID");
-
-                entity.Property(e => e.PartyKey)
+                entity.Property(e => e.AlertId)
                     .HasPrecision(12)
-                    .HasColumnName("PARTY_KEY");
+                    .HasColumnName("ALERT_ID");
 
-                entity.Property(e => e.PartyName)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("PARTY_NAME");
-
-                entity.Property(e => e.PartyNumber)
+                entity.Property(e => e.TransactionId)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("PARTY_NUMBER");
+                    .HasColumnName("TRANSACTION_ID");
 
-                entity.Property(e => e.ProposedRiskClassification)
-                    .HasPrecision(1)
-                    .HasColumnName("PROPOSED_RISK_CLASSIFICATION");
+                entity.Property(e => e.AccountNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACCOUNT_NUMBER");
 
-                entity.Property(e => e.RiskAssessmentDuration)
-                    .HasPrecision(3)
-                    .HasColumnName("RISK_ASSESSMENT_DURATION");
+                entity.Property(e => e.AlertedEntityKey)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERTED_ENTITY_KEY");
 
-                entity.Property(e => e.RiskAssessmentStatusCode)
+                entity.Property(e => e.AlertedEntityLevelCode)
                     .HasMaxLength(3)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_ASSESSMENT_STATUS_CODE")
+                    .HasColumnName("ALERTED_ENTITY_LEVEL_CODE")
                     .IsFixedLength();
 
-                entity.Property(e => e.RiskClassification)
-                    .HasPrecision(1)
-                    .HasColumnName("RISK_CLASSIFICATION");
+                entity.Property(e => e.AssociateName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("ASSOCIATE_NAME");
 
-                entity.Property(e => e.StartingMonthKey)
+                entity.Property(e => e.BeneficiaryName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("BENEFICIARY_NAME");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.CreatedTimestamp)
                     .HasPrecision(6)
-                    .HasColumnName("STARTING_MONTH_KEY");
+                    .HasColumnName("CREATED_TIMESTAMP");
 
-                entity.Property(e => e.VersionNumber)
-                    .HasPrecision(10)
-                    .HasColumnName("VERSION_NUMBER");
+                entity.Property(e => e.DateKey)
+                    .HasPrecision(8)
+                    .HasColumnName("DATE_KEY");
+
+                entity.Property(e => e.PrimaryMediumDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PRIMARY_MEDIUM_DESC");
+
+                entity.Property(e => e.SecondaryMediumDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SECONDARY_MEDIUM_DESC");
+
+                entity.Property(e => e.TimeKey)
+                    .HasPrecision(6)
+                    .HasColumnName("TIME_KEY");
+
+                entity.Property(e => e.TransactionAmt)
+                    .HasColumnType("NUMBER(15,3)")
+                    .HasColumnName("TRANSACTION_AMT");
+
+                entity.Property(e => e.TransactionCdiDesc)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_CDI_DESC");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasPrecision(6)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_DESC");
+
+                entity.Property(e => e.TransactionMechanism)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_MECHANISM");
+
+                entity.Property(e => e.TransactionStatus)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_STATUS");
+
+                entity.Property(e => e.TriggeringIndicatorCd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("TRIGGERING_INDICATOR_CD");
             });
         }
 
@@ -14700,111 +14708,6 @@ namespace Data.ModelCreatingStrategies
                       .HasColumnName("MODIFIED_BY")
                       .HasMaxLength(250)
                       .IsRequired(false);
-            });
-            modelBuilder.Entity<FskCaseTransaction>(entity =>
-            {
-                entity.HasKey(e => new { e.CaseId, e.AlertId, e.TransactionId })
-                    .HasName("XPKFSK_CASE_TRANSACTION");
-
-                entity.ToTable("FSK_CASE_TRANSACTION");
-
-                entity.Property(e => e.CaseId)
-                    .HasPrecision(12)
-                    .HasColumnName("CASE_ID");
-
-                entity.Property(e => e.AlertId)
-                    .HasPrecision(12)
-                    .HasColumnName("ALERT_ID");
-
-                entity.Property(e => e.TransactionId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_ID");
-
-                entity.Property(e => e.AccountNumber)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("ACCOUNT_NUMBER");
-
-                entity.Property(e => e.AlertedEntityKey)
-                    .HasPrecision(12)
-                    .HasColumnName("ALERTED_ENTITY_KEY");
-
-                entity.Property(e => e.AlertedEntityLevelCode)
-                    .HasMaxLength(3)
-                    .IsUnicode(false)
-                    .HasColumnName("ALERTED_ENTITY_LEVEL_CODE")
-                    .IsFixedLength();
-
-                entity.Property(e => e.AssociateName)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("ASSOCIATE_NAME");
-
-                entity.Property(e => e.BeneficiaryName)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("BENEFICIARY_NAME");
-
-                entity.Property(e => e.BranchName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("BRANCH_NAME");
-
-                entity.Property(e => e.CreatedTimestamp)
-                    .HasPrecision(6)
-                    .HasColumnName("CREATED_TIMESTAMP");
-
-                entity.Property(e => e.DateKey)
-                    .HasPrecision(8)
-                    .HasColumnName("DATE_KEY");
-
-                entity.Property(e => e.PrimaryMediumDesc)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("PRIMARY_MEDIUM_DESC");
-
-                entity.Property(e => e.SecondaryMediumDesc)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("SECONDARY_MEDIUM_DESC");
-
-                entity.Property(e => e.TimeKey)
-                    .HasPrecision(6)
-                    .HasColumnName("TIME_KEY");
-
-                entity.Property(e => e.TransactionAmt)
-                    .HasColumnType("NUMBER(15,3)")
-                    .HasColumnName("TRANSACTION_AMT");
-
-                entity.Property(e => e.TransactionCdiDesc)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_CDI_DESC");
-
-                entity.Property(e => e.TransactionDate)
-                    .HasPrecision(6)
-                    .HasColumnName("TRANSACTION_DATE");
-
-                entity.Property(e => e.TransactionDesc)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_DESC");
-
-                entity.Property(e => e.TransactionMechanism)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_MECHANISM");
-
-                entity.Property(e => e.TransactionStatus)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("TRANSACTION_STATUS");
-
-                entity.Property(e => e.TriggeringIndicatorCd)
-                    .HasMaxLength(3)
-                    .IsUnicode(false)
-                    .HasColumnName("TRIGGERING_INDICATOR_CD");
             });
         }
 

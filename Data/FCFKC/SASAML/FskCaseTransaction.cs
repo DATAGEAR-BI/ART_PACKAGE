@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.GOAML
+namespace Data.FCFKC.SASAML
 {
     public partial class FskCaseTransaction
     {

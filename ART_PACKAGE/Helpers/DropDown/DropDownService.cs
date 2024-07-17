@@ -307,7 +307,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetTransactionTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.GOAML.FskCaseTransactions.Where(x=>x.TriggeringIndicatorCd == "Y").Select(x => x.PrimaryMediumDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCaseTransactions.Where(x=>x.TriggeringIndicatorCd == "Y").Select(x => x.PrimaryMediumDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
 
