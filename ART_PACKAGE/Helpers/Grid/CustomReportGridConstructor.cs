@@ -109,7 +109,7 @@ namespace ART_PACKAGE.Helpers.Grid
         public string ExportGridToCsv(int reportId, ExportRequest exportRequest, string user, string gridId)
         {
             string folderGuid = gridId;//Guid.NewGuid().ToString();
-            _processesHandler.AddProcess(gridId);
+            _processesHandler.AddProcess(gridId,"CSV");
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
             ArtSavedCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
@@ -194,7 +194,7 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             ArtSavedCustomReport report = Repo.GetReport(reportId);
 
-            _processesHandler.AddProcess((string)ViewData["reportId"]);
+            _processesHandler.AddProcess((string)ViewData["reportId"], "PDF");
             DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
             GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
             IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });

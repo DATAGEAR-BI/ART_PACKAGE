@@ -1,4 +1,6 @@
-﻿namespace ART_PACKAGE.Helpers.Handlers
+﻿using com.sun.org.apache.xalan.@internal.xsltc.compiler.util;
+
+namespace ART_PACKAGE.Helpers.Handlers
 {
     public class ProcessesHandler
     {
@@ -20,14 +22,14 @@
             var process = processes.Where(p => p.Id == processId).FirstOrDefault();
             return process != null ? process.canceld : true;
         }
-        public bool AddProcess(string processId)
+        public bool AddProcess(string processId,string type )
         {
             var currentUser = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
             
             var process = processes.Where(p => p.Id == processId).FirstOrDefault();
             if (process == null&&currentUser!=null)
             {
-                processes.Add(new() { Id = processId ,UserName=currentUser,UserConnectioId=connections.GetConnections(currentUser) });
+                processes.Add(new() { Id = processId ,UserName=currentUser,UserConnectioId=connections.GetConnections(currentUser) ,type=type});
                 return true;
             }
             return false;
@@ -62,5 +64,6 @@
         public decimal? CompletionPercentage { get; set; }
         public string UserName { get;set; }
         public List<string> UserConnectioId { get; set; }
-}
+        public string type { get; set; }
+    }
 }

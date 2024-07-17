@@ -56,9 +56,13 @@ namespace ART_PACKAGE.Hubs
             string? user = Context.User.Identity.Name;
             List<ProcessessModel> processes = _pdfProcessHandler.processes.Where(p => p.UserName == user && p.UserConnectioId.Contains(Context.ConnectionId)).ToList();
 
-            foreach (var item in processes)
+            foreach (var item in processes.Where(x=>x.type=="PDF"))
             {
                 await Clients.Caller.SendCoreAsync("updateExportPDFProgress", new object[] { item.CompletionPercentage, item.Id });
+            }
+            foreach (var item in processes.Where(x => x.type == "CSV"))
+            {
+                await Clients.Caller.SendCoreAsync("updateExportProgress", new object[] { item.CompletionPercentage, item.Id });
             }
 
             await Clients.Caller.SendAsync("iAmAlive");
