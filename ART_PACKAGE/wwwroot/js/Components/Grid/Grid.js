@@ -265,6 +265,7 @@ class Grid extends HTMLElement {
 
             if (currentCSVProcess != folder) {
                 exportConnection.invoke("CancelPdfExport", folder);
+               // return;
 
             }
             if (currentCSVProcess == folder) {
@@ -305,7 +306,7 @@ class Grid extends HTMLElement {
             console.log("curr | e | P", exportinProcess)
             if (currentPDFReportId != exportinProcess) {
                 exportConnection.invoke("CancelPdfExport", exportinProcess);
-
+                //return;
             }
             if (currentPDFReportId == exportinProcess) {
                 if (isExportPdfHitted) {
@@ -1520,7 +1521,7 @@ class Grid extends HTMLElement {
     async ExportCsv(e) {
 
         if (!this.isDownloaded) {
-            toastObj.icon = 'error';
+            toastObj.icon = 'warning';
             toastObj.text = "you exported a file and haven't downloaded it yet.";
             toastObj.heading = "Export Status";
             $.toast(toastObj);

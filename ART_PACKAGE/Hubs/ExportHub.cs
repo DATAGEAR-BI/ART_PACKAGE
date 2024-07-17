@@ -20,6 +20,7 @@ using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
 using Microsoft.AspNetCore.SignalR;
 using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+using System.Diagnostics;
 
 namespace ART_PACKAGE.Hubs
 {
@@ -52,11 +53,14 @@ namespace ART_PACKAGE.Hubs
 
         public async Task KeepAlive()
         {
-            foreach (var process in _pdfProcessHandler.processes)
-            {
-                await Clients.Caller.SendCoreAsync("updateExportPDFProgress", new object[] { process.CompletionPercentage, process.Id});
+            string? user = Context.User.Identity.Name;
+            List<ProcessessModel> processes = _pdfProcessHandler.processes.Where(p => p.UserName == user && p.UserConnectioId.Contains(Context.ConnectionId)).ToList();
 
+            foreach (var item in processes)
+            {
+                await Clients.Caller.SendCoreAsync("updateExportPDFProgress", new object[] { item.CompletionPercentage, item.Id });
             }
+
             await Clients.Caller.SendAsync("iAmAlive");
         }
         
