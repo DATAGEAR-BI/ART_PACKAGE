@@ -170,7 +170,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetPartyType_AlertDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs.Where(x => x.LovTypeName == "FCF_PARTY_TYPE" && x.LovLanguageDesc == "en").Select(x => x.LovTypeDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs.Where(x => x.LovTypeName == "FCF_PARTY_TYPE" && x.LovLanguageDesc == "en").Select(x => x.LovTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
