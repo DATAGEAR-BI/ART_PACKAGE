@@ -305,7 +305,11 @@ class Grid extends HTMLElement {
   /*          console.log("curr", currentPDFReportId)
             console.log("curr |", currentPDFReportId)
             console.log("curr | e | P", exportinProcess)*/
-            if (currentPDFReportId != exportinProcess || progress==null) {
+            if (currentPDFReportId != exportinProcess ) {
+                //exportConnection.invoke("CancelPdfExport", exportinProcess);
+                return;
+            }
+            if (currentPDFReportId == exportinProcess && progress == null) {
                 //exportConnection.invoke("CancelPdfExport", exportinProcess);
                 return;
             }
