@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
             defaultSortOption = new()
             {
-                field = "RiskScore",
+                field = "AlertsCntSum",
                 dir = "desc"
             };
 
