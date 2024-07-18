@@ -2383,7 +2383,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_AML_ALERT_DETAIL_VIEW");
+                entity.ToView("ART_AML_ALERT_DETAIL_TB");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
@@ -3058,7 +3058,7 @@ namespace Data.ModelCreatingStrategies
 
             modelBuilder.Entity<ArtAlertsPerAlertedEntityView>(entity =>
             {
-                entity.ToView("ART_ALERTS_PER_ALERTED_ENTETY_VIEW");
+                entity.ToView("ART_ALERTS_PER_ALERTED_ENTETY_TB");
 
                 entity.HasNoKey();
 
@@ -3097,7 +3097,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_MONTHLY_SWIFT_VIEW");
+                entity.ToView("ART_MONTHLY_SWIFT_TB");
 
                 entity.Property(e => e.Month)
                     .HasColumnName("MONTH")
