@@ -490,7 +490,12 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCasesDetailsCreatedByDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.CreateUserId == null || string.IsNullOrEmpty(x.CreateUserId.Trim()) ? "UNKNOWN" : x.CreateUserId).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetOwner_AlertedEntityDropDown()

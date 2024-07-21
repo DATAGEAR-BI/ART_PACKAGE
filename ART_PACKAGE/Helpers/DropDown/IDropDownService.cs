@@ -123,6 +123,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown();
         public List<SelectItem> GetReportTypeForStaffAndNonStaffSummariesDropDown();
+        public List<SelectItem> GetCasesDetailsCreatedByDropDown();
         //
 
 
