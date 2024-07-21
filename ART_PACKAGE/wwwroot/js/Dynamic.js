@@ -830,12 +830,12 @@ function createFiltersDiv(obj) {
 
             if (existinp) {
                 var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${x.value}`;
+                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : x.value}`;
             } else {
                 var inp = document.createElement("input");
                 inp.id = x.field + "-0";
                 inp.type = "text";
-                inp.value = `${x.field}=> ${ops[x.operator]} ${x.value}`;
+                inp.value = `${x.field}=> ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : x.value}`;
                 inp.classList = ["form-control"];
                 inp.readOnly = true;
                 fDiv.appendChild(inp);
@@ -849,13 +849,12 @@ function createFiltersDiv(obj) {
 
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${y.value
-                        }`;
+                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${onePartitionOperators.includes(y.operator) ? "" : y.value}`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
                     inp.type = "text";
-                    inp.value = `${y.field}=> ${ops[y.operator]} ${y.value}`;
+                    inp.value = `${y.field}=> ${ops[y.operator]} ${onePartitionOperators.includes(y.operator)?"": y.value}`;
                     inp.classList = ["form-control"];
                     inp.readOnly = true;
                     fDiv.appendChild(inp);
