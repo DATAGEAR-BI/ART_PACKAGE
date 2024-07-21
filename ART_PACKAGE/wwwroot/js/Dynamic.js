@@ -110,6 +110,9 @@ var globaldata = [];
 var groupList = [];
 var valList = [];
 var spinner = new Spinner(spinnerOpts).spin(grid);
+var isSortingOrFiltering = false;
+var previousScrollPosition = 0;
+
 if (isStoredProc == "true") {
 
     getExRules();
@@ -539,6 +542,13 @@ function generateGrid() {
                     dbclickhandler(dataItem).then(console.log("done"));
                 }
             });
+            if (isSortingOrFiltering) {
+                setTimeout(function () {
+                    console.log(previousScrollPosition);
+                    grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
+                    isSortingOrFiltering = false;
+                }, 0);
+            }
 
         },
         ...(isHierarchy == "true" && {
@@ -558,7 +568,11 @@ function generateGrid() {
     var grid = $("#grid").data("kendoGrid");
 
     grid.thead.on("click", ".k-checkbox", onClick);
-
+    grid.thead.on("click", "th", function () {
+        previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+        console.log(previousScrollPosition);
+        isSortingOrFiltering = true;
+    });
     grid.tbody.on("click", ".k-checkbox", (e) => {
         selected = Object.entries(selected).reduce((acc, [key, value]) => {
             if (grid.dataSource.page() == key) {

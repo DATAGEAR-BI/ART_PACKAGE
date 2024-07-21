@@ -21,6 +21,9 @@ var isExportingCSVNow = false;
 //var currentPDFReportId = currentPDFReportId;
 var isExportPdfHitted = false;
 var currentCSVProcess = '';
+var isSortingOrFiltering = false;
+var previousScrollPosition = 0;
+
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -924,6 +927,12 @@ class Grid extends HTMLElement {
 
 
                 });
+                if (isSortingOrFiltering) {
+                    setTimeout(function () {
+                        grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
+                        isSortingOrFiltering = false;
+                    }, 0);
+                }
             },
             //...(isHierarchy == "true" && {
             //    detailInit: (e) => {
@@ -961,7 +970,10 @@ class Grid extends HTMLElement {
 
         // event for constructing the filters for multi select columns
         grid.bind("columnMenuOpen", (e) => {
-            console.log("collumn menu hitted ")
+            console.log("collumn menu hitted ");
+            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+            console.log(previousScrollPosition);
+            isSortingOrFiltering = true;
             var querySelectorsObj = {
                 multiSelectQuerySelector: {
                     value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
@@ -1130,7 +1142,11 @@ class Grid extends HTMLElement {
             }
         });
 
-
+        grid.thead.on("click", "th", function () {
+            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+            console.log(previousScrollPosition);
+            isSortingOrFiltering = true;
+        });
         grid.thead.on("click", ".k-checkbox", this.ToggleSelectAll);
 
         grid.tbody.on("click", ".k-checkbox", (e) => {
