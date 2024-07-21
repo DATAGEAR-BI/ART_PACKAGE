@@ -68,8 +68,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                       {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown() },
                       {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
                       {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown() },
-                      {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown() },
-                      {"Owner".ToLower(),_dropDown.GetCasesDetailsCreatedByDropDown() },
+                      {"CreatedBy".ToLower(),_dropDown.GetCasesDetailsCreatedByDropDown() },
+                      {"Owner".ToLower(),_dropDown.GetOwnerDropDown() },
              /*         {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown() },
                       {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },*/
        
