@@ -125,6 +125,11 @@
                                                 {
                                                     @string.Format(CultureInfo.InvariantCulture, "{0:n2}", @item[key])
                                                 }
+                                                @if (item[key] is not null && item[key].GetType() == typeof(DateTime))
+                                                {
+                                                    @string.Format(CultureInfo.InvariantCulture, "{0:dd/MM/yyyy hh:mm:ss}", @item[key])
+                                                    
+                                                }
                                                 else
                                                 {
                                                     @item[key]
