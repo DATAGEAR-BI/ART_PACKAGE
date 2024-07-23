@@ -99,7 +99,7 @@ export const Handlers = {
         para.Skip = 0;
         para.Filter = filters;
         para.sort = ds.dataSource.sort();;
-
+        para.IsExport = true;
 
         var res = await fetch(`/${controller}/Export`, {
             method: "POST",
