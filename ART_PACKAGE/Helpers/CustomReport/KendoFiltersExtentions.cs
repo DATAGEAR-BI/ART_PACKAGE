@@ -1,5 +1,7 @@
-﻿using ART_PACKAGE.Extentions.StringExtentions;
+﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+using ART_PACKAGE.Extentions.StringExtentions;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -84,6 +86,64 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"lte"  , "{0} <= \"{1}\"" },
             { "lt"  , "{0} < \"{1}\"" },
         };
+        
+
+        private static ReportConfig GetConfigs<T>()
+        {
+            Type type = typeof(ReportConfig);
+
+            // Get the full name of the type (namespace + class name)
+            string typeName = type.FullName;
+
+            // Get the assembly name
+            string assemblyName = type.Assembly.GetName().Name;
+
+            // Combine them to get the fully qualified type name
+            string fullyQualifiedTypeName = $"{SliceUntilLastPeriod(typeName)}{typeof(T).Name}Config, {assemblyName}";
+            Type ConfigType = Type.GetType(fullyQualifiedTypeName);
+            if (ConfigType != null)
+            {
+                // Create an instance of the type
+                object ConfigInstance = Activator.CreateInstance(ConfigType);
+                if (ConfigInstance == null)
+                {
+                    return null;
+                }
+                return (ReportConfig)ConfigInstance;
+            }
+            fullyQualifiedTypeName = $"{SliceUntilLastPeriod(typeName)}{typeof(T).Name.ToLower()}Config, {assemblyName}";
+             ConfigType = Type.GetType(fullyQualifiedTypeName);
+            if (ConfigType != null)
+            {
+                // Create an instance of the type
+                object ConfigInstance = Activator.CreateInstance(ConfigType);
+                if (ConfigInstance == null)
+                {
+                    return null;
+                }
+                return (ReportConfig)ConfigInstance;
+            }
+            return null;
+
+
+
+
+
+        }
+        static string SliceUntilLastPeriod(string input)
+        {
+            // Find the index of the last occurrence of the period
+            int lastIndex = input.LastIndexOf('.');
+
+            // If there is no period in the string, return the original string or handle accordingly
+            if (lastIndex == -1)
+            {
+                return input;
+            }
+
+            // Use Substring to get the portion of the string until (and including) the last period
+            return input.Substring(0, lastIndex + 1);
+        }
 
 
         private static readonly Dictionary<string, string> readableOperators = new()
@@ -617,8 +677,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
         {
             string filter = obj.Filter.GetFiltersString<T>();
 
-
-
+            ReportConfig config = GetConfigs<T>();
+            propertiesToSkip=propertiesToSkip ==null? config!=null?config.SkipList:propertiesToSkip: propertiesToSkip; 
 
 
             if (!string.IsNullOrEmpty(filter))
@@ -803,6 +863,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
         public static async Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, KendoRequest obj)
         {
+            
             KendoDataDesc<T> calldata = data.CallData(obj);
             data = calldata.Data;
             decimal total = calldata.Total;
@@ -880,6 +941,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
             );
             return bytes;
         }
+
+
 
         public static List<List<object>> GetFilterTextForCsv(this Filter Filters)
         {
