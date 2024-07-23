@@ -16,6 +16,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
             };
+            SkipList = new List<string> { "RN" };
+
         }
     }
 }
