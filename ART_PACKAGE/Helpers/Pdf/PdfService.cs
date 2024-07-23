@@ -1,5 +1,6 @@
 ﻿
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.ReportsConfigurations;
 using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -167,6 +168,9 @@ namespace ART_PACKAGE.Helpers.Pdf
             KendoDataDesc<T> calldata = data.CallData(obj);
             data = calldata.Data;
             decimal total = calldata.Total;
+            ReportConfig config = ReportConfigResolver2.GetConfigs<T>();
+            ColumnsToSkip = ColumnsToSkip == null ? config != null ? config.SkipList : ColumnsToSkip : ColumnsToSkip;
+
 
             ViewData["user"] = UserName;
             List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
