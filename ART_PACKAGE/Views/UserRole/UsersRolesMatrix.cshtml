@@ -82,6 +82,8 @@
             column = {};
             column["field"] = col;
             column["title"] = col;
+                column["width"] = "150px";
+             
             if (index > 0) {
 
                 column["template"] = "#=dirtyField(data,\"" + col + "\")#<input type=\"checkbox\" #= " + col + " ? \'checked=\"checked\"\' : \"\" # class=\"chkbx k-checkbox\" />";
@@ -116,9 +118,9 @@
             columns: createcolumns(columnsData),
             pageable: true,
             dataBound: function () {
-                for (var i = 0; i < this.columns.length; i++) {
-                    this.autoFitColumn(i);
-                }
+                //for (var i = 0; i < this.columns.length; i++) {
+                //    this.autoFitColumn(i);
+                //}
             },
         });
 
