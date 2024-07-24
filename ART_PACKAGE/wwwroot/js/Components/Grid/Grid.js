@@ -819,6 +819,7 @@ class Grid extends HTMLElement {
                         // Store relevant information dynamically
                         return this.cleanDataItem(dataItem);
                     });
+                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                 } else {
                     delete this.selectedRows[grid.dataSource.page()];
                 }
@@ -1157,11 +1158,12 @@ class Grid extends HTMLElement {
                 var pages = Object.keys(this.selectedRows);
 
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
-                localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
+                //localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
+                console.log("selected",)
                 setTimeout(() => {
-                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
+                    //localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');
