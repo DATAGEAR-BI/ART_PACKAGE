@@ -92,6 +92,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     icon = "k-i-redo"
                 },
             };
+            HasFixedWidth = true;
         }
     }
 }

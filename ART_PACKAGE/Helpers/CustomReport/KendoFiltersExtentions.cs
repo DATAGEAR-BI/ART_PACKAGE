@@ -599,9 +599,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                                         ,
                     isNullable = isnullabe,
                     type = Type,
-
                     AggType = agg,
                     AggTitle = aggText,
+                    template = ReportConfigResolver2.GetConfigs<T>()?.DisplayNames[name]?.Template,
+                    
                 };
 
             }).ToList();

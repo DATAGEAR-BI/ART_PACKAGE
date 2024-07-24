@@ -304,6 +304,25 @@ namespace ART_PACKAGE.Extentions.CSV
                 }
                 else
                 {
+                    Type propType = typeof(TModel).GetProperty(i.field).PropertyType;
+                    Type? underlyingType = Nullable.GetUnderlyingType(propType);
+                    if (underlyingType != null)
+                    {
+                        if ( underlyingType.Name == nameof(DateTime))
+                        {
+                            DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
+                            i.value = value.ToLocalTime();
+                        }
+                    }
+                    else
+                    {
+                        if (propType.Name == nameof(DateTime))
+                        {
+                            DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
+                            i.value = value.ToLocalTime();
+                        }
+                    }
+                    
                     List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], i.value };
                     returnList.Add(v);
                 }

@@ -2,6 +2,8 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 
@@ -927,7 +929,8 @@ function generateColumns(response) {
                 },
             };
         }
-
+        var template = column.template;
+        var hasTemplate = template && template != ""
         var isCollection = column.isCollection;
 
         if (!column.isNullable) {
@@ -972,7 +975,7 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? (di) => Templates[template](di, column.name) : null, 
         };
     });
 

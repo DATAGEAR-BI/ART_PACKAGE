@@ -15,6 +15,8 @@
         public List<dynamic> menu { get; set; }
         public string AggType { get; set; }
         public string AggTitle { get; set; }
+        public string? template { get; set; }
+
     }
 
 }

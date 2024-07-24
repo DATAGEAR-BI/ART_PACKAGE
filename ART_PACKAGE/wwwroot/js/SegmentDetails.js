@@ -43,9 +43,10 @@ async function onChangeSegment(e) {
     var selectedSegment = e.target.value;
     var baseUrl = URLS.AllSegmentsOutliersNew.split("?")[0];
     console.log(URLS.AllSegmentsOutliersNew);
-    URLS.AllSegmentsOutliersNew = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
+    //URLS.AllSegmentsOutliersNew = baseUrl.replace('GetData','GetDataByParams') + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
     console.log(URLS.AllSegmentsOutliersNew);
-    
+    console.log($("#outliers"))
+    $("#outliers")[0].url = baseUrl.replace('GetData', 'GetDataByParams') + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`;
     $("#outliers-Grid").data("kendoGrid").dataSource.read();
     await fetch("/AllSegmentsOutliersNew/GetSegmentOutliersChartData"+`?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`, {
         method: "GET",
