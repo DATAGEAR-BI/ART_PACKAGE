@@ -5564,7 +5564,8 @@ namespace Data.ModelCreatingStrategies
                     .HasDefaultValueSql("(CURRENT_DATE)");
 
                 entity.Property(e => e.Deleted)
-                    .IsRequired()
+                .HasColumnName("Deleted")
+                .IsRequired()
                     .HasPrecision(1)
                     .HasDefaultValue(false);
                     //.HasDefaultValueSql("0");
