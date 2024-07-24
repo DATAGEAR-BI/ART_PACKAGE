@@ -5547,6 +5547,28 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("TOTAL_WIRE_D_CNT");
             });
 
+            modelBuilder.Entity<ArtAmlAnalysisRule>(entity =>
+            {
+                entity.Property(e => e.Id).HasPrecision(10);
+
+                entity.Property(e => e.Action).HasMaxLength(20);
+
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValue(true);
+                    //.HasDefaultValueSql("1");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasPrecision(7)
+                    .HasDefaultValueSql("(CURRENT_DATE)");
+
+                entity.Property(e => e.Deleted)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValue(false);
+                    //.HasDefaultValueSql("0");
+            });
 
             modelBuilder.Entity<VaGroupInfo>(entity =>
             {

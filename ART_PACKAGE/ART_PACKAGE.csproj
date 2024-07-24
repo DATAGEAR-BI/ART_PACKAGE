@@ -8,9 +8,13 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+		<Compile Remove="AutoRulesModels\**" />
 		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="AutoRulesModels\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="AutoRulesModels\**" />
 		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="AutoRulesModels\**" />
 		<None Remove="Helpers\Aml_Analysis\**" />
 	</ItemGroup>
 
