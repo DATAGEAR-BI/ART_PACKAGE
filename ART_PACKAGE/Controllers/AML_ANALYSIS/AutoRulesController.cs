@@ -71,11 +71,11 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             try
             {
                 _gridConstructor.Repo.AddRule(req);
-                return Ok();
+                return Ok("Rule Added Successfully");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest("Cannot Add Rule");
             }
         }
 
