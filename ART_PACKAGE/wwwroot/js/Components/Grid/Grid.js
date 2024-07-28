@@ -13,7 +13,7 @@ import { exportConnection } from "../../ExportListener.js";
 //import * as ta from "../TextAreaInput/TextAreaInput.js";
 //import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
-
+//test
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 var isExportingPDFNow = false;
