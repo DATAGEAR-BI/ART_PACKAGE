@@ -14,25 +14,25 @@ namespace ART_PACKAGE.Helpers.Pdf
             , List<string> ColumnsToSkip = null
             , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
         public Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
-           , ActionContext ControllerContext
-           , int ColumnsPerPage
-           , string UserName,
+            , ActionContext ControllerContext
+            , int ColumnsPerPage
+            , string UserName,
             string reportId
-           , List<string> ColumnsToSkip = null
-           , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
+            , List<string> ColumnsToSkip = null
+            , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
         public Task<byte[]> ExportToPdf<T>(IQueryable<T> data, KendoRequest obj, ViewDataDictionary ViewData
-           , ActionContext ControllerContext
-           , int ColumnsPerPage
-           , string UserName
-           , List<string> ColumnsToSkip = null
-           , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
+            , ActionContext ControllerContext
+            , int ColumnsPerPage
+            , string UserName
+            , List<string> ColumnsToSkip = null
+            , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
         public Task<byte[]> ExportCustomReportToPdf(IEnumerable<dynamic> data, ViewDataDictionary ViewData
             , ActionContext ControllerContext
             , int ColumnsPerPage
             , string UserName
             , List<string> DataColumns);
         public Task<byte[]> ExportGroupedToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
-           , ActionContext ControllerContext, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null
-           , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
+            , ActionContext ControllerContext, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null
+            , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
     }
 }

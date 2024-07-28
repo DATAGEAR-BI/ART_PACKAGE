@@ -1,7 +1,6 @@
 import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
-import { CONFIG } from "../../GridConfigration/GridConfigs.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers, currentPDFReportId, generateGUID } from "../../GridConfigration/GridEvents.js"
 import { Actions, ActionsConditions } from "../../GridConfigration/GridActions.js"
@@ -22,8 +21,6 @@ var isExportingCSVNow = false;
 //var currentPDFReportId = currentPDFReportId;
 var isExportPdfHitted = false;
 var currentCSVProcess = '';
-var isSortingOrFiltering = false;
-var previousScrollPosition = 0;
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -48,6 +45,7 @@ class Grid extends HTMLElement {
         builder: undefined,
         applyBtn: undefined
     }
+    hasFixedColumn = false;
     customtToolBarBtns = [];
     filtersModal = document.createElement("div");
     csvExportId = "";
@@ -62,13 +60,11 @@ class Grid extends HTMLElement {
         super();
 
 
-
     }
 
 
     filterAction(e) {
-        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter())
-
+        console.log("d", $(this.gridDiv).data("kendoGrid").dataSource.filter());
         var multiselects = document.querySelector(`[data-role=multiselect][data-field=${e.field}]`);
         if (multiselects) {
             e.preventDefault();
@@ -268,9 +264,11 @@ class Grid extends HTMLElement {
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
 
             if (currentCSVProcess != folder) {
-                exportConnection.invoke("CancelPdfExport", folder);
+                //exportConnection.invoke("CancelPdfExport", folder);
+                return;
 
             }
+
             if (currentCSVProcess == folder) {
                 /*  if (this.id !== gridId)
                       return;*/
@@ -285,7 +283,7 @@ class Grid extends HTMLElement {
                     progressBar.hidden = false;
 
                 var reminder = ((100 - progress) * this.total) / 100;
-                console.log(reminder)
+                // console.log(reminder)
                 console.log(folder, progress)
 
                 progressBar.value = parseFloat(progress.toFixed(2));
@@ -293,6 +291,7 @@ class Grid extends HTMLElement {
                     progressBar.hidden = true;
                     var downloadButton = document.getElementById("ExportDownloadBtn");
                     downloadButton.style.visibility = "";
+                    downloadButton.hidden = false;
                     this.isExporting = false;
                     this.isDownloaded = false;
                     isExportingCSVNow = false;
@@ -303,14 +302,19 @@ class Grid extends HTMLElement {
 
         });
         exportConnection.on("updateExportPDFProgress", async (progress, exportinProcess) => {
-            console.log("curr", currentPDFReportId)
-            console.log("curr |", currentPDFReportId)
-            console.log("curr | e | P", exportinProcess)
-            if (currentPDFReportId != exportinProcess) {
-                exportConnection.invoke("CancelPdfExport", exportinProcess);
-
+            /*          console.log("curr", currentPDFReportId)
+                      console.log("curr |", currentPDFReportId)
+                      console.log("curr | e | P", exportinProcess)*/
+            if (currentPDFReportId != exportinProcess ) {
+                //exportConnection.invoke("CancelPdfExport", exportinProcess);
+                return;
+            }
+            if (currentPDFReportId == exportinProcess && progress == null) {
+                //exportConnection.invoke("CancelPdfExport", exportinProcess);
+                return;
             }
             if (currentPDFReportId == exportinProcess) {
+                console.log(currentPDFReportId, progress)
                 if (isExportPdfHitted) {
                     console.log(progress)
                     console.log(exportinProcess)
@@ -332,17 +336,27 @@ class Grid extends HTMLElement {
                         isExportingPDFNow = true;
 
 
+                    } else if (progress && progress > 0 && progress >= 100 && currentPDFReportId == exportinProcess) {
+                        if (!pdfProgressBar.hidden) {
+                            pdfProgressBar.hidden = true;
+                            pdfProgressBar.style.visibility = "hidden";
+                        }
+                        exportConnection.invoke("CancelPdfExport", currentPDFReportId);
+
+                        isExportingPDFNow = false;
                     } else {
                         if (!pdfProgressBar.hidden) {
                             pdfProgressBar.hidden = true;
                             pdfProgressBar.style.visibility = "hidden";
                         }
+
                         isExportingPDFNow = false;
                     }
                 }
             }
 
         });
+
 
         //beforeLeaveAction();
 
@@ -382,7 +396,7 @@ class Grid extends HTMLElement {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
                 //}
-
+                this.hasFixedColumn = d.hasFixedWidth;
                 this.model = this.generateModel(d.columns);
                 this.columns = this.generateColumns(d.columns, d.containsActions, d.selectable, d.actions);
                 this.toolbar = this.genrateToolBar(d.toolbar, d.doesNotContainAllFun, d.showCsvBtn, d.showPdfBtn);
@@ -805,6 +819,7 @@ class Grid extends HTMLElement {
                         // Store relevant information dynamically
                         return this.cleanDataItem(dataItem);
                     });
+                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                 } else {
                     delete this.selectedRows[grid.dataSource.page()];
                 }
@@ -833,6 +848,7 @@ class Grid extends HTMLElement {
 
 
             //},
+
             //excelExport: function (e) {
             //    e.preventDefault();
 
@@ -844,15 +860,12 @@ class Grid extends HTMLElement {
             //    // Handler for the excel export event
             //},
             dataBound: (e) => {
-
-                if (CONFIG[this.handlerkey] && !CONFIG[this.handlerkey].autofit) {
-                    //do some thing in the future
-                } else {
+                if (!this.hasFixedColumn) {
                     for (var i = 0; i < this.columns.length; i++) {
                         grid.autoFitColumn(i);
                     }
                 }
-                
+
                 /*$('.k-action-buttons button[type="reset"]').on('click', function (eva) {
                     // Call your function to handle clear filter button click
                     //handleClearFilterButtonClick();
@@ -929,14 +942,6 @@ class Grid extends HTMLElement {
 
 
                 });
-
-                if (isSortingOrFiltering) {
-                    setTimeout(function () {
-                        console.log(previousScrollPosition);
-                        grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
-                        isSortingOrFiltering = false;
-                    }, 0);
-                }
             },
             //...(isHierarchy == "true" && {
             //    detailInit: (e) => {
@@ -967,17 +972,14 @@ class Grid extends HTMLElement {
         function grid_filterMenuInit(e) {
         }
         // grid.bind("filterMenuInit", grid_filterMenuInit);
-        $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
-            console.log("999999999999999999999999999")
-        })
+        /* $(this.gridDiv).data('kendoGrid').bind("filterMenuInit", (e) => {
+             console.log("999999999999999999999999999")
+         })*/
 
 
         // event for constructing the filters for multi select columns
         grid.bind("columnMenuOpen", (e) => {
             console.log("collumn menu hitted ")
-            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
-            console.log(previousScrollPosition);
-            isSortingOrFiltering = true;
             var querySelectorsObj = {
                 multiSelectQuerySelector: {
                     value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
@@ -1156,12 +1158,12 @@ class Grid extends HTMLElement {
                 var pages = Object.keys(this.selectedRows);
 
                 pages.filter(p => p != page).forEach(p => delete this.selectedRows[p]);
-                localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
-
+                //localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
             }
             else if (!this.isAllSelected && this.selectedRows[page] && this.selectedRows[page].length < 100) {
+                console.log("selected",)
                 setTimeout(() => {
-                    localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
+                    //localStorage.setItem("selectedidz", JSON.stringify(this.selectedRows));
                     var selectall = this.gridDiv.querySelector("th > input.k-checkbox");
                     selectall.classList.remove("k-checkbox:checked");
                     selectall.setAttribute("aria-checked", 'false');
@@ -1174,11 +1176,6 @@ class Grid extends HTMLElement {
             }
         });
 
-        grid.thead.on("click", "th", function () {
-            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
-            console.log(previousScrollPosition);
-            isSortingOrFiltering = true;
-        });
         $('.k-action-buttons button[type="reset"]').click(function (e) {
             console.log("reset")
             // Your custom logic to handle the clear button event
@@ -1216,7 +1213,7 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click(async (e) => {
             if (!isExportingPDFNow /*&& !this.buttonExportClicked*/) {
                 toastObj.icon = 'warning';
-                toastObj.text = "Export PDF is started";
+                toastObj.text = "Export PDF is started ,\n Please be patient as this may take some time to complete.";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
 
@@ -1272,7 +1269,7 @@ class Grid extends HTMLElement {
 
             }
             else {
-                toastObj.icon = 'error';
+                toastObj.icon = 'warning';
                 toastObj.text = "Already PDF exporting now";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
@@ -1532,7 +1529,7 @@ class Grid extends HTMLElement {
     async ExportCsv(e) {
 
         if (!this.isDownloaded) {
-            toastObj.icon = 'error';
+            toastObj.icon = 'warning';
             toastObj.text = "you exported a file and haven't downloaded it yet.";
             toastObj.heading = "Export Status";
             $.toast(toastObj);
@@ -1845,13 +1842,15 @@ function copyText(textToCopy) {
     //const textToCopy = "This is the text to copy";
 
     // Create a hidden textarea
+    const convertedText = textToCopy.split('\n').map(line => `${line}`).join('\n');
+
     const textArea = document.createElement("textarea");
-    textArea.value = textToCopy;
+    textArea.value = convertedText;
     document.body.appendChild(textArea);
 
     // Select the text
     textArea.select();
-    textArea.setSelectionRange(0, textToCopy.length);  // For mobile devices
+    textArea.setSelectionRange(0, convertedText.length);  // For mobile devices
 
     // Copy the text
     const successful = document.execCommand("copy");
@@ -1982,28 +1981,28 @@ function parseObjectWithFunctions(obj) {
 }
 window.addEventListener('beforeunload', function (e) {
 
-    if (isExportingPDFNow) {
-        // Cancel the event
-        e.preventDefault();
-        // Chrome requires returnValue to be set
-        e.returnValue = '';
-        // Display the confirmation dialog
-        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
-        e.returnValue = confirmationMessage; // For older browsers
-        return confirmationMessage;
-    }
-    if (isExportingCSVNow) {
-        // Cancel the event
-        e.preventDefault();
-        // Chrome requires returnValue to be set
-        e.returnValue = '';
-        // Display the confirmation dialog
-        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export CSV?';
-        e.returnValue = confirmationMessage; // For older browsers
-        return confirmationMessage;
-    }
+        if (isExportingPDFNow) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+            // Display the confirmation dialog
+            var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
+            e.returnValue = confirmationMessage; // For older browsers
+            return confirmationMessage;
+        }
+        if (isExportingCSVNow) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+            // Display the confirmation dialog
+            var confirmationMessage = 'Are you sure you want to leave this page and cancle Export CSV?';
+            e.returnValue = confirmationMessage; // For older browsers
+            return confirmationMessage;
+        }
 
-}
+    }
 
 );
 

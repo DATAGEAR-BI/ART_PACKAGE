@@ -19,6 +19,8 @@ using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
 using Microsoft.AspNetCore.SignalR;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+using System.Diagnostics;
 
 namespace ART_PACKAGE.Hubs
 {
@@ -47,11 +49,25 @@ namespace ART_PACKAGE.Hubs
             connections.AddConnctionIdFor(user, Context.ConnectionId);
             return base.OnConnectedAsync();
         }
+       
 
         public async Task KeepAlive()
         {
+            string? user = Context.User.Identity.Name;
+            List<ProcessessModel> processes = _pdfProcessHandler.processes.Where(p => p.UserName == user && p.UserConnectioId.Contains(Context.ConnectionId)).ToList();
+
+            foreach (var item in processes.Where(x=>x.type=="PDF"))
+            {
+                await Clients.Caller.SendCoreAsync("updateExportPDFProgress", new object[] { item.CompletionPercentage, item.Id });
+            }
+            foreach (var item in processes.Where(x => x.type == "CSV"))
+            {
+                await Clients.Caller.SendCoreAsync("updateExportProgress", new object[] { item.CompletionPercentage, item.Id });
+            }
+
             await Clients.Caller.SendAsync("iAmAlive");
         }
+        
         public async Task Export(ExportDto<object> para, string controller)
         {
 
@@ -86,8 +102,6 @@ namespace ART_PACKAGE.Hubs
                 EcmContext ecmService = _ecmscope.ServiceProvider.GetRequiredService<EcmContext>();
                 _ecm = ecmService;
                 if (controller.ToLower() == nameof(AlertedEntitiesController).ToLower().Replace("controller", "")) await _csvSrv.Export<ArtAlertedEntity, AlertedEntitiesController>(_ecm, Context.User.Identity.Name, para);
-                if (controller.ToLower() == nameof(CFTConfigController).ToLower().Replace("controller", "")) await _csvSrv.Export<ArtCFTConfig, CFTConfigController>(_ecm, Context.User.Identity.Name, para);
-                if (controller.ToLower() == nameof(ClearDetectController).ToLower().Replace("controller", "")) await _csvSrv.Export<ArtClearDetect, ClearDetectController>(_ecm, Context.User.Identity.Name, para);
                 if (controller.ToLower() == nameof(SystemPerformanceController).ToLower().Replace("controller", "")) await _csvSrv.Export<ArtSystemPerformance, SystemPerformanceController>(_ecm, Context.User.Identity.Name, para);
                 if (controller.ToLower() == nameof(UserPerformanceController).ToLower().Replace("controller", "")) await _csvSrv.Export<ArtUserPerformance, UserPerformanceController>(_ecm, Context.User.Identity.Name, para);
             }

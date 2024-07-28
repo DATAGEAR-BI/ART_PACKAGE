@@ -2,6 +2,13 @@
 import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
+import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+import { Actions, ActionsConditions } from "./GridConfigration/GridActions.js"
+
+
+
+var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+
 var spinnerOpts = {
     lines: 13, // The number of lines to draw
     length: 14, // The length of each line
@@ -71,6 +78,8 @@ var ops = {
     gt: "Greater Than",
     lte: "Less Than Or Equal",
     lt: "Less Than",
+    isnotnullorempty: "Has Value",
+    isnullorempty:"Has No Value"
 };
 var isHierarchy = document.getElementById("script").dataset.hierarchy;
 var reportName = "";
@@ -127,6 +136,8 @@ if (isStoredProc == "true") {
 }
 
 function intializeGrid() {
+    console.log(JSON.stringify(para))
+
     fetch(url, {
         method: "POST",
         headers: {
@@ -189,7 +200,7 @@ function genrateToolBar(data, doesnotcontainsll) {
         data.forEach((x) => {
             toolbar.push({
                 name: "custom",
-                template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.id}" href="\\#"">${x.text}</a>`,
+                template: `<a class="k-button k-button-icontext k-grid-custom" id="${x.action}" href="\\#"">${x.text}</a>`,
             });
         });
     }
@@ -464,7 +475,7 @@ function generateGrid() {
         noRecords: true,
         persistSelection: true,
         pageable: true,
-        sortable: true,
+        //sortable: true,
         change: function (e) {
             if ([...this.select()].length > 0) {
                 selected[this.dataSource.page()] = [...this.select()].map((x) => {
@@ -531,6 +542,7 @@ function generateGrid() {
             });
             this.tbody.find("tr").dblclick(function (e) {
                 var dataItem = grid.dataItem(this);
+                copyText(GetValidCellValue(e.target.textContent))
                 var dbclickhandler = dbClickHandlers[handlerkey];
                 dbclickhandler(dataItem).then(console.log("done"));
             });
@@ -587,7 +599,125 @@ function generateGrid() {
         }
 
     });
+    //class="k-grid-filter"   a[class="k-grid-filter"]
+    /* $(".k-grid-filter").click(function (e) {
+ 
+         console.log("grid filter hitted")
+         grid_filterMenuInit2(e);
+     })*/
 
+
+
+    function grid_filterMenuInit(e) {
+
+        console.log("collumn menu hitted ")
+        var querySelectorsObj = {
+            multiSelectQuerySelector: {
+                value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
+                additional: 'div[class="k-widget k-multiselect k-multiselect-clearable"] > input[title="Additional value"] '
+            },
+            datePickerQuerySelector: {
+                value: 'span[class="k-widget k-datepicker"] :has(input[title="Value"]',
+                additional: 'span[class="k-widget k-datepicker"] :has(input[title="Additional value"])'
+            },
+            inputQuerySelector: {
+                value: 'input[title="Value"]',
+                additional: 'input[title="Additional value"]'
+            }
+        }
+        var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
+
+        function showOrHideInputElements(element, show, filterType) {
+            if (filterType == "init") {
+                //showOrHideInputElements(element, show, 'value');
+                var opValue = element.querySelector('select[title = "Operator"]').value;
+                var f = querySelectorsObj.datePickerQuerySelector['value'] + " " + querySelectorsObj.inputQuerySelector['value'];
+                if (onePartitionOperators.includes(opValue)) {
+
+                    element.querySelector(querySelectorsObj.inputQuerySelector['value']).value = '';
+                    showOrHideInputElements(element, false, 'value')
+                } else {
+                    showOrHideInputElements(element, true, 'value')
+
+                }
+
+                return;
+            }
+            if (filterType == "initAdditional") {
+                //showOrHideInputElements(element, show, 'value');
+                var opValue = element.querySelector('select[title = "Additional operator"]').value;
+                var f = querySelectorsObj.datePickerQuerySelector['additional'] + " " + querySelectorsObj.inputQuerySelector['additional'];
+                if (onePartitionOperators.includes(opValue)) {
+
+                    element.querySelector(querySelectorsObj.inputQuerySelector['additional']).value = '';
+                    showOrHideInputElements(element, false, 'additional')
+                } else {
+                    showOrHideInputElements(element, true, 'additional')
+
+                }
+
+                console.log()
+                return;
+            }
+            console.log(element);
+            if (element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType])) {
+                if (show)
+                    element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "flex";
+                else
+                    element.querySelector(querySelectorsObj.datePickerQuerySelector[filterType]).style.display = "none";
+
+            }
+            else if (element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType])) {
+                if (show)
+                    element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "block";
+                else
+                    element.querySelector(querySelectorsObj.multiSelectQuerySelector[filterType]).style.display = "none";
+
+            }
+            else {
+                if (show)
+                    element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "block";
+                else
+                    element.querySelector(querySelectorsObj.inputQuerySelector[filterType]).style.display = "none";
+
+            }
+        }
+
+        console.log(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement)
+
+        showOrHideInputElements(e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]')[0].parentElement.parentElement, false, "init")
+        var s = e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0]
+        if (s) {
+            showOrHideInputElements(e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]')[0].parentElement.parentElement, false, "initAdditional")
+
+        }
+
+        e.container.find('select[title="Operator"][data-bind="value: filters[0].operator"]').change((ev) => {
+            console.log("here ")
+            if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "value")
+
+            }
+            else {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "value")
+            }
+        })
+        e.container.find('select[title="Additional operator"][data-bind="value: filters[1].operator"]').change((ev) => {
+            if (onePartitionOperators.includes(ev.currentTarget.value)) {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, false, "additional")
+
+            }
+            else {
+                showOrHideInputElements(ev.currentTarget.parentElement.parentElement, true, "additional")
+            }
+        })
+
+    }
+
+    grid.bind("filterMenuOpen", (e) => {
+        grid_filterMenuInit(e)
+    })
+    //grid.bind("filterMenuInit", grid_filterMenuInit2);
     $(".k-grid-custom").click(function (e) {
         var orgin = window.location.pathname.split("/");
         var controller = orgin[1];
@@ -603,6 +733,11 @@ function generateGrid() {
         }
 
         else if (e.target.id == "clientPdExport") {
+
+            toastObj.icon = 'warning';
+            toastObj.text = "Export PDF is started ,\n Please be patient as this may take some time to complete.";
+            toastObj.heading = "PDF Status";
+            $.toast(toastObj);
 
             if (isStoredProc) {
                 var csvhandler = Handlers["clientStoredPdExport"];
@@ -700,12 +835,12 @@ function createFiltersDiv(obj) {
 
             if (existinp) {
                 var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${x.value}`;
+                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : GetValidCellValue( x.value)}`;
             } else {
                 var inp = document.createElement("input");
                 inp.id = x.field + "-0";
                 inp.type = "text";
-                inp.value = `${x.field}=> ${ops[x.operator]} ${x.value}`;
+                inp.value = `${x.field}=> ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : GetValidCellValue( x.value)}`;
                 inp.classList = ["form-control"];
                 inp.readOnly = true;
                 fDiv.appendChild(inp);
@@ -719,13 +854,12 @@ function createFiltersDiv(obj) {
 
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${y.value
-                        }`;
+                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${onePartitionOperators.includes(y.operator) ? "" : GetValidCellValue( y.value)}`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
                     inp.type = "text";
-                    inp.value = `${y.field}=> ${ops[y.operator]} ${y.value}`;
+                    inp.value = `${y.field}=> ${ops[y.operator]} ${onePartitionOperators.includes(y.operator)?"": GetValidCellValue( y.value)}`;
                     inp.classList = ["form-control"];
                     inp.readOnly = true;
                     fDiv.appendChild(inp);
@@ -768,7 +902,10 @@ function createCollection(di, prop) {
 
 function generateColumns(response) {
     var columnNames = response["columns"];
-    var contiansActions = response["containsActions"];
+    var containsActions = response["containsActions"];
+    var actions = response["actions"];
+
+
     var selectCol = {
         selectable: true,
         width: "50px",
@@ -783,7 +920,7 @@ function generateColumns(response) {
             else if (column.type === "number") ops = { number: equal };
             else ops = { boolean: equal };
             filter = {
-                ui: (e) => createMultiSelect(e, column.menu, column.name),
+                ui: (e) => { console.log("help "); createMultiSelect(e, column.menu, column.name) },
                 extra: false,
                 operators: ops,
             };
@@ -798,7 +935,8 @@ function generateColumns(response) {
                 },
             };
         }
-
+        var template = column.template;
+        var hasTemplate = template && template != ""
         var isCollection = column.isCollection;
 
         if (!column.isNullable) {
@@ -843,11 +981,11 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : null,
+                : hasTemplate ? (di) => Templates[template](di, column.name) : null,
         };
     });
 
-    if (contiansActions) {
+    /*if (contiansActions) {
         cols = [
             ...cols,
             {
@@ -868,13 +1006,37 @@ function generateColumns(response) {
                 ],
             },
         ];
+    }*/
+    if (containsActions) {
+        console.log(ActionsConditions)
+        var actionsBtns = [];
+        [...actions].forEach(x => {
+            let cond = ActionsConditions[x.action] ?? function (dt) {
+                return true
+            }
+            let act = {
+
+                name: x.text,
+                iconClass: `k-icon ${x.icon}`,
+                click: (e) => Actions[x.action](e, grid),
+                visible: cond,
+            }
+            actionsBtns.push(act);
+        });
+        cols = [
+            ...cols,
+            {
+                title: "Actions",
+                command: actionsBtns,
+            },
+        ];
     }
     if (response.selectable) cols = [selectCol, ...cols];
     return cols;
 }
 
 function createMultiSelect(element, data, field) {
-    //console.log(element);
+    console.log("hhhhhhhhhhhhhelp",element);
     element.removeAttr("data-bind");
     element[0].dataset.field = field;
     element.kendoMultiSelect({
@@ -1009,5 +1171,50 @@ function generateModel(response) {
 }
 
 
+function copyText(textToCopy) {
+    //const textToCopy = "This is the text to copy";
 
+    // Create a hidden textarea
+    const convertedText = textToCopy.split('\n').map(line => `${line}`).join('\n');
+
+    const textArea = document.createElement("textarea");
+    textArea.value = convertedText;
+    document.body.appendChild(textArea);
+
+    // Select the text
+    textArea.select();
+    textArea.setSelectionRange(0, convertedText.length);  // For mobile devices
+
+    // Copy the text
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textArea);  // Clean up the textarea
+
+    if (successful) {
+        console.log("Text copied successfully");
+    } else {
+        console.error("Failed to copy text");
+    }
+}
+function GetValidCellValue(contentText) {
+
+    if (isValidDateTime(contentText)) return typeof (contentText) == 'object' ? convertDateString(contentText) : getDateOnly(contentText);
+    else return contentText;
+}
+function convertDateString(dateStr) {
+    const date = new Date(dateStr);
+
+    // Get day, month, and year and format them with leading zeros
+    const day = String(date.getDate()).padStart(2, '0');  // Two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Two-digit month
+    const year = date.getFullYear();  // Four-digit year
+
+    return `${day}/${month}/${year}`;  // Return formatted date
+}
+function getDateOnly(dateString) {
+    return typeof (dateString) == 'string' ? dateString.split(" ")[0] : dateString;
+}
+function isValidDateTime(string) {
+    const timestamp = Date.parse(string);
+    return !isNaN(timestamp);  // Returns true if the string can be parsed into a valid date/time
+}
 

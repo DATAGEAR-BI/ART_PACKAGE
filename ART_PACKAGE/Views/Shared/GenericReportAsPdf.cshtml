@@ -11,12 +11,7 @@
     var recordPerPage = 17;
     var user = User.Identity.Name;
     string exportinProcess =(string) ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-    if (exportinProcess is null || exportinProcess == "")
-    {
-        exportinProcess = new Guid().ToString();
-        _pdfHAndler.AddProcess(exportinProcess);
-    }
-
+   
 }
 
 
@@ -112,6 +107,7 @@
                                 tcounter++;
                                 var pregress = (Convert.ToDouble(tcounter) / Convert.ToDouble(tttotalRecords)) * 100;
                                 //Console.WriteLine(pregress);
+                                _pdfHAndler.UpdateCompletionPercentage(exportinProcess, Convert.ToDecimal(pregress));
 
                                 await _exportHub.Clients.Clients(connections.GetConnections(user))
                                 .SendCoreAsync("updateExportPDFProgress", new object[] { pregress, exportinProcess });
@@ -119,8 +115,8 @@
                                     @foreach (var key in keys)
                                     {
 
-                                        if (_pdfHAndler.isProcessCanceld(exportinProcess))
-                                            return;
+                                       @* if (_pdfHAndler.isProcessCanceld(exportinProcess))
+                                            return;*@
 
                                         <td>
                                             <div>
@@ -128,6 +124,11 @@
                                                 @if (item[key] is not null && item[key].GetType() == typeof(double))
                                                 {
                                                     @string.Format(CultureInfo.InvariantCulture, "{0:n2}", @item[key])
+                                                }
+                                                @if (item[key] is not null && item[key].GetType() == typeof(DateTime))
+                                                {
+                                                    @string.Format(CultureInfo.InvariantCulture, "{0:dd/MM/yyyy hh:mm:ss}", @item[key])
+                                                    
                                                 }
                                                 else
                                                 {
@@ -142,7 +143,7 @@
                     </table>
 
                     <hr style="  border: 1px solid black;" />
-                    <div class="brk text-center"> Printed on: @DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
+                    <div class="brk text-center"> Printed on: @DateTime.Now.ToString("dd/MM/yyyyy hh:mm:ss") - Page :@((i / recordPerPage) + 1) /@(Math.Ceiling((double)length / recordPerPage)) - Printed By : @ViewData["user"]</div>
                 }
             }
             _pdfHAndler.CancelProcess(exportinProcess);

@@ -11,10 +11,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="adding show filters and the charts component">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/shelf/change_connection_to_mysql.xml" afterDir="false" />
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportConfigResolver2.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Card/Card.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Card/Card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/CsvExport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/ICsvExport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Csv/ICsvExport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Handlers/ProcessesHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Handlers/ProcessesHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/ReportConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/ReportConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Hubs/ExportHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Hubs/ExportHub.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/GenericReportAsPdf.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Views/Shared/GenericReportAsPdf.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Dynamic.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Dynamic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/BaseRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/BaseRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridColumnConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridColumnConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/Grid/GridIntializationConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Services/IBaseRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Services/IBaseRepo.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,39 +48,15 @@
     <option name="projectConfigVersion" value="5" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Extensions/Features/src/FeatureReferences.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Http/Http/src/DefaultHttpContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Core/src/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Core/src/Infrastructure/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Mvc/Mvc.Razor/src/RazorView.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/be51b1aa73343e45a1d00afd436abad794f471fb/src/Servers/Kestrel/Core/src/Internal/Http/HttpProtocol.Generated.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore.Relational/Metadata/Internal/ViewColumn.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore.Relational/Query/Internal/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/coreclr/System.Private.CoreLib/src/System/RuntimeType.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Diagnostics.DiagnosticSource/src/System/Diagnostics/DiagnosticListener.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Future.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/c76ac565499f3e7c657126d46c00b67a0d74832c/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/083d812d36874057b3d71d1da1898aa4a23e80/92/258d7a13/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31fe1b309f4d4baba3621c111ea0755c18c7f8/40/a1e3175c/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/13/cf213c7a/OracleDataReader.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/be2060f17a814cc89790736066e0de4345f888/d7/aed28299/OracleCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56177b963230e2aa38217bfe7bfe8faf7b986d936de0608d999eba7335aa48d/SerilogLoggingBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/58b0b7706a8be4f7160749424eb996a3f845a1682c3c7ac5e405a346a8c20f1/JToken.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5f8b1b66e5e5b489f6bab41513041a777351240ac97acbdd32993bba7d972f9/ClassMap.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/65564e101750ff5f657d63abac3ada3974d1e8d11795bdf8258b64f23adab/ClassMap`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f623736f2488a11716f7a03aa1d499eeece3df015251a70468a5f72c2db27/JArray.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73462a4a9394ff73b345712598c94965b0f6032ce187cd124f118b498662d1/MimeMessage.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore/Metadata/IReadOnlyPropertyBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CustomersSummaryController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/eslam/source/repos/ART_PACKAGE/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/eslam/source/repos/ART_PACKAGE/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamlcasedetailsviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -86,7 +77,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.ART_PACKAGE.executor": "Debug",
+    ".NET Launch Settings Profile.ART_PACKAGE.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.4980315",
@@ -163,7 +154,7 @@
       <workItem from="1712240554242" duration="449000" />
       <workItem from="1712281331204" duration="545000" />
       <workItem from="1712492836866" duration="8278000" />
-      <workItem from="1722152813525" duration="59000" />
+      <workItem from="1722152813525" duration="13009000" />
     </task>
     <task id="LOCAL-00001" summary="adding views">
       <option name="closed" value="true" />
@@ -205,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712504059213</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="test">
+      <option name="closed" value="true" />
+      <created>1722153215685</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722153215685</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,7 +229,8 @@
     <MESSAGE value="add cofig assigning" />
     <MESSAGE value="fix jquery issue" />
     <MESSAGE value="adding show filters and the charts component" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding show filters and the charts component" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -240,6 +240,12 @@
           <line>73</line>
           <properties documentPath="C:\Users\eslam\source\repos\ART_PACKAGE\ART_PACKAGE\Controllers\MyReportsController.cs" initialLine="73" containingFunctionPresentation="Method 'SaveReport'" />
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js</url>
+          <line>23</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

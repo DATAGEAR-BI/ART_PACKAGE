@@ -9,6 +9,8 @@
         public string? AggText { get; set; }
         public string Template { get; set; }
         public string Filter { get; set; }
+        public int? Width { get; set; }
+
     }
     public enum GridAggregateType
     {
