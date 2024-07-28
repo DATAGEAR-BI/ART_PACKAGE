@@ -3,6 +3,8 @@ import { URLS } from "./URLConsts.js"
 import { Handlers, dbClickHandlers, changeRowColorHandlers } from "./KendoToolBarrEventHandlers.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 import { Templates } from "./GridConfigration/ColumnsTemplate.js"
+import { Actions, ActionsConditions } from "./GridConfigration/GridActions.js"
+
 
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
@@ -899,7 +901,10 @@ function createCollection(di, prop) {
 
 function generateColumns(response) {
     var columnNames = response["columns"];
-    var contiansActions = response["containsActions"];
+    var containsActions = response["containsActions"];
+    var actions = response["actions"];
+
+
     var selectCol = {
         selectable: true,
         width: "50px",
@@ -979,7 +984,7 @@ function generateColumns(response) {
         };
     });
 
-    if (contiansActions) {
+    /*if (contiansActions) {
         cols = [
             ...cols,
             {
@@ -998,6 +1003,30 @@ function generateColumns(response) {
                         },
                     },
                 ],
+            },
+        ];
+    }*/
+    if (containsActions) {
+        console.log(ActionsConditions)
+        var actionsBtns = [];
+        [...actions].forEach(x => {
+            let cond = ActionsConditions[x.action] ?? function (dt) {
+                return true
+            }
+            let act = {
+
+                name: x.text,
+                iconClass: `k-icon ${x.icon}`,
+                click: (e) => Actions[x.action](e, grid),
+                visible: cond,
+            }
+            actionsBtns.push(act);
+        });
+        cols = [
+            ...cols,
+            {
+                title: "Actions",
+                command: actionsBtns,
             },
         ];
     }

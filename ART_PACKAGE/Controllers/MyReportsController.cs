@@ -94,7 +94,7 @@ namespace ART_PACKAGE.Controllers
         // {
         //     return base.GetData(request);
         // }
-
+        [HttpPost]
         public override async Task<IActionResult> GetData(GridRequest request)
         {
             AppUser user = await _um.GetUserAsync(User);

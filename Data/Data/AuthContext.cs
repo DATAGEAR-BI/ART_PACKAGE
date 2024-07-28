@@ -67,7 +67,10 @@ public class AuthContext : IdentityDbContext<AppUser>
                 });
         });
 
-
+        modelBuilder.Entity<UserReport>(e =>
+        {
+            e.ToTable("UserReport");
+        });
 
 
 
