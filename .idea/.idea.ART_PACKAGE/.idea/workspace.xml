@@ -11,7 +11,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="adding show filters and the charts component">
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +34,7 @@
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/User/source/repos/ART_PACKAGE/ART_PACKAGE/Controllers/MyReportsController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CustomersSummaryController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -41,6 +42,7 @@
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamlcasedetailsviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/User/source/repos/ART_PACKAGE/Data/Data/AuthContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -139,6 +141,7 @@
       <workItem from="1718091194518" duration="136000" />
       <workItem from="1718125280578" duration="3000" />
       <workItem from="1718176972377" duration="825000" />
+      <workItem from="1722150075706" duration="881000" />
     </task>
     <task id="LOCAL-00001" summary="adding views">
       <option name="closed" value="true" />
@@ -180,13 +183,32 @@
       <option name="project" value="LOCAL" />
       <updated>1712504059213</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix custom report">
+      <option name="closed" value="true" />
+      <created>1722150743769</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722150743769</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="adding views" />
@@ -194,7 +216,8 @@
     <MESSAGE value="add cofig assigning" />
     <MESSAGE value="fix jquery issue" />
     <MESSAGE value="adding show filters and the charts component" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding show filters and the charts component" />
+    <MESSAGE value="fix custom report" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix custom report" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
