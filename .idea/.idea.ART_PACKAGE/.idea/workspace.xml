@@ -11,10 +11,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="adding show filters and the charts component">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js" afterDir="false" />
-    </list>
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -203,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712504059213</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="test push">
+      <option name="closed" value="true" />
+      <created>1722151319356</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722151319356</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +222,7 @@
     <MESSAGE value="add cofig assigning" />
     <MESSAGE value="fix jquery issue" />
     <MESSAGE value="adding show filters and the charts component" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding show filters and the charts component" />
+    <MESSAGE value="test push" />
+    <option name="LAST_COMMIT_MESSAGE" value="test push" />
   </component>
 </project>
