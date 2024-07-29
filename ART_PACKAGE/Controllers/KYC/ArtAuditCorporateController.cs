@@ -65,7 +65,7 @@ namespace ART_PACKAGE.Controllers.KYC
         //    List<ArtAuditCorporateView> data = dbfcfkc.ArtAuditCorporateViews.CallData(req).Data.ToList();
         //    ViewData["title"] = "Audit For Corporates Report";
         //    ViewData["desc"] = "Presents all Corporate customers with the related information as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

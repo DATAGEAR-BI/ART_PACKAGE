@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Controllers.FATCA
      List<ArtFatcaAlert> data = context.ArtFatcaAlerts.CallData(req).Data.ToList();
      ViewData["title"] = "FATCA Alerts Report";
      ViewData["desc"] = "This report presents all Fatca Alerts with the related information as below";
-     byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+     byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                              , User.Identity.Name, ColumnsToSkip, DisplayNames);
      return File(pdfBytes, "application/pdf");
  }

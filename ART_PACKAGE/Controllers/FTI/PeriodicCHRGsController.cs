@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiPeriodicChrgsReport> data = fti.ArtTiPeriodicChrgsReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "Amortization Report";
         //    ViewData["desc"] = "This report produces all transactions which have not yet expired and which have periodic charges either accruing or amortising within a period that you can specify";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

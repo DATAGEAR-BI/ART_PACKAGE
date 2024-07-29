@@ -67,7 +67,7 @@ namespace ART_PACKAGE.Controllers.ECM
         //    List<ArtUserPerformance> data = context.ArtUserPerformances.CallData(req).Data.ToList();
         //    ViewData["title"] = "User Performance Report";
         //    ViewData["desc"] = "This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

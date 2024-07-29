@@ -123,7 +123,7 @@ namespace ART_PACKAGE.Controllers.ECM
             }
             ViewData["title"] = "User Performance Per Action Report";
             ViewData["desc"] = "";
-            byte[] bytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+            byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(),para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
         }

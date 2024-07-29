@@ -73,7 +73,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiMasterEventHistory> data = fti.ArtTiMasterEventHistories.CallData(req).Data.ToList();
         //    ViewData["title"] = "Master Event History Report";
         //    ViewData["desc"] = "This report produces a full history of the events for master records";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

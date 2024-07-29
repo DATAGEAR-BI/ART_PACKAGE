@@ -347,7 +347,35 @@ namespace ART_PACKAGE.Helpers.DropDown
         //    var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Appname).Select(g => g.Key).OrderBy(s => s).ToList();
         //    return distinct_value;
         //}
+        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName=="report_type" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName == "report_status" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "To Person",
+                "Account",
+                "Entity",
+                "From Account",
+                "From Entity",
+                "To Account",
+                "From Person",
+                "Person",
+                "To Entity" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
 
         //public List<SelectItem> GetMakerEventNameDropDown()
         //{
@@ -380,7 +408,12 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.OwnerUserLongId == null || string.IsNullOrEmpty(x.OwnerUserLongId.Trim()) ? "UNKNOWN" : x.OwnerUserLongId).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCasesDetailsCreatedByDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.CreateUserId == null || string.IsNullOrEmpty(x.CreateUserId.Trim()) ? "UNKNOWN" : x.CreateUserId).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetAlertOwnerDropDown()
@@ -728,6 +761,17 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetDGParmTypeDescDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        
+        public List<SelectItem> GetOwner_RiskAssessmentDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCreatedByDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
     }

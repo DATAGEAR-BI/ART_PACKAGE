@@ -566,6 +566,7 @@ export const Handlers = {
                 para.Skip = skip;
                 para.Filter = filters;
                 para.Group = groups;
+                para.sort = ds.dataSource.sort();
 
                 var isMyreports = window.location.href.toLowerCase().includes('myreports');
                 var res;
@@ -661,6 +662,7 @@ export const Handlers = {
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
+                para.sort = ds.dataSource.sort();
                 var res = await fetch(`/${controller}/ExportPdf`, {
                     method: "POST",
                     headers: {

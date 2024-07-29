@@ -75,7 +75,7 @@ public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
    List<ArtScenarioHistoryView> data = _context.ArtScenarioHistoryViews.CallData(req).Data.ToList();
    ViewData["title"] = "Data Gear Aml Art Scenario History";
    ViewData["desc"] = "Presents the art scenario history details";
-   byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+   byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
    return File(pdfBytes, "application/pdf");
 }

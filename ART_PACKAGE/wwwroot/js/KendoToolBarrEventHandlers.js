@@ -98,6 +98,7 @@ export const Handlers = {
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
+        para.sort = ds.dataSource.sort();
         var res = await fetch(`/${controller}/Export`, {
             method: "POST",
             headers: {
@@ -251,6 +252,7 @@ export const Handlers = {
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
+                para.sort = ds.dataSource.sort();
                 var res = await fetch(`/${controller}/ExportPdf`, {
                     method: "POST",
                     headers: {

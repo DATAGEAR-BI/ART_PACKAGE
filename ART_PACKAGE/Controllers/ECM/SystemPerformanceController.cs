@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.ECM
         //    List<ArtSystemPerformance> data = context.ArtSystemPerformances.CallData(req).Data.ToList();
         //    ViewData["title"] = "System Performance Report";
         //    ViewData["desc"] = "This report presents all sanction cases with the related information on case level as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

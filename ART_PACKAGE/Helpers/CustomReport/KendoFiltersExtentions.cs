@@ -48,6 +48,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
             { "doesnotcontain"  , "!{0}.Contains(\"{1}\")" },
             { "endswith"        , "{0}.EndsWith(\"{1}\")" },
             { "doesnotendwith"  , "!{0}.EndsWith(\"{1}\")" },
+            { "isnotnullorempty"  , " ( {0}!= null && {0}!=\"\") " },
+            { "isnullorempty"  , "({0}== null || {0}==\"\") " },
         };
         private static readonly Dictionary<string, string> NumberOp = new()
         {
@@ -102,6 +104,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"doesnotcontain" , "Doesn't Contain" },
             {"endswith" , "Ends With" },
             {"doesnotendwith" , "Doesn't End With" },
+            { "isnotnullorempty"  , "Has Value" },
+            { "isnullorempty"  , "Has No Value" },
         };
 
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()

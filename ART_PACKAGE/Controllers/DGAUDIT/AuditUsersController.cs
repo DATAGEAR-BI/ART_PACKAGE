@@ -82,7 +82,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //    List<ArtUsersAuditView> data = context.ArtUsersAuditViews.CallData(req).Data.ToList();
         //    ViewData["title"] = "ART User Audit Report";
         //    ViewData["desc"] = "This report Presents all events of users with the related information as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

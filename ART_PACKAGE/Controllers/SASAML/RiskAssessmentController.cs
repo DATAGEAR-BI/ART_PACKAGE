@@ -71,7 +71,7 @@ namespace ART_PACKAGE.Controllers.SASAML
         //    List<ArtRiskAssessmentView> data = dbfcfcore.ArtRiskAssessmentViews.CallData(req).Data.ToList();
         //    ViewData["title"] = "Risk Assessment Details";
         //    ViewData["desc"] = "Presents the Risk details";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

@@ -95,7 +95,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    }
         //    else
         //    {
-        //        byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 9
+        //        byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 9
         //                                           , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //        return File(pdfBytes, "application/pdf");
 

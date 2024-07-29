@@ -93,7 +93,7 @@ namespace ART_PACKAGE.Controllers.CRP
      List<ArtCrpCase> data = _crp.ArtCrpCases.CallData(req).Data.ToList();
      ViewData["title"] = "CRP Cases Details";
      ViewData["desc"] = "";
-     byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+     byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                              , User.Identity.Name, ColumnsToSkip, DisplayNames);
      return File(pdfBytes, "application/pdf");
  }*/

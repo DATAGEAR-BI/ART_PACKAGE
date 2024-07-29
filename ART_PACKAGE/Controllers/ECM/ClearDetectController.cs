@@ -80,7 +80,7 @@ namespace ART_PACKAGE.Controllers.ECM
              List<ArtClearDetect> data = context.ArtClearDetects.CallData(req).Data.ToList();
              ViewData["title"] = "Clear Detect Report";
              ViewData["desc"] = "This report presents all Clear Detects";
-             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                                      , User.Identity.Name, ColumnsToSkip, DisplayNames);
              return File(pdfBytes, "application/pdf");
          }

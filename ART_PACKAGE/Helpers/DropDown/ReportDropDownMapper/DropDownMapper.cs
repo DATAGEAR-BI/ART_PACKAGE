@@ -75,7 +75,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                       {"CasePriority".ToLower(),_dropDown.GetCasePriorityDropDown() },
                       {"CaseStatus".ToLower(),_dropDown.GetCaseStatusDropDown() },
                       {"EntityLevel".ToLower(),_dropDown.GetEntityLevelDropDown() },
-                      {"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown() },
+                      //{"CreatedBy".ToLower(),_dropDown.GetOwnerDropDown() },
+                      {"CreatedBy".ToLower(),_dropDown.GetCasesDetailsCreatedByDropDown() },
                       {"Owner".ToLower(),_dropDown.GetOwnerDropDown() },
              /*         {"CaseCategory".ToLower(),_dropDown.GetCaseCategoryDropDown() },
                       {"CaseSubCategory".ToLower(),_dropDown.GetCaseSubCategoryDropDown() },*/
@@ -115,6 +116,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"OwnerUserLongId".ToLower(),_dropDown.GetOwnerDropDown() }
+                },
+                var value when value == nameof(artriskassessmentviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                    {"AssessmentTypeCd".ToLower(),_dropDown.GetAssessmentTypeDropDown() },
+                    {"CreateUserId".ToLower(),_dropDown.GetCreatedByDropDown() },
+                    {"RiskStatus".ToLower(),_dropDown.GetRiskStatusDropDown() },
+                    {"RiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"ProposedRiskClass".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"OwnerUserLongId".ToLower(),_dropDown.GetOwner_RiskAssessmentDropDown() }
                 },
                 nameof(TriageController) => new Dictionary<string, List<SelectItem>>
                 {

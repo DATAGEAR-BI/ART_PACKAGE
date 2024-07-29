@@ -101,6 +101,14 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetDGCreateUserIdDropDown();
         public List<SelectItem> GetAlertOwnerDropDown();
         public List<SelectItem> GetQueuesDropDown();
+        
+        public List<SelectItem> GetCasesDetailsCreatedByDropDown();
+        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown();
+        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown();
+        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown();
+        public List<SelectItem> GetOwner_RiskAssessmentDropDown();
+        public List<SelectItem> GetCreatedByDropDown();
+
 
         //
 

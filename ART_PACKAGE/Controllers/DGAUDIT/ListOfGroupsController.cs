@@ -81,7 +81,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //    List<ListOfGroup> data = context.ListOfGroups.CallData(req).Data.ToList();
         //    ViewData["title"] = "List Of Groups Report";
         //    ViewData["desc"] = "This Report presents all groups with the related information as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}
