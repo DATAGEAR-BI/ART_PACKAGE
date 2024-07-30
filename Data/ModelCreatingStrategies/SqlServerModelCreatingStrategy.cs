@@ -4937,6 +4937,33 @@ namespace Data.ModelCreatingStrategies
 
         public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Fsk_EntityQueue>(entity =>
+            {
+                entity.ToTable("FSK_ENTITY_QUEUE", "FCFKC");
+
+                entity.HasKey(e => e.QueueCode);
+
+                entity.Property(e => e.QueueCode)
+                    .HasColumnName("queue_code")
+                    .HasMaxLength(32)
+                    .IsRequired();
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasColumnName("alerted_entity_level_code")
+                    .HasMaxLength(3)
+                    .IsRequired();
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasColumnName("alerted_entity_number")
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                entity.Property(e => e.OwnerUserid)
+                    .HasColumnName("owner_userid")
+                    .HasMaxLength(60)
+                    .IsRequired(false);
+            });
+            
             modelBuilder.Entity<FskRiskAssessment>(entity =>
             {
                 entity.HasKey(e => e.RiskAssessmentId)
@@ -5067,6 +5094,7 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(100)
                     .HasColumnName("lov_type_desc");
             });
+            
             modelBuilder.Entity<FskScenario>(entity =>
             {
                 entity.HasKey(e => e.ScenarioId)

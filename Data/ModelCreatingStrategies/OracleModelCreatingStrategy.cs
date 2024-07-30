@@ -5898,6 +5898,36 @@ namespace Data.ModelCreatingStrategies
         }
         public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder)
         {
+            
+            modelBuilder.Entity<Fsk_EntityQueue>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("FSK_ENTITY_QUEUE");
+
+                entity.HasIndex(e => new { e.AlertedEntityLevelCode, e.AlertedEntityNumber, e.QueueCode, e.OwnerUserid }, "XEIQFSK_ENTITY_QUEUE");
+
+                entity.Property(e => e.AlertedEntityLevelCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_LEVEL_CODE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.OwnerUserid)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USERID");
+
+                entity.Property(e => e.QueueCode)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("QUEUE_CODE");
+            });
             modelBuilder.Entity<FskCase>(entity =>
             {
                 entity.HasKey(e => e.CaseId)

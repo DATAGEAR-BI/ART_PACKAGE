@@ -134,6 +134,30 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"OwnerUserid".ToLower(),_dropDown.GetOwnerDropDown() }
                 },
+                var value when value == nameof(artamltriageviewConfig).ToLower()  => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
+                    {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() },
+                    {"AlertedEntityLevel".ToLower(),_dropDown.GetAlertedEntityLevelDropDown() },
+                },
+                var value when value == nameof(artamlcustomersdetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CustomerType".ToLower(),_dropDown.GetCustomerTypeDropDown() },
+                    {"CustomerStatus".ToLower(),_dropDown.GetCustomerStatusDropDown() },
+                    {"MaritalStatusDesc".ToLower(),_dropDown.GetMaritalStatusDropDown() },
+                    {"CustomerLevel".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Other",value= "Other" }, new SelectItem() { text = "Customer", value = "Customer" } } },
+                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    //{"NonProfitOrgInd".ToLower(),pipList },
+                    //{"PoliticallyExposedPersonInd".ToLower(),pipList },
+                    //{"CharityDonationsInd".ToLower(),pipList },
+                    //{"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown() },
+                    //{"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown() },
+                    //{"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown() },
+                    //{"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() }
+                },
                 nameof(ArtAuditCorporateController) => new Dictionary<string, List<SelectItem>>
                 {
                     //{"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },

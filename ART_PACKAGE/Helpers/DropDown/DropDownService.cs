@@ -53,9 +53,11 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetBranchNameDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.CORE.FscBranchDims
-               .Where(a => a.ChangeCurrentInd.Contains("Y"))
-               .Where(b => b.BranchTypeDesc.Contains("BRANCH")).Select(x => x.BranchName)
-              .Select(x => new SelectItem { text = x, value = x }).ToList();
+                .Where(a => a.ChangeCurrentInd.Contains("Y") && a.BranchName != null &&!string.IsNullOrEmpty(a.BranchName.Trim()))
+                //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
+                .Select(x => x.BranchName)
+                .Select(x => new SelectItem { text = x, value = x }).ToList();
+            distinct_value.Add(new SelectItem { text = "Unknown", value = "Unknown" });
             return distinct_value;
 
         }
@@ -159,7 +161,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetAssessmentTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentTypeCd).Select(g => g.Key).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentTypeCd).Select(g => g.Key).Where(s=>s!=null).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
@@ -773,6 +775,39 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
+        }
+        public List<SelectItem> GetAlertedEntityLevelDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+                .Where(a => a.LovTypeName.StartsWith("RT_ENTITY_LEVEL"))
+                .Where(b => b.LovLanguageDesc.Contains("en")).Select(g => g.LovTypeDesc)
+                .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetOwner_AlertedEntityDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskEntityQueues.Select(x => x.OwnerUserid).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        
+        public List<SelectItem> GetCustomerStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetMaritalStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.MaritalStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetCustomerTypeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyKey != -1).Select(x => x.PartyTypeDesc.ToUpper() == "ORGNIZATION" ? "ORGANIZATION" : x.PartyTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
         }
     }
 }

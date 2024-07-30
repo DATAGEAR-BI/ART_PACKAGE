@@ -9,7 +9,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
             SkipList = new List<string>() { "AlertedEntityLevel" };
 
-            DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"AlertedEntityName" , new GridColumnConfiguration { DisplayName = "Alerted Entity Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+            DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"AlertedEntityName" , new GridColumnConfiguration { DisplayName = "Alerted Entity Name"  , Format = ""  ,  Filter = "" , Template = "mixedArabicAndEnglish" , AggText = ""  , isLargeText = false   } },
 {"AlertedEntityNumber" , new GridColumnConfiguration { DisplayName = "Alerted Entity Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"BranchNumber" , new GridColumnConfiguration { DisplayName = "Branch Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"BranchName" , new GridColumnConfiguration { DisplayName = "Branch Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
