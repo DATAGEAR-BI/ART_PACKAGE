@@ -203,5 +203,60 @@ namespace ART_PACKAGE.Helpers.Grid
                                                     , user, reportId, reportConfig.SkipList, reportConfig.DisplayNames);
             return pdfBytes;
         }
+        
+        public string ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        {
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
+            string folderGuid = reportGUID;//Guid.NewGuid().ToString();
+            _processesHandler.AddProcess(reportGUID, "CSV");
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "PDF"), folderGuid);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
+            int total = dataRes.total;
+            int totalcopy = total;
+            var d = _config.GetValue<int>("export_Patch", 50000);// is not null ? _config.GetSection("export_Patch").ToString() : "500_000";
+            //var saved_batch = Int32.Parse(_config.GetSection("export_Patch") is not null ? _config.GetSection("export_Patch").ToString() : "500_000");
+            int batch = d;
+            //500_000:
+            int round = 0;
+            fileProgress = new();
+
+            _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
+            {
+                fileProgress[fileNumber] = recordsDone;
+                var done = fileProgress.Values.Sum();
+                decimal progress = done / (decimal)totalcopy;
+                _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
+                _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                               .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+            };
+            while (total > 0)
+            {
+                GridRequest dataReq = new()
+                {
+                    Skip = round * batch,
+                    Take = batch,
+                    Filter = exportRequest.DataReq.Filter,
+                    Sort = exportRequest.DataReq.Sort,
+                    Group = exportRequest.DataReq.Group,
+                    All = exportRequest.DataReq.All,
+                    IdColumn = exportRequest.DataReq.IdColumn,
+                    SelectedValues = exportRequest.DataReq.SelectedValues,
+                };
+                ExportRequest roundReq = new()
+                {
+                    DataReq = dataReq,
+                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                };
+                int localRound = round + 1;
+
+                _ = Task.Run(() => _pdfSrv.ITextPdf<TRepo, TContext, TModel>(roundReq,localRound, folderPath, "Report.pdf", reportGUID, baseCondition, defaultSort: reportConfig.defaultSortOption));
+
+                total -= batch;
+                round++;
+            }
+            return folderGuid;
+        }
+
+        
     }
 }

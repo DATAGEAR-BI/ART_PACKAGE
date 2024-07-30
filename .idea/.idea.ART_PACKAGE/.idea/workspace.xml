@@ -11,17 +11,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/FCFKC/SASAML/Fsk_EntityQueue.cs" afterDir="false" />
+    <list default="true" id="4b93964d-7822-40a3-8707-bf7105e181b6" name="Changes" comment="try to use IText">
+      <change afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Handlers/PDFPageEventHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ART_PACKAGE/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/DropDownService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/DropDownService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/IDropDownService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/IDropDownService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/ReportDropDownMapper/DropDownMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/DropDown/ReportDropDownMapper/DropDownMapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamltriageviewConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamltriageviewConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Charts/Charts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/FCFKC/SASAML/FCFKC.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/FCFKC/SASAML/FCFKC.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/ART_PACKAGE.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/CustomReportGridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/IGridConstructor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/IGridConstructor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +41,17 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/fedc545ce86467b7d3413d906f1ab02fb3db12ff/src/Mvc/Mvc.ViewFeatures/src/ModelExplorer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/75dcd62c87eb7816c2015ff3923b68f2ccea22c4/src/EFCore/Metadata/IReadOnlyPropertyBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/IO/FileStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/IO/Strategies/FileStreamHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/Runtime/Serialization/SerializationInfo.SerializationGuard.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/Threading/AsyncLocal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/Threading/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6485fc45b28b4cbc9b039c7fc929205d43400/69/3dc340d7/FileUtil.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d65cdafc7b9c440eb11e41cedc1c4e34f1a00/4a/4b4f9e28/WriterProperties.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d65cdafc7b9c440eb11e41cedc1c4e34f1a00/a5/db24b90f/PdfWriter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/AML_ANALYSIS/AML_ANALYSISController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/LicenseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Controllers/SASAML/CustomersSummaryController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/CSVMAppers/ReportsConfig.cs" root0="SKIP_HIGHLIGHTING" />
@@ -52,6 +59,7 @@
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamlcasedetailsviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/User/RiderProjects/ART_PACK/ART_PACKAGE/ART_PACKAGE/Helpers/ReportsConfigurations/artamltriageviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/SqlServerModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -153,7 +161,7 @@
       <workItem from="1722238642362" duration="12177000" />
       <workItem from="1722263648667" duration="768000" />
       <workItem from="1722327303572" duration="7317000" />
-      <workItem from="1722339488634" duration="5435000" />
+      <workItem from="1722339488634" duration="14373000" />
     </task>
     <task id="LOCAL-00001" summary="adding views">
       <option name="closed" value="true" />
@@ -219,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722263719999</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixing all midb,fib issues">
+      <option name="closed" value="true" />
+      <created>1722346469405</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1722346469405</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +263,9 @@
     <MESSAGE value="test" />
     <MESSAGE value="add heriarichy sorting and add copy when dbclik on dynamic cell and make export as FIB and add process handler and add config resolver" />
     <MESSAGE value="refactor some issues on release" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor some issues on release" />
+    <MESSAGE value="fixing all midb,fib issues" />
+    <MESSAGE value="try to use IText" />
+    <option name="LAST_COMMIT_MESSAGE" value="try to use IText" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -286,39 +304,39 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
-          <line>362</line>
+          <line>390</line>
           <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="362" containingFunctionPresentation="Method 'ExportToPdf'">
             <startOffsets>
-              <option value="16217" />
+              <option value="17191" />
             </startOffsets>
             <endOffsets>
-              <option value="16249" />
+              <option value="17223" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
-          <line>383</line>
+          <line>411</line>
           <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="383" containingFunctionPresentation="Method 'ExportToPdf'">
             <startOffsets>
-              <option value="17418" />
+              <option value="18392" />
             </startOffsets>
             <endOffsets>
-              <option value="17670" />
+              <option value="18644" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
-          <line>394</line>
+          <line>422</line>
           <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="394" containingFunctionPresentation="Method 'ExportToPdf'">
             <startOffsets>
-              <option value="17688" />
+              <option value="18662" />
             </startOffsets>
             <endOffsets>
-              <option value="17734" />
+              <option value="18708" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
@@ -335,6 +353,188 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>559</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="535" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="24211" />
+            </startOffsets>
+            <endOffsets>
+              <option value="24212" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>470</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="470" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="20537" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20629" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs</url>
+          <line>208</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Grid\GridConstructor.cs" initialLine="208" containingFunctionPresentation="Method 'ExportGridToPDFUsingIText'">
+            <startOffsets>
+              <option value="11449" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11545" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs</url>
+          <line>71</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Controllers\BaseReportController.cs" initialLine="71" containingFunctionPresentation="Method 'ExportToCsv'">
+            <startOffsets>
+              <option value="2640" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2671" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs</url>
+          <line>69</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Controllers\BaseReportController.cs" initialLine="69" containingFunctionPresentation="Method 'ExportToCsv'">
+            <startOffsets>
+              <option value="2625" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2626" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Controllers/BaseReportController.cs</url>
+          <line>74</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Controllers\BaseReportController.cs" initialLine="74" containingFunctionPresentation="Method 'ExportToCsv'">
+            <startOffsets>
+              <option value="2915" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2954" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs</url>
+          <line>232</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Grid\GridConstructor.cs" initialLine="232" containingFunctionPresentation="Method 'ExportGridToPDFUsingIText'">
+            <startOffsets>
+              <option value="13000" />
+            </startOffsets>
+            <endOffsets>
+              <option value="13001" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Grid/GridConstructor.cs</url>
+          <line>220</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Grid\GridConstructor.cs" initialLine="220" containingFunctionPresentation="Method 'ExportGridToPDFUsingIText'">
+            <startOffsets>
+              <option value="12390" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12411" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>510</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="486" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="22138" />
+            </startOffsets>
+            <endOffsets>
+              <option value="22188" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>511</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="487" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="22197" />
+            </startOffsets>
+            <endOffsets>
+              <option value="22238" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>632</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="608" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="26985" />
+            </startOffsets>
+            <endOffsets>
+              <option value="26998" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/e77011b31a3e5c47d931248a64b47f9b2d47853d/src/libraries/System.Private.CoreLib/src/System/IO/Strategies/FileStreamHelpers.cs</url>
+          <line>120</line>
+          <properties documentPath="C:\Users\User\AppData\Local\Symbols\src\dotnet\runtime\e77011b31a3e5c47d931248a64b47f9b2d47853d\src\libraries\System.Private.CoreLib\src\System\IO\Strategies\FileStreamHelpers.cs" initialLine="120" containingFunctionPresentation="Method 'ValidateArguments'">
+            <startOffsets>
+              <option value="5962" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5963" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>488</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="488" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="21316" />
+            </startOffsets>
+            <endOffsets>
+              <option value="21360" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs</url>
+          <line>491</line>
+          <properties documentPath="C:\Users\User\RiderProjects\ART_PACK\ART_PACKAGE\ART_PACKAGE\Helpers\Pdf\PdfService.cs" initialLine="491" containingFunctionPresentation="Method 'ITextPdf'">
+            <startOffsets>
+              <option value="21444" />
+            </startOffsets>
+            <endOffsets>
+              <option value="21485" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/js/Components/Grid/Grid.js</url>
