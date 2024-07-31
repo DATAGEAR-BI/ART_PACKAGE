@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.SASAUDIT;
 using Data.Data.TRADE_BASE;
@@ -20,6 +21,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public EcmContext ARTECM { get; }
+
         public GoAmlContext GOAML { get; }
         public DGMGMTContext DGMGMT { get; }
         public DGMGMTAUDContext DGMGMTAUD { get; }

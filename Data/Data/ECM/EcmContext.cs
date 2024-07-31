@@ -20,6 +20,8 @@ namespace Data.Data.ECM
         public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
         public virtual DbSet<ArtCFTConfig> ArtCFTConfigs { get; set; } = null!;
         public virtual DbSet<ArtClearDetect> ArtClearDetects { get; set; } = null!;
+        public virtual DbSet<ArtCaseTypeRefView> ArtCaseTypesRefView { get; set; } = null!;
+
 
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;
 

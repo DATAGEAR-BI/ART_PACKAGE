@@ -75,6 +75,8 @@ export const Filters = {
             return [
                 { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
                 { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "casetype", field: "casetype", label: "Case Type", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/SystemPerformanceSummary/GetCaseTypesDropDown/") },
+
             ]
         },
         rules: [

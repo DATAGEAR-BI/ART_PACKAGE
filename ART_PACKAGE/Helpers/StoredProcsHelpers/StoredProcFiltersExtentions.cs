@@ -50,6 +50,15 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                     MySqlType = MySqlDbType.VarChar
 
                 }},
+                { "casetype",new(){
+                    SqlServerName="@V_CASE_TYPE",
+                    OracleName="V_CASE_TYPE",
+                    MySqlName="V_CASE_TYPE",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.NVarchar2,
+                    MySqlType = MySqlDbType.VarChar
+
+                }},
             };
             return dbType switch
             {

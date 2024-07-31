@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.ECM;
 using Data.Data.SASAml;
 using Data.Data.SASAUDIT;
 using Data.Data.TRADE_BASE;
@@ -56,6 +57,9 @@ namespace ART_PACKAGE.Helpers.DBService
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
                     ECM = ecmService;
+                    IServiceScope artEcmscope = _serviceScopeFactory.CreateScope();
+                    EcmContext artecmService = artEcmscope.ServiceProvider.GetRequiredService<EcmContext>();
+                    ARTECM = artecmService;
                 }
                 if (modules.Contains("FATCA"))
                 {
@@ -95,6 +99,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public EcmContext ARTECM { get; }
         public DGFATCAContext FATCA { get; }
 
         public GoAmlContext GOAML { get; }
