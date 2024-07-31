@@ -13,8 +13,39 @@
     </div>
 </section>
 <br/>
+<div class="text-center">
+    <div class="row top-buffer">
+        <div class="col-md-4  ">
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <label>Run Month</label>
+            <select name="monthKey" id="MonthKey"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="">
+                <option value="monthKey">-- Not Selected --</option>
 
-<div class="row">
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <label>Segment Type</label>
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <select name="segmentTypes" id="PartyTypeDesc"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentType">-- Not Selected --</option>
+
+            </select>
+        </div>
+        <div class="col-md-4  ">
+            <label>Segment ID</label>
+            <!-- <label style="display: block; text-align: center;">Hi</label> -->
+            <select name="segmentId" id="Segment"
+                    class="form-control targeted-search-input ng-pristine ng-valid ng-touched" style="">
+                <option value="segmentId">-- Not Selected --</option>
+
+            </select>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
     <div class="col-4">
             <m-select name="monthKey" id="MonthKey" data-searchable data-title="Month Key">
             </m-select>
@@ -27,14 +58,14 @@
             <m-select name="segmentId" id="Segment" data-searchable data-title="Segment">
             </m-select>
     </div>
-</div>
+</div>*@
 
 <br/>
 <m-grid id="outliers" data-urlkey="AllSegmentsOutliersNew" data-handlerkey="AllSegmentsOutliersNew"></m-grid>
 <br/>
 
-    <m-donut-chart id="ch1" class="col-12" data-title="Outlier Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px"></m-donut-chart>
-    <m-donut-chart id="ch2" class="col-12" data-title="Outliers Vs Customers Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px"></m-donut-chart>
+    <m-donut-chart id="ch1" class="col-12" data-title="Outlier Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px !important;min-height:600px !important; display:block !important;"></m-donut-chart>
+<m-donut-chart id="ch2" class="col-12" data-title="Outliers Vs Customers Per Segment" data-category="Cat" data-value="NumberOfOutliers" style="height:600px !important;min-height:600px !important; display:block !important;"></m-donut-chart>
 
 
 

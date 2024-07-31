@@ -21,7 +21,7 @@ namespace ART_PACKAGE.Controllers.SEG
             _segoutvsalloutRepo = segoutvsalloutRepo;
         }
 
-
+        [HttpPost]
         public async Task<IActionResult> GetDataByParams([FromQuery] int? MonthKey, [FromQuery] string PartyTypeDesc, [FromQuery] int? Segment, [FromBody] GridRequest request)
         {
             bool hasParams = MonthKey is not null && PartyTypeDesc is not null && Segment is not null;

@@ -19,7 +19,7 @@
         }
     </script>
 </div>
-<ul class="nav nav-tabs nav-justified" role="tablist">
+<ul id="TabsButtonsContainer" class="nav nav-tabs nav-justified" role="tablist">
     <li class="nav-item active" role="presentation">
         <button class="nav-link " data-bs-toggle="tab" role="tab" data-aggCat="Wire" data-bs-target="#aggs">
             Wire
@@ -64,7 +64,7 @@
     </li>
 </ul>
 <!-- Tab Panes -->
-<div class="tab-content">
+<div id="tabContentContainer" class="tab-content">
     <div class="tab-pane container-fluid active row" role="tabpanel" id="aggs">
         <div class="row d-flex justify-content-around align-items-center my-3">
             <p class="col-1 text-center text-uppercase fs-4" >Debit:</p>
@@ -165,8 +165,28 @@
         </div>
 </div>
 
+@*<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@@materialstyle/materialstyle@3.1.1/dist/css/materialstyle.min.css"
+      integrity="sha384-TveZ4SBMG9Zwu44Pq5aK2bgL+4CaFRTtx6pSSsxmQKWhIRKoONDSRW+k+NA9A0Gk"
+      crossorigin="anonymous">*@
+<!-- Popper JS -->
+@*<script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+<!-- MDC Ripple JS (Only for Ripple effects) -->
+<script src="https://cdn.jsdelivr.net/npm/@@material/ripple@14.0.0/dist/mdc.ripple.min.js"
+        integrity="sha384-9QANVmWxL3S8VRs8x1Q+bF1Zzogpy7P/Qw1+y5qHLdC1ig0EuoHg9VbB1SXyecdZ"
+        crossorigin="anonymous"></script>*@
+
+@*<!-- Material Style JS -->
+<script src="https://cdn.jsdelivr.net/npm/@@materialstyle/materialstyle@3.1.1/dist/js/materialstyle.min.js"
+        integrity="sha384-rqhP61M9WSmzd7+ssgyoWP2I+R68vVHx7o+UmmIs6/Nxe8Lt1DoF6+0CKptZIXC0"
+        crossorigin="anonymous"></script>*@
 
 
+
+<script src="~/lib/materialstyle-3.1.1-dist/js/materialstyle.min.js" asp-append-version="true"></script>
 
 
 
@@ -199,7 +219,60 @@
         })
     </script>
     <script src="~/js/singlesegmentreport.js" type="module"></script>
+    @*    <link href="~/materialstyle/3.1/dist/css/materialstyle.css" rel="stylesheet" />
+*@
 }
+<style>
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #2f5673;
+        background-color: #c1c9ce;
+        border-radius: 12px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.5s;
+            font-size: 17px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #456780;
+                color: white;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 20px;
+        border-radius: 12px;
+        border-top: none;
+        border: 1px solid #8e9da9;
+        /*background-color: #8e9da9;*/
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .tablinks {
+        width: 12.5%;
+    }
+</style>
 
 
 

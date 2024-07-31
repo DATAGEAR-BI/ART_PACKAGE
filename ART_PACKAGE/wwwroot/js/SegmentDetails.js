@@ -43,8 +43,36 @@ async function onChangeSegment(e) {
     var selectedSegment = e.target.value;
     var baseUrl = URLS.AllSegmentsOutliersNew.split("?")[0];
     console.log(URLS.AllSegmentsOutliersNew);
-    URLS.AllSegmentsOutliersNew = baseUrl + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
+    //URLS.AllSegmentsOutliersNew = baseUrl.replace('GetData','GetDataByParams') + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`
     console.log(URLS.AllSegmentsOutliersNew);
-
-    $("#grid").data("kendoGrid").dataSource.read();
+    console.log($("#outliers"))
+    $("#outliers")[0].url = baseUrl.replace('GetData', 'GetDataByParams') + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`;
+    $("#outliers-Grid").data("kendoGrid").dataSource.read();
+    await fetch("/AllSegmentsOutliersNew/GetSegmentOutliersChartData"+`?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+/*        body: JSON.stringify(para),
+*/    }).then(res => res.json())
+        .then(data => {
+            console.log("seg data chart", data);
+            let chart = document.getElementById("ch1");
+            chart.setdata(data);
+        })
+    await fetch("/AllSegmentsOutliersNew/GetSegentCustomersChartData" + `?MonthKey=${selectedMonthKey}&PartyTypeDesc=${selectedSegmentType}&Segment=${selectedSegment}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+/*        body: JSON.stringify(para),
+*/    }).then(res => res.json())
+        .then(data => {
+            console.log("seg data chart", data);
+            let chart = document.getElementById("ch2");
+            chart.setdata(data);
+        })
+   /* */
 }
