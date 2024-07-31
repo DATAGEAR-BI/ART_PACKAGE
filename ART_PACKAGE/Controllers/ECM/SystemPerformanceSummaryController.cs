@@ -11,6 +11,7 @@ using System.Collections;
 using System.Data;
 using System.Linq.Dynamic.Core;
 using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.DropDown;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -22,14 +23,17 @@ namespace ART_PACKAGE.Controllers.ECM
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly string dbType;
+        private readonly IDropDownService _dropDown;
 
-        public SystemPerformanceSummaryController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config)
+
+        public SystemPerformanceSummaryController(EcmContext _context, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IConfiguration config, IDropDownService dropDown)
         {
             _env = env;
             _cache = cache;
             context = _context;
             _config = config;
             dbType = _config.GetValue<string>("dbType").ToUpper();
+            _dropDown = dropDown;
         }
 
         public IActionResult GetData([FromBody] StoredReq para)
@@ -157,7 +161,16 @@ namespace ART_PACKAGE.Controllers.ECM
 
             };
         }
+        public IActionResult GetCaseTypesDropDown()
+        {
 
+
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(_dropDown.GetCaseTypesDropDown(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+        }
         public IActionResult Index()
         {
             return View();

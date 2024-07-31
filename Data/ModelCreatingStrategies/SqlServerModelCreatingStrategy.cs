@@ -2141,7 +2141,15 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ReleasedDate)
                     .HasColumnName("RELEASED_DATE");
             });
+            modelBuilder.Entity<ArtCaseTypeRefView>(entity =>
+            {
+                entity.ToView("ART_CASE_TYPE_REF_VIEW", "ART_DB");
+                entity.HasNoKey();  // Use if the view does not have a primary key
+                entity.Property(e => e.CaseTypeCd)
+                   .HasMaxLength(32)
+                   .HasColumnName("Case_Type_Cd");
 
+            });
             // Configure ArtSwiftMessagesView
             modelBuilder.Entity<ArtSwiftMessagesView>(entity =>
             {
