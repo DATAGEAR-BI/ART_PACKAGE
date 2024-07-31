@@ -1190,7 +1190,7 @@ class Grid extends HTMLElement {
         $(`.k-grid-${this.gridDiv.id}pdfExport`).click(async (e) => {
             if (!isExportingPDFNow /*&& !this.buttonExportClicked*/) {
                 toastObj.icon = 'warning';
-                toastObj.text = "Export PDF is started";
+                toastObj.text = "Export PDF is started ,\n Please be patient as this may take some time to complete.";
                 toastObj.heading = "PDF Status";
                 $.toast(toastObj);
 
