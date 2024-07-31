@@ -472,7 +472,11 @@ namespace ART_PACKAGE.Helpers.Pdf
             GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
             IQueryable<TModel>? data = dataRes.data;
             int total = dataRes.total;
-            
+            List<testttttt> s = new();
+            for (int i = 0; i < 1000; i++)
+            {
+                s.Add(new() { id = i, name = "name" + i, phone = "0101088667" + i });
+            }
             //file prep
             if (!Directory.Exists(folderPath))
                 _ = Directory.CreateDirectory(folderPath);
@@ -483,155 +487,153 @@ namespace ART_PACKAGE.Helpers.Pdf
             //string pdfPath = "exported_data.pdf";
             bool isLandscape = true; 
             // Create a PDF document
-            try
+            
+                  
+
+                try
             {
                 // Create a PDF writer
                 using (var writer = new PdfWriter(filePath))
                 {
-                    // Create a PDF document
-                    using (var pdf = new PdfDocument(writer))
-                    {
-                        // Create a document instance
-                        var document = new Document(pdf);
-
-                        // Add simple text to the document
-                        document.Add(new Paragraph("Hello, this is a simple test of iText PDF creation!"));
-
-                        // Close the document
-                        document.Close();
-                    }
-                }
-
-                Console.WriteLine("PDF created successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        /*await using (var writer = new PdfWriter(filePath))
-        using (var pdf = new PdfDocument(writer))
-        {
-            var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
-            var document = new Document(pdf, pageSize);
-
-            // Add an image on the first page
-            /*var imagePath = "path_to_image.jpg";
-            var image = new iText.Layout.Element.Image(ImageDataFactory.Create(imagePath))
-                .SetFixedPosition(50, pageSize.GetHeight() - 150, 200)
-                .SetAutoScale(true);
-            document.Add(image);#1#
-            // Get model properties for dynamic table headers
-            var modelType = typeof(TModel);
-            var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var columnHeaders = properties.Select(p => p.Name).ToArray();
-            
-            // Define table layout
-            var table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Dynamic number of columns
-            table.SetWidth(UnitValue.CreatePercentValue(100));
-
-            // Add headers
-            foreach (var header in columnHeaders)
-            {
-                table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
-            }
-
-            // Adjust font size dynamically
-            float fontSize = 8f; // Start with a smaller font size
-            if (columnHeaders.Length > 20)
-            {
-                fontSize = 8f; // Adjust font size if necessary
-            }
-            else
-            {
-                fontSize = 12f; // Default font size
-            }
-
-            // Add footer with page numbers
-            pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new PDFPageEventHandler());
-
-            // Retrieve data from IQueryable and add it to the table
-            int rowCount = 0;
-            if (!data.Any())
-                OnProgressChanged(0, fileNumber);
-            int index = 0;
-            int dataCount = data.Count();
-            float progress = 0;
-            foreach (var item in data)
-            {
-                if (_processesHandler.isProcessCanceld(reportGUID))
+                using (var pdf = new PdfDocument(writer))
                 {
-                    if (!Directory.Exists(folderPath))
-                        _ = Directory.CreateDirectory(folderPath);
-                    try
-                    {
-                        _logger.LogInformation("Pdf Process Cancled");
-                        document.Add(table);
-                        // Close the document
-                        document.Close();
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
-                        return false;
-                    }
-                }
-                
-                
-                
-                
-                if (rowCount % 50 == 0 && rowCount > 0) // Example for page break
-                {
-                    document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                    table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
+                    var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
+                    var document = new Document(pdf, pageSize);
+
+                        // Add an image on the first page
+                        /*var imagePath = "path_to_image.jpg";
+                        var image = new iText.Layout.Element.Image(ImageDataFactory.Create(imagePath))
+                            .SetFixedPosition(50, pageSize.GetHeight() - 150, 200)
+                            .SetAutoScale(true);
+                        document.Add(image);#1#
+                        */
+                        // Get model properties for dynamic table headers
+                        // var modelType = typeof(TModel);
+                         var modelType = typeof(testttttt);
+
+                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    var columnHeaders = properties.Select(p => p.Name).ToArray();
+
+                    // Define table layout
+                    var table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Dynamic number of columns
                     table.SetWidth(UnitValue.CreatePercentValue(100));
 
-                    // Re-add headers
+                    // Add headers
                     foreach (var header in columnHeaders)
                     {
                         table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
                     }
-                }
 
-                // Add data cells
-                foreach (var property in properties)
-                {
-                    var value = property.GetValue(item)?.ToString();
-                    table.AddCell(new Cell().Add(new Paragraph(value).SetFontSize(fontSize)));
-                }
-                rowCount++;
-                
-                index++; // Increment the index for each item
-                if (dataCount > 100)
-                {
-                    if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                    // Adjust font size dynamically
+                    float fontSize = 8f; // Start with a smaller font size
+                    if (columnHeaders.Length > 20)
                     {
-                        //progress = (float)(index / (float)total * 100);
-                        int recordsDone = index + 1;
-                        lock (_locker)
+                        fontSize = 8f; // Adjust font size if necessary
+                    }
+                    else
+                    {
+                        fontSize = 12f; // Default font size
+                    }
+
+                    // Add footer with page numbers
+                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new PDFPageEventHandler());
+
+                    // Retrieve data from IQueryable and add it to the table
+                    int rowCount = 0;
+                    if (!data.Any())
+                        OnProgressChanged(0, fileNumber);
+                    int index = 0;
+                    int dataCount = data.Count();
+                    float progress = 0;
+                    foreach (var item in s)
+                    {
+                        if (_processesHandler.isProcessCanceld(reportGUID))
                         {
-                            OnProgressChanged(recordsDone, fileNumber);
+                            if (!Directory.Exists(folderPath))
+                                _ = Directory.CreateDirectory(folderPath);
+                            try
+                            {
+                                _logger.LogInformation("Pdf Process Cancled");
+                                document.Add(table);
+                                // Close the document
+                                document.Close();
+                                return true;
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                                return false;
+                            }
                         }
+
+
+
+
+                        if (rowCount % 50 == 0 && rowCount > 0) // Example for page break
+                        {
+                            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                            table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
+                            table.SetWidth(UnitValue.CreatePercentValue(100));
+
+                            // Re-add headers
+                            foreach (var header in columnHeaders)
+                            {
+                                table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
+                            }
+                        }
+
+                        // Add data cells
+                        foreach (var property in properties)
+                        {
+                            var value = property.GetValue(item)?.ToString();
+                            table.AddCell(new Cell().Add(new Paragraph(value).SetFontSize(fontSize)));
+                        }
+                        rowCount++;
+
+                        index++; // Increment the index for each item
+                        if (dataCount > 100)
+                        {
+                            if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                            {
+                                //progress = (float)(index / (float)total * 100);
+                                int recordsDone = index + 1;
+                                lock (_locker)
+                                {
+                                    OnProgressChanged(recordsDone, fileNumber);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            int recordsDone = index + 1;
+                            lock (_locker)
+                            {
+                                //OnProgressChanged(recordsDone, fileNumber);
+                            }
+                        }
+
                     }
+
+                    document.Add(table);
+
+                    // Close the document
+                    document.Close();
                 }
-                else
-                {
-                    int recordsDone = index + 1;
-                    lock (_locker)
-                    {
-                        OnProgressChanged(recordsDone, fileNumber);
-                    }
                 }
-                
             }
-
-            document.Add(table);
-
-            // Close the document
-            document.Close();
-        }*/
-            return  true;
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred: {ex.Message}");
+                    }
+                return true;
         }
 
+
+    }
+    class testttttt
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
     }
 }

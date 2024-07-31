@@ -70,7 +70,7 @@ namespace ART_PACKAGE.Controllers
         {
 
             AppUser user = await GetUser();
-            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToPDFUsingIText(req, user.UserName, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
 
             return Ok(new { folder = folderGuid });
         }
