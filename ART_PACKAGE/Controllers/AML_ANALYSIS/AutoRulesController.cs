@@ -49,7 +49,7 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
             }
             else
             {
-                baseCondition = (x => x.Deleted == false);
+                baseCondition=(x=>x.Deleted==false);
                 GridResult<ArtAmlAnalysisRule> res = _gridConstructor.GetGridData(request, baseCondition, includes);
                 return new ContentResult
                 {
@@ -64,18 +64,18 @@ namespace ART_PACKAGE.Controllers.AML_ANALYSIS
         {
             return Ok(_gridConstructor.Repo.GetQueryBuilderFields());
         }
-
+        
         [HttpPost("[controller]/[action]")]
         public IActionResult AddRule([FromBody] AddRuleRequest req)
         {
             try
             {
                 _gridConstructor.Repo.AddRule(req);
-                return Ok();
+                return Ok("Rule Added Successfully");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest("Cannot Add Rule");
             }
         }
 
