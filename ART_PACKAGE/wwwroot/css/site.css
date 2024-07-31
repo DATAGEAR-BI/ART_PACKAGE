@@ -63,3 +63,9 @@ td[role="gridcell"] {
     height: auto !important;
     max-height: 150px !important;
 }
+
+
+#filters_rule_2 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
