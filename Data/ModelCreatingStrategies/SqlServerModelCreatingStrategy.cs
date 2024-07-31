@@ -2147,7 +2147,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasNoKey();  // Use if the view does not have a primary key
                 entity.Property(e => e.CaseTypeCd)
                    .HasMaxLength(32)
-                   .HasColumnName("Case_Type_Cd");
+                   .HasColumnName("Case_TYPE");
 
             });
             // Configure ArtSwiftMessagesView
