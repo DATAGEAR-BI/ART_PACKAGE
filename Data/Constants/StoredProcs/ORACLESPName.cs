@@ -54,6 +54,30 @@
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
 
 
+        #region DGAML ALERTS Summary
+        //DG AML
+        public static readonly string ART_ST_DGAML_ALERT_PER_OWNER = "ART.ART_ST_DGAML_ALERT_PER_OWNER";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "ART.ART_ST_DGAML_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "ART.ART_ST_DGAML_ALERTS_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "ART.ART_ST_DGAML_ALERTS_PER_SCENARIO";
+        #endregion
+
+        #region DGAML CASES SUMMARY
+        public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "ART.ART_ST_DGAML_CASES_PER_CATEGORY";
+        public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "ART.ART_ST_DGAML_CASES_PER_PRIORITY";
+        public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "ART.ART_ST_DGAML_CASES_PER_STATUS";
+        #endregion
+
+        #region DGAML CUSOMER SUMMARY
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_BRANCH = "ART.ART_ST_DGAML_CUSTOMER_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_TYPE = "ART.ART_ST_DGAML_CUSTOMER_PER_TYPE";
+        #endregion
+
+        #region EXTERNAL CUSTOMER SUMMARY
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE";
+        #endregion
+
 
 
     }

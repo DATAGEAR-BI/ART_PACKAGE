@@ -51,8 +51,11 @@ namespace ART_PACKAGE.Controllers.DGAML
 
             if (dbType == DbTypes.Oracle)
             {
-                //chart1Data = _context.ExecuteProc<ArtStAlertsPerStatus>(ORACLESPName.ART_ST_ALERTS_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStAlertPerOwner>(ORACLESPName.ART_ST_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(ORACLESPName.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
+                chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(ORACLESPName.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(ORACLESPName.ART_ST_DGAML_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(ORACLESPName.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart4Params.ToArray());
+              
 
             }
             if (dbType == DbTypes.MySql)
@@ -60,8 +63,8 @@ namespace ART_PACKAGE.Controllers.DGAML
 
                 chart1Data = _context.ExecuteProc<ArtStDgAmlAlertsPerStatus>(MYSQLSPName.ART_ST_DGAML_ALERTS_PER_STATUS, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStDgAmlAlertPerOwner>(MYSQLSPName.ART_ST_DGAML_ALERT_PER_OWNER, chart2Params.ToArray());
-                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(MYSQLSPName.ART_ST_ALERTS_PER_BRANCH, chart3Params.ToArray());
-                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(MYSQLSPName.ART_ST_ALERTS_PER_SCENARIO, chart4Params.ToArray());
+                chart3data = _context.ExecuteProc<ArtStDgAmlAlertsPerBranch>(MYSQLSPName.ART_ST_DGAML_ALERTS_PER_BRANCH, chart3Params.ToArray());
+                chart4data = _context.ExecuteProc<ArtStDgAmlAlertsPerScenario>(MYSQLSPName.ART_ST_DGAML_ALERTS_PER_SCENARIO, chart4Params.ToArray());
 
             }
 
