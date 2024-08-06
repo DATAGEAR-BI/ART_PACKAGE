@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
 
-namespace ART_PACKAGE.Controllers.AML_ANALYSIS
+namespace ART_PACKAGE.Controllers.AMLANALYSIS
 {
     public class AutoRulesController
         : BaseReportController<

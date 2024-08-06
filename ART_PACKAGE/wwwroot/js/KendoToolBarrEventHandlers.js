@@ -674,7 +674,7 @@ export const Handlers = {
                         confirm: async function () {
 
                             var para = [...selectedidz]
-                            var res = await fetch("/AML_ANALYSIS/Apply", {
+                            var res = await fetch("/AutoRules/Apply", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",

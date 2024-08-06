@@ -6,7 +6,7 @@ using Data.Services.Grid;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ART_PACKAGE.Controllers.AML_ANALYSIS
+namespace ART_PACKAGE.Controllers.AMLANALYSIS
 {
     public class AML_ANALYSISController : BaseReportController<IGridConstructor<IAmlAnalysisRepo, AmlAnalysisContext, ArtAmlAnalysisViewTb>, IAmlAnalysisRepo, AmlAnalysisContext, ArtAmlAnalysisViewTb>
     {

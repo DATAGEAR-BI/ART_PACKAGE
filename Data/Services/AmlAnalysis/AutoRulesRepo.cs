@@ -50,7 +50,7 @@ public class AutoRulesRepo : BaseRepo<AmlAnalysisContext, ArtAmlAnalysisRule>, I
 
     public void AddRule(AddRuleRequest request)
     {
-        if (request.Action != "close" && request.Action != "route")
+        if (request.Action.ToLower() != "close" && request.Action.ToLower() != "route")
             throw new InvalidOperationException("action not supported");
         var entity = _context.ArtAmlAnalysisViewTbs;
         var tableEntityType = entity.EntityType;

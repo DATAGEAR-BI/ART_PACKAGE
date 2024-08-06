@@ -119,6 +119,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
                 foreach (string role in moduleRoles)
                 {
+                    //Console.WriteLine(module + "---" + role);
+
                     if (!await rm.RoleExistsAsync(role))
                     {
                         IdentityRole roleToadd = new(role);

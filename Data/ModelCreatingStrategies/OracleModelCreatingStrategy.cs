@@ -2789,7 +2789,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_RISK_ASSESSMENT_VIEW");
+                entity.ToView("ART_AML_RISK_ASSESSMENT_VIEW");
 
                 entity.Property(e => e.AssessmentCategoryCd)
                     .HasMaxLength(32)

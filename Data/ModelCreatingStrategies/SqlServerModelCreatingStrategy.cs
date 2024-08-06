@@ -4663,7 +4663,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("alerted_entity_segment_id");
 
                 entity.Property(e => e.AlertsCnt)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(4, 0)")
                     .HasColumnName("alerts_cnt");
 
                 entity.Property(e => e.CreatedTimestamp)
@@ -4695,7 +4695,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("lstupdate_user_id");
 
                 entity.Property(e => e.MoneyLaunderingScore)
-                    .HasColumnType("int")
+                    .HasColumnType("decimal(4, 0)")
                     .HasColumnName("money_laundering_score");
 
                 entity.Property(e => e.PoliticallyExposedPersonInd)
@@ -4710,7 +4710,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("risk_score_code");
 
                 entity.Property(e => e.TransactionsCnt)
-                    .HasColumnType("numeric(11, 0)")
+                    .HasColumnType("decimal(4, 0)")
                     .HasColumnName("transactions_cnt");
                 /*entity.HasNoKey();
 

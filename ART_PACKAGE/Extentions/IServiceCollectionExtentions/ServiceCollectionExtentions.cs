@@ -231,6 +231,9 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         public static IServiceCollection AddAmlAnalysis(this IServiceCollection services)
         {
             _ = services.AddScoped<IAmlAnalysis, AmlAnalysis>();
+            _ = services.AddScoped<IAmlAnalysisRepo, AmlAnalysisRepo>();
+            _ = services.AddScoped<IAutoRulesRepo, AutoRulesRepo>();
+
             _ = services.AddSingleton<AmlAnalysisUpdateTableIndecator>();
             //_ = services.AddHostedService<AmlAnalysisWatcher>();
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();

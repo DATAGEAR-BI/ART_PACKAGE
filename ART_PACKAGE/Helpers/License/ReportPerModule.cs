@@ -1,5 +1,5 @@
 ﻿using ART_PACKAGE.Controllers;
-using ART_PACKAGE.Controllers.AML_ANALYSIS;
+using ART_PACKAGE.Controllers.AMLANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
 
 using ART_PACKAGE.Controllers.DGAUDIT;
