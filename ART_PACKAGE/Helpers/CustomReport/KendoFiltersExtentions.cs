@@ -601,7 +601,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     type = Type,
                     AggType = agg,
                     AggTitle = aggText,
-                    template = ReportConfigResolver2.GetConfigs<T>()?.DisplayNames[name]?.Template,
+                    template = displayNamesDectionary is not null ? displayNamesDectionary.Keys.Contains(name)?ReportConfigResolver2.GetConfigs<T>()?.DisplayNames[name]?.Template:"":"",
                     
                 };
 

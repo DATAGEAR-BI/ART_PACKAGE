@@ -10,7 +10,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 { "year", new GridColumnConfiguration { DisplayName = "Year" } },
-               
+                { "CASE_TYPE", new GridColumnConfiguration { DisplayName = "Case Type" } },
+
+
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } }
             };
         }
