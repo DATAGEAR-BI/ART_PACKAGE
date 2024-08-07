@@ -299,6 +299,8 @@ class BarChart extends BaseCatValChart {
                 this.isHorizontal = true;
                 this.makeHBar();
             }
+            this.makeExportMenu();
+
             setTimeout(() => {
                 this.toggleLoading();
             }, 3000);
