@@ -12,7 +12,8 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDGMGMGModelCreating(ModelBuilder modelBuilder);
         public void OnDGMGMGMAUDodelCreating(ModelBuilder modelBuilder);
-        public void OnDgAMLModelCreating(ModelBuilder modelBuilder);
+        public void OnDgAMLCOREModelCreating(ModelBuilder modelBuilder);
+        public void OnDgAMLACModelCreating(ModelBuilder modelBuilder);
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder);
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder);
         public void OnTiZoneModelCreating(ModelBuilder modelBuilder);

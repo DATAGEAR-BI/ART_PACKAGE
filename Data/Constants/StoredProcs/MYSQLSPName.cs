@@ -61,10 +61,10 @@
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART_DB.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART_DB.ART_ST_CASES_PER_PRIORITY";
         //GoAml
-        public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "ART.ART_ST_GOAML_REPORTS_PER_TYPE";
-        public static readonly string ART_ST_GOAML_REPORTS_PER_STATUS = "ART.ART_ST_GOAML_REPORTS_PER_STATUS";
-        public static readonly string ART_ST_GOAML_REPORTS_PER_INDICATOR = "ART.ART_ST_GOAML_REPORTS_PER_INDICATOR";
-        public static readonly string ART_ST_GOAML_REPORTS_PER_CREATOR = "ART.ART_ST_GOAML_REPORTS_PER_CREATOR";
+        public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "ART_DB.ART_ST_GOAML_REPORTS_PER_TYPE";
+        public static readonly string ART_ST_GOAML_REPORTS_PER_STATUS = "ART_DB.ART_ST_GOAML_REPORTS_PER_STATUS";
+        public static readonly string ART_ST_GOAML_REPORTS_PER_INDICATOR = "ART_DB.ART_ST_GOAML_REPORTS_PER_INDICATOR";
+        public static readonly string ART_ST_GOAML_REPORTS_PER_CREATOR = "ART_DB.ART_ST_GOAML_REPORTS_PER_CREATOR";
 
 
         //crp

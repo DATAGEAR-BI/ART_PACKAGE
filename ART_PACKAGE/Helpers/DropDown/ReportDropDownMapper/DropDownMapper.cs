@@ -6,6 +6,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
+using ART_PACKAGE.Helpers.ReportsConfigurations.ECM;
 using Data.Data.ARTDGAML;
 using Data.Data.Audit;
 using Data.Data.FTI;
@@ -458,7 +459,22 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
                     {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
                 },
-
+                var value when value == nameof(ArtSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
+                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
+                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
+                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                },
+                var value when value == nameof(ArtUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                },
                 _ => null
             };
         }

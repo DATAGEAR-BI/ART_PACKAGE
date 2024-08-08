@@ -10,7 +10,7 @@ using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
-using Data.DGAML;
+using Data.DGAMLCORE;
 using Data.DGECM;
 using Data.FCF71;
 using Data.FCFCORE;
@@ -19,6 +19,7 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.AmlAnalysis;
+using Data.DGAMLAC;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -931,6 +932,52 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .HasColumnName("TRANSACTIONNUMBER")
                     .UseCollation("Arabic_100_CI_AI");
+            });
+
+
+            modelBuilder.Entity<ArtHomeGoamlReportsDate>(entity =>
+            {
+                entity.ToTable("ART_HOME_GOAML_REPORTS_DATE", "ART_DB"); // Specify the view name
+                entity.HasNoKey();
+
+                entity.Property(e => e.CountOfReportId)
+                    .HasColumnName("COUNT_OF_REPORT_ID")
+                    .HasColumnType("decimal(18, 2)") // Adjust precision as needed
+                    .HasMaxLength(10) // This may not be necessary for decimal types
+                    .IsRequired(false);
+
+                entity.Property(e => e.Year)
+                    .HasColumnName("YEAR")
+                    .HasColumnType("int")
+                    .HasMaxLength(10) // This may not be necessary for int types
+                    .IsRequired(false);
+
+                entity.Property(e => e.Month)
+                    .HasColumnName("MONTH")
+                    .HasColumnType("nvarchar")
+                    .HasMaxLength(4000)
+                    .IsRequired(false);
+            });
+            modelBuilder.Entity<ArtHomeGoamlReportsPerType>(entity =>
+            {
+                entity.ToTable("ART_HOME_GOAML_REPORTS_PER_TYPE", "ART_DB"); // Specify the view name
+                entity.HasNoKey();
+
+                entity.Property(e => e.ReportType)
+                    .HasColumnName("REPORT_TYPE")
+                    .HasColumnType("nvarchar")
+                    .HasMaxLength(255)
+                    .IsRequired(false);
+
+                entity.Property(e => e.NumberOfReports)
+                    .HasColumnName("NUMBER_OF_REPORTS")
+                    .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                    .IsRequired(false);
+
+                entity.Property(e => e.Year)
+               .HasColumnName("YEAR")
+               .HasColumnType("int")
+               .IsRequired(false);
             });
         }
 
@@ -2024,7 +2071,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("nvarchar(max)");
             });
 
-            modelBuilder.Entity<ArtClearDetect>(entity =>
+           /* modelBuilder.Entity<ArtClearDetect>(entity =>
             {
                 entity.HasNoKey();
 
@@ -2050,7 +2097,7 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("SOURCE_TYPE");
-            });
+            });*/
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
@@ -6085,348 +6132,9 @@ namespace Data.ModelCreatingStrategies
 
 
 
-        public void OnDgAMLModelCreating(ModelBuilder modelBuilder)
+        public void OnDgAMLCOREModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AcLkpTable>(entity =>
-            {
-                entity.HasKey(e => new { e.LkpName, e.LkpValCd, e.LkpLangDesc })
-                    .HasName("AC_LKP_Table_PK2");
-
-                entity.ToTable("AC_LKP_Table", "AC");
-
-                entity.Property(e => e.LkpName)
-                    .HasMaxLength(50)
-                    .HasColumnName("LKP_Name");
-
-                entity.Property(e => e.LkpValCd)
-                    .HasMaxLength(100)
-                    .HasColumnName("LKP_Val_Cd");
-
-                entity.Property(e => e.LkpLangDesc)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("LKP_Lang_Desc");
-
-                entity.Property(e => e.ActiveFlg)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Active_Flg")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Deleted)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("DELETED")
-                    .IsFixedLength();
-
-                entity.Property(e => e.DisplayOrdrNo)
-                    .HasColumnType("numeric(6, 0)")
-                    .HasColumnName("Display_Ordr_No");
-
-                entity.Property(e => e.LkpLangDescParent)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("LKP_Lang_Desc_parent");
-
-                entity.Property(e => e.LkpNameParent)
-                    .HasMaxLength(50)
-                    .HasColumnName("LKP_Name_parent");
-
-                entity.Property(e => e.LkpValCdParent)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("LKP_Val_Cd_parent");
-
-                entity.Property(e => e.LkpValDesc)
-                    .HasMaxLength(4000)
-                    .HasColumnName("LKP_Val_Desc");
-            });
-            modelBuilder.Entity<AcRoutine>(entity =>
-            {
-                entity.HasKey(e => e.RoutineId);
-
-                entity.ToTable("AC_Routine", "AC");
-
-                entity.Property(e => e.RoutineId)
-                    .HasColumnType("numeric(12, 0)")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("Routine_Id");
-
-                entity.Property(e => e.AdminStatusCd)
-                    .HasMaxLength(25)
-                    .HasColumnName("admin_status_cd");
-
-                entity.Property(e => e.AlarmCategCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Alarm_Categ_Cd");
-
-                entity.Property(e => e.AlarmSubcategCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Alarm_Subcateg_Cd");
-
-                entity.Property(e => e.AlarmTypeCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Alarm_Type_Cd");
-
-                entity.Property(e => e.ComparedDateAttribute)
-                    .HasMaxLength(255)
-                    .HasColumnName("Compared_Date_Attribute");
-
-                entity.Property(e => e.CorrespondingViewNm)
-                    .HasMaxLength(1024)
-                    .HasColumnName("corresponding_view_NM");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Create_Date");
-
-                entity.Property(e => e.CreateUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("Create_User_Id");
-
-                entity.Property(e => e.CurrentInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Current_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.DfltSupprDurCount).HasColumnName("Dflt_Suppr_Dur_Count");
-
-                entity.Property(e => e.EndDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("End_Date");
-
-                entity.Property(e => e.EndUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("End_User_Id");
-
-                entity.Property(e => e.ExecProbRate)
-                    .HasColumnType("numeric(7, 7)")
-                    .HasColumnName("Exec_Prob_Rate");
-
-                entity.Property(e => e.HeaderId)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("header_id");
-
-                entity.Property(e => e.LastUpdateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Last_Update_Date");
-
-                entity.Property(e => e.LastUpdateUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("Last_Update_User_Id");
-
-                entity.Property(e => e.LogicDelInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Logic_Del_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.MlBayesWeight)
-                    .HasColumnType("numeric(15, 5)")
-                    .HasColumnName("ML_Bayes_Weight");
-
-                entity.Property(e => e.ObjLevelCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Obj_Level_Cd");
-
-                entity.Property(e => e.OrderInHeader).HasColumnName("Order_In_Header");
-
-                entity.Property(e => e.PrimObjNoVarName)
-                    .HasMaxLength(32)
-                    .HasColumnName("Prim_Obj_No_Var_Name");
-
-                entity.Property(e => e.ProdTypeCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Prod_Type_Cd");
-
-                entity.Property(e => e.RiskFactInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Risk_Fact_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.RootKey)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("root_key");
-
-                entity.Property(e => e.RouteGrpId)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("Route_Grp_Id");
-
-                entity.Property(e => e.RouteUserLongId)
-                    .HasMaxLength(60)
-                    .HasColumnName("Route_User_Long_Id");
-
-                entity.Property(e => e.RoutineCategCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Routine_Categ_Cd");
-
-                entity.Property(e => e.RoutineCdLocDesc)
-                    .HasMaxLength(255)
-                    .HasColumnName("Routine_Cd_Loc_Desc");
-
-                entity.Property(e => e.RoutineDesc)
-                    .HasMaxLength(255)
-                    .HasColumnName("Routine_Desc");
-
-                entity.Property(e => e.RoutineDurCount).HasColumnName("Routine_Dur_Count");
-
-                entity.Property(e => e.RoutineMsgTxt)
-                    .HasMaxLength(255)
-                    .HasColumnName("Routine_Msg_Txt");
-
-                entity.Property(e => e.RoutineName)
-                    .HasMaxLength(32)
-                    .HasColumnName("Routine_Name");
-
-                entity.Property(e => e.RoutineRunFreqCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Routine_Run_Freq_Cd");
-
-                entity.Property(e => e.RoutineShortDesc)
-                    .HasMaxLength(100)
-                    .HasColumnName("Routine_Short_Desc");
-
-                entity.Property(e => e.RoutineStatusCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Routine_Status_Cd");
-
-                entity.Property(e => e.RoutineTypeCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Routine_Type_Cd");
-
-                entity.Property(e => e.SaveTrigTransInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Save_Trig_Trans_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.SkipIfNoTransCcyDayInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Skip_If_No_Trans_Ccy_Day_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.TfBayesWeight)
-                    .HasColumnType("numeric(15, 5)")
-                    .HasColumnName("TF_Bayes_Weight");
-
-                entity.Property(e => e.VerNo).HasColumnName("Ver_No");
-
-                entity.Property(e => e.VsdInstallationName)
-                    .HasMaxLength(255)
-                    .HasColumnName("VSD_Installation_Name");
-
-                entity.Property(e => e.VsdWinName)
-                    .HasMaxLength(25)
-                    .HasColumnName("VSD_Win_Name");
-            });
-
-            modelBuilder.Entity<AcScenarioEvent>(entity =>
-            {
-                entity.HasKey(e => e.EventId);
-
-                entity.ToTable("AC_Scenario_Event", "AC");
-
-                entity.Property(e => e.EventId)
-                    .HasColumnType("numeric(12, 0)")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("Event_Id");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Create_Date");
-
-                entity.Property(e => e.CreateUserId)
-                    .HasMaxLength(60)
-                    .HasColumnName("Create_User_Id");
-
-                entity.Property(e => e.EventDesc)
-                    .HasMaxLength(255)
-                    .HasColumnName("Event_Desc");
-
-                entity.Property(e => e.EventTypeCd)
-                    .HasMaxLength(60)
-                    .HasColumnName("Event_Type_Cd");
-
-                entity.Property(e => e.ScenarioRootKey)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("Scenario_Root_Key");
-            });
-            modelBuilder.Entity<AcSuspectedObject>(entity =>
-            {
-                entity.HasKey(e => new { e.AlarmedObjLevelCd, e.AlarmedObjKey })
-                    .HasName("XPKAC_Suspected_Object");
-
-                entity.ToTable("AC_Suspected_Object", "AC");
-
-                entity.Property(e => e.AlarmedObjLevelCd)
-                    .HasMaxLength(3)
-                    .HasColumnName("Alarmed_Obj_level_Cd");
-
-                entity.Property(e => e.AlarmedObjKey)
-                    .HasColumnType("numeric(12, 0)")
-                    .HasColumnName("Alarmed_Obj_Key");
-
-                entity.Property(e => e.AgeOldAlarm).HasColumnName("Age_Old_Alarm");
-
-                entity.Property(e => e.AggAmt)
-                    .HasColumnType("numeric(15, 3)")
-                    .HasColumnName("Agg_Amt");
-
-                entity.Property(e => e.AlarmedObjName)
-                    .HasMaxLength(100)
-                    .HasColumnName("Alarmed_Obj_Name");
-
-                entity.Property(e => e.AlarmedObjNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("Alarmed_Obj_No");
-
-                entity.Property(e => e.AlarmsCount).HasColumnName("Alarms_Count");
-
-                entity.Property(e => e.Branch).HasMaxLength(50);
-
-                entity.Property(e => e.CreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Create_Timestamp");
-
-                entity.Property(e => e.EmpInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Emp_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.MlScore).HasColumnName("ML_Score");
-
-                entity.Property(e => e.OwnerUid)
-                    .HasMaxLength(240)
-                    .HasColumnName("Owner_UID");
-
-                entity.Property(e => e.PoliticalExpPersonInd)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Political_Exp_Person_Ind")
-                    .IsFixedLength();
-
-                entity.Property(e => e.ProdType)
-                    .HasMaxLength(3)
-                    .HasColumnName("Prod_Type");
-
-                entity.Property(e => e.RiskScoreCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("Risk_Score_Cd");
-
-                entity.Property(e => e.SuspectIdentity)
-                    .HasMaxLength(50)
-                    .HasColumnName("Suspect_Identity");
-
-                entity.Property(e => e.SuspectQueue)
-                    .HasMaxLength(50)
-                    .HasColumnName("Suspect_Queue");
-
-                entity.Property(e => e.TransCount).HasColumnName("Trans_Count");
-            });
+            
 
             modelBuilder.Entity<Account>(entity =>
             {
@@ -7246,6 +6954,354 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(25)
                     .HasColumnName("Tel_No_2");
             });
+
+            
+        }
+
+        public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<AcLkpTable>(entity =>
+            {
+                entity.HasKey(e => new { e.LkpName, e.LkpValCd, e.LkpLangDesc })
+                    .HasName("AC_LKP_Table_PK2");
+
+                entity.ToTable("AC_LKP_Table", "AC");
+
+                entity.Property(e => e.LkpName)
+                    .HasMaxLength(50)
+                    .HasColumnName("LKP_Name");
+
+                entity.Property(e => e.LkpValCd)
+                    .HasMaxLength(100)
+                    .HasColumnName("LKP_Val_Cd");
+
+                entity.Property(e => e.LkpLangDesc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LKP_Lang_Desc");
+
+                entity.Property(e => e.ActiveFlg)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Active_Flg")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Deleted)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("DELETED")
+                    .IsFixedLength();
+
+                entity.Property(e => e.DisplayOrdrNo)
+                    .HasColumnType("numeric(6, 0)")
+                    .HasColumnName("Display_Ordr_No");
+
+                entity.Property(e => e.LkpLangDescParent)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("LKP_Lang_Desc_parent");
+
+                entity.Property(e => e.LkpNameParent)
+                    .HasMaxLength(50)
+                    .HasColumnName("LKP_Name_parent");
+
+                entity.Property(e => e.LkpValCdParent)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("LKP_Val_Cd_parent");
+
+                entity.Property(e => e.LkpValDesc)
+                    .HasMaxLength(4000)
+                    .HasColumnName("LKP_Val_Desc");
+            });
+            modelBuilder.Entity<AcRoutine>(entity =>
+            {
+                entity.HasKey(e => e.RoutineId);
+
+                entity.ToTable("AC_Routine", "AC");
+
+                entity.Property(e => e.RoutineId)
+                    .HasColumnType("numeric(12, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("Routine_Id");
+
+                entity.Property(e => e.AdminStatusCd)
+                    .HasMaxLength(25)
+                    .HasColumnName("admin_status_cd");
+
+                entity.Property(e => e.AlarmCategCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Categ_Cd");
+
+                entity.Property(e => e.AlarmSubcategCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Subcateg_Cd");
+
+                entity.Property(e => e.AlarmTypeCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Type_Cd");
+
+                entity.Property(e => e.ComparedDateAttribute)
+                    .HasMaxLength(255)
+                    .HasColumnName("Compared_Date_Attribute");
+
+                entity.Property(e => e.CorrespondingViewNm)
+                    .HasMaxLength(1024)
+                    .HasColumnName("corresponding_view_NM");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Create_User_Id");
+
+                entity.Property(e => e.CurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Current_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.DfltSupprDurCount).HasColumnName("Dflt_Suppr_Dur_Count");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("End_Date");
+
+                entity.Property(e => e.EndUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("End_User_Id");
+
+                entity.Property(e => e.ExecProbRate)
+                    .HasColumnType("numeric(7, 7)")
+                    .HasColumnName("Exec_Prob_Rate");
+
+                entity.Property(e => e.HeaderId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("header_id");
+
+                entity.Property(e => e.LastUpdateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Last_Update_Date");
+
+                entity.Property(e => e.LastUpdateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Last_Update_User_Id");
+
+                entity.Property(e => e.LogicDelInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Logic_Del_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.MlBayesWeight)
+                    .HasColumnType("numeric(15, 5)")
+                    .HasColumnName("ML_Bayes_Weight");
+
+                entity.Property(e => e.ObjLevelCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Obj_Level_Cd");
+
+                entity.Property(e => e.OrderInHeader).HasColumnName("Order_In_Header");
+
+                entity.Property(e => e.PrimObjNoVarName)
+                    .HasMaxLength(32)
+                    .HasColumnName("Prim_Obj_No_Var_Name");
+
+                entity.Property(e => e.ProdTypeCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Prod_Type_Cd");
+
+                entity.Property(e => e.RiskFactInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Risk_Fact_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.RootKey)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("root_key");
+
+                entity.Property(e => e.RouteGrpId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Route_Grp_Id");
+
+                entity.Property(e => e.RouteUserLongId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Route_User_Long_Id");
+
+                entity.Property(e => e.RoutineCategCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Routine_Categ_Cd");
+
+                entity.Property(e => e.RoutineCdLocDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Routine_Cd_Loc_Desc");
+
+                entity.Property(e => e.RoutineDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Routine_Desc");
+
+                entity.Property(e => e.RoutineDurCount).HasColumnName("Routine_Dur_Count");
+
+                entity.Property(e => e.RoutineMsgTxt)
+                    .HasMaxLength(255)
+                    .HasColumnName("Routine_Msg_Txt");
+
+                entity.Property(e => e.RoutineName)
+                    .HasMaxLength(32)
+                    .HasColumnName("Routine_Name");
+
+                entity.Property(e => e.RoutineRunFreqCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Routine_Run_Freq_Cd");
+
+                entity.Property(e => e.RoutineShortDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("Routine_Short_Desc");
+
+                entity.Property(e => e.RoutineStatusCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Routine_Status_Cd");
+
+                entity.Property(e => e.RoutineTypeCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Routine_Type_Cd");
+
+                entity.Property(e => e.SaveTrigTransInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Save_Trig_Trans_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.SkipIfNoTransCcyDayInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Skip_If_No_Trans_Ccy_Day_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.TfBayesWeight)
+                    .HasColumnType("numeric(15, 5)")
+                    .HasColumnName("TF_Bayes_Weight");
+
+                entity.Property(e => e.VerNo).HasColumnName("Ver_No");
+
+                entity.Property(e => e.VsdInstallationName)
+                    .HasMaxLength(255)
+                    .HasColumnName("VSD_Installation_Name");
+
+                entity.Property(e => e.VsdWinName)
+                    .HasMaxLength(25)
+                    .HasColumnName("VSD_Win_Name");
+            });
+
+            modelBuilder.Entity<AcScenarioEvent>(entity =>
+            {
+                entity.HasKey(e => e.EventId);
+
+                entity.ToTable("AC_Scenario_Event", "AC");
+
+                entity.Property(e => e.EventId)
+                    .HasColumnType("numeric(12, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("Event_Id");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Create_User_Id");
+
+                entity.Property(e => e.EventDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Event_Desc");
+
+                entity.Property(e => e.EventTypeCd)
+                    .HasMaxLength(60)
+                    .HasColumnName("Event_Type_Cd");
+
+                entity.Property(e => e.ScenarioRootKey)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Scenario_Root_Key");
+            });
+            modelBuilder.Entity<AcSuspectedObject>(entity =>
+            {
+                entity.HasKey(e => new { e.AlarmedObjLevelCd, e.AlarmedObjKey })
+                    .HasName("XPKAC_Suspected_Object");
+
+                entity.ToTable("AC_Suspected_Object", "AC");
+
+                entity.Property(e => e.AlarmedObjLevelCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Alarmed_Obj_level_Cd");
+
+                entity.Property(e => e.AlarmedObjKey)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Alarmed_Obj_Key");
+
+                entity.Property(e => e.AgeOldAlarm).HasColumnName("Age_Old_Alarm");
+
+                entity.Property(e => e.AggAmt)
+                    .HasColumnType("numeric(15, 3)")
+                    .HasColumnName("Agg_Amt");
+
+                entity.Property(e => e.AlarmedObjName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Alarmed_Obj_Name");
+
+                entity.Property(e => e.AlarmedObjNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("Alarmed_Obj_No");
+
+                entity.Property(e => e.AlarmsCount).HasColumnName("Alarms_Count");
+
+                entity.Property(e => e.Branch).HasMaxLength(50);
+
+                entity.Property(e => e.CreateTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Timestamp");
+
+                entity.Property(e => e.EmpInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Emp_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.MlScore).HasColumnName("ML_Score");
+
+                entity.Property(e => e.OwnerUid)
+                    .HasMaxLength(240)
+                    .HasColumnName("Owner_UID");
+
+                entity.Property(e => e.PoliticalExpPersonInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Political_Exp_Person_Ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ProdType)
+                    .HasMaxLength(3)
+                    .HasColumnName("Prod_Type");
+
+                entity.Property(e => e.RiskScoreCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Risk_Score_Cd");
+
+                entity.Property(e => e.SuspectIdentity)
+                    .HasMaxLength(50)
+                    .HasColumnName("Suspect_Identity");
+
+                entity.Property(e => e.SuspectQueue)
+                    .HasMaxLength(50)
+                    .HasColumnName("Suspect_Queue");
+
+                entity.Property(e => e.TransCount).HasColumnName("Trans_Count");
+            });
+
             modelBuilder.Entity<AcRoutineParameter>(entity =>
             {
                 entity.HasKey(e => new { e.RoutineId, e.ParmName });
@@ -7299,7 +7355,6 @@ namespace Data.ModelCreatingStrategies
 
             modelBuilder.HasSequence("sequence_generator_AC_Risk_Classifier_Category", "AC");
         }
-
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("Arabic_CI_AI");

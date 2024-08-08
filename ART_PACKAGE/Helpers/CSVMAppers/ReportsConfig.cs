@@ -122,7 +122,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
     }
 },
-            {
+            /*{
     nameof(ClearDetectController).ToLower(), new ReportConfig
     {
         SkipList = new List<string>
@@ -137,7 +137,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
             }
     }
-            },
+            },*/
             /*{
                 nameof(ReportController).ToLower(),new ReportConfig
                 {
