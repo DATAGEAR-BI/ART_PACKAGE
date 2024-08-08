@@ -43,6 +43,7 @@ namespace ART_PACKAGE.Middlewares.Security
                 string LoginProvider = _configuration.GetSection("LoginProvider").Value;
                 if (LoginProvider == "DGUM") _redirectUri = new PathString("/Account/DgUMAuth/login");
                 else if (LoginProvider == "LDAP") _redirectUri = new PathString("/Account/Ldapauth/login");
+                else _redirectUri = new PathString("/Identity/Account/Login");
 
                 context.Response.Redirect(_redirectUri);
                 return;

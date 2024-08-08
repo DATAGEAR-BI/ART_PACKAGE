@@ -1,6 +1,7 @@
 ﻿using ART_PACKAGE.Controllers.AMLANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
+using ART_PACKAGE.Controllers.DGSUPPORT;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.FTI;
 using ART_PACKAGE.Controllers.GOAML;
@@ -8,6 +9,7 @@ using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using Data.Data.AmlAnalysis;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTDGSupport;
 using Data.Data.ARTGOAML;
 using Data.Data.Audit;
 using Data.Data.ECM;
@@ -122,6 +124,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
           { nameof(DGAMLCasesDetailsController).ToLower() ,                             new List<Type>{ typeof(ArtDgAmlCaseDetailView) } }     ,
           { nameof(DGAMLCustomersDetailsController).ToLower() ,                         new List<Type>{ typeof(ArtDgAmlCustomerDetailView) } }     ,
           { nameof(DGAMLTriageController).ToLower() ,                                   new List<Type>{ typeof(ArtDgAmlTriageView) } }     ,
+          { nameof(TicketDetailsController).ToLower() ,                                   new List<Type>{ typeof(ArtTicketDetail) } }     ,
 
 
 

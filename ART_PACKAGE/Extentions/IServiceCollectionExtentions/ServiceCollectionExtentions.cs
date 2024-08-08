@@ -32,6 +32,7 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
+using Data.Data.ARTDGSupport;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -155,6 +156,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("KYC"))
             {
                 _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+            }
+            if (modulesToApply.Contains("DGSUPPORT"))
+            {
+                _ = services.AddDbContext<ARTDGSupportContext>(opt => contextBuilder(opt, connectionString));
             }
 
             // if (modulesToApply.Contains("EXPORT_SCHEDULAR"))

@@ -2,6 +2,7 @@
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTDGSupport;
 using Data.Data.ARTGOAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
@@ -25,6 +26,7 @@ namespace ART_PACKAGE.Controllers
         private readonly ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
         private readonly ArtGoAmlContext _dbGoAml;
+        private readonly ARTDGSupportContext _dbDGSupport;
 
         //private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
 
@@ -62,6 +64,12 @@ namespace ART_PACKAGE.Controllers
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     ArtGoAmlContext goamlService = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
                     _dbGoAml = goamlService;
+                }
+                if (modules.Contains("DGSUPPORT"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    ARTDGSupportContext DgSupportService = scope.ServiceProvider.GetRequiredService<ARTDGSupportContext>();
+                    _dbDGSupport = DgSupportService;
                 }
 
             }
@@ -216,6 +224,42 @@ namespace ART_PACKAGE.Controllers
             {
                 dates = dateData,
                 types = typesData
+            });
+
+
+        }
+
+        public IActionResult GetDGSupportChartsData()
+        {
+
+            var dateData = _dbDGSupport.ArtHomeTicketsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
+            {
+                year = x.Key.ToString(),
+                value = x.Sum(x => x.NumberOfTickets),
+                monthData = x.GroupBy(m => m.Month).Select(m =>
+                new
+                {
+                    Month = m.Key.ToString(),
+                    value = m.Sum(x => x.NumberOfTickets)
+                })
+            });
+            var clientsData = _dbDGSupport.ArtHomeTicketsPerClients.Select(x => new { ClientName = x.ClientName ?? "Unkown", x.NumberOfTickets, year = x.Year }); ;
+            var modulesData = _dbDGSupport.ArtHomeTicketsPerModules.Select(x => new { ModuleName = x.ModuleName ?? "Unkown", x.NumberOfTickets, year = x.Year }); ;
+            var productsData = _dbDGSupport.ArtHomeTicketsPerProducts.Select(x => new { ProductName = x.ProductName ?? "Unkown", x.NumberOfTickets, year = x.Year }); ;
+            var statusesData = _dbDGSupport.ArtHomeTicketsPerStatuses.Select(x => new { Status = x.Status ?? "Unkown", x.NumberOfTickets, year = x.Year }); ;
+            var agesData = _dbDGSupport.ArtHomeTicketsPerAges.Select(x => new { DayBucket = x.DayBucket ?? "Unkown", x.Total, year = x.Year }); ;
+            
+
+
+
+            return Ok(new
+            {
+                dates = dateData,
+                statuses = statusesData,
+                clients = clientsData,
+                products = productsData,
+                ages = agesData,
+                modules = modulesData,
             });
 
 

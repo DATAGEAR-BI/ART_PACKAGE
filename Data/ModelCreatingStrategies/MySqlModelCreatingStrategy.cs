@@ -15,6 +15,7 @@ using Data.FCFKC.AmlAnalysis;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Microsoft.EntityFrameworkCore;
+using Data.Data.ARTDGSupport;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -8178,6 +8179,175 @@ namespace Data.ModelCreatingStrategies
         {
 
             throw new NotImplementedException();
+        }
+        public void OnARTDGSupportModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtHomeTicketsPerAge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_AGE");
+
+                entity.Property(e => e.DayBucket)
+                    .HasMaxLength(18)
+                    .HasColumnName("DAY_BUCKET");
+
+                entity.Property(e => e.Total)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("TOTAL");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeTicketsPerClient>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_CLIENT");
+
+                entity.Property(e => e.ClientName)
+                    .HasMaxLength(255)
+                    .HasColumnName("CLIENT_NAME");
+
+                entity.Property(e => e.NumberOfTickets)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("NUMBER_OF_TICKETS");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeTicketsPerDate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_DATE");
+
+                entity.Property(e => e.Month)
+                    .HasMaxLength(9)
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.NumberOfTickets)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("NUMBER_OF_TICKETS");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeTicketsPerModule>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_MODULE");
+
+                entity.Property(e => e.ModuleName)
+                    .HasMaxLength(255)
+                    .HasColumnName("MODULE_NAME");
+
+                entity.Property(e => e.NumberOfTickets)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("NUMBER_OF_TICKETS");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeTicketsPerProduct>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_PRODUCT");
+
+                entity.Property(e => e.NumberOfTickets)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("NUMBER_OF_TICKETS");
+
+                entity.Property(e => e.ProductName)
+                    .HasMaxLength(255)
+                    .HasColumnName("PRODUCT_NAME");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeTicketsPerStatus>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_TICKETS_PER_STATUS");
+
+                entity.Property(e => e.NumberOfTickets)
+                    .HasColumnType("bigint(21)")
+                    .HasColumnName("NUMBER_OF_TICKETS");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(13)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int(4)")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtTicketDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_TICKET_DETAILS");
+
+                entity.Property(e => e.ClientName)
+                    .HasMaxLength(255)
+                    .HasColumnName("CLIENT_NAME")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CLOSE_DATE");
+
+                entity.Property(e => e.LastUpdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LAST_UPDATE");
+
+                entity.Property(e => e.OpenDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OPEN_DATE");
+
+                entity.Property(e => e.PendingReason)
+                    .HasColumnType("mediumtext")
+                    .HasColumnName("PENDING REASON");
+
+                entity.Property(e => e.ServiceName)
+                    .HasMaxLength(255)
+                    .HasColumnName("SERVICE_NAME")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.ServiceSubcategoryName)
+                    .HasMaxLength(255)
+                    .HasColumnName("SERVICE_SUBCATEGORY_NAME")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Status)
+                    .HasColumnType("enum('assigned','closed','dispatched','escalated_tto','escalated_ttr','new','pending','redispatched','resolved')")
+                    .HasColumnName("STATUS")
+                    .HasDefaultValueSql("'new'");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("TICKET_NUMBER")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .HasColumnName("TITLE")
+                    .HasDefaultValueSql("''");
+            });
         }
     }
 }

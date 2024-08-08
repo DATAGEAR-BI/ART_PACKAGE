@@ -76,7 +76,15 @@
         #region EXTERNAL CUSTOMER SUMMARY
         public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH";
         public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE";
+
         #endregion
+
+
+        public static readonly string ART_ST_TICKETS_PER_AGE = "ART.ART_ST_TICKETS_PER_AGE";
+        public static readonly string ART_ST_TICKETS_PER_CLIENT = "ART.ART_ST_TICKETS_PER_CLIENT";
+        public static readonly string ART_ST_TICKETS_PER_MODULE = "ART.ART_ST_TICKETS_PER_MODULE";
+        public static readonly string ART_ST_TICKETS_PER_PRODUCT = "ART.ART_ST_TICKETS_PER_PRODUCT";
+        public static readonly string ART_ST_TICKETS_PER_STATUS = "ART.ART_ST_TICKETS_PER_STATUS";
 
 
 

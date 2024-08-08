@@ -16,7 +16,7 @@
 }
 else
 {
-    @if (!modules.Contains("SASAML") && !modules.Contains("ECM") && !modules.Contains("DGAML"))
+    @if (!modules.Contains("SASAML") && !modules.Contains("ECM") && !modules.Contains("DGAML") && !modules.Contains("DGSUPPORT"))
     {
         <h1> You Dont Have ECM OR SASAML Modules in the app </h1>
     }
@@ -45,6 +45,12 @@ else
                 <script src="~/js/GoAmlHomeChartsjs.js" type="module" defer></script>
 
             }
+            @if (homeType.Contains(HomeType.DGSUPPORT) && modules.Contains("DGSUPPORT"))
+            {
+                <script src="~/js/DGSupportHomeChartsjs.js" type="module" defer></script>
+
+            }
+
 
 }
         @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
@@ -103,6 +109,31 @@ else
                     <div id="charts" class="row">
                         <m-piewithbar-chart id="goAmldateChart" data-title="Reports Per Year & Month" data-barcategory="month" data-donutcategory="year" data-barvalue="value" data-donutvalue="value" data-bardatakey="monthData" data-exportValueName="Number Of Reports" style="height:600px;display:block !important;"></m-piewithbar-chart>
                         <m-bar-chart id="goAmltype" class="col-12" data-title="Reports Per Type" data-category="reportType" data-value="numberOfReports" style="height:600px;display:block !important;"></m-bar-chart>
+                    </div>
+                </div>
+            </section>
+        }
+
+        @if (homeType.Contains(HomeType.DGSUPPORT) && modules.Contains("DGSUPPORT"))
+        {
+            <section class="content-header">
+
+                <h1>
+                    DG SUPPORT Dashboard
+
+                </h1>
+
+            </section>
+            <section class="content container-fluid">
+
+                <div style="align-content:center">
+                    <div id="charts" class="row">
+                        <m-piewithbar-chart id="dgSupportdateChart" data-title="Tickets Per Year & Month" data-barcategory="month" data-donutcategory="year" data-barvalue="value" data-donutvalue="value" data-bardatakey="monthData" data-exportValueName="Number Of Tickets" style="height:600px;display:block !important;"></m-piewithbar-chart>
+                        <m-bar-chart id="dgSupportAge" class="col-12" data-title="Tickets Per Age" data-category="dayBucket" data-value="total" style="height:600px;display:block !important;"></m-bar-chart>
+                        <m-bar-chart id="dgSupportClient" class="col-12" data-title="Tickets Per Client" data-category="clientName" data-value="numberOfTickets" style="height:600px;display:block !important;"></m-bar-chart>
+                        <m-bar-chart id="dgSupportModule" class="col-12" data-title="Tickets Per Module" data-category="moduleName" data-value="numberOfTickets" style="height:600px;display:block !important;"></m-bar-chart>
+                        <m-bar-chart id="dgSupportProduct" class="col-12" data-title="Tickets Per Product" data-category="productName" data-value="numberOfTickets" style="height:600px;display:block !important;"></m-bar-chart>
+                        <m-bar-chart id="dgSupportStatus" class="col-12" data-title="Tickets Per Status" data-category="status" data-value="numberOfTickets" style="height:600px;display:block !important;"></m-bar-chart>
                     </div>
                 </div>
             </section>

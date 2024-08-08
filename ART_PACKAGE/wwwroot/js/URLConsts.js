@@ -145,4 +145,8 @@
     autorules: "AutoRules/GetData",
 
 
+    TicketDetails: "/TicketDetails/GetData",
+    TicketsSummary: "/TicketsSummary/GetData",
+
+
 };

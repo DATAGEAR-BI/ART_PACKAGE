@@ -1,8 +1,11 @@
 ﻿using Data.Constants.db;
 using Data.Data.ARTDGAML;
+using Data.Data.ARTDGSupport;
 using Data.Data.ARTGOAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
+using Microsoft.EntityFrameworkCore;
+using OracleInternal.SqlAndPlsqlParser.LocalParsing;
 
 namespace Data.Constants.StoredProcs
 {
@@ -148,6 +151,29 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStDgAmlExternalCustomerPerBranch) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH,
 
                 Type t when t == typeof(ArtStDgAmlExternalCustomerPerType) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE,
+
+
+   
+
+                Type t when t == typeof(ArtStTicketsPerAge) && dbType == DbTypes.SqlServer =>    SQLSERVERSPNames.ART_ST_TICKETS_PER_AGE,
+                Type t when t == typeof(ArtStTicketsPerClient) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TICKETS_PER_CLIENT,
+                Type t when t == typeof(ArtStTicketsPerModule) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TICKETS_PER_MODULE,
+                Type t when t == typeof(ArtStTicketsPerProduct) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TICKETS_PER_PRODUCT,
+                Type t when t == typeof(ArtStTicketsPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_TICKETS_PER_STATUS,
+
+                Type t when t == typeof(ArtStTicketsPerAge) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_TICKETS_PER_AGE,
+                Type t when t == typeof(ArtStTicketsPerClient) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_TICKETS_PER_CLIENT,
+                Type t when t == typeof(ArtStTicketsPerModule) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_TICKETS_PER_MODULE,
+                Type t when t == typeof(ArtStTicketsPerProduct) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_TICKETS_PER_PRODUCT,
+                Type t when t == typeof(ArtStTicketsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_TICKETS_PER_STATUS,
+
+                Type t when t == typeof(ArtStTicketsPerAge) && dbType == DbTypes.SqlServer => ORACLESPName.ART_ST_TICKETS_PER_AGE,
+                Type t when t == typeof(ArtStTicketsPerClient) && dbType == DbTypes.SqlServer => ORACLESPName.ART_ST_TICKETS_PER_CLIENT,
+                Type t when t == typeof(ArtStTicketsPerModule) && dbType == DbTypes.SqlServer => ORACLESPName.ART_ST_TICKETS_PER_MODULE,
+                Type t when t == typeof(ArtStTicketsPerProduct) && dbType == DbTypes.SqlServer =>ORACLESPName.ART_ST_TICKETS_PER_PRODUCT,
+                Type t when t == typeof(ArtStTicketsPerStatus) && dbType == DbTypes.SqlServer => ORACLESPName.ART_ST_TICKETS_PER_STATUS,
+
+
 
 
                 // Add more cases for other types if needed

@@ -76,5 +76,14 @@
         public static readonly string ART_ST_FATCA_CUSTS_PER_NATION = "[ART_DB].[ART_ST_FATCA_CUSTS_PER_NATION]";
         public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "[ART_DB].[ART_ST_FATCA_CASES_PER_STATUS]";
 
-    }
+
+
+        public static readonly string ART_ST_TICKETS_PER_AGE = "[ART_DB].[ART_ST_TICKETS_PER_AGE]";
+        public static readonly string ART_ST_TICKETS_PER_CLIENT = "[ART_DB].[ART_ST_TICKETS_PER_CLIENT]";
+        public static readonly string ART_ST_TICKETS_PER_MODULE = "[ART_DB].[ART_ST_TICKETS_PER_MODULE]";
+        public static readonly string ART_ST_TICKETS_PER_PRODUCT = "[ART_DB].[ART_ST_TICKETS_PER_PRODUCT]";
+        public static readonly string ART_ST_TICKETS_PER_STATUS = "[ART_DB].[ART_ST_TICKETS_PER_STATUS]";
+    
+
+}
 }

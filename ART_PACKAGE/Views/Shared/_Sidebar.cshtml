@@ -728,6 +728,28 @@
                             </li>
 
                         }
+
+                        @if (Modules.Contains("DGSUPPORT"))
+                        {
+                            <li class="treeview ">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-book"></i> <span>SUPPORT REPORTS</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "TicketsSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Tickets Summary</span></a>
+                                    </li>
+                                  
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "TicketDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Tickets Details</span></a>
+                                    </li>
+                               
+                                </ul>
+                            </li>
+                        }
                     </ul>
 
 

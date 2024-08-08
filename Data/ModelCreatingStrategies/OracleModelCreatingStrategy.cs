@@ -18193,5 +18193,9 @@ namespace Data.ModelCreatingStrategies
 
             throw new NotImplementedException();
         }
+        public void OnARTDGSupportModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -130,5 +130,9 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnCRPModelCreating(modelBuilder);
         }
+        public void OnARTDGSupportModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnARTDGSupportModelCreating(modelBuilder);
+        }
     }
 }
