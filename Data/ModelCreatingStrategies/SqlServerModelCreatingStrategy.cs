@@ -2350,6 +2350,8 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.InvestigationDays).HasColumnName("INVESTIGATION_DAYS");
 
+                entity.Property(e => e.AlertAgeAtEndOfMonth).HasColumnName("ALERT_AGE_AT_END_OF_MONTH");
+
                 entity.Property(e => e.MoneyLaunderingRiskScore)
                     .HasColumnType("decimal(3, 0)")
                     .HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
@@ -2389,6 +2391,12 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .IsUnicode(false)
                     .HasColumnName("SCENARIO_NAME");
+
+                entity.Property(e => e.AlertAgeGroup)
+                    .HasMaxLength(24)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_AGE_GROUP");
+
                 entity.Property(e => e.CasesStatus)
                    .HasMaxLength(100)
                    .HasColumnName("CASE_STATUS");
@@ -2462,6 +2470,12 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("OWNER");
+                entity.Property(e => e.AlertAgeAtEndOfMonth).HasColumnName("ALERT_AGE_AT_END_OF_MONTH");
+
+                entity.Property(e => e.AlertAgeGroup)
+                                    .HasMaxLength(24)
+                                    .IsUnicode(false)
+                                    .HasColumnName("ALERT_AGE_GROUP");
             });
 
             modelBuilder.Entity<ArtAmlCustomersDetailsView>(entity =>
