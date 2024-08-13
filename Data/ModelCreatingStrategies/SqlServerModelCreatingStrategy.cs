@@ -2291,6 +2291,12 @@ namespace Data.ModelCreatingStrategies
 
                 entity.ToView("ART_AML_ALERT_DETAIL_VIEW", "ART_DB");
 
+                entity.Property(e => e.AlertAgeAtEndOfMonth).HasColumnName("ALERT_AGE_AT_END_OF_MONTH");
+                entity.Property(e => e.AlertAgeGroup)
+                                    .HasMaxLength(24)
+                                    .IsUnicode(false)
+                                    .HasColumnName("ALERT_AGE_GROUP");
+
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
                     .HasColumnName("ACTUAL_VALUES_TEXT");
@@ -2399,6 +2405,13 @@ namespace Data.ModelCreatingStrategies
                 entity.HasNoKey();
 
                 entity.ToView("ART_AML_CASE_DETAILS_VIEW", "ART_DB");
+
+
+                entity.Property(e => e.AlertAgeAtEndOfMonth).HasColumnName("ALERT_AGE_AT_END_OF_MONTH");
+                entity.Property(e => e.AlertAgeGroup)
+                                    .HasMaxLength(24)
+                                    .IsUnicode(false)
+                                    .HasColumnName("ALERT_AGE_GROUP");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(100)

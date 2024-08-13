@@ -18,6 +18,8 @@
         public DateTime? AlertRunDate { get; set; }
 
         public string? BranchNumber { get; set; }
+        public int? AlertAgeAtEndOfMonth { get; set; }
+        public string? AlertAgeGroup { get; set; }
 
     }
 }
