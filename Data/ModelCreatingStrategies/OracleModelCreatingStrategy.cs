@@ -21,6 +21,8 @@ using Data.Data;
 using Data.Data.ARTDGAML;
 using Data.DGAMLAC;
 using Data.DGAMLCORE;
+using Data.Data.SASAudit;
+using Data.Data.CRP;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -15442,7 +15444,203 @@ namespace Data.ModelCreatingStrategies
 
         public void OnCRPModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.HasDefaultSchema("ART")
+               .UseCollation("USING_NLS_COMP");
+
+            modelBuilder.Entity<ArtCrpConfig>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_CONFIG");
+
+                entity.Property(e => e.ActionDetail)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("ACTION_DETAIL");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.Checker)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CHECKER");
+
+                entity.Property(e => e.CheckerAction)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CHECKER_ACTION");
+
+                entity.Property(e => e.CheckerDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CHECKER_DATE");
+
+                entity.Property(e => e.Maker)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("MAKER");
+
+                entity.Property(e => e.MakerDate)
+                    .HasPrecision(6)
+                    .HasColumnName("MAKER_DATE");
+            });
+
+            modelBuilder.Entity<ArtCrpSystemPerformance>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_SYSTEM_PERFORMANCE");
+
+                entity.Property(e => e.CaseCurrentRate)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CURRENT_RATE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseType)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_TYPE");
+
+                entity.Property(e => e.Casetargetrate)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASETARGETRATE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.CustomerName)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CUSTOMER_NAME");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CUSTOMER_NUMBER");
+
+                entity.Property(e => e.DurationsInDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_DAYS");
+
+                entity.Property(e => e.DurationsInHours)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_HOURS");
+
+                entity.Property(e => e.DurationsInMinutes)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_MINUTES");
+
+                entity.Property(e => e.DurationsInSeconds)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_SECONDS");
+
+                entity.Property(e => e.EcmLastStatusDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ECM_LAST_STATUS_DATE");
+            });
+
+            modelBuilder.Entity<ArtCrpUserPerformance>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_USER_PERFORMANCE");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION");
+
+                entity.Property(e => e.ActionUser)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_USER");
+
+                entity.Property(e => e.AsssignedTime)
+                    .HasPrecision(6)
+                    .HasColumnName("ASSSIGNED_TIME");
+
+                entity.Property(e => e.CaseCurrentRate)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CURRENT_RATE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseType)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CASE_TYPE");
+
+                entity.Property(e => e.Casetargetrate)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASETARGETRATE")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.CustomerName)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CUSTOMER_NAME");
+
+                entity.Property(e => e.CustomerNumber)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("CUSTOMER_NUMBER");
+
+                entity.Property(e => e.DurationsInDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_DAYS");
+
+                entity.Property(e => e.DurationsInHours)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_HOURS");
+
+                entity.Property(e => e.DurationsInMinutes)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_MINUTES");
+
+                entity.Property(e => e.DurationsInSeconds)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("DURATIONS_IN_SECONDS");
+
+                entity.Property(e => e.ReleasedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("RELEASED_DATE");
+            });
+
+            modelBuilder.HasSequence("HF_JOB_ID_SEQ");
+
+            modelBuilder.HasSequence("HF_SEQUENCE");
         }
 
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder)
@@ -18193,5 +18391,356 @@ namespace Data.ModelCreatingStrategies
 
             throw new NotImplementedException();
         }
+
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SasAuditTrailReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_AUDIT_TRAIL_REPORT");
+
+                entity.Property(e => e.ActionDate)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_DATE");
+
+                entity.Property(e => e.ActionOn)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_ON");
+
+                entity.Property(e => e.ActionType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_TYPE");
+
+                entity.Property(e => e.DateTime)
+                    .HasColumnType("DATE")
+                    .HasColumnName("DATE_TIME");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.ObjectName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_NAME");
+
+                entity.Property(e => e.ObjectType)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJECT_TYPE");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerProfile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_PROFILE");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.GroupDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DESCRIPTION");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_NAME");
+
+                entity.Property(e => e.Grouptype)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPTYPE");
+            });
+
+            modelBuilder.Entity<SasListAccessRightPerRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_RIGHT_PER_ROLE");
+
+                entity.Property(e => e.CapName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAP_NAME");
+
+                entity.Property(e => e.CapabilitiyGroupName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIY_GROUP_NAME");
+
+                entity.Property(e => e.CapabilityId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITY_ID");
+
+                entity.Property(e => e.ComponentName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPONENT_NAME");
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE");
+
+                entity.Property(e => e.RoleDescription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DESCRIPTION");
+            });
+
+            modelBuilder.Entity<SasListAccessUsersGroupsCap>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_ACCESS_USERS_GROUPS_CAPS");
+
+                entity.Property(e => e.Capabilities)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPABILITIES");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+
+                entity.Property(e => e.Ggroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GGROUP");
+
+                entity.Property(e => e.Rrole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("RROLE");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SasListGroupsRolesSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_GROUPS_ROLES_SUMMARY");
+
+                entity.Property(e => e.Groups)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUPS");
+
+                entity.Property(e => e.Roles)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLES");
+            });
+
+            modelBuilder.Entity<SasListOfUsersAndGroupsRole>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_OF_USERS_AND_GROUPS_ROLES");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.GroupDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("GROUP_DISPLAY_NAME");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("JOB_TITLE");
+
+                entity.Property(e => e.MemberOfGroup)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("MEMBER_OF_GROUP");
+
+                entity.Property(e => e.RoleDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ROLE_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.UserRole)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ROLE");
+            });
+
+            modelBuilder.Entity<SasListUsersDepartment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SAS_LIST_USERS_DEPARTMENT");
+
+                entity.Property(e => e.Appname)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
+                    .HasColumnName("APPNAME");
+
+                entity.Property(e => e.Department)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT");
+
+                entity.Property(e => e.Logindatetime)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LOGINDATETIME");
+
+                entity.Property(e => e.UserDesccription)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DESCCRIPTION");
+
+                entity.Property(e => e.UserDisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_DISPLAY_NAME");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_ID");
+
+                entity.Property(e => e.UserTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_TITLE");
+            });
+            modelBuilder.Entity<VaLastLoginView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VA_LAST_LOGIN_VIEW");
+
+                entity.Property(e => e.Appname)
+                    .HasMaxLength(70)
+                    .IsUnicode(false)
+                    .HasColumnName("APPNAME");
+
+                entity.Property(e => e.Logindate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LOGINDATE");
+
+                entity.Property(e => e.Logindatetime)
+                    .HasPrecision(9)
+                    .HasColumnName("LOGINDATETIME");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(80)
+                    .IsUnicode(false)
+                    .HasColumnName("USERNAME");
+            });
+            modelBuilder.Entity<VaLicensed>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_LICENSED");
+
+                entity.Property(e => e.AppLebal)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("APP_LEBAL");
+
+                entity.Property(e => e.BeginDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("BEGIN_DATE");
+
+                entity.Property(e => e.Diedate)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("DIEDATE");
+
+                entity.Property(e => e.Fmtname)
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasColumnName("FMTNAME");
+
+                entity.Property(e => e.ProStart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_START");
+
+                entity.Property(e => e.ProType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PRO_TYPE");
+            });
+        }
+
     }
 }

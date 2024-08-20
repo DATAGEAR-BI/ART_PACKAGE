@@ -1120,6 +1120,15 @@
 		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SASAuditListApp\Index.cshtml" />
+		<None Include="Views\SASAuditTrailAccessGroupRole\Index.cshtml" />
+		<None Include="Views\SASAuditTrailAccessRole\Index.cshtml" />
+		<None Include="Views\SASAuditTrailAction\Index.cshtml" />
+		<None Include="Views\SASAuditTrailGroupsRolesSummary\Index.cshtml" />
+		<None Include="Views\SASAuditTrailLastLogin\Index.cshtml" />
+		<None Include="Views\SASAuditTrailUsersDepartment\Index.cshtml" />
+		<None Include="Views\SASAuditTrailUsersGroupsCaps\Index.cshtml" />
+		<None Include="Views\SASAuditTrailUsersGroups\Index.cshtml" />
 		<None Include="Views\SystemTailoring\Index.cshtml" />
 		<None Include="Views\Triage\Index.cshtml" />
 

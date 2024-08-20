@@ -8179,5 +8179,10 @@ namespace Data.ModelCreatingStrategies
 
             throw new NotImplementedException();
         }
+
+        public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
