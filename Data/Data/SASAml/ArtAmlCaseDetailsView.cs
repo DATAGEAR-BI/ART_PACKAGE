@@ -16,8 +16,9 @@
         public DateTime? CreateDate { get; set; }
         public DateTime? ClosedDate { get; set; }
         public DateTime? AlertRunDate { get; set; }
-
         public string? BranchNumber { get; set; }
+        public int? AlertAgeDaily { get; set; }
+        public string? AlertAgeGroupDaily { get; set; }
         public int? AlertAgeAtEndOfMonth { get; set; }
         public string? AlertAgeGroup { get; set; }
 

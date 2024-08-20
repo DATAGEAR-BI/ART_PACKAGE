@@ -37,8 +37,10 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"OwnerUserid" , new GridColumnConfiguration { DisplayName = "Owner "  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"InvestigationDays" , new GridColumnConfiguration { DisplayName = "Investigation Days"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
                                                                                 { "Queue" , new GridColumnConfiguration { DisplayName = "Queue", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                                                                                {"AlertAgeDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
+                                                                                {"AlertAgeGroupDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } 
                                                                                 { "AlertAgeAtEndOfMonth" , new GridColumnConfiguration { DisplayName = "Alert Age At End Of Month", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
-                                                                                { "AlertAgeGroup" , new GridColumnConfiguration { DisplayName = "Alert Age Group", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+                                                                                { "Alert Age Group" , new GridColumnConfiguration { DisplayName = "AlertAgeGroup", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
         };
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";
