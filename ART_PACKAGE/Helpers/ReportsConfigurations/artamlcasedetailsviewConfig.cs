@@ -22,7 +22,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"Owner" , new GridColumnConfiguration { DisplayName = "Owner"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ClosedDate" , new GridColumnConfiguration { DisplayName = "Closed Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
-            { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+            { "AlertRunDate" , new GridColumnConfiguration { DisplayName = "Alert Run Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+            {"AlertAgeDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
+            {"AlertAgeGroupDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } }
         };
 
             ReportTitle = "Cases Details";

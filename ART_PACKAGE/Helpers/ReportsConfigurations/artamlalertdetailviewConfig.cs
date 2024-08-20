@@ -36,7 +36,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"ActualValuesText" , new GridColumnConfiguration { DisplayName = "Scenario Message"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"OwnerUserid" , new GridColumnConfiguration { DisplayName = "Owner "  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                                                                                 {"InvestigationDays" , new GridColumnConfiguration { DisplayName = "Investigation Days"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
-                                                                                { "Queue" , new GridColumnConfiguration { DisplayName = "Queue", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+                                                                                { "Queue" , new GridColumnConfiguration { DisplayName = "Queue", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                                                                                {"AlertAgeDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
+                                                                                {"AlertAgeGroupDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } 
         };
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";

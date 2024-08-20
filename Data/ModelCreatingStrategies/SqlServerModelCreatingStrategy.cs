@@ -2392,6 +2392,13 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.CasesStatus)
                    .HasMaxLength(100)
                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.AlertAgeDaily).HasColumnName("ALERT_AGE_DAILY");
+                entity.Property(e => e.AlertAgeGroupDaily)
+                   .HasMaxLength(24)
+                   .IsUnicode(false)
+                   .HasColumnName("ALERT_AGE_GROUP_DAILY");
+
             });
 
             modelBuilder.Entity<ArtAmlCaseDetailsView>(entity =>
@@ -2462,6 +2469,11 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("OWNER");
+                entity.Property(e => e.AlertAgeDaily).HasColumnName("ALERT_AGE_DAILY");
+                entity.Property(e => e.AlertAgeGroupDaily)
+                   .HasMaxLength(24)
+                   .IsUnicode(false)
+                   .HasColumnName("ALERT_AGE_GROUP_DAILY");
             });
 
             modelBuilder.Entity<ArtAmlCustomersDetailsView>(entity =>

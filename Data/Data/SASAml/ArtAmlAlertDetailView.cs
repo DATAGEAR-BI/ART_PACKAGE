@@ -35,5 +35,7 @@
         public string? ReportCloseRsn { get; set; }
         public string? EmployeeInd { get; set; }
         public int? InvestigationDays { get; set; }
+        public int? AlertAgeDaily { get; set; }
+        public string? AlertAgeGroupDaily { get; set; }
     }
 }
