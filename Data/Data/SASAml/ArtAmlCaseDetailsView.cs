@@ -20,7 +20,7 @@
         public int? AlertAgeDaily { get; set; }
         public string? AlertAgeGroupDaily { get; set; }
         public int? AlertAgeAtEndOfMonth { get; set; }
-        public string? AlertAgeGroup { get; set; }
+        public string? AlertAgeGroupMonthly { get; set; }
 
     }
 }

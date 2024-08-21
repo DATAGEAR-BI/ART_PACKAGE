@@ -2392,10 +2392,10 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("SCENARIO_NAME");
 
-                entity.Property(e => e.AlertAgeGroup)
+                entity.Property(e => e.AlertAgeGroupMonthly)
                     .HasMaxLength(24)
                     .IsUnicode(false)
-                    .HasColumnName("ALERT_AGE_GROUP");
+                    .HasColumnName("ALERT_AGE_GROUP_MONTHLY");
 
                 entity.Property(e => e.CasesStatus)
                    .HasMaxLength(100)
@@ -2479,10 +2479,10 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("OWNER");
                 entity.Property(e => e.AlertAgeAtEndOfMonth).HasColumnName("ALERT_AGE_AT_END_OF_MONTH");
 
-                entity.Property(e => e.AlertAgeGroup)
+                entity.Property(e => e.AlertAgeGroupMonthly)
                                     .HasMaxLength(24)
                                     .IsUnicode(false)
-                                    .HasColumnName("ALERT_AGE_GROUP");
+                                    .HasColumnName("ALERT_AGE_GROUP_MONTHLY");
                 entity.Property(e => e.AlertAgeDaily).HasColumnName("ALERT_AGE_DAILY");
                 entity.Property(e => e.AlertAgeGroupDaily)
                    .HasMaxLength(24)
