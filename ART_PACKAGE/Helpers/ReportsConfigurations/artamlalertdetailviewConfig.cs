@@ -40,7 +40,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"AlertAgeDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
                                                                                 {"AlertAgeGroupDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
                                                                                 { "AlertAgeAtEndOfMonth" , new GridColumnConfiguration { DisplayName = "Alert Age At End Of Month", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
-                                                                                { "Alert Age Group" , new GridColumnConfiguration { DisplayName = "AlertAgeGroup", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                                                                                { "AlertAgeGroupMonthly" , new GridColumnConfiguration { DisplayName = "Alert Age Group Monthly", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
         };
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";
