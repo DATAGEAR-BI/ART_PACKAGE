@@ -41,6 +41,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                                                                                 {"AlertAgeGroupDaily" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } ,
                                                                                 { "AlertAgeAtEndOfMonth" , new GridColumnConfiguration { DisplayName = "Alert Age At End Of Month", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                                                                                 { "AlertAgeGroupMonthly" , new GridColumnConfiguration { DisplayName = "Alert Age Group Monthly", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                                                                                { "AlertAgeGroupDailyEom" , new GridColumnConfiguration { DisplayName = "Alert Age Group Daily Eom", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }, 
         };
             ReportTitle = "Alert Details";
             ReportDescription = "Presents the alerts details";

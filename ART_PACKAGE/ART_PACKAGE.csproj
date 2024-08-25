@@ -7,6 +7,16 @@
 		
 	</PropertyGroup>
 	
+	 <!-- Custom target to copy dgum_cer folder to release -->
+  <Target Name="CopyDgumCerToRelease" AfterTargets="Build">
+    <ItemGroup>
+      <FilesToCopy Include="dgum_cer\**\*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(FilesToCopy)" 
+          DestinationFolder="$(OutputPath)dgum_cer\" 
+          SkipUnchangedFiles="true" />
+  </Target>
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />

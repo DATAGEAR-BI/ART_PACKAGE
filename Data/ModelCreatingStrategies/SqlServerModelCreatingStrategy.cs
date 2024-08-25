@@ -2412,6 +2412,10 @@ namespace Data.ModelCreatingStrategies
                    .HasMaxLength(24)
                    .IsUnicode(false)
                    .HasColumnName("ALERT_AGE_GROUP_DAILY");
+                entity.Property(e => e.AlertAgeGroupDailyEom)
+                   .HasMaxLength(24)
+                   .IsUnicode(false)
+                   .HasColumnName("ALERT_AGE_GROUP_DAILY_EOM");
 
             });
 
@@ -2501,6 +2505,10 @@ namespace Data.ModelCreatingStrategies
                    .HasMaxLength(24)
                    .IsUnicode(false)
                    .HasColumnName("ALERT_AGE_GROUP_DAILY");
+                entity.Property(e => e.AlertAgeGroupDailyEom)
+                   .HasMaxLength(24)
+                   .IsUnicode(false)
+                   .HasColumnName("ALERT_AGE_GROUP_DAILY_EOM");
             });
 
             modelBuilder.Entity<ArtAmlCustomersDetailsView>(entity =>

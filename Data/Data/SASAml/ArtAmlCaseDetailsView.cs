@@ -21,6 +21,8 @@
         public string? AlertAgeGroupDaily { get; set; }
         public int? AlertAgeAtEndOfMonth { get; set; }
         public string? AlertAgeGroupMonthly { get; set; }
+        public string? AlertAgeGroupDailyEom { get; set; }
+
 
     }
 }
