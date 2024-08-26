@@ -11,7 +11,7 @@ on:
   pull_request:
     branches:
       - main
-      - ABK 
+      - ABK
 
 jobs:
   build:
@@ -29,42 +29,41 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: List Folders
-        run: ls
-
       - name: Build
         run: dotnet build --no-restore
 
       - name: Build and Publish
         run: dotnet publish -c Release -o ./Release
 
-      - name: Check jq Installation
-        run: |
-          jq --version
-
       - name: Validate and Extract Data from JSON
         id: extract_data
         run: |
-            # Remove comments (//) and trim spaces from JSON
-            content=$(sed '/^\s*\/\//d' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's/#.*$//' | tr -d '\r')
+          # Remove comments (// and #) and trim spaces from JSON
+          content=$(sed '/^\s*\/\//d' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's/#.*$//' | tr -d '\r')
 
-            # Save cleaned content to a new file
-            echo "$content" > cleaned_appsettings.json
-    
-            # Validate cleaned JSON
-            if ! jq . cleaned_appsettings.json > /dev/null 2>&1; then
-                echo "Invalid JSON format. Exiting."
-                exit 1
-            fi
-    
-            # Extract data
-            version=$(jq -r '.Version' cleaned_appsettings.json)
-            release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
-    
-            # Set outputs
-            echo "VERSION=$version" >> $GITHUB_ENV
-            echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+          # Save cleaned content to a new file
+          echo "$content" > cleaned_appsettings.json
 
+          # Remove trailing commas if present
+          sed -i 's/,\s*}/}/g' cleaned_appsettings.json
+          sed -i 's/,\s*]/]/g' cleaned_appsettings.json
+
+          # Validate cleaned JSON
+          if ! jq . cleaned_appsettings.json > /dev/null 2>&1; then
+            echo "Invalid JSON format. Exiting."
+            exit 1
+          fi
+
+          # Print cleaned JSON for debugging
+          cat cleaned_appsettings.json
+
+          # Extract data
+          version=$(jq -r '.Version' cleaned_appsettings.json)
+          release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
+
+          # Set outputs
+          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
 
       - name: Check for existing release
         id: check_release
@@ -75,14 +74,19 @@ jobs:
             | jq -r '.tag_name')
           if [ "$existing_tag" = "${{ env.VERSION }}" ]; then
             echo "Release with this tag already exists."
-            echo "release_exists=true" >> $GITHUB_ENV
+            echo "::set-output name=release_exists::true"
           else
-            echo "release_exists=false" >> $GITHUB_ENV
+            echo "::set-output name=release_exists::false"
           fi
 
-      - name: Create or Update Release
+      - name: Update or Create Release
         id: release
-        if: env.release_exists == 'false'
+        if: steps.check_release.outputs.release_exists == 'true'
+        run: echo "Updating existing release with tag ${{ env.VERSION }}"
+
+      - name: Create a New Release
+        id: create_release
+        if: steps.check_release.outputs.release_exists == 'false'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -106,7 +110,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Release.zip
           asset_name: Release.zip
           asset_content_type: application/zip
