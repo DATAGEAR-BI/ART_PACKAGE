@@ -41,24 +41,21 @@ jobs:
       - name: Get Version and Tag From Code
         id: set_ver
         run: |
-            content=$(cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json)
+            # Read the JSON file and remove comments (lines starting with // or #)
+            content=$(grep -vE '^\s*//' ${{ github.workspace }}/ART_PACKAGE/appsettings.json)
     
-            # Debugging: Output the content of appsettings.json
-            echo "Content of appsettings.json:"
-            echo "$content"
+            # Handling multi-line JSON for GitHub Actions
+            content="${content//'%'/'%25'}"
+            content="${content//$'\n'/'%0A'}"
+            content="${content//$'\r'/'%0D'}"
     
-            # Try parsing the JSON content
-            version=$(echo "$content" | jq -r '.Version' || echo "Invalid JSON")
-            release_name=$(echo "$content" | jq -r '.ReleaseName' || echo "Invalid JSON")
+            # Extract the version using jq (or manually if jq is unavailable)
+            version=$(echo "$content" | jq -r '.Version')
     
-            # Check for parsing errors
-            if [ "$version" = "Invalid JSON" ] || [ "$release_name" = "Invalid JSON" ]; then
-             echo "Error: Failed to parse appsettings.json."
-             exit 1
-            fi
-    
-            echo "VERSION=$version" >> $GITHUB_ENV
-            echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+            # Set outputs for GitHub Actions
+            echo "::set-output name=appsettings::$content"
+            echo "::set-output name=version::$version"
+
 
       - name: Check for existing release
         id: check_release
