@@ -11,7 +11,7 @@ on:
   pull_request:
     branches:
       - main
-      - ABK 
+      - ABK
 
 jobs:
   build:
@@ -29,8 +29,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name : List Folders
-        run : ls
+      - name: List Folders
+        run: ls
 
       - name: Build
         run: dotnet build --no-restore
@@ -41,41 +41,39 @@ jobs:
       - name: Get Version and Tag From Code
         id: set_ver
         run: |
-          content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=version::$(echo $content | jq -r '.Version')"
-          echo "::set-output name=release_name::$(echo $content | jq -r '.ReleaseName')"
+          content=$(cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json)
+          version=$(echo $content | jq -r '.Version')
+          release_name=$(echo $content | jq -r '.ReleaseName')
+          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
 
       - name: Check for existing release
         id: check_release
         run: |
           existing_tag=$(curl -s \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.set_ver.outputs.version }} \
+            https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.VERSION }} \
             | jq -r '.tag_name')
-          if [ "$existing_tag" = "${{ steps.set_ver.outputs.version }}" ]; then
+          if [ "$existing_tag" = "${{ env.VERSION }}" ]; then
             echo "Release with this tag already exists."
-            echo "::set-output name=release_exists::true"
+            echo "RELEASE_EXISTS=true" >> $GITHUB_ENV
           else
-            echo "::set-output name=release_exists::false"
+            echo "RELEASE_EXISTS=false" >> $GITHUB_ENV
           fi
 
       - name: Update or Create Release
-        id: release
-        if: steps.check_release.outputs.release_exists == 'true'
-        run: echo "Updating existing release with tag ${{ steps.set_ver.outputs.version }}"
+        if: env.RELEASE_EXISTS == 'true'
+        run: echo "Updating existing release with tag ${{ env.VERSION }}"
 
       - name: Create a New Release
         id: create_release
-        if: steps.check_release.outputs.release_exists == 'false'
+        if: env.RELEASE_EXISTS == 'false'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.set_ver.outputs.version }}
-          release_name: ${{ steps.set_ver.outputs.release_name }}
+          tag_name: ${{ env.VERSION }}
+          release_name: ${{ env.RELEASE_NAME }}
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
           prerelease: false
