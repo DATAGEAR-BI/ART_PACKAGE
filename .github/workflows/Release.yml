@@ -1,3 +1,4 @@
+
 name: ART Release
 
 on:
@@ -11,7 +12,8 @@ on:
   pull_request:
     branches:
       - main
-      - ABK
+      - ABK 
+  workflow_dispatch:  # Allow manual triggers
 
 jobs:
   build:
@@ -29,76 +31,42 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name : List Folders
+        run : ls
       - name: Build
         run: dotnet build --no-restore
 
       - name: Build and Publish
         run: dotnet publish -c Release -o ./Release
 
-      - name: Validate and Extract Data from JSON
-        id: extract_data
+
+
+      
+
+      - name: Get Version and Tag From Code
+        id: set_ver
         run: |
-          # Remove comments (// and #) and trim spaces from JSON
-          content=$(sed '/^\s*\/\//d' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's/#.*$//' | tr -d '\r')
-
-          # Print cleaned JSON for debugging
-          cat appsettings.json
-
-          # Save cleaned content to a new file
-          echo "$content" > cleaned_appsettings.json
-
-          # Remove trailing commas if present
-          sed -i 's/,\s*}/}/g' cleaned_appsettings.json
-          sed -i 's/,\s*]/]/g' cleaned_appsettings.json
-
-          # Validate cleaned JSON
-          if ! jq . cleaned_appsettings.json > /dev/null 2>&1; then
-            echo "Invalid JSON format. Exiting."
-            exit 1
-          fi
-
-          # Print cleaned JSON for debugging
-          cat cleaned_appsettings.json
-
-          # Extract data
-          version=$(jq -r '.Version' cleaned_appsettings.json)
-          release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
-
-          # Set outputs
-          echo "VERSION=$version" >> $GITHUB_ENV
-          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
-
-      - name: Check for existing release
-        id: check_release
-        run: |
-          existing_tag=$(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.VERSION }} \
-            | jq -r '.tag_name')
-          if [ "$existing_tag" = "${{ env.VERSION }}" ]; then
-            echo "Release with this tag already exists."
-            echo "::set-output name=release_exists::true"
-          else
-            echo "::set-output name=release_exists::false"
-          fi
-
-      - name: Update or Create Release
-        id: release
-        if: steps.check_release.outputs.release_exists == 'true'
-        run: echo "Updating existing release with tag ${{ env.VERSION }}"
-
-      - name: Create a New Release
+              content=`cat ${{ github.workspace }}/ART_PACKAGE/appsettings.json`
+              # the following lines are only required for multi line json
+              content="${content//'%'/'%25'}"
+              content="${content//$'\n'/'%0A'}"
+              content="${content//$'\r'/'%0D'}"
+              # end of optional handling for multi line json
+              echo "::set-output name=appsettings::$content"
+              echo "${{ steps.set_ver.outputs.appsettings }}"
+      - name: Create Release
         id: create_release
-        if: steps.check_release.outputs.release_exists == 'false'
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{fromJson(steps.set_ver.outputs.appsettings).Version}}
+          release_name: ${{fromJson(steps.set_ver.outputs.appsettings).ReleaseName}}
           body_path: ${{ github.workspace }}/Release_Note.md
           draft: false
           prerelease: false
+          
+
 
       - name: Copy ReleaseNote To Release Folder
         run: cp Release_Note.md ./Release
@@ -106,7 +74,7 @@ jobs:
       - name: Zip folder
         run: |
           zip -r Release.zip ./Release
-
+          
       - name: Upload Release Artifact
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -115,5 +83,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Release.zip
-          asset_name: Release.zip
+          asset_name: Release.zip # Change the name as needed
           asset_content_type: application/zip
