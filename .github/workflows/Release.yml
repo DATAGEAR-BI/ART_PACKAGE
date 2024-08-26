@@ -11,7 +11,7 @@ on:
   pull_request:
     branches:
       - main
-      - ABK
+      - ABK 
 
 jobs:
   build:
@@ -38,24 +38,28 @@ jobs:
       - name: Build and Publish
         run: dotnet publish -c Release -o ./Release
 
-      - name: Get Version and Tag From Code
-        id: set_ver
+      - name: Check jq Installation
         run: |
-            # Read the JSON file and remove comments (lines starting with // or #)
-            content=$(grep -vE '^\s*//' ${{ github.workspace }}/ART_PACKAGE/appsettings.json)
-    
-            # Handling multi-line JSON for GitHub Actions
-            content="${content//'%'/'%25'}"
-            content="${content//$'\n'/'%0A'}"
-            content="${content//$'\r'/'%0D'}"
-    
-            # Extract the version using jq (or manually if jq is unavailable)
-            version=$(echo "$content" | jq -r '.Version')
-    
-            # Set outputs for GitHub Actions
-            echo "::set-output name=appsettings::$content"
-            echo "::set-output name=version::$version"
+          jq --version
 
+      - name: Validate and Extract Data from JSON
+        id: extract_data
+        run: |
+          # Remove comments and validate JSON
+          content=$(sed 's://.*$::' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's:#.*$::')
+          
+          # Save cleaned content to a new file
+          echo "$content" > cleaned_appsettings.json
+          
+          # Validate cleaned JSON
+          jq . cleaned_appsettings.json
+          
+          # Extract data
+          version=$(jq -r '.Version' cleaned_appsettings.json)
+          release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
+          
+          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
 
       - name: Check for existing release
         id: check_release
@@ -66,18 +70,14 @@ jobs:
             | jq -r '.tag_name')
           if [ "$existing_tag" = "${{ env.VERSION }}" ]; then
             echo "Release with this tag already exists."
-            echo "RELEASE_EXISTS=true" >> $GITHUB_ENV
+            echo "release_exists=true" >> $GITHUB_ENV
           else
-            echo "RELEASE_EXISTS=false" >> $GITHUB_ENV
+            echo "release_exists=false" >> $GITHUB_ENV
           fi
 
-      - name: Update or Create Release
-        if: env.RELEASE_EXISTS == 'true'
-        run: echo "Updating existing release with tag ${{ env.VERSION }}"
-
-      - name: Create a New Release
-        id: create_release
-        if: env.RELEASE_EXISTS == 'false'
+      - name: Create or Update Release
+        id: release
+        if: env.release_exists == 'false'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -101,7 +101,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Release.zip
           asset_name: Release.zip
           asset_content_type: application/zip
