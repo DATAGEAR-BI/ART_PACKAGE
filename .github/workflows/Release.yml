@@ -41,6 +41,9 @@ jobs:
           # Remove comments (// and #) and trim spaces from JSON
           content=$(sed '/^\s*\/\//d' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's/#.*$//' | tr -d '\r')
 
+          # Print cleaned JSON for debugging
+          cat appsettings.json
+
           # Save cleaned content to a new file
           echo "$content" > cleaned_appsettings.json
 
