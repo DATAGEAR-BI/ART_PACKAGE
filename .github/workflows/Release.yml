@@ -45,21 +45,26 @@ jobs:
       - name: Validate and Extract Data from JSON
         id: extract_data
         run: |
-          # Remove comments and validate JSON
-          content=$(sed 's://.*$::' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's:#.*$::')
-          
-          # Save cleaned content to a new file
-          echo "$content" > cleaned_appsettings.json
-          
-          # Validate cleaned JSON
-          jq . cleaned_appsettings.json
-          
-          # Extract data
-          version=$(jq -r '.Version' cleaned_appsettings.json)
-          release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
-          
-          echo "VERSION=$version" >> $GITHUB_ENV
-          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+            # Remove comments (//) and trim spaces from JSON
+            content=$(sed '/^\s*\/\//d' "${{ github.workspace }}/ART_PACKAGE/appsettings.json" | sed 's/#.*$//' | tr -d '\r')
+
+            # Save cleaned content to a new file
+            echo "$content" > cleaned_appsettings.json
+    
+            # Validate cleaned JSON
+            if ! jq . cleaned_appsettings.json > /dev/null 2>&1; then
+                echo "Invalid JSON format. Exiting."
+                exit 1
+            fi
+    
+            # Extract data
+            version=$(jq -r '.Version' cleaned_appsettings.json)
+            release_name=$(jq -r '.ReleaseName' cleaned_appsettings.json)
+    
+            # Set outputs
+            echo "VERSION=$version" >> $GITHUB_ENV
+            echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+
 
       - name: Check for existing release
         id: check_release
