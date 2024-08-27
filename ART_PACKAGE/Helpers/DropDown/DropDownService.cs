@@ -276,7 +276,20 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
         }
 
-
+        public List<SelectItem> GetAlarmStatusDropDown()
+        {
+            //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
+            //return distinct_value;
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetRoutineNameDropDown()
+        {
+            //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
+            //return distinct_value;
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(s => s.RoutineName != null).Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
 
         public List<SelectItem> GetNonREntityBranchDropDown()
         {

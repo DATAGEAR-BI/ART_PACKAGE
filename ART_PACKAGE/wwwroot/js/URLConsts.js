@@ -143,6 +143,8 @@
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
     test: "Test/GetData",
     autorules: "AutoRules/GetData",
+    DGAMLTotalAlarmsDetails: "DGAMLTotalAlarmsDetails/GetData",
+    DGAMLAlarmSummary: "DGAMLAlarmSummary/GetData",
 
 
 };

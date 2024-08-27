@@ -113,6 +113,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCustomerTypeDropDown();
         public List<SelectItem> GetMaritalStatusDropDown();
         public List<SelectItem> GetCustomerStatusDropDown();
+        public List<SelectItem> GetAlarmStatusDropDown();
+        public List<SelectItem> GetRoutineNameDropDown();
 
         //
 

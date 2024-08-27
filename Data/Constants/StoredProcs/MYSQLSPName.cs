@@ -17,6 +17,10 @@
         public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "ART_DB.ART_ST_DGAML_ALERTS_PER_STATUS";
         public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "ART_DB.ART_ST_DGAML_ALERTS_PER_BRANCH";
         public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "ART_DB.ART_ST_DGAML_ALERTS_PER_SCENARIO";
+
+        public static readonly string ART_ST_DGAML_ALARMS_PER_STATUS = "";
+        public static readonly string ART_ST_DGAML_TOTAL_ALARMS_DETAIL = "";
+
         #endregion
         #region DGAML CASES SUMMARY
         public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "ART_DB.ART_ST_DGAML_CASES_PER_CATEGORY";

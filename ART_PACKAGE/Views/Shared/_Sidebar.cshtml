@@ -265,6 +265,23 @@
                                             </li>
                                         </ul>
                                     </li>
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Alarm</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "DGAMLAlarmSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "DGAMLTotalAlarmsDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="active">
                                         <a href="@Url.Action("Index", "DGAMLArtScenarioAdmin")">
                                             <i class="glyphicon glyphicon-tasks"></i>
@@ -284,6 +301,7 @@
                                         </a>
                                     </li>
                                 </ul>
+
 
                             </li>
 

@@ -52,6 +52,8 @@
         //DGAML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_DGAML_ALARMS_PER_STATUS = "";
+        public static readonly string ART_ST_DGAML_TOTAL_ALARMS_DETAIL = "";
 
 
         #region DGAML ALERTS Summary

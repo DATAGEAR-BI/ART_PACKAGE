@@ -150,6 +150,14 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtStDgAmlExternalCustomerPerType) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE,
 
 
+                Type t when t == typeof(ArtStDgAmlAlarmsPerStatus) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_DGAML_ALARMS_PER_STATUS,
+                Type t when t == typeof(ArtStDgAmlAlarmsPerStatus) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_DGAML_ALARMS_PER_STATUS,
+                Type t when t == typeof(ArtStDgAmlAlarmsPerStatus) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_ALARMS_PER_STATUS,
+
+                Type t when t == typeof(ArtStDgAmlTotalAlarmsDetail) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_DGAML_TOTAL_ALARMS_DETAIL,
+                Type t when t == typeof(ArtStDgAmlTotalAlarmsDetail) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_DGAML_TOTAL_ALARMS_DETAIL,
+                Type t when t == typeof(ArtStDgAmlTotalAlarmsDetail) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_DGAML_TOTAL_ALARMS_DETAIL,
+
                 // Add more cases for other types if needed
                 _ => throw new ArgumentException("Invalid entity type or database type")
             };

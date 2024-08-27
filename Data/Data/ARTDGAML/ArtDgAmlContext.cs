@@ -44,6 +44,10 @@ namespace Data.Data.ARTDGAML
             modelBuilder.Entity<ArtStDgAmlAlertsPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlAlertsPerScenario>().HasNoKey().ToView(null);
 
+            modelBuilder.Entity<ArtStDgAmlAlarmsPerStatus>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlTotalAlarmsDetail>().HasNoKey().ToView(null);
+
+
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTDGAMLModelCreating(modelBuilder);
         }

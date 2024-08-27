@@ -1,6 +1,6 @@
 ﻿import { Filters, GoToDeatailsUrls } from "./Modules/ExternalFilters.js"
 //import { makedynamicChart } from "./Modules/MakeDynamicChart.js"
-import  {getChartType} from "./Components/Charts/Charts.js"
+import { getChartType } from "./Components/Charts/Charts.js"
 import { URLS as Urls } from "./URLConsts.js"
 import { Spinner } from "../lib/spin.js/spin.js"
 
@@ -70,7 +70,7 @@ class ExternalFilter extends HTMLElement {
 
 
         btn.onclick = () => {
-            
+
             var rules = $(filtercontrol).queryBuilder('getRules');
             var isValidFilters = true;
             if (rules == null || rules.rules == null) {
@@ -82,16 +82,20 @@ class ExternalFilter extends HTMLElement {
             }
             filters.forEach((f) => {
                 if (rules && rules.rules) {
-                    var IsRuleExist = rules.rules.some(item => item.id === f.id);
-                    if (!IsRuleExist) {
-                        isValidFilters = false;
-                        toastObj.icon = 'error';
-                        toastObj.text = `please add ${f.label} filter`;
-                        toastObj.heading = "Apply Filter Status";
-                        $.toast(toastObj);
+                    console.log("ruree", f);
+                    if (!f.optional) {
+
+                        var IsRuleExist = rules.rules.some(item => item.id === f.id);
+                        if (!IsRuleExist) {
+                            isValidFilters = false;
+                            toastObj.icon = 'error';
+                            toastObj.text = `please add ${f.label} filter`;
+                            toastObj.heading = "Apply Filter Status";
+                            $.toast(toastObj);
+                        }
                     }
                 }
-                
+
             })
             if (isValidFilters) {
                 console.log(rules);
@@ -125,7 +129,7 @@ class ExternalFilter extends HTMLElement {
                     }
                 }
             }
-            
+
         }
         this.appendChild(spinnerstyle);
         this.appendChild(filtercontrol);
@@ -247,14 +251,13 @@ function callDefinedCharts(url) {
         [...data].forEach(c => {
 
             let chart = document.getElementById(c.ChartId);
-            
-            if(chart)
-            {
+
+            if (chart) {
                 chart.setdata(c.Data);
                 $(".spinner").remove();
                 return;
             }
-            
+
             let type = getChartType(c.Type);
             chart = document.createElement(type);
             chart.dataset.value = c.Val;
@@ -264,7 +267,7 @@ function callDefinedCharts(url) {
             chart.style.height = "700px"
             chart.classList.add("col-sm-12", "col-md-12", "col-xs-12");
             charts.appendChild(chart);
-            
+
 
         });
         $(".spinner").remove();
