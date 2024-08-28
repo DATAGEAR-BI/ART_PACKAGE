@@ -196,6 +196,26 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
+
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-user"></i> <span>Alarm</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "DGAMLAlarmSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
+                                            </li>
+                                            <li class="active ">
+                                                <a href="@Url.Action("Index", "DGAMLTotalAlarmsDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    
+                                    @*
+
                                     <li class="treeview">
                                         <a href="#">
                                             <i class="glyphicon glyphicon-user"></i> <span>Alerts</span>
@@ -266,22 +286,7 @@
                                         </ul>
                                     </li>
 
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="glyphicon glyphicon-user"></i> <span>Alarm</span>
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "DGAMLAlarmSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
-                                            </li>
-                                            <li class="active ">
-                                                <a href="@Url.Action("Index", "DGAMLTotalAlarmsDetails")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                    
                                     <li class="active">
                                         <a href="@Url.Action("Index", "DGAMLArtScenarioAdmin")">
                                             <i class="glyphicon glyphicon-tasks"></i>
@@ -299,7 +304,7 @@
                                             <i class="glyphicon glyphicon-tasks"></i>
                                             <span>Suspect Detail Aduit</span>
                                         </a>
-                                    </li>
+                                    </li>*@
                                 </ul>
 
 
@@ -772,7 +777,7 @@
 
                 }
             }
-            @if (User.IsInRole("art_customreport"))
+           @* @if (User.IsInRole("art_customreport"))
             {
                 <li class="treeview ">
                     <a href="#">
@@ -790,7 +795,7 @@
                         </li>
                     </ul>
                 </li>
-            }
+            }*@
             @if (User.IsInRole("art_admin"))
             {
                 <li class="treeview ">

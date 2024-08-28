@@ -17,7 +17,8 @@ namespace ART_PACKAGE.Extentions.DbContextExtentions
 
         private static IEnumerable<T> SqlServerExecuteProc<T>(this DbContext db, string SPName, params DbParameter[] parameters) where T : class
         {
-            string sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x => x.ParameterName))}";
+            string sql = $"EXEC {SPName} {string.Join(", ", parameters.Select(x =>$@" {x.ParameterName} = {x.ParameterName}"))}";
+            var executedQuery= db.Set<T>().FromSqlRaw(sql, parameters).ToQueryString() ;
             return db.Set<T>().FromSqlRaw(sql, parameters).ToList();
         }
 

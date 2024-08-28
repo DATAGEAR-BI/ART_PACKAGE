@@ -69,3 +69,16 @@ td[role="gridcell"] {
 .bootstrap-select .dropdown-menu {
     min-width: 200px !important;
 }
+
+
+#filters_rule_2 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
+
+
+
+#filters_rule_3 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}

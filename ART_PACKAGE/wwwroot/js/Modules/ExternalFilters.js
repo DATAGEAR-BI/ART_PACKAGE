@@ -25,13 +25,16 @@ function multiSelectSetting(url) {
 
     console.log(vals);
 
-
+    const valuesObject = {};
+    vals.forEach(option => {
+        valuesObject[option.value] = option.text;
+    });
     return {
         multiple: true,
         input: 'select',
         validation: false,
         operators: ['in'],
-        values: vals,
+        values: valuesObject,
         value_separator: ",",
         plugin: 'selectpicker',
         plugin_config: {
@@ -318,7 +321,7 @@ export const Filters = {
                 { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
                 { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
                 { id: "alarmstatus", field: "alarmstatus", label: "Alarm Status", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLTotalAlarmsDetails/GetAlarmStatusDropDown/") },
-                { id: "routinename", field: "routinename", label: "Routine Name", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLTotalAlarmsDetails/GetRoutineNameDropDown/") },
+                { id: "routinename", field: "routinename", label: "Senario Name", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLTotalAlarmsDetails/GetRoutineNameDropDown/") },
 
             ]
         }
@@ -337,7 +340,7 @@ export const Filters = {
                 { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
                 { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
                 { id: "alarmstatus", field: "alarmstatus", label: "Alarm Status", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLAlarmSummary/GetAlarmStatusDropDown/") },
-                { id: "routinename", field: "routinename", label: "Routine Name", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLAlarmSummary/GetRoutineNameDropDown/") },
+                { id: "routinename", field: "routinename", label: "Senario Name", operators: ['equal'], type: "string", optional: true, ...multiSelectSetting("/DGAMLAlarmSummary/GetRoutineNameDropDown/") },
 
             ]
         }
