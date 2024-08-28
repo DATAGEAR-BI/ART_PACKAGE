@@ -82,3 +82,20 @@ td[role="gridcell"] {
     width: 35px;
     display: inline-block;
 }
+
+#filters_rule_4 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
+#filters_rule_5 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
+#filters_rule_6 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
+#filters_rule_7 .rule-operator-container span {
+    width: 35px;
+    display: inline-block;
+}
