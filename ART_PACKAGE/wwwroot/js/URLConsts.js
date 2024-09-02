@@ -215,6 +215,8 @@
     AlertedEntityDetail: "AlertedEntityDetail/GetData",
     MonthlySwiftDetail: "MonthlySwiftDetail/GetData",
     autorules: "AutoRules/GetData",
+    InternalCaseValidation: "InternalCaseValidation/GetData",
+    GoamlReportsValidation: "GoamlReportsValidation/GetData",
 
 
 };

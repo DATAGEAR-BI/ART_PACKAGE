@@ -14,6 +14,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "CaseDesc", new GridColumnConfiguration { DisplayName = "Case Description"}},
                     { "CaseStatus", new GridColumnConfiguration { DisplayName = "Case Status"}},
                     { "Priority", new GridColumnConfiguration { DisplayName = "Priority"}},
+                    { "BranchNumber", new GridColumnConfiguration { DisplayName = "Branch Number"}},
+                    { "BranchName", new GridColumnConfiguration { DisplayName = "Branch Name"}},
+                    { "Region", new GridColumnConfiguration { DisplayName = "Region"}},
                     { "HitsCount", new GridColumnConfiguration { DisplayName = "Hits Count"}},
                     { "TransactionDirection", new GridColumnConfiguration { DisplayName = "Transaction Direction"}},
                     { "TransactionType", new GridColumnConfiguration { DisplayName = "Transaction Type"}},
@@ -46,7 +49,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             {
                    "CaseRk",
     "ValidFromDate",
-    "LastCommentSubject"            };
+    "LastCommentSubject"      ,"LastStatus"      };
         }
     }
 }

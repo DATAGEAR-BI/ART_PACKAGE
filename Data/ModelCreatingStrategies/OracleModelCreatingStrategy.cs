@@ -1732,6 +1732,107 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("TRANSACTIONNUMBER")
                     .UseCollation("Arabic_100_CI_AI");
             });
+            modelBuilder.Entity<ArtGoamlReportsValidationView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_GOAML_REPORTS_VALIDATION_VIEW", "ART");
+
+
+                entity.Property(e => e.Id)
+                      .HasColumnName("ID")
+                      .HasColumnType("NUMBER")
+                      .HasPrecision(22, 10);
+
+                entity.Property(e => e.ReportCode)
+                      .HasColumnName("REPORTCODE")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.ReportIndicator)
+                      .HasColumnName("REPORT_INDICATOR")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CrimeProduct)
+                      .HasColumnName("CRIME/PRODUCT")
+                      .HasMaxLength(4000)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.AccountType)
+                      .HasColumnName("ACCOUNT_TYPE")
+                      .HasMaxLength(4000)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Account)
+                      .HasColumnName("ACCOUNT")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+                entity.Property(e => e.TransactionNumber)
+                 .HasColumnName("TRANSACTIONNUMBER")
+                 .HasMaxLength(1020)
+                 .IsUnicode(false);
+
+                entity.Property(e => e.Region)
+                      .HasColumnName("REGION")
+                      .HasMaxLength(35)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.ReportDate)
+                      .HasColumnName("REPORTDATE")
+                      .HasColumnType("TIMESTAMP(9)");
+
+                entity.Property(e => e.ReportStatusCode)
+                      .HasColumnName("REPORTSTATUSCODE")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.SubmissionDate)
+                      .HasColumnName("SUBMISSIONDATE")
+                      .HasColumnType("TIMESTAMP(9)");
+
+                entity.Property(e => e.ReportCreatedDate)
+                      .HasColumnName("REPORTCREATEDDATE")
+                      .HasColumnType("TIMESTAMP(9)");
+
+                entity.Property(e => e.ReportClosedDate)
+                      .HasColumnName("REPORTCLOSEDDATE")
+                      .HasColumnType("TIMESTAMP(9)");
+                entity.Property(e => e.EntityReference)
+             .HasColumnName("ENTITYREFERENCE")
+             .HasMaxLength(1020)
+             .IsUnicode(false);
+
+                entity.Property(e => e.FiuRefNumber)
+                      .HasColumnName("FIUREFNUMBER")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.PartyNumber)
+                      .HasColumnName("PARTYNUMBER")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.PartyName)
+                      .HasColumnName("PARTY_NAME")
+                      .HasMaxLength(3068)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Branch)
+                      .HasColumnName("BRANCH")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.EmployeeInd)
+                      .HasColumnName("EMPLOYEE_IND")
+                      .HasMaxLength(26)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Activity)
+                      .HasColumnName("ACTIVITY")
+                      .HasMaxLength(12)
+                      .IsUnicode(false);
+            });
         }
 
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
@@ -1843,6 +1944,20 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ValidFromDate)
                     .HasPrecision(6)
                     .HasColumnName("VALID_FROM_DATE");
+                entity.Property(e => e.BranchName)
+                 .HasColumnName("BRANCH_NAME")
+                 .HasMaxLength(100)
+                 .IsUnicode(false);
+
+                entity.Property(e => e.BranchNumber)
+                      .HasColumnName("BRANCH_NUMBER")
+                      .HasMaxLength(40)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Region)
+                      .HasColumnName("REGION")
+                      .HasMaxLength(35)
+                      .IsUnicode(false);
 
                 entity.Property(e => e.DurationsInDays)
                     .HasColumnType("NUMBER")
@@ -1916,7 +2031,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.UpdateUserId)
                     .HasMaxLength(60)
                     .IsUnicode(false)
-                    .HasColumnName("UPDATE_USER_ID");
+                    .HasColumnName("UPDATED_BY");
 
                 entity.Property(e => e.LastStatus)
                    .HasMaxLength(256)
@@ -3056,6 +3171,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("USER_");
             });
 
+
             modelBuilder.Entity<ArtAlertsPerAlertedEntityView>(entity =>
             {
                 entity.ToView("ART_ALERTS_PER_ALERTED_ENTETY_TB");
@@ -3118,6 +3234,91 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_TRANSACTIONS")
                     .HasColumnType("decimal(22,0)")
                     .IsRequired(false);
+            });
+
+            modelBuilder.Entity<ArtAmlInternalCaseValidationView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_AML_INTERNAL_CASES_VALIDATION_VIEW");
+
+                entity.Property(e => e.CaseId)
+                      .HasColumnName("CASE_ID")
+                      .HasColumnType("NUMBER")
+                      .HasPrecision(22, 12);
+
+                entity.Property(e => e.EntityName)
+                      .HasColumnName("ENTITY_NAME")
+                      .HasMaxLength(35)
+                      .IsUnicode(false); // Use IsUnicode(false) for VARCHAR2 if applicable
+
+                entity.Property(e => e.EntityNumber)
+                      .HasColumnName("ENTITY_NUMBER")
+                      .HasMaxLength(50)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.BranchName)
+                      .HasColumnName("BRANCH_NAME")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.BranchNumber)
+                      .HasColumnName("BRANCH_NUMBER")
+                      .HasMaxLength(40)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Region)
+                      .HasColumnName("REGION")
+                      .HasMaxLength(35)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.TransactionType)
+                      .HasColumnName("TRRANSACTION_TYPE")
+                      .HasMaxLength(30)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CasePriority)
+                      .HasColumnName("CASE_PRIORITY")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CaseStatus)
+                      .HasColumnName("CASE_STATUS")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CaseCategory)
+                      .HasColumnName("CASE_CATEGORY")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CaseSubCategory)
+                      .HasColumnName("CASE_SUB_CATEGORY")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.EntityLevel)
+                      .HasColumnName("ENTITY_LEVEL")
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                      .HasColumnName("CREATED_BY")
+                      .HasMaxLength(60)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Owner)
+                      .HasColumnName("OWNER")
+                      .HasMaxLength(60)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.CreateDate)
+                      .HasColumnName("CREATE_DATE")
+                      .HasColumnType("DATE");
+
+                entity.Property(e => e.ClosedDate)
+                      .HasColumnName("CLOSED_DATE")
+                      .HasColumnType("TIMESTAMP(6)");
             });
 
         }

@@ -18,6 +18,7 @@ namespace Data.Data.ARTGOAML
         public virtual DbSet<ArtGoamlReportsIndicator> ArtGoamlReportsIndicators { get; set; } = null!;
         public virtual DbSet<ArtGoamlReportsDetail> ArtGoamlReportsDetails { get; set; } = null!;
         public virtual DbSet<ArtGoamlReportsSusbectParty> ArtGoamlReportsSusbectParties { get; set; } = null!;
+        public virtual DbSet<ArtGoamlReportsValidationView> ArtGoamlReportsValidationViews { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //GOAML

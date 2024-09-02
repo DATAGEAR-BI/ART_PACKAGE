@@ -32,6 +32,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             { nameof(TriageController).ToLower() , new List<Type> { typeof(ArtAmlTriageView)  } },
             { nameof(AlertedEntityDetailController).ToLower() , new List<Type> { typeof(ArtAlertsPerAlertedEntityView)  } },
             { nameof(MonthlySwiftDetailController).ToLower() , new List<Type> { typeof(ArtMonthlySwiftView)  } },
+            { nameof(InternalCaseValidationController).ToLower() , new List<Type> { typeof(ArtAmlInternalCaseValidationView)  } },
 
 
             //KYC
@@ -59,6 +60,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             {nameof(GOAMLReportIndicatorDetailsController).ToLower() ,new List<Type>{ typeof(ArtGoamlReportsIndicator) } }     ,
             {nameof(GOAMLReportsDetailsController).ToLower() ,new List<Type>{ typeof(ArtGoamlReportsDetail) } }     ,
             {nameof(GOAMLReportsSuspectController).ToLower() ,new List<Type>{ typeof(ArtGoamlReportsSusbectParty) } }     ,
+            { nameof(GoamlReportsValidationController).ToLower() , new List<Type> { typeof(ArtGoamlReportsValidationView)  } },
 
 
             //FTI

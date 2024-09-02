@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        AML Internal Cases Validation
+        <small>presents details about the AML Internal Cases reports to validate them with the related information</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="InternalCaseValidation" data-urlkey="InternalCaseValidation" data-handlerkey="InternalCaseValidation"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}
