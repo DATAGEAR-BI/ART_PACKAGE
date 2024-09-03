@@ -24,7 +24,7 @@ else
     {
         @section Scripts {
 
-    <script src="~/js/components/multiselect/select.js"></script>
+    <script src="~/js/Components/MultiSelect/Select.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
@@ -33,11 +33,11 @@ else
 
     @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
             {
-                <script src="~/js/amlhome.js" type="module" defer></script>
+                <script src="~/js/AMLHome.js" type="module" defer></script>
             }
             @if (homeType.Contains(HomeType.SANCTION) && modules.Contains("ECM"))
             {
-                <script src="~/js/homechartsjs.js" type="module" defer></script>
+                <script src="~/js/HomeChartsjs.js" type="module" defer></script>
 
             }
             @if (homeType.Contains(HomeType.GOAML) && modules.Contains("GOAML"))
