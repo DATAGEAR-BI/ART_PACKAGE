@@ -2557,5 +2557,7 @@
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
-
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(ProjectDir)\dgum_cer\**\*" DestinationFolder="$(ProjectDir)\bin\Release\net6.0\dgum_cer" />
+	</Target>
 </Project>
