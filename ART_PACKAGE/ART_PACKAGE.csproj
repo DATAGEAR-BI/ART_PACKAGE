@@ -2558,6 +2558,9 @@
 		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="$(ProjectDir)\dgum_cer\**\*" DestinationFolder="$(ProjectDir)\bin\Release\net6.0\dgum_cer" />
+		<ItemGroup>
+			<FilesToCopy Include="$(ProjectDir)\dgum_cer\**\*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(ProjectDir)\bin\Release\net6.0\dgum_cer" SkipUnchangedFiles="true" />
 	</Target>
 </Project>
