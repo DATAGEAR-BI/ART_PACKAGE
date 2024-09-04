@@ -20,7 +20,13 @@ public enum DbSchema
     GoAml,
     [Option(DisplayName = "TI Zone", ModuleNames = "FTI")]
     FTI,
-    [Option(DisplayName = "DG AML", ModuleNames = "DGAML")]
-    DGAML
+    [Option(DisplayName = "DG AML AC", ModuleNames = "DGAML")]
+    DGAMLAC,
+    [Option(DisplayName = "DG AML Core", ModuleNames = "DGAML")]
+    DGAMLCORE,
+    [Option(DisplayName = "DGMGMT", ModuleNames = "DGAUDIT")]
+    DGMGMT,
+    [Option(DisplayName = "DGMGMT AUDIT", ModuleNames = "DGAUDIT")]
+    DGMGMT_AUDIT,
 }
 

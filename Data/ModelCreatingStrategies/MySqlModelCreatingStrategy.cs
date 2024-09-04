@@ -4568,6 +4568,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDgAMLCOREModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("dgamlcore");
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.AcctKey)
@@ -5422,7 +5423,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.HasDefaultSchema("ac");
             //ac
 
             modelBuilder.Entity<AcLkpTable>(entity =>
@@ -7249,6 +7250,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnGoAmlModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("target");
             modelBuilder.Entity<Lookup>(entity =>
             {
                 entity.ToTable("lookups");
@@ -7537,6 +7539,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDGMGMGModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("dgmgmt");
             modelBuilder.Entity<GroupDg>(entity =>
             {
                 entity.ToTable("group_dg");
@@ -7722,6 +7725,7 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDGMGMGMAUDodelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("dgmgmt_audit");
             modelBuilder.Entity<AccountAud>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.Rev })

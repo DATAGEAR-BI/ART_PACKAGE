@@ -118,7 +118,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            HasFixedWidth = true;
 
 
 
