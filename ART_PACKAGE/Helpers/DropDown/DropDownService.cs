@@ -287,7 +287,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(s => s.RoutineName != null).Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(s => s.RoutineName != null&&s.LogicDelInd=="N" && s.RoutineStatusCd=="ACT"&&s.CurrentInd=="Y").Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
