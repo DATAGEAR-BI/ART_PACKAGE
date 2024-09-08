@@ -1,6 +1,7 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
 using Data.Services.Grid;
+using FakeItEasy;
 
 namespace ART_PACKAGE.Helpers.DropDown
 {
@@ -280,8 +281,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
-            return distinct_value;
+            var data = from b in _dbSrv.DGAMLAC.AcAlarms.Select(s => s.AlarmStatusCd).Distinct()
+                        join a in _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null && s.LkpName == "ALARM_STATUS")
+                        on b equals  a.LkpValCd
+                        select new SelectItem { text = a.LkpValDesc, value = a.LkpValCd };
+
+            //List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
+            return data.ToList();
         }
         public List<SelectItem> GetRoutineNameDropDown()
         {

@@ -22,6 +22,7 @@ namespace Data.DGAMLAC
         public virtual DbSet<AcRoutineParameter> AcRoutineParameters { get; set; } = null!;
         public virtual DbSet<AcScenarioEvent> AcScenarioEvents { get; set; } = null!;
         public virtual DbSet<AcSuspectedObject> AcSuspectedObjects { get; set; } = null!;
+        public virtual DbSet<AcAlarm> AcAlarms { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

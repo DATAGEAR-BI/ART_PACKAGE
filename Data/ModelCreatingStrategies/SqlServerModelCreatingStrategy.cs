@@ -9006,6 +9006,144 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("value_cate");
             });
 
+            modelBuilder.Entity<AcAlarm>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("AC_Alarm", "AC");
+
+                entity.Property(e => e.AlarmId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Alarm_Id");
+
+                entity.Property(e => e.ProdType)
+                    .HasMaxLength(3)
+                    .HasColumnName("Prod_Type");
+
+                entity.Property(e => e.AlarmStatusCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Alarm_Status_Cd");
+
+                entity.Property(e => e.MlRiskScore)
+                    .HasColumnType("int")
+                    .HasColumnName("Ml_Risk_Score");
+
+                entity.Property(e => e.TfRiskScore)
+                    .HasColumnType("int")
+                    .HasColumnName("Tf_Risk_Score");
+
+                entity.Property(e => e.AlarmDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("Alarm_Desc");
+
+                entity.Property(e => e.PrimObjLevelCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Prim_Obj_level_Cd");
+
+                entity.Property(e => e.AlarmedObjNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("Alarmed_Obj_No");
+
+                entity.Property(e => e.AlarmedObjName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Alarmed_Obj_Name");
+
+                entity.Property(e => e.PrimObjNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("Prim_Obj_No");
+
+                entity.Property(e => e.PrimObjKey)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Prim_Obj_Key");
+
+                entity.Property(e => e.PrimObjName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Prim_Obj_Name");
+
+                entity.Property(e => e.RoutineId)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Routine_Id");
+
+                entity.Property(e => e.RoutineName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Routine_Name");
+
+                entity.Property(e => e.SupprEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Suppr_End_Date");
+
+                entity.Property(e => e.ActualValueTxt)
+                    .HasMaxLength(255)
+                    .HasColumnName("Actual_Value_Txt");
+
+                entity.Property(e => e.RunDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Run_Date");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Create_Date");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .HasColumnName("Create_User_Id");
+
+                entity.Property(e => e.EmpInd)
+                    .HasColumnType("char(1)")
+                    .HasColumnName("Emp_Ind");
+
+                entity.Property(e => e.VerNo)
+                    .HasColumnType("int")
+                    .HasColumnName("Ver_No");
+
+                entity.Property(e => e.LogicDelInd)
+                    .HasColumnType("char(1)")
+                    .HasColumnName("Logic_Del_Ind");
+
+                entity.Property(e => e.AlarmTypeCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Type_Cd");
+
+                entity.Property(e => e.AlarmCategCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Categ_Cd");
+
+                entity.Property(e => e.AlarmSubcategCd)
+                    .HasMaxLength(32)
+                    .HasColumnName("Alarm_Subcateg_Cd");
+
+                entity.Property(e => e.AlarmedObjKey)
+                    .HasColumnType("numeric(12, 0)")
+                    .HasColumnName("Alarmed_Obj_Key");
+
+                entity.Property(e => e.AlarmedObjLevelCd)
+                    .HasColumnType("char(3)")
+                    .HasColumnName("Alarmed_Obj_Level_Cd");
+
+                entity.Property(e => e.AlarmType)
+                    .HasMaxLength(50)
+                    .HasColumnName("Alarm_Type");
+
+                entity.Property(e => e.AlarmScore)
+                    .HasColumnType("int")
+                    .HasColumnName("Alarm_Score");
+
+                entity.Property(e => e.SScore)
+                    .HasColumnType("int")
+                    .HasColumnName("S_Score");
+
+                entity.Property(e => e.SAnlysis)
+                    .HasMaxLength(1000)
+                    .HasColumnName("S_Anlysis");
+
+                entity.Property(e => e.UnSScore)
+                    .HasColumnType("int")
+                    .HasColumnName("UnS_Score");
+
+                entity.Property(e => e.UnSAnlysis)
+                    .HasMaxLength(1000)
+                    .HasColumnName("UnS_Anlysis");
+            });
+
             modelBuilder.HasSequence("hibernate_sequence");
 
             modelBuilder.HasSequence("sequence_generator_AC_List", "AC");
