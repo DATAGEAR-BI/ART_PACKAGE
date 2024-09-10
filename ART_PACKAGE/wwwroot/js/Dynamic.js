@@ -119,6 +119,9 @@ var globaldata = [];
 var groupList = [];
 var valList = [];
 var spinner = new Spinner(spinnerOpts).spin(grid);
+var isSortingOrFiltering = false;
+var previousScrollPosition = 0;
+
 if (isStoredProc == "true") {
 
     getExRules();
@@ -546,6 +549,12 @@ function generateGrid() {
                 var dbclickhandler = dbClickHandlers[handlerkey];
                 dbclickhandler(dataItem).then(console.log("done"));
             });
+            if (isSortingOrFiltering) {
+                setTimeout(function () {
+                    grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
+                    isSortingOrFiltering = false;
+                }, 0);
+            }
         },
         ...(isHierarchy == "true" && {
             detailInit: (e) => {
@@ -609,6 +618,9 @@ function generateGrid() {
 
 
     function grid_filterMenuInit(e) {
+        previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+        console.log(previousScrollPosition);
+        isSortingOrFiltering = true;
 
         console.log("collumn menu hitted ")
         var querySelectorsObj = {
@@ -713,6 +725,11 @@ function generateGrid() {
         })
 
     }
+    grid.thead.on("click", "th", function () {
+        previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+        console.log(previousScrollPosition);
+        isSortingOrFiltering = true;
+    });
 
     grid.bind("filterMenuOpen", (e) => {
         grid_filterMenuInit(e)
