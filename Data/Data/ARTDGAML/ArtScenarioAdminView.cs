@@ -30,5 +30,6 @@ namespace Data.Data.ARTDGAML
         public string? ParamCondition { get; set; }
         public string? ScorParmName { get; set; }
         public string? ScorDependAttribute { get; set; }
+        public int RoutineDurCount { get; set; }
     }
 }

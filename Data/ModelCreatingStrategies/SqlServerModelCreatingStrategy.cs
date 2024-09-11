@@ -1515,6 +1515,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ScorParmName)
                     .HasMaxLength(32)
                     .HasColumnName("SCOR_PARM_NAME");
+
+                entity.Property(e => e.RoutineDurCount)
+                  .HasColumnName("ROUTINE_DUR_COUNT");
             });
 
             modelBuilder.Entity<ArtScenarioHistoryView>(entity =>

@@ -15,6 +15,7 @@ var types = {
 
 var isChartRotativeVerical = [];
 
+
 const exportMenu = [{
     "label": "...",
     "menu": [{
@@ -26,15 +27,13 @@ const exportMenu = [{
         "label": "Data",
         "menu": [
 
-            {
-                "type": "csv", "label": "CSV" },
+            { "type": "csv", "label": "CSV" },
             { "type": "xlsx", "label": "XLSX" }
 
         ]
-        }],
-    
+    }],
 }];
-am4core.addLicense("ch-custom-attribution");
+//am4core.addLicense("ch-custom-attribution");
 
 export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange,exportValueName) {
     /**
@@ -52,6 +51,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     var columnSeries = undefined;
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_kelly);
+    am4core.addLicense("ch-custom-attribution");
     /**
      * Source data
      */
@@ -459,8 +459,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
 
 
 function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
-    am4charts.
-        am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
@@ -1130,7 +1129,7 @@ function callClusterd(data, clusterdtitle, chartId,) {
 
     am4core.useTheme(am4themes_animated);
     // Themes end
-
+    am4core.addLicense("ch-custom-attribution");
 
 
     var chart = am4core.create(chartId, am4charts.XYChart)

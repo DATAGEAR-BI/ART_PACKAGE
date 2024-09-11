@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.DGAML
         [HttpGet("[controller]/[action]/{AlarmId}")]
         public IActionResult GetCloseReasons(string AlarmId)
         {
-            var closeReasons = _context.ArtAlertsCloseReasonPopupView.Where(x => x.AlarmId == Convert.ToDecimal(AlarmId) && (x.CloseReason != null)).Select(x => new { x.AlarmId, x.AlarmStatus, x.CloseReason, x.CloseDate,x.ClosedBy });
+            var closeReasons = _context.ArtAlertsCloseReasonPopupView.Where(x => x.AlarmId == Convert.ToDecimal(AlarmId) && (x.CloseReason != null)).Select(x => new { x.AlarmId, x.AlarmStatus, x.CloseReason, x.CloseDate, x.ClosedBy });
             return Ok(closeReasons);
 
         }
