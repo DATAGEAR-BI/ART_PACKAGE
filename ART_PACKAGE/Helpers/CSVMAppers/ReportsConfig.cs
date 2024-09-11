@@ -614,6 +614,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "ParamCondition",new DisplayNameAndFormat { DisplayName ="Parameter Condition"}},
                         {  "ScorParmName",new DisplayNameAndFormat { DisplayName ="Score Parameter Name"}},
                         {  "ScorDependAttribute",new DisplayNameAndFormat { DisplayName ="Score Depend Attribute"}},
+                        {  "RoutineDurCount",new DisplayNameAndFormat { DisplayName ="Routine Dur Count"}},
 
                     }
                 }
