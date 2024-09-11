@@ -1,5 +1,7 @@
 ﻿
 
+
+
 var types = {
     bar: 0,
     pie: 1,
@@ -15,6 +17,7 @@ var types = {
 
 var isChartRotativeVerical = [];
 
+
 const exportMenu = [{
     "label": "...",
     "menu": [{
@@ -26,17 +29,15 @@ const exportMenu = [{
         "label": "Data",
         "menu": [
 
-            {
-                "type": "csv", "label": "CSV" },
+            { "type": "csv", "label": "CSV" },
             { "type": "xlsx", "label": "XLSX" }
 
         ]
-        }],
-    
+    }],
 }];
-am4core.addLicense("ch-custom-attribution");
+//am4core.addLicense("ch-custom-attribution");
 
-export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange,exportValueName) {
+export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey, ctitle, onDateChange, exportValueName) {
     /**
   * ---------------------------------------
   * This demo was created using amCharts 4.
@@ -52,6 +53,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     var columnSeries = undefined;
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_kelly);
+    am4core.addLicense("ch-custom-attribution");
     /**
      * Source data
      */
@@ -66,7 +68,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     chart.width = am4core.percent(100);
     chart.height = am4core.percent(100);
     chart.layout = "horizontal";
- 
+
 
 
     /**
@@ -239,7 +241,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
     });
     // Create chart instance
     if (!Object.keys(document.getElementById(divId).dataset).includes("horizontal")) {
-        isChartRotativeVerical[divId]= false;
+        isChartRotativeVerical[divId] = false;
         makeVBar();
 
 
@@ -307,7 +309,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
 
 
 
-   function makeBar() {
+    function makeBar() {
         var barchartData = columnChart ? columnChart.data : [];
 
         if (columnChart != undefined) {
@@ -326,7 +328,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
         categoryAxis.dataFields.category = subcat;
         categoryAxis.renderer.grid.template.location = 0;
         categoryAxis.renderer.inversed = true;
-       categoryAxis.renderer.minGridDistance = 20;
+        categoryAxis.renderer.minGridDistance = 20;
         let valueAxis = columnChart.xAxes.push(new am4charts.ValueAxis());
         valueAxis.renderer.labels.template.fontSize = 20;
         var lastColumnSeriesFill = columnSeries ? columnSeries.fill : "#5CC0DE";
@@ -350,19 +352,19 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
         columnChart.cursor.behavior = "zoomX";
         let scrollbar = new am4charts.XYChartScrollbar();
         columnChart.scrollbarX = scrollbar;
-       makeRotateButtonForDates();
+        makeRotateButtonForDates();
 
     }
-    function  makeVBar() {
+    function makeVBar() {
         var barchartData = columnChart ? columnChart.data : [];
 
         console.log(chart)
         if (columnChart != undefined) {
             columnChart.dispose();
-            if (rotateButtonContainer!=undefined) {
+            if (rotateButtonContainer != undefined) {
                 rotateButtonContainer.dispose();
             }
-            
+
 
         }
         columnChart = chart.createChild(am4charts.XYChart);
@@ -427,7 +429,7 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
         columnChart.scrollbarX = scrollbar;
         makeRotateButtonForDates();
     }
-    function  makeRotateButtonForDates() {
+    function makeRotateButtonForDates() {
 
         rotateButtonContainer = columnChart.createChild(am4core.Container);
         // this.chart.children.moveValue(this.rotateButtonContainer, 0);
@@ -454,13 +456,12 @@ export function makeDatesChart(data, divId, cat, val, subcat, subval, subListKey
         });
     }
 }
-  
+
 
 
 
 function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
-    am4charts.
-        am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_animated);
     am4core.addLicense("ch-custom-attribution");
     var chart = am4core.create(divId, am4charts.XYChart3D);
     chart.data = data;
@@ -499,7 +500,7 @@ function callCurvyChart(data, curvtitle, divId, chartValue, chartCategory) {
 
     chart.scrollbarX = new am4core.Scrollbar();
 
-    
+
     //chart.exporting.menu = new am4core.ExportMenu();
 }
 
@@ -585,7 +586,7 @@ function callPieChart(data, pietitle, divId, chartValue, chartCategory) {
 }
 function callHBar(data, hbartitle, divId, chartValue, chartCategory) {
 
-    
+
     am4core.useTheme(am4themes_animated);
 
     // Create chart instance
@@ -1130,7 +1131,7 @@ function callClusterd(data, clusterdtitle, chartId,) {
 
     am4core.useTheme(am4themes_animated);
     // Themes end
-
+    am4core.addLicense("ch-custom-attribution");
 
 
     var chart = am4core.create(chartId, am4charts.XYChart)
@@ -1281,7 +1282,7 @@ export function makedynamicChart(
             callBarChart(data, title, divId, chartValue, chartCategory, isRotaive, columnsColorFunc);
             break;
         }
-            
+
         case types.hbar: {
             if (isRotaive) {
                 isChartRotativeVerical[divId] = false;
@@ -1289,7 +1290,7 @@ export function makedynamicChart(
             callHBar(data, title, divId, chartValue, chartCategory);
             break;
         }
-            
+
         case types.dragdrop:
             callDragDropChart(data, title, divId, chartValue, chartCategory);
             break;
@@ -1334,12 +1335,12 @@ function makeRotateButton(chart) {
 
         // Get chart title
         var title = chart.titles.values.length > 0 ? chart.titles.values[0].text : "";
-  
+
 
         // Get the category axis from the chart
         var categoryAxisFromChart = chart.xAxes.getIndex(0);
         var categoryField = categoryAxisFromChart.dataFields.category;
-    
+
         // Get the series and its data field valueY
         var seriesFromChart = chart.series.getIndex(0);
         var valueYField = seriesFromChart.dataFields.valueY;
