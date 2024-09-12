@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="RD-233.13135.100">
+    <data-source name="ART_DB@192.168.1.45" uuid="860126f5-cf63-4182-bd63-542535dd398a">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MSSQL" />
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
