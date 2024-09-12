@@ -2953,6 +2953,12 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.NumberOfAttachments)
                     .HasColumnType("NUMBER")
                     .HasColumnName("NUMBER_OF_ATTACHMENTS");
+
+                entity.Property(e => e.LastStatus)
+                  .HasMaxLength(256)
+                  .IsUnicode(false)
+                  .HasColumnName("LAST_STATUS")
+                  .UseCollation("Arabic_100_CI_AI");
             });
 
             modelBuilder.Entity<ArtAlertedEntity>(entity =>

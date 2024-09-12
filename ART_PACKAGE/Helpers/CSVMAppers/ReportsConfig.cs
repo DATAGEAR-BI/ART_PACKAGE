@@ -203,7 +203,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             }
     }
             },
-            {
+           /* {
     nameof(CFTConfigController).ToLower() , new ReportConfig
     {
         DisplayNames = new Dictionary<string, GridColumnConfiguration>
@@ -218,7 +218,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
             }
     }
-            },
+            },*/
             {
     nameof(UserPerformanceController).ToLower(),
                 new ReportConfig

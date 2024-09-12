@@ -101,7 +101,7 @@ namespace ART_PACKAGE.Controllers
         }
 
 
-
+/*
         public IActionResult CardsData()
         {
             int numberOfCustomers = _dbAml.ArtHomeNumberOfCustomers.FirstOrDefault()?.NumberOfCustomers ?? 0;
@@ -117,7 +117,7 @@ namespace ART_PACKAGE.Controllers
                 NumberOfHighRiskCustomers = numberOfHighRiskCustomers
             });
         }
-
+*/
         public IActionResult getChartsData()
         {
 

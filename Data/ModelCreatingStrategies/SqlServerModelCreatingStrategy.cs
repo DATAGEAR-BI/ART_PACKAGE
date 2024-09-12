@@ -2037,7 +2037,7 @@ namespace Data.ModelCreatingStrategies
                    .HasColumnName("LAST_STATUS".ToUpper())
                    .UseCollation("Arabic_100_CI_AI");
             });
-            modelBuilder.Entity<ArtCFTConfig>(entity =>
+            /*modelBuilder.Entity<ArtCFTConfig>(entity =>
             {
                 entity.ToView("ART_CFT_CONFIG", "ART_DB");
                 entity.HasNoKey();
@@ -2070,7 +2070,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ActionDetail)
                     .HasColumnName("Action_Detail")
                     .HasColumnType("nvarchar(max)");
-            });
+            });*/
 
            /* modelBuilder.Entity<ArtClearDetect>(entity =>
             {
