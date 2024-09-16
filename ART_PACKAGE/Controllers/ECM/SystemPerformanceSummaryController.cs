@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Controllers.ECM
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                //chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
 
@@ -88,14 +88,14 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                //chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
 
             }
             if (dbType == DbTypes.MySql)
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(MYSQLSPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(MYSQLSPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+                //chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
 
             }
 
@@ -137,7 +137,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Type = ChartType.curvedline
                 });
             }*/
-            if (dbType is DbTypes.SqlServer or DbTypes.MySql)
+            /*if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
@@ -152,7 +152,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Val = "TOTAL_NUMBER_OF_CASES",
                     Type = ChartType.donut
                 });
-            }
+            }*/
             return new ContentResult
             {
                 ContentType = "application/json",
