@@ -126,16 +126,7 @@ namespace ART_PACKAGE.Helpers.DropDown
        
         
         public List<SelectItem> GetCasesDetailsCreatedByDropDown();
-        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown();
-        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown();
-        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown();
-        public List<SelectItem> GetOwner_RiskAssessmentDropDown();
-        public List<SelectItem> GetCreatedByDropDown();
-        public List<SelectItem> GetAlertedEntityLevelDropDown();
-        public List<SelectItem> GetOwner_AlertedEntityDropDown();
-        public List<SelectItem> GetCustomerTypeDropDown();
-        public List<SelectItem> GetMaritalStatusDropDown();
-        public List<SelectItem> GetCustomerStatusDropDown();
+
 
         //
 

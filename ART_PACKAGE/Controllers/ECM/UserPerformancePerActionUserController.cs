@@ -94,7 +94,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
-            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
+            byte[] bytes = await data.AsQueryable().ExportToCSV(para);
             return File(bytes, "text/csv");
         }
 

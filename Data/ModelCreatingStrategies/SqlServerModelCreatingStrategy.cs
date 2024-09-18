@@ -2007,7 +2007,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ValidFromDate)
                     .HasColumnType("datetime")
                     .HasColumnName("VALID_FROM_DATE");
-                entity.Property(e => e.LastComment)
+                /*entity.Property(e => e.LastComment)
                    .HasMaxLength(4000)
                    .IsUnicode(false)
                    .HasColumnName("LAST_COMMENT")
@@ -2030,7 +2030,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("number_of_comments".ToUpper());
                 entity.Property(e => e.NumberOfAttachments)
                     .HasColumnType("int")
-                    .HasColumnName("number_of_attachments".ToUpper());
+                    .HasColumnName("number_of_attachments".ToUpper());*/
                 entity.Property(e => e.LastStatus)
                    .HasMaxLength(256)
                    .IsUnicode(false)

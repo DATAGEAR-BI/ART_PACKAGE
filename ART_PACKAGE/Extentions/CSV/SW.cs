@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Extentions.StringExtentions;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using CsvHelper;
 using Data.Services.Grid;
 using System.Reflection;
@@ -107,6 +108,22 @@ namespace ART_PACKAGE.Extentions.CSV
                 foreach (var filterGrediant in filter)
                 {
                     cw.WriteField(filterGrediant.ToString());
+                    //cw.WriteComment(filterGrediant.ToString());
+                }
+                cw.NextRecord();
+
+
+            }
+
+
+        }
+        public static void WriteFilters<TModel>(this CsvWriter cw, List<List<object>> filters)
+        {
+            foreach (var filter in filters)
+            {
+                foreach (var filterGrediant in filter)
+                {
+                    cw.WriteField(filterGrediant.ToString().MapToHeaderName());
                     //cw.WriteComment(filterGrediant.ToString());
                 }
                 cw.NextRecord();

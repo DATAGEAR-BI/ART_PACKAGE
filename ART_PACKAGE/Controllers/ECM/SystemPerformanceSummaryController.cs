@@ -151,7 +151,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Val = "CASES",
                     Type = ChartType.curvedline
                 });*/
-            }
+            
             if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
