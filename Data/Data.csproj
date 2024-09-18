@@ -13,6 +13,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="DGAMLCORE\AcLkpTable.cs" />
+	  <Compile Remove="DGAMLCORE\AcRoutine.cs" />
+	  <Compile Remove="DGAMLCORE\AcRoutineParameter.cs" />
+	  <Compile Remove="DGAMLCORE\AcScenarioEvent.cs" />
+	  <Compile Remove="DGAMLCORE\AcSuspectedObject.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />

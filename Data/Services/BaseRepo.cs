@@ -6,6 +6,7 @@ using Data.Services.QueryBuilder;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 
 namespace Data.Services
@@ -103,6 +104,7 @@ namespace Data.Services
             }
             else
             {
+                defaultSort = defaultSort ?? getDefaultSortOption();
                 if (defaultSort != null)
                 {
                     System.Linq.Expressions.Expression<Func<TModel, object>> sortEx = defaultSort.GetSortExpression<TModel>();
@@ -178,6 +180,65 @@ namespace Data.Services
         public TModel? GetFirstWithCondition(Expression<Func<TModel, bool>> condition)
         {
             return _context.Set<TModel>().FirstOrDefault(condition);
+        }
+
+        private SortOption getDefaultSortOption()
+        {
+            var entityType = _context.Model.FindEntityType(typeof(TModel));
+            if (entityType == null)
+            {
+                Console.WriteLine("Entity type not found.");
+                return null;
+            }
+            // Retrieve indexed columns
+            var indexedColumns = entityType.GetIndexes()
+                .SelectMany(index => index.Properties)
+                .Distinct()
+                .Select(property => property.Name).FirstOrDefault();
+            if (indexedColumns is not null)
+            {
+                return new()
+                {
+                    dir = "asc",
+                    field = indexedColumns
+                };
+            }
+            
+            Type[] dataTypesOrder = new Type[]
+            {
+                typeof(int),
+                typeof(int?),
+                typeof(DateTime),
+                typeof(DateTime?),
+                typeof(decimal),
+                typeof(decimal?),
+                typeof(string)
+            };
+            IProperty firstMatchingColumn = null;
+            foreach (var type in dataTypesOrder)
+            {
+                firstMatchingColumn = entityType.GetProperties().FirstOrDefault(property => property.ClrType == type);
+                if (firstMatchingColumn != null)
+                {
+                    break;
+                }
+            }
+        
+            if (firstMatchingColumn != null)
+            {
+                Console.WriteLine($"\nFirst mached Column: {firstMatchingColumn.Name} has type :{firstMatchingColumn.ClrType.Name}");
+                return new()
+                {
+                    dir = "asc",
+                    field = firstMatchingColumn.Name
+                }; 
+            }
+            else
+            {
+                Console.WriteLine("\nNo Mached column found.");
+                return null;
+            }
+            
         }
     }
 }

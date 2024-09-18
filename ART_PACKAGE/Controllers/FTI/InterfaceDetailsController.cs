@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiInterfaceDetailsReport> data = fti.ArtTiInterfaceDetailsReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "Interface Details Report";
         //    ViewData["desc"] = "This report produces a listing of items passed from Fusion Trade Innovation to each back office system like Postings, Foreign exchange deals etc..";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

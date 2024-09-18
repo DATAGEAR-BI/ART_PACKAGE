@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiOsTransByNonpriReport> data = fti.ArtTiOsTransByNonpriReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "OS Transactions By Non-Pri Report";
         //    ViewData["desc"] = "This report produces information for non-principal parties instead of principal parties. All totals are in the reporting currency if one is specified, otherwise in base currency";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

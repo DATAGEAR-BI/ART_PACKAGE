@@ -71,6 +71,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     new GridColumnConfiguration() { Template = "Aml_Analysis_prediction" }
                 }
             };
+            HasFixedWidth = true;
             SkipList = typeof(ArtAmlAnalysisViewTb)
                 .GetProperties()
                 .Where(x => !columnsToKeep.Contains(x.Name))

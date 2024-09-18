@@ -13,7 +13,7 @@ import { exportConnection } from "../../ExportListener.js";
 //import * as ta from "../TextAreaInput/TextAreaInput.js";
 //import * as s from "../MultiSelect/Select.js";
 import * as pb from "../../../lib/SmartComponents/source/modules/smart.progressbar.js";
-
+//test
 
 var onePartitionOperators = ["isnull", "isnotnull", "isnullorempty", "isnotnullorempty", "isempty", "isnotempty"]
 var isExportingPDFNow = false;
@@ -21,6 +21,9 @@ var isExportingCSVNow = false;
 //var currentPDFReportId = currentPDFReportId;
 var isExportPdfHitted = false;
 var currentCSVProcess = '';
+var isSortingOrFiltering = false;
+var previousScrollPosition = 0;
+
 class Grid extends HTMLElement {
     url = "";
     total = 0;
@@ -309,6 +312,7 @@ class Grid extends HTMLElement {
                 //exportConnection.invoke("CancelPdfExport", exportinProcess);
                 return;
             }
+            
             if (currentPDFReportId == exportinProcess && progress == null) {
                 //exportConnection.invoke("CancelPdfExport", exportinProcess);
                 return;
@@ -942,6 +946,14 @@ class Grid extends HTMLElement {
 
 
                 });
+
+
+                if (isSortingOrFiltering) {
+                    setTimeout(function () {
+                        grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
+                        isSortingOrFiltering = false;
+                    }, 0);
+                }
             },
             //...(isHierarchy == "true" && {
             //    detailInit: (e) => {
@@ -980,6 +992,11 @@ class Grid extends HTMLElement {
         // event for constructing the filters for multi select columns
         grid.bind("columnMenuOpen", (e) => {
             console.log("collumn menu hitted ")
+
+            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+            console.log(previousScrollPosition);
+            isSortingOrFiltering = true;
+
             var querySelectorsObj = {
                 multiSelectQuerySelector: {
                     value: 'div[class="k-widget k-multiselect k-multiselect-clearable"]',
@@ -1147,7 +1164,11 @@ class Grid extends HTMLElement {
                 });
             }
         });
-
+        grid.thead.on("click", "th", function () {
+            previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+            console.log(previousScrollPosition);
+            isSortingOrFiltering = true;
+        });
 
         grid.thead.on("click", ".k-checkbox", this.ToggleSelectAll);
 
@@ -1981,28 +2002,28 @@ function parseObjectWithFunctions(obj) {
 }
 window.addEventListener('beforeunload', function (e) {
 
-    if (isExportingPDFNow) {
-        // Cancel the event
-        e.preventDefault();
-        // Chrome requires returnValue to be set
-        e.returnValue = '';
-        // Display the confirmation dialog
-        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
-        e.returnValue = confirmationMessage; // For older browsers
-        return confirmationMessage;
-    }
-    if (isExportingCSVNow) {
-        // Cancel the event
-        e.preventDefault();
-        // Chrome requires returnValue to be set
-        e.returnValue = '';
-        // Display the confirmation dialog
-        var confirmationMessage = 'Are you sure you want to leave this page and cancle Export CSV?';
-        e.returnValue = confirmationMessage; // For older browsers
-        return confirmationMessage;
-    }
+        if (isExportingPDFNow) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+            // Display the confirmation dialog
+            var confirmationMessage = 'Are you sure you want to leave this page and cancle Export Pdf?';
+            e.returnValue = confirmationMessage; // For older browsers
+            return confirmationMessage;
+        }
+        if (isExportingCSVNow) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+            // Display the confirmation dialog
+            var confirmationMessage = 'Are you sure you want to leave this page and cancle Export CSV?';
+            e.returnValue = confirmationMessage; // For older browsers
+            return confirmationMessage;
+        }
 
-}
+    }
 
 );
 

@@ -209,7 +209,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetAssessmentTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentTypeCd).Select(g => g.Key).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.GroupBy(s => s.AssessmentTypeCd).Select(g => g.Key).Where(s=>s!=null).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
@@ -457,7 +457,35 @@ namespace ART_PACKAGE.Helpers.DropDown
         //    var distinct_value = dbcmcaudit.VaLastLogins.GroupBy(s => s.Appname).Select(g => g.Key).OrderBy(s => s).ToList();
         //    return distinct_value;
         //}
+        public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName=="report_type" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.GOAML.Lookups.Where(x => x.LookupName == "report_status" && x.LookupKey != null).Select(x => x.LookupKey).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetReportActivityForgoamlReportsSusbectDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "To Person",
+                "Account",
+                "Entity",
+                "From Account",
+                "From Entity",
+                "To Account",
+                "From Person",
+                "Person",
+                "To Entity" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
 
         //public List<SelectItem> GetMakerEventNameDropDown()
         //{
@@ -506,6 +534,11 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetOwner_RiskAssessmentDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCasesDetailsCreatedByDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskCases.Select(x => x.CreateUserId == null || string.IsNullOrEmpty(x.CreateUserId.Trim()) ? "UNKNOWN" : x.CreateUserId).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetAlertOwnerDropDown()
@@ -700,124 +733,124 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGScenarioCategoryDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGScenarioStatusDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGProductTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("PRODUCT_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("PRODUCT_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGScenarioTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGScenarioFrequencyDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_FREQUENCY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("SCENARIO_FREQUENCY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGObjectLevelDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("OBJECT_LEVEL") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("OBJECT_LEVEL") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGAlarmTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_TYPE") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGAlarmCategoryDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_CATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGAlarmSubcategoryDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_SUBCATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_SUBCATEGORY") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGCreateUserIdDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcScenarioEvents.Select(x => x.CreateUserId).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcScenarioEvents.Select(x => x.CreateUserId).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGScenarioNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutines.Select(x => x.RoutineName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Select(x => x.RoutineName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGRiskFactDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGBranchNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGProfileRiskDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.RiskScoreCd)).Select(x => x.RiskScoreCd).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.RiskScoreCd)).Select(x => x.RiskScoreCd).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.OwnerUid)).Select(x => x.OwnerUid).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.OwnerUid)).Select(x => x.OwnerUid).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGPoliticalExpPrsnIndDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.PoliticalExpPrsnInd)).Select(x => x.PoliticalExpPrsnInd).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.PoliticalExpPrsnInd)).Select(x => x.PoliticalExpPrsnInd).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGRiskClassificationDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Customers.Where(x => x.RiskClass != null).Select(x => x.RiskClass.ToString()).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => x.RiskClass != null).Select(x => x.RiskClass.ToString()).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGCitizenCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGCustIdentTypeDescDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.CustIdentTypeDesc)).Select(x => x.CustIdentTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.CustIdentTypeDesc)).Select(x => x.CustIdentTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGOccupDescDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.Customers.Where(x => !string.IsNullOrEmpty(x.OccupDesc)).Select(x => x.OccupDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.OccupDesc)).Select(x => x.OccupDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGRoutineCreateUserIdDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutines.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGCustomerTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ExtCustTypeDesc)).Select(x => x.ExtCustTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetLast10YearsDropDown()
@@ -832,48 +865,92 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGCustomerIdentificationTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.IdentTypeDesc)).Select(x => x.IdentTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.IdentTypeDesc)).Select(x => x.IdentTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGCityNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CityName)).Select(x => x.CityName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CityName)).Select(x => x.CityName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGStreetCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGresidenceCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ResidCntryName)).Select(x => x.ResidCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.ResidCntryName)).Select(x => x.ResidCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGCitizenshipCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.CitizenCntryName)).Select(x => x.CitizenCntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
         public List<SelectItem> GetDGExternalCustomerBranchNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.BranchName)).Select(x => x.BranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.ExternalCustomers.Where(x => !string.IsNullOrEmpty(x.BranchName)).Select(x => x.BranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGParmValueDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmValue)).Select(x => x.ParmValue).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmValue)).Select(x => x.ParmValue).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGParmTypeDescDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
+        }
+        
+        public List<SelectItem> GetOwner_RiskAssessmentDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCreatedByDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.CreateUserId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetAlertedEntityLevelDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
+                .Where(a => a.LovTypeName.StartsWith("RT_ENTITY_LEVEL"))
+                .Where(b => b.LovLanguageDesc.Contains("en")).Select(g => g.LovTypeDesc)
+                .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetOwner_AlertedEntityDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.KC.FskEntityQueues.Select(x => x.OwnerUserid).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        
+        public List<SelectItem> GetCustomerStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.PartyStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetMaritalStatusDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Select(x => x.MaritalStatusDesc).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetCustomerTypeDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyKey != -1).Select(x => x.PartyTypeDesc.ToUpper() == "ORGNIZATION" ? "ORGANIZATION" : x.PartyTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
         }
     }
 }

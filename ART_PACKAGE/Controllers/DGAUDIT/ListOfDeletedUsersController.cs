@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //    List<ListOfDeletedUser> data = context.ListOfDeletedUsers.CallData(req).Data.ToList();
         //    ViewData["title"] = "List Of Deleted Users";
         //    ViewData["desc"] = "This Report presents all deleted users with the related informaton as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

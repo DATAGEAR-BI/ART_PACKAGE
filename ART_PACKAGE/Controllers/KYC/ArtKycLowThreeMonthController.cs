@@ -64,7 +64,7 @@ namespace ART_PACKAGE.Controllers.KYC
         //    List<ArtKycLowThreeMonth> data = dbfcfkc.ArtKycLowThreeMonths.CallData(req).Data.ToList();
         //    ViewData["title"] = "Low risk within 3 months customers Report";
         //    ViewData["desc"] = "presents all low-risk customers need to be update their KYCs within 3 months with the related information below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

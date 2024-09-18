@@ -2,7 +2,8 @@
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
-using Data.DGAML;
+using Data.DGAMLCORE;
+using Data.DGAMLAC;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
@@ -39,9 +40,12 @@ namespace ART_PACKAGE.Helpers.DBService
                 }
                 if (modules.Contains("DGAML"))
                 {
-                    IServiceScope scope = _serviceScopeFactory.CreateScope();
-                    DGAMLContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLContext>();
-                    DGAML = dgAml;
+                    IServiceScope coreScope = _serviceScopeFactory.CreateScope();
+                    DGAMLCOREContext dgAmlCore = coreScope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
+                    DGAMLCORE = dgAmlCore;
+                    IServiceScope ACscope = _serviceScopeFactory.CreateScope();
+                    DGAMLACContext dgAmlAc = ACscope.ServiceProvider.GetRequiredService<DGAMLACContext>();
+                    DGAMLAC = dgAmlAc;
                 }
                 if (modules.Contains("GOAML"))
                 {
@@ -91,7 +95,9 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public GoAmlContext GOAML { get; }
 
-        public DGAMLContext DGAML { get; }
+        public DGAMLCOREContext DGAMLCORE { get; }
+        public DGAMLACContext DGAMLAC { get; }
+
 
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }

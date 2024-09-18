@@ -65,7 +65,7 @@ namespace ART_PACKAGE.Controllers.KYC
         //    List<ArtKycExpiredId> data = dbfcfkc.ArtKycExpiredIds.CallData(req).Data.ToList();
         //    ViewData["title"] = "Expired ID customers Report";
         //    ViewData["desc"] = "Presents all expired ID customers need to be update their expired IDs with the related information below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

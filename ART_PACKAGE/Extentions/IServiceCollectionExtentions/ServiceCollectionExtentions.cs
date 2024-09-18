@@ -21,7 +21,7 @@ using Data.Data.SASAml;
 using Data.Data.Segmentation;
 using Data.Data.TRADE_BASE;
 using Data.Data.FATCA;
-using Data.DGAML;
+using Data.DGAMLCORE;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
@@ -32,6 +32,7 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.SASAudit;
+using Data.DGAMLAC;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -98,8 +99,10 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("DGAML"))
             {
-                string DGAMLContextConnection = config.GetConnectionString("DGAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-                _ = services.AddDbContext<DGAMLContext>(opt => contextBuilder(opt, DGAMLContextConnection));
+                string DGAMLCOREContextConnection = config.GetConnectionString("DGAMLCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
+                string DGAMLACContextConnection = config.GetConnectionString("DGAMLACContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLACContextConnection' not found.");
+                _ = services.AddDbContext<DGAMLCOREContext>(opt => contextBuilder(opt, DGAMLCOREContextConnection));
+                _ = services.AddDbContext<DGAMLACContext>(opt => contextBuilder(opt, DGAMLACContextConnection));
                 _ = services.AddDbContext<ArtDgAmlContext>(opt => contextBuilder(opt, connectionString));
             }
 

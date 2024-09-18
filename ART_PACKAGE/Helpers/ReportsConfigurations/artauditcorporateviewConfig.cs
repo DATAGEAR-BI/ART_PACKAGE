@@ -114,7 +114,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"HoldingCorporation" , new GridColumnConfiguration { DisplayName = "Holding Corporation"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"HoldingCorporationCd" , new GridColumnConfiguration { DisplayName = "Holding Corporation CD"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
-
+            HasFixedWidth = true;
 
 
 

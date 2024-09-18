@@ -6,6 +6,7 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
+using ART_PACKAGE.Helpers.ReportsConfigurations.ECM;
 using Data.Data.ARTDGAML;
 using Data.Data.Audit;
 using Data.Data.FTI;
@@ -130,6 +131,30 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
                     {"OwnerUserid".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() },
                     {"AlertedEntityLevel".ToLower(),_dropDown.GetAlertedEntityLevelDropDown() },
+                },
+                var value when value == nameof(artamltriageviewConfig).ToLower()  => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(), _dropDown.GetBranchNameDropDown() },
+                    {"RiskScore".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetOwner_AlertedEntityDropDown() },
+                    {"AlertedEntityLevel".ToLower(),_dropDown.GetAlertedEntityLevelDropDown() },
+                },
+                var value when value == nameof(artamlcustomersdetailsviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CustomerType".ToLower(),_dropDown.GetCustomerTypeDropDown() },
+                    {"CustomerStatus".ToLower(),_dropDown.GetCustomerStatusDropDown() },
+                    {"MaritalStatusDesc".ToLower(),_dropDown.GetMaritalStatusDropDown() },
+                    {"CustomerLevel".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Other",value= "Other" }, new SelectItem() { text = "Customer", value = "Customer" } } },
+                    {"RiskClassification".ToLower(),_dropDown.GetRiskClassificationDropDown() },
+                    //{"NonProfitOrgInd".ToLower(),pipList },
+                    //{"PoliticallyExposedPersonInd".ToLower(),pipList },
+                    //{"CharityDonationsInd".ToLower(),pipList },
+                    //{"ResidenceCountryName".ToLower(),_dropDown.GetResidenceCountryNameDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    //{"IndustryDesc".ToLower(),_dropDown.GetIndustryDescDropDown() },
+                    //{"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeDropDown() },
+                    //{"OccupationDesc".ToLower(),_dropDown.GetOccupationDescDropDown() },
+                    //{"CitizenshipCountryName".ToLower(),_dropDown.GetCitizenshipCountryNameDropDown() }
                 },
                 nameof(ArtAuditCorporateController) => new Dictionary<string, List<SelectItem>>
                 {
@@ -437,8 +462,22 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
                     {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
                 },
-
-
+                var value when value == nameof(ArtSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
+                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
+                    {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
+                    {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                },
+                var value when value == nameof(ArtUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                    {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                },
                 _ => null
             };
         }

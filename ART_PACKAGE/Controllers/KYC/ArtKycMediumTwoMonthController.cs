@@ -64,7 +64,7 @@ namespace ART_PACKAGE.Controllers.KYC
         //    List<ArtKycMediumTwoMonth> data = dbfcfkc.ArtKycMediumTwoMonths.CallData(req).Data.ToList();
         //    ViewData["title"] = "Medium risk within 2 months customers Report";
         //    ViewData["desc"] = "Presents all individual customers with the related information as below";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

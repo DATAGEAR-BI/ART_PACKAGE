@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.TRADE_BASE
              List<ArtTradeBaseSummary> data = context.ArtTradeBaseSummaries.CallData(req).Data.ToList();
              ViewData["title"] = "Trade Base AML Summary Report";
              ViewData["desc"] = "This report presents all Trade Base AML Summary ";
-             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                                      , User.Identity.Name, ColumnsToSkip, DisplayNames);
              return File(pdfBytes, "application/pdf");
          }

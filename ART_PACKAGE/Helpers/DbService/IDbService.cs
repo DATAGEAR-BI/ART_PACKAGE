@@ -2,7 +2,8 @@
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
-using Data.DGAML;
+using Data.DGAMLCORE;
+using Data.DGAMLAC;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
@@ -23,7 +24,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public DGFATCAContext FATCA { get; }
 
-        public DGAMLContext DGAML { get; }
+        public DGAMLCOREContext DGAMLCORE { get; }
+        public DGAMLACContext DGAMLAC { get; }
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }

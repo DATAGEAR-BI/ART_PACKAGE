@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //    List<LastLoginPerDayView> data = context.LastLoginPerDayViews.CallData(req).Data.ToList();
         //    ViewData["title"] = "User Last Login Per Day Report";
         //    ViewData["desc"] = "This Report presents each user with last login dateime for each day";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

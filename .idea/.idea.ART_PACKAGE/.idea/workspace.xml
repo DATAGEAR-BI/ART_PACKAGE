@@ -41,6 +41,7 @@
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/IPdfService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/Pdf/PdfService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/Helpers/ReportsConfigurations/artamlcasedetailsviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/User/RiderProjects/ART_PACK/ART_PACKAGE/ART_PACKAGE/Helpers/ReportsConfigurations/artamltriageviewConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ART_PACKAGE/wwwroot/lib/Plugins/amcharts_4.10.18/amcharts4/plugins/annotation.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/User/source/repos/ART_PACKAGE/Data/Data/AuthContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ModelCreatingStrategies/OracleModelCreatingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -75,10 +76,10 @@
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\JetBrains Rider 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlserver&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver",
+      "mysql"
     ],
     &quot;rider.external.source.directories&quot;: [
       &quot;C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
@@ -86,7 +87,7 @@
       &quot;C:\\Users\\User\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ART_PACKAGE">
     <configuration name="ART_PACKAGE: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/ART_PACKAGE/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-622866090572625215" uuid_low="-6395489615877505628" />

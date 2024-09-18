@@ -108,6 +108,8 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"doesnotcontain" , "Doesn't Contain" },
             {"endswith" , "Ends With" },
             {"doesnotendwith" , "Doesn't End With" },
+            { "isnotnullorempty"  , "Has Value" },
+            { "isnullorempty"  , "Has No Value" },
         };
 
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
@@ -529,7 +531,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
-            bool isDisplayNameExist = ReportsConfigm.CONFIG.Keys.Contains(typeof(T).Name.ToLower()) != null ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames != null ? true : false : false;
+            bool isDisplayNameExist = ReportsConfigm.CONFIG.Keys.Contains(typeof(T).Name.ToLower()) ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames != null ? true : false : false;
             Dictionary<string, GridColumnConfiguration> displayNamesDectionary = isDisplayNameExist ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames : null;
 
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));

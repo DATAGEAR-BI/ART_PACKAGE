@@ -119,6 +119,9 @@ var globaldata = [];
 var groupList = [];
 var valList = [];
 var spinner = new Spinner(spinnerOpts).spin(grid);
+var isSortingOrFiltering = false;
+var previousScrollPosition = 0;
+
 if (isStoredProc == "true") {
 
     getExRules();
@@ -475,7 +478,7 @@ function generateGrid() {
         noRecords: true,
         persistSelection: true,
         pageable: true,
-        sortable: true,
+        //sortable: true,
         change: function (e) {
             if ([...this.select()].length > 0) {
                 selected[this.dataSource.page()] = [...this.select()].map((x) => {
@@ -542,9 +545,16 @@ function generateGrid() {
             });
             this.tbody.find("tr").dblclick(function (e) {
                 var dataItem = grid.dataItem(this);
+                copyText(GetValidCellValue(e.target.textContent))
                 var dbclickhandler = dbClickHandlers[handlerkey];
                 dbclickhandler(dataItem).then(console.log("done"));
             });
+            if (isSortingOrFiltering) {
+                setTimeout(function () {
+                    grid.element.find(".k-grid-content").scrollLeft(previousScrollPosition);
+                    isSortingOrFiltering = false;
+                }, 0);
+            }
         },
         ...(isHierarchy == "true" && {
             detailInit: (e) => {
@@ -599,15 +609,18 @@ function generateGrid() {
 
     });
     //class="k-grid-filter"   a[class="k-grid-filter"]
-   /* $(".k-grid-filter").click(function (e) {
-
-        console.log("grid filter hitted")
-        grid_filterMenuInit2(e);
-    })*/
+    /* $(".k-grid-filter").click(function (e) {
+ 
+         console.log("grid filter hitted")
+         grid_filterMenuInit2(e);
+     })*/
 
 
 
     function grid_filterMenuInit(e) {
+        previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+        console.log(previousScrollPosition);
+        isSortingOrFiltering = true;
 
         console.log("collumn menu hitted ")
         var querySelectorsObj = {
@@ -712,9 +725,14 @@ function generateGrid() {
         })
 
     }
+    grid.thead.on("click", "th", function () {
+        previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
+        console.log(previousScrollPosition);
+        isSortingOrFiltering = true;
+    });
 
     grid.bind("filterMenuOpen", (e) => {
-        grid_filterMenuInit(e) 
+        grid_filterMenuInit(e)
     })
     //grid.bind("filterMenuInit", grid_filterMenuInit2);
     $(".k-grid-custom").click(function (e) {
@@ -834,12 +852,12 @@ function createFiltersDiv(obj) {
 
             if (existinp) {
                 var oldVal = existinp.value.split("=> ")[1];
-                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : x.value}`;
+                existinp.value = `${x.field}=> ${oldVal},${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : GetValidCellValue( x.value)}`;
             } else {
                 var inp = document.createElement("input");
                 inp.id = x.field + "-0";
                 inp.type = "text";
-                inp.value = `${x.field}=> ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : x.value}`;
+                inp.value = `${x.field}=> ${ops[x.operator]} ${onePartitionOperators.includes(x.operator) ? "" : GetValidCellValue( x.value)}`;
                 inp.classList = ["form-control"];
                 inp.readOnly = true;
                 fDiv.appendChild(inp);
@@ -853,12 +871,12 @@ function createFiltersDiv(obj) {
 
                 if (existinp) {
                     var oldVal = existinp.value.split("=> ")[1];
-                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${onePartitionOperators.includes(y.operator) ? "" : y.value}`;
+                    existinp.value = `${y.field}=> ${oldVal},${ops[y.operator]} ${onePartitionOperators.includes(y.operator) ? "" : GetValidCellValue( y.value)}`;
                 } else {
                     var inp = document.createElement("input");
                     inp.id = y.field + "-0";
                     inp.type = "text";
-                    inp.value = `${y.field}=> ${ops[y.operator]} ${onePartitionOperators.includes(y.operator)?"": y.value}`;
+                    inp.value = `${y.field}=> ${ops[y.operator]} ${onePartitionOperators.includes(y.operator)?"": GetValidCellValue( y.value)}`;
                     inp.classList = ["form-control"];
                     inp.readOnly = true;
                     fDiv.appendChild(inp);
@@ -980,7 +998,7 @@ function generateColumns(response) {
             template: isCollection
                 ? (di) =>
                     createCollection(di[column.name], column.CollectionPropertyName)
-                : hasTemplate ? (di) => Templates[template](di, column.name) : null, 
+                : hasTemplate ? (di) => Templates[template](di, column.name) : null,
         };
     });
 
@@ -1170,5 +1188,50 @@ function generateModel(response) {
 }
 
 
+function copyText(textToCopy) {
+    //const textToCopy = "This is the text to copy";
 
+    // Create a hidden textarea
+    const convertedText = textToCopy.split('\n').map(line => `${line}`).join('\n');
+
+    const textArea = document.createElement("textarea");
+    textArea.value = convertedText;
+    document.body.appendChild(textArea);
+
+    // Select the text
+    textArea.select();
+    textArea.setSelectionRange(0, convertedText.length);  // For mobile devices
+
+    // Copy the text
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textArea);  // Clean up the textarea
+
+    if (successful) {
+        console.log("Text copied successfully");
+    } else {
+        console.error("Failed to copy text");
+    }
+}
+function GetValidCellValue(contentText) {
+
+    if (isValidDateTime(contentText)) return typeof (contentText) == 'object' ? convertDateString(contentText) : getDateOnly(contentText);
+    else return contentText;
+}
+function convertDateString(dateStr) {
+    const date = new Date(dateStr);
+
+    // Get day, month, and year and format them with leading zeros
+    const day = String(date.getDate()).padStart(2, '0');  // Two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Two-digit month
+    const year = date.getFullYear();  // Four-digit year
+
+    return `${day}/${month}/${year}`;  // Return formatted date
+}
+function getDateOnly(dateString) {
+    return typeof (dateString) == 'string' ? dateString.split(" ")[0] : dateString;
+}
+function isValidDateTime(string) {
+    const timestamp = Date.parse(string);
+    return !isNaN(timestamp);  // Returns true if the string can be parsed into a valid date/time
+}
 

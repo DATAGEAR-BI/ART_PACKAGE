@@ -59,7 +59,7 @@ namespace ART_PACKAGE.Controllers.CRP
             }
             if (dbType == DbTypes.MySql) 
             {
-                //chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
+                chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(MYSQLSPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
                 chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
             }
@@ -84,9 +84,18 @@ namespace ART_PACKAGE.Controllers.CRP
                     Type=ChartType.clusteredbarchart
 
                 },
+                new ChartData<ART_ST_CRP_PER_RISK>
+                {
+                    ChartId = "ART_ST_CRP_PER_RISK",
+                    Data = chart1Data.ToList(),
+                    Title = "CUSTOMERS PER RISK CLASSIFICATION",
+                    Cat = "RISK_CLASSIFICATION",
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
+                }
             };
 
-            if (dbType is DbTypes.Oracle or DbTypes.SqlServer)
+            /*if (dbType is DbTypes.Oracle or DbTypes.SqlServer)
             {
                 _ = chartData.Add(new ChartData<ART_ST_CRP_PER_RISK>
                 {
@@ -97,7 +106,7 @@ namespace ART_PACKAGE.Controllers.CRP
                     Val = "NUMBER_OF_CUSTOMERS",
                     Type = ChartType.donut
                 });
-            }
+            }*/
 
 
 
