@@ -7,6 +7,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
     {
         public ArtSystemPerformanceConfig()
         {
+            ShowExportPdf = (s => true);
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                     { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},

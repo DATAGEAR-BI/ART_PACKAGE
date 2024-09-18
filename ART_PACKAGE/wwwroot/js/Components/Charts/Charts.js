@@ -53,6 +53,7 @@ class BaseCatValChart extends HTMLElement {
     chartValue = "";
     filterBuilder = undefined;
     filtersApplyBtn = undefined;
+    watermark = undefined;
     constructor() {
         super();
 
@@ -121,6 +122,16 @@ class BaseCatValChart extends HTMLElement {
         this.chartCategory = this.dataset.category;
         this.chartValue = this.dataset.value;
 
+
+        /*// Add watermark
+        var watermark = new am4core.Image();
+        watermark.href = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-160/cat.svg";
+        this.chart.plotContainer.children.push(watermark);
+        watermark.align = "right";
+        watermark.valign = "bottom";
+        watermark.opacity = 0.3;
+        watermark.marginRight = 10;
+        watermark.marginBottom = 5;*/
     }
 
 
@@ -187,6 +198,31 @@ class BaseCatValChart extends HTMLElement {
         this.chart.exporting.filePrefix = (Object.keys(this.dataset).includes("title") ? this.dataset["title"] : "ART_report") + "_" + formatDate(new Date())
 
     }
+
+    addWaterMark() {
+        // Add watermark
+        var watermark = new am4core.Image();
+        watermark.href = "/imgs/bank_logo.png"; //https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-160/cat.svg
+        //this.chart.plotContainer.children.push(watermark);
+        watermark.align = "right";
+        watermark.valign = "bottom";//top
+        watermark.width = 120;
+        watermark.height = 120;
+        watermark.opacity = 0.5;
+        watermark.marginRight = 10;
+        watermark.marginBottom = 5;
+        watermark.disabled = true;
+
+
+
+        let pattern = new am4core.Pattern();
+        pattern.addElement(watermark.element);
+        pattern.width = 80;
+        pattern.height = 80;
+        pattern.x = 20;
+        this.chart.plotContainer.background.fill = pattern;
+        this.chart.plotContainer.background.fillOpacity = 0.1;
+    }
 }
 
 class PieChart extends BaseCatValChart {
@@ -238,7 +274,7 @@ class BarChart extends BaseCatValChart {
         this.chart.exporting.menu = new am4core.ExportMenu();
         this.chart.exporting.menu.items = exportMenu;
         this.chart.exporting.filePrefix = (Object.keys(this.dataset).includes("title") ? this.dataset["title"] : "ART_report") + "_" + formatDate(new Date())
-
+        
         //if (columnsColorFunc) {
         //    series.columns.template.adapter.add("fill", (fill, target) => columnsColorFunc(fill, target)
         //    );
@@ -251,7 +287,7 @@ class BarChart extends BaseCatValChart {
 
 
 
-
+        this.addWaterMark()
 
 
 
@@ -300,12 +336,14 @@ class BarChart extends BaseCatValChart {
                 this.makeHBar();
             }
             this.makeExportMenu();
-
+            this.addWaterMark()
             setTimeout(() => {
                 this.toggleLoading();
             }, 3000);
         });
     }
+
+    
     makeBar() {
 
         this.chart = am4core.create(this.chartDiv, am4charts.XYChart);
@@ -718,6 +756,7 @@ class CurvedColumnChart extends BaseCatValChart {
         this.chart.scrollbarX = new am4core.Scrollbar();
         this.makeTitle();
         this.makeExportMenu();
+        this.addWaterMark();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
@@ -772,6 +811,7 @@ class CylnderChart extends BaseCatValChart {
         chart.cursor = new am4charts.XYCursor();
         this.makeTitle();
         this.makeExportMenu();
+        this.addWaterMark();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
@@ -951,6 +991,7 @@ class DonutChart extends BaseCatValChart {
         this.chart.legend.labels.template.text = "{name} : ({value})";
         this.makeTitle();
         this.makeExportMenu();
+        //this.addWaterMark();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
@@ -1027,6 +1068,7 @@ class LineChart extends BaseCatValChart {
 
         this.makeTitle();
         this.makeExportMenu();
+        this.addWaterMark();
         setTimeout(() => {
             this.toggleLoading();
         }, 3000);
