@@ -693,6 +693,16 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetCitizenshipCountryDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CurrencyLkps.Where(x => !string.IsNullOrEmpty(x.CurrName)).Select(x => x.CurrName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerNameDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.CustFname)).Select(x => x.CustFname).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
         public List<SelectItem> GetDGProfileRiskDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcSuspectedObjects.Where(x => !string.IsNullOrEmpty(x.RiskScoreCd)).Select(x => x.RiskScoreCd).Select(x => new SelectItem { text = x, value = x }).ToList();

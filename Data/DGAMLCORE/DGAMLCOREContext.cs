@@ -22,6 +22,8 @@ namespace Data.DGAMLCORE
         public virtual DbSet<ExternalCustomer> ExternalCustomers { get; set; } = null!;
 
         public virtual DbSet<Customer> Customers { get; set; } = null!;
+        public virtual DbSet<CurrencyLkp> CurrencyLkps { get; set; } = null!;
+
         //public virtual DbSet<AcRoutineParameter> AcRoutineParameters { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
