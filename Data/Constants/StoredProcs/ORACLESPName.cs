@@ -54,6 +54,9 @@
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
         public static readonly string ART_ST_DGAML_ALARMS_PER_STATUS = "";
         public static readonly string ART_ST_DGAML_TOTAL_ALARMS_DETAIL = "";
+        public static readonly string ART_ST_DGAML_PARTIES_LIST_DETAILS_REPORT = "";
+        public static readonly string ART_ST_DGAML_POLITICALLY_EXPOSED_REPORT = "";
+        public static readonly string ART_ST_DGAML_PARTIES_LIST_SUMMARY_REPORT = "";
 
 
         #region DGAML ALERTS Summary

@@ -46,6 +46,9 @@ namespace Data.Data.ARTDGAML
 
             modelBuilder.Entity<ArtStDgAmlAlarmsPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlTotalAlarmsDetail>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlPartiesListDetails>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlPoliticallyExposed>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlPartiesListSummary>().HasNoKey().ToView(null);
 
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());

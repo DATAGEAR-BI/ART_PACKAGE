@@ -227,31 +227,36 @@ function getExRules() {
     }
     function internal() {
 
-        var rules = $('#filters').queryBuilder('getRules');
+        var rules = $('#filters').queryBuilder('getRules', { skip_empty: true });
 
-        var g = [...rules.rules].reduce((group, product) => {
-            const { id } = product;
-            group[id] = !group[id] ? [] : group[id];
-            group[id].push(product);
-            return group;
-        }, {});
-        var arr = [];
-        for (var prop in g) {
-            arr.push(g[prop]);
-        }
-        if (arr.some(x => x.length > 1)) {
-            console.log("error");
-        } else {
-            exRules = Array.prototype.concat.apply([], arr);
-            exRules = [...exRules].map(x => {
-                if (Array.isArray(x.value)) {
-                    x.value = [...x.value].join(",");
-                }
-                return x;
-            });
-            isextractRulesFinished = true;
-            console.log(exRules);
+        console.log(rules);
 
+        if (rules != null) {
+
+            var g = [...rules.rules].reduce((group, product) => {
+                const { id } = product;
+                group[id] = !group[id] ? [] : group[id];
+                group[id].push(product);
+                return group;
+            }, {});
+            var arr = [];
+            for (var prop in g) {
+                arr.push(g[prop]);
+            }
+            if (arr.some(x => x.length > 1)) {
+                console.log("error");
+            } else {
+                exRules = Array.prototype.concat.apply([], arr);
+                exRules = [...exRules].map(x => {
+                    if (Array.isArray(x.value)) {
+                        x.value = [...x.value].join(",");
+                    }
+                    return x;
+                });
+                isextractRulesFinished = true;
+                console.log(exRules);
+
+            }
         }
     }
 }

@@ -145,6 +145,8 @@
     autorules: "AutoRules/GetData",
     DGAMLTotalAlarmsDetails: "DGAMLTotalAlarmsDetails/GetData",
     DGAMLAlarmSummary: "DGAMLAlarmSummary/GetData",
-
+    DGAMLPartiesListDetails: "DGAMLPartiesListDetails/GetData",
+    DGAMLPoliticallyExposed: "DGAMLPoliticallyExposed/GetData",
+    DGAMLPartiesListSummary: "DGAMLPartiesListSummary/GetData",
 
 };

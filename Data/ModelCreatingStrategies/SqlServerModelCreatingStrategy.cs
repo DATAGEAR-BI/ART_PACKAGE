@@ -8619,8 +8619,23 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(25)
                     .HasColumnName("Tel_No_2");
             });
+            modelBuilder.Entity<CurrencyLkp>(entity =>
+            {
+                entity.HasKey(e => e.CurrKey)
+                    .HasName("XPK_Currency");
 
-            
+                entity.ToTable("Currency_LKP", "DGAMLCORE");
+
+                entity.Property(e => e.CurrKey).HasColumnName("Curr_key");
+
+                entity.Property(e => e.CurrCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Curr_Cd");
+
+                entity.Property(e => e.CurrName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Curr_Name");
+            });
         }
 
         public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)

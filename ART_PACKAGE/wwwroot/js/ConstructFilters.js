@@ -30,6 +30,12 @@ class ExternalFilter extends HTMLElement {
         filtercontrol.classList.add("col-xs-8", "col-md-8", "col-sm-8");
         btn.classList.add("col-xs-2", "col-md-2", "col-sm-2", "btn", "btn-primary");
         filtercontrol.id = "filters";
+        var allow_empty = false;
+
+        if (key == "DGAMLPartiesListDetails" || key == "DGAMLPoliticallyExposed" || key == "DGAMLPartiesListSummary") {
+            allow_empty = true;
+        }
+
         $(filtercontrol).queryBuilder({
             filters: [...filters],
             rules: [...rules],
@@ -38,10 +44,10 @@ class ExternalFilter extends HTMLElement {
             },
             conditions: ["AND"],
             allow_groups: false,
-            operators: ['equal', 'in']
+            operators: ['equal', 'in'],
+            allow_empty: allow_empty
+
         });
-
-
 
         $(filtercontrol).on('afterCreateRuleFilters.queryBuilder', (e, rule) => {
             this.filterRulesObject.push({ id: rule.id });
@@ -70,66 +76,80 @@ class ExternalFilter extends HTMLElement {
 
 
         btn.onclick = () => {
-
-            var rules = $(filtercontrol).queryBuilder('getRules');
-            var isValidFilters = true;
-            if (rules == null || rules.rules == null) {
-                isValidFilters = false;
-                toastObj.icon = 'error';
-                toastObj.text = `please add report filters`;
-                toastObj.heading = "Apply Filter Status";
-                $.toast(toastObj);
+            var ruleEmpty = $(filtercontrol).queryBuilder('getRules');
+            console.log(ruleEmpty);
+            if (allow_empty == true && ruleEmpty == null) { 
+                exRules = [];
+                if (document.getElementById("grid")) {
+                    $("#grid").data("kendoGrid").dataSource.read();
+                    $("#grid").data("kendoGrid").dataSource.view();
+                } else if (document.getElementById("charts")) {
+                    var url = this.dataset.chartsurl;
+                    var chartsurl = Urls[url];
+  
+                    callDefinedCharts(chartsurl);
+                }
             }
-            filters.forEach((f) => {
-                if (rules && rules.rules) {
-                    console.log("ruree", f);
-                    if (!f.optional) {
+            else {
+                var rules = $(filtercontrol).queryBuilder('getRules', { skip_empty: true });
+                var isValidFilters = true;
+                if (rules == null || rules.rules == null) {
+                    isValidFilters = false;
+                    toastObj.icon = 'error';
+                    toastObj.text = `please add report filters`;
+                    toastObj.heading = "Apply Filter Status";
+                    $.toast(toastObj);
+                }
+                filters.forEach((f) => {
+                    if (rules && rules.rules) {
+                        console.log("ruree", f);
+                        if (!f.optional) {
 
-                        var IsRuleExist = rules.rules.some(item => item.id === f.id);
-                        if (!IsRuleExist) {
-                            isValidFilters = false;
-                            toastObj.icon = 'error';
-                            toastObj.text = `please add ${f.label} filter`;
-                            toastObj.heading = "Apply Filter Status";
-                            $.toast(toastObj);
+                            var IsRuleExist = rules.rules.some(item => item.id === f.id);
+                            if (!IsRuleExist) {
+                                isValidFilters = false;
+                                toastObj.icon = 'error';
+                                toastObj.text = `please add ${f.label} filter`;
+                                toastObj.heading = "Apply Filter Status";
+                                $.toast(toastObj);
+                            }
+                        }
+                    }
+
+                })
+                if (isValidFilters) {
+                    console.log(rules);
+                    var g = [...rules.rules].reduce((group, product) => {
+                        const { id } = product;
+                        group[id] = !group[id] ? [] : group[id];
+                        group[id].push(product);
+                        return group;
+                    }, {});
+                    var arr = [];
+                    for (var prop in g) {
+                        arr.push(g[prop]);
+                    }
+                    if (arr.some(x => x.length > 1)) {
+                        console.log("error");
+                    } else {
+                        exRules = Array.prototype.concat.apply([], arr);
+                        exRules = [...exRules].map(x => {
+                            if (Array.isArray(x.value)) {
+                                x.value = [...x.value].join(",");
+                            }
+                            return x;
+                        });
+                        if (document.getElementById("grid")) {
+                            $("#grid").data("kendoGrid").dataSource.read();
+                            $("#grid").data("kendoGrid").dataSource.view();
+                        } else if (document.getElementById("charts")) {
+                            var url = this.dataset.chartsurl;
+                            var chartsurl = Urls[url];
+                            callDefinedCharts(chartsurl);
                         }
                     }
                 }
-
-            })
-            if (isValidFilters) {
-                console.log(rules);
-                var g = [...rules.rules].reduce((group, product) => {
-                    const { id } = product;
-                    group[id] = !group[id] ? [] : group[id];
-                    group[id].push(product);
-                    return group;
-                }, {});
-                var arr = [];
-                for (var prop in g) {
-                    arr.push(g[prop]);
-                }
-                if (arr.some(x => x.length > 1)) {
-                    console.log("error");
-                } else {
-                    exRules = Array.prototype.concat.apply([], arr);
-                    exRules = [...exRules].map(x => {
-                        if (Array.isArray(x.value)) {
-                            x.value = [...x.value].join(",");
-                        }
-                        return x;
-                    });
-                    if (document.getElementById("grid")) {
-                        $("#grid").data("kendoGrid").dataSource.read();
-                        $("#grid").data("kendoGrid").dataSource.view();
-                    } else if (document.getElementById("charts")) {
-                        var url = this.dataset.chartsurl;
-                        var chartsurl = Urls[url];
-                        callDefinedCharts(chartsurl);
-                    }
-                }
             }
-
         }
         this.appendChild(spinnerstyle);
         this.appendChild(filtercontrol);
@@ -137,35 +157,33 @@ class ExternalFilter extends HTMLElement {
         //this.appendChild(goToDetailsBtn);
         this.f = this.getAppliedFiltersNames();
         //this.appendChild(goToDetailsBtn);
-        var rules = $(filtercontrol).queryBuilder('getRules');
+        var rules = $(filtercontrol).queryBuilder('getRules', { skip_empty: true });
         var g = [...rules.rules].reduce((group, product) => {
-            const { id } = product;
-            group[id] = !group[id] ? [] : group[id];
-            group[id].push(product);
-            return group;
-        }, {});
-        var arr = [];
-        for (var prop in g) {
-            arr.push(g[prop]);
-        }
-        if (arr.some(x => x.length > 1)) {
-            console.log("error");
-        } else {
-            exRules = Array.prototype.concat.apply([], arr);
-            exRules = [...exRules].map(x => {
-                if (Array.isArray(x.value)) {
-                    x.value = [...x.value].join(",");
-                }
-                return x;
-            });
-
-
-            if (document.getElementById("charts") && !document.getElementById("grid")) {
-                var url = this.dataset.chartsurl;
-                var chartsurl = Urls[url];
-                callDefinedCharts(chartsurl);
+                const { id } = product;
+                group[id] = !group[id] ? [] : group[id];
+                group[id].push(product);
+                return group;
+            }, {});
+            var arr = [];
+            for (var prop in g) {
+                arr.push(g[prop]);
             }
+            if (arr.some(x => x.length > 1)) {
+                console.log("error");
+            } else {
+                exRules = Array.prototype.concat.apply([], arr);
+                exRules = [...exRules].map(x => {
+                    if (Array.isArray(x.value)) {
+                        x.value = [...x.value].join(",");
+                    }
+                    return x;
+                });
 
+                if (document.getElementById("charts") && !document.getElementById("grid")) {
+                    var url = this.dataset.chartsurl;
+                    var chartsurl = Urls[url];
+                    callDefinedCharts(chartsurl);
+                }
         }
     }
     connectedCallback() { // this function is called when DOM is Created 
@@ -174,7 +192,7 @@ class ExternalFilter extends HTMLElement {
     }
     getAppliedFiltersNames() {
         var filtercontrol = document.getElementById('filters');
-        var rules = $(filtercontrol).queryBuilder('getRules');
+        var rules = $(filtercontrol).queryBuilder('getRules', { skip_empty: true });
 
         if (rules) {
             var g = [...rules.rules].reduce((group, product) => {

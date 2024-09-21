@@ -281,13 +281,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
-            var data = from b in _dbSrv.DGAMLAC.AcAlarms.Select(s => s.AlarmStatusCd).Distinct()
+           /* var data = from b in _dbSrv.DGAMLAC.AcAlarms.Select(s => s.AlarmStatusCd).Distinct()
                         join a in _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null && s.LkpName == "ALARM_STATUS")
                         on b equals  a.LkpValCd
-                        select new SelectItem { text = a.LkpValDesc, value = a.LkpValCd };
+                        select new SelectItem { text = a.LkpValDesc, value = a.LkpValCd };*/
 
-            //List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
-            return data.ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS" && s.LkpValCd!="MAN").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
+            return distinct_value;
         }
         public List<SelectItem> GetRoutineNameDropDown()
         {
@@ -691,6 +691,16 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetDGBranchNameDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCitizenshipCountryDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CurrencyLkps.Where(x => !string.IsNullOrEmpty(x.CurrName)).Select(x => x.CurrName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerNameDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Customers.Where(x => !string.IsNullOrEmpty(x.CustFname)).Select(x => x.CustFname).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGProfileRiskDropDown()

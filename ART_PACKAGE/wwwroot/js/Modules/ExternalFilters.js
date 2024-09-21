@@ -333,6 +333,53 @@ export const Filters = {
 
         ]
     },
+    DGAMLPartiesListDetails: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "@Customer_Name", field: "@Customer_Name", label: "Customer Name", operators: ['equal'], type: "string", optional: true, multiple: true },
+                { id: "@Political_Exposed", field: "@Political_Exposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetPoliticalExposedDropDown/") },
+                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
+
+            ]
+        }
+        ,
+        rules: [
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+
+        ]
+    },
+    DGAMLPoliticallyExposed: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "@Customer_Name", field: "@Customer_Name", label: "Customer Name", operators: ['equal'], type: "string", optional: true },
+                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
+
+            ]
+        }
+        ,
+        rules: [
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+
+        ]
+    },
+    DGAMLPartiesListSummary: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "@Political_Exposed", field: "@Political_Exposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetPoliticalExposedDropDown/") },
+                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetCitizenshipCountryDropDown/") },
+
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+
+        ]
+    },
     DGAMLAlarmSummary: {
         filters: [],
         get filters() {
