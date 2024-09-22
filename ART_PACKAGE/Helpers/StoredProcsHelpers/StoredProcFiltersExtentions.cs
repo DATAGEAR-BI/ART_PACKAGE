@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                 DbTypes.SqlServer => filters.Select(x =>
                 {
                     return
-                    new SqlParameter((paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].SqlServerName : x.id), paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].SqlServerType : SqlDbType.VarChar) { Value = x.value };
+                    new SqlParameter((paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].SqlServerName : x.id), paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].SqlServerType : SqlDbType.NVarChar) { Value = x.value };
                 }),
                 DbTypes.Oracle => filters.Select(x => new OracleParameter(paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].OracleName : x.id, paramtersDictionary.ContainsKey(x.id) ? paramtersDictionary[x.id].OracleType : OracleDbType.Varchar2, ParameterDirection.Input) { Value = x.value }).Append(new OracleParameter("out", OracleDbType.RefCursor, ParameterDirection.Output)),
                 DbTypes.MySql => filters.Select(x =>

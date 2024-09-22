@@ -695,7 +695,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCitizenshipCountryDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CurrencyLkps.Where(x => !string.IsNullOrEmpty(x.CurrName)).Select(x => x.CurrName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CountryLkps.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetCustomerNameDropDown()
