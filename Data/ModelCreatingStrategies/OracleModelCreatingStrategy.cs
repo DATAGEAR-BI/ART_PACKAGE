@@ -1844,6 +1844,48 @@ namespace Data.ModelCreatingStrategies
                       .HasMaxLength(12)
                       .IsUnicode(false);
             });
+
+            modelBuilder.Entity<ArtHomeGoamlReportsDate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_GOAML_REPORTS_DATE");
+
+                entity.Property(e => e.CountOfReportId)
+                    .HasPrecision(10)
+                    .HasColumnName("COUNT_OF_REPORT_ID");
+
+                entity.Property(e => e.Month)
+                    .HasMaxLength(12)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("YEAR");
+            });
+
+            modelBuilder.Entity<ArtHomeGoamlReportsPerType>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_GOAML_REPORTS_PER_TYPE");
+
+                entity.Property(e => e.NumberOfReports)
+                    .HasPrecision(10)
+                    .HasColumnName("NUMBER_OF_REPORTS");
+
+                entity.Property(e => e.ReportType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REPORT_TYPE");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("YEAR");
+            });
+
+
         }
 
         public void OnARTDGAMLModelCreating(ModelBuilder modelBuilder)
@@ -4071,6 +4113,32 @@ namespace Data.ModelCreatingStrategies
                       .HasColumnType("TIMESTAMP(6)");
             });
 
+
+            modelBuilder.Entity<ArtMonthlySwiftViewDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_MONTHLY_SWIFT_VIEW_DETAILS");
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_NAME");
+
+                entity.Property(e => e.Country)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("COUNTRY");
+
+                entity.Property(e => e.TransactionDate)
+                    .HasMaxLength(41)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANSACTION_DATE");
+
+                entity.Property(e => e.TransactionId)
+                    .HasPrecision(12)
+                    .HasColumnName("TRANSACTION_ID");
+            });
         }
 
         public void OnAuditModelCreating(ModelBuilder modelBuilder)
