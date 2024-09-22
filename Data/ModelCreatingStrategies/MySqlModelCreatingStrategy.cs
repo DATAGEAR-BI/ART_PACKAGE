@@ -7866,5 +7866,10 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

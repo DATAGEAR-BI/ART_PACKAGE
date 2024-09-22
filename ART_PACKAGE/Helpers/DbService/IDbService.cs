@@ -4,13 +4,14 @@ using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
 using Data.DGAMLCORE;
 using Data.DGAMLAC;
-using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Data.Data.SASAudit;
+using Data.DGECM;
+using Data.Data.ECM;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -20,6 +21,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public EcmContext ARTECM { get; }
         public GoAmlContext GOAML { get; }
         public DGMGMTContext DGMGMT { get; }
         public DGMGMTAUDContext DGMGMTAUD { get; }

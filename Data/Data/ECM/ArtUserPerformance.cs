@@ -11,7 +11,7 @@ namespace Data.Data.ECM
         public decimal CaseRk { get; set; }
         public string CaseId { get; set; } = null!;
         public DateTime? ValidFromDate { get; set; }
-        public string? CaseTypeCd { get; set; }
+        public string? CaseType { get; set; }
         public string? CaseStatus { get; set; }
         public string? Priority { get; set; }
         public string? CaseDesc { get; set; }

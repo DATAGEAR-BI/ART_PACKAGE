@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -24,16 +25,18 @@ namespace ART_PACKAGE.Controllers.ECM
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
         private readonly string dbType;
+        private readonly IDropDownService _dropSrv;
 
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv,IDropDownService dropSrv, EcmContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
             _pdfSrv = pdfSrv;
             this.context = context;
             _config = config;
+            _dropSrv = dropSrv;
             dbType = _config.GetValue<string>("dbType").ToUpper();
         }
 
@@ -54,8 +57,13 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
+            Dictionary<string, List<dynamic>> DropDownColumn = new Dictionary<string, List<dynamic>>
+            {
+                //{"action".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
 
-            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
+            };
+
+            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new
