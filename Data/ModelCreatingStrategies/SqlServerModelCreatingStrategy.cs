@@ -8636,6 +8636,30 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(100)
                     .HasColumnName("Curr_Name");
             });
+            modelBuilder.Entity<CountryLkp>(entity =>
+            {
+                entity.HasKey(e => e.CntryKey)
+                    .HasName("XPK_Country");
+
+                entity.ToTable("Country_LKP", "DGAMLCORE");
+
+                entity.Property(e => e.CntryKey).HasColumnName("Cntry_Key");
+
+                entity.Property(e => e.CntryCd2)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Cntry_CD_2");
+
+                entity.Property(e => e.CntryCd3)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Cntry_CD_3");
+
+                entity.Property(e => e.CntryName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Cntry_Name");
+            });
         }
 
         public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)

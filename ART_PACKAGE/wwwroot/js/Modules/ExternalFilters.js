@@ -345,7 +345,7 @@ export const Filters = {
         }
         ,
         rules: [
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },
@@ -360,7 +360,7 @@ export const Filters = {
         }
         ,
         rules: [
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },
@@ -376,7 +376,7 @@ export const Filters = {
         ,
         rules: [
 
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Riyal" },
+            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },
