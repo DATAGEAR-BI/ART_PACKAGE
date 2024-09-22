@@ -1,6 +1,7 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
 using Data.Services.Grid;
+using FakeItEasy;
 using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Helpers.DropDown
@@ -50,6 +51,20 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.KC.FskScenarios.Where(x => x.CurrentInd == "Y").Select(x => x.ScenarioName == null || string.IsNullOrEmpty(x.ScenarioName.Trim()) ? "UNKNOWN" : x.ScenarioName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetTypeOfSwiftClearDetectDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.ARTECM.ArtSwiftTypeFilter.Where(x => !string.IsNullOrEmpty(x.Type)).Select(x => x.Type).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetDirectionOfSwiftClearDetectDropDown()
+        {
+            List<SelectItem> distinct_value = new()
+            {
+                new SelectItem(){text = "Input",value="Input"},
+                new SelectItem(){text = "Output",value="Output"},
+            };
+            return distinct_value;
+        }
 
         public List<SelectItem> GetBranchNameDropDown()
         {
@@ -58,7 +73,7 @@ namespace ART_PACKAGE.Helpers.DropDown
                //.Where(b => b.BranchTypeDesc.Contains("BRANCH"))
                .Select(x => x.BranchName)
               .Select(x => new SelectItem { text = x, value = x }).ToList();
-            distinct_value.Add(new SelectItem { text = "Unknown", value = "Unknown" });
+            distinct_value.Add(new SelectItem { text = "UNKNOWN", value = "UNKNOWN" });
             return distinct_value;
 
         }
@@ -203,6 +218,17 @@ namespace ART_PACKAGE.Helpers.DropDown
                 .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE"))
                 // .Where(a => a.RefTableName.StartsWith("RT_CASE_TYPE") && SANCTION_TYPES_FILTER.Contains(a.ValCd))
                 .Select(x => x.ValDesc)
+               .Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+
+        }
+        public List<SelectItem> GetActionForUserPerf()
+        {
+            List<SelectItem> distinct_value = _dbSrv.ECM.EcmEvents
+                .Where(a => a.EventTypeCd == "ACTVCWF" || a.EventTypeCd == "UPDCWF")
+                .Select(x => x.EventDesc == "Case workflow terminated and restarted" ? x.EventDesc.Substring(x.EventDesc.IndexOf(':') + 6).TrimStart() : x.EventDesc.Substring(x.EventDesc.IndexOf(':') + 2).TrimStart())
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Distinct()
                .Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 

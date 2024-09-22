@@ -280,6 +280,16 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
                 },
+                var value when value == nameof(artecmcasesbirthdateviewconfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
+                    {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                },
+                var value when value == nameof(artswiftcleardetectconfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Direction".ToLower(),_dropDown.GetDirectionOfSwiftClearDetectDropDown() },
+                    {"Type".ToLower(),_dropDown.GetTypeOfSwiftClearDetectDropDown() },
+                },
                 nameof(AuditGroupsController) => new Dictionary<string, List<SelectItem>>
                 {
                  {nameof(ArtGroupsAuditView.GroupName            ).ToLower(), _dropDown.GetGroupAudNameDropDown() },
@@ -473,9 +483,10 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 },
                 var value when value == nameof(ArtUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
-                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
+                    {"CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
                     {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                    {"UpdateUserId".ToLower()               ,  _dropDown.GetUpdateUserIdDropDown()        },
                 },
                 _ => null
             };

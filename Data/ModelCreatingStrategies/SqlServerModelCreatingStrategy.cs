@@ -1817,9 +1817,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .HasColumnName("CASE_STATUS");
 
-                entity.Property(e => e.CaseTypeCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("CASE_TYPE_CD");
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(1200)
+                    .HasColumnName("CASE_TYPE");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -10346,6 +10346,11 @@ namespace Data.ModelCreatingStrategies
         }
 
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();
         }

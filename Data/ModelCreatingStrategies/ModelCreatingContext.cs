@@ -134,5 +134,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnSasAuditModelCreating(modelBuilder);
         }
+
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGWLLOGSModelCreating(modelBuilder);
+        }
     }
 }

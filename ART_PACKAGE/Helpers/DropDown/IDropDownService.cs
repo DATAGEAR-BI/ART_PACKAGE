@@ -114,6 +114,9 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetEmployeeIndDropDown();
         public List<SelectItem> GetTransactionTypeDropDown();
         public List<SelectItem> GetQueuesDropDown();
+        public List<SelectItem> GetTypeOfSwiftClearDetectDropDown();
+        public List<SelectItem> GetDirectionOfSwiftClearDetectDropDown();
+        public List<SelectItem> GetActionForUserPerf();
         public List<SelectItem> GetLast10YearsDropDown();
         public List<SelectItem> GetReportTypeForgoamlReportsSusbectDropDown();
         public List<SelectItem> GetReportStatusForgoamlReportsSusbectDropDown();

@@ -1747,7 +1747,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_GOAML_REPORTS_VALIDATION_VIEW", "ART");
+                entity.ToTable("ART_GOAML_REPORTS_VALIDATION_TB", "ART");
 
 
                 entity.Property(e => e.Id)
@@ -2868,9 +2868,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .HasColumnName("CASE_STATUS");
 
-                entity.Property(e => e.CaseTypeCd)
-                    .HasMaxLength(32)
-                    .HasColumnName("CASE_TYPE_CD");
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(12000)
+                    .HasColumnName("CASE_TYPE");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnName("CREATE_DATE");
@@ -3110,6 +3110,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(3)
                     .IsUnicode(false)
                     .HasColumnName("IS_DATE_AVAILABLE");
+            });
+            modelBuilder.Entity<ArtSwiftTypeFilter>(entity =>
+            {
+
+                entity.HasNoKey();
+
+                entity.ToTable("ART_SWIFT_TYPE_FILTER");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("Type");
             });
         }
 
@@ -14538,6 +14550,59 @@ namespace Data.ModelCreatingStrategies
                     .HasForeignKey(d => new { d.ParentRefTableName, d.ParentValCd })
                     .HasConstraintName("REF_TABLE_VAL_FK1");
             });
+            modelBuilder.Entity<EcmEvent>(entity =>
+            {
+                entity.HasKey(e => e.EventRk)
+                    .HasName("EVENT_PK");
+
+                entity.ToTable("ECM_EVENT");
+
+                entity.HasIndex(e => new { e.BusinessObjectName, e.BusinessObjectRk }, "ECM_EVENT_IDX1");
+
+                entity.HasIndex(e => new { e.LinkedObjectName, e.LinkedObjectRk }, "ECM_EVENT_IDX2");
+
+                entity.Property(e => e.EventRk)
+                    .HasPrecision(10)
+                    .ValueGeneratedNever()
+                    .HasColumnName("EVENT_RK");
+
+                entity.Property(e => e.BusinessObjectName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BUSINESS_OBJECT_NAME");
+
+                entity.Property(e => e.BusinessObjectRk)
+                    .HasPrecision(10)
+                    .HasColumnName("BUSINESS_OBJECT_RK");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.EventDesc)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_DESC");
+
+                entity.Property(e => e.EventTypeCd)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("EVENT_TYPE_CD");
+
+                entity.Property(e => e.LinkedObjectName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("LINKED_OBJECT_NAME");
+
+                entity.Property(e => e.LinkedObjectRk)
+                    .HasPrecision(10)
+                    .HasColumnName("LINKED_OBJECT_RK");
+            });
 
             modelBuilder.HasSequence("CASE_RK_SEQ");
 
@@ -19361,7 +19426,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("TITLE");
             });
         }
-     }
+
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+    }
     }
 
 

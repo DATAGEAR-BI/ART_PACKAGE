@@ -16,6 +16,7 @@ namespace Data.DGECM
 
         public virtual DbSet<RefTableVal> RefTableVals { get; set; } = null!;
         public virtual DbSet<CaseLive> CaseLives { get; set; } = null!;
+        public virtual DbSet<EcmEvent> EcmEvents { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
