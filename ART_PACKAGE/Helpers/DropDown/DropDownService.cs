@@ -549,7 +549,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.CORE.FscBankDims.Select(x => x.BankCountryName != null ? x.BankCountryName.Trim() : null).Distinct().Where(x => !string.IsNullOrEmpty(x)&& x != "Israel").Append("Palestine").Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();//free palastine 
+            List<SelectItem> distinct_value = _dbSrv.CORE.FscBankDims.Select(x => x.BankCountryName != null ? x.BankCountryName.Trim() : null).Distinct().Where(x => !string.IsNullOrEmpty(x)/*&& x != "Israel"*/)/*.Append("Palestine")*//*.Distinct()*/.Select(x => new SelectItem { text = x, value = x }).ToList();//free palastine fuck usa
             return distinct_value;
 
         }
