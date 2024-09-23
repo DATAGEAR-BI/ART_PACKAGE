@@ -3123,6 +3123,17 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("Type");
             });
+            modelBuilder.Entity<ActionFilter>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ACTION_FILTER");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION");
+            });
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)

@@ -224,10 +224,9 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetActionForUserPerf()
         {
-            List<SelectItem> distinct_value = _dbSrv.ECM.EcmEvents
-                .Where(a => a.EventTypeCd == "ACTVCWF" || a.EventTypeCd == "UPDCWF")
-                .Select(x => x.EventDesc == "Case workflow terminated and restarted" ? x.EventDesc.Substring(x.EventDesc.IndexOf(':') + 6).TrimStart() : x.EventDesc.Substring(x.EventDesc.IndexOf(':') + 2).TrimStart())
-                .Where(x => !string.IsNullOrEmpty(x))
+            List<SelectItem> distinct_value = _dbSrv.ARTECM.ActionFilters
+                .Where(x => !string.IsNullOrEmpty(x.Action))
+                .Select(x => x.Action)
                 .Distinct()
                .Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
@@ -675,7 +674,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetUserNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 

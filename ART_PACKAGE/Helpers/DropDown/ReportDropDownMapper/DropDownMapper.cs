@@ -478,15 +478,15 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
                     {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
                     {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
-                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
-                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetUserNameDropDown()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetUserNameDropDown()         },
                 },
                 var value when value == nameof(ArtUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
                     {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
-                    {"UpdateUserId".ToLower()               ,  _dropDown.GetUpdateUserIdDropDown()        },
+                    {"UpdateUserId".ToLower()               ,  _dropDown.GetUserNameDropDown()        },
                 },
                 _ => null
             };
