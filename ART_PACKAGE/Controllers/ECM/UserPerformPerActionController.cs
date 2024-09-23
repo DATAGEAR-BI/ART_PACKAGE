@@ -6,9 +6,11 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ECM;
+using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -57,9 +59,9 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
-            Dictionary<string, List<dynamic>> DropDownColumn = new Dictionary<string, List<dynamic>>
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
             {
-                //{"action".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
+                {"action".ToLower(),_dropSrv.GetActionForUserPerf().Select(s=>s.value).ToDynamicList()},
 
             };
 

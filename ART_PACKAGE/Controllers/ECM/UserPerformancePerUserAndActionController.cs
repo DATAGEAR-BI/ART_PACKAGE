@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -8,6 +9,7 @@ using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -24,16 +26,18 @@ namespace ART_PACKAGE.Controllers.ECM
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
         private readonly string dbType;
+        private readonly IDropDownService _dropSrv;
 
 
 
-        public UserPerformancePerUserAndActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+        public UserPerformancePerUserAndActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, IDropDownService dropSrv, EcmContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
             _pdfSrv = pdfSrv;
             this.context = context;
             _config = config;
+            _dropSrv = dropSrv;
             dbType = _config.GetValue<string>("dbType").ToUpper();
         }
 
@@ -54,8 +58,13 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
+            {
+                {"ACTION".ToLower(),_dropSrv.GetActionForUserPerf().Select(s=>s.value).ToDynamicList()},
+                {"ACTION_USER".ToLower(),_dropSrv.GetUserNameDropDown().Select(s=>s.value).ToDynamicList()},
 
-            KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req);
+            };
+            KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new

@@ -21,6 +21,8 @@ namespace Data.Data.ECM
         public virtual DbSet<ArtSwiftClearDetect> ArtSwiftClearDetects { get; set; } = null!;
         public virtual DbSet<ArtEcmCasesBirthdateView> ArtEcmCasesBirthdateViews { get; set; } = null!;
         public virtual DbSet<ArtSwiftTypeFilter> ArtSwiftTypeFilter { get; set; } = null!;
+        public virtual DbSet<ActionFilter> ActionFilters { get; set; } = null!;
+
 
 
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;

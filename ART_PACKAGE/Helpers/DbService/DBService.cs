@@ -60,8 +60,10 @@ namespace ART_PACKAGE.Helpers.DBService
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
                     EcmContext artecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                    DGMGMTContext dgmgmt = scope.ServiceProvider.GetRequiredService<DGMGMTContext>();
                     ECM = ecmService;
                     ARTECM = artecmService;
+                    DGMGMT = dgmgmt;
                 }
                 if (modules.Contains("FATCA"))
                 {
