@@ -28,6 +28,8 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtMonthlySwiftView> ArtMonthlySwiftViews { get; set; } = null!;
         public virtual DbSet<ArtMonthlySwiftViewDetail> ArtMonthlySwiftViewDetails { get; set; } = null!;
         public virtual DbSet<ArtAmlInternalCaseValidationView> ArtAmlInternalCaseValidationViews { get; set; } = null!;
+        public virtual DbSet<SasVaPerson> VaPersons { get; set; } = null!;
+
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 
 

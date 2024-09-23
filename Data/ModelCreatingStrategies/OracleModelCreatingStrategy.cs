@@ -4011,6 +4011,14 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("NUMBER_OF_ALERTS")
                     .HasColumnType("decimal(22,0)")
                     .IsRequired(false);
+                entity.Property(e => e.EmployeeInd)
+                    .HasColumnName("EMPLOYEE_IND")
+                    .HasMaxLength(78)
+                    .IsRequired(false);
+                entity.Property(e => e.RiskClassification)
+                    .HasColumnName("RISK_CLASSIFICATION")
+                    .HasMaxLength(300)
+                    .IsRequired(false);
             });
 
             modelBuilder.Entity<ArtMonthlySwiftView>(entity =>
@@ -4150,6 +4158,46 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.TransactionId)
                     .HasPrecision(12)
                     .HasColumnName("TRANSACTION_ID");
+            });
+            modelBuilder.Entity<SasVaPerson>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("VA_PERSON");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.Displayname)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAYNAME");
+
+                entity.Property(e => e.Externalkey)
+                    .HasPrecision(8)
+                    .HasColumnName("EXTERNALKEY");
+
+                entity.Property(e => e.Keyid)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("KEYID");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(240)
+                    .IsUnicode(false)
+                    .HasColumnName("NAME");
+
+                entity.Property(e => e.Objid)
+                    .HasMaxLength(68)
+                    .IsUnicode(false)
+                    .HasColumnName("OBJID");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(800)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE");
             });
         }
 

@@ -21,7 +21,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetAlertStatusDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskLovs
-                .Where(a => a.LovTypeName.StartsWith("RT_ALERT_STATUS"))
+                .Where(a => a.LovTypeName.StartsWith("RT_ALERT_STATUS") && a.LovLanguageDesc=="en")
                 .Where(b => b.LovLanguageDesc.Contains("en")).Select(x => x.LovTypeDesc).Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
@@ -535,7 +535,13 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.KC.FskRiskAssessments.Select(x => x.OwnerUserLongId).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
-        
+        public List<SelectItem> GetAlertsOwnerDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.SasAML.VaPersons.Select(x => x.Name).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+
         public List<SelectItem> GetAlertOwnerDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();

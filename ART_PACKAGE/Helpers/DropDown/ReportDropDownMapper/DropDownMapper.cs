@@ -59,6 +59,9 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"PartyTypeDesc".ToLower(),_dropDown.GetPartyType_AlertDropDown() },
                     {"BranchName".ToLower(),_dropDown.GetBranchNameDropDown() },
                     {"BranchNumber".ToLower(),_dropDown.GetBranchNumberDropDown() },
+                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusDropDown() },
+                    {"OwnerUserid".ToLower(),_dropDown.GetAlertsOwnerDropDown() },
+
                     {"ReportCloseRsn".ToLower(),_dropDown.GetCloseRsnDropDown() },
                     {"EmployeeInd".ToLower(),new List<SelectItem>(){ new SelectItem() { text="Y",value= "Y" }, new SelectItem() { text = "N", value = "N" } } } ,
                 },

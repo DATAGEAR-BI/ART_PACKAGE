@@ -27,5 +27,9 @@ namespace Data.Data.SASAml
         public string OwnerUserId { get; set; }
 
         public decimal? NumberOfAlerts { get; set; }
+        public string EmployeeInd { get; set; }
+
+        public string RiskClassification { get; set; }
+
     }
 }
