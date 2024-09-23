@@ -213,7 +213,8 @@
     UnusualAndSuspectedAlerts: "UnusualAndSuspectedAlerts/GetData",
 
     AlertedEntityDetail: "AlertedEntityDetail/GetData",
-    MonthlySwiftDetail: "MonthlySwiftDetail/GetData",
+    MonthlySwiftSummary: "MonthlySwiftSummary/GetData",
+    ArtMonthlySwiftDetail: "ArtMonthlySwiftDetail/GetData",
     autorules: "AutoRules/GetData",
     InternalCaseValidation: "InternalCaseValidation/GetData",
     GoamlReportsValidation: "GoamlReportsValidation/GetData",

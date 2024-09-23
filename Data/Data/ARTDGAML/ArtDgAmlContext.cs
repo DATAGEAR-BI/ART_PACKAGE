@@ -22,6 +22,7 @@ namespace Data.Data.ARTDGAML
         //DGAML Home
         public virtual DbSet<ArtHomeDgamlAlertsPerDate> ArtHomeDgamlAlertsPerDates { get; set; } = null!;
         public virtual DbSet<ArtHomeDgamlAlertsPerStatus> ArtHomeDgamlAlertsPerStatuses { get; set; } = null!;
+
         //public virtual DbSet<ArtHomeDgamlNumberOfAccount> ArtHomeDgamlNumberOfAccounts { get; set; } = null!;
         //public virtual DbSet<ArtHomeDgamlNumberOfCustomer> ArtHomeDgamlNumberOfCustomers { get; set; } = null!;
         //public virtual DbSet<ArtHomeDgamlNumberOfHighRiskCustomer> ArtHomeDgamlNumberOfHighRiskCustomers { get; set; } = null!;
