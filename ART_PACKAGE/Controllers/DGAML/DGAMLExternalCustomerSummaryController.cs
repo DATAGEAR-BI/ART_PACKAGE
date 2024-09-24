@@ -47,6 +47,9 @@ namespace ART_PACKAGE.Controllers.DGAML
 
             if (dbType == DbTypes.Oracle)
             {
+                chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(ORACLESPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
+                chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(ORACLESPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
+
                 //chart1Data = _context.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
                 //chart2data = _context.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
                 //chart3Data = _context.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
@@ -54,8 +57,8 @@ namespace ART_PACKAGE.Controllers.DGAML
             }
             if (dbType == DbTypes.MySql)
             {
-                chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
-                chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(MYSQLSPName.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(MYSQLSPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
+                chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(MYSQLSPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
 
             }
 

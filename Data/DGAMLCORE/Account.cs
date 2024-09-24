@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.DGAML
+namespace Data.DGAMLCORE
 {
     public partial class Account
     {

@@ -18,6 +18,8 @@ namespace Data.ModelCreatingStrategies
         public void OnCRPModelCreating(ModelBuilder modelBuilder);
         public void OnTRADE_BASEModelCreating(ModelBuilder modelBuilder);
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder);
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder);
+
 
 
     }

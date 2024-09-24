@@ -14,7 +14,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "BranchName", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "BranchNumber", new GridColumnConfiguration { DisplayName = "Branch Number" } },
                 { "OwnerUserId", new GridColumnConfiguration { DisplayName = "Owner User ID" } },
-                { "NumberOfAlerts", new GridColumnConfiguration { DisplayName = "Number of Alerts" } }
+                { "NumberOfAlerts", new GridColumnConfiguration { DisplayName = "Number of Alerts" } },
+                { "RiskClassification", new GridColumnConfiguration { DisplayName = "Risk Classification" } },
+                { "EmployeeInd", new GridColumnConfiguration { DisplayName = "Employee Ind." } },
             };
         }
 

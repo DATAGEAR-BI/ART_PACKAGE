@@ -92,9 +92,13 @@ namespace Data.ModelCreatingStrategies
 
 
 
-        public void OnDgAMLModelCreating(ModelBuilder modelBuilder)
+        public void OnDgAMLCOREModelCreating(ModelBuilder modelBuilder)
         {
-            _strategy.OnDgAMLModelCreating(modelBuilder);
+            _strategy.OnDgAMLCOREModelCreating(modelBuilder);
+        }
+        public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDgAMLACModelCreating(modelBuilder);
         }
 
         public void OnFCFCOREModelCreating(ModelBuilder modelBuilder)
@@ -126,10 +130,14 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnCRPModelCreating(modelBuilder);
         }
-
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnSasAuditModelCreating(modelBuilder);
+        }
+
+        public void OnDGWLLOGSModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGWLLOGSModelCreating(modelBuilder);
         }
     }
 }

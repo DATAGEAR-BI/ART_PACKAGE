@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Controllers.SASAML
         //    List<ArtAmlTriageView> data = dbfcfkc.ArtAmlTriageViews.CallData(req).Data.ToList();
         //    ViewData["title"] = "Triage";
         //    ViewData["desc"] = "Presents each entity with the related active alerts count";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

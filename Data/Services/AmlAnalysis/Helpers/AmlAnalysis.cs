@@ -127,6 +127,7 @@ namespace Data.Services.AmlAnalysis
         )
         {
             decimal maxEntityEvent = _fcfkc.FskEntityEvents.Max(x => x.EventId);
+             
             IEnumerable<FskEntityEvent> events = entitiesNumber.Select(a => new FskEntityEvent
             {
                 CaseId = null,
@@ -139,7 +140,7 @@ namespace Data.Services.AmlAnalysis
                         ?.AlertedEntityLevelCode ?? "",
                 EntityNumber = a,
                 EventDescription = eventDescription,
-                EventId = ++maxEntityEvent
+                EventId = ((decimal)(((int)++maxEntityEvent) ))//++maxEntityEvent
             });
             await _fcfkc.AddRangeAsync(events);
 

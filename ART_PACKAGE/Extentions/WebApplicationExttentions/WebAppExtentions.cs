@@ -112,8 +112,12 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                         .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
             List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
             RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            UserManager<AppUser>? um = app.Services.CreateScope().ServiceProvider.GetService<UserManager<AppUser>>();
+            var adminUser=um.Users.Where(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM").FirstOrDefault();
             if (modules is null || modules.Count == 0)
                 return;
+
+            List<string> rolesAdminDoesnotHave = new List<string>();  
             foreach (string module in modules)
             {
                 IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
@@ -125,9 +129,14 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                         IdentityRole roleToadd = new(role);
                         _ = await rm.CreateAsync(roleToadd);
                     }
+                    if (!await um.IsInRoleAsync(adminUser, role))
+                    {
+                        rolesAdminDoesnotHave.Add(role);
+                    }
 
                 }
             }
+            await um.AddToRolesAsync(adminUser, rolesAdminDoesnotHave);
 
         }
 

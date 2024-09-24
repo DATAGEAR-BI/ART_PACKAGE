@@ -79,7 +79,7 @@ public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
    List<ArtExternalCustomerDetailView> data = _context.ArtExternalCustomerDetailViews.CallData(req).Data.ToList();
    ViewData["title"] = "Data Gear AML External Customer Details";
    ViewData["desc"] = "Presents the external customer details";
-   byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+   byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
    return File(pdfBytes, "application/pdf");
 }

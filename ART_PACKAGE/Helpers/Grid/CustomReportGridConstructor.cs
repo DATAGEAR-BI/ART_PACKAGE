@@ -226,11 +226,17 @@ namespace ART_PACKAGE.Helpers.Grid
             throw new NotImplementedException();
         }
 
-        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        public string ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID,
+            Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
         {
             throw new NotImplementedException();
         }
 
+        public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
+        }
+      
 
     }
 }

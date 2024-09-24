@@ -47,10 +47,10 @@ namespace ART_PACKAGE.Controllers.DGAML
 
             if (dbType == DbTypes.Oracle)
             {
-                //chart1Data = _context.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
-                //chart3Data = _context.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
+                chart1Data = _context.ExecuteProc<ArtStDgAmlCustomerPerType>(ORACLESPName.ART_ST_DGAML_CUSTOMER_PER_TYPE, chart1Params.ToArray());
+                chart3Data = _context.ExecuteProc<ArtStDgAmlCustomerPerBranch>(ORACLESPName.ART_ST_DGAML_CUSTOMER_PER_BRANCH, chart3Params.ToArray());
 
+           
             }
             if (dbType == DbTypes.MySql)
             {

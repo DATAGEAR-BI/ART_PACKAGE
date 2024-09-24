@@ -1,6 +1,6 @@
 ﻿using Data.Services.Grid;
 
-namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
+namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
     public class ArtUserPerformanceConfig : ReportConfig
     {
@@ -10,7 +10,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
                                                         {
                                                                 { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
-                                                                { "CaseTypeCd", new GridColumnConfiguration { DisplayName = "Case Type"}},
+                                                                { "CaseType", new GridColumnConfiguration { DisplayName = "Case Type"}},
                                                                 { "CaseDesc", new GridColumnConfiguration { DisplayName = "Case Description"}},
                                                                 { "CaseStatus", new GridColumnConfiguration { DisplayName = "Case Status"}},
                                                                 { "Priority", new GridColumnConfiguration { DisplayName = "Priority"}},

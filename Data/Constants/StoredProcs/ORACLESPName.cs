@@ -42,9 +42,9 @@
 
 
         //crp
-        public static readonly string ART_ST_CRP_CUST_PER_RISK = "";
-        public static readonly string ART_ST_CRP_CASES_PER_STATUS = "";
-        public static readonly string ART_ST_CRP_CASES_PER_RATE = "";
+        public static readonly string ART_ST_CRP_CUST_PER_RISK = "ART.ART_ST_CRP_CUST_PER_RISK";
+        public static readonly string ART_ST_CRP_CASES_PER_STATUS = "ART.ART_ST_CRP_CASES_PER_STATUS";
+        public static readonly string ART_ST_CRP_CASES_PER_RATE = "ART.ART_ST_CRP_CASES_PER_RATE";
 
 
         //FATCA
@@ -101,6 +101,30 @@
         public static readonly string ART_ST_YEARLY_SANCTION_PER_REGION                         = "ART.ART_ST_YEARLY_SANCTION_PER_REGION";
         public static readonly string ART_ST_YEARLY_SANCTION_PER_YEAR                                        = "ART.ART_ST_YEARLY_SANCTION_PER_YEAR";
 
+
+        #region DGAML ALERTS Summary
+        //DG AML
+        public static readonly string ART_ST_DGAML_ALERT_PER_OWNER = "ART.ART_ST_DGAML_ALERTS_PER_OWNER";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "ART.ART_ST_DGAML_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "ART.ART_ST_DGAML_ALERTS_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "ART.ART_ST_DGAML_ALERTS_PER_SCENARIO";
+        #endregion
+
+        #region DGAML CASES SUMMARY
+        public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "ART.ART_ST_DGAML_CASES_PER_CATEGORY";
+        public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "ART.ART_ST_DGAML_CASES_PER_PRIORITY";
+        public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "ART.ART_ST_DGAML_CASES_PER_STATUS";
+        #endregion
+
+        #region DGAML CUSOMER SUMMARY
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_BRANCH = "ART.ART_ST_DGAML_CUSTOMER_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_TYPE = "ART.ART_ST_DGAML_CUSTOMER_PER_TYPE";
+        #endregion
+
+        #region EXTERNAL CUSTOMER SUMMARY
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH";
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE = "ART.ART_ST_EXTERNAL_CUSTOMER_PER_TYPE";
+        #endregion
 
 
 

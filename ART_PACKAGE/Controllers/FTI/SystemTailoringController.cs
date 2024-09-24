@@ -74,7 +74,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiSystemTailoringReport> data = fti.ArtTiSystemTailoringReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "System Tailoring Report";
         //    ViewData["desc"] = "This report produces rules conditions and parameter code details";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

@@ -1086,6 +1086,9 @@
 		<None Include="Views\Bottom5AMLBranches\Index.cshtml" />
 		<None Include="Views\Bottom5GOAMLBranches\Index.cshtml" />
 		<None Include="Views\Bottom5SanctionBranches\Index.cshtml" />
+		<None Include="Views\AML_ANALYSIS\Builder.cshtml" />
+		<None Include="Views\AML_ANALYSIS\Index.cshtml" />
+		<None Include="Views\AutoRules\Index.cshtml" />
 		<None Include="Views\CasesDetails\Index.cshtml" />
 		<None Include="Views\CasesPerProduct\Index.cshtml" />
 		<None Include="Views\CasesPerRegion\Index.cshtml" />
@@ -1929,6 +1932,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\woman.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
+		<None Include="wwwroot\js\AmlAnalysisScripts\AutoRules.js" />
 		<None Include="wwwroot\js\Components\Card\Card.js" />
 		<None Include="wwwroot\js\Components\Charts\Charts.js" />
 		<None Include="wwwroot\js\Components\Card\ChartUtils.js" />
@@ -1951,6 +1955,34 @@
 		<None Include="wwwroot\js\segmentReport - Copy.js" />
 		<None Include="wwwroot\js\segmentReport.js" />
 		<None Include="wwwroot\js\SingleSegmentReport.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-grid.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-grid.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-grid.rtl.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-grid.rtl.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-reboot.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-reboot.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-reboot.rtl.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-reboot.rtl.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-utilities.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-utilities.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-utilities.rtl.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle-utilities.rtl.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle.rtl.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\css\materialstyle.rtl.min.css.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.bundle.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.bundle.js.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.bundle.min.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.bundle.min.js.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.esm.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.esm.js.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.esm.min.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.esm.min.js.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.js.map" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.min.js" />
+		<None Include="wwwroot\lib\materialstyle-3.1.1-dist\js\materialstyle.min.js.map" />
 		<None Include="wwwroot\lib\Plugins\Kendo\jquery-1.12.4.min.js" />
 		<None Include="wwwroot\lib\Plugins\Kendo\jquery.min.js" />
 		<None Include="wwwroot\lib\Plugins\Kendo\jszip.js" />
@@ -2459,6 +2491,34 @@
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-sprite.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\icons-stack.svg" />
 		<None Include="wwwroot\lib\SmartComponents\source\styles\images\radial.svg" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-grid.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-grid.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-grid.rtl.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-grid.rtl.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-reboot.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-reboot.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-reboot.rtl.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-reboot.rtl.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-utilities.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-utilities.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-utilities.rtl.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle-utilities.rtl.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle.rtl.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\css\materialstyle.rtl.min.css.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.bundle.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.bundle.js.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.bundle.min.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.bundle.min.js.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.esm.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.esm.js.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.esm.min.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.esm.min.js.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.js.map" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.min.js" />
+		<None Include="wwwroot\materialstyle\3.1\dist\js\materialstyle.min.js.map" />
 		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.js" />
 		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.all.min.js" />
 		<None Include="wwwroot\lib\SweatAlert\dist\sweetalert2.js" />
@@ -2470,12 +2530,15 @@
 
 
 	<ItemGroup>
+		<PackageReference Include="BouncyCastle" Version="1.8.9" />
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
 		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.11" />
 		<PackageReference Include="Hangfire.LiteDB" Version="0.4.1" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
 		<PackageReference Include="IKVM" Version="8.6.2" />
+		<PackageReference Include="itext7" Version="8.0.5" />
+		<PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -2516,6 +2579,13 @@
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\AmlAnalysisScripts\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
+		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
-
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<FilesToCopy Include="$(ProjectDir)\dgum_cer\**\*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(ProjectDir)\bin\Release\net6.0\dgum_cer" SkipUnchangedFiles="true" />
+	</Target>
 </Project>

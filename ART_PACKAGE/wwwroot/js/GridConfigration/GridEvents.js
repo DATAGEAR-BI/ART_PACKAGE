@@ -566,7 +566,7 @@ export const Handlers = {
                 para.Skip = skip;
                 para.Filter = filters;
                 para.Group = groups;
-                para.sort = ds.dataSource.sort();;
+                para.sort = ds.dataSource.sort();
                 var isMyreports = window.location.href.toLowerCase().includes('myreports');
                 var res;
                 if (isMyreports) {

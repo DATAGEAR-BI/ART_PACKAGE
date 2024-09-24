@@ -1,4 +1,4 @@
-﻿using ART_PACKAGE.Controllers.AML_ANALYSIS;
+﻿using ART_PACKAGE.Controllers.AMLANALYSIS;
 using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.DGAUDIT;
 using ART_PACKAGE.Controllers.ECM;
@@ -31,7 +31,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
             { nameof(RiskAssessmentController).ToLower() , new List<Type> { typeof(ArtRiskAssessmentView)  } },
             { nameof(TriageController).ToLower() , new List<Type> { typeof(ArtAmlTriageView)  } },
             { nameof(AlertedEntityDetailController).ToLower() , new List<Type> { typeof(ArtAlertsPerAlertedEntityView)  } },
-            { nameof(MonthlySwiftDetailController).ToLower() , new List<Type> { typeof(ArtMonthlySwiftView)  } },
+            { nameof(MonthlySwiftSummaryController).ToLower() , new List<Type> { typeof(ArtMonthlySwiftView)  } },
+            { nameof(ArtMonthlySwiftDetailController).ToLower() , new List<Type> { typeof(ArtMonthlySwiftViewDetail)  } },
             { nameof(InternalCaseValidationController).ToLower() , new List<Type> { typeof(ArtAmlInternalCaseValidationView)  } },
 
 

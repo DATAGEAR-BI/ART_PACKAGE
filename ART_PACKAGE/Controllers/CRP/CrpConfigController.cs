@@ -82,7 +82,7 @@ public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
     List<ArtCrpConfig> data = _crp.ArtCrpConfigs.CallData(req).Data.ToList();
     ViewData["title"] = "CRP Configs ";
     ViewData["desc"] = "";
-    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
                                             , User.Identity.Name, ColumnsToSkip, DisplayNames);
     return File(pdfBytes, "application/pdf");
 }

@@ -67,7 +67,7 @@ namespace ART_PACKAGE.Controllers.GOAML
         //    List<ArtGoamlReportsSusbectParty> data = _context.ArtGoamlReportsSusbectParties.CallData(req).Data.ToList();
         //    ViewData["title"] = "GOAML Reports Suspected Partites Details";
         //    ViewData["desc"] = "Presents details about the GOAML reports with the related suspected parties";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

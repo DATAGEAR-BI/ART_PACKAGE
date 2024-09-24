@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiOsTransByPrincipalReport> data = fti.ArtTiOsTransByPrincipalReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "OS Transactions By Principal Report";
         //    ViewData["desc"] = "This report produces list information for master records that are not yet booked off or cancelled";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

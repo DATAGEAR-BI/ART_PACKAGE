@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
         //    List<ListGroupsRolesSummary> data = context.ListGroupsRolesSummaries.CallData(req).Data.ToList();
         //    ViewData["title"] = "List Of Groups Roles Summary";
         //    ViewData["desc"] = "This Report presents all groups with their roles";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

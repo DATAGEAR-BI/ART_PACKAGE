@@ -9,6 +9,7 @@ using Data.Constants.StoredProcs;
 using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -54,8 +55,12 @@ namespace ART_PACKAGE.Controllers.ECM
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
 
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
+            {
+                {"ACTION_USER".ToLower(),_dropSrv.GetUserNameDropDown().Select(s=>s.value).ToDynamicList()},
 
-            KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req);
+            };
+            KendoDataDesc<ArtUserPerformancePerActionUser> Data = data.AsQueryable().CallData(para.req,columnsToDropDownd: DropDownColumn);
 
 
             var result = new
@@ -94,7 +99,7 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformancePerActionUser>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER, summaryParams.ToArray());
             }
-            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
+            byte[] bytes = await data.AsQueryable().ExportToCSV(para);
             return File(bytes, "text/csv");
         }
 

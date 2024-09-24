@@ -102,7 +102,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiEcmAuditReport> data = fti.ArtTiEcmAuditReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "ECM Audit Trial Report";
         //    ViewData["desc"] = "";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

@@ -259,7 +259,7 @@ export const Handlers = {
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
-                para.sort = ds.dataSource.sort();;
+                para.sort = ds.dataSource.sort();
                 var res = await fetch(`/${controller}/ExportPdf`, {
                     method: "POST",
                     headers: {

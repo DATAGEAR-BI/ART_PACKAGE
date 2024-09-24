@@ -44,19 +44,19 @@ public class AuthContext : IdentityDbContext<AppUser>
             });
 
         modelBuilder.Entity<ArtSavedReportsChart>(e =>
-            {
-                e.HasKey(e => new { e.ReportId, e.Column, e.Type });
-                e.HasOne<ArtSavedCustomReport>(r => r.Report)
-                 .WithMany(c => c.Charts)
-                 .HasForeignKey(fk => fk.ReportId);
-                e.ToTable("ArtSavedReportsChart");
-            });
+        {
+            e.HasKey(e => new { e.ReportId, e.Column, e.Type });
+            e.HasOne<ArtSavedCustomReport>(r => r.Report)
+             .WithMany(c => c.Charts)
+             .HasForeignKey(fk => fk.ReportId);
+            e.ToTable("ArtSavedReportsChart");
+        });
 
 
         modelBuilder.Entity<ArtSavedCustomReport>(e =>
         {
             e.ToTable("ArtSavedCustomReport");
-            
+
             e.HasMany<AppUser>(e => e.Users)
                 .WithMany(r => r.Reports)
                 .UsingEntity<UserReport>(ur =>

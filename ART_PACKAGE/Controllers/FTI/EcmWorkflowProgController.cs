@@ -109,7 +109,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiEcmWorkflowProgReport> data = fti.ArtTiEcmWorkflowProgReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "ECM Workflow Progression Report";
         //    ViewData["desc"] = "";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

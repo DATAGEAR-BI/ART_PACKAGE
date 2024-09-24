@@ -18,6 +18,8 @@ namespace Data.Data.SASAudit
         public virtual DbSet<SasListUsersDepartment> SasListUsersDepartments { get; set; } = null!;
         public virtual DbSet<VaLastLoginView> VaLastLogins { get; set; }=null!;
         public virtual DbSet<VaLicensed> VaLicenseds { get; set; }=null!;
+        public virtual DbSet<VaPerson> VaPersons { get; set; } = null!;
+
 
         public SasAuditContext(DbContextOptions<SasAuditContext> options) : base(options)
         {

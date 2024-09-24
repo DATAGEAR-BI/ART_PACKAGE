@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Controllers.FTI
         //    List<ArtTiDiaryExceptionsReport> data = fti.ArtTiDiaryExceptionsReports.CallData(req).Data.ToList();
         //    ViewData["title"] = "Diary Exceptions Report";
         //    ViewData["desc"] = "This report produces a list of diary activities that were not carried out when due because of exception conditions";
-        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
+        //    byte[] pdfBytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData,ControllerContext, 5
         //                                            , User.Identity.Name, ColumnsToSkip, DisplayNames);
         //    return File(pdfBytes, "application/pdf");
         //}

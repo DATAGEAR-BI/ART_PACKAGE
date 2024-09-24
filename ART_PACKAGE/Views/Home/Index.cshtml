@@ -24,20 +24,25 @@ else
     {
         @section Scripts {
 
-    <script src="~/js/components/multiselect/select.js"></script>
+    <script src="~/js/Components/MultiSelect/Select.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/core.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/charts.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/animated.js"></script>
     <script src="~/lib/Plugins/amcharts_4.10.18/amcharts4/themes/kelly.js"></script>
-    <script type="module" src="~/js/Components/Charts/Charts.js"></script>
+    <script type="module" src="~/js/Components/Grid/Grid.js"></script>
 
     @if (homeType.Contains(HomeType.AML) && (modules.Contains("SASAML") || modules.Contains("DGAML")))
             {
-                <script src="~/js/amlhome.js" type="module" defer></script>
+                <script src="~/js/AMLHome.js" type="module" defer></script>
             }
             @if (homeType.Contains(HomeType.SANCTION) && modules.Contains("ECM"))
             {
-                <script src="~/js/homechartsjs.js" type="module" defer></script>
+                <script src="~/js/HomeChartsjs.js" type="module" defer></script>
+
+            }
+            @if (homeType.Contains(HomeType.GOAML) && modules.Contains("GOAML"))
+            {
+                <script src="~/js/GoAmlHomeChartsjs.js" type="module" defer></script>
 
             }
 
@@ -78,6 +83,26 @@ else
                         <m-piewithbar-chart id="dateChart" data-title="Cases Per Year & Month" data-barcategory="month" data-donutcategory="year" data-barvalue="value" data-donutvalue="value" data-bardatakey="monthData" data-exportValueName="Number Of Cases" style="height:600px;display:block !important;"></m-piewithbar-chart>
                         <m-bar-chart id="type" class="col-12" data-title="Cases Per Type" data-category="caseType" data-value="numberOfCases" style="height:600px;display:block !important;"></m-bar-chart>
                         <m-bar-chart id="status" class="col-12" data-title="Cases Per Status" data-category="caseStatus" data-value="numberOfCases" style="height:600px;display:block !important;"></m-bar-chart>
+                    </div>
+                </div>
+            </section>
+        }
+        @if (homeType.Contains(HomeType.GOAML) && modules.Contains("GOAML"))
+        {
+            <section class="content-header">
+
+                <h1>
+                    GOAML Dashboard
+
+                </h1>
+
+            </section>
+            <section class="content container-fluid">
+
+                <div style="align-content:center">
+                    <div id="charts" class="row">
+                        <m-piewithbar-chart id="goAmldateChart" data-title="Reports Per Year & Month" data-barcategory="month" data-donutcategory="year" data-barvalue="value" data-donutvalue="value" data-bardatakey="monthData" data-exportValueName="Number Of Reports" style="height:600px;display:block !important;"></m-piewithbar-chart>
+                        <m-bar-chart id="goAmltype" class="col-12" data-title="Reports Per Type" data-category="reportType" data-value="numberOfReports" style="height:600px;display:block !important;"></m-bar-chart>
                     </div>
                 </div>
             </section>

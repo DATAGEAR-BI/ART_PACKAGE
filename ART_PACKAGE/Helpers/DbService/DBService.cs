@@ -2,13 +2,16 @@
 using Data.Audit.DGMGMT_AUD;
 using Data.Data.SASAml;
 using Data.Data.TRADE_BASE;
-using Data.DGAML;
+using Data.DGAMLCORE;
+using Data.DGAMLAC;
 using Data.DGECM;
 using Data.DGFATCA;
 using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
+using Data.Data.SASAudit;
+using Data.Data.ECM;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -39,9 +42,12 @@ namespace ART_PACKAGE.Helpers.DBService
                 }
                 if (modules.Contains("DGAML"))
                 {
-                    IServiceScope scope = _serviceScopeFactory.CreateScope();
-                    DGAMLContext dgAml = scope.ServiceProvider.GetRequiredService<DGAMLContext>();
-                    DGAML = dgAml;
+                    IServiceScope coreScope = _serviceScopeFactory.CreateScope();
+                    DGAMLCOREContext dgAmlCore = coreScope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
+                    DGAMLCORE = dgAmlCore;
+                    IServiceScope ACscope = _serviceScopeFactory.CreateScope();
+                    DGAMLACContext dgAmlAc = ACscope.ServiceProvider.GetRequiredService<DGAMLACContext>();
+                    DGAMLAC = dgAmlAc;
                 }
                 if (modules.Contains("GOAML"))
                 {
@@ -53,7 +59,11 @@ namespace ART_PACKAGE.Helpers.DBService
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+                    EcmContext artecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                    DGMGMTContext dgmgmt = scope.ServiceProvider.GetRequiredService<DGMGMTContext>();
                     ECM = ecmService;
+                    ARTECM = artecmService;
+                    DGMGMT = dgmgmt;
                 }
                 if (modules.Contains("FATCA"))
                 {
@@ -81,17 +91,26 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
+                if (modules.Contains("SASAUDIT"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    SasAuditContext sasAud = scope.ServiceProvider.GetRequiredService<SasAuditContext>();
+                    SasAudit = sasAud;
+                }
             }
         }
 
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public EcmContext ARTECM { get; }
         public DGFATCAContext FATCA { get; }
 
         public GoAmlContext GOAML { get; }
 
-        public DGAMLContext DGAML { get; }
+        public DGAMLCOREContext DGAMLCORE { get; }
+        public DGAMLACContext DGAMLAC { get; }
+
 
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
@@ -100,6 +119,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
+        public SasAuditContext SasAudit { get; }
 
     }
 }

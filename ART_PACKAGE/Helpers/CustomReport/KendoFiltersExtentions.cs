@@ -1,7 +1,9 @@
-﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
+﻿using ART_PACKAGE.Extentions.CSV;
+using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Extentions.StringExtentions;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
+using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -108,6 +110,30 @@ namespace ART_PACKAGE.Helpers.CustomReport
             {"doesnotcontain" , "Doesn't Contain" },
             {"endswith" , "Ends With" },
             {"doesnotendwith" , "Doesn't End With" },
+            { "isnotnullorempty"  , "Has Value" },
+            { "isnullorempty"  , "Has No Value" },
+        };
+        private static readonly Dictionary<string, string> readableOperatorsProc = new()
+        {
+            {"equal" , "Is Equal To" },
+            {"neq" , "Is In" },
+            {"notequal" , "Is Not Equal To" },
+            {"gt" , "Is Greater Than" },
+            {"gte" , "Is Greater Than Or Equal" },
+            {"lt" , "Is Less Than" },
+            {"lte" , "Is Less Than Or Equal" },
+            {"isnull" , "Is Null" },
+            {"isnotnull" , "Is Not Null" },
+            {"isempty" , "Is Empty" },
+            {"isnotempty" , "Is Not Empty" },
+            {"startswith" , "Starts With" },
+            {"doesnotstartwith" , "Doesn't Start With" },
+            {"contains" , "Contains" },
+            {"doesnotcontain" , "Doesn't Contain" },
+            {"endswith" , "Ends With" },
+            {"doesnotendwith" , "Doesn't End With" },
+            { "isnotnullorempty"  , "Has Value" },
+            { "isnullorempty"  , "Has No Value" },
         };
 
         private static readonly Dictionary<string, Dictionary<string, string>> DateOp = new()
@@ -529,7 +555,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         public static List<ColumnsDto> GetColumns<T>(Dictionary<string, List<dynamic>> columnsToDropDownd = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null, List<string> propertiesToSkip = null)
         {
-            bool isDisplayNameExist = ReportsConfigm.CONFIG.Keys.Contains(typeof(T).Name.ToLower()) != null ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames != null ? true : false : false;
+            bool isDisplayNameExist = ReportsConfigm.CONFIG.Keys.Contains(typeof(T).Name.ToLower()) ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames != null ? true : false : false;
             Dictionary<string, GridColumnConfiguration> displayNamesDectionary = isDisplayNameExist ? ReportsConfigm.CONFIG[typeof(T).Name.ToLower()].DisplayNames : null;
 
             IEnumerable<PropertyInfo> props = propertiesToSkip is null ? typeof(T).GetProperties() : typeof(T).GetProperties().Where(x => !propertiesToSkip.Contains(x.Name));
@@ -887,10 +913,99 @@ namespace ART_PACKAGE.Helpers.CustomReport
             return bytes;
         }
 
-
-
-        public static List<List<object>> GetFilterTextForCsv(this Filter Filters)
+        public static async Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, StoredReq obj)
         {
+            var export_Patch_str = AssemblyConfigurationReader.GetAppSettingFromAssembly("export_Patch") == null ? 10000 : AssemblyConfigurationReader.GetAppSettingFromAssembly("export_Patch");
+            int.TryParse(export_Patch_str.ToString(), out int export_Patch);
+           
+            KendoDataDesc<T> calldata = data.CallData(obj.req);
+            data = calldata.Data;
+            decimal total = calldata.Total;
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            byte[] bytes = new byte[] { };
+            List<List<object>> filters = GetFilterTextForCsv<T>(obj.procFilters) is null ? GetFilterTextForCsv<T>(obj.req.Filter): GetFilterTextForCsv<T>(obj.procFilters).Concat(GetFilterTextForCsv<T>(obj.req.Filter)).ToList();
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
+            {
+                //cw.WriteFilters<T>(obj.req.Filter);
+                sw.Write("");
+                
+                if (calldata.Columns != null && calldata.Columns.Any())
+                {
+
+                    foreach (var colDto in calldata.Columns)
+                    {
+                        
+                        cw.WriteField(colDto.displayName);
+                        cw.NextRecord();
+                    }
+                }
+                else
+                {
+                    cw.WriteHeader<T>();
+
+                }
+
+                bytes = stream.ToArray();
+            }
+            while (total > 0)
+            {
+                List<T> tempData = data.Skip(skip).Take(export_Patch).ToList();
+                Task<byte[]> task = Task.Run(() =>
+                {
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (CsvWriter cw = new(sw, config))
+                    {
+                        sw.Write("");
+                        cw.WriteFilters<T>(filters);
+                        if (calldata.Columns != null && calldata.Columns.Any())
+                        {
+                            foreach (var colDto in calldata.Columns)
+                            {
+                                cw.WriteField(colDto.displayName);
+                            }
+                        }
+                        else
+                        {
+                            cw.WriteHeader<T>();
+
+                        }
+                        cw.NextRecord();
+                        foreach (T? elm in tempData)
+                        {
+                            cw.WriteRecord(elm);
+                            cw.NextRecord();
+                        }
+                    }
+                    byte[] b = stream.ToArray();
+                    return b;
+                });
+                tasks.Add(task);
+                total -=(export_Patch);
+                skip += (export_Patch);
+            }
+            byte[][] results = await Task.WhenAll(tasks);
+            tasks.ForEach(x =>
+            {
+                Console.WriteLine(x.Result.Length);
+                bytes = bytes.Concat(x.Result).ToArray();
+            }
+            );
+            return bytes;
+        }
+
+
+        public static List<List<object>> GetFilterTextForCsv<TModel>(this Filter Filters)
+        {
+            Dictionary<string, GridColumnConfiguration> displayNames = new();
+            displayNames = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().DisplayNames : null;
             List<List<object>> returnList = new();
             if (Filters is null)
             {
@@ -912,15 +1027,42 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
-                    returnList.AddRange(GetFilterTextForCsv(filter));
+                    returnList.AddRange(GetFilterTextForCsv<TModel>(filter));
 
                 }
                 else
                 {
-                    List<object> v = new() { i.field, readableOperators[i.@operator], i.value };
+                    List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], i.value };
                     returnList.Add(v);
                 }
 
+
+            }
+
+
+            return returnList;
+
+
+
+
+        }
+        public static List<List<object>> GetFilterTextForCsv<TModel>(this List<Filters> Filters)
+        {
+            Dictionary<string, GridColumnConfiguration> displayNames = new();
+            displayNames = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().DisplayNames : null;
+            List<List<object>> returnList = new();
+            if (Filters is null)
+            {
+                return returnList;
+            }
+
+            
+            foreach (var item in Filters)
+            {
+                
+                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(item.field) ? displayNames[item.field].DisplayName : item.field, readableOperatorsProc[item.@operator], item.value };
+                returnList.Add(v);
+              
 
             }
 

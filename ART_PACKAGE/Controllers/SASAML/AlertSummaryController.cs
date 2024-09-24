@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Controllers.SASAML
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_USERID",
                     Val = "ALERTS_CNT_SUM",
-                    Type = ChartType.donut
+                    Type = ChartType.bar
                 },
                   new ChartData<ArtStAlertPerBranch>
                 {
