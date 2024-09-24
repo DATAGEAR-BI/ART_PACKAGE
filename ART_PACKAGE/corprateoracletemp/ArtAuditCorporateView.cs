@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Data.KYC
+namespace ART_PACKAGE.corprateoracletemp
 {
     public partial class ArtAuditCorporateView
     {

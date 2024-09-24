@@ -13,7 +13,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
-                { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Average Of Alerts Or Cases " } },
+                { "MONTHLY_AVG_OF_ALERTS_OR_CFT_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Or CFT Cases " } },
                 { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
             };
