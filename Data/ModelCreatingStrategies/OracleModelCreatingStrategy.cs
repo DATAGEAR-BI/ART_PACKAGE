@@ -12837,11 +12837,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ID_ISSUE_COUNTRY");
 
                 entity.Property(e => e.IdentExpiryDate)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("IDENT_EXPIRY_DATE");
 
                 entity.Property(e => e.IdentIssueDate)
-                    .HasPrecision(6)
+                    .HasColumnType("DATE")
                     .HasColumnName("IDENT_ISSUE_DATE");
 
                 entity.Property(e => e.IdentNumber)
