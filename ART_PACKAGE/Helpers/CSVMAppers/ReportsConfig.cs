@@ -2987,7 +2987,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                  { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                   { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Of Cases" } },
                    { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 }}
                 
             },
@@ -3004,7 +3005,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                  { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                   { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Of Cases" } },
                    { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 }}
             },
 
@@ -3017,9 +3019,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                      { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "region", new GridColumnConfiguration { DisplayName = "Region" } },
                 }}
             },
+           
 
             { nameof(ART_ST_YEARLY_TOP_SANCTION_BRANCHES).ToLower(), new ReportConfig {
                SkipList =  new List<string>
@@ -3029,7 +3033,8 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 {
                      { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 }}
             },
 
@@ -3040,6 +3045,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
                 {
                      { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                     { "region", new GridColumnConfiguration { DisplayName = "Region" } },
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
@@ -3053,6 +3059,7 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                DisplayNames =  new Dictionary<string, GridColumnConfiguration>
                 {
                       { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                      { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
                 { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }

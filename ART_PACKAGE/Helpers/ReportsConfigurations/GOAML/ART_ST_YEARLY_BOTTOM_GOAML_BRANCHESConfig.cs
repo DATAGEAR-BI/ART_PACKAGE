@@ -10,6 +10,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
                 { "REPORT_TYPE", new GridColumnConfiguration { DisplayName = "Report Type" } },
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Average Of Alerts Or Cases " } },

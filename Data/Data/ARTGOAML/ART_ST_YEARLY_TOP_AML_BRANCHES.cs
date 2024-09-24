@@ -11,6 +11,7 @@ namespace Data.Data.ARTGOAML
 
         public decimal? YEAR { get; set; }
         public string? BRANCH_NAME { get; set; }
+        public string? region { get; set; }
         public decimal? NUMBER_OF_CASES { get; set; }
         public decimal? NUMBER_OF_REPORTS { get; set; }
     }

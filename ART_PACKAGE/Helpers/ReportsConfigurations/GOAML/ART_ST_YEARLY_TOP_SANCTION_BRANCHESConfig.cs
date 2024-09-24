@@ -11,7 +11,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             {
                 { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                 { "NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Number Of Cases" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
+                { "YEAR", new GridColumnConfiguration { DisplayName = "Year" } },
             };
         }
     }

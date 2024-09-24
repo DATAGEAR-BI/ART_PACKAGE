@@ -14,7 +14,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                  { "BRANCH_NAME", new GridColumnConfiguration { DisplayName = "Branch Name" } },
                   { "MONTHLY_AVG_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Monthly Avergae Of Alerts Of Cases" } },
                    { "RN", new GridColumnConfiguration { DisplayName = "RN" } },
-                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } }
+                { "NUMBER_OF_REPORTS", new GridColumnConfiguration { DisplayName = "Number Of Reports" } },
+                { "REGION", new GridColumnConfiguration { DisplayName = "Region" } },
             };
             SkipList = new List<string> { "RN" };
         }
