@@ -13,9 +13,7 @@
       <FilesToCopy Include="dgum_cer\**\*" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(FilesToCopy)" 
-          DestinationFolder="$(OutputPath)dgum_cer\" 
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(OutputPath)dgum_cer\" SkipUnchangedFiles="true" />
   </Target>
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
@@ -2495,6 +2493,7 @@
 		<Folder Include="Licenses\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
+		<Folder Include="wwwroot\CSV\" />
 	</ItemGroup>
 
 </Project>
