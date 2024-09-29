@@ -6713,10 +6713,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6752,10 +6752,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6791,10 +6791,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6830,10 +6830,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6867,10 +6867,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6906,10 +6906,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6945,10 +6945,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -6984,10 +6984,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -7021,10 +7021,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -7060,10 +7060,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -7099,10 +7099,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -7138,10 +7138,10 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BRANCH_NAME)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .HasColumnName("BRANCH_NAME")
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Type)
@@ -7172,6 +7172,72 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
             });
+            modelBuilder.Entity<ArtCustomerRenewalDetails>(entity =>
+            {
+                entity.HasNoKey(); // If the table has no primary key, otherwise configure the key accordingly
+
+                entity.ToView("ART_CUTOMERS_RENEWAL_DETAILS", "ART_DB"); // Specify the actual view name and schema if it maps to a view
+
+                entity.Property(e => e.PartyName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NAME");
+
+                entity.Property(e => e.PartyNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_NUMBER");
+
+                entity.Property(e => e.PartyType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .IsRequired()
+                    .HasColumnName("PARTY_TYPE");
+
+                entity.Property(e => e.PartyOccupation)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PARTY_OCCUPATION");
+
+                entity.Property(e => e.ExpiredDate)
+                    .HasColumnType("date")
+                    .HasColumnName("EXPIRED_DATE");
+
+                entity.Property(e => e.DateField)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("DATE_FIELD");
+
+                entity.Property(e => e.ActionRequired)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_REQUIRED");
+
+                entity.Property(e => e.LastContactDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LAST_CONTACT_DATE");
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .HasColumnType("date")
+                    .HasColumnName("CHANGE_BEGIN_DATE");
+
+                entity.Property(e => e.ChangeCurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsRequired()
+                    .HasColumnName("CHANGE_CURRENT_IND");
+
+                entity.Property(e => e.KycExpiryInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("KYC_EXPIRY_IND");
+
+                entity.Property(e => e.RiskClassification)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASSIFICATION");
+            });
+
         }
 
         public void OnDGECMModelCreating(ModelBuilder modelBuilder)

@@ -9,7 +9,8 @@ namespace Data.Data.KYC
         public string? AmlRisk { get; set; }
         public string? Type { get; set; }
         public string? EntityName { get; set; }
-        public string? RiskClassIndustry { get; set; }
+        //public string? RiskClassIndustry { get; set; }
+        public string? BRANCH_NAME { get; set; }
         public DateTime? NextUpdateDate { get; set; }
         public decimal? Month { get; set; }
     }
