@@ -19,6 +19,7 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.AmlAnalysis;
+using Data.Data.KYC;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -5505,7 +5506,1672 @@ namespace Data.ModelCreatingStrategies
 
         public void OnKYCModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+
+            modelBuilder.Entity<ArtAuditCorporateView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_AUDIT_CORPORATE_VIEW", "ART_DB");
+
+                entity.Property(e => e.ActivityAmount)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY_AMOUNT")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ActivityAmountCurrency)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY_AMOUNT_CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ActivityEndDate).HasColumnName("ACTIVITY_END_DATE");
+
+                entity.Property(e => e.ActivityStartDate).HasColumnName("ACTIVITY_START_DATE");
+
+                entity.Property(e => e.ActivityType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ActivityTypeDtls)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY_TYPE_DTLS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ActivityTypeSub)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTIVITY_TYPE_SUB")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AmlRiskCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AnnualNetIncomeCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ANNUAL_NET_INCOME_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BankingOrCorporate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BANKING_OR_CORPORATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BankingOrOtherRef)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BANKING_OR_OTHER_REF")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BudgetDate1).HasColumnName("BUDGET_DATE_1");
+
+                entity.Property(e => e.BudgetDate2).HasColumnName("BUDGET_DATE_2");
+
+                entity.Property(e => e.BudgetDate3).HasColumnName("BUDGET_DATE_3");
+
+                entity.Property(e => e.BusinessCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BUSINESS_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CalculateZakahFlag)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CALCULATE_ZAKAH_FLAG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Capital1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPITAL_1")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Capital2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPITAL_2")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Capital3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CAPITAL_3")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseRk).HasColumnName("CASE_RK");
+
+                entity.Property(e => e.CbRiskRate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CB_RISK_RATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CharityDonationsInd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CHARITY_DONATIONS_IND")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CloseDate).HasColumnName("CLOSE_DATE");
+
+                entity.Property(e => e.ClosingReasonId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLOSING_REASON_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CommercialName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMERCIAL_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CommercialNameEn)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMERCIAL_NAME_EN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CompanyStock)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPANY_STOCK")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CompanyStockName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPANY_STOCK_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CorporateName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CORPORATE_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CorporateNameEn)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CORPORATE_NAME_EN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATED_BY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerReference)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_REFERENCE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerStatus)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DateOfBudget)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DATE_OF_BUDGET")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DealAbrdBankDetails)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEAL_ABRD_BANK_DETAILS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DealtBankDetails)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEALT_BANK_DETAILS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DefaultBranch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEFAULT_BRANCH")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EconomicActivityCode5)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECONOMIC_ACTIVITY_CODE5")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FfiType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FFI_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FinancialStartDate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FINANCIAL_START_DATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ForeignConsulateEmbassyInd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FOREIGN_CONSULATE_EMBASSY_IND")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.GeoCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("GEO_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Giin)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("GIIN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.GovOrgInd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("GOV_ORG_IND")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.HeadQuarterCountry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HEAD_QUARTER_COUNTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.HoldingCorporation)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HOLDING_CORPORATION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.HoldingCorporationCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HOLDING_CORPORATION_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IdIssueCountry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_ISSUE_COUNTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IdentExpiryDate).HasColumnName("IDENT_EXPIRY_DATE");
+
+                entity.Property(e => e.IdentIssueDate).HasColumnName("IDENT_ISSUE_DATE");
+
+                entity.Property(e => e.IdentNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("IDENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IdentType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("IDENT_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IncorporationCountryCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INCORPORATION_COUNTRY_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IncorporationDate).HasColumnName("INCORPORATION_DATE");
+
+                entity.Property(e => e.IncorporationLegalForm)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INCORPORATION_LEGAL_FORM")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IncorporationState)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INCORPORATION_STATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Industry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.InvestmentBalance)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTMENT_BALANCE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.KycStatus)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("KYC_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LastQueryDate).HasColumnName("LAST_QUERY_DATE");
+
+                entity.Property(e => e.LegalFormOthers)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_FORM_OTHERS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalFormSub)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_FORM_SUB")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalStepMainCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_STEP_MAIN_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalStepSubCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_STEP_SUB_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LimitsAmount).HasColumnName("LIMITS_AMOUNT");
+
+                entity.Property(e => e.LimitsAmountCurrency)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LIMITS_AMOUNT_CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MainLegalForm)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MAIN_LEGAL_FORM")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NameLanguage)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NAME_LANGUAGE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NationalityCountry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY_COUNTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.NoOfEmployees)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NO_OF_EMPLOYEES")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NonProfitOrganization)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NON_PROFIT_ORGANIZATION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.OtherBankAccounts)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_BANK_ACCOUNTS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PaidUpCapitalAmount).HasColumnName("PAID_UP_CAPITAL_AMOUNT");
+
+                entity.Property(e => e.PaidUpCapitalCurrency)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PAID_UP_CAPITAL_CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ReferenceEmployeeId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REFERENCE_EMPLOYEE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RegExpiryDate).HasColumnName("REG_EXPIRY_DATE");
+
+                entity.Property(e => e.RegNumberCity)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REG_NUMBER_CITY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RegNumberLastDate).HasColumnName("REG_NUMBER_LAST_DATE");
+
+                entity.Property(e => e.RegNumberOffice)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REG_NUMBER_OFFICE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RegistrationNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REGISTRATION_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskReason)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_REASON")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskWeight)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_WEIGHT")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SalesBasis)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_BASIS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SalesVolume1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_VOLUME_1")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SalesVolume2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_VOLUME_2")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SalesVolume3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_VOLUME_3")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SizeOfSales).HasColumnName("SIZE_OF_SALES");
+
+                entity.Property(e => e.SizeOfTransaction).HasColumnName("SIZE_OF_TRANSACTION");
+
+                entity.Property(e => e.TaxIdNum)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_ID_NUM")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TotalNoOfUnits)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TOTAL_NO_OF_UNITS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TradeAddDate).HasColumnName("TRADE_ADD_DATE");
+
+                entity.Property(e => e.TypeOfBusiness)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE_OF_BUSINESS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TypeOfBusinessOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE_OF_BUSINESS_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UnderEstablishment)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UNDER_ESTABLISHMENT")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UpdateDate).HasColumnName("UPDATE_DATE");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATED_BY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.WomenShare)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("WOMEN_SHARE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.WorthCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("WORTH_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.WorthLastCalcDate).HasColumnName("WORTH_LAST_CALC_DATE");
+            });
+
+            modelBuilder.Entity<ArtAuditIndividualsView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_AUDIT_INDIVIDUALS_VIEW", "ART_DB");
+
+                entity.Property(e => e.AKA)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("A_K_A")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AmlRiskCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AnnualIncomeCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ANNUAL_INCOME_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BusinessCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BUSINESS_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BusinessSector)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BUSINESS_SECTOR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.BusinessSectorOthers)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("BUSINESS_SECTOR_OTHERS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CalculateZakahFlag)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CALCULATE_ZAKAH_FLAG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CaseRk).HasColumnName("CASE_RK");
+
+                entity.Property(e => e.CbRiskId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CB_RISK_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CbRiskRate)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CB_RISK_RATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CbRiskRateOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CB_RISK_RATE_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CharityFlag)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CHARITY_FLAG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CitizenOrResident)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CITIZEN_OR_RESIDENT")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CloseDate).HasColumnName("CLOSE_DATE");
+
+                entity.Property(e => e.ClosingReasonId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLOSING_REASON_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ClosingReasonIdOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLOSING_REASON_ID_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CompanySalesAmountPerYear)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPANY_SALES_AMOUNT_PER_YEAR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATED_BY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerStatus)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.CustomerType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DealAbrdBankDetails)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEAL_ABRD_BANK_DETAILS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DealtBankDetails)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEALT_BANK_DETAILS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DefaultBranch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEFAULT_BRANCH")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EconomicMainCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECONOMIC_MAIN_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EconomicSubCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ECONOMIC_SUB_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EducationId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EDUCATION_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EducationIdOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EDUCATION_ID_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployedOrBusiness)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYED_OR_BUSINESS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployeeIndicator)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYEE_INDICATOR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessAdrs)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_ADRS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessCity)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_CITY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessCtry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_CTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessState)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_STATE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerBusinessTown)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_BUSINESS_TOWN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerCountryPhoneCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_COUNTRY_PHONE_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmployerPhone)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYER_PHONE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmploymentType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EMPLOYMENT_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ExpenseIsoCurrency)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("EXPENSE_ISO_CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FIRST_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FirstNameEng)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FIRST_NAME_ENG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FullNameAr)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FULL_NAME_AR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.FullNameEn)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FULL_NAME_EN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.GenderCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("GENDER_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.GeoCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("GEO_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.HomeCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HOME_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IncomeIsoCurrency)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("INCOME_ISO_CURRENCY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.KycStatus)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("KYC_STATUS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LastNameEng)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_NAME_ENG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LastQueryDate).HasColumnName("LAST_QUERY_DATE");
+
+                entity.Property(e => e.LegalMainCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_MAIN_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalStepDate).HasColumnName("LEGAL_STEP_DATE");
+
+                entity.Property(e => e.LegalStepMainCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_STEP_MAIN_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalStepSubCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_STEP_SUB_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.LegalSubCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEGAL_SUB_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MaritalStatusCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MARITAL_STATUS_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MiddleName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MIDDLE_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MiddleNameEng)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MIDDLE_NAME_ENG")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MonthExpense)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_EXPENSE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MonthIncome)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MONTH_INCOME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.MotherName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("MOTHER_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NameLanguage)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NAME_LANGUAGE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NationalityCode1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY_CODE1")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NationalityCode2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY_CODE2")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NationalityCode3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY_CODE3")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.NumberOfDependents)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("NUMBER_OF_DEPENDENTS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Occupation)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.OccupationDtl)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OCCUPATION_DTL")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.OpeningReasonId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OPENING_REASON_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.OpeningReasonIdOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OPENING_REASON_ID_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.OtherBankAccounts)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("OTHER_BANK_ACCOUNTS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PepIndicator)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PEP_INDICATOR")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PepIndicatorDtls)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PEP_INDICATOR_DTLS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PepIndicatorOth)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PEP_INDICATOR_OTH")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RaceId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RACE_ID")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ReferredPersonAddress)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REFERRED_PERSON_ADDRESS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ReferredPersonPhone)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("REFERRED_PERSON_PHONE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RelationToBankCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RELATION_TO_BANK_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Religion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RELIGION")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ResidenceCountry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RESIDENCE_COUNTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskClassValue)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS_VALUE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskCodeOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CODE_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskReason)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_REASON")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SectorAnalysesCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SECTOR_ANALYSES_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SictorCode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SICTOR_CODE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SourceOfIncomeCd)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SOURCE_OF_INCOME_CD")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SourceOfIncomeOther)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SOURCE_OF_INCOME_OTHER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SpouseBusiness)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SPOUSE_BUSINESS")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SpouseName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SPOUSE_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationCtryCd1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_CTRY_CD1")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationCtryCd2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_CTRY_CD2")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationCtryCd3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_CTRY_CD3")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationTin1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_TIN1")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationTin2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_TIN2")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.TaxRegulationTin3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_REGULATION_TIN3")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TITLE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UpdateDate).HasColumnName("UPDATE_DATE");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UPDATED_BY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.VisaExpirationDate)
+                    .HasColumnType("date")
+                    .HasColumnName("VISA_EXPIRATION_DATE");
+
+                entity.Property(e => e.VisaType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("VISA_TYPE")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.WorthLastCalcDate).HasColumnName("WORTH_LAST_CALC_DATE");
+            });
+
+            modelBuilder.Entity<ArtKycExpiredId>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_EXPIRED_ID", "ART_DB");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.IdExpireDate)
+                    .HasColumnType("date")
+                    .HasColumnName("ID_EXPIRE_DATE");
+
+                entity.Property(e => e.IdNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+            });
+
+            modelBuilder.Entity<ArtKycHighExpired>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_EXPIRED", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighOneMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_ONE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighThreeMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_THREE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycHighTwoMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_HIGH_TWO_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowExpired>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_EXPIRED", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowOneMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_ONE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowThreeMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_THREE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycLowTwoMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_LOW_TWO_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumExpired>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_EXPIRED", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumOneMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_ONE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumThreeMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_THREE_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycMediumTwoMonth>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_MEDIUM_TWO_MONTH", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.ClientNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Month).HasColumnName("MONTH");
+
+                entity.Property(e => e.NextUpdateDate).HasColumnName("NEXT_UPDATE_DATE");
+
+                entity.Property(e => e.RiskClassIndustry)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_CLASS/INDUSTRY")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
+
+            modelBuilder.Entity<ArtKycSummaryByRisk>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_KYC_SUMMARY_BY_RISK", "ART_DB");
+
+                entity.Property(e => e.AmlRisk)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("AML_RISK");
+
+                entity.Property(e => e.NumberOfNotUpdatedKyc).HasColumnName("NUMBER_OF_NOT_UPDATED_KYC");
+
+                entity.Property(e => e.NumberOfUpdatedKyc).HasColumnName("NUMBER_OF_UPDATED_KYC");
+
+                entity.Property(e => e.Total).HasColumnName("TOTAL");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("TYPE");
+            });
         }
 
         public void OnDGECMModelCreating(ModelBuilder modelBuilder)
