@@ -58,8 +58,14 @@ namespace ART_PACKAGE.Controllers
         public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
 
-            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
-            return File(pdfBytes, "application/pdf");
+            //byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
+            var fileame=  await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportGUID,reportGUID);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+            //return File(pdfBytes, "application/pdf");
         }
 
 

@@ -204,7 +204,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return pdfBytes;
         }
         
-        public string ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        public async Task<string> ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
