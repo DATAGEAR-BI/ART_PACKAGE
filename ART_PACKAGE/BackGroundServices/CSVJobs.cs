@@ -8,6 +8,17 @@
             try
             {
                 Console.WriteLine("Delete start");
+                // Check if the directory exists
+                if (!Directory.Exists(csvFolderPath))
+                {
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory(csvFolderPath);
+                    Console.WriteLine("Directory created.");
+                }
+                else
+                {
+                    Console.WriteLine("Directory already exists.");
+                }
                 DirectoryInfo directoryInfo = new DirectoryInfo(csvFolderPath);
                 foreach (FileInfo file in directoryInfo.GetFiles())
                 {
