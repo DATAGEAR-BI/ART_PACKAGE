@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/ART_PACKAGE/Hangfire-log.db
+/ART_PACKAGE/Hangfire.db
