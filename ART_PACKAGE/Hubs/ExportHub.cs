@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using CsvHelper;
 using Data.Data.ARTDGAML;
+using Data.Data.Audit;
 using Data.Data.ECM;
 using Data.Data.FTI;
 using Data.Data.SASAml;
@@ -28,7 +29,7 @@ namespace ART_PACKAGE.Hubs
         private readonly List<string>? modules;
         private readonly FTIContext _fti;
         private readonly TIZONE2Context ti;
-        private readonly List<string>? modules;
+       // private readonly List<string>? modules;
 
         public ExportHub(UsersConnectionIds connections, ICsvExport csvSrv, IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
