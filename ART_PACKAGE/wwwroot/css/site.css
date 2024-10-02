@@ -53,7 +53,23 @@ body {
     background-color:red;
 }
 td[role="gridcell"] {
-    white-space: pre !important;
+    white-space: pre-wrap !important;
+}
+.k-grid td {
+    white-space: pre-wrap !important; /* Allows content to wrap and not stay in a single line */
+    word-wrap: break-word; /* Break long words to avoid overflow */
+}
+.k-grid-filter-row .k-textbox {
+    white-space: pre-wrap !important; /* Preserve white spaces */
+    word-wrap: break-word; /* Allows word breaks */
+}
+.k-textbox {
+    white-space: pre-wrap !important; /* Allows content to wrap and not stay in a single line */
+    word-wrap: break-word; /* Break long words to avoid overflow */
+}
+input, textarea {
+    white-space: pre-wrap !important; /* Preserves white spaces */
+    word-wrap: break-word; /* Allows wrapping within input fields */
 }
 /*
 .k-list-scroller {

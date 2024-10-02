@@ -259,6 +259,18 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Reportingpersontype".ToLower(),_dropDown.GetReportPersonTypeDropDown() },
                     //{"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown() },
                 },
+                var value when value == nameof(ArtGoamlReportsValidationViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Reportcode".ToLower(),_dropDown.GetReportTypeDropDown()},
+                    {"Reportstatuscode".ToLower(),_dropDown.GetReportstatuscodeDropDown() },
+                    {"ReportIndicator".ToLower(),_dropDown.GetReportIndicatorDropDown() },
+                    {"Activity".ToLower(),_dropDown.GetReportActivityForgoamlReportsSusbectDropDown() },
+                    {"AccountType".ToLower(),_dropDown.GetGOAMLReportAccountTypesDropDown() },
+
+                  
+                    //{"Rentitybranch".ToLower(),_dropDown.GetNonREntityBranchDropDown() },
+                },
+
                 var value when value == nameof(artgoamlreportssusbectpartyConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"Reportcode".ToLower(),_dropDown.GetReportTypeForgoamlReportsSusbectDropDown() },

@@ -130,6 +130,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         
         public List<SelectItem> GetCasesDetailsCreatedByDropDown();
         public List<SelectItem> GetAlertsOwnerDropDown();
+        public List<SelectItem> GetGOAMLReportAccountTypesDropDown();
 
 
         //

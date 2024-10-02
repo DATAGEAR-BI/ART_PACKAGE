@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -100,6 +101,7 @@ public static class FilterExtensions
             ? op
             : filter.@operator;
         MethodInfo? inFunc = null;
+        MethodInfo? stEqFunc = null;
         if (filter.@operator == "in" || filter.@operator == "not_in")
         {
             var listType = typeof(List<>).MakeGenericType(memType);
@@ -107,7 +109,19 @@ public static class FilterExtensions
             inFunc = typeof(FilterExtensions)
                 .GetMethod(nameof(FilterExtensions.BuildInExpression))
                 ?.MakeGenericMethod(listType);
-        }
+        }/*else if(filter.@operator == "eq"&& member.Type == typeof(string))
+        {
+           
+
+
+            
+            constant = BuildConstantExpression(memType , filter.value);
+            stEqFunc = typeof(FilterExtensions)
+                .GetMethod(nameof(FilterExtensions.BuildIgnoreNewLinesExpression))
+                 member.Type == typeof(string) ? ?.MakeGenericMethod(memType);
+
+
+        }*/
         else
         {
             constant = BuildConstantExpression(memType, filter.value);
@@ -207,9 +221,27 @@ public static class FilterExtensions
                     (Expression)inFunc.Invoke(null, new object[] { member, constant, memType })
                 ),
             _ => throw new NotSupportedException($"Operator {filter.@operator} is not supported.")
-        };
+        }; ;
     }
+    // Function that builds an expression to compare a member's value after ignoring newlines
+    /*public static Expression<Func<T, bool>> BuildIgnoreNewLinesExpression<T>(
+        MemberExpression member, ConstantExpression constant)
+    {
+        // Define the method to remove newlines (from string)
+        MethodInfo removeNewlinesMethod = typeof(FilterExtensions).GetMethod(nameof(RemoveNewlines));
 
+        // Create expression to call RemoveNewlines on the member (e.g., RemoveNewlines(entity.Property))
+        var cleanedMember = Expression.Call(removeNewlinesMethod, member);
+
+        // Create expression to call RemoveNewlines on the constant value (e.g., RemoveNewlines("some value"))
+        var cleanedConstant = Expression.Call(removeNewlinesMethod, constant);
+
+        // Build the equality expression to compare cleaned member and cleaned constant
+        var equalityExpression = Expression.Equal(cleanedMember, cleanedConstant);
+
+        // Compile into a lambda expression for the provided type 'T'
+        return Expression.Lambda<Func<T, bool>>(equalityExpression, member.Expression as ParameterExpression);
+    }*/
     public static Expression BuildInExpression<T>(
         MemberExpression member,
         ConstantExpression constant,
@@ -221,6 +253,21 @@ public static class FilterExtensions
 
         // Create the method call expression 'list.Contains(x.PropertyName)'.
         return Expression.Call(constant, containsMethod, member);
+    }
+    public static Expression BuildIgnoreNewLinesExpression<T>(
+        MemberExpression member, ConstantExpression constant)
+    {
+        // Define the method to remove newlines (from string)
+        MethodInfo removeNewlinesMethod = typeof(FilterExtensions).GetMethod(nameof(RemoveNewlines));
+
+        // Create expression to call RemoveNewlines on the member (e.g., RemoveNewlines(entity.Property))
+        var cleanedMember = Expression.Call(removeNewlinesMethod, member);
+
+        // Create expression to call RemoveNewlines on the constant value (e.g., RemoveNewlines("some value"))
+        var cleanedConstant = Expression.Call(removeNewlinesMethod, constant);
+
+        // Build the equality expression to compare cleaned member and cleaned constant
+        return Expression.Equal(cleanedMember, cleanedConstant);
     }
 
     private static Expression BuildMethodExpression<T>(
@@ -322,6 +369,7 @@ public static class FilterExtensions
                             : throw new ArgumentException("Invalid date format or value.");
                 return Expression.Constant(dateTime.Date, fieldType);
             }
+           
             MethodInfo? method = typeof(FilterExtensions)
                 ?.GetMethod(nameof(FilterExtensions.ToObject))
                 ?.MakeGenericMethod(fieldType);
@@ -329,6 +377,8 @@ public static class FilterExtensions
             return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
         }
     }
+    public static string RemoveNewlines(string input) => input.Replace("\n", "").Replace("\r", "");
+
 
     public static T ToObject<T>(this JsonElement element)
     {

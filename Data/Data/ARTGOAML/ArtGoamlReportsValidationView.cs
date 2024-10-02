@@ -25,6 +25,7 @@ namespace Data.Data.ARTGOAML
         public string? FiuRefNumber { get; set; } // Maps to VARCHAR2(1020)
         public string? PartyName { get; set; } // Maps to VARCHAR2(3068)
         public string? PartyNumber { get; set; } // Maps to VARCHAR2(1020)
+        public string? PartyID { get; set; } // Maps to VARCHAR2(1020)
         public string? Branch { get; set; } // Maps to VARCHAR2(1020)
         public string? Region { get; set; } // Maps to VARCHAR2(35)
         public string? Activity { get; set; } // Maps to VARCHAR2(12)

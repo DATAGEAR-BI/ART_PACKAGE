@@ -529,7 +529,14 @@ class Grid extends HTMLElement {
             }
 
 
-
+            filter["cell"] = {
+                template: function (args) {
+                    args.element
+                        .attr("style", "white-space: pre-wrap;") // Preserve white spaces in the filter input
+                        .addClass("custom-filter-input");
+                }
+            }
+     
 
             return {
                 field: column.name,
@@ -1345,6 +1352,26 @@ class Grid extends HTMLElement {
             });
         })
 
+
+        /*grid.dataSource.filter({
+            logic: "or",
+            filters: [
+                { field: "CrimeProduct", operator: customFilterOperator, value: "" }
+            ]
+        });
+
+        // Custom filter operator function
+        function customFilterOperator(input, filterValue) {
+            if (!filterValue || !input) {
+                return true; // If no filter value is set, include the row
+            }
+
+            // Compare values while preserving white spaces
+            var inputValue = String(input);
+            var filterValueWithWhiteSpaces = String(filterValue).replace(/ /g, '\u00A0'); // Replace regular spaces with non-breaking spaces
+            return inputValue.indexOf(filterValueWithWhiteSpaces) !== -1;
+        }*/
+   
 
         //$(".k-grid-custom").click(function (e) {
         //    var orgin = window.location.pathname.split("/");

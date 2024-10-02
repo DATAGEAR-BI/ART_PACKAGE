@@ -1823,6 +1823,10 @@ namespace Data.ModelCreatingStrategies
                       .HasColumnName("PARTYNUMBER")
                       .HasMaxLength(1020)
                       .IsUnicode(false);
+                entity.Property(e => e.PartyID)
+                      .HasColumnName("PARTY_ID")
+                      .HasMaxLength(1020)
+                      .IsUnicode(false);
 
                 entity.Property(e => e.PartyName)
                       .HasColumnName("PARTY_NAME")
