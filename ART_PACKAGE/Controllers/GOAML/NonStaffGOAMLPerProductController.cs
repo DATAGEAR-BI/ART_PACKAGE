@@ -56,7 +56,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
-                {"PRODUCT".ToLower(),_dropSrv.GetGOAMLReportAccountTypesDropDown().ToDynamicList()},
+                {"PRODUCT".ToLower(),_dropSrv.GetGOAMLReportAccountTypesDropDown().Select(s=>s.value).ToDynamicList()},
 
             };
             KendoDataDesc<ART_ST_YEARLY_NON_STAFF_GOAML_AML_PER_PRODUCT> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
