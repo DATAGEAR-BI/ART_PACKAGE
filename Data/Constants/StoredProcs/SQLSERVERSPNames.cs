@@ -38,24 +38,25 @@
        
         //DGAML
         public static readonly string ART_ST_DGAML_ALERT_PER_OWNER = "[ART_DB].[ART_ST_DGAML_ALERT_PER_OWNER]";
-        public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_DGAML_ALERTS_PER_STATUS]";
-        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_ALERTS_PER_BRANCH]";
-        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO]";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_DGAML_ALERTS_PER_STATUS_BYC]";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_ALERTS_PER_BRANCH_BYC]";
+        public static readonly string ART_ST_DGAML_ALERTS_PER_SCENARIO = "[ART_DB].[ART_ST_ALERTS_PER_SCENARIO_BYC]";
+        public static readonly string ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER = "[ART_DB].[ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER]";
 
 
         #region EXTERNAL CUSTOMER SUMMARY
-        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH]";
-        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE = "[ART_DB].[ART_ST_EXTERNAL_CUSTOMER_PER_TYPE]";
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_EXTERNAL_CUSTOMER_PER_BRANCH_BYC]";
+        public static readonly string ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE = "[ART_DB].[ART_ST_EXTERNAL_CUSTOMER_PER_TYPE_BYC]";
         #endregion
 
         #region DGAML CASES SUMMARY
-        public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_DGAML_CASES_PER_CATEGORY]";
-        public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY]";
-        public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "[ART_DB].[ART_ST_DGAML_CASES_PER_STATUS]";
+        public static readonly string ART_ST_DGAML_CASES_PER_CATEGORY = "[ART_DB].[ART_ST_DGAML_CASES_PER_CATEGORY_BYC]";
+        public static readonly string ART_ST_DGAML_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_DGAML_CASES_PER_PRIORITY_BYC]";
+        public static readonly string ART_ST_DGAML_CASES_PER_STATUS = "[ART_DB].[ART_ST_DGAML_CASES_PER_STATUS_BYC]";
         #endregion
         #region DGAML CUSOMER SUMMARY
-        public static readonly string ART_ST_DGAML_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_BRANCH]";
-        public static readonly string ART_ST_DGAML_CUSTOMER_PER_TYPE = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_TYPE]";
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_BRANCH = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_BRANCH_BYC]";
+        public static readonly string ART_ST_DGAML_CUSTOMER_PER_TYPE = "[ART_DB].[ART_ST_DGAML_CUSTOMER_PER_TYPE_BYC]";
         #endregion
 
         public static readonly string ART_ST_ALERTS_PER_STATUS = "[ART_DB].[ART_ST_DGAML_ALERTS_PER_STATUS]";
@@ -64,9 +65,10 @@
 
 
         //crp
-        public static readonly string ART_ST_CRP_CUST_PER_RISK = "[ART_DB].[ART_ST_CRP_CUST_PER_RISK]";
+        public static readonly string ART_ST_DGCRP_CUST_PER_RISK = "[ART_DB].[ART_ST_DGCRP_CUST_PER_RISK]";
         public static readonly string ART_ST_CRP_CASES_PER_STATUS = "[ART_DB].[ART_ST_CRP_CASES_PER_STATUS]";
         public static readonly string ART_ST_CRP_CASES_PER_RATE = "[ART_DB].[ART_ST_CRP_CASES_PER_RATE]";
+        public static readonly string ART_ST_DGCRP_CUST_PER_PROP_RISK = "[ART_DB].[ART_ST_DGCRP_CUST_PER_PROP_RISK]";
 
         //FATCA
         public static readonly string ART_ST_FATCA_ALERTS_PER_BRANCH = "[ART_DB].[ART_ST_FATCA_ALERTS_PER_BRANCH]";

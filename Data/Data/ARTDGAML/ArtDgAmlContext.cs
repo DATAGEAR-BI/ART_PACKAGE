@@ -1,4 +1,5 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data.ECM;
+using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.ARTDGAML
@@ -32,6 +33,7 @@ namespace Data.Data.ARTDGAML
 
             //DGAML
             modelBuilder.Entity<ArtStDgAmlAlertPerOwner>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgAmlAlertsAndCasesPerOwner>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlAlertsPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlCustomerPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlCustomerPerType>().HasNoKey().ToView(null);

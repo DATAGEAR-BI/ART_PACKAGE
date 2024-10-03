@@ -9,13 +9,22 @@ namespace ART_PACKAGE.Controllers.CRP
 {
     public class CrpSystemPerformanceController : BaseReportController<IGridConstructor<IBaseRepo<CRPContext, ArtCrpSystemPerformance>, CRPContext, ArtCrpSystemPerformance>, IBaseRepo<CRPContext, ArtCrpSystemPerformance>, CRPContext, ArtCrpSystemPerformance>
     {
-        public CrpSystemPerformanceController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpSystemPerformance>, CRPContext, ArtCrpSystemPerformance> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        private readonly CRPContext _context;
+        public CrpSystemPerformanceController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpSystemPerformance>, CRPContext, ArtCrpSystemPerformance> gridConstructor, UserManager<AppUser> um, CRPContext context) : base(gridConstructor, um)
         {
+            _context = context;
         }
 
         public override IActionResult Index()
         {
             return View();
+        }
+        [HttpGet("[controller]/[action]/{CaseId}")]
+        public IActionResult GetReasons(string CaseId)
+        {
+            var Reasons = _context.ArtCrpCaseRiskRatingReasonPopUpViews.Where(x => x.CaseId == CaseId).Select(x => new { x.CaseId, x.Reason });
+            return Ok(Reasons);
+
         }
         /* private readonly CRPContext _crp;
 private readonly IDropDownService _dropDown;

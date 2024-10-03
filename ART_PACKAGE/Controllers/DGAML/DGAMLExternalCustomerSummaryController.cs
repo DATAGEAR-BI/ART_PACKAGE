@@ -50,10 +50,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                 chart1Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerBranch>(ORACLESPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_BRANCH, chart1Params.ToArray());
                 chart3Data = _context.ExecuteProc<ArtStDgAmlExternalCustomerPerType>(ORACLESPName.ART_ST_DGAML_EXTERNAL_CUSTOMER_PER_TYPE, chart3Params.ToArray());
 
-                //chart1Data = _context.ExecuteProc<ArtStCustPerType>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart1Params.ToArray());
-                //chart2data = _context.ExecuteProc<ArtStCustPerRisk>(ORACLESPName.ART_ST_CASES_PER_CATEGORY, chart2Params.ToArray());
-                //chart3Data = _context.ExecuteProc<ArtStCustPerBranch>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
-
             }
             if (dbType == DbTypes.MySql)
             {
@@ -68,7 +64,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                 {
                     ChartId = "StCustomerPerType",
                     Data = chart3Data.ToList(),
-                    Title = "External Customer Per Type",
+                    Title = "Customers Per Type",
                     Cat = "CUSTOMER_TYPE",
                     Val = "NUMBER_OF_CUSTOMERS",
                     Type = ChartType.donut
@@ -78,7 +74,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                 {
                     ChartId = "StCustomerPerBranch",
                     Data = chart1Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
-                    Title = "External Customer Per Branch",
+                    Title = "Customers Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "NUMBER_OF_CUSTOMERS",
                     Type = ChartType.bar

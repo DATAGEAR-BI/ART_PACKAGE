@@ -26,12 +26,17 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"CustIdentId" , new GridColumnConfiguration { DisplayName = "Customer Identification ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CustIdentTypeDesc" , new GridColumnConfiguration { DisplayName = "Customer Identification Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"OccupDesc" , new GridColumnConfiguration { DisplayName = "Occupation Description"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"LastComment" , new GridColumnConfiguration { DisplayName = "Last Comment"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"CreatedBy" , new GridColumnConfiguration { DisplayName = "Created By"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"UpdatedDate" , new GridColumnConfiguration { DisplayName = "Updated Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"NumberOfComments" , new GridColumnConfiguration { DisplayName = "Number Of Comments"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"NumberOfAttachments" , new GridColumnConfiguration { DisplayName = "Number Of Attachments"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CustSinceDate" , new GridColumnConfiguration { DisplayName = "Customer Since Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
 
-
-
+            ReportTitle = "Data Gear Aml Art Suspect Details";
+            ReportDescription = "Presents the All Suspects with details";
 
 
         }

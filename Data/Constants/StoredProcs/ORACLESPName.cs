@@ -38,6 +38,7 @@
         public static readonly string ART_ST_CRP_CUST_PER_RISK = "ART.ART_ST_CRP_CUST_PER_RISK";
         public static readonly string ART_ST_CRP_CASES_PER_STATUS = "ART.ART_ST_CRP_CASES_PER_STATUS";
         public static readonly string ART_ST_CRP_CASES_PER_RATE = "ART.ART_ST_CRP_CASES_PER_RATE";
+        public static readonly string ART_ST_DGCRP_CUST_PER_PROP_RISK = "ART.ART_ST_DGCRP_CUST_PER_PROP_RISK";
 
 
         //FATCA
@@ -52,6 +53,7 @@
         //DGAML
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
+        public static readonly string ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER = "ART.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER";
 
 
         #region DGAML ALERTS Summary

@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"RoleOfGroup" , new GridColumnConfiguration { DisplayName = "Role Of Group"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
-
+            SkipList = new List<string>() { "CreatedDate", "LastLoginDate", "AccountStatus" };
 
 
 

@@ -107,6 +107,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                 }
     }
 },
+            { nameof(ArtDgAmlAlertsAndCasesPerOwner).ToLower(), new ReportConfig {
+
+               DisplayNames = new Dictionary<string, GridColumnConfiguration>
+                {
+                    { "owner", new GridColumnConfiguration { DisplayName = "Owner" } },
+                    { "TYPE", new GridColumnConfiguration { DisplayName = "Type" } },
+                    { "STATUS", new GridColumnConfiguration { DisplayName = "Status" } },
+                    { "TOTAL_NUMERT_OF_ALERTS_OR_CASES", new GridColumnConfiguration { DisplayName = "Total Number Of Alerts Or Cases" } },
+                }
+    }
+},
 
             { nameof(ArtStAmlAlertAgeSummery).ToLower(), new ReportConfig {
 

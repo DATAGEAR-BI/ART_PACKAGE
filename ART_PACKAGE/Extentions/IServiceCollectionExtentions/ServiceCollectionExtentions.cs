@@ -44,7 +44,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
 
-            void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
+            void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 3600)
             {
                 _ = dbType switch
                 {

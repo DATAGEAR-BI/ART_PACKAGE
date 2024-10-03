@@ -44,6 +44,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             ReportDescription = "This report presents all sanction cases with the related information on case level as below";
             SkipList = new List<string>
             {
+                   "LastStatus",
                    "CaseRk",
     "ValidFromDate",
     "LastCommentSubject"            };

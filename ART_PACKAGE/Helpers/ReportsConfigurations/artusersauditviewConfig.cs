@@ -26,6 +26,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"Enable" , new GridColumnConfiguration { DisplayName = "Enable"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"GroupNames" , new GridColumnConfiguration { DisplayName = "Group Names"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"MemberUsers" , new GridColumnConfiguration { DisplayName = "Member Users"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"RoleNames" , new GridColumnConfiguration { DisplayName = "Role Names"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"DomainAccounts" , new GridColumnConfiguration { DisplayName = "Domain Accounts"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 

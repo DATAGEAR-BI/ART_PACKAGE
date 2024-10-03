@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Updated Watch List Report
+        <small class="h6">Presents all the updated watch list with the related information as below</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="UpdatedWatchList" data-urlkey="UpdatedWatchList" data-handlerkey="UpdatedWatchList"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+}
+
+
+

@@ -37,7 +37,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "Data Gear Aml Art Scenario Admin";
+            ReportDescription = "Presents the art scenario admin details";
 
 
 

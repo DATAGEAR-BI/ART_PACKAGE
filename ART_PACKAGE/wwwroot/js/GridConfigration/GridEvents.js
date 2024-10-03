@@ -839,7 +839,69 @@ export const dbClickHandlers = {
         kendo.ui.progress($('#grid'), false);
 
     },
+    CrpSystemPerformance: async (dataItem) => {
+        kendo.ui.progress($('#grid'), true);
+        console.log(dataItem);
+        var reasonData = await (await fetch(`/CrpSystemPerformance/GetReasons/${dataItem.CaseId}`)).json();
+        var reasonGrid = document.getElementById("reasonGrid");
+        reasonGrid.innerText = "";
+        if (reasonData && [...reasonData].length > 0) {
+            var table = document.createElement("table");
+            table.className = "table";
+            var thead = document.createElement("thead");
+            var tr = document.createElement("tr");
+            var headers = ["#", "Case ID", "Reason"]
+            headers.forEach(x => {
+                var th = document.createElement("th");
+                th.setAttribute("scope", "col");
+                th.innerText = x;
+                tr.appendChild(th);
+            });
 
+            thead.appendChild(tr);
+            var tbody = document.createElement("tbody");
+            [...reasonData].forEach((x, index) => {
+                console.log(x);
+                var tr = document.createElement("tr");
+
+                var rowNumberTd = document.createElement("th");
+                rowNumberTd.setAttribute("scope", "row");
+                rowNumberTd.innerText = index + 1;
+
+                var caseIdTd = document.createElement("td");
+                caseIdTd.innerText = x.caseId;
+
+
+                var reasonTd = document.createElement("td");
+                reasonTd.innerText = x.reason;
+
+
+
+                tr.appendChild(rowNumberTd);
+                tr.appendChild(caseIdTd);
+
+                tr.appendChild(reasonTd);
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+            reasonGrid.appendChild(table);
+        }
+        else {
+            var noReasonsDiv = document.createElement("div");
+            noReasonsDiv.innerText = "There is no Reasons for the Case ID:" + dataItem.CaseId
+            noReasonsDiv.className = "text-center";
+            reasonGrid.appendChild(noReasonsDiv);
+        }
+
+        $("#ReasonModal").modal("show");
+
+
+        kendo.ui.progress($('#grid'), false);
+
+    },
     messagesDbHandler: async (item) => {
         kendo.ui.progress($('#grid'), true);
         var id = item.RequestUid;

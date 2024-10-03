@@ -52,7 +52,6 @@ namespace ART_PACKAGE.Controllers.DGAML
             {
                 chart1Data = _context.ExecuteProc<ArtStDgAmlCasesPerStatus>(ORACLESPName.ART_ST_DGAML_CASES_PER_STATUS, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStDgAmlCasesPerCategory>(ORACLESPName.ART_ST_DGAML_CASES_PER_CATEGORY, chart2Params.ToArray());
-                //chart3Data = _context.ExecuteProc<ArtStCasesPerSubcat>(ORACLESPName.ART_ST_CASES_PER_SUBCAT, chart3Params.ToArray());
                 chart4Data = _context.ExecuteProc<ArtStDgAmlCasesPerPriority>(ORACLESPName.ART_ST_DGAML_CASES_PER_PRIORITY, chart4Params.ToArray());
 
             }
@@ -66,6 +65,15 @@ namespace ART_PACKAGE.Controllers.DGAML
 
             ArrayList chartData = new()
             {
+                new ChartData<ArtStDgAmlCasesPerPriority>
+                {
+                    ChartId = "StCasesPerPriority",
+                    Data = chart4Data.ToList(),
+                    Title = "Cases Per Priority",
+                    Cat = "CASE_PRIORITY",
+                    Val = "NUMBER_OF_CASES",
+                    Type = ChartType.donut
+                },
                 new ChartData<ArtStDgAmlCasesPerStatus>
                 {
                     ChartId = "StCasesPerStatus",
@@ -82,16 +90,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Data = chart2data.ToList(),
                     Title = "Cases Per Category",
                     Cat = "CASE_CATEGORY",
-                    Val = "NUMBER_OF_CASES",
-                    Type = ChartType.donut
-                },
-
-                new ChartData<ArtStDgAmlCasesPerPriority>
-                {
-                    ChartId = "StCasesPerPriority",
-                    Data = chart4Data.ToList(),
-                    Title = "Cases Per Priority",
-                    Cat = "CASE_PRIORITY",
                     Val = "NUMBER_OF_CASES",
                     Type = ChartType.donut
                 }

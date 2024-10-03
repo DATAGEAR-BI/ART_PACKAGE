@@ -118,6 +118,7 @@
     DGAMLArtScenarioHistory: "/DGAMLArtScenarioHistory/GetData",
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
+    AlertsAndCasesPerOwner: "/AlertsAndCasesPerOwner/GetData",
 
 
     //crp
@@ -138,6 +139,7 @@
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
     ClearDetect: "/ClearDetect/GetData",
+    UpdatedWatchList: "/UpdatedWatchList/GetData",
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",

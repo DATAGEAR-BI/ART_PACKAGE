@@ -17,8 +17,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
-
+            ReportTitle = "Data Gear Aml Art Scenario History";
+            ReportDescription = "Presents the art scenario history details";
 
 
         }

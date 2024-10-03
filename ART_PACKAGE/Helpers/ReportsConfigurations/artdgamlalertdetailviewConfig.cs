@@ -7,7 +7,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public artdgamlalertdetailviewConfig()
         {
 
-            SkipList = new List<string>() { "ActualValuesText" };
+            SkipList = new List<string>() { "ActualValuesText", "OwnerUid" };
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ {"AlarmId" , new GridColumnConfiguration { DisplayName = "Alert ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AlertedEntityNumber" , new GridColumnConfiguration { DisplayName = "Alerted Entity Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -31,8 +31,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"InvestigationDays" , new GridColumnConfiguration { DisplayName = "Investigation Days"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
-
-
+            ReportTitle = "Data Gear Aml Alert Details";
+            ReportDescription = "Presents the alerts details";
 
 
 

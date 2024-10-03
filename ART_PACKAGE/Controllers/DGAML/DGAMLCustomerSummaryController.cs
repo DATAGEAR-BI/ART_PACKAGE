@@ -49,8 +49,6 @@ namespace ART_PACKAGE.Controllers.DGAML
             {
                 chart1Data = _context.ExecuteProc<ArtStDgAmlCustomerPerType>(ORACLESPName.ART_ST_DGAML_CUSTOMER_PER_TYPE, chart1Params.ToArray());
                 chart3Data = _context.ExecuteProc<ArtStDgAmlCustomerPerBranch>(ORACLESPName.ART_ST_DGAML_CUSTOMER_PER_BRANCH, chart3Params.ToArray());
-
-           
             }
             if (dbType == DbTypes.MySql)
             {
@@ -65,7 +63,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                 {
                     ChartId = "StCustomerPerType",
                     Data = chart1Data.ToList(),
-                    Title = "Customer Per Type",
+                    Title = "Customers Per Type",
                     Cat = "CUSTOMER_TYPE",
                     Val = "NUMBER_OF_CUSTOMERS",
                     Type = ChartType.donut
@@ -75,7 +73,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                 {
                     ChartId = "StCustomerPerBranch",
                     Data = chart3Data.OrderBy(x=>x.NUMBER_OF_CUSTOMERS).ToList(),
-                    Title = "Customer Per Branch",
+                    Title = "Customers Per Branch",
                     Cat = "BRANCH_NAME",
                     Val = "NUMBER_OF_CUSTOMERS",
                     Type = ChartType.bar

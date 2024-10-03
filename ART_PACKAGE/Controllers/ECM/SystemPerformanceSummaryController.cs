@@ -109,7 +109,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Title = "Cases Per Status",
                     Cat = "CASE_STATUS",
                     Val = "TOTAL_NUMBER_OF_CASES",
-                    Type = ChartType.donut
+                    Type = ChartType.pie
 
                 },
                 new ChartData<ArtSystemPerfPerType>
@@ -119,24 +119,11 @@ namespace ART_PACKAGE.Controllers.ECM
                     Title = "Cases Per Type",
                     Cat = "CASE_TYPE",
                     Val = "TOTAL_NUMBER_OF_CASES",
-                    Type = ChartType.donut
+                    Type = ChartType.pie
                 },
 
 
             };
-           /* if (dbType is DbTypes.Oracle or DbTypes.MySql)
-            {
-                _ = chartData.Add(new ChartData<dynamic>
-                {
-                    ChartId = "StSystemPerfPerDate",
-                    //Data = chart4Data.Select(x => new { Date = DateTime.ParseExact($"{x.DAY}-{x.MONTH.Trim()}-{x.YEAR}", "d-MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), CASES = x.NUMBER_OF_CASES }).ToDynamicList(),
-                    Data = chart4Data.GroupBy(x => new { x.YEAR, x.MONTH }).Select(x => new { Date = DateTime.ParseExact($"{15}-{x.Key.MONTH.Trim()}-{x.Key.YEAR}", "d-MMM-yyyy", null), CASES = x.Sum(x => x.NUMBER_OF_CASES) }).ToDynamicList(),
-                    Title = "Cases Per Trans Direction",
-                    Cat = "Date",
-                    Val = "CASES",
-                    Type = ChartType.curvedline
-                });
-            }*/
             if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
@@ -147,10 +134,10 @@ namespace ART_PACKAGE.Controllers.ECM
                         x.TRANSACTION_DIRECTION ??= "UNKOWN";
                         return x;
                     }).ToList(),
-                    Title = "Swift Cases Per Direction",
+                    Title = "Cases Per Transaction Direction",
                     Cat = "TRANSACTION_DIRECTION",
                     Val = "TOTAL_NUMBER_OF_CASES",
-                    Type = ChartType.donut
+                    Type = ChartType.pie
                 });
             }
             return new ContentResult

@@ -19,6 +19,7 @@ namespace Data.Data.ARTDGAML
         public string? AlertStatus { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime RunDate { get; set; }
+        public string? OwnerUid { get; set; }
         public string? PoliticallyExposedPersonInd { get; set; }
         public string? EmpInd { get; set; }
         public string? ClosedUserId { get; set; }

@@ -4,22 +4,19 @@ using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
+using Data.Data.ARTDGAML;
 using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers.ECM
+namespace ART_PACKAGE.Controllers.DGAML
 {
-    //[Authorize(Roles = "UserPerformPerAction")]
-    public class UserPerformPerActionController : Controller//BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerAction>, EcmContext, ArtUserPerformPerAction>, IBaseRepo<EcmContext, ArtUserPerformPerAction>, EcmContext, ArtUserPerformPerAction>
+    //[Authorize(Roles = "AlertsAndCasesPerOwner")]
+    public class AlertsAndCasesPerOwnerController : Controller
     {
-        //public UserPerformPerActionController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerAction>, EcmContext, ArtUserPerformPerAction> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
-        //{
-        //}
-
         private readonly IMemoryCache _cache;
-        private readonly EcmContext context;
+        private readonly ArtDgAmlContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
@@ -27,7 +24,7 @@ namespace ART_PACKAGE.Controllers.ECM
 
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+        public AlertsAndCasesPerOwnerController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, ArtDgAmlContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
@@ -39,23 +36,23 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
+            IEnumerable<ArtDgAmlAlertsAndCasesPerOwner> data = Enumerable.Empty<ArtDgAmlAlertsAndCasesPerOwner>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(ORACLESPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(MYSQLSPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
 
-            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtDgAmlAlertsAndCasesPerOwner> Data = data.AsQueryable().CallData(para.req);
 
 
             var result = new
@@ -63,7 +60,7 @@ namespace ART_PACKAGE.Controllers.ECM
                 data = Data.Data,
                 columns = Data.Columns,
                 total = Data.Total,
-                reportname = "UserPerformPerAction"
+                reportname = "ArtDgAmlAlertsAndCasesPerOwner"
             };
             return new ContentResult
             {
@@ -85,20 +82,20 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
+            IEnumerable<ArtDgAmlAlertsAndCasesPerOwner> data = Enumerable.Empty<ArtDgAmlAlertsAndCasesPerOwner>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(ORACLESPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(MYSQLSPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
             return File(bytes, "text/csv");
@@ -106,23 +103,23 @@ namespace ART_PACKAGE.Controllers.ECM
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
+            IEnumerable<ArtDgAmlAlertsAndCasesPerOwner> data = Enumerable.Empty<ArtDgAmlAlertsAndCasesPerOwner>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(SQLSERVERSPNames.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(ORACLESPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtUserPerformPerAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtDgAmlAlertsAndCasesPerOwner>(MYSQLSPName.ART_ST_DGAML_ALERTS_OR_CASES_PER_OWNER, summaryParams.ToArray());
             }
-            ViewData["title"] = "User Performance Per Action Report";
-            ViewData["desc"] = "presents all sanction closed and terminated cases without the manually closed cases with the related information as below";
+            ViewData["title"] = "Alerts/Cases Per Owner Report";
+            ViewData["desc"] = "Shows the total number of alerts or Cases per owner";
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(),para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");

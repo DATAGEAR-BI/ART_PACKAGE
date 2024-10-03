@@ -15,6 +15,29 @@
 
 <m-grid id="CrpSystemPerformance" data-urlkey="CrpSystemPerformance" data-handlerkey="CrpSystemPerformance"></m-grid>
 
+
+<div class="modal fade" id="ReasonModal" tabindex="-1" role="dialog" aria-labelledby="ReasonModalLablel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Title" style="padding-right:300px;">Risk Rating Reason</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body" id="ReasonModelBodyHTML">
+                <div id="reasonGrid" style="max-height:333px;max-width:1463px;overflow:scroll">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @*<div id="grid"></div>*@
 @section Scripts{
     <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
