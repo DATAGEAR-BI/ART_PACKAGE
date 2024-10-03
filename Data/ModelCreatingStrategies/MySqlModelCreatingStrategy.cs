@@ -8184,5 +8184,10 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+
+        public void OnDGCFTWLModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

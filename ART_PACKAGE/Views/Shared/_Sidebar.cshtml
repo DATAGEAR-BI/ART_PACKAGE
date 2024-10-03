@@ -41,7 +41,13 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li class="treeview">
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ScreeningStatus")"><i class="glyphicon glyphicon-globe"></i> <span>Screening Status</span></a>
+                                    </li>
+                                    <li class="active ">
+                                        <a href="@Url.Action("Index", "ListUpdate")"><i class="glyphicon glyphicon-globe"></i> <span>List Update</span></a>
+                                    </li>
+                                    @*<li class="treeview">
                                         <a href="#">
                                             <i class="glyphicon glyphicon-user"></i> <span>Sys Performance</span>
                                             <span class="pull-right-container">
@@ -65,9 +71,6 @@
                                             </span>
                                         </a>
                                         <ul class="treeview-menu">
-                                            @*<li class="active ">
-                                    <a href="@Url.Action("Index", "UserPerformanceSummary")"><i class="glyphicon glyphicon-tasks"></i> <span>Summary</span></a>
-                                    </li>*@
                                             <li class="active ">
                                                 <a href="@Url.Action("Index", "UserPerformance")"><i class="glyphicon glyphicon-tasks"></i> <span>Details</span></a>
                                             </li>
@@ -81,9 +84,6 @@
                                                 <a href="@Url.Action("Index", "UserPerformancePerUserAndAction")"><i class="glyphicon glyphicon-tasks"></i> <span>User Perf Per User And Action</span></a>
                                             </li>
                                         </ul>
-                                    </li>
-                                    @*<li class="active ">
-                                        <a href="@Url.Action("Index", "CFTConfig")"><i class="glyphicon glyphicon-globe"></i> <span>CFT Config</span></a>
                                     </li>*@
                                   @*  <li class="active ">
                                         <a href="@Url.Action("Index", "ClearDetect")"><i class="glyphicon glyphicon-globe"></i> <span>Clear Detect</span></a>

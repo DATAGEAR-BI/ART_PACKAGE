@@ -78,16 +78,18 @@ class ExternalFilter extends HTMLElement {
         btn.onclick = () => {
             var ruleEmpty = $(filtercontrol).queryBuilder('getRules');
             console.log(ruleEmpty);
-            if (allow_empty == true && ruleEmpty == null) { 
+            if (ruleEmpty == null) { 
                 exRules = [];
-                if (document.getElementById("grid")) {
-                    $("#grid").data("kendoGrid").dataSource.read();
-                    $("#grid").data("kendoGrid").dataSource.view();
-                } else if (document.getElementById("charts")) {
-                    var url = this.dataset.chartsurl;
-                    var chartsurl = Urls[url];
-  
-                    callDefinedCharts(chartsurl);
+                if (allow_empty == true) {
+                    if (document.getElementById("grid")) {
+                        $("#grid").data("kendoGrid").dataSource.read();
+                        $("#grid").data("kendoGrid").dataSource.view();
+                    } else if (document.getElementById("charts")) {
+                        var url = this.dataset.chartsurl;
+                        var chartsurl = Urls[url];
+
+                        callDefinedCharts(chartsurl);
+                    }
                 }
             }
             else {
@@ -139,10 +141,11 @@ class ExternalFilter extends HTMLElement {
                             }
                             return x;
                         });
-                        if (document.getElementById("grid")) {
+                        console.log(exRules);
+                        if (document.getElementById("grid") && exRules) {
                             $("#grid").data("kendoGrid").dataSource.read();
                             $("#grid").data("kendoGrid").dataSource.view();
-                        } else if (document.getElementById("charts")) {
+                        } else if (document.getElementById("charts") && exRules) {
                             var url = this.dataset.chartsurl;
                             var chartsurl = Urls[url];
                             callDefinedCharts(chartsurl);

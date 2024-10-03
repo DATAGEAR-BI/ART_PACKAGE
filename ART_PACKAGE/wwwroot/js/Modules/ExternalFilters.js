@@ -312,8 +312,47 @@ export const Filters = {
 
         ]
     },
+    // ECM
+    ScreeningStatus: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "sourcetype", field: "sourcetype", label: "Source Type", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/ScreeningStatus/GetSourceTypeDropDown/") },
+                { id: "searchmatch", field: "searchmatch", label: "Search Match", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/ScreeningStatus/GetSearchMatchDropDown/") },
 
-  
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    ListUpdate: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "watchlistname", field: "watchlistname", label: "Watch List Name", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/ListUpdate/GetWatchListNameDropDown/") },
+                { id: "type", field: "type", label: "Type", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/ListUpdate/GetTypeDropDown/") },
+                { id: "status", field: "status", label: "Status", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/ListUpdate/GetStatusDropDown/") },
+
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+   // DGAML
     DGAMLTotalAlarmsDetails: {
         filters: [],
         get filters() {
@@ -337,15 +376,15 @@ export const Filters = {
         filters: [],
         get filters() {
             return [
-                { id: "@Customer_Name", field: "@Customer_Name", label: "Customer Name", operators: ['equal'], type: "string", optional: true, multiple: true },
-                { id: "@Political_Exposed", field: "@Political_Exposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetPoliticalExposedDropDown/") },
-                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
+                { id: "customername", field: "customername", label: "Customer Name", operators: ['equal'], type: "string", optional: true, multiple: true },
+                { id: "politicalexposed", field: "politicalexposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetPoliticalExposedDropDown/") },
+                { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
 
             ]
         }
         ,
         rules: [
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
+            { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },
@@ -353,14 +392,14 @@ export const Filters = {
         filters: [],
         get filters() {
             return [
-                { id: "@Customer_Name", field: "@Customer_Name", label: "Customer Name", operators: ['equal'], type: "string", optional: true },
-                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
+                { id: "customername", field: "customername", label: "Customer Name", operators: ['equal'], type: "string", optional: true },
+                { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListDetails/GetCitizenshipCountryDropDown/") },
 
             ]
         }
         ,
         rules: [
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
+            { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },
@@ -368,15 +407,15 @@ export const Filters = {
         filters: [],
         get filters() {
             return [
-                { id: "@Political_Exposed", field: "@Political_Exposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetPoliticalExposedDropDown/") },
-                { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetCitizenshipCountryDropDown/") },
+                { id: "politicalexposed", field: "politicalexposed", label: "Political Exposed", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetPoliticalExposedDropDown/") },
+                { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", operators: ['in'], type: "string", optional: true, ...multiSelectSetting("/DGAMLPartiesListSummary/GetCitizenshipCountryDropDown/") },
 
             ]
         }
         ,
         rules: [
 
-            { id: "@Citizenship_Country", field: "@Citizenship_Country", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
+            { id: "citizenshipcountry", field: "citizenshipcountry", label: "Citizenship Country", type: "string", operator: "in", value: "Saudi Arabia" },
 
         ]
     },

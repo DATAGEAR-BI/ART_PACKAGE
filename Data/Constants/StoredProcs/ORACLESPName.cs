@@ -10,6 +10,10 @@
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION_USER = "ART.ART_ST_USER_PERF_PER_ACT_USER";
         public static readonly string ST_USER_PERFORMANCE_PER_ACTION = "ART.ART_ST_USER_PERF_PER_ACTION";
         public static readonly string ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "ART.ART_ST_USR_PRF_PER_USR_AND_ACT";
+
+
+        public static readonly string ART_ST_SANCTION_SCREENING_STATUS = "ART.TWK_ART_ST_SANCTION_SCREENING_STATUS";
+        public static readonly string ART_ST_SANCTION_LIST_UPDATE = "ART.TWK_ART_ST_SANCTION_LIST_UPDATE";
         //AML
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART.ART_ST_CASES_PER_PRIORITY";

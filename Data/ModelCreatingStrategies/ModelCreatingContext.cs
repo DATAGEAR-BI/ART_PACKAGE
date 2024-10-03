@@ -85,6 +85,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGECMModelCreating(modelBuilder);
         }
+        public void OnDGCFTWLModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGCFTWLModelCreating(modelBuilder);
+        }
         public void OnDGFATCAModelCreating(ModelBuilder modelBuilder)
         {
             _strategy.OnDGFATCAModelCreating(modelBuilder);

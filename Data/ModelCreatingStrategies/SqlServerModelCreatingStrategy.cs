@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Data.AmlAnalysis;
 using Data.DGAMLAC;
 using Data.Data.KYC;
+using Data.DGCFTWL;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -2071,34 +2072,45 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Action_Detail")
                     .HasColumnType("nvarchar(max)");
             });
-
-           /* modelBuilder.Entity<ArtClearDetect>(entity =>
+            modelBuilder.Entity<SourceTypeDropDownView>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_CLEAR_DETECT", "ART_DB");
-
-                entity.Property(e => e.CaseId)
-                    .HasMaxLength(64)
-                    .HasColumnName("Case_Id")
-                    .UseCollation("Arabic_100_CI_AI");
-
-                entity.Property(e => e.RequestDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("REQUEST_DATE");
-
-                entity.Property(e => e.RequestUid).HasColumnName("REQUEST_UID");
-
-                entity.Property(e => e.SearchMatch)
-                    .HasMaxLength(11)
-                    .IsUnicode(false)
-                    .HasColumnName("SEARCH_MATCH");
+                entity.ToTable("SOURCE_TYPE_DROP_DOWN_VIEW", "ART_DB");
 
                 entity.Property(e => e.SourceType)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false)
-                    .HasColumnName("SOURCE_TYPE");
-            });*/
+                  .HasMaxLength(1000)
+                  .HasColumnName("SOURCE_TYPE")
+                  .UseCollation("Arabic_100_CI_AI");
+            });
+
+            /* modelBuilder.Entity<ArtClearDetect>(entity =>
+             {
+                 entity.HasNoKey();
+
+                 entity.ToView("ART_CLEAR_DETECT", "ART_DB");
+
+                 entity.Property(e => e.CaseId)
+                     .HasMaxLength(64)
+                     .HasColumnName("Case_Id")
+                     .UseCollation("Arabic_100_CI_AI");
+
+                 entity.Property(e => e.RequestDate)
+                     .HasColumnType("datetime")
+                     .HasColumnName("REQUEST_DATE");
+
+                 entity.Property(e => e.RequestUid).HasColumnName("REQUEST_UID");
+
+                 entity.Property(e => e.SearchMatch)
+                     .HasMaxLength(11)
+                     .IsUnicode(false)
+                     .HasColumnName("SEARCH_MATCH");
+
+                 entity.Property(e => e.SourceType)
+                     .HasMaxLength(1000)
+                     .IsUnicode(false)
+                     .HasColumnName("SOURCE_TYPE");
+             });*/
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)
@@ -11203,6 +11215,300 @@ namespace Data.ModelCreatingStrategies
         public void OnSasAuditModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();
+        }
+        public void OnDGCFTWLModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FscEntityWatchListDim>(entity =>
+            {
+                entity.HasKey(e => e.EntityWatchListKey)
+                    .HasName("XPKFSC_ENTITY_WATCH_LIST_DIM");
+
+                entity.ToTable("FSC_ENTITY_WATCH_LIST_DIM", "DGCFTCORE");
+
+                entity.HasIndex(e => e.ChangeBeginDate, "CHANGEBEGDATE_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.ChangeCurrentInd, "CHANGECURRIND_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.EddBic, "EDDBIC_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.EddCountry, "EDDCOUNTRY_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.EntityName, "ENTITYNAME_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.OccupationDesc, "OCCUPATIONDESC_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.ScreeningDate, "SCREENINGDATE_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.WatchListName, "WATCHLISTNAME_WATCHLISTDIM_INDX");
+
+                entity.HasIndex(e => e.EntityWatchListNumber, "WATCHLISTNUM_WATCHLISTDIM_INDX");
+
+                entity.Property(e => e.EntityWatchListKey)
+                    .HasColumnType("decimal(12, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("entity_watch_list_key");
+
+                entity.Property(e => e.ActiveInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("active_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(1000)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.AlternativeNames).HasColumnName("alternative_names");
+
+                entity.Property(e => e.CategoryDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("category_desc");
+
+                entity.Property(e => e.ChangeBeginDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("change_begin_date");
+
+                entity.Property(e => e.ChangeCurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("change_current_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ChangeEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("change_end_date")
+                    .HasDefaultValueSql("('5999-01-01T00:00:00')");
+
+                entity.Property(e => e.CitizenshipCountryCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("citizenship_country_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CitizenshipCountryName)
+                    .HasMaxLength(255)
+                    .HasColumnName("citizenship_country_name");
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(255)
+                    .HasColumnName("city_name");
+
+                entity.Property(e => e.CountryCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("country_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.CountryName)
+                    .HasMaxLength(255)
+                    .HasColumnName("country_name");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("create_date");
+
+                entity.Property(e => e.DateOfBirth)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_of_birth");
+
+                entity.Property(e => e.DeceasedInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("deceased_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.EddBic)
+                    .HasMaxLength(200)
+                    .HasColumnName("EDD_BIC");
+
+                entity.Property(e => e.EddCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("EDD_Country");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(800)
+                    .HasColumnName("entity_name");
+
+                entity.Property(e => e.EntityTitle)
+                    .HasMaxLength(500)
+                    .HasColumnName("entity_title");
+
+                entity.Property(e => e.EntityWatchListNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("entity_watch_list_number");
+
+                entity.Property(e => e.Errordesc)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("ERRORDESC");
+
+                entity.Property(e => e.ExcludeInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("exclude_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ExpirationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("expiration_date");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(350)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.FullAddress)
+                    .HasMaxLength(3000)
+                    .HasColumnName("full_address");
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("gender");
+
+                entity.Property(e => e.IdentificationId)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("identification_id");
+
+                entity.Property(e => e.IdentificationTypeDesc)
+                    .HasMaxLength(255)
+                    .HasColumnName("identification_type_desc");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(350)
+                    .HasColumnName("last_name");
+
+                entity.Property(e => e.MatchCodeAddrLines)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_addr_lines");
+
+                entity.Property(e => e.MatchCodeCitizenship)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_citizenship");
+
+                entity.Property(e => e.MatchCodeCity)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_city");
+
+                entity.Property(e => e.MatchCodeCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_country");
+
+                entity.Property(e => e.MatchCodeFullAddress)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_full_address");
+
+                entity.Property(e => e.MatchCodeIndividual)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_individual");
+
+                entity.Property(e => e.MatchCodeNationality)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_nationality");
+
+                entity.Property(e => e.MatchCodeOrgCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_org_country");
+
+                entity.Property(e => e.MatchCodeOrganization)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_organization");
+
+                entity.Property(e => e.MatchCodeState)
+                    .HasMaxLength(200)
+                    .HasColumnName("match_code_state");
+
+                entity.Property(e => e.MiddleName)
+                    .HasMaxLength(255)
+                    .HasColumnName("middle_name");
+
+                entity.Property(e => e.NationalityCountryCode)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("nationality_country_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.NationalityCountryName)
+                    .HasMaxLength(255)
+                    .HasColumnName("nationality_country_name");
+
+                entity.Property(e => e.OccupationDesc)
+                    .HasMaxLength(1000)
+                    .HasColumnName("occupation_desc");
+
+                entity.Property(e => e.OrgCountryOfBusinessCode)
+                    .HasMaxLength(50)
+                    .HasColumnName("org_country_of_business_code");
+
+                entity.Property(e => e.OrgCountryOfBusinessName)
+                    .HasMaxLength(255)
+                    .HasColumnName("org_country_of_business_name");
+
+                entity.Property(e => e.PlaceOfBirth)
+                    .HasMaxLength(500)
+                    .HasColumnName("place_of_birth");
+
+                entity.Property(e => e.PoliticallyExposedPersonInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("politically_exposed_person_ind")
+                    .IsFixedLength();
+
+                entity.Property(e => e.PostalCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("postal_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Programs)
+                    .HasMaxLength(500)
+                    .HasColumnName("programs");
+
+                entity.Property(e => e.Remarks).HasColumnName("remarks");
+
+                entity.Property(e => e.Result).HasColumnName("result");
+
+                entity.Property(e => e.ScreeningDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("screening_date");
+
+                entity.Property(e => e.StateName)
+                    .HasMaxLength(150)
+                    .HasColumnName("state_name");
+
+                entity.Property(e => e.TaxId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("tax_id");
+
+                entity.Property(e => e.TaxIdTypeCode)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("tax_id_type_code")
+                    .IsFixedLength();
+
+                entity.Property(e => e.TypeDesc)
+                    .HasMaxLength(50)
+                    .HasColumnName("type_desc");
+
+                entity.Property(e => e.UpdateDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("update_date");
+
+                entity.Property(e => e.WatchListName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("watch_list_name");
+
+                entity.Property(e => e.WatchListSubCategory)
+                    .HasMaxLength(300)
+                    .HasColumnName("watch_list_sub_category");
+
+                entity.Property(e => e.YearOfBirth)
+                    .HasColumnType("decimal(4, 0)")
+                    .HasColumnName("year_of_birth");
+            });
         }
     }
 }
