@@ -280,6 +280,7 @@ function generateGrid() {
 
                         var intializeParaInterval = setInterval(() => {
                             if (isextractRulesFinished) {
+
                                 para.procFilters = exRules;
                                 readdata();
                                 isextractRulesFinished = false;

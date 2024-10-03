@@ -10,6 +10,8 @@ using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
+using Data.Data.ECM;
+using Data.DGCFTWL;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -19,6 +21,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
+        public EcmContext ARTECM { get; }
+        public DGCFTWLContext DGCFTWL { get; }
         public GoAmlContext GOAML { get; }
         public DGMGMTContext DGMGMT { get; }
         public DGMGMTAUDContext DGMGMTAUD { get; }

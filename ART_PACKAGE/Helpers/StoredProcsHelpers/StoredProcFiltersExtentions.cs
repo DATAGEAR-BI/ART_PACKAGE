@@ -32,6 +32,70 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                     OracleType = OracleDbType.Varchar2,
                     MySqlType = MySqlDbType.Date
                 }},
+                 { "sourcetype",new(){
+                    SqlServerName="@SOURCE_TYPE",
+                    OracleName="SOURCE_TYPE",
+                    MySqlName="SOURCE_TYPE",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "searchmatch",new(){
+                    SqlServerName="@SEARCH_MATCH",
+                    OracleName="SEARCH_MATCH",
+                    MySqlName="SEARCH_MATCH",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "customername",new(){
+                    SqlServerName="@Customer_Name",
+                    OracleName="Customer_Name",
+                    MySqlName="Customer_Name",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "politicalexposed",new(){
+                    SqlServerName="@Political_Exposed",
+                    OracleName="Political_Exposed",
+                    MySqlName="Political_Exposed",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "citizenshipcountry",new(){
+                    SqlServerName="@Citizenship_Country",
+                    OracleName="Citizenship_Country",
+                    MySqlName="Citizenship_Country",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "watchlistname",new(){
+                    SqlServerName="@WATCH_LIST_NAME",
+                    OracleName="WATCH_LIST_NAME",
+                    MySqlName="WATCH_LIST_NAME",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "type",new(){
+                    SqlServerName="@TYPE",
+                    OracleName="TYPE",
+                    MySqlName="TYPE",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
+                { "status",new(){
+                    SqlServerName="@STATUS",
+                    OracleName="STATUS",
+                    MySqlName="STATUS",
+                    SqlServerType=SqlDbType.NVarChar,
+                    OracleType = OracleDbType.Varchar2,
+                    MySqlType = MySqlDbType.VarChar
+                }},
                 { "customer_number",new(){
                     SqlServerName="@CUSTOMER_NUMBER",
                     OracleName="CUSTOMER_NUMBER",
@@ -68,7 +132,6 @@ namespace ART_PACKAGE.Helpers.StoredProcsHelpers
                     MySqlType = MySqlDbType.VarChar
 
                 }},
-                
                 { "routinename",new(){
                     SqlServerName="@Routine_Name",
                     OracleName="Routine_Name",

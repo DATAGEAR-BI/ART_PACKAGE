@@ -138,6 +138,8 @@
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
     ClearDetect: "/ClearDetect/GetData",
+    ScreeningStatus: "/ScreeningStatus/GetData",
+    ListUpdate: "/ListUpdate/GetData",
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
