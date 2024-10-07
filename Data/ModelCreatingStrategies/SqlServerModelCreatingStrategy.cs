@@ -6676,6 +6676,11 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("ENTITY_NAME")
                     .UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.CustIdentTypeDesc)
+                   .HasMaxLength(255)
+                   .IsUnicode(false)
+                   .HasColumnName("CUST_IDENT_TYPE_DESC")
+                   .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.IdExpireDate)
                     .HasColumnType("date")

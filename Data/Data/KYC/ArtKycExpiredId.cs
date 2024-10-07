@@ -8,6 +8,7 @@ namespace Data.Data.KYC
         public string? ClientNumber { get; set; }
         public string? EntityName { get; set; }
         public string? IdNumber { get; set; }
+        public string? CustIdentTypeDesc { get; set; }
         public DateTime? IdExpireDate { get; set; }
     }
 }
