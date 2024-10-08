@@ -34,6 +34,7 @@
 
 	<ItemGroup>
 	  <Folder Include="GML\" />
+	  <Folder Include="SASAMLSLA\" />
 	</ItemGroup>
 
 </Project>

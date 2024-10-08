@@ -4214,6 +4214,561 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("TITLE");
             });
+
+
+            //sla rep[orts
+            modelBuilder.Entity<SlaAlertsExceeded20Day>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_ALERTS_EXCEEDED_20_DAYS");
+
+                entity.Property(e => e.AddToCaseDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ADD_TO_CASE_DATE");
+
+                entity.Property(e => e.AlertCreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ALERT_CREATE_DATE");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.InvestigationDaysLevel1)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL1");
+
+                entity.Property(e => e.InvestigationDaysLevel2)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL2");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.RoutingDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ROUTING_DATE");
+
+                entity.Property(e => e.TotalInvestigationDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INVESTIGATION_DAYS");
+
+                entity.Property(e => e.UserLevel1)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL1");
+
+                entity.Property(e => e.UserLevel2)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL2");
+
+                entity.Property(e => e.UserLevel3)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL3");
+            });
+
+            modelBuilder.Entity<SlaClosedAlertsExceeded45Day>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_CLOSED_ALERTS_EXCEEDED_45_DAYS");
+
+                entity.Property(e => e.AddToCaseDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ADD_TO_CASE_DATE");
+
+                entity.Property(e => e.AlertCreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ALERT_CREATE_DATE");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.CaseCloseDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CASE_CLOSE_DATE");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.InvestigationDaysLevel1)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL1");
+
+                entity.Property(e => e.InvestigationDaysLevel2)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL2");
+
+                entity.Property(e => e.InvestigationDaysLevel3)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL3");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.RoutingDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ROUTING_DATE");
+
+                entity.Property(e => e.TotalInvestigationDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INVESTIGATION_DAYS");
+
+                entity.Property(e => e.UserLevel1)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL1");
+
+                entity.Property(e => e.UserLevel2)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL2");
+
+                entity.Property(e => e.UserLevel3)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL3");
+            });
+
+            modelBuilder.Entity<SlaDailyClosedAlertsFromLevel2>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_Daily_Closed_Alerts_FROM_LEVEL2");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.LastActionDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_ACTION_DATE");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaLevel1NonStaffViolatedWithAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL1_NON_STAFF_VIOLATED_WITH_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.RoutingDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ROUTING_DATE");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaLevel1NonStaffViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL1_NON_STAFF_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaLevel2NonStaffViolatedWithAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL2_NON_STAFF_VIOLATED_WITH_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LastActionDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_ACTION_DATE");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaLevel2NonStaffViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL2_NON_STAFF_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaLevel3NonStaffViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL3_NON_STAFF_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.CaseCloseDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CASE_CLOSE_DATE");
+
+                entity.Property(e => e.CaseId)
+                    .HasPrecision(12)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
+
+            modelBuilder.Entity<SlaMedHighClosedAlertsExceeded10Day>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_MED_HIGH_CLOSED_ALERTS_EXCEEDED_10_DAYS");
+
+                entity.Property(e => e.AlertCreateDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ALERT_CREATE_DATE");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.InvestigationDaysLevel1)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL1");
+
+                entity.Property(e => e.InvestigationDaysLevel2)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS_LEVEL2");
+
+                entity.Property(e => e.LastActionDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LAST_ACTION_DATE");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.RoutingDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ROUTING_DATE");
+
+                entity.Property(e => e.TotalInvestigationDays)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_INVESTIGATION_DAYS");
+
+                entity.Property(e => e.UserLevel1)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL1");
+
+                entity.Property(e => e.UserLevel2)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_LEVEL2");
+            });
         }
 
         public void OnAuditModelCreating(ModelBuilder modelBuilder)
