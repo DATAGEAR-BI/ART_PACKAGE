@@ -38,6 +38,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             _serviceScopeFactory = serviceScopeFactory;
             _processesHandler = processesHandler;
             _logger = logger;
+            OnProgressChanged = (rd, fn) => _logger.LogInformation("pdf file ({fn}) is being exported : {p}", fn, rd);
 
 
 
@@ -472,11 +473,11 @@ namespace ART_PACKAGE.Helpers.Pdf
             GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
             IQueryable<TModel>? data = dataRes.data;
             int total = dataRes.total;
-            List<testttttt> s = new();
-            for (int i = 0; i < 1000; i++)
+           // List<TModel> s = data.ToList();
+            /*for (int i = 0; i < 1000; i++)
             {
                 s.Add(new() { id = i, name = "name" + i, phone = "0101088667" + i });
-            }
+            }*/
             //file prep
             if (!Directory.Exists(folderPath))
                 _ = Directory.CreateDirectory(folderPath);
@@ -509,7 +510,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         */
                         // Get model properties for dynamic table headers
                         // var modelType = typeof(TModel);
-                         var modelType = typeof(testttttt);
+                         var modelType = typeof(TModel);
 
                         var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                     var columnHeaders = properties.Select(p => p.Name).ToArray();
@@ -545,7 +546,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                     int index = 0;
                     int dataCount = data.Count();
                     float progress = 0;
-                    foreach (var item in s)
+                    foreach (var item in data)
                     {
                         if (_processesHandler.isProcessCanceld(reportGUID))
                         {
@@ -569,24 +570,24 @@ namespace ART_PACKAGE.Helpers.Pdf
 
 
 
-                        if (rowCount % 50 == 0 && rowCount > 0) // Example for page break
-                        {
-                            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                            table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
-                            table.SetWidth(UnitValue.CreatePercentValue(100));
+                        //if (rowCount % 20 == 0 && rowCount > 0) // Example for page break
+                        //{
+                        //    document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                        //    table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
+                        //    table.SetWidth(UnitValue.CreatePercentValue(100));
 
-                            // Re-add headers
-                            foreach (var header in columnHeaders)
-                            {
-                                table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
-                            }
-                        }
+                        //    // Re-add headers
+                        //    foreach (var header in columnHeaders)
+                        //    {
+                        //        table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
+                        //    }
+                        //}
 
                         // Add data cells
                         foreach (var property in properties)
                         {
                             var value = property.GetValue(item)?.ToString();
-                            table.AddCell(new Cell().Add(new Paragraph(value).SetFontSize(fontSize)));
+                            table.AddCell(new Cell().Add(new Paragraph(value??"").SetFontSize(fontSize)));
                         }
                         rowCount++;
 
@@ -611,13 +612,14 @@ namespace ART_PACKAGE.Helpers.Pdf
                                 //OnProgressChanged(recordsDone, fileNumber);
                             }
                         }
+                          
+                        }
+                        document.Add(table);
 
-                    }
 
-                    document.Add(table);
 
-                    // Close the document
-                    document.Close();
+                        // Close the document
+                        document.Close();
                 }
                 }
             }
