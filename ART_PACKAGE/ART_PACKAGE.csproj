@@ -27,10 +27,6 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Remove="Views\SlaAlertsExceeded20Days\Index.cshtml" />
-		<Content Remove="Views\SlaClosedAlertsExceeded45Days\Index.cshtml" />
-		<Content Remove="Views\SlaLevel1NonStaffViolatedWithAction\Index.cshtml" />
-		<Content Remove="Views\SlaLevel2NonStaffViolatedWithAction\Index.cshtml" />
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
@@ -1083,10 +1079,6 @@
 		<None Include="Views\ACPostingsAccount\Index.cshtml" />
 		<None Include="Views\ACPostingsCustomers\Index.cshtml" />
 		<None Include="Views\Activity\Index.cshtml" />
-		<None Include="Views\SlaAlertsExceeded20Days\Index.cshtml" />
-		<None Include="Views\SlaClosedAlertsExceeded45Days\Index.cshtml" />
-		<None Include="Views\SlaLevel1NonStaffViolatedWithAction\Index.cshtml" />
-		<None Include="Views\SlaLevel2NonStaffViolatedWithAction\Index.cshtml" />
 		<None Include="Views\AlertDetails\Index.cshtml" />
 		<None Include="Views\AlertSummary\Index.cshtml" />
 		<None Include="Views\AMLCasesPerRegion\Index.cshtml" />
@@ -1146,6 +1138,15 @@
 		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SlaAlertsExceeded20Days\Index.cshtml" />
+		<None Include="Views\SlaClosedAlertsExceeded45Days\Index.cshtml" />
+		<None Include="Views\SlaDailyClosedAlertsFromLevel2\Index.cshtml" />
+		<None Include="Views\SlaLevel1NonStaffViolatedWithAction\Index.cshtml" />
+		<None Include="Views\SlaLevel1NonStaffViolatedWithoutAction\Index.cshtml" />
+		<None Include="Views\SlaLevel2NonStaffViolatedWithAction\Index.cshtml" />
+		<None Include="Views\SlaLevel2NonStaffViolatedWithoutAction\Index.cshtml" />
+		<None Include="Views\SlaLevel3NonStaffViolatedWithoutAction\Index.cshtml" />
+		<None Include="Views\SlaMedHighClosedAlertsExceeded10Day\Index.cshtml" />
 		<None Include="Views\StaffGOAMLperCrime\Index.cshtml" />
 		<None Include="Views\StaffGOAMLperProduct\Index.cshtml" />
 		<None Include="Views\StaffGOAMLperRegion\Index.cshtml" />
