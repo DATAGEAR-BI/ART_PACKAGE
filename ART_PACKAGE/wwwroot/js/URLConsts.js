@@ -218,6 +218,11 @@
     autorules: "AutoRules/GetData",
     InternalCaseValidation: "InternalCaseValidation/GetData",
     GoamlReportsValidation: "GoamlReportsValidation/GetData",
+    SlaDailyClosedAlertsFromLevel2: "SlaDailyClosedAlertsFromLevel2/GetData",
+    SlaLevel1NonStaffViolatedWithoutAction: "SlaLevel1NonStaffViolatedWithoutAction/GetData",
+    SlaLevel2NonStaffViolatedWithoutAction: "SlaLevel2NonStaffViolatedWithoutAction/GetData",
+    SlaLevel3NonStaffViolatedWithoutAction: "SlaLevel3NonStaffViolatedWithoutAction/GetData",
+    SlaMedHighClosedAlertsExceeded10Day: "SlaMedHighClosedAlertsExceeded10Day/GetData",
 
 
 };
