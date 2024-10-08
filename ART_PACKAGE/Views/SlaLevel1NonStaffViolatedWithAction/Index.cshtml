@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SLA Level 1 Non Staff Violated With Action
+        <small></small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaLevel1NonStaffViolatedWithAction" data-urlkey="SlaLevel1NonStaffViolatedWithAction" data-handlerkey="SlaLevel1NonStaffViolatedWithAction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

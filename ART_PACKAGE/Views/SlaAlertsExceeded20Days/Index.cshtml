@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SLA Alerts Exceeded 20 Days
+        <small></small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaAlertsExceeded20Days" data-urlkey="SlaAlertsExceeded20Days" data-handlerkey="SlaAlertsExceeded20Days"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

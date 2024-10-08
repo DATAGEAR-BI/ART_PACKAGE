@@ -122,6 +122,10 @@
     //SAS AMl
 
     AmlAuditReport: "/AmlAuditReport/GetData",
+    SlaLevel2NonStaffViolatedWithAction: "/SlaLevel2NonStaffViolatedWithAction/GetData",
+    SlaLevel1NonStaffViolatedWithAction: "/SlaLevel1NonStaffViolatedWithAction/GetData",
+    SlaAlertsExceeded20Days: "/SlaAlertsExceeded20Days/GetData",
+    SlaClosedAlertsExceeded45Days: "/SlaClosedAlertsExceeded45Days/GetData",
 
 
 
