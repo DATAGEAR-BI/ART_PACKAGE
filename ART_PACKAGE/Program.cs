@@ -103,7 +103,7 @@ Serilog.Core.Logger logger = new LoggerConfiguration()
 builder.Logging.AddConsole();
 builder.Logging.AddSerilog(logger);
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)builder.Environment, "Rotativa");
-
+AppSettingsResolver.Initialize(builder.Configuration);
 builder.Services.AddHangfire(configuration =>
 {
     _ = configuration
