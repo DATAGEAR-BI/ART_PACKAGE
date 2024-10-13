@@ -26,6 +26,7 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private static Dictionary<int, int> fileProgress = new();
+        private static Dictionary<int, int> PDFfileProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
         private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
@@ -208,7 +209,7 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
-            _processesHandler.AddProcess(reportGUID, "CSV");
+            _processesHandler.AddProcess(reportGUID, "PDF");
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "PDF"), folderGuid);
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
             int total = dataRes.total;
@@ -218,12 +219,13 @@ namespace ART_PACKAGE.Helpers.Grid
             int batch = d;
             //500_000:
             int round = 0;
-            fileProgress = new();
+            PDFfileProgress = new();
+            //int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
-                fileProgress[fileNumber] = recordsDone;
-                var done = fileProgress.Values.Sum();
+                PDFfileProgress[fileNumber] = recordsDone;
+                var done = PDFfileProgress.Values.Sum();
                 decimal progress = done / (decimal)totalcopy;
                 _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
