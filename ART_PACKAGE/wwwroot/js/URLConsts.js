@@ -126,6 +126,9 @@
     SlaLevel1NonStaffViolatedWithAction: "/SlaLevel1NonStaffViolatedWithAction/GetData",
     SlaAlertsExceeded20Days: "/SlaAlertsExceeded20Days/GetData",
     SlaClosedAlertsExceeded45Days: "/SlaClosedAlertsExceeded45Days/GetData",
+    FiveRandomSelection: "/FiveRandomSelection/GetData",
+    SlaEcmCasesViolated: "/SlaEcmCasesViolated/GetData",
+    SlaLevel3StaffViolatedWithoutAction: "/SlaLevel3StaffViolatedWithoutAction/GetData",
 
 
 

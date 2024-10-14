@@ -4769,6 +4769,169 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("USER_LEVEL2");
             });
+            modelBuilder.Entity<ArtFiveRandomSelectionView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_FIVE_RANDOM_SELECTION_VIEW");
+
+                entity.Property(e => e.AlertCaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT/CASE_ID");
+
+                entity.Property(e => e.AlertCaseStatus)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT/CASE_STATUS");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(560)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CLOSE_DATE");
+
+                entity.Property(e => e.ClosedBy)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("CLOSED_BY");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.EntityName)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("ENTITY_NAME");
+
+                entity.Property(e => e.EntityNumber)
+                    .HasColumnType("VARCHAR2(12000)")
+                    .HasColumnName("ENTITY_NUMBER");
+
+                entity.Property(e => e.Module)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("MODULE");
+            });
+
+            modelBuilder.Entity<SlaEcmCasesViolated>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_ECM_CASES_VIOLATED");
+
+                entity.Property(e => e.CaseId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.CaseType)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_TYPE");
+
+                entity.Property(e => e.ClientName)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NAME");
+
+                entity.Property(e => e.ClientNumber)
+                    .IsUnicode(false)
+                    .HasColumnName("CLIENT_NUMBER");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.Formattedtime)
+                    .IsUnicode(false)
+                    .HasColumnName("FORMATTEDTIME");
+
+                entity.Property(e => e.LastActionBy)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("LAST_ACTION_BY");
+
+                entity.Property(e => e.LastActionDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LAST_ACTION_DATE");
+
+                entity.Property(e => e.NumberOfActions)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("NUMBER_OF_ACTIONS");
+
+                entity.Property(e => e.TotalTime)
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("TOTAL_TIME");
+
+                entity.Property(e => e.ViolatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("VIOLATED_BY");
+
+                entity.Property(e => e.ViolatedTime)
+                    .IsUnicode(false)
+                    .HasColumnName("VIOLATED_TIME");
+            });
+
+            modelBuilder.Entity<SlaLevel3StaffViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_LEVEL3_STAFF_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertCloseDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ALERT_CLOSE_DATE");
+
+                entity.Property(e => e.AlertId)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.CaseCloseDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CASE_CLOSE_DATE");
+
+                entity.Property(e => e.CaseId)
+                    .HasPrecision(12)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+            });
         }
 
         public void OnAuditModelCreating(ModelBuilder modelBuilder)

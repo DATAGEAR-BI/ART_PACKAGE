@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SAS AML Staff SLA Report
+        <small></small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaLevel3StaffViolatedWithoutAction" data-urlkey="SlaLevel3StaffViolatedWithoutAction" data-handlerkey="SlaLevel3StaffViolatedWithoutAction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

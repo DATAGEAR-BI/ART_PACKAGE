@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        5% Random Selection Report
+        <small></small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="FiveRandomSelection" data-urlkey="FiveRandomSelection" data-handlerkey="FiveRandomSelection"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

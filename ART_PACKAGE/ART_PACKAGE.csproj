@@ -28,6 +28,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="Views\SlaAlertsExceeded20Days - Copy (2)\Index.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
 		<Content Remove="wwwroot\js\segmentReport - Copy.js" />
