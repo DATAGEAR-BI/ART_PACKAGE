@@ -7,7 +7,6 @@ using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ARTGOAML;
-using Data.GOAML;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
@@ -56,7 +55,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 {"year".ToLower(),_dropSrv.GetLast10YearsDropDown().Select(s=>Int32.Parse(s.value)).ToDynamicList()},
-                                {"REPORT_TYPE".ToLower(),_dropSrv.GetReportTypeForTopsAndBottomsDropDown().Select(s=>s.value).ToDynamicList()},
+                {"REPORT_TYPE".ToLower(),_dropSrv.GetReportTypeForTopsAndBottomsDropDown().Select(s=>s.value).ToDynamicList()},
 
 
             };
@@ -99,7 +98,8 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
             {
                 data = context.ExecuteProc<ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES>(MYSQLSPName.ART_ST_YEARLY_BOTTOM_GOAML_BRANCHES, summaryParams.ToArray());
             }
-            byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
+
+            byte[] bytes = await data.AsQueryable().ExportToCSVWithSkippedColumn(para.req, propsToSkip: new() { "RN" });
             return File(bytes, "text/csv");
         }
 

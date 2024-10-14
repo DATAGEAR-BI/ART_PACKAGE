@@ -832,6 +832,86 @@ namespace ART_PACKAGE.Helpers.CustomReport
             return bytes;
 
         }
+        public static async Task<byte[]> ExportToCSVWithSkippedColumn<T>(this IQueryable<T> data, KendoRequest obj, List<string> propsToSkip = null)
+        {
+
+            KendoDataDesc<T> calldata = data.CallData(obj, propertiesToSkip: propsToSkip);
+            data = calldata.Data;
+            decimal total = calldata.Total;
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            int skip = 0;
+            List<Task<byte[]>> tasks = new() { };
+            byte[] bytes = new byte[] { };
+            using MemoryStream stream = new();
+            using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+            using (CsvWriter cw = new(sw, config))
+            {
+
+                sw.Write("");
+                if (calldata.Columns != null && calldata.Columns.Any())
+                {
+                    foreach (var colDto in calldata.Columns)
+                    {
+                        cw.WriteField(colDto.displayName);
+                        cw.NextRecord();
+                    }
+                }
+                else
+                {
+                    cw.WriteHeader<T>();
+
+                }
+
+                bytes = stream.ToArray();
+            }
+            while (total > 0)
+            {
+                List<T> tempData = data.Skip(skip).Take(100000).ToList();
+                Task<byte[]> task = Task.Run(() =>
+                {
+                    using MemoryStream stream = new();
+                    using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
+                    using (CsvWriter cw = new(sw, config))
+                    {
+                        sw.Write("");
+                        if (calldata.Columns != null && calldata.Columns.Any())
+                        {
+                            foreach (var colDto in calldata.Columns)
+                            {
+                                cw.WriteField(colDto.displayName);
+                            }
+                        }
+                        else
+                        {
+                            cw.WriteHeader<T>();
+
+                        }
+                        cw.NextRecord();
+                        foreach (T? elm in tempData)
+                        {
+                            cw.WriteRecord(elm);
+                            cw.NextRecord();
+                        }
+                    }
+                    byte[] b = stream.ToArray();
+                    return b;
+                });
+                tasks.Add(task);
+                total -= 100000;
+                skip += 100000;
+            }
+            byte[][] results = await Task.WhenAll(tasks);
+            tasks.ForEach(x =>
+            {
+                Console.WriteLine(x.Result.Length);
+                bytes = bytes.Concat(x.Result).ToArray();
+            }
+            );
+            return bytes;
+        }
         public static async Task<byte[]> ExportToCSV<T>(this IQueryable<T> data, KendoRequest obj)
         {
             

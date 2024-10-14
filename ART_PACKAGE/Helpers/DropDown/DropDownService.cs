@@ -375,7 +375,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown()
         {
-            List<SelectItem> distinct_value = new List<string>() { "DTET, SARAF or STRTF", "SAR or STR" }.Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = new List<string>() { "DTET, SARTF or STRTF", "SAR or STR" }.Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
 
