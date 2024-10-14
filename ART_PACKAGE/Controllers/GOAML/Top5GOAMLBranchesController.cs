@@ -58,7 +58,7 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
 
             };
 
-            KendoDataDesc<ART_ST_YEARLY_TOP_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn, propertiesToSkip: new() { "RN"});
+            KendoDataDesc<ART_ST_YEARLY_TOP_GOAML_BRANCHES> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn, propertiesToSkip: new() { "RN"} );
 
 
             var result = new
@@ -125,7 +125,7 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
             ViewData["title"] = "Top 5 GOAML Branches Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name);
+                                                    , User.Identity.Name, ColumnsToSkip : new() { "RN" });
             return File(bytes, "application/pdf");
         }
 

@@ -127,7 +127,7 @@ DropDownColumn = new Dictionary<string, List<dynamic>>
             ViewData["title"] = "Bottom 5 GOAML Branches Report";
             ViewData["desc"] = "";
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
-                                                    , User.Identity.Name);
+                                                    , User.Identity.Name, ColumnsToSkip: new() { "RN" });
             return File(bytes, "application/pdf");
         }
 
