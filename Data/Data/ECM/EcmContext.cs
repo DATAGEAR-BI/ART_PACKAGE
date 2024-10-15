@@ -1,9 +1,10 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.ECM
 {
-    public class EcmContext : DbContext
+    public class EcmContext : TenatDBContext
     {
         //ECM 
         public virtual DbSet<ArtHomeCasesDate> ArtHomeCasesDates { get; set; } = null!;
@@ -23,7 +24,11 @@ namespace Data.Data.ECM
 
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;
 
-        public EcmContext(DbContextOptions<EcmContext> opt) : base(opt) { }
+        public EcmContext(DbContextOptions<EcmContext> opt, ITenantService tenantService) : base(opt,tenantService) { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            contextBuilder(optionsBuilder, "AuthContextConnection");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +43,7 @@ namespace Data.Data.ECM
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnEcmModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
     }

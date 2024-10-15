@@ -32,6 +32,8 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
+using Data.Setting;
+using Data.Services;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -242,7 +244,13 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
             return services;
         }
+        public static IServiceCollection AddTenancy(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            services.AddScoped<ITenantService, TenantService>();
+            services.Configure<TenantSettings>(configuration.GetSection(nameof(TenantSettings)));
 
+            return services;
+        }
 
         public static IServiceCollection AddReportsConfiguratons(this IServiceCollection services)
         {

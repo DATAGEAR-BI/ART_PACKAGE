@@ -34,7 +34,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
     EnvironmentName = "Development",
 });
 
+builder.Services.AddTenancy(builder.Configuration);
+
 builder.Services.AddDbs(builder.Configuration);
+
+
 
 builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
