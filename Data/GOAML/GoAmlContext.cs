@@ -1,18 +1,23 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data;
+using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.GOAML
 {
-    public partial class GoAmlContext : DbContext
+    public partial class GoAmlContext : TenatDBContext
     {
-        public GoAmlContext()
+     
+
+        public GoAmlContext(DbContextOptions<GoAmlContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            contextBuilder(optionsBuilder, "GOAMLContextConnection");
         }
 
-        public GoAmlContext(DbContextOptions<GoAmlContext> options)
-            : base(options)
-        {
-        }
 
         public virtual DbSet<Report> Reports { get; set; } = null!;
         public virtual DbSet<ReportIndicatorType> ReportIndicatorTypes { get; set; } = null!;
@@ -25,6 +30,8 @@ namespace Data.GOAML
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnGoAmlModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
 
 
         }

@@ -1,14 +1,17 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.Segmentation
 {
-    public class SegmentationContext : DbContext
+    public class SegmentationContext : TenatDBContext
     {
-        public SegmentationContext(DbContextOptions<SegmentationContext> options)
-      : base(options)
+        public SegmentationContext(DbContextOptions<SegmentationContext> options,ITenantService tenantService)
+      : base(options, tenantService)
         {
+
         }
+        
         // SEGMENTATION
         public virtual DbSet<ArtAlertsPerSegmentTb> ArtAlertsPerSegmentTbs { get; set; } = null!;
         public virtual DbSet<ArtAllSegmentCustCountTb> ArtAllSegmentCustCountTbs { get; set; } = null!;
@@ -25,6 +28,7 @@ namespace Data.Data.Segmentation
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSegmentionModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 

@@ -25,11 +25,7 @@ namespace Data.Data.ECM
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;
 
         public EcmContext(DbContextOptions<EcmContext> opt, ITenantService tenantService) : base(opt,tenantService) { }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            contextBuilder(optionsBuilder, "AuthContextConnection");
-        }
-
+     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Sanction

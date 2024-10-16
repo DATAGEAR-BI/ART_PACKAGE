@@ -1,13 +1,15 @@
 ﻿using Data.Data.ARTDGAML;
 using Data.FCF71;
 using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.Common;
 
 namespace Data.Data.SASAml
 {
-    public class SasAmlContext : DbContext
+    public class SasAmlContext : TenatDBContext
     {
         //AML
         public virtual DbSet<ArtHomeAlertsPerDate> ArtHomeAlertsPerDates { get; set; } = null!;
@@ -25,7 +27,8 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
         // public virtual DbSet<BigData> BigDatas { get; set; } = null!;
 
-        public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
+        public SasAmlContext(DbContextOptions<SasAmlContext> options, ITenantService tenantService)
+      : base(options, tenantService) { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,6 +52,8 @@ namespace Data.Data.SASAml
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public IEnumerable<T> ExecuteProc<T>(string SPName, params DbParameter[] parameters) where T : class

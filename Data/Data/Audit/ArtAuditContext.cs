@@ -1,9 +1,10 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.Audit
 {
-    public class ArtAuditContext : DbContext
+    public class ArtAuditContext : TenatDBContext
     {
 
         //Aduit
@@ -20,13 +21,17 @@ namespace Data.Data.Audit
         public virtual DbSet<ListOfUsersAndGroupsRole> ListOfUsersAndGroupsRoles { get; set; } = null!;
         public virtual DbSet<ListOfUsersGroup> ListOfUsersGroups { get; set; } = null!;
         public virtual DbSet<ListOfUsersRole> ListOfUsersRoles { get; set; } = null!;
-        public ArtAuditContext(DbContextOptions<ArtAuditContext> options) : base(options)
+        public ArtAuditContext(DbContextOptions<ArtAuditContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnAuditModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
+
         }
 
 

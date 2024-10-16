@@ -1,16 +1,14 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.TRADE_BASE
 {
-    public partial class TRADE_BASEContext : DbContext
+    public partial class TRADE_BASEContext : TenatDBContext
     {
-        public TRADE_BASEContext()
-        {
-        }
-
-        public TRADE_BASEContext(DbContextOptions<TRADE_BASEContext> options)
-            : base(options)
+   
+        public TRADE_BASEContext(DbContextOptions<TRADE_BASEContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -25,6 +23,8 @@ namespace Data.Data.TRADE_BASE
             OnModelCreatingPartial(modelBuilder);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnTRADE_BASEModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

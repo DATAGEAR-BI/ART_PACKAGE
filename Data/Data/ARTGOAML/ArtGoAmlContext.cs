@@ -1,15 +1,16 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.ARTGOAML
 {
-    public class ArtGoAmlContext : DbContext
+    public class ArtGoAmlContext : TenatDBContext
     {
 
 
 
-        public ArtGoAmlContext(DbContextOptions<ArtGoAmlContext> options)
-      : base(options)
+        public ArtGoAmlContext(DbContextOptions<ArtGoAmlContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -30,6 +31,7 @@ namespace Data.Data.ARTGOAML
             modelBuilder.Entity<ArtStGoAmlReportsPerCreator>().HasNoKey().ToView(null);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTGOAMLModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

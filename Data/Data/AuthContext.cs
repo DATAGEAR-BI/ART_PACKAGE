@@ -1,6 +1,9 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data.Configrations;
+using Data.Constants.db;
+using Data.Contracts;
 using Data.Data;
 using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +11,12 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 
 public class AuthContext : IdentityDbContext<AppUser>
 {
+
+    public string TenantId { get; set; }
+    private readonly ITenantService _tenantService;
+
+
+
 
     public virtual DbSet<ArtSavedCustomReport> ArtSavedCustomReports { get; set; } = null!;
     public virtual DbSet<ArtSavedReportsColumns> ArtSavedReportsColumns { get; set; } = null!;
@@ -17,11 +26,17 @@ public class AuthContext : IdentityDbContext<AppUser>
 
 
 
-    public AuthContext(DbContextOptions<AuthContext> options)
+    public AuthContext(DbContextOptions<AuthContext> options,ITenantService tenantService)
         : base(options)
     {
-    }
 
+        _tenantService = tenantService;
+        TenantId = _tenantService.GetCurrentTenant()?.TId;
+    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        contextBuilder(optionsBuilder);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -81,7 +96,43 @@ public class AuthContext : IdentityDbContext<AppUser>
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
 
-    }
 
+
+    }
+    protected void contextBuilder(DbContextOptionsBuilder options, string conn = "AuthContextConnection")
+    {
+
+        int commandTimeOut = _tenantService.GetCommendTimeOut() ?? 120;
+        var tenantConnectionString = _tenantService.GetConnectionString(conn);
+        if (!string.IsNullOrWhiteSpace(tenantConnectionString))
+        {
+            string dbType = _tenantService.GetDatabaseProvider();
+            _ = dbType switch
+            {
+                DbTypes.SqlServer => options.UseSqlServer(
+                    conn,
+                    x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                    ),
+                DbTypes.Oracle => options.UseOracle(
+                    conn,
+                    x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                    ),
+                DbTypes.MySql => options.UseMySQL(
+                conn,
+                x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                ),
+                _ => throw new Exception($"Unsupported provider: {dbType}")
+            };
+        }
+    }
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
+        {
+            entry.Entity.TenantId = TenantId;
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
+    }
 
 }

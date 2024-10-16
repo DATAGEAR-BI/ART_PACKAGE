@@ -1,12 +1,13 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.ARTDGAML
 {
-    public class ArtDgAmlContext : DbContext
+    public class ArtDgAmlContext : TenatDBContext
     {
-        public ArtDgAmlContext(DbContextOptions<ArtDgAmlContext> options)
-      : base(options)
+        public ArtDgAmlContext(DbContextOptions<ArtDgAmlContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -46,6 +47,8 @@ namespace Data.Data.ARTDGAML
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTDGAMLModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
 
     }

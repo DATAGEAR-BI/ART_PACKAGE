@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data.Data;
 using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Data.DGAMLAC
 {
-    public partial class DGAMLACContext : DbContext
+    public partial class DGAMLACContext : TenatDBContext
     {
-        public DGAMLACContext()
-        {
-        }
 
-        public DGAMLACContext(DbContextOptions<DGAMLACContext> options)
-            : base(options)
+
+        public DGAMLACContext(DbContextOptions<DGAMLACContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -25,12 +25,9 @@ namespace Data.DGAMLAC
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("Server=192.168.1.182;Database=ac;User=root;Password=P@ssw0rd;");
-            }
+            contextBuilder(optionsBuilder, "DGAMLACContextConnection");
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +36,8 @@ namespace Data.DGAMLAC
             OnModelCreatingPartial(modelBuilder);
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnDgAMLACModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

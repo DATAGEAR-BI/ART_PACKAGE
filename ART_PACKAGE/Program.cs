@@ -21,6 +21,7 @@ using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
+using Data.Services.Tenat;
 using Hangfire;
 using Hangfire.LiteDB;
 using Microsoft.AspNetCore.Identity;
@@ -125,8 +126,10 @@ _recurringService.AddOrUpdate("clean-csv-directory", () =>
     csvJobs.CleanDirectory(), $"0 0 * * *");
 
 WebApplication app = builder.Build();
-
+//var tenantConstant=serviceProvider.GetRequiredService<TenantConstants>();
+//tenantConstant.SetID("UG");
 app.ApplyModulesMigrations();
+
 
 app.SeedModuleRoles();
 

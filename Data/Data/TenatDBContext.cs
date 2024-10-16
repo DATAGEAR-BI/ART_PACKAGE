@@ -22,7 +22,8 @@ namespace Data.Data
             TenantId = _tenantService.GetCurrentTenant()?.TId;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {      
+        {
+            contextBuilder(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,8 +32,10 @@ namespace Data.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        protected void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
+        protected void contextBuilder(DbContextOptionsBuilder options, string conn= "AuthContextConnection")
         {
+
+            int commandTimeOut = _tenantService.GetCommendTimeOut()??120;
             var tenantConnectionString = _tenantService.GetConnectionString(conn);
             if (!string.IsNullOrWhiteSpace(tenantConnectionString))
             {

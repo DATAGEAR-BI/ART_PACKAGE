@@ -1,9 +1,10 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.AmlAnalysis
 {
-    public class AmlAnalysisContext : DbContext
+    public class AmlAnalysisContext : TenatDBContext
     {
         //public virtual DbSet<ArtAlertsStatusCustomer> ArtAlertsStatusCustomers { get; set; } = null!;
         public virtual DbSet<ArtAmlAnalysisView> ArtAmlAnalysisViews { get; set; } = null!;
@@ -16,8 +17,8 @@ namespace Data.Data.AmlAnalysis
 
 
 
-        public AmlAnalysisContext(DbContextOptions<AmlAnalysisContext> options)
-      : base(options)
+        public AmlAnalysisContext(DbContextOptions<AmlAnalysisContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -27,6 +28,8 @@ namespace Data.Data.AmlAnalysis
             modelBuilder.ApplyConfiguration(new ArtAmlAnalysisRuleConfigration(dbtype));
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnAmlAnalysisModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

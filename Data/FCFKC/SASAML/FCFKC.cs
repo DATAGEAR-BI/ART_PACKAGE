@@ -1,11 +1,15 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data;
+using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Data.FCFKC.SASAML
 {
-    public class FCFKC : DbContext
+    public class FCFKC : TenatDBContext
     {
-        public FCFKC(DbContextOptions<FCFKC> opts) : base(opts)
+        public FCFKC(DbContextOptions<FCFKC> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
 
         }
@@ -18,6 +22,11 @@ namespace Data.FCFKC.SASAML
 
 
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            contextBuilder(optionsBuilder, "FCFKCContextConnection");
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +34,8 @@ namespace Data.FCFKC.SASAML
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnFcfkcSASAMLModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

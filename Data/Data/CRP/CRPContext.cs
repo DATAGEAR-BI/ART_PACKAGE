@@ -1,9 +1,10 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.CRP
 {
-    public class CRPContext : DbContext
+    public class CRPContext : TenatDBContext
     {
         //public virtual DbSet<ArtCrpCase> ArtCrpCases { get; set; } = null!;
         public virtual DbSet<ArtCrpConfig> ArtCrpConfigs { get; set; } = null!;
@@ -11,7 +12,8 @@ namespace Data.Data.CRP
         public virtual DbSet<ArtCrpUserPerformance> ArtCrpUserPerformances { get; set; } = null!;
 
 
-        public CRPContext(DbContextOptions<CRPContext> options) : base(options)
+        public CRPContext(DbContextOptions<CRPContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,6 +25,9 @@ namespace Data.Data.CRP
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnCRPModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

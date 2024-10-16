@@ -1,17 +1,15 @@
 ﻿using Data.Data.FATCA;
 using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.FATCA
 {
-    public partial class FATCAContext : DbContext
+    public partial class FATCAContext : TenatDBContext
     {
-        public FATCAContext()
-        {
-        }
-
-        public FATCAContext(DbContextOptions<FATCAContext> options)
-            : base(options)
+      
+        public FATCAContext(DbContextOptions<FATCAContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -29,14 +27,6 @@ namespace Data.Data.FATCA
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseOracle("User Id=ART;Password=ART1;Data Source=192.168.1.70:1521/orcl;");
-//            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +40,8 @@ namespace Data.Data.FATCA
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnFATCAModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
             //OnModelCreatingPartial(modelBuilder);
         }
 

@@ -34,6 +34,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
 using Data.Setting;
 using Data.Services;
+using Data.Services.Tenat;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -45,6 +46,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
+            TenantSettings tenatSittings = new();
+            config.GetSection(nameof(TenantSettings)).Bind(tenatSittings);
 
             void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {
@@ -65,8 +68,25 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
             }
+            void tenatContextBuilder(DbContextOptionsBuilder options)
+            {
+                int commandTimeOut = tenatSittings.Defaults.CommandTimeOut==null?120: tenatSittings.Defaults.CommandTimeOut;
+                _ = tenatSittings.Defaults.DBProvider switch
+                {
+                    DbTypes.SqlServer => options.UseSqlServer(
+                        x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                        ),
+                    DbTypes.Oracle => options.UseOracle(
+                        x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                        ),
+                    DbTypes.MySql => options.UseMySQL(
+                    x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                    ),
+                    _ => throw new Exception($"Unsupported provider: {dbType}")
+                };
+            }
 
-            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            _ = services.AddDbContext<AuthContext>(opt => tenatContextBuilder(opt));
 
 
             if (modulesToApply is null)
@@ -79,84 +99,72 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
                 //_ = services.AddDbContext<SEGFCFKCContext>(opt => contextBuilder(opt, FCFKCContextConnection));
-                _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<SegmentationContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("GOAML"))
             {
-                string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
-                _ = services.AddDbContext<GoAmlContext>(opt => contextBuilder(opt, GOAMLContextConnection));
-                _ = services.AddDbContext<ArtGoAmlContext>(opt => contextBuilder(opt, connectionString));
+             
+                _ = services.AddDbContext<GoAmlContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<ArtGoAmlContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("FTI"))
             {
-                string TIZONEContextConnection = config.GetConnectionString("TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
-                _ = services.AddDbContext<TIZONE2Context>(opt => contextBuilder(opt, TIZONEContextConnection));
-                _ = services.AddDbContext<FTIContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<TIZONE2Context>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<FTIContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("DGAML"))
             {
-                string DGAMLCOREContextConnection = config.GetConnectionString("DGAMLCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-                string DGAMLACContextConnection = config.GetConnectionString("DGAMLACContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLACContextConnection' not found.");
-                _ = services.AddDbContext<DGAMLCOREContext>(opt => contextBuilder(opt, DGAMLCOREContextConnection));
-                _ = services.AddDbContext<DGAMLACContext>(opt => contextBuilder(opt, DGAMLACContextConnection));
-                _ = services.AddDbContext<ArtDgAmlContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGAMLCOREContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<DGAMLACContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<ArtDgAmlContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("ECM"))
             {
-                string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
-                _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
-                _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGECMContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<EcmContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("FATCA"))
             {
-                string DGFATCAContextConnection = config.GetConnectionString("DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
-                _ = services.AddDbContext<DGFATCAContext>(opt => contextBuilder(opt, DGFATCAContextConnection));
-                _ = services.AddDbContext<FATCAContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGFATCAContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<FATCAContext>(opt => tenatContextBuilder(opt));
             }
             if (modulesToApply.Contains("CRP"))
             {
-                _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<CRPContext>(opt => tenatContextBuilder(opt));
             }
             if (modulesToApply.Contains("TRADE_BASE"))
             {
-                _ = services.AddDbContext<TRADE_BASEContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<TRADE_BASEContext>(opt => tenatContextBuilder(opt));
             }
             if (modulesToApply.Contains("SASAML"))
             {
-                string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
-                _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
-                _ = services.AddDbContext<FCFKC>(opt => contextBuilder(opt, FCFKCContextConnection));
-                _ = services.AddDbContext<SasAmlContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<fcf71Context>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<FCFKC>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<SasAmlContext>(opt => tenatContextBuilder(opt));
             }
             if (modulesToApply.Contains("DGAUDIT"))
             {
-
-                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
-                string DGMGMTAUDContextConnection = config.GetConnectionString("DGMGMTAUDContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTAUDContextConnection' not found.");
-                _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
-                _ = services.AddDbContext<DGMGMTAUDContext>(opt => contextBuilder(opt, DGMGMTAUDContextConnection));
-                _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGMGMTContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<DGMGMTAUDContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<ArtAuditContext>(opt => tenatContextBuilder(opt));
             }
 
             if (modulesToApply.Contains("AMLANALYSIS"))
             {
-                string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
-                _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
-                _ = services.AddDbContext<FCFKCAmlAnalysisContext>(opt => contextBuilder(opt, FCFKCContextConnection));
-                _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<fcf71Context>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<FCFKCAmlAnalysisContext>(opt => tenatContextBuilder(opt));
+                _ = services.AddDbContext<AmlAnalysisContext>(opt => tenatContextBuilder(opt));
                 _ = services.AddAmlAnalysis();
             }
 
             if (modulesToApply.Contains("KYC"))
             {
-                _ = services.AddDbContext<KYCContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<KYCContext>(opt => tenatContextBuilder(opt));
             }
 
             // if (modulesToApply.Contains("EXPORT_SCHEDULAR"))
@@ -246,6 +254,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         }
         public static IServiceCollection AddTenancy(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.AddSingleton<TenantConstants>();
             services.AddScoped<ITenantService, TenantService>();
             services.Configure<TenantSettings>(configuration.GetSection(nameof(TenantSettings)));
 

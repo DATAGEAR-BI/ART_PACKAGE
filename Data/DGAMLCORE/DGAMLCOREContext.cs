@@ -1,16 +1,16 @@
-﻿using Data.ModelCreatingStrategies;
+﻿using Data.Data;
+using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.DGAMLCORE
 {
-    public partial class DGAMLCOREContext : DbContext
+    public partial class DGAMLCOREContext : TenatDBContext
     {
-        public DGAMLCOREContext()
-        {
-        }
 
-        public DGAMLCOREContext(DbContextOptions<DGAMLCOREContext> options)
-            : base(options)
+
+        public DGAMLCOREContext(DbContextOptions<DGAMLCOREContext> options,ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -23,11 +23,17 @@ namespace Data.DGAMLCORE
 
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         //public virtual DbSet<AcRoutineParameter> AcRoutineParameters { get; set; } = null!;
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            contextBuilder(optionsBuilder, "DGAMLCOREContextConnection");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnDgAMLCOREModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+
         }
 
 

@@ -1,9 +1,10 @@
 ﻿using Data.ModelCreatingStrategies;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data.FTI
 {
-    public class FTIContext : DbContext
+    public class FTIContext : TenatDBContext
     {
         // FTI
         public virtual DbSet<ArtTiAcpostingsAccReport> ArtTiAcpostingsAccReports { get; set; } = null!;
@@ -35,7 +36,8 @@ namespace Data.Data.FTI
         public virtual DbSet<ArtTiFullJournalReport> ArtTiFullJournalReports { get; set; } = null!;
         public virtual DbSet<ArtTiEcmWorkflowProgReportOld> ArtTiEcmWorkflowProgReportOlds { get; set; } = null!;
         public virtual DbSet<ArtTiEcmAuditReport> ArtTiEcmAuditReports { get; set; } = null!;
-        public FTIContext(DbContextOptions<FTIContext> options) : base(options)
+        public FTIContext(DbContextOptions<FTIContext> options, ITenantService tenantService)
+      : base(options, tenantService)
         {
         }
 
@@ -43,6 +45,9 @@ namespace Data.Data.FTI
         {
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnFTIModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }
