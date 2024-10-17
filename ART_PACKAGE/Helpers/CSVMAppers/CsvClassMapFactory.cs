@@ -28,5 +28,17 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
 
             return new GenericCsvClassMapper<TModel>(reportsConfigResolver, _inculdedColumns);
         }
+        public ClassMap CreateInstance<TModel>()
+        {
+            Type modelType = typeof(TModel);
+            Type dictType = typeof(CustomReportRecord);
+            Type CRPConfig = typeof(ArtCrpConfig);
+            if (modelType == dictType)
+                return new CustomReportClassMapper(_inculdedColumns);
+            if (modelType == CRPConfig)
+                return new ArtCRPConfigMapper(_inculdedColumns);
+
+            return new GenericCsvClassMapper<TModel>( _inculdedColumns);
+        }
     }
 }

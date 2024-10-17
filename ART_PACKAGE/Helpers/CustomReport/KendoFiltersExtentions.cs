@@ -876,6 +876,10 @@ namespace ART_PACKAGE.Helpers.CustomReport
                     using (StreamWriter sw = new(stream, new UTF8Encoding(true)))
                     using (CsvWriter cw = new(sw, config))
                     {
+                        ClassMap mapperInstance = new CsvClassMapFactory(null).CreateInstance<T>();
+
+                        cw.Context.RegisterClassMap(mapperInstance);
+
                         sw.Write("");
                         if (calldata.Columns != null && calldata.Columns.Any())
                         {
