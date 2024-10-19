@@ -21,6 +21,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "AlertId", new GridColumnConfiguration { DisplayName = "Alert ID" } },
                 { "AlertedEntityNumber", new GridColumnConfiguration { DisplayName = "Alerted Entity Number" } }
             };
+            ReportTitle = "SAS NonStaff SLA Closed Level2 Report";
+            ReportDescription = "Presents all AML closed alerts which exceeded the threshold for closing alerts or add to case for non - staff customers";
         }
 
 

@@ -5,12 +5,12 @@ namespace Data.Data.SASAml
 {
     public partial class SlaAlertsExceeded20Day
     {
-        public decimal? AlertId { get; set; }
+        public long? AlertId { get; set; }
         public string? EntityNumber { get; set; }
         public string? EntityName { get; set; }
         public string? BranchNumber { get; set; }
         public string? BranchName { get; set; }
-        public decimal? LevelOfRisk { get; set; }
+        public string? LevelOfRisk { get; set; }
         public string? UserLevel1 { get; set; }
         public DateTime? AlertCreateDate { get; set; }
         public DateTime? RoutingDate { get; set; }
@@ -19,6 +19,6 @@ namespace Data.Data.SASAml
         public DateTime? AddToCaseDate { get; set; }
         public string? InvestigationDaysLevel2 { get; set; }
         public string? UserLevel3 { get; set; }
-        public decimal? TotalInvestigationDays { get; set; }
+        public string? TotalInvestigationDays { get; set; }
     }
 }

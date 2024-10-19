@@ -20,6 +20,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "InvestigationDays", new GridColumnConfiguration { DisplayName = "Investigation Days", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "LevelOfRisk", new GridColumnConfiguration { DisplayName = "Level Of Risk", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
             };
+            ReportTitle = "SAS NonStaff SLA Level1 Report";
+            ReportDescription = "Presents SLA Level1 NonStaff Violated Without Action in the table below";
         }
     }
 }

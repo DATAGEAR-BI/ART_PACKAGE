@@ -19,7 +19,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "LevelOfRisk", new GridColumnConfiguration { DisplayName = "Level Of Risk" } },
                 { "InvestigationDays", new GridColumnConfiguration { DisplayName = "Investigation Days" } },
             };
-            ReportTitle = "SAS AML Staff SLA Report";
+            ReportTitle = "SAS Staff SLA Level3 Report";
+            ReportDescription = "Presents all AML alerts which exceeded the threshold for closing cases or alerts for staff";
 
         }
     }

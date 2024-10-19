@@ -6,7 +6,7 @@ namespace Data.Data.SASAml
     public partial class SlaDailyClosedAlertsFromLevel2
     {
         public string? UserName { get; set; }
-        public decimal? AlertId { get; set; }
+        public long? AlertId { get; set; }
         public string? EntityNumber { get; set; }
         public string? EntityName { get; set; }
         public string? BranchNumber { get; set; }
@@ -14,6 +14,6 @@ namespace Data.Data.SASAml
         public DateTime? AssignedDate { get; set; }
         public string? AlertStatus { get; set; }
         public DateTime? LastActionDate { get; set; }
-        public decimal? LevelOfRisk { get; set; }
+        public string? LevelOfRisk { get; set; }
     }
 }

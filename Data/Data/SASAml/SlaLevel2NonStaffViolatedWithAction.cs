@@ -6,7 +6,7 @@ namespace Data.Data.SASAml
     public partial class SlaLevel2NonStaffViolatedWithAction
     {
         public string? UserName { get; set; }
-        public decimal? AlertId { get; set; }
+        public long? AlertId { get; set; }
         public string? AlertedEntityNumber { get; set; }
         public string? AlertedEntityName { get; set; }
         public string? BranchName { get; set; }
@@ -15,6 +15,6 @@ namespace Data.Data.SASAml
         public DateTime? LastActionDate { get; set; }
         public DateTime? AssignedDate { get; set; }
         public string? InvestigationDays { get; set; }
-        public decimal? LevelOfRisk { get; set; }
+        public string? LevelOfRisk { get; set; }
     }
 }

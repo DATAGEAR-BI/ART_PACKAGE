@@ -4224,15 +4224,15 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_ALERTS_EXCEEDED_20_DAYS");
 
                 entity.Property(e => e.AddToCaseDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ADD_TO_CASE_DATE");
 
                 entity.Property(e => e.AlertCreateDate)
-                    .HasColumnType("DATE")
+                   .HasPrecision(6)
                     .HasColumnName("ALERT_CREATE_DATE");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.BranchName)
@@ -4264,15 +4264,16 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS_LEVEL2");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                     .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.RoutingDate)
-                    .HasColumnType("DATE")
+                   .HasPrecision(6)
                     .HasColumnName("ROUTING_DATE");
 
                 entity.Property(e => e.TotalInvestigationDays)
-                    .HasColumnType("NUMBER")
+                    .IsUnicode(false)
                     .HasColumnName("TOTAL_INVESTIGATION_DAYS");
 
                 entity.Property(e => e.UserLevel1)
@@ -4298,15 +4299,15 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_CLOSED_ALERTS_EXCEEDED_45_DAYS");
 
                 entity.Property(e => e.AddToCaseDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ADD_TO_CASE_DATE");
 
                 entity.Property(e => e.AlertCreateDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ALERT_CREATE_DATE");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.BranchName)
@@ -4346,15 +4347,16 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS_LEVEL3");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                   .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.RoutingDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ROUTING_DATE");
 
                 entity.Property(e => e.TotalInvestigationDays)
-                    .HasColumnType("NUMBER")
+                    .IsUnicode(false)
                     .HasColumnName("TOTAL_INVESTIGATION_DAYS");
 
                 entity.Property(e => e.UserLevel1)
@@ -4377,10 +4379,10 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("SLA_Daily_Closed_Alerts_FROM_LEVEL2");
+                entity.ToView("SLA_DAILY_CLOSED_ALERTS_LEVEL2");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertStatus)
@@ -4390,7 +4392,7 @@ namespace Data.ModelCreatingStrategies
                     .IsFixedLength();
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4414,11 +4416,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ENTITY_NUMBER");
 
                 entity.Property(e => e.LastActionDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("LAST_ACTION_DATE");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.UserName)
@@ -4434,7 +4437,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_LEVEL1_NON_STAFF_VIOLATED_WITH_ACTION");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertedEntityName)
@@ -4448,7 +4451,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4466,11 +4469,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.RoutingDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ROUTING_DATE");
 
                 entity.Property(e => e.UserName)
@@ -4486,7 +4490,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_LEVEL1_NON_STAFF_VIOLATED_WITHOUT_ACTION");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertedEntityName)
@@ -4500,7 +4504,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4518,7 +4522,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.UserName)
@@ -4534,7 +4539,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_LEVEL2_NON_STAFF_VIOLATED_WITH_ACTION");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertStatus)
@@ -4554,7 +4559,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4572,11 +4577,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.LastActionDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("LAST_ACTION_DATE");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                     .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.UserName)
@@ -4592,7 +4598,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_LEVEL2_NON_STAFF_VIOLATED_WITHOUT_ACTION");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertStatus)
@@ -4612,7 +4618,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                   .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4630,7 +4636,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.UserName)
@@ -4646,7 +4653,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_LEVEL3_NON_STAFF_VIOLATED_WITHOUT_ACTION");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertedEntityName)
@@ -4660,7 +4667,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AssignedDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ASSIGNED_DATE");
 
                 entity.Property(e => e.BranchName)
@@ -4686,7 +4693,8 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.UserName)
@@ -4702,11 +4710,11 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("SLA_MED_HIGH_CLOSED_ALERTS_EXCEEDED_10_DAYS");
 
                 entity.Property(e => e.AlertCreateDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ALERT_CREATE_DATE");
 
                 entity.Property(e => e.AlertId)
-                    .HasColumnType("NUMBER(38)")
+                    .HasPrecision(12)
                     .HasColumnName("ALERT_ID");
 
                 entity.Property(e => e.AlertStatus)
@@ -4744,19 +4752,20 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("INVESTIGATION_DAYS_LEVEL2");
 
                 entity.Property(e => e.LastActionDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("LAST_ACTION_DATE");
 
                 entity.Property(e => e.LevelOfRisk)
-                    .HasColumnType("NUMBER(38)")
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
                     .HasColumnName("LEVEL_OF_RISK");
 
                 entity.Property(e => e.RoutingDate)
-                    .HasColumnType("DATE")
+                    .HasPrecision(6)
                     .HasColumnName("ROUTING_DATE");
 
                 entity.Property(e => e.TotalInvestigationDays)
-                    .HasColumnType("NUMBER")
+                    .IsUnicode(false)
                     .HasColumnName("TOTAL_INVESTIGATION_DAYS");
 
                 entity.Property(e => e.UserLevel1)

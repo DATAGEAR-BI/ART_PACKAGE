@@ -26,6 +26,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "InvestigationDaysLevel2", new GridColumnConfiguration { DisplayName = "Investigation Days Level 2", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "TotalInvestigationDays", new GridColumnConfiguration { DisplayName = "Total Investigation Days", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
             };
+            ReportTitle = "SLA MedHigh Closed Alerts Exceeded 10 Days Report";
+        ReportDescription="Presents SLA MedHigh Closed Alerts Exceeded 10 Days in the table below";
         }
     }
 }
