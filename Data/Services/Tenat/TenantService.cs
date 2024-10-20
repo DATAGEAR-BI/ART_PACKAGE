@@ -11,6 +11,7 @@ public class TenantService : ITenantService
     private readonly TenantSettings _tenantSettings;
     private HttpContext? _httpContext;
     private Tenant? _currentTenant;
+    private ModulesConnections? _currentConnections;
     private string tenantId;
     public TenantService(IHttpContextAccessor contextAccessor, IOptions<TenantSettings> tenantSettings)
     {
@@ -21,13 +22,14 @@ public class TenantService : ITenantService
         {
             if(_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))
             {
+                SetCurrentConnections(tenantId);
                 //tenantConstants.SetID(tenantId);
-                SetCurrentTenant(tenantId!);
+                //SetCurrentTenant(tenantId!);
             }
-            else
+            /*else
             {
                 throw new Exception("No tenant provided!");
-            }
+            }*/
         }
         /*else
         {
@@ -40,10 +42,14 @@ public class TenantService : ITenantService
     {
         try
         {
-            var ModulesConnectionType = typeof(ModulesConnections);
-            var properties = ModulesConnectionType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var connectionString = properties.FirstOrDefault(s => s.Name == module)
-                .GetValue(_currentTenant.ModulesConnections)?.ToString()?? throw new InvalidOperationException($@"Connection string '{module}' not found.");
+            
+                var ModulesConnectionType = typeof(ModulesConnections);
+                var properties = ModulesConnectionType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                string connectionString = properties.FirstOrDefault(s => s.Name == module)
+                    .GetValue(_currentConnections)?.ToString() ?? throw new InvalidOperationException($@"Connection string '{module}' not found.");
+            
+          
+            
             return connectionString;
         }
         catch (Exception)
@@ -73,6 +79,10 @@ public class TenantService : ITenantService
     {
         return _currentTenant;
     }
+    public ModulesConnections? GetCurrentConnections()
+    {
+        return _currentConnections;
+    }
 
     public string? GetDatabaseProvider()
     {
@@ -92,6 +102,26 @@ public class TenantService : ITenantService
         }
 
     }
+    private void SetCurrentConnections(string tenantId)
+    {
+
+        _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.TId == tenantId);
+        if (_currentTenant != null)
+        {
+            _currentConnections = _currentTenant.ModulesConnections;
+        }
+        else if (_tenantSettings.Defaults!.Connections!=null)
+        {
+            _currentConnections = _tenantSettings.Defaults.Connections;
+        }else
+        {
+
+            throw new Exception("Couldn't spacify connections");
+        }
+            
+
+
+    }
     public void ManiualSetCurrentTenant(string tenantId)
     {
         _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.TId == tenantId);
@@ -99,6 +129,23 @@ public class TenantService : ITenantService
         if (_currentTenant is null)
         {
             throw new Exception("Invalid tenant ID");
+        }
+
+    }
+    public void ManiualSetCurrentConnections(string tenantId)
+    {
+        _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.TId == tenantId);
+        if (_currentTenant != null)
+        {
+            _currentConnections = _currentTenant.ModulesConnections;
+        }
+        else if (_tenantSettings.Defaults!.Connections != null)
+        {
+            _currentConnections = _tenantSettings.Defaults.Connections;
+        }else
+        {
+
+            throw new Exception("Couldn't spacify connections");
         }
 
     }

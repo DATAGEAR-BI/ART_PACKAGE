@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 public class AuthContext : IdentityDbContext<AppUser>
 {
 
-    public string TenantId { get; set; }
+    //public string TenantId { get; set; }
     private readonly ITenantService _tenantService;
 
 
@@ -31,16 +31,20 @@ public class AuthContext : IdentityDbContext<AppUser>
     {
 
         _tenantService = tenantService;
-        TenantId = _tenantService.GetCurrentTenant()?.TId;
+        //TenantId = _tenantService.GetCurrentTenant()?.TId;
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         contextBuilder(optionsBuilder);
     }
-
+    public void ChangeConnectionString(string tenantId)
+    {
+        var connectionString = _tenantService.GetConnectionString();
+        Database.GetDbConnection().ConnectionString = connectionString;
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
@@ -96,7 +100,7 @@ public class AuthContext : IdentityDbContext<AppUser>
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
 
-
+        base.OnModelCreating(modelBuilder);
 
     }
     protected void contextBuilder(DbContextOptionsBuilder options, string conn = "AuthContextConnection")
@@ -125,7 +129,7 @@ public class AuthContext : IdentityDbContext<AppUser>
             };
         }
     }
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    /*public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
         {
@@ -133,6 +137,6 @@ public class AuthContext : IdentityDbContext<AppUser>
         }
 
         return base.SaveChangesAsync(cancellationToken);
-    }
+    }*/
 
 }

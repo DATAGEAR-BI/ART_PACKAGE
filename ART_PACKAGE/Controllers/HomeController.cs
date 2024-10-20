@@ -18,13 +18,13 @@ namespace ART_PACKAGE.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDbService _dbSrv;
-        private readonly EcmContext _db;
-        private readonly SasAmlContext _dbAml;
+        private EcmContext _db;
+        private SasAmlContext _dbAml;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
-        private readonly ArtDgAmlContext _dgaml;
+        private ArtDgAmlContext _dgaml;
         private readonly List<string>? modules;
-        private readonly ArtGoAmlContext _dbGoAml;
+        private  ArtGoAmlContext _dbGoAml;
 
         //private readonly IBaseRepo<FCFKCAmlAnalysisContext, FskAlert> repo;
 
@@ -39,30 +39,30 @@ namespace ART_PACKAGE.Controllers
             modules = _configuration.GetSection("Modules").Get<List<string>>();
             if (modules is not null)
             {
-                if (modules.Contains("SASAML"))
+               /* if (modules.Contains("SASAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
                     _dbAml = amlService;
-                }
-                if (modules.Contains("ECM"))
+                }*/
+                /*if (modules.Contains("ECM"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
                     _db = ecmService;
-                }
-                if (modules.Contains("DGAML"))
+                }*/
+                /*if (modules.Contains("DGAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
                     _dgaml = dgamlService;
-                }
-                if (modules.Contains("GOAML"))
+                }*/
+               /* if (modules.Contains("GOAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     ArtGoAmlContext goamlService = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
                     _dbGoAml = goamlService;
-                }
+                }*/
 
             }
 
@@ -120,7 +120,11 @@ namespace ART_PACKAGE.Controllers
 */
         public IActionResult getChartsData()
         {
-
+            
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmService = scope.ServiceProvider.GetRequiredService<EcmContext>();
+                _db = ecmService;
+            
             var dateData = _db.ArtHomeCasesDates.ToList().GroupBy(x => x.Year).Select(x => new
             {
                 year = x.Key.ToString(),
@@ -151,6 +155,10 @@ namespace ART_PACKAGE.Controllers
         {
             if (modules.Contains("SASAML"))
             {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    SasAmlContext amlService = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                    _dbAml = amlService;
+                
                 var dateData = _dbAml.ArtHomeAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
                 {
                     year = x.Key.ToString(),
@@ -172,6 +180,9 @@ namespace ART_PACKAGE.Controllers
             }
             else
             {
+                IServiceScope scope = _serviceScopeFactory.CreateScope();
+                ArtDgAmlContext dgamlService = scope.ServiceProvider.GetRequiredService<ArtDgAmlContext>();
+                _dgaml = dgamlService;
                 var dateData = _dgaml.ArtHomeDgamlAlertsPerDates.ToList().GroupBy(x => x.Year).Select(x => new
                 {
                     year = x.Key.ToString(),
@@ -196,7 +207,9 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetGOAmlChartsData()
         {
-
+            IServiceScope scope = _serviceScopeFactory.CreateScope();
+            ArtGoAmlContext goamlService = scope.ServiceProvider.GetRequiredService<ArtGoAmlContext>();
+            _dbGoAml = goamlService;
             var dateData = _dbGoAml.ArtHomeGoamlReportsDates.ToList().GroupBy(x => x.Year).Select(x => new
             {
                 year = x.Key.ToString(),

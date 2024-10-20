@@ -14,12 +14,12 @@ namespace Data.Data
 {
     public class TenatDBContext :DbContext
     {
-        public string TenantId { get; set; }
+        //public string TenantId { get; set; }
         private readonly ITenantService _tenantService;
         public TenatDBContext(DbContextOptions options, ITenantService tenantService) : base(options)
         {
             _tenantService = tenantService;
-            TenantId = _tenantService.GetCurrentTenant()?.TId;
+            //TenantId = _tenantService.GetCurrentTenant()?.TId;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -58,7 +58,7 @@ namespace Data.Data
                 };
             }
         }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        /*public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
             {
@@ -66,6 +66,6 @@ namespace Data.Data
             }
 
             return base.SaveChangesAsync(cancellationToken);
-        }
+        }*/
     }
 }

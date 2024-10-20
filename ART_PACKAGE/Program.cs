@@ -39,6 +39,13 @@ builder.Services.AddTenancy(builder.Configuration);
 
 builder.Services.AddDbs(builder.Configuration);
 
+builder.Services.AddDistributedMemoryCache();
+/*builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});*/
 
 
 builder.Services.AddSignalR();
@@ -128,9 +135,9 @@ _recurringService.AddOrUpdate("clean-csv-directory", () =>
 WebApplication app = builder.Build();
 //var tenantConstant=serviceProvider.GetRequiredService<TenantConstants>();
 //tenantConstant.SetID("UG");
-app.ApplyModulesMigrations();
+//app.ApplyModulesMigrations();
 
-
+//app.UseSession();
 app.SeedModuleRoles();
 
 
@@ -145,8 +152,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-app.UseMiddleware<LogUserNameMiddleware>();
-app.UseAuthorization();
+//app.UseMiddleware<LogUserNameMiddleware>();
+//app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();

@@ -12,6 +12,7 @@ public interface ITenantService
     Tenant? GetCurrentTenant();
     List<string>? GetAllTenantsIDs();
     void ManiualSetCurrentTenant(string tenantId);
+    void ManiualSetCurrentConnections(string tenantId);
 
 
 }

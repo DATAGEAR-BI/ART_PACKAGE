@@ -3,6 +3,7 @@ using Data.Services;
 using Data.Services.Tenat;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -105,7 +106,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //}*/
         }
 
-        public static async void SeedModuleRoles(this WebApplication app)
+        public static async void SeedModuleRoleso(this WebApplication app)
         {
 
             IEnumerable<Type> types = AppDomain.CurrentDomain
@@ -153,7 +154,60 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
         }
 
+        public static async Task SeedModuleRoles(this WebApplication app)
+        {
+            var modulesNameSpaces = app.Configuration
+                .GetSection("Modules")
+                .Get<List<string>>()
+                .Select(s => $"ART_PACKAGE.Controllers.{s}")
+                .ToList();
 
+            IEnumerable<Type> types = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+
+            var currentModuleTypes = types
+                .Where(s => modulesNameSpaces.Contains(s.Namespace))
+                .Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
+
+            using var scope = app.Services.CreateScope();
+            var tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
+            var tenants = tenantService.GetAllTenantsIDs();
+
+            foreach (var tenantId in tenants)
+            {
+                tenantService.ManiualSetCurrentConnections(tenantId);
+
+                using var tenantScope = app.Services.CreateScope();
+                var hh= tenantScope.ServiceProvider.GetRequiredService<ITenantService>();
+                hh.ManiualSetCurrentConnections(tenantId);
+                var authc = tenantScope.ServiceProvider.GetRequiredService<AuthContext>();
+                authc.Database.SetConnectionString(hh.GetConnectionString());
+                var s = authc.Users;
+                //authc.ChangeConnectionString(tenantId);
+                //var connectionstr_ = authc.Database.GetDbConnection();
+                var roleManager = tenantScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = tenantScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+              
+                var tenantRoles = roleManager.Roles.Select(r => r.Name).ToList();
+                var adminUser = await userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM");
+
+                if (adminUser == null || modulesNameSpaces == null || modulesNameSpaces.Count == 0)
+                    continue;
+
+                var modulesRolesToAdd = currentModuleTypes.Except(tenantRoles).ToList();
+
+                foreach (var role in modulesRolesToAdd)
+                {
+                    var roleToAdd = new IdentityRole(role);
+                    await roleManager.CreateAsync(roleToAdd);
+                }
+
+                await userManager.AddToRolesAsync(adminUser, tenantRoles.Union(modulesRolesToAdd));
+            }
+        }
     }
 
 
