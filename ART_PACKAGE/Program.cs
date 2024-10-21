@@ -78,7 +78,7 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddEntityFrameworkStores<AuthContext>();
 
 var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
-var cerPass = builder.Configuration.GetSection("DgUserManagementAuth").GetSection("CertificatePassword").Value;
+var cerPass = builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth:CertificatePassword").Value;
 var certificate = Certificate.LoadCertificate(cerPath, cerPass);
 
 builder.Services.AddHttpClient("CertificateClient")
@@ -87,7 +87,7 @@ builder.Services.AddHttpClient("CertificateClient")
 builder.Services.ConfigureApplicationCookie(opt =>
  {
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
-     if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+     if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") !=null) opt.LoginPath = new PathString("/Account/DgUMAuth/login");
      else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
  });

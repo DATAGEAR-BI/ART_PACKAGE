@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Areas.Identity.Data;
 public class AuthContext : IdentityDbContext<AppUser>
 {
 
-    //public string TenantId { get; set; }
+    public string TenantId { get; set; }
     private readonly ITenantService _tenantService;
 
 
@@ -31,12 +31,12 @@ public class AuthContext : IdentityDbContext<AppUser>
     {
 
         _tenantService = tenantService;
-        //TenantId = _tenantService.GetCurrentTenant()?.TId;
+        TenantId = _tenantService.GetCurrentTenant()?.TId;
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         contextBuilder(optionsBuilder);
-    }
+    }*/
     public void ChangeConnectionString(string tenantId)
     {
         var connectionString = _tenantService.GetConnectionString();
@@ -129,7 +129,7 @@ public class AuthContext : IdentityDbContext<AppUser>
             };
         }
     }
-    /*public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
         {
@@ -137,6 +137,6 @@ public class AuthContext : IdentityDbContext<AppUser>
         }
 
         return base.SaveChangesAsync(cancellationToken);
-    }*/
+    }
 
 }

@@ -32,7 +32,7 @@ namespace Data.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        protected void contextBuilder(DbContextOptionsBuilder options, string conn= "AuthContextConnection")
+        protected void contextBuilder(DbContextOptionsBuilder options, string conn= "ARTContextConnection")
         {
 
             int commandTimeOut = _tenantService.GetCommendTimeOut()??120;

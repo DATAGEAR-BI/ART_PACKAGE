@@ -106,55 +106,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //}*/
         }
 
-        public static async void SeedModuleRoleso(this WebApplication app)
-        {
-
-            IEnumerable<Type> types = AppDomain.CurrentDomain
-                        .GetAssemblies()
-                        .SelectMany(a => a.GetTypes())
-                        .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
-            List<string>? modulesNameSpaces = app.Configuration.GetSection("Modules").Get<List<string>>().Select(s=> $"ART_PACKAGE.Controllers.{s}").ToList();
-            var curentModulesTyes=types.Where(s=>modulesNameSpaces.Contains(s.Namespace)).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
-            var httpContextAccessor = app.Services.CreateScope().ServiceProvider.GetRequiredService<IHttpContextAccessor>();
-            var tenantConstant = app.Services.CreateScope().ServiceProvider.GetRequiredService<TenantConstants>();
-           
-            ITenantService? _tn = app.Services.CreateScope().ServiceProvider.GetService<ITenantService>();
-
-            List<string> tenants= _tn.GetAllTenantsIDs();
-            foreach (var tenantId in tenants)
-            {
-                _tn.ManiualSetCurrentTenant(tenantId);
-                //if (httpContextAccessor.HttpContext != null)
-                //{
-                //    httpContextAccessor.HttpContext.Request.Headers["tenant"] = tenantId;
-
-                RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
-                    var tenantRoles = rm.Roles.Select(s=>s.Name);
-             
-                    UserManager<AppUser>? um = app.Services.CreateScope().ServiceProvider.GetService<UserManager<AppUser>>();
-                    var adminUser = um.Users.Where(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM").FirstOrDefault();
-                    var userRoles=await um.GetRolesAsync(adminUser);
-
-                    if (modulesNameSpaces is null || modulesNameSpaces.Count == 0)
-                        return;
-                    List<string> modulesRolesShouldAdded = curentModulesTyes.Except(tenantRoles).ToList();
-
-                    foreach (var role in modulesRolesShouldAdded)
-                    {
-                        IdentityRole roleToadd = new(role);
-                        _ = await rm.CreateAsync(roleToadd);
-                    }
-
-                   _=await um.AddToRolesAsync(adminUser, tenantRoles.Union(modulesRolesShouldAdded));
-
-          
-                //}
-
-            }
-
-        }
-
-        public static async Task SeedModuleRoles(this WebApplication app)
+       
+        public static async Task SeedModuleRolesWithTenant(this WebApplication app)
         {
             var modulesNameSpaces = app.Configuration
                 .GetSection("Modules")
@@ -207,6 +160,49 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
                 await userManager.AddToRolesAsync(adminUser, tenantRoles.Union(modulesRolesToAdd));
             }
+        }
+        public static async Task SeedModuleRoles(this WebApplication app)
+        {
+            var modulesNameSpaces = app.Configuration
+                .GetSection("Modules")
+                .Get<List<string>>()
+                .Select(s => $"ART_PACKAGE.Controllers.{s}")
+                .ToList();
+
+            IEnumerable<Type> types = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+
+            var currentModuleTypes = types
+                .Where(s => modulesNameSpaces.Contains(s.Namespace))
+                .Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
+
+        
+
+           
+                using var scope = app.Services.CreateScope();
+
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                var allRoles = roleManager.Roles.Select(r => r.Name).ToList();
+                var adminUser = await userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM");
+
+            if (adminUser == null || modulesNameSpaces == null || modulesNameSpaces.Count == 0)
+                return;
+
+            var modulesRolesToAdd = currentModuleTypes.Except(allRoles).ToList();
+
+                foreach (var role in modulesRolesToAdd)
+                {
+                    var roleToAdd = new IdentityRole(role);
+                    await roleManager.CreateAsync(roleToAdd);
+                }
+
+                await userManager.AddToRolesAsync(adminUser, allRoles.Union(modulesRolesToAdd));
+            
         }
     }
 

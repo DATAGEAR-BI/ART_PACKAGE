@@ -1,8 +1,9 @@
 ﻿namespace Data.Setting
 {
-    public class ModulesConnections
+    public partial class ModulesConnections
     {
         public string? AuthContextConnection { get; set; }
+        public string? ARTContextConnection { get; set; }
         public string? DGECMContextConnection { get; set; }
         public string? FCFCOREContextConnection { get; set; }
         public string? FCFKCContextConnection { get; set; }

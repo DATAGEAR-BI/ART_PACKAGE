@@ -86,7 +86,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 };
             }
 
-            _ = services.AddDbContext<AuthContext>(opt => tenatContextBuilder(opt));
+            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
 
 
             if (modulesToApply is null)

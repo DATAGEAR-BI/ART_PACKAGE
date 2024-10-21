@@ -31,14 +31,14 @@ public class TenantService : ITenantService
                 throw new Exception("No tenant provided!");
             }*/
         }
-        /*else
+        else
         {
-            SetCurrentTenant(tenantConstants.GetID()!);
-        }*/
+            SetCurrentConnections();
+        }
 
     }
 
-    public string? GetConnectionString(string? module= "AuthContextConnection")
+    public string? GetConnectionString(string? module= "ARTContextConnection")
     {
         try
         {
@@ -58,7 +58,7 @@ public class TenantService : ITenantService
             throw new Exception("No tenant provided!");
         }
     }
-    public string? GetTenantConnectionString(string tenantID, string? module = "AuthContextConnection")
+    public string? GetTenantConnectionString(string tenantID, string? module = "ARTContextConnection")
     {
         try
         {
@@ -102,7 +102,7 @@ public class TenantService : ITenantService
         }
 
     }
-    private void SetCurrentConnections(string tenantId)
+    private void SetCurrentConnections(string? tenantId="")
     {
 
         _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.TId == tenantId);

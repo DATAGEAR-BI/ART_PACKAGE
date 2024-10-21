@@ -6,8 +6,8 @@ public interface ITenantService
 {
     string? GetDatabaseProvider();
     int? GetCommendTimeOut();
-    string? GetConnectionString(string? module = "AuthContextConnection");
-    string? GetTenantConnectionString(string tenantID,string? module = "AuthContextConnection" );
+    string? GetConnectionString(string? module = "ARTContextConnection");
+    string? GetTenantConnectionString(string tenantID,string? module = "ARTContextConnection");
 
     Tenant? GetCurrentTenant();
     List<string>? GetAllTenantsIDs();

@@ -80,6 +80,7 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                         IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
                         IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
 
+
                         string? email = info.UserLoginInfo.ProviderKey;
                         _logger.LogWarning("checking for user External Login");
                         _logger.LogWarning("User Roles : ({roles})", string.Join(",", artRoles.Select(x => x.Name)));
