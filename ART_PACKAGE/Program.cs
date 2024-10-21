@@ -6,6 +6,7 @@ using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.EmailService;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
@@ -21,6 +22,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 
     EnvironmentName = "Development",
 });
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddDbs(builder.Configuration);
 builder.Services.AddSignalR();
