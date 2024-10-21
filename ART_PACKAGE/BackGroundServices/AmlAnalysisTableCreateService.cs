@@ -7,7 +7,7 @@ namespace ART_PACKAGE.BackGroundServices
         private readonly ILogger<AmlAnalysisWatcher> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly TimeOnly startTime = TimeOnly.FromDateTime(new DateTime(2023, 1, 1, 00, 0, 0, 0));
-        private readonly TimeOnly endTime = TimeOnly.FromDateTime(new DateTime(2023, 1, 1, 01, 0, 0, 0));
+        private readonly TimeOnly endTime = TimeOnly.FromDateTime(new DateTime(2025, 1, 1, 17, 0, 0, 0));
         public AmlAnalysisTableCreateService(ILogger<AmlAnalysisWatcher> logger, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
@@ -17,7 +17,8 @@ namespace ART_PACKAGE.BackGroundServices
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
 
-            using PeriodicTimer timer = new(TimeSpan.FromMinutes(10));
+            //using PeriodicTimer timer = new(TimeSpan.FromMinutes(10));
+            using PeriodicTimer timer = new(TimeSpan.FromSeconds(10));
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {

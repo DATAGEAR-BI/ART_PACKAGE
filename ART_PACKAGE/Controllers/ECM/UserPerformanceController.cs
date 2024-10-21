@@ -46,6 +46,11 @@ namespace ART_PACKAGE.Controllers.ECM
                     {"CaseTypeCd".ToLower()              , _dropSrv.GetCaseTypeDropDown()    .ToDynamicList()     },
                     {"CaseStatus".ToLower()             , _dropSrv.GetUserCaseStatusDropDown()    .ToDynamicList()     },
                     {"Priority".ToLower()               ,  _dropSrv.GetPriorityDropDown()     .ToDynamicList()     },
+                    {"Action".ToLower()               ,  _dropSrv.GetUserPerformenceActionDropDown()     .ToDynamicList()     },
+                    {"ActionUser".ToLower()               ,  _dropSrv.GetUserPerformenceActionUserDropDown()     .ToDynamicList()     },
+                    {"LockedBy".ToLower()               ,  _dropSrv.GetUserPerformenceLockedByDropDown()     .ToDynamicList()     },
+                    {"UpdateUserId".ToLower()               ,  _dropSrv.GetUserPerformenceUpdateUserDropDown()     .ToDynamicList()     },
+
 
                 };
                 ColumnsToSkip = ReportsConfig.CONFIG[nameof(UserPerformanceController).ToLower()].SkipList;

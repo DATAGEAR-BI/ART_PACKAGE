@@ -1,5 +1,6 @@
 ﻿using Data.Audit.DGMGMT;
 using Data.Audit.DGMGMT_AUD;
+using Data.Data.ECM;
 using Data.DGAML;
 using Data.DGECM;
 using Data.FCFCORE;
@@ -43,7 +44,11 @@ namespace ART_PACKAGE.Helpers.DBService
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+
+                IServiceScope ecmScope = _serviceScopeFactory.CreateScope();
+                EcmContext ecmDbService = ecmScope.ServiceProvider.GetRequiredService<EcmContext>();
                 ECM = ecmService;
+                EcmDb = ecmDbService;
             }
             if (modules.Contains("DGAUDIT"))
             {
@@ -74,5 +79,6 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGMGMTContext DGMGMT { get; }
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
+        public EcmContext EcmDb { get; }
     }
 }

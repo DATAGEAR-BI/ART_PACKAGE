@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.DropDown;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
@@ -8,6 +9,7 @@ using Data.Data.ECM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.ECM
 {
@@ -21,9 +23,10 @@ namespace ART_PACKAGE.Controllers.ECM
         private readonly IConfiguration _config;
         private readonly string dbType;
 
+        private readonly IDropDownService _dropSrv;
 
 
-        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
+        public UserPerformPerActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config, IDropDownService dropSrv)
         {
             _env = env;
             _cache = cache;
@@ -31,11 +34,14 @@ namespace ART_PACKAGE.Controllers.ECM
             this.context = context;
             _config = config;
             dbType = _config.GetValue<string>("dbType").ToUpper();
+            _dropSrv = dropSrv;
+
         }
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
             IEnumerable<ArtUserPerformPerAction> data = Enumerable.Empty<ArtUserPerformPerAction>().AsQueryable();
+            Dictionary<string, List<dynamic>> DropDownColumn = null;
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
@@ -46,9 +52,14 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION, summaryParams.ToArray());
             }
+            DropDownColumn = new Dictionary<string, List<dynamic>>
+                {
+                    { "action".ToLower()              , _dropSrv.GetUserPerformenceActionDropDown()      .ToDynamicList()     },
+
+                };
 
 
-            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtUserPerformPerAction> Data = data.AsQueryable().CallData(para.req, DropDownColumn);
 
 
             var result = new

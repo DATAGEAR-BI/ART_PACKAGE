@@ -100,12 +100,19 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                     { "DurationsInSeconds", new DisplayNameAndFormat { DisplayName = "Durations In Seconds"}},
                     { "DurationsInMinutes", new DisplayNameAndFormat { DisplayName = "Durations In Minutes"}},
                     { "DurationsInHours", new DisplayNameAndFormat { DisplayName = "Durations In Hours"}},
-                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}}
+                    { "DurationsInDays", new DisplayNameAndFormat { DisplayName = "Durations In Days"}},
+                    { "CreateUserId", new DisplayNameAndFormat { DisplayName = "Create User Id"}},
+
             },
                 SkipList = new List<string>
             {
                     "CaseRk",
                 "ValidFromDate",
+                "TransactionDirection",
+                     "TransactionType",
+                     "TransactionAmount",
+                      "TransactionCurrency",
+                      "SwiftReference"
             }
             }
             },

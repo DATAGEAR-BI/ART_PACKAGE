@@ -100,6 +100,12 @@
         public List<string> GetDGCustomerIdentificationTypeDropDown();
         public List<string> GetDGCustomerTypeDropDown();
         public List<string> GetDGCreateUserIdDropDown();
+        public List<string> GetSystemPerformenceLockedByDropDown();
+        public List<string> GetSystemPerformenceCreateUserDropDown();
+        public List<string> GetUserPerformenceLockedByDropDown();
+        public List<string> GetUserPerformenceActionUserDropDown();
+        public List<string> GetUserPerformenceUpdateUserDropDown();
+        public List<string> GetUserPerformenceActionDropDown();
 
     }
 }

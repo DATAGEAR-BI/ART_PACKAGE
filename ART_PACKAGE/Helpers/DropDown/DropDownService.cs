@@ -691,5 +691,36 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<string> distinct_value = _dbSrv.DGAML.AcRoutineParameters.Where(x => !string.IsNullOrEmpty(x.ParmTypeDesc)).Select(x => x.ParmTypeDesc).Distinct().ToList();
             return distinct_value;
         }
+        public List<string> GetSystemPerformenceLockedByDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtSystemPerformances.Where(x => !string.IsNullOrEmpty(x.LockedBy)).Select(x => x.LockedBy).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetSystemPerformenceCreateUserDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtSystemPerformances.Where(x => !string.IsNullOrEmpty(x.CreateUserId)).Select(x => x.CreateUserId).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetUserPerformenceLockedByDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtUserPerformances.Where(x => !string.IsNullOrEmpty(x.LockedBy)).Select(x => x.LockedBy).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetUserPerformenceActionDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtUserPerformances.Where(x => !string.IsNullOrEmpty(x.Action)).Select(x => x.Action).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetUserPerformenceUpdateUserDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtUserPerformances.Where(x => !string.IsNullOrEmpty(x.UpdateUserId)).Select(x => x.UpdateUserId).Distinct().ToList();
+            return distinct_value;
+        }
+        public List<string> GetUserPerformenceActionUserDropDown()
+        {
+            List<string> distinct_value = _dbSrv.EcmDb.ArtUserPerformances.Where(x => !string.IsNullOrEmpty(x.ActionUser)).Select(x => x.ActionUser).Distinct().ToList();
+            return distinct_value;
+        }
+
     }
 }

@@ -42,3 +42,6 @@ body {
         transform: rotate(360deg);
     }
 }
+.k-grid td {
+    white-space: pre-wrap;
+}

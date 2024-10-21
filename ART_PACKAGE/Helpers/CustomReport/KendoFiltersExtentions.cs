@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
         private static readonly Dictionary<string, string> StringOp = new()
         {
-            { "eq"              , "{1} = '{0}'" },
+            { "eq"              , "{1}.ToLower() = '{0}'.ToLower()" },
             { "neq"             , "{1} <> '{0}'" },
             { "isnull"          , "{1} IS NULL" },
             { "isnotnull"       , "{1} IS NOT NULL" },
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         };
         private static readonly Dictionary<string, string> StringOpForC = new()
         {
-            { "eq"              , "{0}==\"{1}\"" },
+            { "eq"              , "{0}.ToLower()==\"{1}\".ToLower()" },
             { "neq"             , "{0}!=\"{1}\"" },
             { "isnull"          , "{0}== null" },
             { "isnotnull"       , "{0}!= null" },
@@ -257,7 +257,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                             else
                             {
                                 string value = ((JsonElement)i.value).ToObject<string>();
-                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value);
+                                query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value.ToLower());
 
                             }
                         }
