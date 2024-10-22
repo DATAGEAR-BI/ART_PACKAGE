@@ -1,4 +1,11 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using ART_PACKAGE.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Security.Claims;
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
 
 
 <header id="headingArea" class="main-header" style="position: fixed;width:100%; ">
@@ -20,11 +27,63 @@
         <a href="#" class="" style="color:white;" data-toggle="push-menu" role="button">
             <span class="glyphicon glyphicon-align-justify togela"></span>
         </a>
-     
-        <partial name="_LoginPartial" />
+        <div class="" style="width:auto;display:inline-block;align-self: center;float:right; margin-right:50px;" >
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var currentUser = await UserManager.FindByIdAsync(userId);
+                var userClaims = await UserManager.GetClaimsAsync(currentUser);
+                if (userClaims.Any(s => s.Type == "tenant_idz"))
+                {
+                    
+                
+
+                    var tenantIds = userClaims.FirstOrDefault(s => s.Type == "tenant_idz").Value.Split(',') ?? new string[0];
+               
+                    <select id="tenant-select" class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="width:auto;display:inline;" >
+                        @foreach (var tenantId in tenantIds)
+                        {
+                            bool isSelected = tenantId == User.FindFirst("tenant_id").Value;
+                            if (isSelected)
+                            {
+                                <option value="@tenantId" selected>@tenantId</option>
+
+                            }
+                            else
+                            {
+                                <option value="@tenantId">@tenantId</option>
+
+                            }
+                        }
+                    </select>
+                }
+            }
+
+
+            <partial name="_LoginPartial" />
+           
+        </div>
+       
     </nav>
 </header>
+<script>
+    $(document).on('change', '#tenant-select', function () {
+        var selectedTenant = $(this).val();
+        $.ajax({
+            url: '@Url.Action("UpdateTenantClaim", "Tenant")',
+            type: 'POST',
+            data: { tenantId: selectedTenant },
+            success: function (response) {
+                alert('Tenant updated successfully.  ' + response);
+                // Optionally refresh the page or update UI elements.
+            },
+            error: function (xhr, status, error) {
+                alert('Failed to update tenant.');
+            }
+        });
+    });
 
+</script>
 
 
 <style>

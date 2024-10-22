@@ -1,11 +1,16 @@
 
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DgUserManagement;
+using Data.Setting;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 using Role = ART_PACKAGE.Helpers.DgUserManagement.Role;
 
 namespace ART_PACKAGE.Areas.Identity.Pages.Account
@@ -18,16 +23,19 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<DgUserManagementAuthModel> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly TenantSettings _tenantSettings;
+
 
         public DgUserManagementAuthModel(SignInManager<AppUser> signInManager,
             ILogger<DgUserManagementAuthModel> logger,
-            UserManager<AppUser> userManager, IDgUserManager dgUM, RoleManager<IdentityRole> roleManager)
+            UserManager<AppUser> userManager, IDgUserManager dgUM, RoleManager<IdentityRole> roleManager, IOptions<TenantSettings> tenantSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             this.dgUM = dgUM;
             _roleManager = roleManager;
+            _tenantSettings = tenantSettings.Value;
         }
 
         [BindProperty]
@@ -62,6 +70,9 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ReturnUrl = returnUrl;
+            var claims = new List<Claim>
+                                {};
+
             _logger.LogWarning("user {email} tring to login at {time}", Input.Email, DateTime.Now.ToShortTimeString());
             try
             {
@@ -79,15 +90,39 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                     {
                         IEnumerable<Role> artRoles = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith("art_"));
                         IEnumerable<Group> artGroups = info.DgUserManagementResponse.Groups.Where(x => x.Name.ToLower().StartsWith("art_"));
-
+                        IEnumerable<string> artBisnisUnits = info.DgUserManagementResponse.Roles.Where(x => x.Name.ToLower().StartsWith(_tenantSettings.Defaults.BusinessUnitPrefix.ToLower())).Select(s=>s.Name.ToUpper().Replace(_tenantSettings.Defaults.BusinessUnitPrefix.ToUpper(), ""));
+                       
 
                         string? email = info.UserLoginInfo.ProviderKey;
                         _logger.LogWarning("checking for user External Login");
                         _logger.LogWarning("User Roles : ({roles})", string.Join(",", artRoles.Select(x => x.Name)));
                         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey, Input.RememberMe, true);
 
+                        if (artBisnisUnits != null && artBisnisUnits.Count() > 0)
+                        {
+                            claims.Add(new("tenant_idz", string.Join(",", artBisnisUnits)));
+                            claims.Add(new("tenant_id", artBisnisUnits.First()));
+                        }
+                        else
+                        {
+                            claims.Add(new("tenant_idz", string.Join(",", _tenantSettings.Tenants.Select(s => s.TId))));
+                            claims.Add(new("tenant_id", _tenantSettings.Tenants.Select(s => s.TId).First()));
+                        } 
+
                         if (result.Succeeded)
                         {
+                            var user = await _userManager.FindByLoginAsync(info.UserLoginInfo.LoginProvider, info.UserLoginInfo.ProviderKey);
+                            if (user != null)
+                            {
+                                var userClaims =await _userManager.GetClaimsAsync(user);
+                                if (userClaims!=null )  await _userManager.RemoveClaimsAsync(user, userClaims);
+
+                               
+                               await _userManager.AddClaimsAsync(user, claims);
+                                // Sign in with the custom claims
+                                await _signInManager.SignInWithClaimsAsync(user, new AuthenticationProperties { IsPersistent = Input.RememberMe },claims); // Ensure this line uses claimsIdentity
+
+                            }
                             _logger.LogInformation($"Success {email}");
                             _logger.LogWarning($"Adding roles to user");
                             await AddRolesAndGroupsToUser(email, artRoles);
@@ -123,7 +158,12 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 _logger.LogWarning($"Adding roles to user");
                                 await AddRolesAndGroupsToUser(user.Email, artRoles);
-                                await _signInManager.SignInAsync(user, true);
+
+                                var userClaims = await _userManager.GetClaimsAsync(user);
+                                if (userClaims != null) await _userManager.RemoveClaimsAsync(user, userClaims);
+                                await _userManager.AddClaimsAsync(user, claims);
+
+                                await _signInManager.SignInWithClaimsAsync(user, new AuthenticationProperties { IsPersistent = true }, claims);
 
                             }
                             return LocalRedirect(returnUrl);

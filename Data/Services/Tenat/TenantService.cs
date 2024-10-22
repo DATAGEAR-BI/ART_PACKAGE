@@ -17,19 +17,23 @@ public class TenantService : ITenantService
     {
         _httpContext = contextAccessor.HttpContext;
         _tenantSettings = tenantSettings.Value;
-
         if(_httpContext is not null)
         {
-            if(_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))
+            var claims = _httpContext.User.Claims.ToList();
+
+            if (_httpContext.User!=null && claims.Any(s=>s.Type=="tenant_id"))
             {
+                tenantId = _httpContext.User.FindFirst("tenant_id")?.Value;
+
                 SetCurrentConnections(tenantId);
                 //tenantConstants.SetID(tenantId);
                 //SetCurrentTenant(tenantId!);
             }
-            /*else
+            else
             {
-                throw new Exception("No tenant provided!");
-            }*/
+                SetCurrentConnections();
+               // throw new Exception("No tenant provided!");
+            }
         }
         else
         {

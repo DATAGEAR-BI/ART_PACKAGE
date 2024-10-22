@@ -148,12 +148,13 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     _ = app.UseHsts();
 }
+//app.UseTenantMiddleware();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 //app.UseMiddleware<LogUserNameMiddleware>();
-//app.UseAuthorization();
+app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();

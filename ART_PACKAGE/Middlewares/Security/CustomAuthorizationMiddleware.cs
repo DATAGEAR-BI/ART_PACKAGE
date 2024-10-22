@@ -16,7 +16,8 @@ namespace ART_PACKAGE.Middlewares.Security
             "/Identity/Account/AccessDenied".ToLower() ,
             "/Account/DgUMAuth/login".ToLower(),
             "/Account/Ldapauth/login".ToLower(),
-           "/Account/login".ToLower()
+           "/Account/login".ToLower(),
+           "/Tenant/UpdateTenantClaim".ToLower()
         };
         public CustomAuthorizationMiddleware(RequestDelegate next, IConfiguration configuration)
         {
