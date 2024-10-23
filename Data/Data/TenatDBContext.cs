@@ -19,6 +19,7 @@ namespace Data.Data
         public TenatDBContext(DbContextOptions options, ITenantService tenantService) : base(options)
         {
             _tenantService = tenantService;
+            _tenantService.Print(contextName: this.GetType().Name);
             //TenantId = _tenantService.GetCurrentTenant()?.TId;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,7 +37,7 @@ namespace Data.Data
         {
 
             int commandTimeOut = _tenantService.GetCommendTimeOut()??120;
-            var tenantConnectionString = _tenantService.GetConnectionString(conn);
+            var tenantConnectionString = _tenantService.GetConnectionString(conn,this.GetType().Name);
             if (!string.IsNullOrWhiteSpace(tenantConnectionString))
             {
                 string dbType = _tenantService.GetDatabaseProvider();

@@ -107,22 +107,22 @@ public class AuthContext : IdentityDbContext<AppUser>
     {
 
         int commandTimeOut = _tenantService.GetCommendTimeOut() ?? 120;
-        var tenantConnectionString = _tenantService.GetConnectionString(conn);
+        var tenantConnectionString = _tenantService.GetConnectionString(conn,this.GetType().Name);
         if (!string.IsNullOrWhiteSpace(tenantConnectionString))
         {
             string dbType = _tenantService.GetDatabaseProvider();
             _ = dbType switch
             {
                 DbTypes.SqlServer => options.UseSqlServer(
-                    conn,
+                    tenantConnectionString,
                     x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                     ),
                 DbTypes.Oracle => options.UseOracle(
-                    conn,
+                    tenantConnectionString,
                     x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                     ),
                 DbTypes.MySql => options.UseMySQL(
-                conn,
+                tenantConnectionString,
                 x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
                 ),
                 _ => throw new Exception($"Unsupported provider: {dbType}")
