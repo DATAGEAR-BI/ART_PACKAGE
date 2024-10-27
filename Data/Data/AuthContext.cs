@@ -9,11 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Areas.Identity.Data;
 
-public class AuthContext : IdentityDbContext<AppUser>
+public class AuthContext : TenatDBContext /*IdentityDbContext<AppUser>*/
 {
 
-    public string TenantId { get; set; }
-    private readonly ITenantService _tenantService;
+
 
 
 
@@ -26,22 +25,22 @@ public class AuthContext : IdentityDbContext<AppUser>
 
 
 
-    public AuthContext(DbContextOptions<AuthContext> options,ITenantService tenantService)
-        : base(options)
+    public AuthContext(DbContextOptions<AuthContext> options, ITenantService tenantService)
+        : base(options, tenantService)
     {
 
-        _tenantService = tenantService;
-        TenantId = _tenantService.GetCurrentTenant()?.TId;
+
     }
+
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         contextBuilder(optionsBuilder);
     }*/
-    public void ChangeConnectionString(string tenantId)
-    {
-        var connectionString = _tenantService.GetConnectionString();
-        Database.GetDbConnection().ConnectionString = connectionString;
-    }
+    /*    public void ChangeConnectionString(string tenantId)
+        {
+            var connectionString = _tenantService.GetConnectionString();
+            Database.GetDbConnection().ConnectionString = connectionString;
+        }*/
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -49,9 +48,9 @@ public class AuthContext : IdentityDbContext<AppUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
 
-        modelBuilder.ApplyConfiguration(new RolesConfigration());
-        modelBuilder.ApplyConfiguration(new UserConfigration());
-        modelBuilder.ApplyConfiguration(new UserRolesConfiguration());
+        /* modelBuilder.ApplyConfiguration(new RolesConfigration());
+         modelBuilder.ApplyConfiguration(new UserConfigration());
+         modelBuilder.ApplyConfiguration(new UserRolesConfiguration());*/
         modelBuilder.Entity<ArtSavedReportsColumns>(
 
             e =>
@@ -76,14 +75,13 @@ public class AuthContext : IdentityDbContext<AppUser>
         {
             e.ToTable("ArtSavedCustomReport");
 
-            e.HasMany<AppUser>(e => e.Users)
-                .WithMany(r => r.Reports)
-                .UsingEntity<UserReport>(ur =>
-                {
-                    ur.HasKey(i => new { i.ReportId, i.UserId, i.SharedFromId });
-                    ur.HasOne<AppUser>(e => e.User).WithMany(e => e.UserReports).HasForeignKey(e => e.UserId);
-                    ur.HasOne<ArtSavedCustomReport>(e => e.Report).WithMany(e => e.UserReports).HasForeignKey(e => e.ReportId);
-                });
+            /* e.HasMany<UserReport>(r => r.Report)
+                 .UsingEntity<UserReport>(ur =>
+                 {
+                     ur.HasKey(i => new { i.ReportId, i.UserId, i.SharedFromId });
+                     ur.HasOne<AppUser>(e => e.User).WithMany(e => e.UserReports).HasForeignKey(e => e.UserId);
+                     ur.HasOne<ArtSavedCustomReport>(e => e.Report).WithMany(e => e.UserReports).HasForeignKey(e => e.ReportId);
+                 });*/
         });
 
         modelBuilder.Entity<UserReport>(e =>
@@ -103,40 +101,41 @@ public class AuthContext : IdentityDbContext<AppUser>
         base.OnModelCreating(modelBuilder);
 
     }
-    protected void contextBuilder(DbContextOptionsBuilder options, string conn = "AuthContextConnection")
-    {
+    /* protected void contextBuilder(DbContextOptionsBuilder options, string conn = "AuthContextConnection")
+     {
 
-        int commandTimeOut = _tenantService.GetCommendTimeOut() ?? 120;
-        var tenantConnectionString = _tenantService.GetConnectionString(conn,this.GetType().Name);
-        if (!string.IsNullOrWhiteSpace(tenantConnectionString))
-        {
-            string dbType = _tenantService.GetDatabaseProvider();
-            _ = dbType switch
-            {
-                DbTypes.SqlServer => options.UseSqlServer(
-                    tenantConnectionString,
-                    x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
-                    ),
-                DbTypes.Oracle => options.UseOracle(
-                    tenantConnectionString,
-                    x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
-                    ),
-                DbTypes.MySql => options.UseMySQL(
-                tenantConnectionString,
-                x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
-                ),
-                _ => throw new Exception($"Unsupported provider: {dbType}")
-            };
-        }
-    }
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
-        {
-            entry.Entity.TenantId = TenantId;
-        }
+         int commandTimeOut = _tenantService.GetCommendTimeOut() ?? 120;
+         var tenantConnectionString = _tenantService.GetConnectionString(conn,this.GetType().Name);
+         if (!string.IsNullOrWhiteSpace(tenantConnectionString))
+         {
+             string dbType = _tenantService.GetDatabaseProvider();
+             _ = dbType switch
+             {
+                 DbTypes.SqlServer => options.UseSqlServer(
+                     tenantConnectionString,
+                     x => { _ = x.MigrationsAssembly("SqlServerMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                     ),
+                 DbTypes.Oracle => options.UseOracle(
+                     tenantConnectionString,
+                     x => { _ = x.MigrationsAssembly("OracleMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                     ),
+                 DbTypes.MySql => options.UseMySQL(
+                 tenantConnectionString,
+                 x => { _ = x.MigrationsAssembly("MySqlMigrations"); _ = x.CommandTimeout(commandTimeOut); }
+                 ),
+                 _ => throw new Exception($"Unsupported provider: {dbType}")
+             };
+         }
+     }*/
+    /*   public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+       {
+           foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
+           {
+               entry.Entity.TenantId = TenantId;
+           }
 
-        return base.SaveChangesAsync(cancellationToken);
-    }
+           return base.SaveChangesAsync(cancellationToken);
+       }*/
+
 
 }

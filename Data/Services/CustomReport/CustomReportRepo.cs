@@ -463,7 +463,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             return null;
         _context.Entry(report).Collection(u => u.Columns).Load();
         _context.Entry(report).Collection(u => u.Charts).Load();
-        _context.Entry(report).Collection(u => u.Users).Load();
-        return report;
+/*        _context.Entry(report).Collection(u => u.Users).Load();
+*/        return report;
     }
 }

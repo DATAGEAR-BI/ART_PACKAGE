@@ -10,7 +10,13 @@ import { mapParamtersToFilters, multiSelectOperation } from "../../QueryBuilderC
 
 let chartTypes = {};
 
-fetch("/CustomReport/GetChartsTypes/").then(x => x.json()).then(types => {
+/*fetch("/CustomReport/GetChartsTypes/").then(x => x.json()).then(types => {
+    types.forEach(t => {
+        chartTypes[t.value] = t.text
+    });
+    console.log(types);
+})*/
+fetch("/Home/GetChartsTypes/").then(x => x.json()).then(types => {
     types.forEach(t => {
         chartTypes[t.value] = t.text
     });

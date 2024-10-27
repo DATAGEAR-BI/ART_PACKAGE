@@ -34,8 +34,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 
     EnvironmentName = "Development",
 });
-
 builder.Services.AddTenancy(builder.Configuration);
+builder.Services.AddJWTAuth(builder.Configuration);
+
 
 builder.Services.AddDbs(builder.Configuration);
 
@@ -54,7 +55,7 @@ builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<DBFactory>();
-builder.Services.AddScoped<LDapUserManager>();
+//builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
@@ -68,14 +69,15 @@ builder.Services.AddTransient(typeof(IMyReportsRepo), typeof(MyReportsRepo));
 builder.Services.AddTransient(typeof(IGridConstructor<,,>), typeof(GridConstructor<,,>));
 builder.Services.AddTransient(typeof(ICustomReportGridConstructor), typeof(CustomReportGridConstructor));
 
-builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
+//builder.Services.AddTransient(typeof(IChartConstructor<,>), typeof(ChartConstructor<,>));
 builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 builder.Services.AddReportsConfiguratons();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
-builder.Services.AddDefaultIdentity<AppUser>()
+/*builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AuthContext>();
+    .AddEntityFrameworkStores<AuthContext>();*/
+
 
 var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
 var cerPass = builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth:CertificatePassword").Value;
@@ -87,7 +89,8 @@ builder.Services.AddHttpClient("CertificateClient")
 builder.Services.ConfigureApplicationCookie(opt =>
  {
      string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
-     if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") !=null) opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+     /*if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") !=null) opt.LoginPath = new PathString("/Account/DgUMAuth/login");*/
+     if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") != null) opt.LoginPath = new PathString("/Auth/logIn");
      else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
  });
@@ -138,7 +141,7 @@ WebApplication app = builder.Build();
 //app.ApplyModulesMigrations();
 
 //app.UseSession();
-app.SeedModuleRoles();
+//app.SeedModuleRoles();
 
 
 // Configure the HTTP request pipeline.

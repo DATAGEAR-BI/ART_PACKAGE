@@ -2,8 +2,8 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using System.Security.Claims;
-@inject SignInManager<AppUser> SignInManager
-@inject UserManager<AppUser> UserManager
+@*@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager*@
 
 
 
@@ -28,11 +28,9 @@
             <span class="glyphicon glyphicon-align-justify togela"></span>
         </a>
         <div class="" style="width:auto;display:inline-block;align-self: center;float:right; margin-right:50px;" >
-            @if (SignInManager.IsSignedIn(User))
+            @if (User.Identity.IsAuthenticated)
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var currentUser = await UserManager.FindByIdAsync(userId);
-                var userClaims = await UserManager.GetClaimsAsync(currentUser);
+                var userClaims = User.Claims;
                 if (userClaims.Any(s => s.Type == "tenant_idz"))
                 {
                     
@@ -43,7 +41,7 @@
                     <select id="tenant-select" class="form-control targeted-search-input ng-pristine ng-valid ng-touched " style="width:auto;display:inline;" >
                         @foreach (var tenantId in tenantIds)
                         {
-                            bool isSelected = tenantId == User.FindFirst("tenant_id").Value;
+                            bool isSelected = tenantId == (User.Claims.FirstOrDefault(s=>s.Type=="tenant_id").Value);
                             if (isSelected)
                             {
                                 <option value="@tenantId" selected>@tenantId</option>
@@ -75,6 +73,8 @@
             data: { tenantId: selectedTenant },
             success: function (response) {
                 alert('Tenant updated successfully.  ' + response);
+                location.reload(true);
+
                 // Optionally refresh the page or update UI elements.
             },
             error: function (xhr, status, error) {

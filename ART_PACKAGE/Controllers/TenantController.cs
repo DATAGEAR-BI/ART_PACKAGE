@@ -1,4 +1,5 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.Auth.Sevices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -7,12 +8,11 @@ namespace ART_PACKAGE.Controllers
 {
     public class TenantController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        public TenantController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly ITokenService _tokenService;
+
+        public TenantController(ITokenService tokenService)
         {
-            _signInManager = signInManager;
-            _userManager = userManager; 
+            _tokenService = tokenService;
         }
         public IActionResult Index()
         {
@@ -21,28 +21,36 @@ namespace ART_PACKAGE.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTenantClaim(string tenantId)
         {
-            var user = await _userManager.GetUserAsync(User);
+
            
-            if (user != null)
+            if (User != null)
             {
               
-                var userClaims = await _userManager.GetClaimsAsync(user);
+                var userClaims = User.Claims.ToList();
                 var existingClaim = userClaims
                     .FirstOrDefault(c => c.Type == "tenant_id");
 
                 if (existingClaim != null)
                 {
-                    await _userManager.RemoveClaimAsync(user, existingClaim);
+                    userClaims.Remove(existingClaim);
                 }
 
                 var newClaim = new Claim("tenant_id", tenantId);
-                await _userManager.AddClaimAsync(user, newClaim);
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                userClaims.Add(newClaim);
 
-                var newTenant = (await _userManager.GetClaimsAsync(user))
-                    .FirstOrDefault(c => c.Type == "tenant_id");
+               string token=_tokenService.GenerateJwtToken(userClaims);
+
+                // Store the token in a cookie
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Expires = DateTime.Now.AddHours(1),
+                    Secure = true // Set to true if using HTTPS
+                };
+
+                Response.Cookies.Append("auth_token", token, cookieOptions);
                 var d = HttpContext.User.Claims.ToList();
-                return Ok(new { message = "Tenant updated"+newTenant.Value });
+                return Ok(new { message = "Tenant updated"});
             }
 
             return BadRequest(new { message = "User not found" });

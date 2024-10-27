@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ART_PACKAGE.Areas.Identity.Data;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject SignInManager<AppUser> SignInManager
-@inject UserManager<AppUser> UserManager
+@*@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager*@
 
 
 
@@ -22,11 +22,11 @@
         <!-- menu -->
         <div id="myDropdown" class="dropdown-content text-center" style="border:solid ; border-radius:5px ; border-color:#053b5f ; box-shadow:12px;">
 
-            @if (SignInManager.IsSignedIn(User))
+            @if (User.Identity.IsAuthenticated)
             {
 
-                <form id="logOutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <a class="btn" asp-area="Identity" asp-page="/Account/Manage/ChangePassword" title="Manage">Loged as <br><strong> @User.Identity.Name </strong></a>
+                <form id="logOutForm" class="form-inline" asp-action="LogOut" asp-controller="Auth" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <a class="btn" href="#" title="Manage">Loged as <br><strong> @User.Identity.Name </strong></a>
                     <button type="submit" class="btn btn-danger">Logout  &nbsp; <span class="glyphicon glyphicon-log-out"></span></button>
                 </form>
                 <br>

@@ -14,8 +14,8 @@ public class ArtSavedCustomReport
     public string Type { get; set; } = null!;
     public bool IsShared { get; set; }
     public string UserId { get; set; }
-    [JsonIgnore]
-    public ICollection<AppUser> Users { get; set; } = new List<AppUser>();
+    /*[JsonIgnore]
+    public ICollection<AppUser> Users { get; set; } = new List<AppUser>();*/
     public ICollection<ArtSavedReportsColumns> Columns { get; set; }
     public ICollection<ArtSavedReportsChart> Charts { get; set; }
 
@@ -26,7 +26,7 @@ public class ArtSavedCustomReport
         {
             var owner = UserReports.FirstOrDefault(u => u.ReportId == Id && u.isOwner);
            
-            return owner.User.Email;
+            return null/*owner.User.Email*/;
         }
     }
     [NotMapped] public string ShareMessage => UserReports.FirstOrDefault(u => u.ReportId == Id && !u.isOwner)?.ShareMessage;

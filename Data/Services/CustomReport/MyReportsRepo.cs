@@ -80,8 +80,8 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
     {
         try
         {
-            ArtSavedCustomReport? report = await _context.ArtSavedCustomReports.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == reportId);
-            return report.Users;
+            ArtSavedCustomReport? report = await _context.ArtSavedCustomReports/*.Include(x => x.Users)*/.FirstOrDefaultAsync(x => x.Id == reportId);
+            return null;// report.Users;
         }
         catch (Exception e)
         {
@@ -142,7 +142,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
             _ = _context.Add(report);
             _ = _context.SaveChanges();
 
-            ArtSavedCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns).Include(x => x.Users).Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
+            ArtSavedCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns)/*.Include(x => x.Users)*/.Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
 
             return true;
         }

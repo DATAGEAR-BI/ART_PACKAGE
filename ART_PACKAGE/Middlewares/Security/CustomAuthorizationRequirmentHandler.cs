@@ -7,16 +7,16 @@
     public class CustomAuthorizationRequirmentHandler : AuthorizationHandler<CustomAuthorizationRequirment>
     {
 
-        private readonly RoleManager<IdentityRole> _roleManger;
-        private readonly UserManager<AppUser> _userManger;
+        //private readonly RoleManager<IdentityRole> _roleManger;
+        //private readonly UserManager<AppUser> _userManger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger)
+        public CustomAuthorizationRequirmentHandler(/*RoleManager<IdentityRole> roleManger,*/ IHttpContextAccessor httpContextAccessor/*, UserManager<AppUser> userManger*/)
         {
 
-            _roleManger = roleManger;
+            //_roleManger = roleManger;
             _httpContextAccessor = httpContextAccessor;
-            _userManger = userManger;
+            //_userManger = userManger;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirment requirement)
@@ -41,12 +41,12 @@
                 return;
             }
             
-            AppUser user = await _userManger.GetUserAsync(context.User);
+            /*AppUser user = await _userManger.GetUserAsync(context.User);
             if (!await _userManger.IsInRoleAsync(user, roleName))
             {
                 context.Fail();
                 return;
-            }
+            }*/
             context.Succeed(requirement);
         }
 

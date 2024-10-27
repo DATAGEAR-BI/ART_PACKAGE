@@ -17,6 +17,7 @@ namespace ART_PACKAGE.Middlewares.Security
             "/Account/DgUMAuth/login".ToLower(),
             "/Account/Ldapauth/login".ToLower(),
            "/Account/login".ToLower(),
+           "/Auth/logIn".ToLower(),
            "/Tenant/UpdateTenantClaim".ToLower()
         };
         public CustomAuthorizationMiddleware(RequestDelegate next, IConfiguration configuration)
@@ -42,7 +43,8 @@ namespace ART_PACKAGE.Middlewares.Security
             if (!context.User.Identity.IsAuthenticated)
             {
                 string LoginProvider = _configuration.GetSection("LoginProvider").Value;
-                if (LoginProvider == "DGUM") _redirectUri = new PathString("/Account/DgUMAuth/login");
+                //if (LoginProvider == "DGUM") _redirectUri = new PathString("/Account/DgUMAuth/login");
+                if (LoginProvider == "DGUM") _redirectUri = new PathString("/Auth/logIn");
                 else if (LoginProvider == "LDAP") _redirectUri = new PathString("/Account/Ldapauth/login");
 
                 context.Response.Redirect(_redirectUri);

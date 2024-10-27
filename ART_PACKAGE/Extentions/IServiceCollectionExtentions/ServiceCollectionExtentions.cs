@@ -35,6 +35,10 @@ using Data.DGAMLAC;
 using Data.Setting;
 using Data.Services;
 using Data.Services.Tenat;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ART_PACKAGE.Helpers.Auth.Sevices;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -86,7 +90,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 };
             }
 
-            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            _ = services.AddDbContext<AuthContext>(opt => tenatContextBuilder(opt));
 
 
             if (modulesToApply is null)
@@ -255,8 +259,58 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         public static IServiceCollection AddTenancy(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddSingleton<TenantConstants>();
-            services.AddScoped<ITenantService, TenantService>();
             services.Configure<TenantSettings>(configuration.GetSection(nameof(TenantSettings)));
+            services.AddScoped<ITenantService, TenantService>();
+
+            return services;
+        }
+        public static IServiceCollection AddJWTAuth(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            services.Configure<JWT>(configuration.GetSection("JWT"));
+            services.AddSingleton<ITokenService, TokenService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+    .AddJwtBearer(o =>
+    {
+        o.RequireHttpsMetadata = false;
+        o.SaveToken = true;
+        o.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer =configuration["JWT:Issuer"],
+            ValidAudience = configuration["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"])),
+            ClockSkew = TimeSpan.Zero
+        };
+        o.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                var error = context.Exception.ToString();
+                Console.WriteLine($"Authentication failed: {error}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine("Token validated successfully.");
+                return Task.CompletedTask;
+            },
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["auth_token"];
+
+                Console.WriteLine($"Token received: {context.Token}");
+                return Task.CompletedTask;
+            }
+        };
+    });
 
             return services;
         }

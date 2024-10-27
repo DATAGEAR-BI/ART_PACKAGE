@@ -27,7 +27,12 @@ namespace ART_PACKAGE.Controllers
 
 
         }
+        protected BaseReportController(TGridConstuctor gridConstructor) : base()
+        {
+            _gridConstructor = gridConstructor;
 
+
+        }
         public abstract IActionResult Index();
         [HttpPost]
         public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)

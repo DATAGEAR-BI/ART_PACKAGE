@@ -12,6 +12,10 @@ namespace ART_PACKAGE.Controllers
         {
             _um = um;
         }
+        public BaseController()
+        {
+           
+        }
 
         protected async Task<AppUser> GetUser()
         {

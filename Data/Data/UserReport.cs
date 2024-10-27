@@ -12,8 +12,8 @@ public class UserReport
     public string? ShareMessage { get; set; }
     [NotMapped]
     public bool isOwner => UserId == SharedFromId;
-    [JsonIgnore]
-    public AppUser User { get; set; }
+   /* [JsonIgnore]
+    public AppUser User { get; set; }*/
     [JsonIgnore]
     public ArtSavedCustomReport Report { get; set; }
 }

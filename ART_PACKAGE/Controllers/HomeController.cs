@@ -1,4 +1,6 @@
-﻿using ART_PACKAGE.Helpers.DBService;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Data.Attributes;
+using ART_PACKAGE.Helpers.DBService;
 using ART_PACKAGE.Models;
 using Data.Data;
 using Data.Data.ARTDGAML;
@@ -6,10 +8,12 @@ using Data.Data.ARTGOAML;
 using Data.Data.ECM;
 using Data.Data.SASAml;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -81,7 +85,27 @@ namespace ART_PACKAGE.Controllers
 
         }
 
+        [HttpGet("[controller]/[action]")]
+        public IActionResult GetChartsTypes()
+        {
+            IEnumerable<SelectListItem> result = typeof(ChartType).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                return displayAttr == null || !displayAttr.IsHidden;
+            }).Select(x =>
+            {
+                OptionAttribute? displayAttr = x.GetCustomAttribute<OptionAttribute>();
+                string text = displayAttr is null ? x.Name : displayAttr.DisplayName;
+                string value = ((int)Enum.Parse(typeof(ChartType), x.Name)).ToString();
+                return new SelectListItem
+                {
+                    Text = text,
+                    Value = value
+                };
 
+            });
+            return Ok(result);
+        }
 
         public IActionResult Index()
         {

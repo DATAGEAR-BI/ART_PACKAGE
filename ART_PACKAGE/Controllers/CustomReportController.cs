@@ -17,7 +17,7 @@ namespace ART_PACKAGE.Controllers
         private readonly ProcessesHandler _processHanandler;
 
 
-        public CustomReportController(ICustomReportGridConstructor gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
+        public CustomReportController(ICustomReportGridConstructor gridConstructor/*, UserManager<AppUser> um*/, ProcessesHandler processesHandler) : base(gridConstructor)
         {
             _processHanandler = processesHandler;
         }
@@ -88,7 +88,7 @@ namespace ART_PACKAGE.Controllers
             }
         }
 
-        [HttpGet("[controller]/[action]")]
+       /* [HttpGet("[controller]/[action]")]
         public IActionResult GetChartsTypes()
         {
             IEnumerable<SelectListItem> result = typeof(ChartType).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
@@ -108,7 +108,7 @@ namespace ART_PACKAGE.Controllers
 
             });
             return Ok(result);
-        }
+        }*/
         [HttpGet("[controller]/[action]")]
         public IActionResult GetDbSchemas()
         {
@@ -156,8 +156,8 @@ namespace ART_PACKAGE.Controllers
 
             AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
-                return Forbid();
+           /* if (!report.Users.Contains(currentUser))
+                return Forbid();*/
 
             ViewBag.id = reportId;
             return View("Index");
@@ -177,8 +177,8 @@ namespace ART_PACKAGE.Controllers
 
             AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
-                return Forbid();
+           /* if (!report.Users.Contains(currentUser))
+                return Forbid();*/
             IEnumerable<ReportChartDto> charts = report.Charts.Select((x, i) => new ReportChartDto
             {
                 ChartId = $"chart-{reportId}-{i}",

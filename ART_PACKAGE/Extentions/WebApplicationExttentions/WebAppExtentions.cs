@@ -137,8 +137,8 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 hh.ManiualSetCurrentConnections(tenantId);
                 var authc = tenantScope.ServiceProvider.GetRequiredService<AuthContext>();
                 authc.Database.SetConnectionString(hh.GetConnectionString());
-                var s = authc.Users;
-                //authc.ChangeConnectionString(tenantId);
+/*                var s = authc.Users;
+*/                //authc.ChangeConnectionString(tenantId);
                 //var connectionstr_ = authc.Database.GetDbConnection();
                 var roleManager = tenantScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var userManager = tenantScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();

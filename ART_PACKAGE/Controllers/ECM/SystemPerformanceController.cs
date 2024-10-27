@@ -10,7 +10,7 @@ namespace ART_PACKAGE.Controllers.ECM
     //[Authorize(Roles = "SystemPerformance")]
     public class SystemPerformanceController : BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtSystemPerformance>, EcmContext, ArtSystemPerformance>, IBaseRepo<EcmContext, ArtSystemPerformance>, EcmContext, ArtSystemPerformance>
     {
-        public SystemPerformanceController(IGridConstructor<IBaseRepo<EcmContext, ArtSystemPerformance>, EcmContext, ArtSystemPerformance> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public SystemPerformanceController(IGridConstructor<IBaseRepo<EcmContext, ArtSystemPerformance>, EcmContext, ArtSystemPerformance> gridConstructor/*, UserManager<AppUser> um*/) : base(gridConstructor)
         {
         }
 

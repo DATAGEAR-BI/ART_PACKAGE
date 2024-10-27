@@ -98,11 +98,11 @@ namespace ART_PACKAGE.Controllers
         public override async Task<IActionResult> GetData(GridRequest request)
         {
             AppUser user = await _um.GetUserAsync(User);
-            baseCondition = x => x.Users.Contains(user);
-            includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
+/*            baseCondition = x => x.Users.Contains(user);
+*/            includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
             {
-                x => x.Users,
-                x => x.UserReports
+/*                x => x.Users,
+*/                x => x.UserReports
             };
             return await base.GetData(request);
         }
