@@ -129,6 +129,7 @@
     FiveRandomSelection: "/FiveRandomSelection/GetData",
     SlaEcmCasesViolated: "/SlaEcmCasesViolated/GetData",
     SlaLevel3StaffViolatedWithoutAction: "/SlaLevel3StaffViolatedWithoutAction/GetData",
+    SlaSummary: "/SlaSummary/GetData",
 
 
 

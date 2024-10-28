@@ -42,6 +42,7 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtFiveRandomSelectionView> ArtFiveRandomSelectionViews { get; set; } = null!;
         public virtual DbSet<SlaEcmCasesViolated> SlaEcmCasesViolateds { get; set; } = null!;
         public virtual DbSet<SlaLevel3StaffViolatedWithoutAction> SlaLevel3StaffViolatedWithoutActions { get; set; } = null!;
+        public virtual DbSet<SlaSummary> SlaSummarys { get; set; } = null!;
 
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
 

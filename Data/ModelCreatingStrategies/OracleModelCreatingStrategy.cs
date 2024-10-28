@@ -4216,7 +4216,32 @@ namespace Data.ModelCreatingStrategies
             });
 
 
-            //sla rep[orts
+            //sla reports
+            modelBuilder.Entity<SlaSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_SUMMARY");
+
+                entity.Property(e => e.TotalNumberOfAlertsOrCases)
+                    .HasColumnName("Total_Number_Of_Alerts_or_Cases");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.Product)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("PRODUCT");
+
+                entity.Property(e => e.ViolationFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("VIOLATION_FLAG");
+            });
+
             modelBuilder.Entity<SlaAlertsExceeded20Day>(entity =>
             {
                 entity.HasNoKey();

@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
 		<Content Remove="Views\SlaAlertsExceeded20Days - Copy (2)\Index.cshtml" />
+		<Content Remove="Views\SlaSummary\Index.cshtml" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
 		<Content Remove="wwwroot\js\segmentReport - Copy.js" />
@@ -1139,6 +1140,7 @@
 		<None Include="Views\PeriodicCHRGs\Index.cshtml" />
 		<None Include="Views\RiskAssessment\Index.cshtml" />
 		<None Include="Views\RiskSummary\Index.cshtml" />
+		<None Include="Views\SlaSummary\Index.cshtml" />
 		<None Include="Views\SlaAlertsExceeded20Days\Index.cshtml" />
 		<None Include="Views\SlaClosedAlertsExceeded45Days\Index.cshtml" />
 		<None Include="Views\SlaDailyClosedAlertsFromLevel2\Index.cshtml" />
