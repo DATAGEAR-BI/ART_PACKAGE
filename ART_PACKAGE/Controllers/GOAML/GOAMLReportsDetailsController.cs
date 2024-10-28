@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTGOAML;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.GOAML
 {
     public class GOAMLReportsDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail>, IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail>
     {
-        public GOAMLReportsDetailsController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public GOAMLReportsDetailsController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsDetail>, ArtGoAmlContext, ArtGoamlReportsDetail> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -2,14 +2,13 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.CRP;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.CRP
 {
     public class CrpUserPerformanceController : BaseReportController<IGridConstructor<IBaseRepo<CRPContext, ArtCrpUserPerformance>, CRPContext, ArtCrpUserPerformance>, IBaseRepo<CRPContext, ArtCrpUserPerformance>, CRPContext, ArtCrpUserPerformance>
     {
-        public CrpUserPerformanceController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpUserPerformance>, CRPContext, ArtCrpUserPerformance> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public CrpUserPerformanceController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpUserPerformance>, CRPContext, ArtCrpUserPerformance> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -1,8 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
+﻿
 using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.License;
 using ART_PACKAGE.Middlewares.License;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +11,7 @@ namespace ART_PACKAGE.Controllers
     public class LicenseController : BaseReportController<IGridConstructor<ILicenseReader, DbContext, License>, ILicenseReader, DbContext, License>
     {
         private readonly ILogger<LicenseController> _logger;
-        public LicenseController(IGridConstructor<ILicenseReader, DbContext, License> gc, UserManager<AppUser> um, ILogger<LicenseController> logger) : base(gc, um)
+        public LicenseController(IGridConstructor<ILicenseReader, DbContext, License> gc, ILogger<LicenseController> logger) : base(gc)
         {
             _logger = logger;
         }

@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -13,7 +11,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class EcmWorkflowProgController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport>, IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport>
     {
-        public EcmWorkflowProgController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public EcmWorkflowProgController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmWorkflowProgReport>, FTIContext, ArtTiEcmWorkflowProgReport> gridConstructor) : base(gridConstructor)
         {
         }
 

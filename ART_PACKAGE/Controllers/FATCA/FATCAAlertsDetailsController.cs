@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FATCA;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FATCA
@@ -10,7 +9,7 @@ namespace ART_PACKAGE.Controllers.FATCA
     /*    [AllowAnonymous]*/
     public class FATCAAlertsDetailsController : BaseReportController<IGridConstructor<IBaseRepo<FATCAContext, ArtFatcaAlert>, FATCAContext, ArtFatcaAlert>, IBaseRepo<FATCAContext, ArtFatcaAlert>, FATCAContext, ArtFatcaAlert>
     {
-        public FATCAAlertsDetailsController(IGridConstructor<IBaseRepo<FATCAContext, ArtFatcaAlert>, FATCAContext, ArtFatcaAlert> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public FATCAAlertsDetailsController(IGridConstructor<IBaseRepo<FATCAContext, ArtFatcaAlert>, FATCAContext, ArtFatcaAlert> gridConstructor) : base(gridConstructor)
         {
         }
 

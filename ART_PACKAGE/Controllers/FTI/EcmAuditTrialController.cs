@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
 using Data.TIZONE2;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -14,7 +12,7 @@ namespace ART_PACKAGE.Controllers.FTI
     public class EcmAuditTrialController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport>, IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport>
     {
         private readonly TIZONE2Context ti;
-        public EcmAuditTrialController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport> gridConstructor, TIZONE2Context ti, UserManager<AppUser> um) : base(gridConstructor, um)
+        public EcmAuditTrialController(IGridConstructor<IBaseRepo<FTIContext, ArtTiEcmAuditReport>, FTIContext, ArtTiEcmAuditReport> gridConstructor, TIZONE2Context ti) : base(gridConstructor)
         {
             this.ti = ti;
         }

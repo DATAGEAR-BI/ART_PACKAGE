@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
@@ -10,7 +9,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
     public class LastLoginPerDayController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView>, IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView>
     {
-        public LastLoginPerDayController(IGridConstructor<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public LastLoginPerDayController(IGridConstructor<IBaseRepo<ArtAuditContext, LastLoginPerDayView>, ArtAuditContext, LastLoginPerDayView> gridConstructor) : base(gridConstructor)
         {
         }
 

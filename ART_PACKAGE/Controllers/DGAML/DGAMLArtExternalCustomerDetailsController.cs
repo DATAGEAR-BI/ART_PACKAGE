@@ -2,14 +2,13 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTDGAML;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
     public class DGAMLArtExternalCustomerDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView>, IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView>
     {
-        public DGAMLArtExternalCustomerDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public DGAMLArtExternalCustomerDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtExternalCustomerDetailView>, ArtDgAmlContext, ArtExternalCustomerDetailView> gridConstructor) : base(gridConstructor)
         {
         }
 

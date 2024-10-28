@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SASAML
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "HighRisk")]
     public class HighRiskController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView>, IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView>
     {
-        public HighRiskController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public HighRiskController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlHighRiskCustView>, SasAmlContext, ArtAmlHighRiskCustView> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
@@ -10,7 +9,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
     public class ListOfDeletedUsersController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser>, IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser>
     {
-        public ListOfDeletedUsersController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ListOfDeletedUsersController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfDeletedUser>, ArtAuditContext, ListOfDeletedUser> gridConstructor) : base(gridConstructor)
         {
         }
 

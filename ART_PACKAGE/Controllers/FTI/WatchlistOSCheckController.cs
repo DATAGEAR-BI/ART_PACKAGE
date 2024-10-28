@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
 {
     public class WatchlistOSCheckController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport>, IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport>
     {
-        public WatchlistOSCheckController(IGridConstructor<IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public WatchlistOSCheckController(IGridConstructor<IBaseRepo<FTIContext, ArtTiWatchlistOsCheckReport>, FTIContext, ArtTiWatchlistOsCheckReport> gridConstructor) : base(gridConstructor)
         {
         }
 

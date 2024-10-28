@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ECM;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.ECM
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.ECM
     //[Authorize(Roles = "UserPerformance")]
     public class UserPerformanceController : BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformance>, EcmContext, ArtUserPerformance>, IBaseRepo<EcmContext, ArtUserPerformance>, EcmContext, ArtUserPerformance>
     {
-        public UserPerformanceController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformance>, EcmContext, ArtUserPerformance> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public UserPerformanceController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformance>, EcmContext, ArtUserPerformance> gridConstructor) : base(gridConstructor)
         {
         }
 

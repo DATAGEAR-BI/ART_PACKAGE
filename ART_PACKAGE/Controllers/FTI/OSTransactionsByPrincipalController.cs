@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -12,7 +10,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class OSTransactionsByPrincipalController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransByPrincipalReport>, FTIContext, ArtTiOsTransByPrincipalReport>, IBaseRepo<FTIContext, ArtTiOsTransByPrincipalReport>, FTIContext, ArtTiOsTransByPrincipalReport>
     {
-        public OSTransactionsByPrincipalController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransByPrincipalReport>, FTIContext, ArtTiOsTransByPrincipalReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public OSTransactionsByPrincipalController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsTransByPrincipalReport>, FTIContext, ArtTiOsTransByPrincipalReport> gridConstructor) : base(gridConstructor)
         {
         }
 

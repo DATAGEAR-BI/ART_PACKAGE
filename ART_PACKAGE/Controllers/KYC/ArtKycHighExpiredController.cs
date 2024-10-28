@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Data.Data.KYC;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
     public class ArtKycHighExpiredController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtKycHighExpired>, KYCContext, ArtKycHighExpired>, IBaseRepo<KYCContext, ArtKycHighExpired>, KYCContext, ArtKycHighExpired>
     {
-        public ArtKycHighExpiredController(IGridConstructor<IBaseRepo<KYCContext, ArtKycHighExpired>, KYCContext, ArtKycHighExpired> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ArtKycHighExpiredController(IGridConstructor<IBaseRepo<KYCContext, ArtKycHighExpired>, KYCContext, ArtKycHighExpired> gridConstructor) : base(gridConstructor)
         {
         }
 

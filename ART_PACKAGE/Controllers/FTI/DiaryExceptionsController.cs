@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -12,7 +11,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class DiaryExceptionsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport>, IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport>
     {
-        public DiaryExceptionsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public DiaryExceptionsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiDiaryExceptionsReport>, FTIContext, ArtTiDiaryExceptionsReport> gridConstructor) : base(gridConstructor)
         {
         }
 

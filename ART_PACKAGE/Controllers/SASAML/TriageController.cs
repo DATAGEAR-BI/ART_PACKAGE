@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SASAML
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "Triage")]
     public class TriageController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView>, IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView>
     {
-        public TriageController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public TriageController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlTriageView>, SasAmlContext, ArtAmlTriageView> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SASAML
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "RiskAssessment")]
     public class RiskAssessmentController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView>, IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView>
     {
-        public RiskAssessmentController(IGridConstructor<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public RiskAssessmentController(IGridConstructor<IBaseRepo<SasAmlContext, ArtRiskAssessmentView>, SasAmlContext, ArtRiskAssessmentView> gridConstructor) : base(gridConstructor)
         {
         }
 

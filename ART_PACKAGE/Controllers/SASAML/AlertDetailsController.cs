@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SASAML
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "AlertDetails")]
     public class AlertDetailsController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView>, IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView>
     {
-        public AlertDetailsController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AlertDetailsController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlAlertDetailView>, SasAmlContext, ArtAmlAlertDetailView> gridConstructor) : base(gridConstructor)
         {
         }
 

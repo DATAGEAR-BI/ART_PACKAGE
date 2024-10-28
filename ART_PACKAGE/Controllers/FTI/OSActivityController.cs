@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 namespace ART_PACKAGE.Controllers.FTI
 {
@@ -11,7 +9,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class OSActivityController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiOsActivityReport>, FTIContext, ArtTiOsActivityReport>, IBaseRepo<FTIContext, ArtTiOsActivityReport>, FTIContext, ArtTiOsActivityReport>
     {
-        public OSActivityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsActivityReport>, FTIContext, ArtTiOsActivityReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public OSActivityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsActivityReport>, FTIContext, ArtTiOsActivityReport> gridConstructor) : base(gridConstructor)
         {
         }
 

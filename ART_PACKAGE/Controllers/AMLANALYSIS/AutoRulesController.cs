@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.AmlAnalysis;
 using Data.Services.AmlAnalysis;
 using Data.Services.Grid;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ArtAmlAnalysisRule = Data.Data.AmlAnalysis.ArtAmlAnalysisRule;
@@ -23,10 +21,10 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
                 IAutoRulesRepo,
                 AmlAnalysisContext,
                 ArtAmlAnalysisRule
-            > gridConstructor,
-            UserManager<AppUser> um
+            > gridConstructor
+            //,UserManager<AppUser> um
         )
-            : base(gridConstructor, um) { }
+            : base(gridConstructor/*, um*/) { }
 
         // GET
         public override IActionResult Index()

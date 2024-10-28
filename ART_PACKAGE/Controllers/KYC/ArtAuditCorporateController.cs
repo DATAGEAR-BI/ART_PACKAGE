@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.KYC;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
     public class ArtAuditCorporateController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>, IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView>
     {
-        public ArtAuditCorporateController(IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ArtAuditCorporateController(IGridConstructor<IBaseRepo<KYCContext, ArtAuditCorporateView>, KYCContext, ArtAuditCorporateView> gridConstructor) : base(gridConstructor)
         {
         }
 

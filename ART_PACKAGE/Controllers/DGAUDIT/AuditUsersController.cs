@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
@@ -10,7 +9,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
     public class AuditUsersController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, ArtUsersAuditView>, ArtAuditContext, ArtUsersAuditView>, IBaseRepo<ArtAuditContext, ArtUsersAuditView>, ArtAuditContext, ArtUsersAuditView>
     {
-        public AuditUsersController(IGridConstructor<IBaseRepo<ArtAuditContext, ArtUsersAuditView>, ArtAuditContext, ArtUsersAuditView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AuditUsersController(IGridConstructor<IBaseRepo<ArtAuditContext, ArtUsersAuditView>, ArtAuditContext, ArtUsersAuditView> gridConstructor) : base(gridConstructor)
         {
         }
 

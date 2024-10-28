@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Handlers;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -14,7 +12,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     public class TestController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData>, IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData>
     {
         private readonly ProcessesHandler _processesHandler;
-        public TestController(IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData> gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
+        public TestController(IGridConstructor<IBaseRepo<SasAmlContext, BigData>, SasAmlContext, BigData> gridConstructor, ProcessesHandler processesHandler) : base(gridConstructor)
         {
             _processesHandler = processesHandler;
         }

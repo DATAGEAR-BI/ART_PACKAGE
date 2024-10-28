@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
 using Data.Services.Grid;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,7 +13,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class OurChargesDetailsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport>, IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport>
     {
-        public OurChargesDetailsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public OurChargesDetailsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiChargesDetailsReport>, FTIContext, ArtTiChargesDetailsReport> gridConstructor) : base(gridConstructor)
         {
         }
 

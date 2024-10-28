@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -13,7 +11,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class OSLiabilityController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport>, IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport>
     {
-        public OSLiabilityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public OSLiabilityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiOsLiabilityReport>, FTIContext, ArtTiOsLiabilityReport> gridConstructor) : base(gridConstructor)
         {
         }
 

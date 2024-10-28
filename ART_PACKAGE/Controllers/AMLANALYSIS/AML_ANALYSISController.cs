@@ -16,7 +16,7 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
             return View();
         }
 
-        public AML_ANALYSISController(IGridConstructor<IAmlAnalysisRepo, AmlAnalysisContext, ArtAmlAnalysisViewTb> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AML_ANALYSISController(IGridConstructor<IAmlAnalysisRepo, AmlAnalysisContext, ArtAmlAnalysisViewTb> gridConstructor) : base(gridConstructor)
         {
         }
 

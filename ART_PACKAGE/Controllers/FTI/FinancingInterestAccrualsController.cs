@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,7 +11,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class FinancingInterestAccrualsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual>, IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual>
     {
-        public FinancingInterestAccrualsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public FinancingInterestAccrualsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiFinanInterAccrual>, FTIContext, ArtTiFinanInterAccrual> gridConstructor) : base(gridConstructor)
         {
         }
 

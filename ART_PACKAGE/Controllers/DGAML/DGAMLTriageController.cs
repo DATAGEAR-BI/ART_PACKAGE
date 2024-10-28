@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTDGAML;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
@@ -10,7 +9,7 @@ namespace ART_PACKAGE.Controllers.DGAML
     public class DGAMLTriageController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView>, IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView>
     {
 
-        public DGAMLTriageController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public DGAMLTriageController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlTriageView>, ArtDgAmlContext, ArtDgAmlTriageView> gridConstructor) : base(gridConstructor)
         {
         }
         /*private readonly ArtDgAmlContext _context;

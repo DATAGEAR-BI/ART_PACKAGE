@@ -2,14 +2,13 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTDGAML;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
     public class DGAMLAlertDetailsController : BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView>, IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView>
     {
-        public DGAMLAlertDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public DGAMLAlertDetailsController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlAlertDetailView>, ArtDgAmlContext, ArtDgAmlAlertDetailView> gridConstructor) : base(gridConstructor)
         {
         }
 

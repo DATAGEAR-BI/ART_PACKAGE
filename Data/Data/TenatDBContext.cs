@@ -19,7 +19,7 @@ namespace Data.Data
         public TenatDBContext(DbContextOptions options, ITenantService tenantService) : base(options)
         {
             _tenantService = tenantService;
-            _tenantService.Print(contextName: this.GetType().Name);
+           // _tenantService.Print(contextName: this.GetType().Name);
             //TenantId = _tenantService.GetCurrentTenant()?.TId;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

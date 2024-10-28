@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.TRADE_BASE;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.TRADE_BASE
 {
     public class TradeBaseAMLSummaryController : BaseReportController<IGridConstructor<IBaseRepo<TRADE_BASEContext, ArtTradeBaseSummary>, TRADE_BASEContext, ArtTradeBaseSummary>, IBaseRepo<TRADE_BASEContext, ArtTradeBaseSummary>, TRADE_BASEContext, ArtTradeBaseSummary>
     {
-        public TradeBaseAMLSummaryController(IGridConstructor<IBaseRepo<TRADE_BASEContext, ArtTradeBaseSummary>, TRADE_BASEContext, ArtTradeBaseSummary> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public TradeBaseAMLSummaryController(IGridConstructor<IBaseRepo<TRADE_BASEContext, ArtTradeBaseSummary>, TRADE_BASEContext, ArtTradeBaseSummary> gridConstructor) : base(gridConstructor)
         {
         }
 

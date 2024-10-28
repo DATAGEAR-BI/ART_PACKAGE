@@ -2,7 +2,6 @@
 using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -11,7 +10,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class ACPostingsAccountController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport>, IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport>
     {
-        public ACPostingsAccountController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ACPostingsAccountController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAcpostingsAccReport>, FTIContext, ArtTiAcpostingsAccReport> gridConstructor) : base(gridConstructor)
         {
         }
 

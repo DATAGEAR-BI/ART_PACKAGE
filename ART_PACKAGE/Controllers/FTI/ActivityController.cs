@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,7 +12,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class ActivityController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport>, IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport>
     {
-        public ActivityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ActivityController(IGridConstructor<IBaseRepo<FTIContext, ArtTiActivityReport>, FTIContext, ArtTiActivityReport> gridConstructor) : base(gridConstructor)
         {
         }
 

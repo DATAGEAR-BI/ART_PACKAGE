@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,7 +9,7 @@ namespace ART_PACKAGE.Controllers.FTI
     ////////[Authorize(Policy = "Licensed", Roles = "Amortization")]
     public class AmortizationController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport>, IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport>
     {
-        public AmortizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AmortizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAmortizationReport>, FTIContext, ArtTiAmortizationReport> gridConstructor) : base(gridConstructor)
         {
         }
 

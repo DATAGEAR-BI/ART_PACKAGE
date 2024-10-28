@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Audit;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.DGAUDIT
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.DGAUDIT
 
     public class ListOfRoleController : BaseReportController<IGridConstructor<IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole>, IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole>
     {
-        public ListOfRoleController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ListOfRoleController(IGridConstructor<IBaseRepo<ArtAuditContext, ListOfRole>, ArtAuditContext, ListOfRole> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Data.Data.KYC;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
     public class ArtKycLowThreeMonthController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtKycLowThreeMonth>, KYCContext, ArtKycLowThreeMonth>, IBaseRepo<KYCContext, ArtKycLowThreeMonth>, KYCContext, ArtKycLowThreeMonth>
     {
-        public ArtKycLowThreeMonthController(IGridConstructor<IBaseRepo<KYCContext, ArtKycLowThreeMonth>, KYCContext, ArtKycLowThreeMonth> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ArtKycLowThreeMonthController(IGridConstructor<IBaseRepo<KYCContext, ArtKycLowThreeMonth>, KYCContext, ArtKycLowThreeMonth> gridConstructor) : base(gridConstructor)
         {
         }
 

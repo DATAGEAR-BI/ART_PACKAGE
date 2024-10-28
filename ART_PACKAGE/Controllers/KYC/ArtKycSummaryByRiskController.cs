@@ -1,15 +1,13 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Data.Data.KYC;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 
 namespace ART_PACKAGE.Controllers.KYC
 {
     public class ArtKycSummaryByRiskController : BaseReportController<IGridConstructor<IBaseRepo<KYCContext, ArtKycSummaryByRisk>, KYCContext, ArtKycSummaryByRisk>, IBaseRepo<KYCContext, ArtKycSummaryByRisk>, KYCContext, ArtKycSummaryByRisk>
     {
-        public ArtKycSummaryByRiskController(IGridConstructor<IBaseRepo<KYCContext, ArtKycSummaryByRisk>, KYCContext, ArtKycSummaryByRisk> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public ArtKycSummaryByRiskController(IGridConstructor<IBaseRepo<KYCContext, ArtKycSummaryByRisk>, KYCContext, ArtKycSummaryByRisk> gridConstructor) : base(gridConstructor)
         {
         }
 

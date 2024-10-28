@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -13,7 +11,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class AdvancePaymentUtilizationController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport>, IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport>
     {
-        public AdvancePaymentUtilizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AdvancePaymentUtilizationController(IGridConstructor<IBaseRepo<FTIContext, ArtTiAdvancePaymentUtilizationReport>, FTIContext, ArtTiAdvancePaymentUtilizationReport> gridConstructor) : base(gridConstructor)
         {
         }
 

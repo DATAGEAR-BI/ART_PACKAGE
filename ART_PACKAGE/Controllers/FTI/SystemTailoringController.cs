@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -12,7 +10,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class SystemTailoringController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport>, IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport>
     {
-        public SystemTailoringController(IGridConstructor<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public SystemTailoringController(IGridConstructor<IBaseRepo<FTIContext, ArtTiSystemTailoringReport>, FTIContext, ArtTiSystemTailoringReport> gridConstructor) : base(gridConstructor)
         {
         }
 

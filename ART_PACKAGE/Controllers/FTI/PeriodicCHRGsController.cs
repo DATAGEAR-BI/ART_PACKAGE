@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.FTI;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.FTI
@@ -12,7 +10,7 @@ namespace ART_PACKAGE.Controllers.FTI
 
     public class PeriodicCHRGsController : BaseReportController<IGridConstructor<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport>, IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport>
     {
-        public PeriodicCHRGsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public PeriodicCHRGsController(IGridConstructor<IBaseRepo<FTIContext, ArtTiPeriodicChrgsReport>, FTIContext, ArtTiPeriodicChrgsReport> gridConstructor) : base(gridConstructor)
         {
         }
 

@@ -1,9 +1,7 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.Segmentation;
 using Data.Services;
 using Data.Services.Grid;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,7 +12,7 @@ namespace ART_PACKAGE.Controllers.SEG
         private readonly IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> _segsFeatrsStatcsRepo;
         private readonly IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> _segoutvsalloutRepo;
         private readonly IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> _segoutvsallcustRepo;
-        public AllSegmentsOutliersNewController(IGridConstructor<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb> gridConstructor, IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> segsFeatrsStatcsRepo, IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> segoutvsallcustRepo, IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> segoutvsalloutRepo, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AllSegmentsOutliersNewController(IGridConstructor<IBaseRepo<SegmentationContext, ArtAllSegmentsOutliersTb>, SegmentationContext, ArtAllSegmentsOutliersTb> gridConstructor, IBaseRepo<SegmentationContext, ArtAllSegsFeatrsStatcsTb> segsFeatrsStatcsRepo, IBaseRepo<SegmentationContext, ArtSegoutvsallcustTb> segoutvsallcustRepo, IBaseRepo<SegmentationContext, ArtSegoutvsalloutTb> segoutvsalloutRepo) : base(gridConstructor)
         {
             _segsFeatrsStatcsRepo = segsFeatrsStatcsRepo;
             _segoutvsallcustRepo = segoutvsallcustRepo;

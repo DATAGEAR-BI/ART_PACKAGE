@@ -9,7 +9,7 @@ namespace ART_PACKAGE.Controllers.CRP
 {
     public class CrpCasesController : BaseReportController<IGridConstructor<IBaseRepo<CRPContext, ArtCrpCase>, CRPContext, ArtCrpCase>, IBaseRepo<CRPContext, ArtCrpCase>, CRPContext, ArtCrpCase>
     {
-        public CrpCasesController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpCase>, CRPContext, ArtCrpCase> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public CrpCasesController(IGridConstructor<IBaseRepo<CRPContext, ArtCrpCase>, CRPContext, ArtCrpCase> gridConstructor) : base(gridConstructor)
         {
         }
 

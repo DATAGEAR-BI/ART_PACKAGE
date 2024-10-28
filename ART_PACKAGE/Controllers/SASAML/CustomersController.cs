@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.SASAml;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ART_PACKAGE.Controllers.SASAML
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAML
     //////[Authorize(Roles = "Customers")]
     public class CustomersController : BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>, IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView>
     {
-        public CustomersController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public CustomersController(IGridConstructor<IBaseRepo<SasAmlContext, ArtAmlCustomersDetailsView>, SasAmlContext, ArtAmlCustomersDetailsView> gridConstructor) : base(gridConstructor)
         {
         }
 

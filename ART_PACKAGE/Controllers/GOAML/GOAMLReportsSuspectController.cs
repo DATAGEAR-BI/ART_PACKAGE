@@ -1,8 +1,6 @@
-﻿using ART_PACKAGE.Areas.Identity.Data;
-using ART_PACKAGE.Helpers.Grid;
+﻿using ART_PACKAGE.Helpers.Grid;
 using Data.Data.ARTGOAML;
 using Data.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,7 +8,7 @@ namespace ART_PACKAGE.Controllers.GOAML
 {
     public class GOAMLReportsSuspectController : BaseReportController<IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsSusbectParty>, ArtGoAmlContext, ArtGoamlReportsSusbectParty>, IBaseRepo<ArtGoAmlContext, ArtGoamlReportsSusbectParty>, ArtGoAmlContext, ArtGoamlReportsSusbectParty>
     {
-        public GOAMLReportsSuspectController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsSusbectParty>, ArtGoAmlContext, ArtGoamlReportsSusbectParty> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public GOAMLReportsSuspectController(IGridConstructor<IBaseRepo<ArtGoAmlContext, ArtGoamlReportsSusbectParty>, ArtGoAmlContext, ArtGoamlReportsSusbectParty> gridConstructor) : base(gridConstructor)
         {
         }
 
