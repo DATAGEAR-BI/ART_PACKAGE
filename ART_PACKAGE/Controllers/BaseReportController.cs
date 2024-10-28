@@ -80,8 +80,7 @@ namespace ART_PACKAGE.Controllers
         public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
 
-            AppUser user = await GetUser();
-            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId, baseCondition);
 
             return Ok(new { folder = folderGuid });
         }

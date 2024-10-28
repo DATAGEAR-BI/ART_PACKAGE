@@ -40,13 +40,12 @@
                 context.Succeed(requirement);
                 return;
             }
-            
-            /*AppUser user = await _userManger.GetUserAsync(context.User);
-            if (!await _userManger.IsInRoleAsync(user, roleName))
+
+            if (!_httpContextAccessor.HttpContext.User.IsInRole( roleName))
             {
                 context.Fail();
                 return;
-            }*/
+            }
             context.Succeed(requirement);
         }
 
@@ -59,8 +58,8 @@
             if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower())
                 return "art_customreport".ToLower();
 
-            if (controller.ToLower() == nameof(UserRoleController).ToLower())
-                return "art_admin".ToLower();
+            /*if (controller.ToLower() == nameof(UserRoleController).ToLower())
+                return "art_admin".ToLower();*/
 
             if (controller.ToLower() == nameof(LicenseController).ToLower())
                 return "art_superadmin".ToLower();

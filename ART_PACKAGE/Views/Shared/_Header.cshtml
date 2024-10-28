@@ -72,9 +72,7 @@
             type: 'POST',
             data: { tenantId: selectedTenant },
             success: function (response) {
-                alert('Tenant updated successfully.  ' + response);
                 location.reload(true);
-
                 // Optionally refresh the page or update UI elements.
             },
             error: function (xhr, status, error) {

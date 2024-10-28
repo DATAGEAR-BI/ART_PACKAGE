@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace ART_PACKAGE.Helpers.Grid
 {
-    public interface ICustomReportGridConstructor : IGridConstructor<ICustomReportRepo, AuthContext, Dictionary<string, object>>
+    public interface ICustomReportGridConstructor : IGridConstructor<ICustomReportRepo, CustomReportsContext, Dictionary<string, object>>
     {
         public GridIntializationConfiguration IntializeGrid(int reportId);
         public GridResult<Dictionary<string, object>> GetGridData(int reportId, GridRequest request);

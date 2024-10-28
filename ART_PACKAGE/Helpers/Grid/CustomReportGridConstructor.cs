@@ -76,7 +76,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public GridResult<Dictionary<string, object>> GetGridData(int reportId, GridRequest request)
         {
-            ArtSavedCustomReport report = Repo.GetReport(reportId);
+            ArtCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
             GridResult<Dictionary<string, object>> dataResult = Repo.GetGridData(schemaContext, report, request);
             return dataResult;
@@ -84,7 +84,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public IEnumerable<ChartDataDto> GetReportChartsData(int reportId, GridRequest request)
         {
-            ArtSavedCustomReport report = Repo.GetReport(reportId);
+            ArtCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
             IEnumerable<ChartDataDto> chartsData = Repo.GetReportChartsData(schemaContext, report, request);
             return chartsData;
@@ -111,7 +111,7 @@ namespace ART_PACKAGE.Helpers.Grid
             string folderGuid = gridId;//Guid.NewGuid().ToString();
             _processesHandler.AddProcess(gridId,"CSV");
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "CSV"), folderGuid);
-            ArtSavedCustomReport report = Repo.GetReport(reportId);
+            ArtCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
             int total = Repo.GetDataCount(schemaContext, report, exportRequest.DataReq);
             int totalcopy = total;
@@ -192,7 +192,7 @@ namespace ART_PACKAGE.Helpers.Grid
 
         public async Task<byte[]> ExportGridToPdf(int reportId, ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
         {
-            ArtSavedCustomReport report = Repo.GetReport(reportId);
+            ArtCustomReport report = Repo.GetReport(reportId);
 
             _processesHandler.AddProcess((string)ViewData["reportId"], "PDF");
             DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());

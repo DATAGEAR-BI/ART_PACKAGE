@@ -184,7 +184,7 @@ namespace ART_PACKAGE.Helpers.Csv
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
         }
 
-        public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
+        public bool ExportCustomData(ArtCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
             int fileNumber)
         {
             DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
@@ -197,7 +197,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
         }
 
-        public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
+        public bool ExportCustomData(ArtCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
            int fileNumber, string reportGUID)
         {
             DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();

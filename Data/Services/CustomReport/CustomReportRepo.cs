@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Data.Services.CustomReport;
 
-public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>>, ICustomReportRepo
+public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string, object>>, ICustomReportRepo
 {
 
     private static readonly Dictionary<string, (string op, bool isShared)> OPS = new()
@@ -29,14 +29,14 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         { "lte"  ,("{0} <= {1}" ,true)},
         { "lt"  , ("{0} < {1}"  ,true)},
     };
-    public CustomReportRepo(AuthContext context) : base(context)
+    public CustomReportRepo(CustomReportsContext context) : base(context)
     {
     }
 
 
     public IEnumerable<GridColumn> GetReportColumns(int reportId)
     {
-        ArtSavedCustomReport? Report = _context.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == reportId);
+        ArtCustomReport? Report = _context.ArtCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == reportId);
         return Report.Columns.Select(x => new GridColumn
         {
             name = x.Column,
@@ -45,7 +45,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         });
     }
 
-    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtCustomReport report, GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
 
@@ -89,7 +89,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         }
     }
 
-    public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public int GetDataCount(DbContext schemaContext, ArtCustomReport report, GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
         using (var connection = schemaContext.Database.GetDbConnection())
@@ -127,7 +127,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         }
 
     }
-    private string GenerateSql(ArtSavedCustomReport report, GridRequest request, string dbType, bool isCount = false)
+    private string GenerateSql(ArtCustomReport report, GridRequest request, string dbType, bool isCount = false)
     {
 
         string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
@@ -150,7 +150,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                   {takeLine}";
     }
 
-    private string GenerateWhere(Filter filter, string dbType, IEnumerable<ArtSavedReportsColumns> columns)
+    private string GenerateWhere(Filter filter, string dbType, IEnumerable<ArtReportsColumns> columns)
     {
         string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
 
@@ -214,7 +214,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
     }
     public DbSchema GetReportSchema(int reportId)
     {
-        ArtSavedCustomReport? Report = _context.ArtSavedCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == reportId);
+        ArtCustomReport? Report = _context.ArtCustomReports.Include(x => x.Columns).FirstOrDefault(x => x.Id == reportId);
         return Report.Schema;
     }
 
@@ -304,10 +304,10 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
 
     public bool IsReportExist(int reportId)
     {
-        return _context.ArtSavedCustomReports.Any(x => x.Id == reportId);
+        return _context.ArtCustomReports.Any(x => x.Id == reportId);
     }
 
-    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtCustomReport report, GridRequest request)
     {
 
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
@@ -456,9 +456,9 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         };
     }
 
-    public ArtSavedCustomReport GetReport(int id)
+    public ArtCustomReport GetReport(int id)
     {
-        var report = _context.ArtSavedCustomReports.Find(id); // Find does not include related data
+        var report = _context.ArtCustomReports.Find(id); // Find does not include related data
         if (report is null)
             return null;
         _context.Entry(report).Collection(u => u.Columns).Load();

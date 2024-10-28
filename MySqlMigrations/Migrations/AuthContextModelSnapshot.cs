@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MySqlMigrations.Migrations
 {
-    [DbContext(typeof(AuthContext))]
+    [DbContext(typeof(CustomReportsContext))]
     partial class AuthContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

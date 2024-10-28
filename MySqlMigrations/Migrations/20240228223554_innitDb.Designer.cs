@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MySqlMigrations.Migrations
 {
-    [DbContext(typeof(AuthContext))]
+    [DbContext(typeof(CustomReportsContext))]
     [Migration("20240228223554_innitDb")]
     partial class innitDb
     {

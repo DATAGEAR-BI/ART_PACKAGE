@@ -9,7 +9,7 @@ public class AppUser : IdentityUser
 {
     public bool Active { get; set; }
     [JsonIgnore]
-    public ICollection<ArtSavedCustomReport>? Reports { get; set; }
+    public ICollection<ArtCustomReport>? Reports { get; set; }
     [JsonIgnore]
     public ICollection<UserReport>? UserReports { get; set; }
     

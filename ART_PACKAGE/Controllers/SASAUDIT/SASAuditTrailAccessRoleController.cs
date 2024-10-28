@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
 {
     public class SASAuditTrailAccessRoleController : BaseReportController<IGridConstructor<IBaseRepo<SasAuditContext, SasListAccessRightPerRole>, SasAuditContext, SasListAccessRightPerRole>, IBaseRepo<SasAuditContext, SasListAccessRightPerRole>, SasAuditContext, SasListAccessRightPerRole>
     {
-        public SASAuditTrailAccessRoleController(IGridConstructor<IBaseRepo<SasAuditContext, SasListAccessRightPerRole>, SasAuditContext, SasListAccessRightPerRole> gridConstructor, UserManager<Areas.Identity.Data.AppUser> um) : base(gridConstructor, um)
+        public SASAuditTrailAccessRoleController(IGridConstructor<IBaseRepo<SasAuditContext, SasListAccessRightPerRole>, SasAuditContext, SasListAccessRightPerRole> gridConstructor) : base(gridConstructor)
         {
         }
 

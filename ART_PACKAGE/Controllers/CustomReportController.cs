@@ -4,6 +4,7 @@ using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Handlers;
 using Data.Services.CustomReport;
 using Data.Services.Grid;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ using System.Reflection;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class CustomReportController : BaseReportController<ICustomReportGridConstructor, ICustomReportRepo, AuthContext, Dictionary<string, object>>
+    public class CustomReportController : BaseReportController<ICustomReportGridConstructor, ICustomReportRepo, CustomReportsContext, Dictionary<string, object>>
     {
         private readonly ProcessesHandler _processHanandler;
 
@@ -132,9 +133,8 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-            AppUser user = await GetUser();
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
-            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, reportGUID);
+            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, User.Identity.Name, reportGUID);
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
@@ -149,14 +149,14 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/{reportId}")]
         public async Task<IActionResult> ViewReport(int reportId)
         {
-            ArtSavedCustomReport report = _gridConstructor.Repo.GetReport(reportId);
+            ArtCustomReport report = _gridConstructor.Repo.GetReport(reportId);
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
+            //AppUser currentUser = await GetUser();
 
-           /* if (!report.Users.Contains(currentUser))
-                return Forbid();*/
+            if (!report.UserId.Contains(User.Identity.Name))
+                return Forbid();
 
             ViewBag.id = reportId;
             return View("Index");
@@ -170,14 +170,13 @@ namespace ART_PACKAGE.Controllers
         [HttpGet("[controller]/[action]/{reportId}")]
         public async Task<IActionResult> GetReportCharts(int reportId)
         {
-            ArtSavedCustomReport report = _gridConstructor.Repo.GetReport(reportId);
+            ArtCustomReport report = _gridConstructor.Repo.GetReport(reportId);
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
 
-           /* if (!report.Users.Contains(currentUser))
-                return Forbid();*/
+            if (!report.UserId.Contains(User.Identity.Name))
+                return Forbid();
             IEnumerable<ReportChartDto> charts = report.Charts.Select((x, i) => new ReportChartDto
             {
                 ChartId = $"chart-{reportId}-{i}",

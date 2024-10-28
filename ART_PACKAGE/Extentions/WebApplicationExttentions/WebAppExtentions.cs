@@ -13,7 +13,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
         {
             _ = app.Configuration.GetSection("Modules").Get<List<string>>();
             using IServiceScope scope = app.Services.CreateScope();
-            AuthContext authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+            CustomReportsContext authContext = scope.ServiceProvider.GetRequiredService<CustomReportsContext>();
 
 
             /*if (authContext.Database.GetPendingMigrations().Any())
@@ -135,7 +135,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                 using var tenantScope = app.Services.CreateScope();
                 var hh= tenantScope.ServiceProvider.GetRequiredService<ITenantService>();
                 hh.ManiualSetCurrentConnections(tenantId);
-                var authc = tenantScope.ServiceProvider.GetRequiredService<AuthContext>();
+                var authc = tenantScope.ServiceProvider.GetRequiredService<CustomReportsContext>();
                 authc.Database.SetConnectionString(hh.GetConnectionString());
 /*                var s = authc.Users;
 */                //authc.ChangeConnectionString(tenantId);

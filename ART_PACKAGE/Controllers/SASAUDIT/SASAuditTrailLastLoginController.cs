@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
 {
     public class SASAuditTrailLastLoginController : BaseReportController<IGridConstructor<IBaseRepo<SasAuditContext, VaLastLoginView>, SasAuditContext, VaLastLoginView>, IBaseRepo<SasAuditContext, VaLastLoginView>, SasAuditContext, VaLastLoginView>
     {
-        public SASAuditTrailLastLoginController(IGridConstructor<IBaseRepo<SasAuditContext, VaLastLoginView>, SasAuditContext, VaLastLoginView> gridConstructor, UserManager<Areas.Identity.Data.AppUser> um) : base(gridConstructor, um)
+        public SASAuditTrailLastLoginController(IGridConstructor<IBaseRepo<SasAuditContext, VaLastLoginView>, SasAuditContext, VaLastLoginView> gridConstructor) : base(gridConstructor)
         {
         }
 

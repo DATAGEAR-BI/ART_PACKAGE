@@ -10,7 +10,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 
 namespace OracleMigrations.Migrations
 {
-    [DbContext(typeof(AuthContext))]
+    [DbContext(typeof(CustomReportsContext))]
     partial class AuthContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 
 namespace OracleMigrations.Migrations
 {
-    [DbContext(typeof(AuthContext))]
+    [DbContext(typeof(CustomReportsContext))]
     [Migration("20230821113217_AddColumnTypeForCustomReportAndActiveForAppUser")]
     partial class AddColumnTypeForCustomReportAndActiveForAppUser
     {

@@ -189,6 +189,7 @@
 	<ItemGroup>
 		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 		<Compile Remove="Controllers\SystemPerformanceController.cs" />
+		<Compile Remove="Controllers\UserRoleController.cs" />
 		<Compile Remove="Helpers\CustomReport\GridAggregateType.cs" />
 	</ItemGroup>
 

@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
 {
     public class SASAuditTrailUsersGroupsController : BaseReportController<IGridConstructor<IBaseRepo<SasAuditContext, SasListOfUsersAndGroupsRole>, SasAuditContext, SasListOfUsersAndGroupsRole>, IBaseRepo<SasAuditContext, SasListOfUsersAndGroupsRole>, SasAuditContext, SasListOfUsersAndGroupsRole>
     {
-        public SASAuditTrailUsersGroupsController(IGridConstructor<IBaseRepo<SasAuditContext, SasListOfUsersAndGroupsRole>, SasAuditContext, SasListOfUsersAndGroupsRole> gridConstructor, UserManager<Areas.Identity.Data.AppUser> um) : base(gridConstructor, um)
+        public SASAuditTrailUsersGroupsController(IGridConstructor<IBaseRepo<SasAuditContext, SasListOfUsersAndGroupsRole>, SasAuditContext, SasListOfUsersAndGroupsRole> gridConstructor) : base(gridConstructor)
         {
         }
 

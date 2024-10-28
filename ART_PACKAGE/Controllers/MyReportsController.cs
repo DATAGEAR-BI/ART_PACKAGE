@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Controllers
 {
-    public class MyReportsController : BaseReportController<IGridConstructor<IMyReportsRepo, AuthContext, ArtSavedCustomReport>, IMyReportsRepo, AuthContext, ArtSavedCustomReport>
+    public class MyReportsController : BaseReportController<IGridConstructor<IMyReportsRepo, CustomReportsContext, ArtCustomReport>, IMyReportsRepo, CustomReportsContext, ArtCustomReport>
     {
 
-        public MyReportsController(IGridConstructor<IMyReportsRepo, AuthContext, ArtSavedCustomReport> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public MyReportsController(IGridConstructor<IMyReportsRepo, CustomReportsContext, ArtCustomReport> gridConstructor) : base(gridConstructor)
         {
         }
         // GET
@@ -72,7 +72,7 @@ namespace ART_PACKAGE.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveReport([FromBody] SaveReportDto model)
         {
-            bool isSaved = await _gridConstructor.Repo.SaveReport(model, await GetUser());
+            bool isSaved = await _gridConstructor.Repo.SaveReport(model,User.Identity.Name);
             if (isSaved)
                 return Ok();
             else
@@ -97,13 +97,7 @@ namespace ART_PACKAGE.Controllers
 
         public override async Task<IActionResult> GetData(GridRequest request)
         {
-            AppUser user = await _um.GetUserAsync(User);
-/*            baseCondition = x => x.Users.Contains(user);
-*/            includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
-            {
-/*                x => x.Users,
-*/                x => x.UserReports
-            };
+            baseCondition = x => x.UserId.Contains(User.Identity.Name);
             return await base.GetData(request);
         }
     }

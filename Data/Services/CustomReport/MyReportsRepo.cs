@@ -5,10 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Data.Services.CustomReport;
 
-public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyReportsRepo
+public class MyReportsRepo : BaseRepo<CustomReportsContext,ArtCustomReport> , IMyReportsRepo
 {
     private readonly ILogger<IMyReportsRepo> _logger;
-    public MyReportsRepo(AuthContext context, ILogger<IMyReportsRepo> logger) : base(context)
+    public MyReportsRepo(CustomReportsContext context, ILogger<IMyReportsRepo> logger) : base(context)
     {
         _logger = logger;
     }
@@ -18,8 +18,8 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
     {
 
         try
-        {
-            ArtSavedCustomReport? report = _context.ArtSavedCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == shareRequest.ReportId);
+        {/*
+            ArtCustomReport? report = _context.ArtCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == shareRequest.ReportId);
             if (report is null)
             {
                 _logger.LogCritical("Failed To share {ReportId} To ({Users}) Due To: {ex}",shareRequest.ReportId,string.Join(",",shareRequest.Recievers),"Report Not Found");
@@ -43,7 +43,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
             }
 
             report.IsShared = true;
-            _context.SaveChanges();
+            _context.SaveChanges();*/
             return true;
         }
         catch (Exception e)
@@ -58,14 +58,14 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
     {
         try
         {
-            ArtSavedCustomReport? report = _context.ArtSavedCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == unShareRequest.ReportId);
+           /* ArtCustomReport? report = _context.ArtSavedCustomReports.Include(x => x.UserReports).FirstOrDefault(x => x.Id == unShareRequest.ReportId);
             var unshareFromUsersIds = unshareFromUsers.Select(x => x.Id).Where(x=>x != cuAppUser.Id);
            
             var usersToremain = report.UserReports.Where(x=>!unshareFromUsersIds.Contains(x.UserId));
             report.UserReports = usersToremain.ToList();
             if (!report.UserReports.Any(x => x.UserId != x.SharedFromId))
                 report.IsShared = false;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
             return true;
         }
         catch (Exception e)
@@ -80,8 +80,8 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
     {
         try
         {
-            ArtSavedCustomReport? report = await _context.ArtSavedCustomReports/*.Include(x => x.Users)*/.FirstOrDefaultAsync(x => x.Id == reportId);
-            return null;// report.Users;
+/*            ArtCustomReport? report = await _context.ArtSavedCustomReports*//*.Include(x => x.Users)*//*.FirstOrDefaultAsync(x => x.Id == reportId);
+*/            return null;// report.Users;
         }
         catch (Exception e)
         {
@@ -95,7 +95,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
     {
         try
         {
-            ArtSavedCustomReport report = new()
+           /* ArtCustomReport report = new()
             {
                 Table = reportDto.Table,
                 Type = reportDto.ObjectType,
@@ -108,7 +108,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
 
 
 
-            List<ArtSavedReportsColumns> columns = reportDto.Columns.Select(e => new ArtSavedReportsColumns
+            List<ArtReportsColumns> columns = reportDto.Columns.Select(e => new ArtReportsColumns
             {
                 Column = e.Name,
                 IsNullable = e.IsNullable == "YES",
@@ -116,7 +116,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
                 ReportId = report.Id
             }).ToList();
 
-            List<ArtSavedReportsChart> charts = reportDto.Charts.Select(c => new ArtSavedReportsChart
+            List<ArtReportsChart> charts = reportDto.Charts.Select(c => new ArtReportsChart
             {
                 Column = c.Column,
                 Type = c.Type,
@@ -142,7 +142,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
             _ = _context.Add(report);
             _ = _context.SaveChanges();
 
-            ArtSavedCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns)/*.Include(x => x.Users)*/.Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
+            ArtCustomReport? reportAfter = _context.ArtSavedCustomReports.Include(x => x.Columns)*//*.Include(x => x.Users)*//*.Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);*/
 
             return true;
         }
@@ -152,5 +152,60 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
             return false;
         }
         
+    }
+    public async Task<bool> SaveReport(SaveReportDto reportDto, string ownerId)
+    {
+        try
+        {
+            ArtCustomReport report = new()
+            {
+                Table = reportDto.Table,
+                Type = reportDto.ObjectType,
+                Name = reportDto.Title,
+                Description = reportDto.Description,
+                CreateDate = DateTime.Now,
+                Schema = reportDto.Schema,
+
+            };
+
+
+
+            List<ArtReportsColumns> columns = reportDto.Columns.Select(e => new ArtReportsColumns
+            {
+                Column = e.Name,
+                IsNullable = e.IsNullable == "YES",
+                JsType = e.JsDataType,
+                ReportId = report.Id
+            }).ToList();
+
+            List<ArtReportsChart> charts = reportDto.Charts.Select(c => new ArtReportsChart
+            {
+                Column = c.Column,
+                Type = c.Type,
+                Title = c.Title,
+                ReportId = report.Id
+            }).ToList();
+
+
+
+
+            report.UserId = ownerId;
+            //report.Users.Add(owner);
+            report.Charts = charts;
+            report.Columns = columns;
+
+            _ = _context.Add(report);
+            _ = _context.SaveChanges();
+
+            ArtCustomReport? reportAfter = _context.ArtCustomReports.Include(x => x.Columns)/*.Include(x => x.Users)*/.Include(x => x.Charts).FirstOrDefault(x => x.Id == report.Id);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("couldn't save report : {ex}", e.Message);
+            return false;
+        }
+
     }
 }

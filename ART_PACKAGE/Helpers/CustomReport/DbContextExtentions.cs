@@ -246,7 +246,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         }
 
 
-        public static List<ChartData<dynamic>> GetChartData(this DbContext db, List<ArtSavedReportsChart> charts, string filters = null)
+        public static List<ChartData<dynamic>> GetChartData(this DbContext db, List<ArtReportsChart> charts, string filters = null)
         {
             string orclSql = @"OPEN {3} FOR SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
             string Sql = @"SELECT {0} As CAT , Count({0}) As AGG FROM {1} {2} GROUP BY {0};";
@@ -314,7 +314,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
 
 
 
-            foreach ((ArtSavedReportsChart chart, int i) in charts.Select((chart, i) => (chart, i)))
+            foreach ((ArtReportsChart chart, int i) in charts.Select((chart, i) => (chart, i)))
             {
                 ChartData<dynamic> d = new()
                 {

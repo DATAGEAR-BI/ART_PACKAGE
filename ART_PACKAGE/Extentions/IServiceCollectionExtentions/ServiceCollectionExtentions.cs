@@ -90,7 +90,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                 };
             }
 
-            _ = services.AddDbContext<AuthContext>(opt => tenatContextBuilder(opt));
+            _ = services.AddDbContext<CustomReportsContext>(opt => tenatContextBuilder(opt));
 
 
             if (modulesToApply is null)

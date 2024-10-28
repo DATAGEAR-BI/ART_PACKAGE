@@ -8,7 +8,7 @@ namespace ART_PACKAGE.Controllers.SASAUDIT
 {
     public class SASAuditListAppController : BaseReportController<IGridConstructor<IBaseRepo<SasAuditContext, VaLicensed>, SasAuditContext, VaLicensed>, IBaseRepo<SasAuditContext, VaLicensed>, SasAuditContext, VaLicensed>
     {
-        public SASAuditListAppController(IGridConstructor<IBaseRepo<SasAuditContext, VaLicensed>, SasAuditContext, VaLicensed> gridConstructor, UserManager<Areas.Identity.Data.AppUser> um) : base(gridConstructor, um)
+        public SASAuditListAppController(IGridConstructor<IBaseRepo<SasAuditContext, VaLicensed>, SasAuditContext, VaLicensed> gridConstructor) : base(gridConstructor)
         {
         }
 
