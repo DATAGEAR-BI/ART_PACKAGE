@@ -25,7 +25,7 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
         {
             try
             {
-                (bool isSucceed, IEnumerable<string> ColseFailedEntities) = await _gridConstructor.Repo.CloseAllAlertsAsync(closeRequest, (await GetUser()).Email, "CLP");
+                (bool isSucceed, IEnumerable<string> ColseFailedEntities) = await _gridConstructor.Repo.CloseAllAlertsAsync(closeRequest,User.Identity.Name, "CLP");
                 if (!isSucceed)
                     return BadRequest();
 
@@ -43,7 +43,7 @@ namespace ART_PACKAGE.Controllers.AMLANALYSIS
         {
             try
             {
-                (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await _gridConstructor.Repo.RouteAllAlertsAsync(routeRequest, (await GetUser()).Email);
+                (bool isSucceed, IEnumerable<string>? RouteFailedEntities) = await _gridConstructor.Repo.RouteAllAlertsAsync(routeRequest, User.Identity.Name);
                 if (!isSucceed)
                     return BadRequest();
 
