@@ -63,6 +63,10 @@
         public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "ART.ART_ST_FATCA_CASES_PER_STATUS";
 
 
+        //KYC
+        public static readonly string ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS = "ART.ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS";
+
+
 
     }
 }

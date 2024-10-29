@@ -53,6 +53,9 @@
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
 
+        //KYC
+        public static readonly string ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS = "ART.ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS";
+
 
 
 

@@ -83,6 +83,7 @@
     ArtCustomersAccountsDetails: "/ArtCustomersAccountsDetails/GetData",
     ArtCustomersWithDiffDocumentsSameCid: "/ArtCustomersWithDiffDocumentsSameCid/GetData",
     ArtCustomersWithSameDocumentsDiffCid: "/ArtCustomersWithSameDocumentsDiffCid/GetData",
+    ArtAccountsOpenedClosedWithin6Months: "/ArtAccountsOpenedClosedWithin6Months/GetData",
 
     //FTI
     ACPostingsAccount: "/ACPostingsAccount/GetData",

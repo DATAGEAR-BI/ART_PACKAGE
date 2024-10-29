@@ -66,5 +66,8 @@
         public static readonly string ART_ST_FATCA_CUSTS_PER_NATION = "[ART_DB].[ART_ST_FATCA_CUSTS_PER_NATION]";
         public static readonly string ART_ST_FATCA_CASES_PER_STATUS = "[ART_DB].[ART_ST_FATCA_CASES_PER_STATUS]";
 
+        //KYC
+        public static readonly string ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS = "[ART_DB].[ART_ST_ACCOUNTS_OPENED_CLOSED_WITHIN_6_MONTHS]";
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Data.Data.FTI;
+﻿using Data.Data.ECM;
+using Data.Data.FTI;
 using Data.ModelCreatingStrategies;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,6 +38,8 @@ namespace Data.Data.KYC
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ArtStAccountsOpenedClosedWithin6Months>().HasNoKey().ToView(null);
+
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnKYCModelCreating(modelBuilder);
         }
