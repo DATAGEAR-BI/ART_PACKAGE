@@ -18,6 +18,7 @@ namespace ART_PACKAGE.Middlewares.Security
             "/Account/Ldapauth/login".ToLower(),
            "/Account/login".ToLower(),
            "/Auth/logIn".ToLower(),
+           "/Auth/logOut".ToLower(),
            "/Tenant/UpdateTenantClaim".ToLower()
         };
         public CustomAuthorizationMiddleware(RequestDelegate next, IConfiguration configuration)
