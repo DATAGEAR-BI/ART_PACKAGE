@@ -16,36 +16,31 @@ public class TenantService : ITenantService
     private Tenant? _currentTenant;
     private ModulesConnections? _currentConnections;
     private string tenantId;
-    public TenantService( IHttpContextAccessor contextAccessor, IOptions<TenantSettings> tenantSettings, [CallerMemberName] string caller = "")
+    public TenantService( IHttpContextAccessor contextAccessor, IOptions<TenantSettings> tenantSettings)
     {
         _httpContext = contextAccessor.HttpContext;
-        Console.WriteLine(@$"Called By : {caller}");
-        //Console.WriteLine(@$"CONTEXT :  {JsonConvert.SerializeObject(_httpContext)}");
         _tenantSettings = tenantSettings.Value;
-        if(_httpContext is not null)
+        if ( tenantSettings.Value==null || tenantSettings.Value.Tenants.Count()==0) throw new Exception("No Tenants Added of Configurations !");
+        if (_httpContext is not null)
         {
             var claims = _httpContext.User.Claims.ToList();
-
-            if (_httpContext.User!=null && claims.Any(s=>s.Type=="tenant_id"))
-            {
-                tenantId = _httpContext.User.FindFirst("tenant_id")?.Value;
-
-                SetCurrentConnections(tenantId);
-                //tenantConstants.SetID(tenantId);
-                //SetCurrentTenant(tenantId!);
-            }
-            else
+            if(_httpContext.User != null && _tenantSettings.Tenants.Count() == 1)
             {
                 SetCurrentConnections();
-               // throw new Exception("No tenant provided!");
             }
+            else if (_httpContext.User != null && claims.Any(s => s.Type == "tenant_id"))
+            {
+                tenantId = _httpContext.User.FindFirst("tenant_id")?.Value;
+                SetCurrentConnections(tenantId);
+            }
+             
+            else throw new Exception("No tenant provided!");
+            
         }
-        else
-        {
-            SetCurrentConnections();
-        }
-
+        else  throw new Exception("No tenant provided!");
         
+
+
 
     }
 
@@ -53,25 +48,16 @@ public class TenantService : ITenantService
     {
         try
         {
-                
-                var ModulesConnectionType = typeof(ModulesConnections);
+            var ModulesConnectionType = typeof(ModulesConnections);
                 var properties = ModulesConnectionType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                 string connectionString = properties.FirstOrDefault(s => s.Name == module)
                     .GetValue(_currentConnections)?.ToString() ?? throw new InvalidOperationException($@"Connection string '{module}' not found.");
-            
-          
-            
             return connectionString;
         }
         catch (Exception)
         {
             Console.WriteLine($@"Current Context : {contextName} ,conn {module}");
             Console.WriteLine(@$"CONTEXT :  {JsonConvert.SerializeObject(_currentConnections)}");
-            Console.WriteLine(@$"CONTEXT :  {JsonConvert.SerializeObject(_httpContext, Formatting.Indented,
-new JsonSerializerSettings
-{
-    PreserveReferencesHandling = PreserveReferencesHandling.Objects
-})}");
             throw new Exception("No tenant provided!");
         }
     }
@@ -127,9 +113,9 @@ new JsonSerializerSettings
         {
             _currentConnections = _currentTenant.ModulesConnections;
         }
-        else if (_tenantSettings.Defaults!.Connections!=null)
+        else if (_tenantSettings.Tenants.Count()==1)
         {
-            _currentConnections = _tenantSettings.Defaults.Connections;
+            _currentConnections = _tenantSettings.Tenants.FirstOrDefault(s=>true).ModulesConnections;
         }else
         {
 
@@ -156,10 +142,7 @@ new JsonSerializerSettings
         {
             _currentConnections = _currentTenant.ModulesConnections;
         }
-        else if (_tenantSettings.Defaults!.Connections != null)
-        {
-            _currentConnections = _tenantSettings.Defaults.Connections;
-        }else
+        else
         {
 
             throw new Exception("Couldn't spacify connections");

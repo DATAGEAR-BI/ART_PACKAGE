@@ -47,7 +47,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
         {
-            string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
+            
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
             TenantSettings tenatSittings = new();
@@ -101,7 +101,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("SEG"))
             {
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                /*string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");*/
                 //_ = services.AddDbContext<SEGFCFKCContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<SegmentationContext>(opt => tenatContextBuilder(opt));
             }
@@ -299,14 +299,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             },
             OnTokenValidated = context =>
             {
-                Console.WriteLine("Token validated successfully.");
                 return Task.CompletedTask;
             },
             OnMessageReceived = context =>
             {
                 context.Token = context.Request.Cookies["auth_token"];
-
-                Console.WriteLine($"Token received: {context.Token}");
                 return Task.CompletedTask;
             }
         };

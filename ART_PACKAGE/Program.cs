@@ -36,26 +36,15 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 builder.Services.AddTenancy(builder.Configuration);
 builder.Services.AddJWTAuth(builder.Configuration);
-
-
 builder.Services.AddDbs(builder.Configuration);
-
 builder.Services.AddDistributedMemoryCache();
-/*builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});*/
-
-
 builder.Services.AddSignalR();
+
 //builder.Services.AddHostedService<LicenseWatcher>();
+
 builder.Services.AddScoped<IDropDownService, DropDownService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
-
 builder.Services.AddScoped<DBFactory>();
-//builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<Module>();
@@ -74,9 +63,7 @@ builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 builder.Services.AddReportsConfiguratons();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
-/*builder.Services.AddDefaultIdentity<AppUser>()
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AuthContext>();*/
+
 
 
 var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
@@ -88,11 +75,7 @@ builder.Services.AddHttpClient("CertificateClient")
 
 builder.Services.ConfigureApplicationCookie(opt =>
  {
-     string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
-     /*if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") !=null) opt.LoginPath = new PathString("/Account/DgUMAuth/login");*/
-     if (LoginProvider == "DGUM" && builder.Configuration.GetSection("TenantSettings:Defaults:DgUserManagementAuth") != null) opt.LoginPath = new PathString("/Auth/logIn");
-     else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
-
+     opt.LoginPath = new PathString("/Auth/logIn");
  });
 
 // Add services to the container.
@@ -136,13 +119,6 @@ _recurringService.AddOrUpdate("clean-csv-directory", () =>
     csvJobs.CleanDirectory(), $"0 0 * * *");
 
 WebApplication app = builder.Build();
-//var tenantConstant=serviceProvider.GetRequiredService<TenantConstants>();
-//tenantConstant.SetID("UG");
-//app.ApplyModulesMigrations();
-
-//app.UseSession();
-//app.SeedModuleRoles();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -151,7 +127,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     _ = app.UseHsts();
 }
-//app.UseTenantMiddleware();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

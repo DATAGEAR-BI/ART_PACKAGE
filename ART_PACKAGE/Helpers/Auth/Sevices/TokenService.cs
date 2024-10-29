@@ -37,11 +37,11 @@ namespace ART_PACKAGE.Helpers.Auth.Sevices
                 claims.Add(new("tenant_idz", string.Join(",", artBisnisUnits)));
                 claims.Add(new("tenant_id", artBisnisUnits.First()));
             }
-            else
+            /*else
             {
                 claims.Add(new("tenant_idz", string.Join(",", _tenantSettings.Tenants.Select(s => s.TId))));
                 claims.Add(new("tenant_id", _tenantSettings.Tenants.Select(s => s.TId).First()));
-            }
+            }*/
 
             /*  // Add custom claims
               foreach (var claim in authResponse.Claims)

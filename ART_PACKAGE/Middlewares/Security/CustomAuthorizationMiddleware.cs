@@ -14,9 +14,6 @@ namespace ART_PACKAGE.Middlewares.Security
         private readonly List<string> _allowedUris = new()
         {
             "/Identity/Account/AccessDenied".ToLower() ,
-            "/Account/DgUMAuth/login".ToLower(),
-            "/Account/Ldapauth/login".ToLower(),
-           "/Account/login".ToLower(),
            "/Auth/logIn".ToLower(),
            "/Auth/logOut".ToLower(),
            "/Tenant/UpdateTenantClaim".ToLower()
@@ -43,11 +40,7 @@ namespace ART_PACKAGE.Middlewares.Security
 
             if (!context.User.Identity.IsAuthenticated)
             {
-                string LoginProvider = _configuration.GetSection("LoginProvider").Value;
-                //if (LoginProvider == "DGUM") _redirectUri = new PathString("/Account/DgUMAuth/login");
-                if (LoginProvider == "DGUM") _redirectUri = new PathString("/Auth/logIn");
-                else if (LoginProvider == "LDAP") _redirectUri = new PathString("/Account/Ldapauth/login");
-
+                _redirectUri = new PathString("/Auth/logIn");
                 context.Response.Redirect(_redirectUri);
                 return;
             }
