@@ -7243,6 +7243,430 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("RISK_CLASSIFICATION");
             });
 
+            modelBuilder.Entity<ArtMissingKycDetailsView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_MISSING_KYC_DETAILS_VIEW", "ART_DB");
+
+                entity.Property(e => e.Cid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CID");
+
+                entity.Property(e => e.IdentificationNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("IDENTIFICATION_NUMBER");
+
+                entity.Property(e => e.CustIdentExpDate)
+                    .HasColumnName("CUST_IDENT_EXP_DATE");
+
+                entity.Property(e => e.DateOfBirthOrIncorporation)
+                   .HasColumnName("DATE_OF_BIRTH_OR_INCORPORATION");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("PHONE_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.KraPin)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("KRA_PIN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ForeignTaxIdentificationNumber)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("FOREIGN_TAX_IDENTIFICATION_NUMBER");
+
+                entity.Property(e => e.Nationality)
+                   .HasMaxLength(50)
+                   .IsUnicode(false)
+                   .HasColumnName("NATIONALITY")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Residence)
+                   .HasMaxLength(3)
+                   .IsUnicode(false)
+                   .HasColumnName("RESIDENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskStatusOrRiskClassification)
+                   .HasMaxLength(50)
+                   .IsUnicode(false)
+                   .HasColumnName("RISK_STATUS_OR_RISK_CLASSIFICATION")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PepFlag)
+                  .HasMaxLength(1)
+                  .IsUnicode(false)
+                  .HasColumnName("PEP_FLAG")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NatureOfBusiness)
+                 .HasMaxLength(255)
+                 .IsUnicode(false)
+                 .HasColumnName("NATURE_OF_BUSINESS")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmailAddress)
+                 .HasMaxLength(350)
+                 .IsUnicode(false)
+                 .HasColumnName("EMAIL_ADDRESS")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorIdentificationNumber)
+                 .HasMaxLength(100)
+                 .IsUnicode(false)
+                 .HasColumnName("DIRECTOR_IDENTIFICATION_NUMBER")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorNationality)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("DIRECTOR_NATIONALITY")
+                .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorDateOfBirth)
+                .HasColumnName("DIRECTOR_DATE_OF_BIRTH");
+
+                entity.Property(e => e.DirectorPhoneNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("DIRECTOR_PHONE_NUMBER")
+                .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorPin)
+               .HasMaxLength(100)
+               .IsUnicode(false)
+               .HasColumnName("DIRECTOR_PIN")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorOccupation)
+               .HasMaxLength(255)
+               .IsUnicode(false)
+               .HasColumnName("DIRECTOR_OCCUPATION")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryIdentificationNumber)
+               .HasMaxLength(100)
+               .IsUnicode(false)
+               .HasColumnName("SIGNATORY_IDENTIFICATION_NUMBER")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryNationality)
+              .HasMaxLength(3)
+              .IsUnicode(false)
+              .HasColumnName("SIGNATORY_NATIONALITY")
+              .UseCollation("Arabic_100_CI_AI");
+
+             entity.Property(e => e.SignatoryDateOfBirth)
+              .HasColumnName("SIGNATORY_DATE_OF_BIRTH");
+
+                entity.Property(e => e.SignatoryPhoneNumber)
+              .HasMaxLength(50)
+              .IsUnicode(false)
+              .HasColumnName("SIGNATORY_PHONE_NUMBER")
+              .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryPin)
+             .HasMaxLength(100)
+             .IsUnicode(false)
+             .HasColumnName("SIGNATORY_PIN")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryOccupation)
+             .HasMaxLength(255)
+             .IsUnicode(false)
+             .HasColumnName("SIGNATORY_OCCUPATION")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UboName)
+             .HasMaxLength(200)
+             .IsUnicode(false)
+             .HasColumnName("UBO_NAME")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UboId)
+             .HasMaxLength(100)
+             .IsUnicode(false)
+             .HasColumnName("UBO_ID")
+             .UseCollation("Arabic_100_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomersAccountsDetailsView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CUSTOMERS_ACCOUNTS_DETAILS_VIEW", "ART_DB");
+
+                entity.Property(e => e.Cid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CID");
+
+                entity.Property(e => e.IdentificationNumber)
+                  .HasMaxLength(50)
+                  .IsUnicode(false)
+                  .HasColumnName("IDENTIFICATION_NUMBER");
+
+                entity.Property(e => e.IdentificationDocumentName)
+                  .HasMaxLength(100)
+                  .IsUnicode(false)
+                  .HasColumnName("IDENTIFICATION_DOCUMENT_NAME");
+
+                entity.Property(e => e.CustIdentExpDate)
+                    .HasColumnName("CUST_IDENT_EXP_DATE");
+
+                entity.Property(e => e.DateOfBirthOrIncorporation)
+                   .HasColumnName("DATE_OF_BIRTH_OR_INCORPORATION");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("PHONE_NUMBER")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.KraPin)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("KRA_PIN")
+                    .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.ForeignTaxIdentificationNumber)
+                    .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("FOREIGN_TAX_IDENTIFICATION_NUMBER");
+
+                entity.Property(e => e.Nationality)
+                   .HasMaxLength(50)
+                   .IsUnicode(false)
+                   .HasColumnName("NATIONALITY")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Residence)
+                   .HasMaxLength(3)
+                   .IsUnicode(false)
+                   .HasColumnName("RESIDENCE")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.RiskStatusOrRiskClassification)
+                   .HasMaxLength(50)
+                   .IsUnicode(false)
+                   .HasColumnName("RISK_STATUS_OR_RISK_CLASSIFICATION")
+                   .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.PepFlag)
+                  .HasMaxLength(1)
+                  .IsUnicode(false)
+                  .HasColumnName("PEP_FLAG")
+                  .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.NatureOfBusiness)
+                 .HasMaxLength(255)
+                 .IsUnicode(false)
+                 .HasColumnName("NATURE_OF_BUSINESS")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.EmailAddress)
+                 .HasMaxLength(350)
+                 .IsUnicode(false)
+                 .HasColumnName("EMAIL_ADDRESS")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorIdentificationNumber)
+                 .HasMaxLength(100)
+                 .IsUnicode(false)
+                 .HasColumnName("DIRECTOR_IDENTIFICATION_NUMBER")
+                 .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorNationality)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("DIRECTOR_NATIONALITY")
+                .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorDateOfBirth)
+                .HasColumnName("DIRECTOR_DATE_OF_BIRTH");
+
+                entity.Property(e => e.DirectorPhoneNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("DIRECTOR_PHONE_NUMBER")
+                .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorPin)
+               .HasMaxLength(100)
+               .IsUnicode(false)
+               .HasColumnName("DIRECTOR_PIN")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorOccupation)
+               .HasMaxLength(255)
+               .IsUnicode(false)
+               .HasColumnName("DIRECTOR_OCCUPATION")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryIdentificationNumber)
+               .HasMaxLength(100)
+               .IsUnicode(false)
+               .HasColumnName("SIGNATORY_IDENTIFICATION_NUMBER")
+               .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryNationality)
+              .HasMaxLength(3)
+              .IsUnicode(false)
+              .HasColumnName("SIGNATORY_NATIONALITY")
+              .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryDateOfBirth)
+                 .HasColumnName("SIGNATORY_DATE_OF_BIRTH");
+
+                entity.Property(e => e.SignatoryPhoneNumber)
+              .HasMaxLength(50)
+              .IsUnicode(false)
+              .HasColumnName("SIGNATORY_PHONE_NUMBER")
+              .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryPin)
+             .HasMaxLength(100)
+             .IsUnicode(false)
+             .HasColumnName("SIGNATORY_PIN")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryOccupation)
+             .HasMaxLength(255)
+             .IsUnicode(false)
+             .HasColumnName("SIGNATORY_OCCUPATION")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UboName)
+             .HasMaxLength(200)
+             .IsUnicode(false)
+             .HasColumnName("UBO_NAME")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.UboId)
+             .HasMaxLength(100)
+             .IsUnicode(false)
+             .HasColumnName("UBO_ID")
+             .UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Title)
+                   .HasMaxLength(50)
+                   .IsUnicode(false)
+                   .HasColumnName("TITLE").UseCollation("Arabic_100_CI_AI");
+                entity.Property(e => e.CustomerType)
+                   .HasMaxLength(20)
+                   .IsUnicode(false)
+                   .HasColumnName("CUSTOMER_TYPE").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Industry)
+                   .HasMaxLength(255)
+                   .IsUnicode(false)
+                   .HasColumnName("INDUSTRY").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Sector)
+                  .HasMaxLength(50)
+                  .IsUnicode(false)
+                  .HasColumnName("SECTOR").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AccountName)
+                  .HasMaxLength(200)
+                  .IsUnicode(false)
+                  .HasColumnName("ACCOUNT_NAME").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.AccountNumber)
+                  .HasMaxLength(50)
+                  .IsUnicode(false)
+                  .HasColumnName("ACCOUNT_NUMBER").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DateAccountOpened)
+                 .HasColumnName("DATE_ACCOUNT_OPENED");
+
+                entity.Property(e => e.AccountStatus)
+                  .HasMaxLength(50)
+                  .IsUnicode(false)
+                  .HasColumnName("ACCOUNT_STATUS").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.Branch)
+                  .HasMaxLength(35)
+                  .IsUnicode(false)
+                  .HasColumnName("BRANCH").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.DirectorName)
+                  .HasMaxLength(200)
+                  .IsUnicode(false)
+                  .HasColumnName("DIRECTOR_NAME").UseCollation("Arabic_100_CI_AI");
+
+                entity.Property(e => e.SignatoryName)
+                 .HasMaxLength(200)
+                 .IsUnicode(false)
+                 .HasColumnName("SIGNATORY_NAME").UseCollation("Arabic_100_CI_AI");
+
+
+            });
+
+            modelBuilder.Entity<ArtCustomersWithDiffDocumentsSameCidView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CUSTOMERS_WITH_DIFF_DOCUMENTS_SAME_CID_VIEW", "ART_DB");
+
+                entity.Property(e => e.CustNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CUST_NO");
+
+                entity.Property(e => e.CustIdentId)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CUST_IDENT_ID");
+
+                entity.Property(e => e.PassPortNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PASSPORTNUMBER");
+
+                entity.Property(e => e.KraPin)
+                  .HasMaxLength(100)
+                  .IsUnicode(false)
+                  .HasColumnName("KRA_PIN");
+            });
+
+            modelBuilder.Entity<ArtCustomersWithSameDocumentsDiffCidView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CUSTOMERS_WITH_SAME_DOCUMENTS_DIFF_CID_VIEW", "ART_DB");
+
+                entity.Property(e => e.CustNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CUST_NO");
+
+                entity.Property(e => e.CustIdentId)
+                   .HasMaxLength(100)
+                   .IsUnicode(false)
+                   .HasColumnName("CUST_IDENT_ID");
+
+                entity.Property(e => e.PassPortNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PASSPORTNUMBER");
+
+                entity.Property(e => e.KraPin)
+                  .HasMaxLength(100)
+                  .IsUnicode(false)
+                  .HasColumnName("KRA_PIN");
+
+                entity.Property(e => e.SimilarDocument)
+                 .HasMaxLength(11)
+                 .IsUnicode(false)
+                 .HasColumnName("SIMILAR_DOCUMENT");
+            });
         }
 
         public void OnDGECMModelCreating(ModelBuilder modelBuilder)

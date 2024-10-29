@@ -79,6 +79,10 @@
     ArtKycMediumTwoMonth: "/ArtKycMediumTwoMonth/GetData",
     ArtKycSummaryByRisk: "/ArtKycSummaryByRisk/GetData",
     ArtCustomerRenewalDetails: "/ArtCustomerRenewalDetails/GetData",
+    ArtMissingKycDetails: "/ArtMissingKycDetails/GetData",
+    ArtCustomersAccountsDetails: "/ArtCustomersAccountsDetails/GetData",
+    ArtCustomersWithDiffDocumentsSameCid: "/ArtCustomersWithDiffDocumentsSameCid/GetData",
+    ArtCustomersWithSameDocumentsDiffCid: "/ArtCustomersWithSameDocumentsDiffCid/GetData",
 
     //FTI
     ACPostingsAccount: "/ACPostingsAccount/GetData",
