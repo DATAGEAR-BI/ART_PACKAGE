@@ -675,7 +675,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                     var columnHeaders = properties.Select(p => p.Name).ToArray();
 
                     // Partition settings
-                    int partitionSize = 8; // Number of columns per page
+                    int partitionSize = 6; // Number of columns per page
                     int totalColumns = columnHeaders.Length;
                     int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
@@ -714,7 +714,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                 table.SetWidth(UnitValue.CreatePercentValue(100));
                                 for (int h = (tableList.Count() ) * partitionSize; h < ((tableList.Count()+1) * partitionSize); h++)
                                 {
-                                    table.AddHeaderCell(new Cell().Add(new Paragraph(columnHeaders[h])).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                                    table.AddHeaderCell(new Cell().Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
                                     .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
                                     .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
                                 }
@@ -726,7 +726,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                             for (int h = (tableList.Count()) * partitionSize; h < totalColumns; h++)
                             {
                                 lastTable.AddHeaderCell(new Cell()
-                                    .Add(new Paragraph(columnHeaders[h]))
+                                    .Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize))
                                     .SetHeight(headerHeight)
                                     .SetTextAlignment(TextAlignment.CENTER)
                                     .SetVerticalAlignment(VerticalAlignment.MIDDLE)
