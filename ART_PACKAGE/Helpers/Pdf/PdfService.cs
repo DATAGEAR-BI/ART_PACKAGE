@@ -653,7 +653,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
             try
             {
-                Stopwatch bdstopwatch = new Stopwatch();
+                Stopwatch bdstopwatch = new Stopwatch();//
                 bdstopwatch.Start();
                 Stopwatch adstopwatch = new Stopwatch();
                 adstopwatch.Start();
