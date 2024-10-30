@@ -104,6 +104,7 @@ export const Handlers = {
         }
         var filters = ds.dataSource.filter();
         var total = ds.dataSource.total();
+        var sort = ds.dataSource.sort();
         var para = {}
         if (id) {
             para.Id = id;
@@ -111,6 +112,7 @@ export const Handlers = {
         para.Take = total;
         para.Skip = 0;
         para.Filter = filters;
+        para.Sort = sort;
         var res = await fetch(`/${controller}/Export`, {
             method: "POST",
             headers: {

@@ -165,7 +165,8 @@ namespace ART_PACKAGE.Helpers.Grid
                 actions = hasConfig ? reportConfig.Actions : null,
                 containsActions = hasConfig && reportConfig.ContainsActions,
                 showCsvBtn = hasConfig && (reportConfig.ShowExportCsv is null || reportConfig.ShowExportCsv(User)),
-                showPdfBtn = hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User))
+                showPdfBtn = hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User)),
+                hasFixedWidth = hasConfig ? reportConfig.HasFixedWidth : false,
             };
             return conf;
         }

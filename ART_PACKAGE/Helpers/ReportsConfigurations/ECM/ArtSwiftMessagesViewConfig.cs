@@ -30,6 +30,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 field = "CreateDate",
                 dir = "asc"
             };
+            HasFixedWidth = true;
         }
     }
 }
