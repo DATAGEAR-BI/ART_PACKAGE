@@ -10,5 +10,7 @@
 
         public bool showCsvBtn { get; set; } = true;
         public bool showPdfBtn { get; set; } = true;
+        public bool hasFixedWidth { get; set; } = false;
+
     }
 }
