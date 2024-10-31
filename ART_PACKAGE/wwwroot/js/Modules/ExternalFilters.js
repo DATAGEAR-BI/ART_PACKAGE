@@ -159,7 +159,7 @@ export const Filters = {
             { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
 
         ]
-    }
+    },
     AlertAgeSummery: {
         filters: [],
         get filters() {
