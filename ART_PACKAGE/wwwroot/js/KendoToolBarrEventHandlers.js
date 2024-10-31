@@ -163,6 +163,7 @@ export const Handlers = {
 
         var filters = ds.dataSource.filter();
         var groups = ds.dataSource.group();
+        var sort = ds.dataSource.sort();
         var promses = [];
         while (total > 0) {
             var promise = new Promise(async (resolve, reject) => {
@@ -174,7 +175,7 @@ export const Handlers = {
                 para.Skip = skip;
                 para.Filter = filters;
                 para.Group = groups;
-
+                para.Sort = sort;
                 var isMyreports = window.location.href.toLowerCase().includes('myreports');
                 var res;
                 if (isMyreports) {
@@ -257,6 +258,7 @@ export const Handlers = {
         var id = document.getElementById("script").dataset.id;
 
         var filters = ds.dataSource.filter();
+        var sort = ds.dataSource.sort();
         var promses = [];
         while (total > 0) {
             var promise = new Promise(async (resolve, reject) => {
@@ -267,6 +269,7 @@ export const Handlers = {
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
+                para.Sort = sort;
                 var res = await fetch(`/${controller}/ExportPdf`, {
                     method: "POST",
                     headers: {
