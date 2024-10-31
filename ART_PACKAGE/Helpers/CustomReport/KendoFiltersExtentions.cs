@@ -35,18 +35,18 @@ namespace ART_PACKAGE.Helpers.CustomReport
         };
         private static readonly Dictionary<string, string> StringOpForC = new()
         {
-            { "eq"              , "{0}==\"{1}\"" },
-            { "neq"             , "{0}!=\"{1}\"" },
+            { "eq"              , "{0}.ToLower()==\"{1}\".ToLower()" },
+            { "neq"             , "{0}.ToLower()!=\"{1}\".ToLower()" },
             { "isnull"          , "{0}== null" },
             { "isnotnull"       , "{0}!= null" },
             { "isempty"         , "{0}==\"\"" },
             { "isnotempty"      , "{0}!=\"\"" },
-            { "startswith"      , "{0}.StartsWith(\"{1}\")" },
-            { "doesnotstartwith", "!{0}.StartsWith(\"{1}\")" },
-            { "contains"        , "{0}.Contains(\"{1}\")" },
-            { "doesnotcontain"  , "!{0}.Contains(\"{1}\")" },
-            { "endswith"        , "{0}.EndsWith(\"{1}\")" },
-            { "doesnotendwith"  , "!{0}.EndsWith(\"{1}\")" },
+            { "startswith"      , "{0}.ToLower().StartsWith(\"{1}\".ToLower())" },
+            { "doesnotstartwith", "!{0}.ToLower().StartsWith(\"{1}\".ToLower())" },
+            { "contains"        , "{0}.ToLower().Contains(\"{1}\".ToLower())" },
+            { "doesnotcontain"  , "!{0}.ToLower().Contains(\"{1}\"v)" },
+            { "endswith"        , "{0}.ToLower().EndsWith(\"{1}\".ToLower())" },
+            { "doesnotendwith"  , "!{0}.ToLower().EndsWith(\"{1}\".ToLower())" },
         };
         private static readonly Dictionary<string, string> NumberOp = new()
         {
