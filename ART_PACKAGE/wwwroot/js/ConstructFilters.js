@@ -17,6 +17,7 @@ class ExternalFilter extends HTMLElement {
         var key = this.dataset.key.toString();
         var filters = Filters[key].filters;
         var rules = Filters[key].rules;
+        var errorInRules = false;
         exRules = rules;
         this.style = `display:flex;
                     justify-content:center;
@@ -72,7 +73,10 @@ class ExternalFilter extends HTMLElement {
             }
         });
 
-
+        $(filtercontrol).on('validationError.queryBuilder', function (e, rule, error, value) {
+            errorInRules = true;
+            console.error("Validation error:", error, "in rule:", rule);
+        });
 
 
         btn.onclick = () => {
@@ -80,7 +84,7 @@ class ExternalFilter extends HTMLElement {
             console.log(ruleEmpty);
             if (ruleEmpty == null) { 
                 exRules = [];
-                if (allow_empty == true) {
+                if (allow_empty == true && !errorInRules) {
                     if (document.getElementById("grid")) {
                         $("#grid").data("kendoGrid").dataSource.read();
                         $("#grid").data("kendoGrid").dataSource.view();
@@ -142,17 +146,20 @@ class ExternalFilter extends HTMLElement {
                             return x;
                         });
                         console.log(exRules);
-                        if (document.getElementById("grid") && exRules) {
-                            $("#grid").data("kendoGrid").dataSource.read();
-                            $("#grid").data("kendoGrid").dataSource.view();
-                        } else if (document.getElementById("charts") && exRules) {
-                            var url = this.dataset.chartsurl;
-                            var chartsurl = Urls[url];
-                            callDefinedCharts(chartsurl);
+                        if (!errorInRules) {
+                            if (document.getElementById("grid") && exRules) {
+                                $("#grid").data("kendoGrid").dataSource.read();
+                                $("#grid").data("kendoGrid").dataSource.view();
+                            } else if (document.getElementById("charts") && exRules) {
+                                var url = this.dataset.chartsurl;
+                                var chartsurl = Urls[url];
+                                callDefinedCharts(chartsurl);
+                            }
                         }
                     }
                 }
             }
+            errorInRules = false;
         }
         this.appendChild(spinnerstyle);
         this.appendChild(filtercontrol);
