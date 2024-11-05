@@ -36,8 +36,9 @@ namespace Data.Data.ARTDGAML
         public string? customer_identification_id { get; set; }
         public DateTime? customer_date_of_birth { get; set; }
         public string? PHONE_NUMBER { get; set; }
-        public int RISK_CLASSIFICATION { get; set; }
+        public int MONEY_LAUNDERING_RISK_SCORE { get; set; }
         public string? occupation_desc { get; set; }
         public DateTime? CUSTOMER_SINCE_DATE { get; set; }
+        public string? Loan_Numbers { get; set; }
     }
 }
