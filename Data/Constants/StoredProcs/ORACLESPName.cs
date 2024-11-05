@@ -61,6 +61,8 @@
         public static readonly string ART_ST_DGAML_PARTIES_LIST_DETAILS_REPORT = "";
         public static readonly string ART_ST_DGAML_POLITICALLY_EXPOSED_REPORT = "";
         public static readonly string ART_ST_DGAML_PARTIES_LIST_SUMMARY_REPORT = "";
+        public static readonly string ART_ST_DGAML_COMMENTS_DETAIL = "";
+        public static readonly string ART_ST_DGAML_SUSPECTED_TRANSACTIONS_DETAIL = "";
 
 
         #region DGAML ALERTS Summary
