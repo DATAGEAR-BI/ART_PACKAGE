@@ -24,7 +24,7 @@ class ExternalFilter extends HTMLElement {
                     padding:1%`;
         this.className = "row";
         var filtercontrol = document.createElement("div");
-
+        var errorInRules = false;
         var btn = document.createElement("button");
         btn.innerText = "apply";
         filtercontrol.classList.add("col-xs-8", "col-md-8", "col-sm-8");
@@ -65,7 +65,10 @@ class ExternalFilter extends HTMLElement {
                 this.hiddenFiltersRules();
             }
         });
-
+        $(filtercontrol).on('validationError.queryBuilder', function (e, rule, error, value) {
+            errorInRules = true;
+            console.error("Validation error:", error, "in rule:", rule);
+        });
 
 
 
@@ -73,7 +76,7 @@ class ExternalFilter extends HTMLElement {
             
             var rules = $(filtercontrol).queryBuilder('getRules');
             var isValidFilters = true;
-            if (rules == null || rules.rules == null) {
+            if (rules == null || rules.rules == null || errorInRules) {
                 isValidFilters = false;
                 toastObj.icon = 'error';
                 toastObj.text = `please add report filters`;
@@ -115,17 +118,19 @@ class ExternalFilter extends HTMLElement {
                         }
                         return x;
                     });
-                    if (document.getElementById("grid")) {
-                        $("#grid").data("kendoGrid").dataSource.read();
-                        $("#grid").data("kendoGrid").dataSource.view();
-                    } else if (document.getElementById("charts")) {
-                        var url = this.dataset.chartsurl;
-                        var chartsurl = Urls[url];
-                        callDefinedCharts(chartsurl);
+                    if (!errorInRules) {
+                        if (document.getElementById("grid")) {
+                            $("#grid").data("kendoGrid").dataSource.read();
+                            $("#grid").data("kendoGrid").dataSource.view();
+                        } else if (document.getElementById("charts")) {
+                            var url = this.dataset.chartsurl;
+                            var chartsurl = Urls[url];
+                            callDefinedCharts(chartsurl);
+                        }
                     }
                 }
             }
-            
+            errorInRules = false;
         }
         this.appendChild(spinnerstyle);
         this.appendChild(filtercontrol);
