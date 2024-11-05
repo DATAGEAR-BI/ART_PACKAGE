@@ -28,5 +28,16 @@ namespace Data.Data.ARTDGAML
 
         // datetime, not nullable
         public DateTime? Run_date { get; set; }
+        public string? Closed_USER_ID { get; set; }  // 
+        public DateTime? close_date { get; set; }
+        public string? close_reason { get; set; }
+        public string? customer_name { get; set; }
+        public string? customer_number { get; set; }
+        public string? customer_identification_id { get; set; }
+        public DateTime? customer_date_of_birth { get; set; }
+        public string? PHONE_NUMBER { get; set; }
+        public int RISK_CLASSIFICATION { get; set; }
+        public string? occupation_desc { get; set; }
+        public DateTime? CUSTOMER_SINCE_DATE { get; set; }
     }
 }

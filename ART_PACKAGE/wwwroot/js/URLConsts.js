@@ -118,6 +118,8 @@
     DGAMLArtScenarioHistory: "/DGAMLArtScenarioHistory/GetData",
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
+    DGAMLCommentsDetail: "/DGAMLCommentsDetail/GetData",
+    DGAMLSuspectedTransactionsDetail: "/DGAMLSuspectedTransactionsDetail/GetData",
 
 
     //crp
