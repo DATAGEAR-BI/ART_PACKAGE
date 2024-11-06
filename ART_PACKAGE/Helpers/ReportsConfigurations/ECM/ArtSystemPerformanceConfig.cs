@@ -45,7 +45,13 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             {
                    "CaseRk",
     "ValidFromDate",
-    "LastCommentSubject"            };
+    "LastCommentSubject",
+            "TransactionDirection",
+            "TransactionType",
+            "TransactionAmount",
+            "TransactionCurrency",
+            "SwiftReference"
+            };
         }
     }
 }
