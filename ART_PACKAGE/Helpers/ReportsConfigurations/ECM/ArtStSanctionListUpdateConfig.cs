@@ -17,6 +17,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 {"ENTITY_TYPE" , new GridColumnConfiguration { DisplayName = "Entity Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
                 {"Number_Of_Actions" , new GridColumnConfiguration { DisplayName = "Number Of Actions"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
                 {"STATUS" , new GridColumnConfiguration { DisplayName = "Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
+                {"PROGRAMS" , new GridColumnConfiguration { DisplayName = "Programs"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
             };
             ReportTitle = "List Update Report";
             ReportDescription = "";
