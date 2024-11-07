@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        User Performance V2 Report
+        <small>This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below</small>
+    </h1>
+</section>
+<m-grid id="UserPerformanceV2" data-urlkey="UserPerformanceV2" data-handlerkey="UserPerformanceV2"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+
+
+}
+
+

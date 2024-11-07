@@ -1,6 +1,9 @@
-﻿namespace Data.Data.ECM
+﻿using System;
+using System.Collections.Generic;
+
+namespace Data.Data.ECM
 {
-    public partial class ArtSystemPerformance
+    public partial class ArtSystemPerformanceV2Sidian
     {
         public string CaseId { get; set; } = null!;
         public decimal CaseRk { get; set; }
@@ -8,7 +11,6 @@
         public string? CaseType { get; set; }
         public string? CaseStatus { get; set; }
         public string? CaseDesc { get; set; }
-        public string? Priority { get; set; }
         public string? CreateUserId { get; set; }
         public string? InvestrUserId { get; set; }
         public DateTime CreateDate { get; set; }
@@ -24,16 +26,7 @@
         public DateTime? UpdatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public int? NumberOfComments { get; set; }
-        public int? NumberOfAttachments { get; set; }
         public string? IncidentId { get; set; }
         public string? WatchListName { get; set; }
-        public int? DurationsInSeconds { get; set; }
-        public int? DurationsInMinutes { get; set; }
-        public int? DurationsInHours { get; set; }
-        public int? DurationsInDays { get; set; }
-
-
-
-
     }
 }

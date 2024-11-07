@@ -144,6 +144,8 @@
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
     ClearDetect: "/ClearDetect/GetData",
+    UserPerformanceV2: "/UserPerformanceV2/GetData",
+    SystemPerformanceV2: "/SystemPerformanceV2/GetData",
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",

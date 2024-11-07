@@ -3,9 +3,9 @@ using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
-    public class ArtSystemPerformanceConfig : ReportConfig
+    public class ArtSystemPerformanceV2SidianConfig : ReportConfig
     {
-        public ArtSystemPerformanceConfig()
+        public ArtSystemPerformanceV2SidianConfig()
         {
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
@@ -37,7 +37,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { nameof(ArtSystemPerformance.CreateUserId), new GridColumnConfiguration { DisplayName = "Create User Id"}},
             };
 
-            ReportTitle = "System Performance Report";
+            ReportTitle = "System Performance V2 Report";
             ReportDescription = "This report presents all sanction cases with the related information on case level as below";
             SkipList = new List<string>
             {

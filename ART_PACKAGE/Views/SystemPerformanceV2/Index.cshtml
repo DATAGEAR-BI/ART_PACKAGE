@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+
+
+<section class="content-header">
+    <h1>
+        System Performance V2 Report
+        <small class="h6">This report presents all sanction cases with the related information on case level as below</small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SystemPerformanceV2" data-urlkey="SystemPerformanceV2" data-handlerkey="SystemPerformanceV2"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/components/grid/grid.js"></script>
+}
+
+
+
