@@ -9,9 +9,13 @@
 	
 	<ItemGroup>
 		<Compile Remove="Helpers\Aml_Analysis\**" />
+		<Compile Remove="Views\DGAMLSuspectedTransactionsDetail\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />
+		<Content Remove="Views\DGAMLSuspectedTransactionsDetail\**" />
 		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
+		<EmbeddedResource Remove="Views\DGAMLSuspectedTransactionsDetail\**" />
 		<None Remove="Helpers\Aml_Analysis\**" />
+		<None Remove="Views\DGAMLSuspectedTransactionsDetail\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -187,6 +191,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Remove="Controllers\DGAML\DGAMLSuspectedTransactionsDetailController.cs" />
 		<Compile Remove="Controllers\RiskSummaryController - Copy.cs" />
 		<Compile Remove="Controllers\SystemPerformanceController.cs" />
 		<Compile Remove="Helpers\CustomReport\GridAggregateType.cs" />
