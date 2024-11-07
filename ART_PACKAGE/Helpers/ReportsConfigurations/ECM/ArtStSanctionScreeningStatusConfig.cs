@@ -15,7 +15,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 {"MATCH_STATUS" , new GridColumnConfiguration { DisplayName = "Match Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
                 {"SEARCH_MESSAGE" , new GridColumnConfiguration { DisplayName = "Search Message"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
                 {"SOURCE_TYPE" , new GridColumnConfiguration { DisplayName = "Source Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
-                {"Screening_List" , new GridColumnConfiguration { DisplayName = "Screening List"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
+                {"SCREENING_LIST" , new GridColumnConfiguration { DisplayName = "Screening List"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },                                                                               
             };
             ReportTitle = " Screening Status Report";
             ReportDescription = "";

@@ -50,7 +50,7 @@ namespace Data.Data.ARTDGAML
             modelBuilder.Entity<ArtStDgAmlPoliticallyExposed>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlPartiesListSummary>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlCommentsDetail>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ArtStDgAmlSuspectedTransactionsDetail>().HasNoKey().ToView(null);
+           //modelBuilder.Entity<ArtStDgAmlSuspectedTransactionsDetail>().HasNoKey().ToView(null);
 
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());

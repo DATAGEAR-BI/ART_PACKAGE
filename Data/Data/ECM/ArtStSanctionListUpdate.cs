@@ -15,7 +15,7 @@ namespace Data.Data.ECM
         public string WATCH_LIST_NAME { get; set; } = null!;
         public string? ENTITY_TYPE { get; set; }
         public string? PROGRAMS { get; set; }
-        public int? Number_Of_Actions { get; set; }
+        public int? NUMBER_OF_ACTIONS { get; set; }
         public string STATUS { get; set; } = null!;
 
     }

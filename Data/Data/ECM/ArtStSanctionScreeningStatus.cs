@@ -15,6 +15,6 @@ namespace Data.Data.ECM
         public string? SEARCH_MESSAGE { get; set; }
 
         public string? SOURCE_TYPE { get; set; }
-        public string? Screening_List { get; set; }
+        public string? SCREENING_LIST { get; set; }
     }
 }
