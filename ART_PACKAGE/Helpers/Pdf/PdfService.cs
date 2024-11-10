@@ -22,7 +22,11 @@ using iText.Layout.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Path = System.IO.Path;
-
+using System.Diagnostics;
+using iText.Layout.Borders;
+using iText.Kernel.Colors;
+using ART_PACKAGE.Hubs;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -33,11 +37,15 @@ namespace ART_PACKAGE.Helpers.Pdf
         private readonly ILogger<PdfService> _logger;
         private readonly object _locker = new();
         public event Action<int, int> OnProgressChanged;
+        public event Action<int, int> OnLastProgressChanged;
         public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _processesHandler = processesHandler;
             _logger = logger;
+            OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
+            OnLastProgressChanged = (rd, fn) => _logger.LogInformation("file is being exported : ({fn}) /  {p} ", fn, rd);
+
 
 
 
@@ -462,170 +470,215 @@ namespace ART_PACKAGE.Helpers.Pdf
 
         }
 
-        public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportRequest req, int fileNumber, string folderPath, string fileName,string reportGUID, string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            //data prep
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
-            GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
-            IQueryable<TModel>? data = dataRes.data;
-            int total = dataRes.total;
-            List<testttttt> s = new();
-            for (int i = 0; i < 1000; i++)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                s.Add(new() { id = i, name = "name" + i, phone = "0101088667" + i });
-            }
-            //file prep
-            if (!Directory.Exists(folderPath))
-                _ = Directory.CreateDirectory(folderPath);
-            
+                ITenantService tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
+                tenantService.ManiualSetCurrentTenant(tenantId);
 
-            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
-            
-            //string pdfPath = "exported_data.pdf";
-            bool isLandscape = true; 
-            // Create a PDF document
-            
-                  
+
+                //data prep
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
+                GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
+                IQueryable<TModel>? data = dataRes.data;
+                int total = dataRes.total;
+
+                // Ensure the folder path exists
+                if (!Directory.Exists(folderPath))
+                    _ = Directory.CreateDirectory(folderPath);
+
+                string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+                bool isLandscape = true;
 
                 try
-            {
-                // Create a PDF writer
-                using (var writer = new PdfWriter(filePath))
                 {
-                using (var pdf = new PdfDocument(writer))
-                {
-                    var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
-                    var document = new Document(pdf, pageSize);
+                    Stopwatch bdstopwatch = new Stopwatch();//
+                    bdstopwatch.Start();
+                    Stopwatch adstopwatch = new Stopwatch();
+                    adstopwatch.Start();
+                    using (var writer = new PdfWriter(filePath))
+                    using (var pdf = new PdfDocument(writer))
+                    {
+                        var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
+                        var document = new Document(pdf, pageSize);
+                        // Define document margins
+                        float documentTopMargin = 32f;    // Points
+                        float documentBottomMargin = 32f; // Points
+                        float documentLeftMargin = 32f;   // Points
+                        float documentRightMargin = 32f;  // Points
+                        document.SetMargins(documentTopMargin, documentRightMargin, documentBottomMargin, documentLeftMargin);
 
-                        // Add an image on the first page
-                        /*var imagePath = "path_to_image.jpg";
-                        var image = new iText.Layout.Element.Image(ImageDataFactory.Create(imagePath))
-                            .SetFixedPosition(50, pageSize.GetHeight() - 150, 200)
-                            .SetAutoScale(true);
-                        document.Add(image);#1#
-                        */
-                        // Get model properties for dynamic table headers
-                        // var modelType = typeof(TModel);
-                         var modelType = typeof(testttttt);
-
+                        // Get the properties of the TModel class for headers and data extraction
+                        var modelType = typeof(TModel);
                         var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                    var columnHeaders = properties.Select(p => p.Name).ToArray();
+                        var columnHeaders = properties.Select(p => p.Name).ToArray();
 
-                    // Define table layout
-                    var table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Dynamic number of columns
-                    table.SetWidth(UnitValue.CreatePercentValue(100));
+                        // Partition settings
+                        int partitionSize = 6; // Number of columns per page
+                        int totalColumns = columnHeaders.Length;
+                        int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
-                    // Add headers
-                    foreach (var header in columnHeaders)
-                    {
-                        table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
-                    }
+                        int recordsPerPage = 20; // Set the number of records per page, this can be dynamic as needed
+                        int rowCount = 0;
+                        int index = 0;
+                        int dataCount = data.Count();
+                        bool newPageRequired = false;
+                        int totalrec = totalPagesForColumns * dataCount;
+                        int pdfRec = 0;
+                        var pageHeight = pdf.GetDefaultPageSize().GetHeight();
+                        float headerHeight = 20f; // Set a fixed height for the header row
+                        float availableHeight = pageSize.GetHeight() - documentTopMargin - documentBottomMargin - headerHeight - 75 - (2 * recordsPerPage);
 
-                    // Adjust font size dynamically
-                    float fontSize = 8f; // Start with a smaller font size
-                    if (columnHeaders.Length > 20)
-                    {
-                        fontSize = 8f; // Adjust font size if necessary
-                    }
-                    else
-                    {
-                        fontSize = 12f; // Default font size
-                    }
+                        float rowHeight = availableHeight / recordsPerPage;
+                        float calculatedFontSize = CalculateFontSize(rowHeight, lines: 2);
 
-                    // Add footer with page numbers
-                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new PDFPageEventHandler());
-
-                    // Retrieve data from IQueryable and add it to the table
-                    int rowCount = 0;
-                    if (!data.Any())
-                        OnProgressChanged(0, fileNumber);
-                    int index = 0;
-                    int dataCount = data.Count();
-                    float progress = 0;
-                    foreach (var item in s)
-                    {
-                        if (_processesHandler.isProcessCanceld(reportGUID))
+                        List<Table> tableList = new List<Table>();
+                        var allElements = new List<IBlockElement>();
+                        foreach (var item in data)
                         {
-                            if (!Directory.Exists(folderPath))
-                                _ = Directory.CreateDirectory(folderPath);
-                            try
+                            if (rowCount % recordsPerPage == 0)
                             {
-                                _logger.LogInformation("Pdf Process Cancled");
-                                document.Add(table);
-                                // Close the document
-                                document.Close();
-                                return true;
-                            }
-                            catch (Exception ex)
-                            {
-                                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
-                                return false;
-                            }
-                        }
-
-
-
-
-                        if (rowCount % 50 == 0 && rowCount > 0) // Example for page break
-                        {
-                            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                            table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
-                            table.SetWidth(UnitValue.CreatePercentValue(100));
-
-                            // Re-add headers
-                            foreach (var header in columnHeaders)
-                            {
-                                table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
-                            }
-                        }
-
-                        // Add data cells
-                        foreach (var property in properties)
-                        {
-                            var value = property.GetValue(item)?.ToString();
-                            table.AddCell(new Cell().Add(new Paragraph(value).SetFontSize(fontSize)));
-                        }
-                        rowCount++;
-
-                        index++; // Increment the index for each item
-                        if (dataCount > 100)
-                        {
-                            if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
-                            {
-                                //progress = (float)(index / (float)total * 100);
-                                int recordsDone = index + 1;
-                                lock (_locker)
+                                foreach (var tabl in tableList)
                                 {
-                                    OnProgressChanged(recordsDone, fileNumber);
+                                    allElements.Add(tabl);
+                                    //allElements.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                                    /*document.Add(tabl);
+                                    document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Add a new page when a new partition starts
+                                    */
                                 }
+                                tableList = new();
+                                for (int i = 0; i < totalPagesForColumns - 1; i++)
+                                {
+                                    Table table = new Table(UnitValue.CreatePercentArray(partitionSize));
+                                    table.SetWidth(UnitValue.CreatePercentValue(100));
+                                    for (int h = (tableList.Count()) * partitionSize; h < ((tableList.Count() + 1) * partitionSize); h++)
+                                    {
+                                        table.AddHeaderCell(new Cell().Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                                        .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                        .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                    }
+                                    tableList.Add(table);
+
+                                }
+                                Table lastTable = new Table(UnitValue.CreatePercentArray(totalColumns % partitionSize == 0 ? partitionSize : totalColumns % partitionSize));
+                                lastTable.SetWidth(UnitValue.CreatePercentValue(100));
+                                for (int h = (tableList.Count()) * partitionSize; h < totalColumns; h++)
+                                {
+                                    lastTable.AddHeaderCell(new Cell()
+                                        .Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize))
+                                        .SetHeight(headerHeight)
+                                        .SetTextAlignment(TextAlignment.CENTER)
+                                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                        .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                                        .SetBorder(Border.NO_BORDER)
+                                        .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                        .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                }
+                                tableList.Add(lastTable);
                             }
-                        }
-                        else
-                        {
-                            int recordsDone = index + 1;
-                            lock (_locker)
+                            int columnNumber = 1;
+                            int tableIndex = 0;
+                            foreach (var property in properties)
                             {
-                                //OnProgressChanged(recordsDone, fileNumber);
+                                var value = property.GetValue(item)?.ToString();
+
+                                tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(value ?? "").SetFontSize(calculatedFontSize)
+                                        .SetTextAlignment(TextAlignment.CENTER)
+                                        .SetMultipliedLeading(1f))
+                                    //.SetHeight(rowHeight)
+                                    .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
+                                    .SetTextAlignment(TextAlignment.CENTER)
+                                    .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                    .SetFontSize(calculatedFontSize)
+                                    .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
+                                    .SetBorder(Border.NO_BORDER)
+                                    .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                    .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+
+                                if (columnNumber != 1 && columnNumber % partitionSize == 0)
+                                {
+                                    tableIndex++;
+                                    pdfRec++;
+                                    if (totalrec > 100 && (pdfRec % 100 == 0 || pdfRec == totalrec))
+                                    {
+                                        int recordsDone = pdfRec + 1;
+                                        lock (_locker)
+                                        {
+                                            OnProgressChanged(recordsDone, fileNumber);
+                                        }
+                                    }
+                                }
+                                columnNumber++;
                             }
+
+
+                            index++; // Increment the index for each item
+
+                            // Log progress or handle process cancellation
+                            /* if (dataCount > 100 && (index % 100 == 0 || index == dataCount))
+                             {
+                                 int recordsDone = index + 1;
+                                 lock (_locker)
+                                 {
+                                     OnProgressChanged(recordsDone, fileNumber);
+                                 }
+                             }*/
+                            rowCount++;
+                            // If all records are added, break out of the loop
+                            if (rowCount >= dataCount)
+                                break;
                         }
+                        bdstopwatch.Stop();
+
+                        // Get the elapsed time as a TimeSpan
+                        TimeSpan bdelapsedTime = bdstopwatch.Elapsed;
+
+                        Console.WriteLine($@"until before close document takes {bdelapsedTime}");
+                        int elementDone = 0;
+                        int totalElements= allElements.Count();
+                        foreach (var elem in allElements)
+                        {
+                            
+                            document.Add(elem);
+                            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                            OnLastProgressChanged(elementDone, totalElements);
+                            elementDone++;
+                        }
+                        // Close the document once done
+                        document.Close();
+                        adstopwatch.Stop();
+
+                        // Get the elapsed time as a TimeSpan
+                        TimeSpan adelapsedTime = adstopwatch.Elapsed;
+                        Console.WriteLine($@"until after close document takes {adelapsedTime}");
+                        OnLastProgressChanged(elementDone, totalElements);
 
                     }
-
-                    document.Add(table);
-
-                    // Close the document
-                    document.Close();
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    return false;
                 }
-            }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred: {ex.Message}");
-                    }
+
                 return true;
+            }
+
+               float CalculateFontSize(float cellHeight, int lines)
+            {
+                // Assuming a basic factor for line spacing and padding/margin inside the cell
+                float lineSpacingFactor = 1.2f; // A factor to include space between lines
+                float paddingFactor = 1.0f; // A factor for padding/margin within the cell
+
+                // Calculate the approximate font size that fits the number of lines
+                float calculatedFontSize = (cellHeight / (lines * lineSpacingFactor)) - paddingFactor;
+
+                return Math.Max(calculatedFontSize, 6); // Set a minimum font size limit (e.g., 6pt)
+            }
         }
 
 
