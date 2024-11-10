@@ -11,10 +11,13 @@ namespace Data.Data.KYC
         public string Cid { get; set; } = null!;
         public string? AccountNumber { get; set; } //
         public string? AccountName { get; set; }  //
+        public string? AccountStatus { get; set; }  //
+        public DateTime? DateAccountOpened { get; set; } //
+        public string? Branch { get; set; }  //
         public string? IdentificationNumber { get; set; }
         public string? IdentificationDocumentName { get; set; }  //
+        public DateTime? CustIdentExpDate { get; set; }
         public string? CustomerType { get; set; }  //
-        public string? AccountStatus { get; set; }  //
         public string? Title { get; set; }    //
         public string? PhoneNumber { get; set; }
         public string? KraPin { get; set; }
@@ -25,10 +28,8 @@ namespace Data.Data.KYC
         public string? Residence { get; set; }
         public string? RiskStatusOrRiskClassification { get; set; }
         public string? NatureOfBusiness { get; set; }
-        public string? Branch { get; set; }  //
         public string? PepFlag { get; set; }
         public string? EmailAddress { get; set; }
-        public DateTime? DateAccountOpened { get; set; } //
         public DateTime? DateOfBirthOrIncorporation { get; set; }
         public string? DirectorIdentificationNumber { get; set; }
         public string? DirectorName { get; set; }  //
@@ -44,17 +45,8 @@ namespace Data.Data.KYC
         public string? SignatoryPin { get; set; }
         public string? SignatoryOccupation { get; set; }
         public DateTime? SignatoryDateOfBirth { get; set; }
-        public string? UboName { get; set; }
         public string? UboId { get; set; }
+        public string? UboName { get; set; }
 
-
-        public DateTime? CustIdentExpDate { get; set; }
-        
-        
-       
-
-        
-        
-       
     }
 }

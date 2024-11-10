@@ -10,6 +10,7 @@ namespace Data.Data.KYC
     {
         public string Cid { get; set; } = null!;
         public string? IdentificationNumber { get; set; }
+        public DateTime? CustIdentExpDate { get; set; }
         public DateTime? DateOfBirthOrIncorporation { get; set; }
         public string? PhoneNumber { get; set; }
         public string? KraPin { get; set; }
@@ -19,7 +20,6 @@ namespace Data.Data.KYC
         public string? EmailAddress { get; set; }
         public string? RiskStatusOrRiskClassification { get; set; }
         public string? NatureOfBusiness { get; set; }
-        public DateTime? CustIdentExpDate { get; set; }
         public string? PepFlag { get; set; }
         public string? DirectorIdentificationNumber { get; set; }
         public string? DirectorNationality { get; set; }
@@ -33,8 +33,8 @@ namespace Data.Data.KYC
         public string? SignatoryPhoneNumber { get; set; }
         public string? SignatoryPin { get; set; }
         public string? SignatoryOccupation { get; set; }
-        public string? UboName { get; set; }
         public string? UboId { get; set; }
+        public string? UboName { get; set; }
 
     }
 }
