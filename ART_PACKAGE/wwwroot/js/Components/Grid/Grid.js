@@ -291,13 +291,26 @@ class Grid extends HTMLElement {
 
                 progressBar.value = parseFloat(progress.toFixed(2));
                 if (progress >= 100) {//|| reminder <= 100
+
                     progressBar.hidden = true;
-                    var downloadButton = document.getElementById("ExportDownloadBtn");
-                    downloadButton.style.visibility = "";
-                    downloadButton.hidden = false;
+                    //var downloadButton = document.getElementById("ExportDownloadBtn");
+                    //downloadButton.style.visibility = "";
+                    //downloadButton.hidden = false;
                     this.isExporting = false;
                     this.isDownloaded = false;
                     isExportingCSVNow = false;
+                    var downloadRes = await fetch("/Files/DownloadCsvFiles/" + this.csvExportId);
+                    if (downloadRes.ok) {
+                        var blob = await downloadRes.blob();
+                        var a = document.createElement("a");
+                        a.setAttribute("download", this.csvExportId + ".Zip");
+                        a.href = window.URL.createObjectURL(blob);
+                        a.click();
+                        e.target.hidden = true;
+                        this.csvExportId = "";
+                        this.isDownloaded = true;
+                        e.target.style.visibility = "hidden";
+                    }
                     exportConnection.invoke("CancelPdfExport", currentCSVProcess);
 
                 }
@@ -344,6 +357,18 @@ class Grid extends HTMLElement {
                             pdfProgressBar.hidden = true;
                             pdfProgressBar.style.visibility = "hidden";
                         }
+
+                        var downloadRes = await fetch("/Files/DownloadPDFFiles/" + exportinProcess);
+                        if (downloadRes.ok) {
+                            var blob = await downloadRes.blob();
+                            var a = document.createElement("a");
+                            a.setAttribute("download", exportinProcess + ".Zip");
+                            a.href = window.URL.createObjectURL(blob);
+                            a.click();
+                            e.target.hidden = true;
+                            e.target.style.visibility = "hidden";
+                        }
+
                         exportConnection.invoke("CancelPdfExport", currentPDFReportId);
 
                         isExportingPDFNow = false;
