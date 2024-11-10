@@ -1,133 +1,96 @@
-﻿class Select extends HTMLElement {
-    select = document.createElement("select");
-    label = document.createElement("label");
-    isMulti;
-    constructor() {
-        super();
-    }
+﻿//class Select extends HTMLElement {
+//    select = document.createElement("select");
+//    label = document.createElement("label");
+//    isMulti;
 
-    connectedCallback() {
-        var id = this.id;
-        this.classList.add("form-floating", "form-floating-outline");
+//    constructor() {
+//        super();
+//    }
 
-        var attrs = Object.keys(this.dataset);
+//    connectedCallback() {
+//        var id = this.id;
+//        this.classList.add("form-floating", "form-floating-outline");
 
-        var isSearchable = attrs.includes("searchable");
+//        var attrs = Object.keys(this.dataset);
 
-        if (isSearchable)
-            this.classList.add("searchable");
+//        var isSearchable = attrs.includes("searchable");
+//        if (isSearchable) this.classList.add("searchable");
 
-        var isMulti = attrs.includes("multiple");
+//        var isMulti = attrs.includes("multiple");
+//        if (isMulti) {
+//            this.isMulti = isMulti;
+//            this.classList.add("multi-select");
+//            this.select.multiple = true;
+//        } else {
+//            this.select.appendChild(document.createElement("option"));
+//        }
 
-        if (isMulti) {
-            this.isMulti = isMulti;
-            this.classList.add("multi-select");
-            this.select.multiple = true;
-        } else {
-            this.select.appendChild(document.createElement("option"))
-        }
+//        this.select.id = id + "-Select";
+//        this.select.classList.add("form-select");
 
+//        if (attrs.includes("disabled")) this.select.disabled = true;
 
-        this.select.id = id + "-Select";
-        this.select.classList.add("form-select");
+//        this.label.innerText = this.dataset.title;
 
-        if (attrs.includes("disabled"))
-            this.select.disabled = true;
+//        this.appendChild(this.select);
+//        this.appendChild(this.label);
+//        this.initialize();
 
-        this.label.innerText = this.dataset.title;
+//        // Initialize selectpicker after everything is appended
+//        $(this.select).selectpicker();
+//    }
 
-        
-        this.appendChild(this.select);
-        this.appendChild(this.label);
-        let children = this.querySelectorAll("option");
-        console.log(children);
-        if(children && children.length > 0){
-            this.intialize(children);
-        }
-        else 
-            this.intialize([]);
-    }
+//    initialize() {
+//        let children = this.querySelectorAll("option");
+//        children.forEach(x => this.select.appendChild(x));
+//    }
 
-    intialize(options) {
-        // Initialize
+//    reset() {
+//        this.select.innerHTML = '';
+//    }
 
-        options.forEach(x => {
-            
-            this.select.appendChild(x);
-        })
-        var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
+//    update(options) {
+//        this.reset();
+//        options.forEach(x => {
+//            const option = document.createElement("option");
+//            option.text = x.text;
+//            option.value = x.value;
+//            this.select.appendChild(option);
+//        });
+//        $(this.select).selectpicker("refresh");  // Refresh selectpicker after updating options
+//    }
 
-        var selectList = [].slice.call(selectnodelist);
+//    setDefaultValues(defaultValues) {
+//        [...this.select.options].forEach(option => {
+//            option.selected = defaultValues.includes(option.value);
+//        });
+//        $(this.select).selectpicker("refresh");  // Refresh selectpicker after setting default values
+//    }
 
-        var selectFields = selectList.map(function (s) {
-            return new materialstyle.SelectField(s)
-        })
-    }
+//    get value() {
+//        if (!this.isMulti) return this.select.options[this.select.selectedIndex];
+//        return [...this.select.options].filter(x => x.selected && x.value != "");
+//    }
 
+//    enable() {
+//        this.select.disabled = false;
+//        $(this.select).selectpicker("refresh");
+//    }
 
-    reset() {
-        this.select.innerHTML = '';
-    }
+//    disable() {
+//        this.select.disabled = true;
+//        $(this.select).selectpicker("refresh");
+//    }
 
-    update(options) {
-        this.reset();
-        options.forEach(x => {
-            this.select.appendChild(x);
-        })
-        var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
-        for (const [, value] of Object.entries(selectnodelist)) {
-            var selectFieldInstance = materialstyle.SelectField.getOrCreateInstance(value)
-            selectFieldInstance.rebuild()
-        }
-    }
+//    toggleDisable() {
+//        if (this.select.disabled) this.enable();
+//        else this.disable();
+//    }
 
-    set onSelectChange(callBack) {
-        this.select.onchange = (e) => callBack(e);
-    }
+//    deSelect() {
+//        [...this.select.options].forEach(x => x.selected = false);
+//        $(this.select).selectpicker("refresh");
+//    }
+//}
 
-
-    get value() {
-        if (!this.isMulti)
-            return this.select.options[this.select.selectedIndex];
-
-        return [...this.select.options].filter(x => x.selected && x.value != "");
-    }
-
-    enable() {
-        this.select.disabled = false;
-        this.querySelector('button[role=combobox]').disabled = false;
-        this.refresh()
-    }
-
-    disable() {
-        this.select.disabled = true;
-        this.querySelector('button[role=combobox]').disabled = true;
-        this.refresh()
-    }
-
-    refresh() {
-
-        var selectnodelist = this.querySelectorAll(`#${this.id}-Select`);
-        for (const [, value] of Object.entries(selectnodelist)) {
-            var selectFieldInstance = materialstyle.SelectField.getOrCreateInstance(value)
-            selectFieldInstance.redraw()
-        }
-    }
-
-    toggleDisable() {
-        if (this.select.disabled)
-            this.enable()
-        else
-            this.disable()
-
-        this.refresh()
-    }
-
-    deSelect() {
-        [...this.select.options].forEach(x => x.selected = false);
-        this.querySelector('button[role=combobox]').innerText = "";
-        this.refresh();
-    }
-}
-
-customElements.define("m-select", Select);
+//customElements.define("m-select", Select);

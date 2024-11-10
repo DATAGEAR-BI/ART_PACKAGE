@@ -1,7 +1,11 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.Constants.db;
+using Data.GOAML;
 using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Collections.Generic;
+using System.Data;
 using System.Text.Json;
 
 
@@ -41,10 +45,57 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
         {
             name = x.Column,
             isNullable = x.IsNullable,
-            type = x.JsType
-        });
+            type = x.JsType,
+            isDropDown = !string.IsNullOrEmpty(x.DropDownView),
+            displayName = x.DisplayName,
+            menu = GetDropDownMenu(x.DropDownView, x.DropDownText, x.DropDownValue)
+        }); ;
     }
+    private IEnumerable<SelectItem> GetDropDownMenu(string DropDownView,string DropDownText,string DropDownValue)
+    {
+        if (string.IsNullOrEmpty( DropDownView))
+        {
+            return null;
+        }
+        using (var connection = _context.Database.GetDbConnection())
+        {
+            try
+            {
+                List < SelectItem > selectMenu = new();
+                if (connection.State != System.Data.ConnectionState.Open)
+                    connection.Open();
+                var result = new List<Dictionary<string, object>>();
+                using var command = connection.CreateCommand();
+                command.CommandText = GenerateDropDownSql(DropDownView,DropDownText,DropDownValue);
+                IQueryable<Dictionary<string, object>> resultData;
+                using (var reader = command.ExecuteReader())
+                {
 
+                    while (reader.Read())
+                    {
+                        selectMenu.Add(new SelectItem() { text = reader[DropDownText].ToString(), value = reader[DropDownValue].ToString() });
+                      
+                    }
+                }
+                return selectMenu;
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+    }
+    private string GenerateDropDownSql(string DropDownView, string DropDownText, string DropDownValue)
+    {
+        var dbType = _context.Database.IsOracle() ? DbTypes.Oracle : _context.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
+        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
+        var selectLine = DropDownText == DropDownValue ? $"SELECT { string.Format(dbLitral, DropDownValue)}" : $@"SELECT { string.Format(dbLitral, DropDownText)},{ string.Format(dbLitral, DropDownValue)} ";
+        var fromLine = $@"FROM {string.Join(".", DropDownView.Split(".").Select(x => string.Format(dbLitral, x)))}";
+
+        return $@"{selectLine}
+                  {fromLine};";
+    }
     public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtCustomReport report, GridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
@@ -466,4 +517,6 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
 /*        _context.Entry(report).Collection(u => u.Users).Load();
 */        return report;
     }
+
+
 }

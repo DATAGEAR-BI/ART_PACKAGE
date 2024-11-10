@@ -11,5 +11,6 @@ public class SaveReportDto
     public string Title { get; set; } = null!;
     public string ObjectType { get; set; } = null!;
     public string? Description { get; set; }
+    public int CategoryId { get; set; }
     public DbSchema Schema { get; set; }
 }

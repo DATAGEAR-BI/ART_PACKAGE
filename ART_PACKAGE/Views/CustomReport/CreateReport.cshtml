@@ -48,7 +48,7 @@
         <div class="row"style="margin-top:2%" >
             <textarea class="form-control col-md-12" rows="4" id="desc" placeholder="Report Description"></textarea>
         </div>
-        
+        <category-tree></category-tree>
 
          <h4>Add the charts you want.</h4>
         <div class="row">
@@ -86,7 +86,105 @@
 
                 
         </div>
+@*        <div>
+            <m-select id="ColumnNamesss" data-title="Column Names" data-live-search="true" data-multiple="true" style="width:100%"></m-select>
 
+        </div>
+
+        <script>
+            // Example usage to set options dynamically from a list:
+            var columnSelect = document.getElementById("ColumnNamesss");
+            columnSelect.setOptions([
+                { text: "Column 1", value: "column1" },
+                { text: "Column 2", value: "column2" },
+                { text: "Column 3", value: "column3" }
+            ]);
+
+            // Example usage to fetch options from a URL:
+        </script>
+        <script src="~/js/Components/MultiSelect/Select.js"></script>
+
+        <div id="dynamic-table-container">
+            <!-- Bootstrap Table with Centered Content and m-select Columns -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">First</th>
+                        <th scope="col" class="text-center">Last</th>
+                        <th scope="col" class="text-center">Handle</th>
+                        <th scope="col" class="text-center">Select 1</th>
+                        <th scope="col" class="text-center">Select 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center">1</th>
+                        <td class="text-center">Mark</td>
+                        <td class="text-center">Otto</td>
+                        <td class="text-center">mdo</td>
+                        <!-- m-select columns -->
+                        <td class="text-center">
+                            <m-select id="select-1-1" data-title="Choose Option" data-multiple="true" data-searchable="true">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                        <td class="text-center">
+                            <m-select id="select-2-1" data-title="Select 2">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">2</th>
+                        <td class="text-center">Jacob</td>
+                        <td class="text-center">Thornton</td>
+                        <td class="text-center">fat</td>
+                        <!-- m-select columns -->
+                        <td class="text-center">
+                            <m-select id="select-1-2" data-title="Select 1">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                        <td class="text-center">
+                            <m-select id="select-2-2" data-title="Select 2">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">3</th>
+                        <td class="text-center">Larry</td>
+                        <td class="text-center">the Bird</td>
+                        <td class="text-center">twitter</td>
+                        <!-- m-select columns -->
+                        <td class="text-center">
+                            <m-select id="select-1-3" data-title="Select 1">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                        <td class="text-center">
+                            <m-select id="select-2-3" data-title="Select 2">
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </m-select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>*@
         <div id="addedCharts" class="row">
 
         </div>
@@ -98,6 +196,21 @@
 
 </div>
 
+<script>
+    var s = document.getElementById("select-1-1");
+
+    // Now we can call setOptions on the custom <m-select> element
+    //s.setOptions([
+    //    { text: "text1", value: "value1" },
+    //    { text: "text2", value: "value2" },
+    //    { text: "text3", value: "value3" },
+    //    { text: "text4", value: "value4" },
+    //    { text: "text5", value: "value5" },
+    //]);
+</script>
 @section scripts {
+    <script src="~/js/Components/CategoryTree/Tree.js"></script>
+    <script src="~/js/Components/MultiSelect/Select.js"></script>
+
     <script src="~/js/ReportScripts.js" ></script>
 }

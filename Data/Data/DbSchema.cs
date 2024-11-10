@@ -28,5 +28,7 @@ public enum DbSchema
     DGMGMT,
     [Option(DisplayName = "DGMGMT AUDIT", ModuleNames = "DGAUDIT")]
     DGMGMT_AUDIT,
+    [Option(DisplayName = "ART", ModuleNames = "ART")]
+    ART,
 }
 

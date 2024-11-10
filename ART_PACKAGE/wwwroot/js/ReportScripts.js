@@ -11,6 +11,9 @@ var addedCharts = [];
 var form = document.getElementById("CustomReportForm");
 var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
+const categoryTree = document.querySelector('category-tree');
+let previousSelectedValues = new Set();
+
 
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
@@ -35,6 +38,19 @@ ShcemaSelect.onchange = (e) => {
     }
 
 }
+
+Fetch(`/ReportCategory/Getcategorieslist`, null, "GET").then(d => {
+    // Define a function for when a category is selected
+    function onCategoryChange(name, id) {
+
+        console.log(`Selected Category:  ${id}`)
+        //alert(`Selected Category: ${name}\nID: ${id}`);
+    }
+    console.log(JSON.stringify(d));
+    // Set attributes on the custom element
+    categoryTree.setAttribute('categories', JSON.stringify(d));
+    categoryTree.setAttribute('oncategorychange', onCategoryChange.toString());
+})
 
 
 
@@ -71,7 +87,139 @@ TableSelect.onchange = async (e) => {
     $('#chartColumn').selectpicker('refresh');
 
 }
+//createTable('dynamic-table-container');
 
+ColumnsSelect.onchange = async (e) => {
+
+
+    const currentSelectedValues = new Set(
+        [...e.target.selectedOptions].filter(option => option.value).map(option => option.value)
+    );
+
+    const containerId = 'dynamic-table-container'; // The ID of the container div
+    const tableBody = document.getElementById("options-table").querySelector("tbody");
+
+
+
+    // Determine newly selected options
+    const newlySelected = [...currentSelectedValues].filter(
+        value => !previousSelectedValues.has(value)
+    );
+
+    // Determine recently deselected options
+    const recentlyDeselected = [...previousSelectedValues].filter(
+        value => !currentSelectedValues.has(value)
+    );
+
+    // Remove rows for deselected options
+    recentlyDeselected.forEach(value => {
+        const row = document.getElementById(`row-${value}`);
+        if (row) row.remove();
+    });
+
+    // Add rows for newly selected options
+    newlySelected.forEach(value => {
+        const option = [...e.target.options].find(opt => opt.value === value);
+        const type = option.dataset.type;
+
+        const row = document.createElement("tr");
+        row.id = `row-${value}`;
+
+        // Create the Name and Type inputs (disabled)
+        const nameCell = document.createElement("td");
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.value = option.textContent;
+        nameInput.disabled = true;
+        nameCell.appendChild(nameInput);
+
+        const typeCell = document.createElement("td");
+        const typeInput = document.createElement("input");
+        typeInput.type = "text";
+        typeInput.value = type;
+        typeInput.disabled = true;
+        typeCell.appendChild(typeInput);
+
+        // Create the Select columns using m-select elements
+        const selectColumns = [];
+        for (let i = 1; i <= 3; i++) {
+            const selectCell = document.createElement("td");
+            const mSelect = document.createElement("m-select");
+            mSelect.id = `${value}-Select-${i}`;
+            mSelect.dataset.title = `Select ${i}`;
+            mSelect.dataset.searchable = true;
+
+            // Add options to m-select
+            ["Option 1", "Option 2", "Option 3"].forEach((optText, index) => {
+                const optionElement = document.createElement("option");
+                optionElement.value = `select${i}-${index}`;
+                optionElement.textContent = optText;
+                mSelect.appendChild(optionElement);
+            });
+
+            if (type !== "number" && type !== "decimal") {
+                mSelect.disabled = true;
+            }
+
+            selectCell.appendChild(mSelect);
+            selectColumns.push(selectCell);
+        }
+
+        // Append all cells to the row
+        row.appendChild(nameCell);
+        row.appendChild(typeCell);
+        selectColumns.forEach(cell => row.appendChild(cell));
+
+        // Append the row to the table body
+        tableBody.appendChild(row);
+    });
+
+    // Update previousSelectedValues
+    previousSelectedValues = currentSelectedValues;
+
+
+// Example usage on a multi-select element
+//document.getElementById("multi-select").addEventListener("change", handleSelectChange);
+
+// Create the table when the page loads (or when the div is available)
+
+    /*var selected = [...e.target.selectedOptions].filter(option => option.value).map(option => ({
+        value: option.value,
+        t: option.dataset.type
+    }));  //var type = selected.dataset.type;
+    //var name = selected.value;
+    console.log(`selected item is ${JSON.stringify( selected)}`);
+    console.log(e);*/
+}
+
+function createTable(containerId) {
+    // Create the table
+    const table = document.createElement('table');
+    table.id = 'options-table';
+    table.border = '1';
+
+    // Create the table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Type', 'Select 1', 'Select 2', 'Select 3'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create the table body (empty initially)
+    const tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    // Find the container div by id and append the table
+    const container = document.getElementById(containerId);
+    container.appendChild(table);
+}
 function deleteCard(event) {
     var id = event.dataset.id;
     var cardToDlt = document.getElementById(id);
@@ -187,6 +335,7 @@ form.onsubmit = async (e) => {
     }));
     var reportTitle = document.getElementById("title").value;
     var reportDesc = document.getElementById("desc").value;
+    var category = categoryTree.selectedValue;
 
     if (!table || table == undefined || table == "" || table.length == 0) {
         errors.push("you must select a table");
@@ -236,6 +385,7 @@ form.onsubmit = async (e) => {
         Charts: charts,
         Description: reportDesc,
         Title: reportTitle,
+        CategoryId: parseInt(category)  ,
         Schema: parseInt(ShcemaSelect.value)
     }
 
@@ -292,3 +442,152 @@ async function Fetch(url, body, mthod) {
     }
    
 }
+
+
+
+// Example categories data
+//const categoriesData = [
+//    { id: 1, name: "Root Category", parentId: null },
+//    { id: 2, name: "Parent Category 1", parentId: 1 },
+//    { id: 3, name: "Subcategory 1.1", parentId: 2 },
+//    { id: 4, name: "Subcategory 1.2", parentId: 2 },
+//    { id: 5, name: "Parent Category 2", parentId: 1 },
+//    { id: 6, name: "Subcategory 2.1", parentId: 5 },
+//    { id: 7, name: "Subcategory 2.2", parentId: 5 }
+//];
+
+
+
+class MSelect extends HTMLElement {
+    constructor() {
+        super();
+        this.select = document.createElement("select");
+        this.label = document.createElement("label");
+        this.isMulti = false;
+    }
+
+    connectedCallback() {
+        const id = this.id;
+        this.classList.add("form-floating", "form-floating-outline");
+        const attrs = Object.keys(this.dataset);
+
+        // Check for searchable and multiple attributes
+        const isSearchable = attrs.includes("live-search");
+        if (isSearchable) this.classList.add("searchable");
+
+        this.isMulti = attrs.includes("multiple");
+        if (this.isMulti) {
+            this.select.multiple = true;
+        }
+
+        this.select.id = id;
+        this.select.classList.add("form-select", "selectpicker");
+
+        // Optional: Handle disabled attribute
+        if (attrs.includes("disabled")) {
+            this.select.disabled = true;
+        }
+
+        // Add label text
+        this.label.innerText = this.dataset.title || "Select Option";
+
+        this.appendChild(this.label);
+        this.appendChild(this.select);
+
+        // Initialize the selectpicker
+        $(this.select).selectpicker({
+            liveSearch: isSearchable,
+            width: "100%"  // Ensure it's 100% width as in the example
+        });
+
+        // Initial options (empty or preset)
+        this.initialize([]);
+    }
+
+    // Initialize the options in the select element
+    initialize(options) {
+        options.forEach(option => {
+            const opt = document.createElement("option");
+            opt.value = option.value;
+            opt.textContent = option.text;
+            this.select.appendChild(opt);
+        });
+
+        // Refresh the selectpicker after setting options
+        $(this.select).selectpicker("refresh");
+    }
+
+    // Set options from an array of text, value
+    setOptions(options) {
+        this.reset();
+        this.initialize(options);
+    }
+
+    // Fetch options from a URL and set them
+    async fetchOptions(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Failed to fetch options");
+
+            const data = await response.json();
+            const options = data.map(item => ({
+                text: item.text,  // Adjust this based on your API response
+                value: item.value // Adjust this based on your API response
+            }));
+
+            this.setOptions(options);
+        } catch (error) {
+            console.error("Error fetching options:", error);
+        }
+    }
+
+    // Reset the options in the select element
+    reset() {
+        this.select.innerHTML = '';
+    }
+
+    // Get the selected value(s)
+    get value() {
+        if (!this.isMulti) {
+            return this.select.options[this.select.selectedIndex].value;
+        }
+        return [...this.select.options].filter(option => option.selected).map(option => option.value);
+    }
+
+    // Set default selected values
+    setDefaultValues(defaultValues) {
+        [...this.select.options].forEach(option => {
+            option.selected = defaultValues.includes(option.value);
+        });
+
+        // Refresh the selectpicker after updating selections
+        $(this.select).selectpicker("refresh");
+    }
+
+    // Enable the select element
+    enable() {
+        this.select.disabled = false;
+        $(this.select).selectpicker("refresh");
+    }
+
+    // Disable the select element
+    disable() {
+        this.select.disabled = true;
+        $(this.select).selectpicker("refresh");
+    }
+
+    // Toggle the disabled state
+    toggleDisable() {
+        this.select.disabled = !this.select.disabled;
+        $(this.select).selectpicker("refresh");
+    }
+
+    // Deselect all options
+    deSelect() {
+        [...this.select.options].forEach(option => option.selected = false);
+        $(this.select).selectpicker("refresh");
+    }
+}
+
+// Define the custom element
+customElements.define("m-select", MSelect);

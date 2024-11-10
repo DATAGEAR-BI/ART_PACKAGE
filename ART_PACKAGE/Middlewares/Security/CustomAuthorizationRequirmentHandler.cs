@@ -48,7 +48,7 @@
                 return "";
 
 
-            if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower())
+            if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower() || controller.ToLower() == nameof(ReportCategoryController).ToLower())
                 return "art_customreport".ToLower();
 
 
