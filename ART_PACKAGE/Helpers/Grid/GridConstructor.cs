@@ -7,6 +7,7 @@ using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Hubs;
 using Data.Services;
 using Data.Services.Grid;
+using Data.Setting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
@@ -212,7 +213,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return pdfBytes;
         }
         
-        public async Task<string> ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        public async Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
@@ -227,15 +228,32 @@ namespace ART_PACKAGE.Helpers.Grid
             //500_000:
             int round = 0;
             fileProgress = new();
+            var tenantId = _tenantService.GetCurrentTenant().TId;
 
-            _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
+            _pdfSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
                 var done = fileProgress.Values.Sum();
                 decimal progress = done / (decimal)totalcopy;
                 _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
+                if (progress<1)
+                {
+                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                                                   .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
+                }
+                
+
+                
+            };
+            _pdfSrv.OnLastProgressChanged += (elementDone, totalElements) =>
+            {
+                
+                decimal progress = elementDone / (decimal)totalElements;
+                _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
-                               .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+                               .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
+
+
             };
             while (total > 0)
             {
@@ -257,7 +275,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _pdfSrv.ITextPdf<TRepo, TContext, TModel>(roundReq,localRound, folderPath, "Report.pdf", reportGUID, baseCondition, defaultSort: reportConfig.defaultSortOption));
+                _ = Task.Run(() => _pdfSrv.ITextPdf<TRepo, TContext, TModel>(roundReq,localRound, folderPath, "Report.pdf", reportGUID, tenantId, baseCondition, defaultSort: reportConfig.defaultSortOption));
 
                 total -= batch;
                 round++;

@@ -453,7 +453,6 @@ namespace ART_PACKAGE.Helpers.Csv
                 cw.NextRecord();
                 //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
 
-                index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
 
@@ -461,22 +460,25 @@ namespace ART_PACKAGE.Helpers.Csv
                     {
 
                         //progress = (float)(index / (float)total * 100);
-                        int recordsDone = index + 1;
                         lock (_locker)
                         {
-                            OnProgressChanged(recordsDone, fileNumber);
+                            OnProgressChanged(index, fileNumber);
                         }
+                        //int recordsDone = index + 1;
+
                     }
 
                 }
                 else
                 {
-                    int recordsDone = index + 1;
                     lock (_locker)
                     {
-                        OnProgressChanged(recordsDone, fileNumber);
+                        OnProgressChanged(index, fileNumber);
                     }
+                    //int recordsDone = index + 1;
+
                 }
+                index++; // Increment the index for each item
 
             }
 
@@ -497,6 +499,7 @@ namespace ART_PACKAGE.Helpers.Csv
             try
             {
                 File.WriteAllBytes(filePath, stream.ToArray());
+                OnProgressChanged(index, fileNumber);
                 return true;
             }
 

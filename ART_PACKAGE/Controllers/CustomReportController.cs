@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Controllers
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             ViewData["reportId"] = reportGUID;
