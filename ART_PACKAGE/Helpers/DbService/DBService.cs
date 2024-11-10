@@ -10,6 +10,9 @@ using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
+using ART_PACKAGE.Areas.Identity.Data;
+using Data.Services;
+using com.sun.xml.@internal.ws.wsdl.writer;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -17,12 +20,83 @@ namespace ART_PACKAGE.Helpers.DBService
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
+        private readonly ITenantService _tenantService;
 
-        public DBService(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
+        public DBService(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration, ITenantService tenantService)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
+            _tenantService = tenantService;
             List<string>? modules = _configuration.GetSection("Modules").Get<List<string>>();
+            /*using (*/
+            IServiceScope scope = _serviceScopeFactory.CreateScope();//)
+            //{
+                ITenantService CustomReportTs = scope.ServiceProvider.GetRequiredService<ITenantService>();
+                CustomReportTs.ManiualSetCurrentTenant(_tenantService.GetCurrentTenant().TId);
+                if (modules is not null)
+                {
+                    if (modules.Contains("SASAML"))
+                    {
+
+
+                        FCFKC kc = scope.ServiceProvider.GetRequiredService<FCFKC>();
+                        fcf71Context core = scope.ServiceProvider.GetRequiredService<fcf71Context>();
+                        SasAmlContext sasAml = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
+                        SasAML = sasAml;
+                        KC = kc;
+                        CORE = core;
+                    }
+                    if (modules.Contains("DGAML"))
+                    {
+                        DGAMLCOREContext dgAmlCore = scope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
+                        DGAMLCORE = dgAmlCore;
+                        DGAMLACContext dgAmlAc = scope.ServiceProvider.GetRequiredService<DGAMLACContext>();
+                        DGAMLAC = dgAmlAc;
+                    }
+                    if (modules.Contains("GOAML"))
+                    {
+                        GoAmlContext goAml = scope.ServiceProvider.GetRequiredService<GoAmlContext>();
+                        GOAML = goAml;
+                    }
+                    if (modules.Contains("ECM"))
+                    {
+                        DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+                        ECM = ecmService;
+                    }
+                    if (modules.Contains("FATCA"))
+                    {
+                        DGFATCAContext fatcaService = scope.ServiceProvider.GetRequiredService<DGFATCAContext>();
+                        FATCA = fatcaService;
+                    }
+                    if (modules.Contains("DGAUDIT"))
+                    {
+                        DGMGMTContext dgmgmt = scope.ServiceProvider.GetRequiredService<DGMGMTContext>();
+                        DGMGMTAUDContext dgmgmtAud = scope.ServiceProvider.GetRequiredService<DGMGMTAUDContext>();
+                        DGMGMT = dgmgmt;
+                        DGMGMTAUD = dgmgmtAud;
+                    }
+                    if (modules.Contains("FTI"))
+                    {
+                        TIZONE2Context ti = scope.ServiceProvider.GetRequiredService<TIZONE2Context>();
+                        TI = ti;
+                    }
+                    if (modules.Contains("TRADE_BASE"))
+                    {
+                        TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
+                        TB = tb;
+                    }
+
+                }
+
+                CustomReportsContext customReportsContext = scope.ServiceProvider.GetRequiredService<CustomReportsContext>();
+                ARTCustomReport = customReportsContext;
+            //}
+        
+           
+
+        }
+/*        private void CreateInstances(List<string>? modules)
+        {
             if (modules is not null)
             {
 
@@ -31,6 +105,7 @@ namespace ART_PACKAGE.Helpers.DBService
                 if (modules.Contains("SASAML"))
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
+
                     FCFKC kc = scope.ServiceProvider.GetRequiredService<FCFKC>();
                     fcf71Context core = scope.ServiceProvider.GetRequiredService<fcf71Context>();
                     SasAmlContext sasAml = scope.ServiceProvider.GetRequiredService<SasAmlContext>();
@@ -41,9 +116,13 @@ namespace ART_PACKAGE.Helpers.DBService
                 if (modules.Contains("DGAML"))
                 {
                     IServiceScope coreScope = _serviceScopeFactory.CreateScope();
+                    ITenantService CoreTs = coreScope.ServiceProvider.GetRequiredService<ITenantService>();
+                    CoreTs = _tenantService;
                     DGAMLCOREContext dgAmlCore = coreScope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
                     DGAMLCORE = dgAmlCore;
                     IServiceScope ACscope = _serviceScopeFactory.CreateScope();
+                    ITenantService ACTs = ACscope.ServiceProvider.GetRequiredService<ITenantService>();
+                    ACTs = _tenantService;
                     DGAMLACContext dgAmlAc = ACscope.ServiceProvider.GetRequiredService<DGAMLACContext>();
                     DGAMLAC = dgAmlAc;
                 }
@@ -85,9 +164,14 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
-            }
-        }
 
+            }
+            IServiceScope CustomReportScope = _serviceScopeFactory.CreateScope();
+            ITenantService CustomReportTs = CustomReportScope.ServiceProvider.GetRequiredService<ITenantService>();
+            CustomReportTs.ManiualSetCurrentTenant(_tenantService.GetCurrentTenant().TId);
+            CustomReportsContext customReportsContext = CustomReportScope.ServiceProvider.GetRequiredService<CustomReportsContext>();
+            ARTCustomReport = customReportsContext;
+        }*/
         public FCFKC KC { get; }
         public fcf71Context CORE { get; }
         public DGECMContext ECM { get; }
@@ -106,6 +190,7 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
+        public CustomReportsContext ARTCustomReport { get; }
 
     }
 }

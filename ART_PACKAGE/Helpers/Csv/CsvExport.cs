@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
+using ART_PACKAGE.Helpers.DBService;
 using Filter = Data.Services.Grid.Filter;
 
 namespace ART_PACKAGE.Helpers.Csv
@@ -155,26 +156,36 @@ namespace ART_PACKAGE.Helpers.Csv
 
         }
 
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber,string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
-            IQueryable<TModel>? data = dataRes.data;
-            int total = dataRes.total;
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                ITenantService tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
+                tenantService.ManiualSetCurrentTenant(tenantId);
 
 
-
-            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
+                GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
+                IQueryable<TModel>? data = dataRes.data;
+                int total = dataRes.total;
+                return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
+            }
         }
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                ITenantService tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
+                tenantService.ManiualSetCurrentTenant(tenantId);
+
+
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
             IQueryable<TModel>? data = dataRes.data;
             int total = dataRes.total;
@@ -182,11 +193,13 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
             return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+                 }
         }
 
         public bool ExportCustomData(ArtCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
             int fileNumber)
         {
+
             DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
             ICustomReportRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ICustomReportRepo>();
             DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
@@ -198,15 +211,23 @@ namespace ART_PACKAGE.Helpers.Csv
         }
 
         public bool ExportCustomData(ArtCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
-           int fileNumber, string reportGUID)
+           int fileNumber, string reportGUID,string tenantId)
         {
-            DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
-            ICustomReportRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ICustomReportRepo>();
-            DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
-            GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
-            IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
-            return ExportToFolder(data, exportRequest.IncludedColumns,
-                dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                ITenantService tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
+                tenantService.ManiualSetCurrentTenant(tenantId);
+                IDbService dbService = scope.ServiceProvider.GetRequiredService<IDbService>();
+                DBFactory dbFactory = scope.ServiceProvider.GetRequiredService<DBFactory>();
+                
+                ICustomReportRepo Repo = scope.ServiceProvider.GetRequiredService<ICustomReportRepo>();
+                DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
+                GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
+                IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
+                return ExportToFolder(data, exportRequest.IncludedColumns,
+                    dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            }
+           
 
         }
         private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, int fileNumber = 1)
