@@ -37,7 +37,7 @@ public class TenantService : ITenantService
             else throw new Exception("No tenant provided!");
             
         }
-        else  throw new Exception("No tenant provided!");
+        //else  throw new Exception("No tenant provided!");
         
 
 
@@ -132,6 +132,11 @@ public class TenantService : ITenantService
         if (_currentTenant is null)
         {
             throw new Exception("Invalid tenant ID");
+        }
+        else
+        {
+            _currentConnections = _currentTenant.ModulesConnections;
+
         }
 
     }

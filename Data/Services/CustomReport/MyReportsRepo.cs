@@ -165,6 +165,7 @@ public class MyReportsRepo : BaseRepo<CustomReportsContext,ArtCustomReport> , IM
                 Description = reportDto.Description,
                 CreateDate = DateTime.Now,
                 Schema = reportDto.Schema,
+                CategoryId = reportDto.CategoryId,
 
             };
 

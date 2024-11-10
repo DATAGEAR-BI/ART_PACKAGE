@@ -30,8 +30,10 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
+        private readonly ITenantService _tenantService;
 
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, ProcessesHandler processesHandler, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger)
+
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, ProcessesHandler processesHandler, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger, ITenantService tenantService)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -44,6 +46,8 @@ namespace ART_PACKAGE.Helpers.Grid
             this._config = _config;
             _logger = logger;
             _processesHandler = processesHandler;
+            _tenantService = tenantService;
+
         }
         public TRepo Repo { get; private set; }
 
@@ -60,6 +64,8 @@ namespace ART_PACKAGE.Helpers.Grid
             //500_000:
             int round = 0;
             fileProgress = new();
+            var tenantId = _tenantService.GetCurrentTenant().TId;
+
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
@@ -89,7 +95,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, baseCondition));
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound,tenantId, baseCondition));
 
                 total -= batch;
                 round++;
@@ -112,6 +118,8 @@ namespace ART_PACKAGE.Helpers.Grid
             //500_000:
             int round = 0;
             fileProgress = new();
+            var tenantId = _tenantService.GetCurrentTenant().TId;
+
 
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
@@ -142,7 +150,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, baseCondition, defaultSort: reportConfig.defaultSortOption));
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID,tenantId, baseCondition, defaultSort: reportConfig.defaultSortOption));
 
                 total -= batch;
                 round++;

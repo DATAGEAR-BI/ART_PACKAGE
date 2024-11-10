@@ -2557,6 +2557,7 @@
 		<Folder Include="Licenses\" />
 		<Folder Include="Services\NewFolder\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\js\Components\CategoryTree\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\CSV\" />

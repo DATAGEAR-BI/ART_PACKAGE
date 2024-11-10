@@ -13,6 +13,12 @@ public class ArtCustomReport
     public string Table { get; set; } = null!;
     public string Type { get; set; } = null!;
     public string UserId { get; set; }
+
+    // Foreign key for the category
+    public int? CategoryId { get; set; }
+
+    // Navigation property for the category
+    public virtual ReportCategory? Category { get; set; }
     public ICollection<ArtReportsColumns> Columns { get; set; }
     public ICollection<ArtReportsChart> Charts { get; set; }
 

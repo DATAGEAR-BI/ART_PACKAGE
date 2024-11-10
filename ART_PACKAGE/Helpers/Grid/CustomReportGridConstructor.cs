@@ -5,6 +5,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using Data.Services;
 using Data.Services.CustomReport;
 using Data.Services.Grid;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,9 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly UsersConnectionIds connections;
         private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
+        private readonly ITenantService _tenantService;
 
-        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IPdfService pdfSrv, ProcessesHandler processesHandler)
+        public CustomReportGridConstructor(ICustomReportRepo repo, DBFactory dbFactory, ICsvExport csvSrv, IWebHostEnvironment webHostEnvironment, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, IPdfService pdfSrv, ProcessesHandler processesHandler,ITenantService tenantService)
         {
             Repo = repo;
             _dbFactory = dbFactory;
@@ -38,6 +40,7 @@ namespace ART_PACKAGE.Helpers.Grid
             this.connections = connections;
             _pdfSrv = pdfSrv;
             _processesHandler = processesHandler;
+            _tenantService = tenantService;
         }
         public ICustomReportRepo Repo { get; private set; }
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User)
@@ -117,7 +120,7 @@ namespace ART_PACKAGE.Helpers.Grid
             int totalcopy = total;
             int batch = 500_000;
             int round = 0;
-
+            var tenantId=_tenantService.GetCurrentTenant().TId;
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 if (total == 0 && recordsDone == 0)
@@ -153,7 +156,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid));
+                _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid,tenantId));
 
             }
             else
@@ -178,7 +181,7 @@ namespace ART_PACKAGE.Helpers.Grid
                     };
                     int localRound = round + 1;
 
-                    _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid));
+                    _ = Task.Run(() => _csvSrv.ExportCustomData(report, roundReq, folderPath, "Report.csv", localRound, folderGuid, tenantId));
 
                     total -= batch;
                     round++;
