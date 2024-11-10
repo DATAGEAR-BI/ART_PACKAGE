@@ -14,6 +14,7 @@ public class CustomReportsContext : TenatDBContext
     public virtual DbSet<ArtCustomReport> ArtCustomReports { get; set; } = null!;
     public virtual DbSet<ArtReportsColumns> ArtReportsColumns { get; set; } = null!;
     public virtual DbSet<ArtReportsChart> ArtReportsCharts { get; set; } = null!;
+    public virtual DbSet<ReportCategory> ReportCategories { get; set; } = null!;
 
 
 
@@ -28,6 +29,12 @@ public class CustomReportsContext : TenatDBContext
         {
             e.ToTable("ArtCustomReport");
         });
+        modelBuilder.Entity<ArtCustomReport>()
+            .HasOne(report => report.Category)
+            .WithMany(category => category.ArtCustomReports)
+            .HasForeignKey(report => report.CategoryId)
+            .OnDelete(DeleteBehavior.SetNull); // Adjust delete behavior as needed
+
         modelBuilder.Entity<ArtReportsColumns>(e =>
             {
                 e.HasKey(e => new { e.ReportId, e.Column });
@@ -43,6 +50,12 @@ public class CustomReportsContext : TenatDBContext
              .HasForeignKey(fk => fk.ReportId);
             e.ToTable("ArtReportsChart");
         });
+        modelBuilder.Entity<ReportCategory>().ToTable("ReportCategory")
+         .HasMany(c => c.Children)
+         .WithOne(c => c.Parent)
+         .HasForeignKey(c => c.ParentId)
+         .OnDelete(DeleteBehavior.Cascade); // Configure the delete behavior if needed
+
 
         var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
         modelCreatingStrategy.OnModelCreating(modelBuilder);
