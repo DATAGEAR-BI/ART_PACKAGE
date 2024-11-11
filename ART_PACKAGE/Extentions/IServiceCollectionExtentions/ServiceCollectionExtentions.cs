@@ -107,7 +107,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("ECM"))
             {
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
-                string DGCFTWLContextConnection = config.GetConnectionString("DGCFTWLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                string DGCFTWLContextConnection = config.GetConnectionString("DGCFTWLContextConnection") ?? throw new InvalidOperationException("Connection string 'DGCFTWLContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
                 _ = services.AddDbContext<DGCFTWLContext>(opt => contextBuilder(opt, DGCFTWLContextConnection));
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
