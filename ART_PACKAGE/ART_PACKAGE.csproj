@@ -9,12 +9,16 @@
 	
 	<ItemGroup>
 		<Compile Remove="AutoRulesModels\**" />
+		<Compile Remove="Controllers\AML_ANALYSIS\**" />
 		<Compile Remove="Helpers\Aml_Analysis\**" />
 		<Content Remove="AutoRulesModels\**" />
+		<Content Remove="Controllers\AML_ANALYSIS\**" />
 		<Content Remove="Helpers\Aml_Analysis\**" />
 		<EmbeddedResource Remove="AutoRulesModels\**" />
+		<EmbeddedResource Remove="Controllers\AML_ANALYSIS\**" />
 		<EmbeddedResource Remove="Helpers\Aml_Analysis\**" />
 		<None Remove="AutoRulesModels\**" />
+		<None Remove="Controllers\AML_ANALYSIS\**" />
 		<None Remove="Helpers\Aml_Analysis\**" />
 	</ItemGroup>
 
