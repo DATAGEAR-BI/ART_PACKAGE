@@ -16,9 +16,11 @@ namespace Data.Data.CRP
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ART_ST_CRP_PER_STATUS>().HasNoKey().ToView(null);
+            //modelBuilder.Entity<ART_ST_CRP_PER_STATUS>().HasNoKey().ToView(null);
             modelBuilder.Entity<ART_ST_CRP_PER_RISK>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ART_ST_CRP_CASES_PER_RATE>().HasNoKey().ToView(null);
+            //modelBuilder.Entity<ART_ST_CRP_CASES_PER_RATE>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ART_ST_CRP_CASES_PER_STATUS>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ART_ST_CRP_CUST_PER_PROP_RISK>().HasNoKey().ToView(null);
 
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
