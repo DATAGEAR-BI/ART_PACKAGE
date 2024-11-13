@@ -20,7 +20,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "AssignedDate", new GridColumnConfiguration { DisplayName = "Assigned Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "AlertStatus", new GridColumnConfiguration { DisplayName = "Alert Status", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "LastActionDate", new GridColumnConfiguration { DisplayName = "Last Action Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
-                { "LevelOfRisk", new GridColumnConfiguration { DisplayName = "Level Of Risk", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+                { "LevelOfRisk", new GridColumnConfiguration { DisplayName = "Level Of Risk", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "DisplayName", new GridColumnConfiguration { DisplayName = "Display Name", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
             };
         }
     }

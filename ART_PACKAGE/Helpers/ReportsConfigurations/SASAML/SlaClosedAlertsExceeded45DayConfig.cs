@@ -25,7 +25,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "UserLevel2", new GridColumnConfiguration { DisplayName = "User Level 2" } },
                 { "AddToCaseDate", new GridColumnConfiguration { DisplayName = "Add To Case Date" } },
                 { "InvestigationDaysLevel2", new GridColumnConfiguration { DisplayName = "Investigation Days Level 2" } },
-                { "InvestigationDaysLevel1", new GridColumnConfiguration { DisplayName = "Investigation Days Level 1" } }
+                { "InvestigationDaysLevel1", new GridColumnConfiguration { DisplayName = "Investigation Days Level 1" } },
+                { "UserLevel1ID", new GridColumnConfiguration { DisplayName = "User Level 1 ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "UserLevel2ID", new GridColumnConfiguration { DisplayName = "User Level 2 ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "UserLevel3ID", new GridColumnConfiguration { DisplayName = "User Level 3 ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+
             };
         }
 

@@ -12,7 +12,7 @@ public class ArtSavedCustomReport
     public DateTime CreateDate { get; set; }
     public string Table { get; set; } = null!;
     public string Type { get; set; } = null!;
-    public bool IsShared { get; set; }
+    //public bool IsShared { get; set; }
     public string UserId { get; set; }
     [JsonIgnore]
     public ICollection<AppUser> Users { get; set; } = new List<AppUser>();

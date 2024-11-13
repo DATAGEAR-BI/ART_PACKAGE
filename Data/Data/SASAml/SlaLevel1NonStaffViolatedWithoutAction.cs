@@ -6,6 +6,7 @@ namespace Data.Data.SASAml
     public partial class SlaLevel1NonStaffViolatedWithoutAction
     {
         public string? UserName { get; set; }
+        public string? DisplayName { get; set; }
         public long? AlertId { get; set; }
         public DateTime? AssignedDate { get; set; }
         public string? AlertedEntityNumber { get; set; }

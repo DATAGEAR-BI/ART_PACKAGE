@@ -8,10 +8,10 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
-                { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID" } },
+                { "CaseReportId", new GridColumnConfiguration { DisplayName = "Case/Report ID" } },
                 { "ClientName", new GridColumnConfiguration { DisplayName = "Client Name" } },
                 { "ClientNumber", new GridColumnConfiguration { DisplayName = "Client Number" } },
-                { "CaseType", new GridColumnConfiguration { DisplayName = "Case Type" } },
+                { "CaseReportType", new GridColumnConfiguration { DisplayName = "Case/Report Type" } },
                 { "CreateDate", new GridColumnConfiguration { DisplayName = "Create Date" } },
                 { "CaseStatus", new GridColumnConfiguration { DisplayName = "Case Status" } },
                 { "LastActionBy", new GridColumnConfiguration { DisplayName = "Last Action By" } },

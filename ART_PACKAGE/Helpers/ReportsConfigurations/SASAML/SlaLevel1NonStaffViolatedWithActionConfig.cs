@@ -18,7 +18,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "UserName", new GridColumnConfiguration { DisplayName = "User Name" } },
                 { "AlertId", new GridColumnConfiguration { DisplayName = "Alert ID" } },
                 { "RoutingDate", new GridColumnConfiguration { DisplayName = "Routing Date" } },
-                { "AlertedEntityNumber", new GridColumnConfiguration { DisplayName = "Alerted Entity Number" } }
+                { "AlertedEntityNumber", new GridColumnConfiguration { DisplayName = "Alerted Entity Number" } },
+                { "DisplayName", new GridColumnConfiguration { DisplayName = "Display Name" } },
+
             };
             ReportTitle = "SAS NonStaff SLA Closed Level1 Report";
             ReportDescription = "Presents all AML closed alerts which exceeded the threshold for first routing alerts to level2 for non - staff customers";

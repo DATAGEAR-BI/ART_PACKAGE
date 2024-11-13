@@ -13,6 +13,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "UserName", new GridColumnConfiguration { DisplayName = "User Name" } },
                 { "Product", new GridColumnConfiguration { DisplayName = "Product" } },
                 { "ViolationFlag", new GridColumnConfiguration { DisplayName = "Violation Flag" } },
+                { "DisplayName", new GridColumnConfiguration { DisplayName = "Display Name" } },
             };
             ReportTitle = "SLA Summary Report";
             ReportDescription = "";

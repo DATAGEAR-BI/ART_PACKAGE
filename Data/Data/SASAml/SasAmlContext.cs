@@ -39,6 +39,7 @@ namespace Data.Data.SASAml
         public virtual DbSet<SlaLevel2NonStaffViolatedWithoutAction> SlaLevel2NonStaffViolatedWithoutActions { get; set; } = null!;
         public virtual DbSet<SlaLevel3NonStaffViolatedWithoutAction> SlaLevel3NonStaffViolatedWithoutActions { get; set; } = null!;
         public virtual DbSet<SlaMedHighClosedAlertsExceeded10Day> SlaMedHighClosedAlertsExceeded10Days { get; set; } = null!;
+        public virtual DbSet<SlaTbLevel1ViolatedWithAction> SlaTbLevel1ViolatedWithActions { get; set; } = null!;
         public virtual DbSet<ArtFiveRandomSelectionView> ArtFiveRandomSelectionViews { get; set; } = null!;
         public virtual DbSet<SlaEcmCasesViolated> SlaEcmCasesViolateds { get; set; } = null!;
         public virtual DbSet<SlaLevel3StaffViolatedWithoutAction> SlaLevel3StaffViolatedWithoutActions { get; set; } = null!;

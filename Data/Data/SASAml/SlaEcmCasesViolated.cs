@@ -5,10 +5,10 @@ namespace Data.Data.SASAml
 {
     public partial class SlaEcmCasesViolated
     {
-        public string CaseId { get; set; } = null!;
+        public string CaseReportId { get; set; } = null!;
         public string? ClientName { get; set; }
         public string? ClientNumber { get; set; }
-        public string? CaseType { get; set; }
+        public string? CaseReportType { get; set; }
         public DateTime CreateDate { get; set; }
         public string? CaseStatus { get; set; }
         public string? LastActionBy { get; set; }

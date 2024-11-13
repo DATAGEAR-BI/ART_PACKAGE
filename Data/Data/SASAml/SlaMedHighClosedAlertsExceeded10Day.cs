@@ -12,13 +12,17 @@ namespace Data.Data.SASAml
         public string? BranchName { get; set; }
         public string? LevelOfRisk { get; set; }
         public string? UserLevel1 { get; set; }
+        public string? UserLevel1ID { get; set; }
         public DateTime? AlertCreateDate { get; set; }
         public DateTime? RoutingDate { get; set; }
         public string? InvestigationDaysLevel1 { get; set; }
         public string? UserLevel2 { get; set; }
+        public string? UserLevel2ID { get; set; }
         public DateTime? LastActionDate { get; set; }
         public string? AlertStatus { get; set; }
         public string? InvestigationDaysLevel2 { get; set; }
         public string? TotalInvestigationDays { get; set; }
+        
+        
     }
 }

@@ -24,7 +24,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "LastActionDate", new GridColumnConfiguration { DisplayName = "Last Action Date", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "AlertStatus", new GridColumnConfiguration { DisplayName = "Alert Status", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "InvestigationDaysLevel2", new GridColumnConfiguration { DisplayName = "Investigation Days Level 2", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
-                { "TotalInvestigationDays", new GridColumnConfiguration { DisplayName = "Total Investigation Days", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
+                { "TotalInvestigationDays", new GridColumnConfiguration { DisplayName = "Total Investigation Days", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "UserLevel1ID", new GridColumnConfiguration { DisplayName = "User Level 1 ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "UserLevel2ID", new GridColumnConfiguration { DisplayName = "User Level 2 ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } }
             };
             ReportTitle = "SLA MedHigh Closed Alerts Exceeded 10 Days Report";
         ReportDescription="Presents SLA MedHigh Closed Alerts Exceeded 10 Days in the table below";

@@ -42,7 +42,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
                 }
             }
 
-            report.IsShared = true;
+            //report.IsShared = true;
             _context.SaveChanges();
             return true;
         }
@@ -64,7 +64,7 @@ public class MyReportsRepo : BaseRepo<AuthContext,ArtSavedCustomReport> , IMyRep
             var usersToremain = report.UserReports.Where(x=>!unshareFromUsersIds.Contains(x.UserId));
             report.UserReports = usersToremain.ToList();
             if (!report.UserReports.Any(x => x.UserId != x.SharedFromId))
-                report.IsShared = false;
+                //report.IsShared = false;
             await _context.SaveChangesAsync();
             return true;
         }

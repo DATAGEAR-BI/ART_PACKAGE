@@ -11,6 +11,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             DisplayNames = new Dictionary<string, GridColumnConfiguration>()
             {
                 { "UserName", new GridColumnConfiguration { DisplayName = "User Name", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
+                { "DisplayName", new GridColumnConfiguration { DisplayName = "Display Name", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "AlertId", new GridColumnConfiguration { DisplayName = "Alert ID", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "AlertedEntityNumber", new GridColumnConfiguration { DisplayName = "Alerted Entity Number", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
                 { "AlertedEntityName", new GridColumnConfiguration { DisplayName = "Alerted Entity Name", Format = "", Filter = "", Template = "", AggText = "", isLargeText = false } },
