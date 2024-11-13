@@ -83,6 +83,7 @@
         public static readonly string ART_ST_CRP_CUST_PER_RISK = "ART_DB.ART_ST_CRP_CUST_PER_RISK";
         public static readonly string ART_ST_CRP_CASES_PER_STATUS = "ART_DB.ART_ST_CRP_CASES_PER_STATUS";
         public static readonly string ART_ST_CRP_CASES_PER_RATE = "ART_DB.ART_ST_CRP_CASES_PER_RATE";
+        public static readonly string ART_ST_CRP_CUST_PER_PROP_RISK = "ART_DB.ART_ST_CRP_CUST_PER_PROP_RISK";
 
 
         //FATCA
