@@ -20,5 +20,6 @@ namespace Data.Data.SASAml
         public DateTime? CaseCloseDate { get; set; }
         public string? LevelOfRisk { get; set; }
         public string? InvestigationDays { get; set; }
+        public string? CaseStatusCode { get; set; }
     }
 }
