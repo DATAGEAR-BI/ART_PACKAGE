@@ -22,7 +22,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "DisplayName", new GridColumnConfiguration { DisplayName = "Display Name" } },
 
             };
-            ReportTitle = "SAS NonStaff SLA Closed Level1 Report";
+            ReportTitle = "Closed Level 1 (Maker)";
             ReportDescription = "Presents all AML closed alerts which exceeded the threshold for first routing alerts to level2 for non - staff customers";
         }
 
