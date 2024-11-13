@@ -4645,6 +4645,61 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("DISPLAY_NAME");
             });
 
+            modelBuilder.Entity<SlaTbLevel1ViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_TB_LEVEL1_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+            });
+
+
             modelBuilder.Entity<SlaLevel2NonStaffViolatedWithAction>(entity =>
             {
                 entity.HasNoKey();
@@ -4709,6 +4764,71 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("DISPLAY_NAME");
             });
 
+            modelBuilder.Entity<SlaTbLevel2ViolatedWithAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_TB_LEVEL2_VIOLATED_WITH_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LastActionDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LAST_ACTION_DATE");
+
+                entity.Property(e => e.LevelOfRisk)
+                     .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+            });
+
+
             modelBuilder.Entity<SlaLevel2NonStaffViolatedWithoutAction>(entity =>
             {
                 entity.HasNoKey();
@@ -4768,6 +4888,68 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("DISPLAY_NAME");
             });
+
+            modelBuilder.Entity<SlaTbLevel2ViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_TB_LEVEL2_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertStatus)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERT_STATUS")
+                    .IsFixedLength();
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                   .HasPrecision(6)
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+            });
+
+
 
             modelBuilder.Entity<SlaLevel3NonStaffViolatedWithoutAction>(entity =>
             {
@@ -4830,6 +5012,73 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("DISPLAY_NAME");
             });
+            modelBuilder.Entity<SlaTbLevel3ViolatedWithoutAction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SLA_TB_LEVEL3_VIOLATED_WITHOUT_ACTION");
+
+                entity.Property(e => e.AlertId)
+                    .HasPrecision(12)
+                    .HasColumnName("ALERT_ID");
+
+                entity.Property(e => e.AlertedEntityName)
+                    .HasMaxLength(128)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NAME");
+
+                entity.Property(e => e.AlertedEntityNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_NUMBER");
+
+                entity.Property(e => e.AssignedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("ASSIGNED_DATE");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.BranchNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NUMBER");
+
+                entity.Property(e => e.CaseCloseDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CASE_CLOSE_DATE");
+
+                entity.Property(e => e.CaseId)
+                    .HasPrecision(12)
+                    .HasColumnName("CASE_ID");
+
+                entity.Property(e => e.InvestigationDays)
+                    .IsUnicode(false)
+                    .HasColumnName("INVESTIGATION_DAYS");
+
+                entity.Property(e => e.LevelOfRisk)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_OF_RISK");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("USER_NAME");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("DISPLAY_NAME");
+                entity.Property(e => e.CaseStatusCode)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STAT_CD");
+            });
+
+
 
             modelBuilder.Entity<SlaMedHighClosedAlertsExceeded10Day>(entity =>
             {

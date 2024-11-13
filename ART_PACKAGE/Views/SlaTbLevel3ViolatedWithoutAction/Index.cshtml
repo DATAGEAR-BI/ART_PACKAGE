@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SLA TB Level 3 (Compliance Checker Group)
+        <small>
+            Presents all AML alerts which exceeded the threshold for not closed cases
+            for non-staff customers with below information
+        </small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaTbLevel3ViolatedWithoutAction" data-urlkey="SlaTbLevel3ViolatedWithoutAction" data-handlerkey="SlaTbLevel3ViolatedWithoutAction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

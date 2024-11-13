@@ -231,6 +231,11 @@
     SlaLevel2NonStaffViolatedWithoutAction: "SlaLevel2NonStaffViolatedWithoutAction/GetData",
     SlaLevel3NonStaffViolatedWithoutAction: "SlaLevel3NonStaffViolatedWithoutAction/GetData",
     SlaMedHighClosedAlertsExceeded10Day: "SlaMedHighClosedAlertsExceeded10Day/GetData",
+    SlaTbLevel1ViolatedWithAction: "SlaTbLevel1ViolatedWithAction/GetData",
+    SlaTbLevel1ViolatedWithoutAction: "SlaTbLevel1ViolatedWithoutAction/GetData",
+    SlaTbLevel2ViolatedWithAction: "SlaTbLevel2ViolatedWithAction/GetData",
+    SlaTbLevel2ViolatedWithoutAction: "SlaTbLevel2ViolatedWithoutAction/GetData",
+    SlaTbLevel3ViolatedWithoutAction: "SlaTbLevel3ViolatedWithoutAction/GetData",
 
 
 };

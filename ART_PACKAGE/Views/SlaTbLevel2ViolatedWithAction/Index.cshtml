@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        Closed Level 2 (Checker)
+        <small>
+            Presents all TB AML closed alerts which exceeded the threshold for closed alerts or add to
+            case with below information
+        </small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaTbLevel2ViolatedWithAction" data-urlkey="SlaTbLevel2ViolatedWithAction" data-handlerkey="SlaTbLevel2ViolatedWithAction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

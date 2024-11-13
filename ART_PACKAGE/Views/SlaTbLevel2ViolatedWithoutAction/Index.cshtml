@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts{
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        SLA TB Level 2 (Checker)
+        <small>
+            Presents all TB AML alerts which exceeded the threshold for not closed alerts or add to case
+            with below information
+        </small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SlaTbLevel2ViolatedWithoutAction" data-urlkey="SlaTbLevel2ViolatedWithoutAction" data-handlerkey="SlaTbLevel2ViolatedWithoutAction"></m-grid>
+
+@section Scripts{
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+}

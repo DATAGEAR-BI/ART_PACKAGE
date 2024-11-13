@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Data.SASAml
 {
-    public partial class SlaLevel3NonStaffViolatedWithoutAction
+    public class SlaTbLevel3ViolatedWithoutAction
     {
         public string? UserName { get; set; }
         public string? DisplayName { get; set; }
@@ -17,6 +20,5 @@ namespace Data.Data.SASAml
         public DateTime? CaseCloseDate { get; set; }
         public string? LevelOfRisk { get; set; }
         public string? InvestigationDays { get; set; }
-        public string? CaseStatusCode { get; set; }
     }
 }
