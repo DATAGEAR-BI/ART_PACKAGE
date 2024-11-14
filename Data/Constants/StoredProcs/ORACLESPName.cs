@@ -53,6 +53,12 @@
         public static readonly string ART_ST_ALERT_PER_OWNER = "ART.ART_ST_ALERT_PER_OWNER";
         public static readonly string ART_ST_ALERTS_PER_STATUS = "ART.ART_ST_ALERTS_PER_STATUS";
 
+        //SASAML
+
+        public static readonly string ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERT_PER_OWNER_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF = "";
 
         #region DGAML ALERTS Summary
         //DG AML

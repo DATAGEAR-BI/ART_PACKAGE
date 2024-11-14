@@ -60,6 +60,10 @@
         public static readonly string ART_ST_CASES_PER_STATUS = "ART_DB.ART_ST_CASES_PER_STATUS";
         public static readonly string ART_ST_CASES_PER_CATEGORY = "ART_DB.ART_ST_CASES_PER_CATEGORY";
         public static readonly string ART_ST_CASES_PER_PRIORITY = "ART_DB.ART_ST_CASES_PER_PRIORITY";
+        public static readonly string ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERT_PER_OWNER_NON_STAFF = "";
+        public static readonly string ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF = "";
         //GoAml
         public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "ART_DB.ART_ST_GOAML_REPORTS_PER_TYPE";
         public static readonly string ART_ST_GOAML_REPORTS_PER_STATUS = "ART_DB.ART_ST_GOAML_REPORTS_PER_STATUS";

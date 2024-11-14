@@ -18,11 +18,13 @@ namespace Data.Data.SASAml
         public virtual DbSet<ArtHomeNumberOfHighRiskCustomer> ArtHomeNumberOfHighRiskCustomers { get; set; } = null!;
         public virtual DbSet<ArtHomeNumberOfPepCustomer> ArtHomeNumberOfPepCustomers { get; set; } = null!;
         public virtual DbSet<ArtAmlTriageView> ArtAmlTriageViews { get; set; } = null!;
-        public virtual DbSet<ArtAmlAlertDetailView> ArtAmlAlertDetailViews { get; set; } = null!;
+        //public virtual DbSet<ArtAmlAlertDetailView> ArtAmlAlertDetailViews { get; set; } = null!;
         public virtual DbSet<ArtAmlCustomersDetailsView> ArtAmlCustomersDetailsViews { get; set; } = null!;
         public virtual DbSet<ArtAmlCaseDetailsView> ArtAmlCaseDetailsViews { get; set; } = null!;
         public virtual DbSet<ArtAmlHighRiskCustView> ArtAmlHighRiskCustViews { get; set; } = null!;
         public virtual DbSet<ArtRiskAssessmentView> ArtRiskAssessmentViews { get; set; } = null!;
+        public virtual DbSet<ArtAmlAlertDetailViewNonStaff> ArtAmlAlertDetailViewNonStaffs { get; set; } = null!;
+
         // public virtual DbSet<BigData> BigDatas { get; set; } = null!;
 
         public SasAmlContext(DbContextOptions<SasAmlContext> opt) : base(opt) { }
@@ -46,6 +48,11 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStAmlAlertsPerStatus>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerScenario>().HasNoKey().ToView(null);
+
+            modelBuilder.Entity<ArtStAmlAlertsPerStatusNonStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertPerOwnerNonStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertsPerScenarioNonStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStAmlAlertsPerBranchNonStaff>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);

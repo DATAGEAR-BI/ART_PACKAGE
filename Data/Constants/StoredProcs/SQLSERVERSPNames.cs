@@ -28,6 +28,12 @@
         public static readonly string ART_ST_ALERT_PER_OWNER = "[ART_DB].[ART_ST_ALERT_PER_OWNER]";
 
 
+        public static readonly string ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERT_PER_OWNER_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERT_PER_OWNER_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF_ADIB]";
+
+
 
         //GoAml
         public static readonly string ART_ST_GOAML_REPORTS_PER_TYPE = "[ART_DB].[ART_ST_GOAML_REPORTS_PER_TYPE]";

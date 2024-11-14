@@ -420,7 +420,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetAlertOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = new List<SelectItem>();
 
             return distinct_value;
         }
