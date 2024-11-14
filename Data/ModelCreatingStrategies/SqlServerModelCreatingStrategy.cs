@@ -5112,7 +5112,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => new { e.LovTypeName, e.LovTypeCode, e.LovLanguageDesc })
                     .HasName("PK_LOV");
 
-                entity.ToTable("FSK_LOV", "FCFKC");
+                entity.ToTable("FSK_LOV");
 
                 entity.Property(e => e.LovTypeName)
                     .HasMaxLength(64)
