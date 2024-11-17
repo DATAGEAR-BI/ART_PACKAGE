@@ -11,7 +11,7 @@ namespace Data.Data.SASAml
         public string? UserName { get; set; }
         public string? DisplayName { get; set; }
         public long? AlertId { get; set; }
-        public long? CaseId { get; set; }
+        public string? CaseId { get; set; }
         public string? AlertedEntityNumber { get; set; }
         public string? AlertedEntityName { get; set; }
         public string? BranchName { get; set; }
