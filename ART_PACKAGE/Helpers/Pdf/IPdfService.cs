@@ -23,6 +23,14 @@ namespace ART_PACKAGE.Helpers.Pdf
             string reportId
             , List<string> ColumnsToSkip = null
             , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
+        public Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
+            , ActionContext ControllerContext
+            , int ColumnsPerPage
+            , string UserName,
+            string reportId
+            , List<string> inculdedColumns
+            , List<string> ColumnsToSkip = null
+            , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
         public Task<byte[]> ExportToPdf<T>(IQueryable<T> data, KendoRequest obj, ViewDataDictionary ViewData
             , ActionContext ControllerContext
             , int ColumnsPerPage

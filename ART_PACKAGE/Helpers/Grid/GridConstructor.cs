@@ -200,7 +200,7 @@ namespace ART_PACKAGE.Helpers.Grid
             ViewData["title"] = reportConfig.ReportTitle;
             ViewData["desc"] = reportConfig.ReportDescription;
             byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data, ViewData, actionContext, 5
-                                                    , user, reportId, reportConfig.SkipList, reportConfig.DisplayNames);
+                                                    , user, reportId, exportRequest.IncludedColumns, reportConfig.SkipList, reportConfig.DisplayNames);
             return pdfBytes;
         }
         
