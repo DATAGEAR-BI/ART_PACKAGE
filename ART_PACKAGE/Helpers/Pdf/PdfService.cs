@@ -462,6 +462,40 @@ namespace ART_PACKAGE.Helpers.Pdf
 
         }
 
+        public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData, ActionContext ControllerContext, int ColumnsPerPage, string UserName, string reportId, List<string> inculdedColumns, List<string> ColumnsToSkip = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
+        {
+            ViewData["user"] = UserName;
+            ViewData["reportId"] = reportId;
+            List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
+            List<List<string>> props = PartitionProPertiesOf(inculdedColumns, ColumnsPerPage);
+            foreach (List<string> group in props)
+            {
+                dataColumnsParts.Add(GetDataPArtitionedByColumns(data, group, DisplayNamesAndFormat));
+            }
+           _ = new ViewAsPdf("ReportPdfCover")
+            {
+                ViewData = ViewData,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+      
+
+            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
+            {
+                ViewData = ViewData,
+                //CustomSwitches = footer,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            };
+
+
+
+
+
+            return await pdf.BuildFile(ControllerContext);
+
+         
+
+        }
+
         public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
