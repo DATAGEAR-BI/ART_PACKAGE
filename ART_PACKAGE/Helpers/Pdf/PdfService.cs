@@ -28,6 +28,7 @@ using iText.Kernel.Colors;
 using ART_PACKAGE.Hubs;
 using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 using ART_PACKAGE.Extentions.PDF;
+using System.Linq;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -492,7 +493,8 @@ namespace ART_PACKAGE.Helpers.Pdf
                 GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
                 IQueryable<TModel>? data = dataRes.data;
                 int total = dataRes.total;
-
+               var reportConfigs= ReportConfigResolver2.GetConfigs<TModel>();
+                var displayNames = reportConfigs?.DisplayNames;
                 // Ensure the folder path exists
                 if (!Directory.Exists(folderPath))
                     _ = Directory.CreateDirectory(folderPath);
@@ -518,14 +520,18 @@ namespace ART_PACKAGE.Helpers.Pdf
                         float documentRightMargin = 32f;  // Points
                         document.SetMargins(documentTopMargin, documentRightMargin, documentBottomMargin, documentLeftMargin);
 
+
+                
+
+
                         // Get the properties of the TModel class for headers and data extraction
                         var modelType = typeof(TModel);
-                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                        var columnHeaders = properties.Select(p => p.Name).ToArray();
+                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(S=>req.IncludedColumns.Contains( S.Name)).OrderBy(p => req.IncludedColumns.IndexOf(p.Name));
+                        var columnHeaders = displayNames is null?req.IncludedColumns: req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s : s).ToList();//properties.Select(p => p.Name).ToArray();
 
                         // Partition settings
                         int partitionSize = 6; // Number of columns per page
-                        int totalColumns = columnHeaders.Length;
+                        int totalColumns = columnHeaders.Count();
                         int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
                         int recordsPerPage = 20; // Set the number of records per page, this can be dynamic as needed
