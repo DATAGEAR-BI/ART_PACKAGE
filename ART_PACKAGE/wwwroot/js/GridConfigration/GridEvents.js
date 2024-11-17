@@ -604,14 +604,14 @@ export const Handlers = {
         }
 
         var results = await Promise.all(promses);
-        results.forEach((x, i) => {
+        /*results.forEach((x, i) => {
             var a = document.createElement("a");
             var dateNow = new Date();
 
             a.setAttribute("download", controller + "_" + (i + 1) + "_" + dateNow + ".pdf");
             a.href = window.URL.createObjectURL(x.blob);
             a.click();
-        });
+        });*/
         //kendo.ui.progress($("#"+gridDiv.id), false);
 
 

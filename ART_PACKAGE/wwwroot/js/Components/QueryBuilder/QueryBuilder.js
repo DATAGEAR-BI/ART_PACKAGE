@@ -6,12 +6,6 @@ class QueryBuilder extends HTMLElement {
         super();
 
 
-
-
-
-        
-
-
     }
 
     filtersInit(filters) {
@@ -48,4 +42,4 @@ class QueryBuilder extends HTMLElement {
     }
 }
 
-customElements.define("art-qbuilder", QueryBuilder);
+customElements.define("art-qbuilder1", QueryBuilder);

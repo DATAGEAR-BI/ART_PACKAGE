@@ -14,7 +14,7 @@ namespace ART_PACKAGE.Helpers.Grid
         public TRepo Repo { get; }
 
         public GridIntializationConfiguration IntializeGrid(string controller, ClaimsPrincipal User);
-        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null);
+        public GridResult<TModel> GetGridData(KendoGridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null);
         public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, Expression<Func<TModel, bool>>? baseCondition = null);
         public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null);
         public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<TModel, bool>>? baseCondition = null);

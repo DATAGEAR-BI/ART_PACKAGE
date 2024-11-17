@@ -78,7 +78,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -133,7 +133,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -181,7 +181,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return conf;
         }
 
-        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
+        public GridResult<TModel> GetGridData(KendoGridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
 
@@ -257,7 +257,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,

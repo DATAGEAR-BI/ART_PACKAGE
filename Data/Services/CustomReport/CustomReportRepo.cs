@@ -96,7 +96,7 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
         return $@"{selectLine}
                   {fromLine};";
     }
-    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtCustomReport report, GridRequest request)
+    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
 
@@ -140,7 +140,7 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
         }
     }
 
-    public int GetDataCount(DbContext schemaContext, ArtCustomReport report, GridRequest request)
+    public int GetDataCount(DbContext schemaContext, ArtCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
         using (var connection = schemaContext.Database.GetDbConnection())
@@ -178,7 +178,7 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
         }
 
     }
-    private string GenerateSql(ArtCustomReport report, GridRequest request, string dbType, bool isCount = false)
+    private string GenerateSql(ArtCustomReport report, KendoGridRequest request, string dbType, bool isCount = false)
     {
 
         string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
@@ -358,7 +358,7 @@ public class CustomReportRepo : BaseRepo<CustomReportsContext, Dictionary<string
         return _context.ArtCustomReports.Any(x => x.Id == reportId);
     }
 
-    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtCustomReport report, GridRequest request)
+    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtCustomReport report, KendoGridRequest request)
     {
 
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;

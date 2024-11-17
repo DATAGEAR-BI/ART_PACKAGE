@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Helpers.License
 
         }
 
-        public GridResult<Middlewares.License.License> GetGridData(GridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null,
+        public GridResult<Middlewares.License.License> GetGridData(KendoGridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null,
             IEnumerable<Expression<Func<Middlewares.License.License, object>>>? includes = null)
         {
 

@@ -58,6 +58,7 @@ class Grid extends HTMLElement {
     selectProp = "";
     excelFileName = "";
     buttonExportClicked = false;
+    exRules = null;
 
     constructor() {
         super();
@@ -176,6 +177,15 @@ class Grid extends HTMLElement {
 
         }
 
+        var filterEelement = document.getElementsByTagName("art-filters-control");
+        console.log(filterEelement)
+        if (filterEelement.length>0) {
+            filterEelement[0].onApplyFilters = (filters) => {
+                console.log("Custom filters applied:", filters);
+                // Additional custom behavior goes here
+            };
+        }
+        
 
 
         this.filtersModal.classList.add("modal", "fade");
@@ -290,8 +300,9 @@ class Grid extends HTMLElement {
                 console.log(folder, progress)
 
                 progressBar.value = parseFloat(progress.toFixed(2));
-                if (progress >= 100) {//|| reminder <= 100
-
+                if (progress >= 100 && currentCSVProcess != "" && currentCSVProcess == folder) {//|| reminder <= 100
+                    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+                    currentCSVProcess = "";
                     progressBar.hidden = true;
                     //var downloadButton = document.getElementById("ExportDownloadBtn");
                     //downloadButton.style.visibility = "";
@@ -301,17 +312,23 @@ class Grid extends HTMLElement {
                     isExportingCSVNow = false;
                     var downloadRes = await fetch("/Files/DownloadCsvFiles/" + this.csvExportId);
                     if (downloadRes.ok) {
+                        
+
                         var blob = await downloadRes.blob();
                         var a = document.createElement("a");
                         a.setAttribute("download", this.csvExportId + ".Zip");
                         a.href = window.URL.createObjectURL(blob);
                         a.click();
-                        e.target.hidden = true;
                         this.csvExportId = "";
                         this.isDownloaded = true;
+                        isExportingCSVNow = false;
+                        this.isExporting = false;
+
+                        e.target.hidden = true;
+                     
                         e.target.style.visibility = "hidden";
                     }
-                    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+                   
 
                 }
             }
@@ -360,6 +377,7 @@ class Grid extends HTMLElement {
 
                         var downloadRes = await fetch("/Files/DownloadPDFFiles/" + exportinProcess);
                         if (downloadRes.ok) {
+                            isExportingPDFNow = false;
                             var blob = await downloadRes.blob();
                             var a = document.createElement("a");
                             a.setAttribute("download", exportinProcess + ".Zip");
@@ -367,11 +385,12 @@ class Grid extends HTMLElement {
                             a.click();
                             e.target.hidden = true;
                             e.target.style.visibility = "hidden";
+                            
                         }
 
                         exportConnection.invoke("CancelPdfExport", currentPDFReportId);
 
-                        isExportingPDFNow = false;
+                        
                     } else {
                         if (!pdfProgressBar.hidden) {
                             pdfProgressBar.hidden = true;
@@ -1881,8 +1900,79 @@ class Grid extends HTMLElement {
 
         });
     }
+    getExRules() {
 
+    var checkinterval = setInterval(check, 1000);
+
+
+    function check() {
+
+        var isFiltersExist = document.getElementById("filters");
+        if (isFiltersExist) {
+            console.log("check");
+            internal();
+            clearInterval(checkinterval);
+        }
+    }
+    function internal() {
+
+        var rules = $('#filters').queryBuilder('getRules');
+
+        var g = [...rules.rules].reduce((group, product) => {
+            const { id } = product;
+            group[id] = !group[id] ? [] : group[id];
+            group[id].push(product);
+            return group;
+        }, {});
+        var arr = [];
+        for (var prop in g) {
+            arr.push(g[prop]);
+        }
+        if (arr.some(x => x.length > 1)) {
+            console.log("error");
+        } else {
+            this.exRules = Array.prototype.concat.apply([], arr);
+            this.exRules = [...exRules].map(x => {
+                if (Array.isArray(x.value)) {
+                    x.value = [...x.value].join(",");
+                }
+                return x;
+            });
+            isextractRulesFinished = true;
+            console.log(exRules);
+
+        }
+    }
+    }
+     getQueryBuilderRules() {
+    var rules = $('#filters').queryBuilder('getRules');
+
+    var g = [...rules.rules].reduce((group, product) => {
+        const { id } = product;
+        group[id] = !group[id] ? [] : group[id];
+        group[id].push(product);
+        return group;
+    }, {});
+    var arr = [];
+    for (var prop in g) {
+        arr.push(g[prop]);
+    }
+    if (arr.some(x => x.length > 1)) {
+        console.log("error");
+    } else {
+        this.exRules = Array.prototype.concat.apply([], arr);
+        this.exRules = [...(this.exRules)].map(x => {
+            if (Array.isArray(x.value)) {
+                x.value = [...x.value].join(",");
+            }
+            return x;
+        });
+        console.log(this.exRules);
+        return this.exRules;
+    }
 }
+}
+
 function copyText(textToCopy) {
     //const textToCopy = "This is the text to copy";
 

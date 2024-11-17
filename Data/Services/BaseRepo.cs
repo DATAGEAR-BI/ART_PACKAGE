@@ -42,7 +42,7 @@ namespace Data.Services
 
 
 
-        public virtual GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
+        public virtual GridResult<TModel> GetGridData(KendoGridRequest request, Expression<Func<TModel, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
             IQueryable<TModel> data;
             if (!request.IsStored)

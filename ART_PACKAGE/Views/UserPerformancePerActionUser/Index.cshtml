@@ -35,13 +35,15 @@
         <br />
     </h1>
 </section>
-<filters-control data-key="UserPerformancePerActionUser"></filters-control>
-<div id="grid"></div>
+<art-filters-control data-key="UserPerformancePerActionUser"></art-filters-control>
+@*<div id="grid"></div>
+*@
+<script>
 
-
+</script>
 @section Scripts {
 
 
-    <script src="~/js/ConstructFilters.js" defer type="module"></script>
-    <script src="~/js/Dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="UserPerformancePerActionUser" data-handlerkey="UserPerformancePerActionUser"></script>
-}
+    <script src="~/js/Components/ARTQBuilder/QueryBuilder.js" defer type="module"></script>
+@*    <script src="~/js/Dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="UserPerformancePerActionUser" data-handlerkey="UserPerformancePerActionUser"></script>
+*@}

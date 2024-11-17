@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             if (request.IsIntialize)
             {
@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             try
             {

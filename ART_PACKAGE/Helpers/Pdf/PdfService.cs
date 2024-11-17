@@ -27,6 +27,7 @@ using iText.Layout.Borders;
 using iText.Kernel.Colors;
 using ART_PACKAGE.Hubs;
 using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+using ART_PACKAGE.Extentions.PDF;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -38,14 +39,16 @@ namespace ART_PACKAGE.Helpers.Pdf
         private readonly object _locker = new();
         public event Action<int, int> OnProgressChanged;
         public event Action<int, int> OnLastProgressChanged;
-        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger)
+        private readonly IWebHostEnvironment _env;
+
+        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger, IWebHostEnvironment env)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _processesHandler = processesHandler;
             _logger = logger;
             OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
             OnLastProgressChanged = (rd, fn) => _logger.LogInformation("file is being exported : ({fn}) /  {p} ", fn, rd);
-
+            _env = env;
 
 
 
@@ -475,6 +478,9 @@ namespace ART_PACKAGE.Helpers.Pdf
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
+
+            var filters = req.DataReq.Filter;
+
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 ITenantService tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
@@ -538,6 +544,23 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                         List<Table> tableList = new List<Table>();
                         var allElements = new List<IBlockElement>();
+                        
+
+                        // Define the paths to the images in wwwroot
+                        string wwwrootPath = _env.WebRootPath;
+                        string imagePath1 = Path.Combine(wwwrootPath, "imgs", "LOGO.png");
+                        string imagePath2 = Path.Combine(wwwrootPath, "imgs", "bank_logo.png");
+
+                        float logoMaxWidth = pdf.GetDefaultPageSize().GetWidth() * 0.1f;
+
+                        document.AddLogos(imagePath1 ,imagePath2, logoMaxWidth);
+
+                        document.AddTitle<TModel>();
+
+                        document.AddDescription<TModel>();
+
+                        document.AddFilters<TModel>(filters);
+
                         foreach (var item in data)
                         {
                             if (rowCount % recordsPerPage == 0)

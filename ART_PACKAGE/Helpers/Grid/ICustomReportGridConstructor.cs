@@ -10,8 +10,8 @@ namespace ART_PACKAGE.Helpers.Grid
     public interface ICustomReportGridConstructor : IGridConstructor<ICustomReportRepo, CustomReportsContext, Dictionary<string, object>>
     {
         public GridIntializationConfiguration IntializeGrid(int reportId);
-        public GridResult<Dictionary<string, object>> GetGridData(int reportId, GridRequest request);
-        public IEnumerable<ChartDataDto> GetReportChartsData(int reportId, GridRequest request);
+        public GridResult<Dictionary<string, object>> GetGridData(int reportId, KendoGridRequest request);
+        public IEnumerable<ChartDataDto> GetReportChartsData(int reportId, KendoGridRequest request);
 
         public IEnumerable<DbObject> GetDbObjectsOf(int schema);
         public IEnumerable<ColumnDto> GetObjectColumns(int schema, string view, string type);

@@ -499,7 +499,10 @@ namespace ART_PACKAGE.Helpers.Csv
             try
             {
                 File.WriteAllBytes(filePath, stream.ToArray());
-                OnProgressChanged(index, fileNumber);
+                lock (_locker)
+                {
+                    OnProgressChanged(index, fileNumber);
+                }
                 return true;
             }
 
