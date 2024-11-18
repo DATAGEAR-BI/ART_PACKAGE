@@ -53,6 +53,10 @@ namespace Data.Data.SASAml
             modelBuilder.Entity<ArtStAmlAlertPerOwnerNonStaff>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerScenarioNonStaff>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStAmlAlertsPerBranchNonStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCasesPerBranch>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerIndustry>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerOccupation>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStCustPerStatus>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnSasAmlModelCreating(modelBuilder);

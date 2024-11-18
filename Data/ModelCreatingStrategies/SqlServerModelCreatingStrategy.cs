@@ -2169,7 +2169,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_AML_CASE_DETAILS_VIEW", "ART_DB");
+                entity.ToView("ART_AML_CASE_DETAILS_VIEW_ADIB", "ART_DB");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(100)
@@ -2239,7 +2239,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_AML_CUSTOMERS_DETAILS_VIEW", "ART_DB");
+                entity.ToView("ART_AML_CUSTOMERS_DETAILS_VIEW_ADIB", "ART_DB");
 
                 entity.Property(e => e.ActiveFlg)
                     .HasMaxLength(1)
@@ -2259,6 +2259,11 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("BRANCH_NUMBER");
+                entity.Property(e => e.Nationality2)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("NATIONALITY2");
+
 
                 entity.Property(e => e.CitizenshipCountryName)
                     .HasMaxLength(100)
@@ -5388,7 +5393,7 @@ namespace Data.ModelCreatingStrategies
                 entity.HasKey(e => e.CaseId)
                     .HasName("XPKFSK_CASE");
 
-                entity.ToTable("FSK_CASE", "FCFKC");
+                entity.ToTable("FSK_CASE");
 
                 entity.HasIndex(e => e.QueueCode, "XEIQFSK_CASE");
 

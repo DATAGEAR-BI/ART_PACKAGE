@@ -35,7 +35,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "LastComment", new GridColumnConfiguration { DisplayName = "Last Comment" } },
                 { "InvestigationDays", new GridColumnConfiguration { DisplayName = "Investigation Days" } },
             };
-            ReportTitle = "Alert Details Non Staff Report";
+            ReportTitle = "Alert Details Non Staff";
 
         }
     }

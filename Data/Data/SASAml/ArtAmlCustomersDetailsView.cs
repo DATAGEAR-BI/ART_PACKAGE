@@ -17,6 +17,7 @@ namespace Data.Data.SASAml
         public string? RiskClassification { get; set; }
         public string? CustomerTaxId { get; set; }
         public string? DoingBusinessAsName { get; set; }
+        public string? Nationality2 { get; set; }//
         public string? GovernorateName { get; set; }
         public string? StreetAddress1 { get; set; }
         public string? CityName { get; set; }
