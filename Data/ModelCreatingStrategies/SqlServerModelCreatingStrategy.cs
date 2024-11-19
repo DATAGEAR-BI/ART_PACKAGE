@@ -1722,7 +1722,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW_NON_STAFF_ADIB", "ART_DB");
+                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW_NON_STAFF", "ART_DB");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
@@ -1829,7 +1829,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_AML_USER_PERFORMANCE_ADIB", "ART_DB");
+                entity.ToView("ART_AML_USER_PERFORMANCE", "ART_DB");
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(4000)
@@ -1875,7 +1875,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW_STAFF_ADIB", "ART_DB");
+                entity.ToView("ART_DGAML_ALERT_DETAIL_VIEW_STAFF", "ART_DB");
 
                 entity.Property(e => e.ActualValuesText)
                     .HasMaxLength(255)
@@ -2145,7 +2145,7 @@ namespace Data.ModelCreatingStrategies
             {
                 entity.HasNoKey();
 
-                entity.ToView("ART_SYSTEM_PERFORMANCE_ADIB", "ART_DB");
+                entity.ToView("ART_SYSTEM_PERFORMANCE", "ART_DB");
 
                 entity.Property(e => e.CaseDesc)
                     .HasMaxLength(100)
