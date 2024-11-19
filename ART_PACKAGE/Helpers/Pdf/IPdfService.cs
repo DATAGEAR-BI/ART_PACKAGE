@@ -41,7 +41,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             , ActionContext ControllerContext, string UserName, List<GridGroup>? GroupColumns, List<string> ColumnsToSkip = null
             , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
 
-        public Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)    where TContext : DbContext
+        public Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportPDFRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)    where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>;
     }

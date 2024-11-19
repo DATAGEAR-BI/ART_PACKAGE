@@ -22,6 +22,7 @@ using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
 using Data.Services.Tenat;
+using Data.Setting;
 using Hangfire;
 using Hangfire.LiteDB;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +44,8 @@ builder.Services.AddSignalR();
 //builder.Services.AddHostedService<LicenseWatcher>();
 
 builder.Services.AddScoped<IDropDownService, DropDownService>();
+
+builder.Services.Configure<PDF>(builder.Configuration.GetSection("PDF"));
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();

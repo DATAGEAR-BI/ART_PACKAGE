@@ -15,6 +15,10 @@ using com.sun.org.apache.bcel.@internal.generic;
 using Type = System.Type;
 using Data.Setting;
 using iText.IO.Image;
+using iTextSharp.text.pdf;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf.Canvas;
 
 namespace ART_PACKAGE.Extentions.PDF
 {
@@ -110,7 +114,65 @@ namespace ART_PACKAGE.Extentions.PDF
 
         };
 
-        public static Document AddFilters<TModel>(this Document document,Filter filters) {
+
+
+        /// <summary>
+        /// Adds a watermark image to the first page of the document.
+        /// </summary>
+        /// <param name="document">The iText document to modify.</param>
+        /// <param name="imagePath">The path to the watermark image.</param>
+        /// <param name="opacity">The opacity of the watermark (0.0 to 1.0).</param>
+        public static Document AddWatermark(this Document document, string imagePath, float opacity = 0.2f)
+        {
+            var pdfDoc = document.GetPdfDocument();
+            if (pdfDoc.GetNumberOfPages() < 1)
+            {
+                throw new InvalidOperationException("The document has no pages.");
+            }
+
+            var page = pdfDoc.GetPage(1);
+            var pageSize = page.GetPageSize();
+
+            float pageWidth = pageSize.GetWidth();
+            float pageHeight = pageSize.GetHeight();
+
+            // Calculate margins (30% of width and height)
+            float marginLeft = pageWidth * 0.3f;
+            float marginTop = pageHeight * 0.3f;
+
+            // Calculate available width and height
+            float availableWidth = pageWidth - marginLeft * 2;
+            float availableHeight = pageHeight - marginTop * 2;
+
+            // Load the image
+            var imageData = ImageDataFactory.Create(imagePath);
+            var image = new Image(imageData);
+
+            // Scale image to fit within the available space
+            float scaleX = availableWidth / image.GetImageWidth();
+            float scaleY = availableHeight / image.GetImageHeight();
+            float scale = Math.Min(scaleX, scaleY);
+
+            float scaledWidth = image.GetImageWidth() * scale;
+            float scaledHeight = image.GetImageHeight() * scale;
+
+            // Set position
+            float xPosition = marginLeft;
+            float yPosition = marginTop;
+
+            // Draw the watermark image
+            var pdfCanvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
+            image
+                .SetOpacity(opacity)
+                .ScaleAbsolute(scaledWidth, scaledHeight)
+                .SetFixedPosition(xPosition, yPosition);
+
+            var canvas = new Canvas(pdfCanvas, pageSize);
+            canvas.Add(image);
+            return document;
+        }
+    
+    public static Document AddFilters<TModel>(this Document document,Filter filters) {
 
             if (filters== null) return document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
             
@@ -121,6 +183,7 @@ namespace ART_PACKAGE.Extentions.PDF
                         .SetMarginLeft(20).SetFontSize(16).SetBold();
             unorderedList.Add(new ListItem("Applied Filters"));
             document.Add(unorderedList);
+            var arabicLanguageProcessor = new ArabicLigaturizer();
 
 
             Table table = new Table(UnitValue.CreatePercentArray(3));
@@ -134,7 +197,7 @@ namespace ART_PACKAGE.Extentions.PDF
             {
                 foreach (var filterGrediant in filter)
                 {
-                    table.AddCell(new Cell().Add(new Paragraph(filterGrediant.ToString() ?? "")
+                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filterGrediant.ToString() ?? ""))
                               .SetTextAlignment(TextAlignment.CENTER)));
 
                 }
@@ -443,7 +506,7 @@ namespace ART_PACKAGE.Extentions.PDF
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(PDF).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
 
                             object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
@@ -554,6 +617,17 @@ namespace ART_PACKAGE.Extentions.PDF
 
             return document;
         }
-
+        /*public static Table AddHeaders<TModel>(this Table table,List<string> headers = null)
+        {
+            if (headers is not null)
+            {
+                foreach (var header in headers)
+                {
+                    table.AddHeaderCell(new Cell().Add(new Paragraph(header).SetFontSize(calculatedFontSize)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                    .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                    .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                }
+            }
+        }*/
     }
 }

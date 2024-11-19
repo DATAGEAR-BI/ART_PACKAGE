@@ -10,7 +10,10 @@ namespace Data.Setting
     {
 
         public bool IsLandScape { get; set; }
-        public int IsNumberOfRowsInPage { get; set; }
+        public int NumberOfRowsInPage { get; set; }
         public int NumberOfColumnsInPage { get; set; }
+        public int NumberOfRowsInFile { get; set; }
+        public bool UsingPartitionApproach { get; set; }
+
     }
 }
