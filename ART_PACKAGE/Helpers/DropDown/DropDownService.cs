@@ -420,7 +420,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetAlertOwnerDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.SasAML.ArtAmlAlertDetailViews.Select(x => x.OwnerUserid).Distinct().Where(x => !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = new List<SelectItem>();
 
             return distinct_value;
         }
@@ -808,6 +808,76 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.CORE.FscPartyDims.Where(x => x.PartyKey != -1).Select(x => x.PartyTypeDesc.ToUpper() == "ORGNIZATION" ? "ORGANIZATION" : x.PartyTypeDesc.ToUpper()).Distinct().Where(x => x != null && !string.IsNullOrEmpty(x.Trim())).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
+        }
+
+        public List<SelectItem> GetBranchNumberDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetCountryNameDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetPartyType_AlertDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetCloseRsnDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetEmployeeIndDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetTransactionTypeDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetTypeOfSwiftClearDetectDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetDirectionOfSwiftClearDetectDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetActionForUserPerf()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetLast10YearsDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetReportTypeForTopsAndBottomsDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetReportTypeForStaffAndNonStaffSummariesDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetAlertsOwnerDropDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SelectItem> GetGOAMLReportAccountTypesDropDown()
+        {
+            throw new NotImplementedException();
         }
     }
 }

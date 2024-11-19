@@ -54,6 +54,22 @@ function yesterday() {
     return d.toISOString().slice(0, 10);
 }
 export const Filters = {
+    //SASAML
+    AlertSummaryNonStaff: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        },
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
     UserPerformanceSummary: {
         filters: [],
         get filters() {

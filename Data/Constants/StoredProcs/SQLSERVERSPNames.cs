@@ -16,9 +16,13 @@
         public static readonly string ART_ST_CASES_PER_PRIORITY = "[ART_DB].[ART_ST_CASES_PER_PRIORITY]";
         public static readonly string ART_ST_CASES_PER_STATUS = "[ART_DB].[ART_ST_CASES_PER_STATUS]";
         public static readonly string ART_ST_CASES_PER_SUBCAT = "[ART_DB].[ART_ST_CASES_PER_SUBCAT]";
+        public static readonly string ART_ST_CASES_PER_BRANCH = "[ART_DB].[ART_ST_CASES_PER_BRANCH]";
         public static readonly string ART_ST_CUST_PER_BRANCH = "[ART_DB].[ART_ST_CUST_PER_BRANCH]";
         public static readonly string ART_ST_CUST_PER_RISK = "[ART_DB].[ART_ST_CUST_PER_RISK]";
         public static readonly string ART_ST_CUST_PER_TYPE = "[ART_DB].[ART_ST_CUST_PER_TYPE]";
+        public static readonly string ART_ST_CUST_PER_INDUSTRY = "[ART_DB].[ART_ST_CUST_PER_INDUSTRY]";
+        public static readonly string ART_ST_CUST_PER_OCCUPATION = "[ART_DB].[ART_ST_CUST_PER_OCCUPATION]";
+        public static readonly string ART_ST_CUST_PER_STATUS = "[ART_DB].[ART_ST_CUST_PER_STATUS]";
         public static readonly string ART_ST_AML_PROP_RISK_CLASS = "[ART_DB].[ART_ST_AML_PROP_RISK_CLASS]";
         public static readonly string ART_ST_AML_RISK_CLASS = "[ART_DB].[ART_ST_AML_RISK_CLASS]";
         public static readonly string ART_ST_AML_ALERT_AGE_SUMMARY = "[ART_DB].[ART_ST_ALERT_AGE_SUMMARY]";
@@ -30,6 +34,12 @@
         public static readonly string ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION = "[ART_DB].[ART_ST_AML_USER_PERFORMANCE_PER_USER_AND_ACTION]";
         public static readonly string ART_ST_USER_PERFORMANCE_PER_ACTION = "[ART_DB].[ART_ST_AML_USER_PERFORMANCE_PER_ACTION]";
 
+
+
+        public static readonly string ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_STATUS_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_SCENARIO_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERT_PER_OWNER_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERT_PER_OWNER_NON_STAFF_ADIB]";
+        public static readonly string ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF = "[ART_DB].[ART_ST_AML_ALERTS_PER_BRANCH_NON_STAFF_ADIB]";
 
 
 

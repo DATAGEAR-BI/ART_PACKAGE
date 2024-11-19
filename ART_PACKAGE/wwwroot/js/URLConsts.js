@@ -38,6 +38,10 @@
     RiskClassSummary: "/RiskSummary/GetData",
     AllSegmentsOutliersNew: "/AllSegmentsOutliersNew/GetData?",
     AlertAgeSummary: "/AlertAgeSummary/GetData",
+
+    //SAS AML
+    AlertDetailsNonStaff: "/AlertDetailsNonStaff/GetData",
+    AlertSummaryNonStaff: "/AlertSummaryNonStaff/GetData",
     //GoAml
     GOAMLReportsDetails: "/GOAMLReportsDetails/GetData",
     GOAMLReportsSummary: "/GOAMLReportsSummary/GetData",
