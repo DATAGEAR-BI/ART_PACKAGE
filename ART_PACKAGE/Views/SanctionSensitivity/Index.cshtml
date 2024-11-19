@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section KendoScripts {
+    <partial name="_GridScripts" />
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Sanction Sensitivity Report
+        <small class="h6"></small>
+        <br />
+    </h1>
+</section>
+
+<m-grid id="SystemPerformance" data-urlkey="SanctionSensitivity" data-handlerkey="SanctionSensitivity"></m-grid>
+
+@section Scripts {
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+}
+
+
+

@@ -245,6 +245,86 @@ export const Filters = {
     },
 
     //DGAML
+    DGAMLAlertSummaryNonStaff: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLUserPerformancePerActionUser: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLUserPerformancePerUserAndAction: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLUserPerformPerAction: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
+    DGAMLAlertSummaryStaff: {
+        filters: [],
+        get filters() {
+            return [
+                { id: "startdate", field: "startdate", label: "Start Date", operators: ['equal'], type: "date", ...dateSetting },
+                { id: "enddate", field: "enddate", label: "End Date", operators: ['equal'], type: "date", ...dateSetting },
+            ]
+        }
+        ,
+        rules: [
+
+            { id: "startdate", field: "startdate", label: "Start Date", type: "date", operator: "equal", value: yesterday() },
+            { id: "enddate", field: "enddate", label: "End Date", type: "date", operator: "equal", value: currentDate() },
+
+        ]
+    },
     DGAMLAlertSummary: {
         filters: [],
         get filters() {

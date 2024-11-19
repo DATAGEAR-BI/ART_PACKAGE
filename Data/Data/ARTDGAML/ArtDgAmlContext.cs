@@ -22,6 +22,11 @@ namespace Data.Data.ARTDGAML
         //DGAML Home
         public virtual DbSet<ArtHomeDgamlAlertsPerDate> ArtHomeDgamlAlertsPerDates { get; set; } = null!;
         public virtual DbSet<ArtHomeDgamlAlertsPerStatus> ArtHomeDgamlAlertsPerStatuses { get; set; } = null!;
+        public virtual DbSet<ArtDgamlAlertDetailViewNonStaff> ArtDgamlAlertDetailViewNonStaffs { get; set; } = null!;
+        public virtual DbSet<ArtAmlUserPerformance> ArtAmlUserPerformances { get; set; } = null!;
+        public virtual DbSet<ArtDgamlAlertDetailViewStaff> ArtDgamlAlertDetailViewStaffs { get; set; } = null!;
+
+
         //public virtual DbSet<ArtHomeDgamlNumberOfAccount> ArtHomeDgamlNumberOfAccounts { get; set; } = null!;
         //public virtual DbSet<ArtHomeDgamlNumberOfCustomer> ArtHomeDgamlNumberOfCustomers { get; set; } = null!;
         //public virtual DbSet<ArtHomeDgamlNumberOfHighRiskCustomer> ArtHomeDgamlNumberOfHighRiskCustomers { get; set; } = null!;
@@ -43,6 +48,13 @@ namespace Data.Data.ARTDGAML
             modelBuilder.Entity<ArtStDgAmlExternalCustomerPerType>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlAlertsPerBranch>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtStDgAmlAlertsPerScenario>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgAmlUserPerformancePerActionUser>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgAmlUserPerformPerAction>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtDgAmlUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertPerOwnerStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerBranchStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerScenarioStaff>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtStDgAmlAlertsPerStatusStaff>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnARTDGAMLModelCreating(modelBuilder);

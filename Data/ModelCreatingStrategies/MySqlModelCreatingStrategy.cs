@@ -3695,9 +3695,6 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3729,9 +3726,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3763,9 +3760,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3797,9 +3794,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3829,9 +3826,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3863,9 +3860,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3897,9 +3894,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3931,9 +3928,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3963,9 +3960,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -3997,9 +3994,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -4031,9 +4028,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -4065,9 +4062,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)

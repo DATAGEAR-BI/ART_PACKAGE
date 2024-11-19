@@ -13102,11 +13102,6 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
-
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -13142,10 +13137,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13182,10 +13177,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
-                    .HasMaxLength(255)
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13222,10 +13217,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13258,10 +13253,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13298,10 +13293,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13338,10 +13333,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13378,10 +13373,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13414,10 +13409,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13454,10 +13449,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13494,10 +13489,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
@@ -13534,10 +13529,10 @@ namespace Data.ModelCreatingStrategies
                     .HasPrecision(6)
                     .HasColumnName("NEXT_UPDATE_DATE");
 
-                entity.Property(e => e.RiskClassIndustry)
+                entity.Property(e => e.BranchName)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("RISK_CLASS/INDUSTRY");
+                    .HasColumnName("BRANCH_NAME");
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)

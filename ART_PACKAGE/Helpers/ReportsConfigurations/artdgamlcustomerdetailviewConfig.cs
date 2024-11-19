@@ -51,7 +51,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "Customers Details Report";
+            ReportDescription = "Presents all customers details";
 
 
 

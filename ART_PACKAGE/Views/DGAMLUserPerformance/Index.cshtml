@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section KendoScripts {
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        Aml User Performance Report
+        <small></small>
+        <br />
+    </h1>
+</section>
+
+
+<m-grid id="DGAMLUserPerformance" data-urlkey="DGAMLUserPerformance" data-handlerkey="DGAMLUserPerformance"></m-grid>
+
+@section Scripts {
+
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+}

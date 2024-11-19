@@ -37,7 +37,7 @@ namespace ART_PACKAGE.Controllers.CRP
 
             IEnumerable<ART_ST_CRP_PER_RISK> chart1Data = Enumerable.Empty<ART_ST_CRP_PER_RISK>().AsQueryable();
             IEnumerable<ART_ST_CRP_PER_STATUS> chart2data = Enumerable.Empty<ART_ST_CRP_PER_STATUS>().AsQueryable();
-            IEnumerable<ART_ST_CRP_CASES_PER_RATE> chart3data = Enumerable.Empty<ART_ST_CRP_CASES_PER_RATE>().AsQueryable();
+            IEnumerable<ART_ST_CRP_CUST_PER_PROP_RISK> chart3data = Enumerable.Empty<ART_ST_CRP_CUST_PER_PROP_RISK>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
@@ -48,20 +48,20 @@ namespace ART_PACKAGE.Controllers.CRP
 
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(SQLSERVERSPNames.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(SQLSERVERSPNames.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CUST_PER_PROP_RISK>(SQLSERVERSPNames.ART_ST_CRP_CUST_PER_PROP_RISK, chart3Params.ToArray());
             }
 
             if (dbType == DbTypes.Oracle)
             {
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(ORACLESPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(ORACLESPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(ORACLESPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CUST_PER_PROP_RISK>(ORACLESPName.ART_ST_CRP_CUST_PER_PROP_RISK, chart3Params.ToArray());
             }
             if (dbType == DbTypes.MySql) 
             {
                 chart1Data = _crp.ExecuteProc<ART_ST_CRP_PER_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_RISK, chart1Params.ToArray());
                 chart2data = _crp.ExecuteProc<ART_ST_CRP_PER_STATUS>(MYSQLSPName.ART_ST_CRP_CASES_PER_STATUS, chart2Params.ToArray());
-                chart3data = _crp.ExecuteProc<ART_ST_CRP_CASES_PER_RATE>(MYSQLSPName.ART_ST_CRP_CASES_PER_RATE, chart3Params.ToArray());
+                chart3data = _crp.ExecuteProc<ART_ST_CRP_CUST_PER_PROP_RISK>(MYSQLSPName.ART_ST_CRP_CUST_PER_PROP_RISK, chart3Params.ToArray());
             }
             ArrayList chartData = new()
             {
@@ -75,13 +75,14 @@ namespace ART_PACKAGE.Controllers.CRP
 
                     Type=ChartType.bar
                 },
-                new ChartData<ART_ST_CRP_CASES_PER_RATE>
+                new ChartData<ART_ST_CRP_CUST_PER_PROP_RISK>
                 {
-                    ChartId = "ART_ST_CRP_CASES_PER_RATE",
+                    ChartId = "ART_ST_CRP_CUST_PER_PROP_RISK",
                     Data =chart3data.ToList(),
-                    Title = "CRP CASES CURRENT VS TARGET RATE",
-                    Cat = "RATE",
-                    Type=ChartType.clusteredbarchart
+                    Title = "CUSTOMERS PER PROP RISK CLASSIFICATION",
+                    Cat = "PROP_RISK_CLASSIFICATION",
+                    Val = "NUMBER_OF_CUSTOMERS",
+                    Type = ChartType.donut
 
                 },
                 new ChartData<ART_ST_CRP_PER_RISK>
@@ -94,19 +95,6 @@ namespace ART_PACKAGE.Controllers.CRP
                     Type = ChartType.donut
                 }
             };
-
-            /*if (dbType is DbTypes.Oracle or DbTypes.SqlServer)
-            {
-                _ = chartData.Add(new ChartData<ART_ST_CRP_PER_RISK>
-                {
-                    ChartId = "ART_ST_CRP_PER_RISK",
-                    Data = chart1Data.ToList(),
-                    Title = "CUSTOMERS PER RISK CLASSIFICATION",
-                    Cat = "RISK_CLASSIFICATION",
-                    Val = "NUMBER_OF_CUSTOMERS",
-                    Type = ChartType.donut
-                });
-            }*/
 
 
 

@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
-
+            ReportTitle = "Cases Details Report";
 
 
 

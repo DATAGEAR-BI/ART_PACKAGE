@@ -27,28 +27,35 @@ namespace ART_PACKAGE.Controllers.GOAML
             IEnumerable<ArtStGoAmlReportsPerCreator> chart3Data = Enumerable.Empty<ArtStGoAmlReportsPerCreator>();
             IEnumerable<ArtStGoAmlReportsPerType> chart1Data = Enumerable.Empty<ArtStGoAmlReportsPerType>();
             IEnumerable<ArtStGoAmlReportsPerStatus> chart2data = Enumerable.Empty<ArtStGoAmlReportsPerStatus>();
+            //IEnumerable<ArtStGoAmlReportsPerIndicator> chart4data = Enumerable.Empty<ArtStGoAmlReportsPerIndicator>();
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+            //IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
                 chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
+              //  chart4data = _context.ExecuteProc<ArtStGoAmlReportsPerIndicator>(SQLSERVERSPNames.ART_ST_GOAML_REPORTS_PER_INDICATOR, chart4Params.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
                 chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
+                //chart4data = _context.ExecuteProc<ArtStGoAmlReportsPerIndicator>(ORACLESPName.ART_ST_GOAML_REPORTS_PER_INDICATOR, chart4Params.ToArray());
+
             }
             else if (dbType == DbTypes.MySql)
             {
                 chart3Data = _context.ExecuteProc<ArtStGoAmlReportsPerCreator>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_CREATOR, chart3Params.ToArray());
                 chart1Data = _context.ExecuteProc<ArtStGoAmlReportsPerType>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_TYPE, chart1Params.ToArray());
                 chart2data = _context.ExecuteProc<ArtStGoAmlReportsPerStatus>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_STATUS, chart2Params.ToArray());
+                //chart4data = _context.ExecuteProc<ArtStGoAmlReportsPerIndicator>(MYSQLSPName.ART_ST_GOAML_REPORTS_PER_INDICATOR, chart4Params.ToArray());
+
             }
 
 
@@ -82,7 +89,16 @@ namespace ART_PACKAGE.Controllers.GOAML
                     Cat = "CREATED_BY",
                     Val = "NUMBER_OF_REPORTS",
                     Type = ChartType.donut
-                }
+                },
+                //new ChartData<ArtStGoAmlReportsPerIndicator>
+                //{
+                //    ChartId = "StGoamlReportsPerIndicator",
+                //    Data = chart4data.ToList(),
+                //    Title = "Number of Reports Per Indicator",
+                //    Cat = "INDICATOR",
+                //    Val = "NUMBER_OF_REPORTS",
+                //    Type = ChartType.donut
+                //},
             };
 
 

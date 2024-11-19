@@ -118,6 +118,14 @@
     DGAMLArtScenarioHistory: "/DGAMLArtScenarioHistory/GetData",
     DGAMLArtSuspectDetails: "/DGAMLArtSuspectDetails/GetData",
     DGAMLExternalCustomerSummary: "/DGAMLExternalCustomerSummary/GetData",
+    DGAMLAlertDetailsNonStaff: "/DGAMLAlertDetailsNonStaff/GetData",
+    DGAMLAlertSummaryNonStaff: "/DGAMLAlertSummaryNonStaff/GetData",
+    DGAMLUserPerformance: "/DGAMLUserPerformance/GetData",
+    DGAMLUserPerformancePerActionUser: "/DGAMLUserPerformancePerActionUser/GetData",
+    DGAMLUserPerformancePerUserAndAction: "/DGAMLUserPerformancePerUserAndAction/GetData",
+    DGAMLUserPerformPerAction: "/DGAMLUserPerformPerAction/GetData",
+    DGAMLAlertDetailsStaff: "/DGAMLAlertDetailsStaff/GetData",
+    DGAMLAlertSummaryStaff: "/DGAMLAlertSummaryStaff/GetData",
 
 
     //crp
@@ -138,6 +146,8 @@
     //ECM
     CFTConfigs: "/CFTConfig/GetData",
     ClearDetect: "/ClearDetect/GetData",
+    SanctionSensitivity: "/SanctionSensitivity/GetData",
+    ACHCaseDetails: "/ACHCaseDetails/GetData",
 
     //TRADE_BASE
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",

@@ -41,36 +41,6 @@ namespace ART_PACKAGE.Controllers.ECM
             IEnumerable<ArtSystemPrefPerStatus> chart1Data = Enumerable.Empty<ArtSystemPrefPerStatus>().AsQueryable();
             IEnumerable<ArtSystemPerfPerType> chart2data = Enumerable.Empty<ArtSystemPerfPerType>().AsQueryable();
 
-
-            //var startDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "startdate".ToLower())?.value;
-            //var endDate = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "enddate".ToLower())?.value;
-            ////var case_id = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_id".ToLower())?.value ?? "";
-            ////var case_type = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_type".ToLower())?.value ?? "";
-            ////var case_status = para.procFilters.FirstOrDefault(x => x.id.ToLower() == "case_status".ToLower())?.value ?? "";
-            //var sd = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = startDate
-            //};
-            //var ed = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = endDate
-            //};
-            //var sd1 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = startDate
-            //};
-            //var ed1 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = endDate
-            //};
-            //var sd3 = new SqlParameter("@V_START_DATE", SqlDbType.Date)
-            //{
-            //    Value = startDate
-            //};
-            //var ed3 = new SqlParameter("@V_END_DATE", SqlDbType.Date)
-            //{
-            //    Value = endDate
-            //};
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
