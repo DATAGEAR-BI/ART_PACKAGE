@@ -12,10 +12,10 @@ namespace Data.Data.SASAml
         public string? DisplayName { get; set; }
         public long? AlertId { get; set; }
         public string? CaseId { get; set; }
-        public string? AlertedEntityNumber { get; set; }
+        public long? AlertedEntityNumber { get; set; }
         public string? AlertedEntityName { get; set; }
         public string? BranchName { get; set; }
-        public string? BranchNumber { get; set; }
+        public long? BranchNumber { get; set; }
         public DateTime AssignedDate { get; set; }
         public DateTime? CaseCloseDate { get; set; }
         public string? LevelOfRisk { get; set; }

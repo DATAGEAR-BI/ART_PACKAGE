@@ -11,10 +11,10 @@ namespace Data.Data.SASAml
         public string? UserName { get; set; }
         public string? DisplayName { get; set; }
         public long? AlertId { get; set; }
-        public string? AlertedEntityNumber { get; set; }
+        public long? AlertedEntityNumber { get; set; }
         public string? AlertedEntityName { get; set; }
         public string? BranchName { get; set; }
-        public string? BranchNumber { get; set; }
+        public long? BranchNumber { get; set; }
         public string? AlertStatus { get; set; }
         public DateTime? LastActionDate { get; set; }
         public DateTime? AssignedDate { get; set; }
