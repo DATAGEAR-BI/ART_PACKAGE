@@ -5273,6 +5273,10 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("VIOLATED_BY");
+                entity.Property(e => e.ViolatedAt)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("VIOLATED_AT");
 
                 entity.Property(e => e.ViolatedTime)
                     .IsUnicode(false)

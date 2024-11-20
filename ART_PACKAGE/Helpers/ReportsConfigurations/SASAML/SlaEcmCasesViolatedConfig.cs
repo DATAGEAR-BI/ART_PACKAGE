@@ -18,6 +18,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "LastActionDate", new GridColumnConfiguration { DisplayName = "Last Action Date" } },
                 { "NumberOfActions", new GridColumnConfiguration { DisplayName = "Number Of Actions" } },
                 { "ViolatedBy", new GridColumnConfiguration { DisplayName = "Violated By" } },
+                { "ViolatedAt", new GridColumnConfiguration { DisplayName = "Violated At" } },
                 { "ViolatedTime", new GridColumnConfiguration { DisplayName = "Violated Time" } },
                 { "TotalTime", new GridColumnConfiguration { DisplayName = "Total Time" } },
                 { "Formattedtime", new GridColumnConfiguration { DisplayName = "Formatted Time" } },

@@ -16,6 +16,7 @@ namespace Data.Data.SASAml
         public decimal? NumberOfActions { get; set; }
         public string? ViolatedBy { get; set; }
         public string? ViolatedTime { get; set; }
+        public string? ViolatedAt { get; set; }
         public decimal? TotalTime { get; set; }
         public string? Formattedtime { get; set; }
     }
