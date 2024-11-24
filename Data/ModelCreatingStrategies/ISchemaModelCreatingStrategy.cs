@@ -8,6 +8,7 @@ namespace Data.ModelCreatingStrategies
         public void OnFcfkcSASAMLModelCreating(ModelBuilder modelBuilder);
 
         public void OnDGECMModelCreating(ModelBuilder modelBuilder);
+        public void OnDGCRPModelCreating(ModelBuilder modelBuilder);
         public void OnDGCFTWLModelCreating(ModelBuilder modelBuilder);
         public void OnDGFATCAModelCreating(ModelBuilder modelBuilder);
 

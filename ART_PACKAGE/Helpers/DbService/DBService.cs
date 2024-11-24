@@ -12,6 +12,7 @@ using Data.GOAML;
 using Data.TIZONE2;
 using Data.Data.ECM;
 using Data.DGCFTWL;
+using Data.DGCRP;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -91,6 +92,12 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
+                if (modules.Contains("CRP"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    DGCRPContext _DGCRP = scope.ServiceProvider.GetRequiredService<DGCRPContext>();
+                    DGCRP = _DGCRP;
+                }
             }
         }
 
@@ -116,5 +123,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public EcmContext ARTECM { get; }
 
         public DGCFTWLContext DGCFTWL { get; }
+
+        public DGCRPContext DGCRP { get; }
     }
 }

@@ -12,6 +12,7 @@ using Data.GOAML;
 using Data.TIZONE2;
 using Data.Data.ECM;
 using Data.DGCFTWL;
+using Data.DGCRP;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -33,6 +34,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }
+
+        public DGCRPContext DGCRP { get; }
 
     }
 }

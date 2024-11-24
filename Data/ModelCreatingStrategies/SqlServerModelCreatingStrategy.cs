@@ -22,6 +22,7 @@ using Data.Data.AmlAnalysis;
 using Data.DGAMLAC;
 using Data.Data.KYC;
 using Data.DGCFTWL;
+using Data.DGCRP;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -11508,6 +11509,34 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.YearOfBirth)
                     .HasColumnType("decimal(4, 0)")
                     .HasColumnName("year_of_birth");
+            });
+        }
+
+        public void OnDGCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtCrpActionFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CRP_ACTION_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCrpCaseStatusFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CRP_CASE_STATUS_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_CI_AI");
             });
         }
     }
