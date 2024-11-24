@@ -19,6 +19,8 @@ using iTextSharp.text.pdf;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf.Canvas;
+using Data.Services.QueryBuilder;
+using ART_PACKAGE.Extentions.StringExtentions;
 
 namespace ART_PACKAGE.Extentions.PDF
 {
@@ -171,8 +173,42 @@ namespace ART_PACKAGE.Extentions.PDF
             canvas.Add(image);
             return document;
         }
-    
-    public static Document AddFilters<TModel>(this Document document,Filter filters) {
+        public static Document AddQueryBuilderFilters(this Document document, List<BuilderFilter> filters)
+        {
+
+            if (filters == null) return document;
+            List unorderedList = new List()
+                        .SetSymbolIndent(12)           // Indent for symbols
+                        .SetListSymbol("\u2022")       // Bullet point symbol
+                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+            unorderedList.Add(new ListItem("Global Filters"));
+            document.Add(unorderedList);
+            var arabicLanguageProcessor = new ArabicLigaturizer();
+
+
+            Table table = new Table(UnitValue.CreatePercentArray(3));
+            table.SetWidth(UnitValue.CreatePercentValue(70));
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Column")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Operator")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Value")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            foreach (var filter in filters)
+            {
+                
+                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Field.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+                table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Operator.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+                table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Value.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+
+
+            }
+            document.Add(table);
+            return document;
+        }
+        public static Document AddFilters<TModel>(this Document document,Filter filters) {
 
             if (filters== null) return document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
             
@@ -181,7 +217,7 @@ namespace ART_PACKAGE.Extentions.PDF
                         .SetSymbolIndent(12)           // Indent for symbols
                         .SetListSymbol("\u2022")       // Bullet point symbol
                         .SetMarginLeft(20).SetFontSize(16).SetBold();
-            unorderedList.Add(new ListItem("Applied Filters"));
+            unorderedList.Add(new ListItem("Table Filters"));
             document.Add(unorderedList);
             var arabicLanguageProcessor = new ArabicLigaturizer();
 
@@ -414,14 +450,14 @@ namespace ART_PACKAGE.Extentions.PDF
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator],"" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator],"" };
                                 returnList.Add(v);
 
                             }
                             else
                             {
                                 string value = ((JsonElement)i.value).ToObject<string>();
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
 
                             }
@@ -431,14 +467,14 @@ namespace ART_PACKAGE.Extentions.PDF
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
                             }
                             else
                             {
                                 DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
                             }
                         }
@@ -447,7 +483,7 @@ namespace ART_PACKAGE.Extentions.PDF
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
                             }
                             else
@@ -456,27 +492,40 @@ namespace ART_PACKAGE.Extentions.PDF
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
                                 object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
 
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
                             }
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
 
                             }
                             else
                             {
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
-                                returnList.Add(v);
+                                /*MethodInfo? vmethod = typeof(PDF)
+                ?.GetMethod(nameof(FilterExtensions.ToObjectJE))
+                ?.MakeGenericMethod(underlyingType);
+                                var vv = vmethod?.Invoke(null, new object[] { (JsonElement)i.value });
+                                var vvv = ConvertToNullableType(vv, underlyingType);*/
+
+                               
+                                    object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
+
+                                    object? value = ConvertToNullableType(deserializedValue, underlyingType);
+                                    List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                    returnList.Add(v);
+                               
+                                
+                             
+                             
                             }
                         }
                     }
@@ -485,14 +534,14 @@ namespace ART_PACKAGE.Extentions.PDF
                         if (propType.Name == nameof(String))
                         {
                             string value = ((JsonElement)i.value).ToObject<string>();
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else if (propType.Name == nameof(DateTime))
                         {
                             DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else if (propType.IsEnum)
@@ -501,22 +550,24 @@ namespace ART_PACKAGE.Extentions.PDF
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
                             object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
 
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else
                         {
-                            MethodInfo? method = typeof(PDF).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                            object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
 
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            object? value = ConvertToNullableType(deserializedValue, propType);
+                            //object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                     }
 
                     ///////////////
-                  /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], i.value };
+                  /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], i.value };
                     returnList.Add(v);*/
                 }
 
@@ -530,14 +581,33 @@ namespace ART_PACKAGE.Extentions.PDF
 
 
         }
+       /* public static T ToObjectJE<T>(this JsonElement element)
+        {
+            string json = element.GetRawText();
+
+            return JsonSerializer.Deserialize<T>(json);
+        }*/
+
+        private static object ConvertToNullableType(object value, Type targetType)
+        {
+            if (value == null || Convert.IsDBNull(value))
+            {
+                return null;
+            }
+
+            Type nonNullableType = Nullable.GetUnderlyingType(targetType) ?? targetType;
+            return Convert.ChangeType(value, nonNullableType);
+        }
+
+
         public static Document AddTitle<TModel>(this Document document,string? reportTitle=null)
         {
             if (reportTitle==null)
             {
-                reportTitle = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportTitle : null;
+                reportTitle = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportTitle : "";
             }
        
-            Paragraph title = new Paragraph(reportTitle)
+            Paragraph title = new Paragraph(string.IsNullOrEmpty( reportTitle)?"No Title": reportTitle)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(20)
                 .SetBold();
@@ -550,11 +620,11 @@ namespace ART_PACKAGE.Extentions.PDF
         {
             if (reportDescription == null)
             {
-                reportDescription = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportDescription : null;
+                reportDescription = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportDescription : "";
             }
 
             // Add a description
-            Paragraph description = new Paragraph(reportDescription)
+            Paragraph description = new Paragraph(string.IsNullOrEmpty(reportDescription)? "No Description": reportDescription)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(12);
             document.Add(description);

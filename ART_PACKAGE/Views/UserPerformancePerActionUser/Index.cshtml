@@ -35,7 +35,10 @@
         <br />
     </h1>
 </section>
-<art-filters-control data-key="UserPerformancePerActionUser"></art-filters-control>
+<art-filters-control id="UserPerformancePerActionUser" data-key="UserPerformancePerActionUser"></art-filters-control>
+<m-grid id="UserPerformancePerActionUser" data-urlkey="UserPerformancePerActionUser" data-handlerkey="UserPerformancePerActionUser" data-stored="UserPerformancePerActionUser"></m-grid>
+@*<m-grid id="UserPerformancePerUserAndAction" data-urlkey="UserPerformancePerUserAndAction" data-handlerkey="UserPerformancePerUserAndAction" data-stored="UserPerformancePerActionUser"></m-grid>*@
+
 @*<div id="grid"></div>
 *@
 <script>
@@ -45,5 +48,8 @@
 
 
     <script src="~/js/Components/ARTQBuilder/QueryBuilder.js" defer type="module"></script>
+
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
 @*    <script src="~/js/Dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="UserPerformancePerActionUser" data-handlerkey="UserPerformancePerActionUser"></script>
 *@}

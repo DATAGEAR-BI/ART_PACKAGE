@@ -8,6 +8,9 @@ let exRules = [];
 
 class ARTExternalFilter extends HTMLElement {
     filterRulesObject = [];
+    filterControl = null;
+    appliedRules = {};
+    
     //onApplyFilters; //= (rules) => { };
     constructor() {
         super();
@@ -17,11 +20,11 @@ class ARTExternalFilter extends HTMLElement {
     initializeComponent() {
         this.applyStyle();
         this.createSpinnerStyle();
-        const filterControl = this.createFilterControl();
-        const applyButton = this.createApplyButton(filterControl);
+        this.filterControl = this.createFilterControl();
+        const applyButton = this.createApplyButton();
 
-        this.append(filterControl, applyButton);
-        this.initializeQueryBuilder(filterControl);
+        this.append(this.filterControl, applyButton);
+        this.initializeQueryBuilder();
     }
 
     applyStyle() {
@@ -40,50 +43,56 @@ class ARTExternalFilter extends HTMLElement {
     }
 
     createFilterControl() {
-        const filterControl = document.createElement("div");
-        filterControl.id = "filters";
-        filterControl.classList.add("col-xs-8", "col-md-8", "col-sm-8");
-        return filterControl;
+        this.filterControl = document.createElement("div");
+        this.filterControl.id = "filters";
+        this.filterControl.classList.add("col-xs-8", "col-md-8", "col-sm-8");
+        return this.filterControl;
     }
 
-    createApplyButton(filterControl) {
+    createApplyButton() {
         const applyButton = document.createElement("button");
         applyButton.innerText = "Apply";
         applyButton.classList.add("col-xs-2", "col-md-2", "col-sm-2", "btn", "btn-primary");
 
-        applyButton.addEventListener("click", () => this.applyFilters(filterControl));
+        applyButton.addEventListener("click", () => this.applyFilters());
         return applyButton;
     }
 
-    initializeQueryBuilder(filterControl) {
+    initializeQueryBuilder() {
         const key = this.dataset.key.toString();
         const { filters, rules } = Filters[key];
         exRules = rules;
-
-        $(filterControl).queryBuilder({
+        let qkey = `${this.id}-QueryBuilderOptions`;
+        var savedrules = localStorage.getItem(qkey);
+        if (!savedrules) {
+            savedrules = rules;
+        } else {
+            savedrules = JSON.parse(savedrules)
+        }
+        $(this.filterControl).queryBuilder({
             filters: [...filters],
-            rules: [...rules],
+            rules: [...savedrules],
             lang: { add_rule: 'Add filter' },
             conditions: ["AND"],
             allow_groups: false,
             operators: ['equal', 'in'],
         });
 
-        this.bindQueryBuilderEvents(filterControl);
+        this.bindQueryBuilderEvents();
     }
 
-    bindQueryBuilderEvents(filterControl) {
-        $(filterControl).on('afterCreateRuleFilters.queryBuilder', (e, rule) => {
+    bindQueryBuilderEvents() {
+        $(this.filterControl).on('afterCreateRuleFilters.queryBuilder', (e, rule) => {
             this.filterRulesObject.push({ id: rule.id });
             this.updateHiddenFilters();
         });
 
-        $(filterControl).on('beforeDeleteRule.queryBuilder', (e, rule) => {
+        $(this.filterControl).on('beforeDeleteRule.queryBuilder', (e, rule) => {
             this.filterRulesObject = this.filterRulesObject.filter(obj => obj.id !== rule.id);
             if (rule.filter) this.showFilterOption(rule.filter.field);
         });
 
-        $(filterControl).on('afterUpdateRuleValue.queryBuilder', (e, rule) => {
+        $(this.filterControl).on('afterUpdateRuleValue.queryBuilder', (e, rule) => {
             const ruleInput = rule.$el[0].querySelector('.rule-value-container')
                 .querySelector(`[name='${rule.id}_value_0']`);
             if (!ruleInput.value) {
@@ -94,12 +103,13 @@ class ARTExternalFilter extends HTMLElement {
         });
     }
 
-    applyFilters(filterControl) {
-        const rules = $(filterControl).queryBuilder('getRules');
+    applyFilters() {
+        const rules = $(this.filterControl).queryBuilder('getRules');
         if (!rules || !this.validateFilters(rules)) return;
 
         this.processRules(rules);
-        this.onApplyFilters(exRules);
+        this.handleApplyClick()
+        //this.onApplyFilters(exRules);
         //this.refreshUI();
     }
 
@@ -125,6 +135,8 @@ class ARTExternalFilter extends HTMLElement {
             if (Array.isArray(rule.value)) rule.value = rule.value.join(",");
             return rule;
         });
+        this.appliedRules.procesedRules = exRules;
+        this.appliedRules.rules = rules.rules;
     }
 
     refreshUI() {
@@ -187,6 +199,32 @@ class ARTExternalFilter extends HTMLElement {
 
     onApplyFilters(callback) {
         //callback(exRules);
+    }
+    handleApplyClick() {
+        // Data to send with the event
+        const data = this.appliedRules;
+
+        // Dispatch the event with the data in the 'detail' property
+        this.dispatchEvent(new CustomEvent('apply', {
+            detail: data, // Add your data here
+            bubbles: true,
+            composed: true
+        }));
+    }
+
+    getexRules() {
+        const rules = $(this.filterControl).queryBuilder('getRules');
+        if (!rules || !this.validateFilters(rules)) return;
+
+        this.processRules(rules);
+        return exRules;
+    }
+    getRules() {
+        const rules = $(this.filterControl).queryBuilder('getRules');
+        if (!rules || !this.validateFilters(rules)) return;
+
+        
+        return rules;
     }
 }
 

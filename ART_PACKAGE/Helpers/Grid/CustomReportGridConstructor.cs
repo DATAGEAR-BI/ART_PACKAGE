@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Helpers.Grid
             throw new NotImplementedException();
         }
 
-        public GridResult<Dictionary<string, object>> GetGridData(KendoGridRequest request, Expression<Func<Dictionary<string, object>, bool>> baseCondition, IEnumerable<Expression<Func<Dictionary<string, object>, object>>>? includes = null)
+        public GridResult<Dictionary<string, object>> GetGridData(GridRequest request, Expression<Func<Dictionary<string, object>, bool>> baseCondition, IEnumerable<Expression<Func<Dictionary<string, object>, object>>>? includes = null)
         {
             throw new NotImplementedException();
         }

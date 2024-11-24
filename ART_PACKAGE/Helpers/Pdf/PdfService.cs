@@ -32,6 +32,7 @@ using System.Linq;
 using static iTextSharp.text.pdf.AcroFields;
 using iText.Kernel.Font;
 using iTextSharp.text.pdf;
+using ART_PACKAGE.Extentions.StringExtentions;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -527,7 +528,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         // Get the properties of the TModel class for headers and data extraction
                         var modelType = typeof(TModel);
                         var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(S=>req.IncludedColumns.Contains( S.Name)).OrderBy(p => req.IncludedColumns.IndexOf(p.Name));
-                        var columnHeaders = displayNames is null?req.IncludedColumns: req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s : s).ToList();//properties.Select(p => p.Name).ToArray();
+                        string[] columnHeaders = displayNames is null?req.IncludedColumns.Select(s=>s.MapToHeaderName()).ToArray() : req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s.MapToHeaderName() : s.MapToHeaderName()).ToArray();//properties.Select(p => p.Name).ToArray();
 
                         // Partition settings
                         int partitionSize = columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
@@ -577,6 +578,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         document.AddTitle<TModel>();
 
                         document.AddDescription<TModel>();
+                        document.AddQueryBuilderFilters(req.DataReq.QueryBuilderFilters);
 
                         document.AddFilters<TModel>(filters);
 

@@ -147,6 +147,8 @@ namespace ART_PACKAGE.Helpers.Grid
                     All = exportRequest.DataReq.All,
                     IdColumn = exportRequest.DataReq.IdColumn,
                     SelectedValues = exportRequest.DataReq.SelectedValues,
+                    IsStored = exportRequest.DataReq.IsStored,
+                    QueryBuilderFilters = exportRequest.DataReq.QueryBuilderFilters,
                 };
                 ExportRequest roundReq = new()
                 {
@@ -185,7 +187,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return conf;
         }
 
-        public GridResult<TModel> GetGridData(KendoGridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
+        public GridResult<TModel> GetGridData(GridRequest request, Expression<Func<TModel, bool>> baseCondition, IEnumerable<Expression<Func<TModel, object>>>? includes = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
 
@@ -287,6 +289,8 @@ namespace ART_PACKAGE.Helpers.Grid
                     All = exportRequest.DataReq.All,
                     IdColumn = exportRequest.DataReq.IdColumn,
                     SelectedValues = exportRequest.DataReq.SelectedValues,
+                    IsStored = exportRequest.DataReq.IsStored,
+                    QueryBuilderFilters=exportRequest.DataReq.QueryBuilderFilters,
                 };
                 ExportPDFRequest roundReq = new()
                 {

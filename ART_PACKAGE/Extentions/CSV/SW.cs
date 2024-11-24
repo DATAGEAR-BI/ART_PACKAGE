@@ -1,6 +1,8 @@
-﻿using ART_PACKAGE.Helpers.CSVMAppers;
+﻿using ART_PACKAGE.Extentions.StringExtentions;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using CsvHelper;
 using Data.Services.Grid;
+using Data.Services.QueryBuilder;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -102,6 +104,13 @@ namespace ART_PACKAGE.Extentions.CSV
 
         public static void WriteFilters<TModel>(this CsvWriter cw, Filter filters)
         {
+            if (filters is null ) return ;
+            cw.WriteField("Table Filters");
+            cw.NextRecord();
+            cw.WriteField("Field");
+            cw.WriteField("Operator");
+            cw.WriteField("Value");
+            cw.NextRecord();
             foreach (var filter in filters.GetFilterTextForCsv<TModel>())
             {
                 foreach (var filterGrediant in filter)
@@ -193,9 +202,9 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
 
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
 
@@ -203,7 +212,7 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
@@ -215,7 +224,7 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
 
                             }
@@ -237,18 +246,18 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else if (propType.IsEnum)
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
 
                             query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value.ToString());
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
 
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
                             query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}", value);
                         }
                         _ = _sb.Append(query);
@@ -318,14 +327,14 @@ namespace ART_PACKAGE.Extentions.CSV
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
 
                             }
                             else
                             {
                                 string value = ((JsonElement)i.value).ToObject<string>();
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
 
                             }
@@ -335,14 +344,14 @@ namespace ART_PACKAGE.Extentions.CSV
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
                             }
                             else
                             {
                                 DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                                 value = value.ToLocalTime();
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
                             }
                         }
@@ -351,35 +360,35 @@ namespace ART_PACKAGE.Extentions.CSV
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
                             }
                             else
                             {
-                                MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
 
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
                             }
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
                                 returnList.Add(v);
 
                             }
                             else
                             {
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
                             }
                         }
@@ -389,38 +398,38 @@ namespace ART_PACKAGE.Extentions.CSV
                         if (propType.Name == nameof(String))
                         {
                             string value = ((JsonElement)i.value).ToObject<string>();
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else if (propType.Name == nameof(DateTime))
                         {
                             DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
                             value = value.ToLocalTime();
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else if (propType.IsEnum)
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
 
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else
                         {
-                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
 
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
-                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], value };
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                     }
 
                     ///////////////
-                    /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field, readableOperators[i.@operator], i.value };
+                    /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], i.value };
                       returnList.Add(v);*/
                 }
 
@@ -434,6 +443,24 @@ namespace ART_PACKAGE.Extentions.CSV
 
 
         }
+        public static CsvWriter WriteQueryBuilderFilters(this CsvWriter cw, List<BuilderFilter> filters)
+        {
+            if (filters is null || filters.Count() == 0) return cw;
+            cw.WriteField("Global Filters");
+            cw.NextRecord();
+            cw.WriteField("Field");
+            cw.WriteField("Operator");
+            cw.WriteField("Value");
+            cw.NextRecord();
+            foreach (var filter in filters)
+            {
+                
+                    cw.WriteField(filter.Field.ToString());
+                    cw.WriteField(filter.Operator.ToString());
+                    cw.WriteField(filter.Value.ToString());
+                    cw.NextRecord();
+            }
+            return cw;         }
 
     }
 

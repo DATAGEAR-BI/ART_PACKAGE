@@ -19,6 +19,7 @@ using System.Text;
 using System.Text.Json;
 using ART_PACKAGE.Helpers.DBService;
 using Filter = Data.Services.Grid.Filter;
+using Data.Services.QueryBuilder;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
@@ -192,7 +193,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
 
 
-            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter,exportRequest.DataReq.QueryBuilderFilters, reportGUID, fileNumber);
                  }
         }
 
@@ -408,6 +409,126 @@ namespace ART_PACKAGE.Helpers.Csv
             ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
 
             cw.Context.RegisterClassMap(mapperInstance);
+            cw.WriteFilters<TModel>(filters);
+            cw.WriteHeader<TModel>();
+            cw.NextRecord();
+
+
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
+            int index = 0;
+            int datacount = data.Count();
+            float progress = 0;
+
+            foreach (TModel item in data)
+            {
+                if (_processesHandler.isProcessCanceld(reportGUID))
+                {
+                    cw.Flush();
+                    sw.Flush();
+                    stream.Flush();
+
+                    // Reset the position of the MemoryStream to the beginning
+                    stream.Position = 0;
+
+
+                    if (!Directory.Exists(folderPath))
+                        _ = Directory.CreateDirectory(folderPath);
+
+                    string returnedFilePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+                    try
+                    {
+                        File.WriteAllBytes(returnedFilePath, stream.ToArray());
+                        return true;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                        return false;
+
+                    }
+                }
+                //_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+                cw.WriteRecord(item);
+                cw.NextRecord();
+                //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+
+                if (dataCount > 100)
+                {
+
+                    if (index % 100 == 0 || index == datacount) // Also check progress at the last item
+                    {
+
+                        //progress = (float)(index / (float)total * 100);
+                        lock (_locker)
+                        {
+                            OnProgressChanged(index, fileNumber);
+                        }
+                        //int recordsDone = index + 1;
+
+                    }
+
+                }
+                else
+                {
+                    lock (_locker)
+                    {
+                        OnProgressChanged(index, fileNumber);
+                    }
+                    //int recordsDone = index + 1;
+
+                }
+                index++; // Increment the index for each item
+
+            }
+
+
+
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
+
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
+
+
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+            try
+            {
+                File.WriteAllBytes(filePath, stream.ToArray());
+                lock (_locker)
+                {
+                    OnProgressChanged(index, fileNumber);
+                }
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                return false;
+
+            }
+        }
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, Filter filters, List<BuilderFilter> QuerybuilderFilters, string reportGUID, int fileNumber = 1)
+        {
+
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
+
+            cw.Context.RegisterClassMap(mapperInstance);
+            cw.WriteQueryBuilderFilters(QuerybuilderFilters);
             cw.WriteFilters<TModel>(filters);
             cw.WriteHeader<TModel>();
             cw.NextRecord();
