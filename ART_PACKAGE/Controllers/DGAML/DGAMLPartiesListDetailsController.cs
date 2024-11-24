@@ -12,6 +12,7 @@ using Data.Constants.StoredProcs;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.DropDown;
 using Data.Services.Grid;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -56,8 +57,17 @@ namespace ART_PACKAGE.Controllers.DGAML
             {
                 data = context.ExecuteProc<ArtStDgAmlPartiesListDetails>(MYSQLSPName.ART_ST_DGAML_PARTIES_LIST_DETAILS_REPORT, summaryParams.ToArray());
             }
-
-            KendoDataDesc<ArtStDgAmlPartiesListDetails> Data = data.AsQueryable().CallData(para.req);
+            List<SelectItem> Result = new()
+            {
+                    new SelectItem(){ text="Yes" , value="Yes" },
+                    new SelectItem(){ text="No" , value="No" },
+            };
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
+            {
+                {"Politically_exposed".ToLower(),Result.Select(x=>x.value).ToDynamicList()},
+                {"Citizenship".ToLower(),_dropDown.GetCitizenshipCountryDropDown().Select(x=>x.value).ToDynamicList()},
+            };
+            KendoDataDesc<ArtStDgAmlPartiesListDetails> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new

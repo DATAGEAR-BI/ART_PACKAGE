@@ -11,6 +11,8 @@ using ART_PACKAGE.Helpers.CustomReport;
 using Data.Constants.StoredProcs;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.DropDown;
+using System.Linq.Dynamic.Core;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -55,8 +57,17 @@ namespace ART_PACKAGE.Controllers.DGAML
             {
                 data = context.ExecuteProc<ArtStDgAmlPoliticallyExposed>(MYSQLSPName.ART_ST_DGAML_POLITICALLY_EXPOSED_REPORT, summaryParams.ToArray());
             }
-
-            KendoDataDesc<ArtStDgAmlPoliticallyExposed> Data = data.AsQueryable().CallData(para.req);
+            List<SelectItem> Result = new()
+ {
+         new SelectItem(){ text="Yes" , value="Yes" },
+         new SelectItem(){ text="No" , value="No" },
+ };
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
+            {
+                {"Politically_exposed".ToLower(),Result.Select(x=>x.value).ToDynamicList()},
+                {"Citizenship".ToLower(),_dropDown.GetCitizenshipCountryDropDown().Select(x=>x.value).ToDynamicList()},
+            };
+            KendoDataDesc<ArtStDgAmlPoliticallyExposed> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new

@@ -11,6 +11,7 @@ using ART_PACKAGE.Helpers.CustomReport;
 using Data.Constants.StoredProcs;
 using Newtonsoft.Json;
 using ART_PACKAGE.Helpers.DropDown;
+using System.Linq.Dynamic.Core;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
@@ -56,7 +57,12 @@ namespace ART_PACKAGE.Controllers.DGAML
                 data = context.ExecuteProc<ArtStDgAmlTotalAlarmsDetail>(MYSQLSPName.ART_ST_DGAML_TOTAL_ALARMS_DETAIL, summaryParams.ToArray());
             }
 
-            KendoDataDesc<ArtStDgAmlTotalAlarmsDetail> Data = data.AsQueryable().CallData(para.req);
+            Dictionary<string, List<dynamic>> DropDownColumn = new()
+            {
+                {"ALARM_STATUS".ToLower(),_dropDown.GetAlarmStatusDropDown().Select(x=>x.value).ToDynamicList()},
+                {"SCENARIO_NAME".ToLower(),_dropDown.GetRoutineNameDropDown().Select(x=>x.value).ToDynamicList()},
+            };
+            KendoDataDesc<ArtStDgAmlTotalAlarmsDetail> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
 
 
             var result = new
