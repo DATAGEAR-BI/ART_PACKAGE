@@ -134,5 +134,9 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnSasAuditModelCreating(modelBuilder);
         }
+        public void OnDGCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGCRPModelCreating(modelBuilder);
+        }
     }
 }

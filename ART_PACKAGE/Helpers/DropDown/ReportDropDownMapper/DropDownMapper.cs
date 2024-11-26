@@ -54,6 +54,14 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
             return controller switch
             {
                 //branch name,Alert status, Alert type, scenario name, queue, owner
+                var value when value == nameof(ArtCrpUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"Action".ToLower(),_dropDown.GetCrpActionFilter() },
+                },
+                var value when value == nameof(ArtCrpSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CaseStatus".ToLower(),_dropDown.GetCrpCaseStatusFilter() },
+                },
 
                 var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

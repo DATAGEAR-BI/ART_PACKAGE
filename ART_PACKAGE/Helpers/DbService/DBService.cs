@@ -10,6 +10,7 @@ using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
+using Data.DGCRP;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -85,6 +86,12 @@ namespace ART_PACKAGE.Helpers.DBService
                     TRADE_BASEContext tb = scope.ServiceProvider.GetRequiredService<TRADE_BASEContext>();
                     TB = tb;
                 }
+                if (modules.Contains("CRP"))
+                {
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    DGCRPContext _DGCRP = scope.ServiceProvider.GetRequiredService<DGCRPContext>();
+                    DGCRP = _DGCRP;
+                }
             }
         }
 
@@ -106,6 +113,8 @@ namespace ART_PACKAGE.Helpers.DBService
 
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
+        public DGCRPContext DGCRP { get; }
+
 
     }
 }

@@ -32,6 +32,7 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
+using Data.DGCRP;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -119,6 +120,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("CRP"))
             {
                 _ = services.AddDbContext<CRPContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGCRPContext>(opt => contextBuilder(opt, connectionString));
             }
             if (modulesToApply.Contains("TRADE_BASE"))
             {
