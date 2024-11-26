@@ -430,21 +430,46 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 nameof(DGAMLCasesDetailsController) => new Dictionary<string, List<SelectItem>>
                  {
                     //commented untill resolve drop down 
-           {"BranchName".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CaseStatus".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CasePriority".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"CaseCategory".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
-           {"EntityLevel".ToLower()                ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                   {"BranchName".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName)       .Distinct()         .Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                   {"CaseStatus".ToLower()                 ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus)       .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                   {"CasePriority".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                   {"CaseCategory".ToLower()               ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory)     .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          },
+                   {"EntityLevel".ToLower()                ,artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel)      .Distinct()     .Where(x=>x!=null)    .Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
+                var value when value == nameof(artdgamlcasedetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                 {
+                    //commented untill resolve drop down 
+                   {"BranchName".ToLower(),artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.BranchName).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                   {"CaseStatus".ToLower(),artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseStatus).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                   {"CasePriority".ToLower(),artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CasePriority).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                   /*{"CaseCategory".ToLower(),artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.CaseCategory).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()},*/
+                   {"EntityLevel".ToLower(),artDgaml_.ArtDgAmlCaseDetailViews.Select(x=>x.EntityLevel).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList()}
                 },
                 nameof(DGAMLCustomersDetailsController) => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"CustomerType".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerType).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"RiskClassification".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.RiskClassification).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList() },
+                    {"ResidenceCountryName".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.ResidenceCountryName).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"BranchName".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.BranchName).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"IndustryDesc".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CustomerIdentificationType".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerIdentificationType).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"OccupationDesc".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CitizenshipCountryName".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CitizenshipCountryName).Distinct().Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"CityName".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CityName).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"MaritalStatusDesc".ToLower(),artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.MaritalStatusDesc).Distinct().Where(x=>x!=null).Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    {"NonProfitOrgInd".ToLower(),new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
+                    {"PoliticallyExposedPersonInd".ToLower(),new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
+
+                },
+                var value when value == nameof(artdgamlcustomerdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                  {
                     {"CustomerType".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerType)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"RiskClassification".ToLower()                     ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.RiskClassification)             .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList() },
                     {"ResidenceCountryName".ToLower()                   ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.ResidenceCountryName)           .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"BranchName".ToLower()                             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.BranchName)                     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"IndustryDesc".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    /*{"IndustryDesc".ToLower()                           ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.IndustryDesc)                   .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },*/
                     {"CustomerIdentificationType".ToLower()             ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CustomerIdentificationType)     .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
-                    {"OccupationDesc".ToLower()                         ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc)                 .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
+                    /*{"OccupationDesc".ToLower()                         ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.OccupationDesc)                 .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },*/
                     {"CitizenshipCountryName".ToLower()                 ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CitizenshipCountryName)         .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"CityName".ToLower()                               ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.CityName)                       .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
                     {"MaritalStatusDesc".ToLower()                      ,artDgaml_.ArtDGAMLCustomerDetailViews.Select(x=>x.MaritalStatusDesc)              .Distinct()    .Where(x=>x!=null)  .Select(x => new SelectItem { text = x, value = x }).ToList() },
@@ -452,12 +477,20 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"PoliticallyExposedPersonInd".ToLower()            ,new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
 
                 },
+
                 nameof(DGAMLTriageController) => new Dictionary<string, List<SelectItem>>
                  {
                     {"BranchName".ToLower()         ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
                     {"RiskScore".ToLower()          ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
                     {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
                     {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
+                },
+                var value when value == nameof(artdgamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                 {
+                    {"BranchName".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                    {"RiskScore".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                    {"OwnerUserid".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
+                    {"AlertedEntityLevel".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()}
                 },
                 var value when value == nameof(ArtSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
