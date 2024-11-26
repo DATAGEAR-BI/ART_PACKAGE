@@ -59,7 +59,7 @@ namespace ART_PACKAGE.Controllers.DGAML
 
             Dictionary<string, List<dynamic>> DropDownColumn = new()
             {
-                {"ALARM_STATUS".ToLower(),_dropDown.GetAlarmStatusDropDown().Select(x=>x.value).ToDynamicList()},
+                {"ALARM_STATUS".ToLower(),_dropDown.GetAlarmStatusDropDown().Select(x=>x.text).ToDynamicList()},
                 {"SCENARIO_NAME".ToLower(),_dropDown.GetRoutineNameDropDown().Select(x=>x.value).ToDynamicList()},
             };
             KendoDataDesc<ArtStDgAmlTotalAlarmsDetail> Data = data.AsQueryable().CallData(para.req, columnsToDropDownd: DropDownColumn);
