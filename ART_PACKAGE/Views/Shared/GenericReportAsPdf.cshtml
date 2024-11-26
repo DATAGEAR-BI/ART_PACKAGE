@@ -11,7 +11,7 @@
     var recordPerPage = 17;
     var user = User.Identity.Name;
     string exportinProcess =(string) ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-   
+    var Domain = (string)ViewData["Domain"];
 }
 
 
@@ -20,8 +20,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="@Domain/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="@Domain/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <style>
 
         body {
@@ -67,7 +67,7 @@
             <p class="lead">@ViewData["desc"]</p>
             <hr class="my-4">
             <div class="d-flex justify-content-between">
-                <img src="~/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
+                <img src="@Domain/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
             </div>
         </div>
 

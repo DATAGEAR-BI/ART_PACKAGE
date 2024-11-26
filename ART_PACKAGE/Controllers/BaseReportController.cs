@@ -57,8 +57,9 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-
+            ViewData["Domain"] = $"{Request.Scheme}://{Request.Host}";
             byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
+
             return File(pdfBytes, "application/pdf");
         }
 
