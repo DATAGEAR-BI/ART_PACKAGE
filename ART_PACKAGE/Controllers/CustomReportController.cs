@@ -23,7 +23,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             if (request.IsIntialize)
             {
@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Controllers
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             ViewData["reportId"] = reportGUID;
