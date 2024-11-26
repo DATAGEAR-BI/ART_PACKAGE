@@ -18743,5 +18743,9 @@ namespace Data.ModelCreatingStrategies
             });
         }
 
+        public void OnDGCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

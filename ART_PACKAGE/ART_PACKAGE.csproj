@@ -2557,6 +2557,7 @@
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\PDF\" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>

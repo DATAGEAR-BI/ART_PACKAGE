@@ -15,7 +15,18 @@ namespace ART_PACKAGE.Helpers.DropDown
             _dbSrv = dbSrv;
         }
 
+        public List<SelectItem> GetCrpActionFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpActionFilterTbs.Select(x => x.Action).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+        }
+        public List<SelectItem> GetCrpCaseStatusFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
         public List<SelectItem> GetAlertStatusDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.KC.FskLovs

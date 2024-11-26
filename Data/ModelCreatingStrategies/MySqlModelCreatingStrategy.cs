@@ -8185,5 +8185,9 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+        public void OnDGCRPModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
