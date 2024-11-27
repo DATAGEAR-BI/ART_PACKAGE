@@ -61,6 +61,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 var value when value == nameof(ArtCrpSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CaseStatus".ToLower(),_dropDown.GetCrpCaseStatusFilter() },
+                    {"CaseType".ToLower(),_dropDown.GetCrpCaseTypeFilter() },
                 },
                 var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

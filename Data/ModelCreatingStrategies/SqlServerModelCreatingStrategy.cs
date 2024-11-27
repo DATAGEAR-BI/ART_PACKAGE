@@ -11526,16 +11526,28 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ACTION")
                     .UseCollation("Arabic_CI_AI");
             });
-            modelBuilder.Entity<ArtCrpCaseStatusFilterTb>(entity =>
+            modelBuilder.Entity<ArtCrpCaseStatusFilter>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("ART_CRP_CASE_STATUS_FILTER_TB", "ART_DB");
+                entity.ToView("ART_CRP_CASE_STATUS_FILTER", "ART_DB");
 
                 entity.Property(e => e.CaseStatus)
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCrpCaseTypeFilter>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_CRP_CASE_TYPE_FILTER", "ART_DB");
+
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_TYPE")
                     .UseCollation("Arabic_CI_AI");
             });
         }

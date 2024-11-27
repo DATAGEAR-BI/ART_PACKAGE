@@ -120,6 +120,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetWatchListNameDropDown();
         public List<SelectItem> GetCrpActionFilter();
         public List<SelectItem> GetCrpCaseStatusFilter();
+        public List<SelectItem> GetCrpCaseTypeFilter();
 
         //
 
