@@ -114,7 +114,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCustomerStatusDropDown();
         public List<SelectItem> GetCrpActionFilter();
         public List<SelectItem> GetCrpCaseStatusFilter();
-
+        public List<SelectItem> GetCrpCaseTypeFilter();
+        public List<SelectItem> GetCaseTypeEcmFilter();
+        public List<SelectItem> GetCaseStatusEcmFilter();
+        public List<SelectItem> GetDisplayNameForUserManagement();
+        public List<SelectItem> GetActionEcmFilter();
+        public List<SelectItem> GetActionNameSanctionSensitivityFilter();
+        public List<SelectItem> GetCategorySanctionSensitivityFilter();
         //
 
 

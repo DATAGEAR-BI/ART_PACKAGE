@@ -15,7 +15,9 @@ namespace Data.DGCRP
         }
 
         public virtual DbSet<ArtCrpActionFilterTb> ArtCrpActionFilterTbs { get; set; } = null!;
-        public virtual DbSet<ArtCrpCaseStatusFilterTb> ArtCrpCaseStatusFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtCrpCaseStatusFilter> ArtCrpCaseStatusFilters { get; set; } = null!;
+        public virtual DbSet<ArtCrpCaseTypeFilter> ArtCrpCaseTypeFilters { get; set; } = null!;
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -14,7 +14,36 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             _dbSrv = dbSrv;
         }
+        public List<SelectItem> GetActionNameSanctionSensitivityFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtSanctionSensitivityActionNameFilterTbs.Select(x => x.ActionName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
+            return distinct_value;
+        }
+        public List<SelectItem> GetCategorySanctionSensitivityFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtSanctionSensitivityCategoryFilterTbs.Select(x => x.Category).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetActionEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtActionFilterTbs.Select(x => x.Action).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCaseStatusEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCaseTypeEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtCaseTypeFilterTbs.Select(x => x.CaseType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
         public List<SelectItem> GetCrpActionFilter()
         {
             List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpActionFilterTbs.Select(x => x.Action).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
@@ -23,7 +52,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCrpCaseStatusFilter()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseStatusFilters.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCrpCaseTypeFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseTypeFilters.Select(x => x.CaseType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }
@@ -221,7 +256,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetTransTypeDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "UNKNOWN" : x.TransactionType).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.ECM.CaseLives.Select(x => x.TransactionType == null || string.IsNullOrEmpty(x.TransactionType.Trim()) || x.TransactionType.ToLower() == "null" ? "UNKNOWN" : x.TransactionType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
 
         }
@@ -557,6 +592,11 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetUserNameDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Select(x => x.Name).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetDisplayNameForUserManagement()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.DisplayName)).Distinct().Select(x => x.DisplayName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
