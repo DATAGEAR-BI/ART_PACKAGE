@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Data.DGCRP
 {
-    public class ArtCrpCaseStatusFilterTb
+    public class ArtCrpCaseStatusFilter
     {
-        public string? CaseStatus { get; set; } 
+        public string CaseStatus { get; set; } = null!; 
     }
 }

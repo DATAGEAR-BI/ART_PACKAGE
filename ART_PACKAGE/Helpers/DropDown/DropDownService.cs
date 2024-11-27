@@ -24,7 +24,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCrpCaseStatusFilter()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseStatusFilters.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCrpCaseTypeFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGCRP.ArtCrpCaseTypeFilters.Select(x => x.CaseType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }
