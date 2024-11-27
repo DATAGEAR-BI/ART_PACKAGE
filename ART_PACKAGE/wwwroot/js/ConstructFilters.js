@@ -232,6 +232,35 @@ class ExternalFilter extends HTMLElement {
             });
         });
     }
+    onApplyFilters(callback) {
+        var rules = $('#filters').queryBuilder('getRules');
+
+        var g = [...rules.rules].reduce((group, product) => {
+            const { id } = product;
+            group[id] = !group[id] ? [] : group[id];
+            group[id].push(product);
+            return group;
+        }, {});
+        var arr = [];
+        for (var prop in g) {
+            arr.push(g[prop]);
+        }
+        if (arr.some(x => x.length > 1)) {
+            console.log("error");
+            return null;
+        } else {
+            exRules = Array.prototype.concat.apply([], arr);
+            exRules = [...exRules].map(x => {
+                if (Array.isArray(x.value)) {
+                    x.value = [...x.value].join(",");
+                }
+                return x;
+            });
+            console.log(exRules);
+            callback(exRules);
+            return exRules;
+        }
+    }
 }
 
 function callDefinedCharts(url) {

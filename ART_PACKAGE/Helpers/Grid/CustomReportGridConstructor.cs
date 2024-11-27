@@ -58,7 +58,7 @@ namespace ART_PACKAGE.Helpers.Grid
             throw new NotImplementedException();
         }
 
-        public GridResult<Dictionary<string, object>> GetGridData(GridRequest request, Expression<Func<object, bool>> baseCondition, IEnumerable<Expression<Func<object, object>>>? includes = null)
+        public GridResult<Dictionary<string, object>> GetGridData(KendoGridRequest request, Expression<Func<object, bool>> baseCondition, IEnumerable<Expression<Func<object, object>>>? includes = null)
         {
             throw new NotImplementedException();
         }
@@ -77,7 +77,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
         }
 
-        public GridResult<Dictionary<string, object>> GetGridData(int reportId, GridRequest request)
+        public GridResult<Dictionary<string, object>> GetGridData(int reportId, KendoGridRequest request)
         {
             ArtCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return dataResult;
         }
 
-        public IEnumerable<ChartDataDto> GetReportChartsData(int reportId, GridRequest request)
+        public IEnumerable<ChartDataDto> GetReportChartsData(int reportId, KendoGridRequest request)
         {
             ArtCustomReport report = Repo.GetReport(reportId);
             Microsoft.EntityFrameworkCore.DbContext? schemaContext = _dbFactory.GetDbInstance(report.Schema.ToString());
@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             if (total == 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -163,7 +163,7 @@ namespace ART_PACKAGE.Helpers.Grid
             {
                 while (total > 0)
                 {
-                    GridRequest dataReq = new()
+                    KendoGridRequest dataReq = new()
                     {
                         Skip = round * batch,
                         Take = batch,
@@ -229,7 +229,7 @@ namespace ART_PACKAGE.Helpers.Grid
             throw new NotImplementedException();
         }
 
-        public Task<string> ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID,
+        public Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID,
             Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
         {
             throw new NotImplementedException();

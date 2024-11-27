@@ -1,4 +1,4 @@
-﻿using Org.BouncyCastle.Utilities.IO.Pem;
+﻿using Data.Setting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Grid
 {
-    public class GridRequest:KendoGridRequest
+    public  class ExportPDFRequest:ExportRequest
     {
-        public List<QueryBuilderFilter>? procFilters { get; set; }
+      
+        public PDF? PdfOptions { get; set; }
+        
 
     }
 }

@@ -1,16 +1,30 @@
-﻿using ART_PACKAGE.Extentions.StringExtentions;
-using ART_PACKAGE.Helpers.CSVMAppers;
-using CsvHelper;
+﻿using iText.Layout;
 using Data.Services.Grid;
-using Data.Services.QueryBuilder;
+using ART_PACKAGE.Extentions.CSV;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using KendoFilterExtention = ART_PACKAGE.Helpers.CustomReport;
+using System.Text;
+using ART_PACKAGE.Helpers.StoredProcsHelpers;
+using iText.Layout.Properties;
+using iText.Layout.Element;
+using iText.Kernel.Colors;
+using iText.Layout.Borders;
+using com.sun.org.apache.bcel.@internal.generic;
+using Type = System.Type;
+using Data.Setting;
+using iText.IO.Image;
+using iTextSharp.text.pdf;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf.Canvas;
+using Data.Services.QueryBuilder;
+using ART_PACKAGE.Extentions.StringExtentions;
 
-namespace ART_PACKAGE.Extentions.CSV
+namespace ART_PACKAGE.Extentions.PDF
 {
-    public static class SW
+    public static class PDF
     {
         private static readonly Dictionary<string, string> StringOp = new()
         {
@@ -102,27 +116,132 @@ namespace ART_PACKAGE.Extentions.CSV
 
         };
 
-        public static void WriteFilters<TModel>(this CsvWriter cw, Filter filters)
+
+
+        /// <summary>
+        /// Adds a watermark image to the first page of the document.
+        /// </summary>
+        /// <param name="document">The iText document to modify.</param>
+        /// <param name="imagePath">The path to the watermark image.</param>
+        /// <param name="opacity">The opacity of the watermark (0.0 to 1.0).</param>
+        public static Document AddWatermark(this Document document, string imagePath, float opacity = 0.2f)
         {
-            if (filters is null ) return ;
-            cw.WriteField("Table Filters");
-            cw.NextRecord();
-            cw.WriteField("Field");
-            cw.WriteField("Operator");
-            cw.WriteField("Value");
-            cw.NextRecord();
+            var pdfDoc = document.GetPdfDocument();
+            if (pdfDoc.GetNumberOfPages() < 1)
+            {
+                throw new InvalidOperationException("The document has no pages.");
+            }
+
+            var page = pdfDoc.GetPage(1);
+            var pageSize = page.GetPageSize();
+
+            float pageWidth = pageSize.GetWidth();
+            float pageHeight = pageSize.GetHeight();
+
+            // Calculate margins (30% of width and height)
+            float marginLeft = pageWidth * 0.3f;
+            float marginTop = pageHeight * 0.3f;
+
+            // Calculate available width and height
+            float availableWidth = pageWidth - marginLeft * 2;
+            float availableHeight = pageHeight - marginTop * 2;
+
+            // Load the image
+            var imageData = ImageDataFactory.Create(imagePath);
+            var image = new Image(imageData);
+
+            // Scale image to fit within the available space
+            float scaleX = availableWidth / image.GetImageWidth();
+            float scaleY = availableHeight / image.GetImageHeight();
+            float scale = Math.Min(scaleX, scaleY);
+
+            float scaledWidth = image.GetImageWidth() * scale;
+            float scaledHeight = image.GetImageHeight() * scale;
+
+            // Set position
+            float xPosition = marginLeft;
+            float yPosition = marginTop;
+
+            // Draw the watermark image
+            var pdfCanvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
+            image
+                .SetOpacity(opacity)
+                .ScaleAbsolute(scaledWidth, scaledHeight)
+                .SetFixedPosition(xPosition, yPosition);
+
+            var canvas = new Canvas(pdfCanvas, pageSize);
+            canvas.Add(image);
+            return document;
+        }
+        public static Document AddQueryBuilderFilters(this Document document, List<BuilderFilter> filters)
+        {
+
+            if (filters == null) return document;
+            List unorderedList = new List()
+                        .SetSymbolIndent(12)           // Indent for symbols
+                        .SetListSymbol("\u2022")       // Bullet point symbol
+                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+            unorderedList.Add(new ListItem("Global Filters"));
+            document.Add(unorderedList);
+            var arabicLanguageProcessor = new ArabicLigaturizer();
+
+
+            Table table = new Table(UnitValue.CreatePercentArray(3));
+            table.SetWidth(UnitValue.CreatePercentValue(70));
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Column")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Operator")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Value")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            foreach (var filter in filters)
+            {
+                
+                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Field.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+                table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Operator.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+                table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filter.Value.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+
+
+            }
+            document.Add(table);
+            return document;
+        }
+        public static Document AddFilters<TModel>(this Document document,Filter filters) {
+
+            if (filters== null) return document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+            
+
+            List unorderedList = new List()
+                        .SetSymbolIndent(12)           // Indent for symbols
+                        .SetListSymbol("\u2022")       // Bullet point symbol
+                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+            unorderedList.Add(new ListItem("Table Filters"));
+            document.Add(unorderedList);
+            var arabicLanguageProcessor = new ArabicLigaturizer();
+
+
+            Table table = new Table(UnitValue.CreatePercentArray(3));
+            table.SetWidth(UnitValue.CreatePercentValue(70));
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Column")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Operator")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Value")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
             foreach (var filter in filters.GetFilterTextForCsv<TModel>())
             {
                 foreach (var filterGrediant in filter)
                 {
-                    cw.WriteField(filterGrediant.ToString());
-                    //cw.WriteComment(filterGrediant.ToString());
+                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filterGrediant.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+
                 }
-                cw.NextRecord();
-
-
             }
+            document.Add(table);
+            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
+            return document;
 
         }
         private static string GetFiltersString<T>(this Filter Filters)
@@ -141,8 +260,12 @@ namespace ART_PACKAGE.Extentions.CSV
             StringBuilder _sb = new();
             foreach (object? item in Filters.filters)
             {
-                JsonElement t = (JsonElement)item;
+                string t = JsonSerializer.Serialize(item);
+                ///JsonElement t = JsonSerializer.Serialize(item);
                 KendoFilterExtention.FilterData i = t.ToObject<KendoFilterExtention.FilterData>();
+
+                /*JsonElement t = (JsonElement)item;
+                KendoFilterExtention.FilterData i = t.ToObject<KendoFilterExtention.FilterData>();*/
                 if (i.field == null)
                 {
                     Filter filter = t.ToObject<Filter>();
@@ -187,8 +310,8 @@ namespace ART_PACKAGE.Extentions.CSV
                             else
                             {
                                 DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
-                                value = value.ToUniversalTime();
-                                query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToString());;
+                                value = value.ToLocalTime();
+                                query += string.Format(DateOpForC[i.@operator], $"para.{i.field}.Value.Date", value.Date.ToLocalTime().ToString());
 
                             }
                         }
@@ -202,9 +325,9 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
 
                                 query += string.Format(StringOpForC[i.@operator], $"para.{i.field}.Value", value.ToString());
 
@@ -212,7 +335,7 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
@@ -224,7 +347,7 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
                                 query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}.Value", value);
 
                             }
@@ -246,18 +369,18 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else if (propType.IsEnum)
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
 
                             query += string.Format(StringOpForC[i.@operator], $"para.{i.field}", value.ToString());
                         }
                         else
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
 
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
                             query += string.Format(NumberOpForC[i.@operator], $"para.{i.field}", value);
                         }
                         _ = _sb.Append(query);
@@ -327,7 +450,7 @@ namespace ART_PACKAGE.Extentions.CSV
 
                             if (i.@operator.ToLower().Contains("null".ToLower()))
                             {
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator],"" };
                                 returnList.Add(v);
 
                             }
@@ -365,9 +488,9 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                                 MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
 
                                 List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                                 returnList.Add(v);
@@ -375,7 +498,7 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
 
 
@@ -387,9 +510,22 @@ namespace ART_PACKAGE.Extentions.CSV
                             }
                             else
                             {
-                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), underlyingType);
-                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
-                                returnList.Add(v);
+                                /*MethodInfo? vmethod = typeof(PDF)
+                ?.GetMethod(nameof(FilterExtensions.ToObjectJE))
+                ?.MakeGenericMethod(underlyingType);
+                                var vv = vmethod?.Invoke(null, new object[] { (JsonElement)i.value });
+                                var vvv = ConvertToNullableType(vv, underlyingType);*/
+
+                               
+                                    object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
+
+                                    object? value = ConvertToNullableType(deserializedValue, underlyingType);
+                                    List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                    returnList.Add(v);
+                               
+                                
+                             
+                             
                             }
                         }
                     }
@@ -410,27 +546,29 @@ namespace ART_PACKAGE.Extentions.CSV
                         }
                         else if (propType.IsEnum)
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
                             MethodInfo Gmethod = method.MakeGenericMethod(propType);
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
 
                             List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                         else
                         {
-                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
-                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                            object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
 
-                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { (JsonElement)i.value }), propType);
+                            object? value = ConvertToNullableType(deserializedValue, propType);
+                            //object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
                             List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
                             returnList.Add(v);
                         }
                     }
 
                     ///////////////
-                    /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], i.value };
-                      returnList.Add(v);*/
+                  /*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], i.value };
+                    returnList.Add(v);*/
                 }
 
 
@@ -443,26 +581,123 @@ namespace ART_PACKAGE.Extentions.CSV
 
 
         }
-        public static CsvWriter WriteQueryBuilderFilters(this CsvWriter cw, List<BuilderFilter> filters)
+       /* public static T ToObjectJE<T>(this JsonElement element)
         {
-            if (filters is null || filters.Count() == 0) return cw;
-            cw.WriteField("Global Filters");
-            cw.NextRecord();
-            cw.WriteField("Field");
-            cw.WriteField("Operator");
-            cw.WriteField("Value");
-            cw.NextRecord();
-            foreach (var filter in filters)
+            string json = element.GetRawText();
+
+            return JsonSerializer.Deserialize<T>(json);
+        }*/
+
+        private static object ConvertToNullableType(object value, Type targetType)
+        {
+            if (value == null || Convert.IsDBNull(value))
             {
-                
-                    cw.WriteField(filter.Field.ToString());
-                    cw.WriteField(filter.Operator.ToString());
-                    cw.WriteField(filter.Value.ToString());
-                    cw.NextRecord();
+                return null;
             }
-            return cw;         }
 
+            Type nonNullableType = Nullable.GetUnderlyingType(targetType) ?? targetType;
+            return Convert.ChangeType(value, nonNullableType);
+        }
+
+
+        public static Document AddTitle<TModel>(this Document document,string? reportTitle=null)
+        {
+            if (reportTitle==null)
+            {
+                reportTitle = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportTitle : "";
+            }
+       
+            Paragraph title = new Paragraph(string.IsNullOrEmpty( reportTitle)?"No Title": reportTitle)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(20)
+                .SetBold();
+
+            document.Add(title);
+            return document;
+        }
+
+        public static Document AddDescription<TModel>(this Document document, string? reportDescription = null)
+        {
+            if (reportDescription == null)
+            {
+                reportDescription = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportDescription : "";
+            }
+
+            // Add a description
+            Paragraph description = new Paragraph(string.IsNullOrEmpty(reportDescription)? "No Description": reportDescription)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(12);
+            document.Add(description);
+            return document;
+        }
+        public static Document AddLogos(this Document document, string imagePath1, string imagePath2,float maxWidth)
+        {
+
+
+            // Load the images
+            Image img1 = new Image(ImageDataFactory.Create(imagePath1));
+            Image img2 = new Image(ImageDataFactory.Create(imagePath2));
+
+            // Manually calculate the scale for each image based on its aspect ratio
+            float img1Width = img1.GetImageWidth();
+            float img1Height = img1.GetImageHeight();
+            float img2Width = img2.GetImageWidth();
+            float img2Height = img2.GetImageHeight();
+
+            // Set the image width to 40% of the page width and scale the height proportionally
+            float img1ScaledWidth = maxWidth;
+            float img1ScaledHeight = (img1Height / img1Width) * img1ScaledWidth;
+
+            float img2ScaledWidth = maxWidth;
+            float img2ScaledHeight = (img2Height / img2Width) * img2ScaledWidth;
+
+            img1.SetWidth(img1ScaledWidth);
+            img1.SetHeight(img1ScaledHeight);
+
+            img2.SetWidth(img2ScaledWidth);
+            img2.SetHeight(img2ScaledHeight);
+
+            // Create a table with 2 equal-width columns for the 2 images
+            Table imageTable = new Table(2)  // 2 columns for 2 images
+                .UseAllAvailableWidth()        // Use all available width
+                .SetWidth(UnitValue.CreatePercentValue(100)) // Fill 100% of the page width
+                .SetHorizontalAlignment(HorizontalAlignment.CENTER); // Center table horizontally
+
+            // Add the first image (centered)
+            imageTable.AddCell(new Cell()
+                .Add(img1.SetHorizontalAlignment(HorizontalAlignment.LEFT))
+                .SetTextAlignment(TextAlignment.CENTER)  // Center the first image
+                .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+
+                .SetBorder(Border.NO_BORDER)
+                .SetWidth(UnitValue.CreatePercentValue(50)));  // Set width for this cell (50%)
+
+            // Add the second image (right-aligned)
+            imageTable.AddCell(new Cell()
+                .Add(img2.SetHorizontalAlignment(HorizontalAlignment.RIGHT))
+                .SetTextAlignment(TextAlignment.RIGHT)  // Align the second image to the right
+                .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                .SetBorder(Border.NO_BORDER)
+                .SetWidth(UnitValue.CreatePercentValue(50))
+                );  // Set width for the second cell (50%)
+
+            // Add the table to the document
+            document.Add(imageTable);
+
+
+            return document;
+        }
+        /*public static Table AddHeaders<TModel>(this Table table,List<string> headers = null)
+        {
+            if (headers is not null)
+            {
+                foreach (var header in headers)
+                {
+                    table.AddHeaderCell(new Cell().Add(new Paragraph(header).SetFontSize(calculatedFontSize)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                    .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                    .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                }
+            }
+        }*/
     }
-
-
 }
