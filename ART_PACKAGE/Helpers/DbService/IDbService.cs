@@ -11,6 +11,7 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Data.DGCRP;
+using Data.DGECMFilters;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -31,6 +32,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }
         public DGCRPContext DGCRP { get; }
+        public DGECMFiltersContext DGECMFilters { get; }
 
 
     }

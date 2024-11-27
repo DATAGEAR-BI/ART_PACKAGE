@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DGCRP
+namespace Data.DGECMFilters
 {
-    public class ArtCrpCaseStatusFilterTb
+    public class ArtActionFilterTb
     {
-        public string? CaseStatus { get; set; } 
+        public string Action { get; set; } = null!; 
     }
 }

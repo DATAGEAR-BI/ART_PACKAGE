@@ -24,7 +24,7 @@
        
         public DateTime? EcmLastStatusDate { get; set; }
         public string? LastStatus { get; set; }
-        public string? HitsCount { get; set; }
+        public int? HitsCount { get; set; }
         public string? LastComment { get; set; }
         public string? LastCommentSubject { get; set; }
         public DateTime? UpdatedDate { get; set; }

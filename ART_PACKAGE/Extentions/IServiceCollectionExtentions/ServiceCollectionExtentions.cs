@@ -33,6 +33,7 @@ using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
 using Data.DGCRP;
+using Data.DGECMFilters;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -106,8 +107,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("ECM"))
             {
+                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+                _ = services.AddDbContext<DGECMFiltersContext>(opt => contextBuilder(opt, connectionString));
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
             }
 

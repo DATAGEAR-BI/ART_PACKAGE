@@ -11,6 +11,7 @@ using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
 using Data.DGCRP;
+using Data.DGECMFilters;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -58,7 +59,9 @@ namespace ART_PACKAGE.Helpers.DBService
                 {
                     IServiceScope scope = _serviceScopeFactory.CreateScope();
                     DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
+                    DGECMFiltersContext ecmFiltersService = scope.ServiceProvider.GetRequiredService<DGECMFiltersContext>();
                     ECM = ecmService;
+                    DGECMFilters = ecmFiltersService;
                 }
                 if (modules.Contains("FATCA"))
                 {
@@ -115,6 +118,6 @@ namespace ART_PACKAGE.Helpers.DBService
         public SasAmlContext SasAML { get; }
         public DGCRPContext DGCRP { get; }
 
-
+        public DGECMFiltersContext DGECMFilters { get; }
     }
 }

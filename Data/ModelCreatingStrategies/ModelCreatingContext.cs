@@ -138,5 +138,9 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGCRPModelCreating(modelBuilder);
         }
+        public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGECMFiltersModelCreating(modelBuilder);
+        }
     }
 }

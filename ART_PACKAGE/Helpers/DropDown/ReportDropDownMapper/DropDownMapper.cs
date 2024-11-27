@@ -57,10 +57,16 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 var value when value == nameof(ArtCrpUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"Action".ToLower(),_dropDown.GetCrpActionFilter() },
+                    {"CaseStatus".ToLower(),_dropDown.GetCrpCaseStatusFilter() },
+                    {"CaseType".ToLower(),_dropDown.GetCrpCaseTypeFilter() },
+                    {"CreateUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"ActionUser".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
                 var value when value == nameof(ArtCrpSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CaseStatus".ToLower(),_dropDown.GetCrpCaseStatusFilter() },
+                    {"CaseType".ToLower(),_dropDown.GetCrpCaseTypeFilter() },
+                    {"CreateUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
 
                 var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
@@ -502,19 +508,33 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 },
                 var value when value == nameof(ArtSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
-                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeDropDown()            },
-                    {"CaseStatus".ToLower()             , _dropDown.GetSystemCaseStatusDropDown()    },
+                    { "CaseType".ToLower()              , _dropDown.GetCaseTypeEcmFilter()            },
+                    {"CaseStatus".ToLower()             , _dropDown.GetCaseStatusEcmFilter()    },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()          },
                     {"TransactionDirection".ToLower()   ,_dropDown.GetTransDirectionDropDown()      },
                     {"TransactionType".ToLower()        ,_dropDown.GetTransTypeDropDown()           },
-                    {"UpdateUserId".ToLower()           ,_dropDown.GetUpdateUserIdDropDown()        },
-                    {"InvestrUserId".ToLower()          ,_dropDown.GetInvestagtorDropDown()         },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetDisplayNameForUserManagement()        },
+                    {"InvestrUserId".ToLower()          ,_dropDown.GetDisplayNameForUserManagement()         },
+                    {"LockedBy".ToLower()          ,_dropDown.GetDisplayNameForUserManagement()         },
+                    {"CreatedBy".ToLower()          ,_dropDown.GetDisplayNameForUserManagement()         },
+                    {"CreateUserId".ToLower()          ,_dropDown.GetDisplayNameForUserManagement()         },
                 },
                 var value when value == nameof(ArtUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
-                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeDropDown()        },
-                    {"CaseStatus".ToLower()             , _dropDown.GetUserCaseStatusDropDown()     },
+                    {"CaseTypeCd".ToLower()              , _dropDown.GetCaseTypeEcmFilter()        },
+                    {"CaseStatus".ToLower()             , _dropDown.GetCaseStatusEcmFilter()     },
                     {"Priority".ToLower()               ,  _dropDown.GetPriorityDropDown()        },
+                    {"LockedBy".ToLower()           ,_dropDown.GetDisplayNameForUserManagement()        },
+                    {"UpdateUserId".ToLower()           ,_dropDown.GetDisplayNameForUserManagement()        },
+                    {"CreateUserId".ToLower()          ,_dropDown.GetDisplayNameForUserManagement()         },
+                    {"Action".ToLower()           ,_dropDown.GetActionEcmFilter()        },
+                    {"ActionUser".ToLower()           ,_dropDown.GetDisplayNameForUserManagement()        },
+                },
+                var value when value == nameof(ArtSanctionSensitivityViewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"ActionName".ToLower()              , _dropDown.GetActionNameSanctionSensitivityFilter()        },
+                    {"Category".ToLower()             , _dropDown.GetCategorySanctionSensitivityFilter()     },
+                    {"UserName".ToLower()               ,  _dropDown.GetDisplayNameForUserManagement()        }
                 },
                 _ => null
             };

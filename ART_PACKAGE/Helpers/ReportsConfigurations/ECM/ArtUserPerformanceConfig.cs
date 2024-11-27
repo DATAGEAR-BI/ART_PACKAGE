@@ -6,7 +6,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
     {
         public ArtUserPerformanceConfig()
         {
-            SkipList = new List<string>() { "CaseRk", "ValidFromDate", "CreateUserId" };
+            SkipList = new List<string>() { "CaseRk", "ValidFromDate" };
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
                                                         {
                                                                 { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
@@ -17,6 +17,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
                                                                 { "LockedBy", new GridColumnConfiguration { DisplayName = "Locked By"}},
                                                                 { "CreateDate", new GridColumnConfiguration { DisplayName = "Create Date"}},
                                                                 { "UpdateUserId", new GridColumnConfiguration { DisplayName = "Updated By"}},
+                                                                { "CreateUserId", new GridColumnConfiguration { DisplayName = "Created By"}},
                                                                 { "AsssignedTime", new GridColumnConfiguration { DisplayName = "Assigned Time"}},
                                                                 { "ActionUser", new GridColumnConfiguration { DisplayName = "Action User"}},
                                                                 { "Action", new GridColumnConfiguration { DisplayName = "Action"}},
