@@ -24,6 +24,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\Components\ARTMSelect\ARTMSelect.js" />
 		<Content Remove="wwwroot\js\Components\ARTQBuilder\QueryBuilder.js" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
@@ -1917,6 +1918,7 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
 		<None Include="wwwroot\js\AmlAnalysisScripts\AutoRules.js" />
+		<None Include="wwwroot\js\Components\ARTMSelect\ARTMSelect.js" />
 		<None Include="wwwroot\js\Components\ARTQBuilder\QueryBuilder.js" />
 		<None Include="wwwroot\js\Components\Card\Card.js" />
 		<None Include="wwwroot\js\Components\Charts\Charts.js" />
@@ -2560,6 +2562,7 @@
 		<Folder Include="Services\NewFolder\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\js\Components\CategoryTree\" />
+		<Folder Include="wwwroot\js\Components\ARTMTables\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\CSV\" />

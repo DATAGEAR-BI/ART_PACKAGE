@@ -13,78 +13,78 @@
 
 <div class="container">
     <div id="errors" hidden class="alert alert-danger alert-dismissible" style="padding:2%" role="alert">
-         <button type="button" style="margin-right:2%;" id="closeEroors" onclick="hideErrors()" class="close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" style="margin-right:2%;" id="closeEroors" onclick="hideErrors()" class="close"><span aria-hidden="true">&times;</span></button>
     </div>
-    <form id="CustomReportForm"> 
+    <form id="CustomReportForm">
         <div class="row">
-        <h4 class="col-md-10">Select the table and columns you want.</h4>
+            <h4 class="col-md-10">Select the table and columns you want.</h4>
 
-        <div class="col-md-2">
+            <div class="col-md-2">
                 <button type="submit" class="btn btn-primary ">Save Report</button>
             </div>
-            </div>
-            <div class="row"style="margin-top:1%">
-             <div class="form-group col-md-4">
-                <select id="Shcema" name="Shecma" style="width:100%"  asp-items="Html.GetEnumValuesWithDisplayName<DbSchema>()" class="text-infol selectpicker" data-live-search="true">
+        </div>
+        <div class="row" style="margin-top:1%">
+            <div class="form-group col-md-4">
+                <select id="Shcema" name="Shecma" style="width:100%" asp-items="Html.GetEnumValuesWithDisplayName<DbSchema>()" class="text-infol selectpicker" data-live-search="true">
                     <option value="-1">Select A Schema</option>
                 </select>
-                    
+
             </div>
             <div class="form-group col-md-4">
-                    <select id="TableName" name="TableName" style="width:100%" class="text-infol selectpicker" data-live-search="true">
-                    </select>
-                    
+                <select id="TableName" name="TableName" style="width:100%" class="text-infol selectpicker" data-live-search="true">
+                </select>
+
             </div>
 
-             <div class="form-group col-md-4">
-                    <select id="ColumnNames" name="ColumnNames" style="width:100%"  class=" text-infol selectpicker" data-live-search="true" multiple>
-                        <option selected value="" >Select some columns</option>
-                    </select>
+            <div class="form-group col-md-4">
+                <select id="ColumnNames" name="ColumnNames" style="width:100%" class=" text-infol selectpicker" data-live-search="true" multiple>
+                    <option selected value="">Select some columns</option>
+                </select>
             </div>
         </div>
-        <div class="row" style="margin-top:2%"> 
-            <input type="text" placeholder="Report Title" class="form-control col-md-10" id="title"/>
+        <div class="row" style="margin-top:2%">
+            <input type="text" placeholder="Report Title" class="form-control col-md-10" id="title" />
         </div>
-        <div class="row"style="margin-top:2%" >
+        <div class="row" style="margin-top:2%">
             <textarea class="form-control col-md-12" rows="4" id="desc" placeholder="Report Description"></textarea>
         </div>
         <category-tree></category-tree>
 
-         <h4>Add the charts you want.</h4>
+        <h4>Add the charts you want.</h4>
         <div class="row">
-           
+
             <div class="col-md-10"></div>
             <div class="col-md-2">
-               <button  id="openAddChart" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
+                <button id="openAddChart" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
                     Add a Chart
-               </button>
-            </div>  
-               
-                <div class="collapse row" style="margin-top:4%" id="chartCollapse">
-                  <div class="card card-body text-center">
-                      <div class=" col-xs-12">
-                          <input type="text" id="chartTitle" name="chartTitle" placeholder="Chart Title" class="form-control" />
-                      </div>
-                      <div class="col-xs-6 ">
-                     <select id="chartType" name="chartType" asp-items="Html.GetEnumSelectList<ChartType>()" class=" text-infol selectpicker" data-live-search="true">
-                        <option selected value="" >Select a Type</option>
-                      </select> 
-                      </div>
-                       <div class="col-xs-6">
-                     <select id="chartColumn" name="chartColumn"  class=" text-infol selectpicker" data-live-search="true">
-                        <option selected value="" >Select a Column</option>
-                      </select> 
-                      </div>
-                       <button id="addChart" class="btn btn-primary col-md-1" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
-                            <i class="glyphicon glyphicon-plus"></i>
-                       </button>
-                   
-                   </div>
-                   
-                      
+                </button>
+            </div>
+
+            <div class="collapse row" style="margin-top:4%" id="chartCollapse">
+                <div class="card card-body text-center">
+                    <div class=" col-xs-12">
+                        <input type="text" id="chartTitle" name="chartTitle" placeholder="Chart Title" class="form-control" />
+                    </div>
+                    <div class="col-xs-6 ">
+                        <select id="chartType" name="chartType" asp-items="Html.GetEnumSelectList<ChartType>()" class=" text-infol selectpicker" data-live-search="true">
+                            <option selected value="">Select a Type</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <select id="chartColumn" name="chartColumn" class=" text-infol selectpicker" data-live-search="true">
+                            <option selected value="">Select a Column</option>
+                        </select>
+                    </div>
+                    <button id="addChart" class="btn btn-primary col-md-1" type="button" data-toggle="collapse" data-target="#chartCollapse" aria-expanded="false" aria-controls="chartCollapse">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+
                 </div>
 
-                
+
+            </div>
+
+
         </div>
 
 
@@ -99,22 +99,22 @@
             });
         </script>
 
-        
-@*        <div>
-            <m-select id="ColumnNamesss" data-title="Column Names" data-live-search="true" data-multiple="true" style="width:100%"></m-select>
+
+        @*        <div>
+        <m-select id="ColumnNamesss" data-title="Column Names" data-live-search="true" data-multiple="true" style="width:100%"></m-select>
 
         </div>
 
         <script>
-            // Example usage to set options dynamically from a list:
-            var columnSelect = document.getElementById("ColumnNamesss");
-            columnSelect.setOptions([
-                { text: "Column 1", value: "column1" },
-                { text: "Column 2", value: "column2" },
-                { text: "Column 3", value: "column3" }
-            ]);
+        // Example usage to set options dynamically from a list:
+        var columnSelect = document.getElementById("ColumnNamesss");
+        columnSelect.setOptions([
+        { text: "Column 1", value: "column1" },
+        { text: "Column 2", value: "column2" },
+        { text: "Column 3", value: "column3" }
+        ]);
 
-            // Example usage to fetch options from a URL:
+        // Example usage to fetch options from a URL:
         </script>
         <script src="~/js/Components/MultiSelect/Select.js"></script>
         *@
@@ -200,13 +200,12 @@
 
         </div>
         <div id="addedCharts" class="row">
-
         </div>
 
 
 
     </form>
-    
+
     <artm-select id="custom-tag-example" title="Select an option" multiple>
         <s-option value="1">Custom Option 1</s-option>
         <s-option value="2" selected>Custom Option 2</s-option>
@@ -214,24 +213,35 @@
     </artm-select>
 
 </div>
+
+<artm-dropdown-table id="dropdown-table">
+
+</artm-dropdown-table>
 <script src="~/js/Components/ARTMSelect/ARTMSelect.js" type="module"></script>
 
 <script>
-    var s = document.getElementById("select-1-1");
+    $(document).ready(function () {
+        console.log("ready!");
+        var ms = document.getElementById("custom-tag-example");
+        ms.setOptions([{ text: "text 1", value: "value1" }, { text: "text 1", value: "value1" }]);
+        var s = document.getElementById("select-1-1");
 
-    // Now we can call setOptions on the custom <m-select> element
-    //s.setOptions([
-    //    { text: "text1", value: "value1" },
-    //    { text: "text2", value: "value2" },
-    //    { text: "text3", value: "value3" },
-    //    { text: "text4", value: "value4" },
-    //    { text: "text5", value: "value5" },
-    //]);
+    });
+    
+        // Now we can call setOptions on the custom <m-select> element
+        //s.setOptions([
+        //    { text: "text1", value: "value1" },
+        //    { text: "text2", value: "value2" },
+        //    { text: "text3", value: "value3" },
+        //    { text: "text4", value: "value4" },
+        //    { text: "text5", value: "value5" },
+        //]);
 </script>
 @section scripts {
     <script src="~/js/Components/CategoryTree/Tree.js"></script>
+    <script src="~/js/Components/ARTMTables/ARTMDropDawnsTable.js"></script>
     @*<script src="~/js/Components/MultiSelect/Select.js"></script>*@
 
-    <script src="~/js/ReportScripts.js" ></script>
+    <script src="~/js/ReportScripts.js"></script>
 
 }

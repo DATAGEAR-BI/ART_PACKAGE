@@ -166,6 +166,11 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
+        [HttpGet("[controller]/[action]")]
+        public IActionResult CreateNewReport()
+        {
+            return View();
+        }
 
         [HttpGet("[controller]/[action]/{reportId}")]
         public async Task<IActionResult> GetReportCharts(int reportId)

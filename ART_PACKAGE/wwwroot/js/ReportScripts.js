@@ -13,12 +13,13 @@ var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
 const categoryTree = document.querySelector('category-tree');
 let previousSelectedValues = new Set();
-
+let entities=[]
 
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
         Fetch(`/CustomReport/GetDbObjects/${value}`, null, "GET").then(d => {
+            entities = d;
             TableSelect.innerHTML = "";
             var opt = document.createElement("option");
             opt.innerText = "Select a Table";
@@ -93,9 +94,21 @@ ColumnsSelect.onchange = async (e) => {
 
 
     const currentSelectedValues = new Set(
-        [...e.target.selectedOptions].filter(option => option.value).map(option => option.value)
+        [...e.target.selectedOptions].filter(option => option.value).map(option => { return JSON.stringify({ name: option.value, type: option.dataset.type }) })
     );
-
+    console.log("selected options pure", [...e.target.selectedOptions]);
+    console.log("current options ",currentSelectedValues);
+    console.log("prev options ", previousSelectedValues);
+    let newlySelected = [...currentSelectedValues].filter(
+        value => !previousSelectedValues.has(value)
+    );
+    newlySelected = JSON.parse(newlySelected);
+    console.log("Newly options ", newlySelected);
+    console.log("entities ",entities)
+    previousSelectedValues = currentSelectedValues;
+    var dropdowntable = document.getElementById("dropdown-table");
+    dropdowntable.addOrRemoveItem({ name: newlySelected.name, type: newlySelected.type, entities: entities.map(s => { return { value: s.vieW_NAME, text: s.vieW_NAME, type: s.type } }) })
+/*
     const containerId = 'dynamic-table-container'; // The ID of the container div
     const tableBody = document.getElementById("options-table").querySelector("tbody");
 
@@ -110,7 +123,7 @@ ColumnsSelect.onchange = async (e) => {
     const recentlyDeselected = [...previousSelectedValues].filter(
         value => !currentSelectedValues.has(value)
     );
-
+    console.log(" recentlty",recentlyDeselected);
     // Remove rows for deselected options
     recentlyDeselected.forEach(value => {
         const row = document.getElementById(`row-${value}`);
@@ -175,7 +188,7 @@ ColumnsSelect.onchange = async (e) => {
     });
 
     // Update previousSelectedValues
-    previousSelectedValues = currentSelectedValues;
+    previousSelectedValues = currentSelectedValues;*/
 
 
 // Example usage on a multi-select element
