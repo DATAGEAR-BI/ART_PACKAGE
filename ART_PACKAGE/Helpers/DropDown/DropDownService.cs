@@ -424,6 +424,14 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+        public List<SelectItem> GetCustTypeDescForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = new List<string>() { "INDIVIDUAL",
+                "ORGANIZATION"}.Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+
+        }
 
         //public List<SelectItem> GetMakerEventNameDropDown()
         //{

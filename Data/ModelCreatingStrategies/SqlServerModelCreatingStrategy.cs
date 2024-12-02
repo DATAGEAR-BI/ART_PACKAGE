@@ -1759,7 +1759,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NAME");
 
                 entity.Property(e => e.AlertedEntityNumber)
-                    .HasMaxLength(50)
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.BranchName)

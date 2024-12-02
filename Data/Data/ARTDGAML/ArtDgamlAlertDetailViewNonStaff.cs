@@ -6,7 +6,7 @@ namespace Data.Data.ARTDGAML
     public partial class ArtDgamlAlertDetailViewNonStaff
     {
         public decimal AlarmId { get; set; }
-        public string AlertedEntityNumber { get; set; } = null!;
+        public int AlertedEntityNumber { get; set; } 
         public string? AlertedEntityName { get; set; }
         public string? CustTypeDesc { get; set; }
         public string AlertDescription { get; set; } = null!;

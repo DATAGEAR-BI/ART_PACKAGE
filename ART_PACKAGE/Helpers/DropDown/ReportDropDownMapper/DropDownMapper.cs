@@ -54,6 +54,10 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
             return controller switch
             {
                 //branch name,Alert status, Alert type, scenario name, queue, owner
+                var value when value == nameof(ArtDgamlAlertDetailViewNonStaffConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CustTypeDesc".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
+                },
                 var value when value == nameof(ArtAmlUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"UserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
