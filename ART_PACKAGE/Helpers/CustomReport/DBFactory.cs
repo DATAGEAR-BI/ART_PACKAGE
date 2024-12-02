@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.DBService;
+using Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Helpers.CustomReport
@@ -12,6 +13,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
         public DBFactory(IDbService db)
         {
             _db = db;
+
         }
 
         public DbContext? GetDbInstance(string schemaName)
@@ -27,6 +29,7 @@ namespace ART_PACKAGE.Helpers.CustomReport
                 : schemaName == DbSchema.GoAml.ToString() ? _db.GOAML
                 : schemaName == DbSchema.DGMGMT.ToString() ? _db.DGMGMT
                 : schemaName == DbSchema.DGMGMT_AUDIT.ToString() ? _db.DGMGMT
+                : schemaName == DbSchema.ART.ToString() ? _db.ARTCustomReport
                 : (DbContext?)null;
         }
     }

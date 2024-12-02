@@ -10,6 +10,7 @@ using Data.FCFCORE;
 using Data.FCFKC.SASAML;
 using Data.GOAML;
 using Data.TIZONE2;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -29,6 +30,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public TIZONE2Context TI { get; }
         public TRADE_BASEContext TB { get; }
         public SasAmlContext SasAML { get; }
+        public AuthContext ARTCustomReport { get; }
 
     }
 }

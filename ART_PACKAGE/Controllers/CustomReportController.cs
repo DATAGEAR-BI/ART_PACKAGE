@@ -17,13 +17,13 @@ namespace ART_PACKAGE.Controllers
         private readonly ProcessesHandler _processHanandler;
 
 
-        public CustomReportController(ICustomReportGridConstructor gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
+        public CustomReportController(ICustomReportGridConstructor gridConstructor,  ProcessesHandler processesHandler, UserManager<AppUser> um) : base(gridConstructor,um)
         {
             _processHanandler = processesHandler;
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             if (request.IsIntialize)
             {
@@ -46,7 +46,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace ART_PACKAGE.Controllers
             }
         }
 
-        [HttpGet("[controller]/[action]")]
+       /* [HttpGet("[controller]/[action]")]
         public IActionResult GetChartsTypes()
         {
             IEnumerable<SelectListItem> result = typeof(ChartType).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
@@ -108,7 +108,7 @@ namespace ART_PACKAGE.Controllers
 
             });
             return Ok(result);
-        }
+        }*/
         [HttpGet("[controller]/[action]")]
         public IActionResult GetDbSchemas()
         {
@@ -133,13 +133,12 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-            AppUser user = await GetUser();
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
-            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, reportGUID);
+            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, User.Identity.Name, reportGUID);
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             ViewData["reportId"] = reportGUID;
@@ -154,9 +153,9 @@ namespace ART_PACKAGE.Controllers
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
+            //AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
+            if (!report.UserId.Contains(User.Identity.Name))
                 return Forbid();
 
             ViewBag.id = reportId;
@@ -164,6 +163,11 @@ namespace ART_PACKAGE.Controllers
         }
         [HttpGet("[controller]/[action]")]
         public IActionResult CreateReport()
+        {
+            return View();
+        }
+        [HttpGet("[controller]/[action]")]
+        public IActionResult CreateNewReport()
         {
             return View();
         }
@@ -175,9 +179,8 @@ namespace ART_PACKAGE.Controllers
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
+            if (!report.UserId.Contains(User.Identity.Name))
                 return Forbid();
             IEnumerable<ReportChartDto> charts = report.Charts.Select((x, i) => new ReportChartDto
             {

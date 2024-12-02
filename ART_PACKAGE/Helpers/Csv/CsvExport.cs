@@ -17,7 +17,9 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
+using ART_PACKAGE.Helpers.DBService;
 using Filter = Data.Services.Grid.Filter;
+using Data.Services.QueryBuilder;
 
 namespace ART_PACKAGE.Helpers.Csv
 {
@@ -155,38 +157,45 @@ namespace ART_PACKAGE.Helpers.Csv
 
         }
 
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber,string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
-            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
-            IQueryable<TModel>? data = dataRes.data;
-            int total = dataRes.total;
-
-
-
-            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
+                GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
+                IQueryable<TModel>? data = dataRes.data;
+                int total = dataRes.total;
+                return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
+            }
         }
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+               
+
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
             IQueryable<TModel>? data = dataRes.data;
             int total = dataRes.total;
 
 
 
-            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter,exportRequest.DataReq.QueryBuilderFilters, reportGUID, fileNumber);
+                 }
         }
 
         public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
             int fileNumber)
         {
+
             DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
             ICustomReportRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ICustomReportRepo>();
             DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
@@ -198,15 +207,22 @@ namespace ART_PACKAGE.Helpers.Csv
         }
 
         public bool ExportCustomData(ArtSavedCustomReport report, ExportRequest exportRequest, string folderPath, string fileName,
-           int fileNumber, string reportGUID)
+           int fileNumber, string reportGUID,string tenantId)
         {
-            DBFactory dbFactory = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<DBFactory>();
-            ICustomReportRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ICustomReportRepo>();
-            DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
-            GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
-            IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
-            return ExportToFolder(data, exportRequest.IncludedColumns,
-                dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                
+                IDbService dbService = scope.ServiceProvider.GetRequiredService<IDbService>();
+                DBFactory dbFactory = scope.ServiceProvider.GetRequiredService<DBFactory>();
+                
+                ICustomReportRepo Repo = scope.ServiceProvider.GetRequiredService<ICustomReportRepo>();
+                DbContext? schemaContext = dbFactory.GetDbInstance(report.Schema.ToString());
+                GridResult<Dictionary<string, object>> dataRes = Repo.GetGridData(schemaContext, report, exportRequest.DataReq);
+                IQueryable<CustomReportRecord> data = dataRes.data.Select(x => new CustomReportRecord() { Data = x });
+                return ExportToFolder(data, exportRequest.IncludedColumns,
+                    dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, reportGUID, fileNumber);
+            }
+           
 
         }
         private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, int fileNumber = 1)
@@ -432,7 +448,6 @@ namespace ART_PACKAGE.Helpers.Csv
                 cw.NextRecord();
                 //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
 
-                index++; // Increment the index for each item
                 if (dataCount > 100)
                 {
 
@@ -440,22 +455,25 @@ namespace ART_PACKAGE.Helpers.Csv
                     {
 
                         //progress = (float)(index / (float)total * 100);
-                        int recordsDone = index + 1;
                         lock (_locker)
                         {
-                            OnProgressChanged(recordsDone, fileNumber);
+                            OnProgressChanged(index, fileNumber);
                         }
+                        //int recordsDone = index + 1;
+
                     }
 
                 }
                 else
                 {
-                    int recordsDone = index + 1;
                     lock (_locker)
                     {
-                        OnProgressChanged(recordsDone, fileNumber);
+                        OnProgressChanged(index, fileNumber);
                     }
+                    //int recordsDone = index + 1;
+
                 }
+                index++; // Increment the index for each item
 
             }
 
@@ -476,6 +494,130 @@ namespace ART_PACKAGE.Helpers.Csv
             try
             {
                 File.WriteAllBytes(filePath, stream.ToArray());
+                lock (_locker)
+                {
+                    OnProgressChanged(index, fileNumber);
+                }
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                return false;
+
+            }
+        }
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, Filter filters, List<BuilderFilter> QuerybuilderFilters, string reportGUID, int fileNumber = 1)
+        {
+
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
+
+            cw.Context.RegisterClassMap(mapperInstance);
+            cw.WriteQueryBuilderFilters(QuerybuilderFilters);
+            cw.WriteFilters<TModel>(filters);
+            cw.WriteHeader<TModel>();
+            cw.NextRecord();
+
+
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
+            int index = 0;
+            int datacount = data.Count();
+            float progress = 0;
+
+            foreach (TModel item in data)
+            {
+                if (_processesHandler.isProcessCanceld(reportGUID))
+                {
+                    cw.Flush();
+                    sw.Flush();
+                    stream.Flush();
+
+                    // Reset the position of the MemoryStream to the beginning
+                    stream.Position = 0;
+
+
+                    if (!Directory.Exists(folderPath))
+                        _ = Directory.CreateDirectory(folderPath);
+
+                    string returnedFilePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+                    try
+                    {
+                        File.WriteAllBytes(returnedFilePath, stream.ToArray());
+                        return true;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                        return false;
+
+                    }
+                }
+                //_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+                cw.WriteRecord(item);
+                cw.NextRecord();
+                //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+
+                if (dataCount > 100)
+                {
+
+                    if (index % 100 == 0 || index == datacount) // Also check progress at the last item
+                    {
+
+                        //progress = (float)(index / (float)total * 100);
+                        lock (_locker)
+                        {
+                            OnProgressChanged(index, fileNumber);
+                        }
+                        //int recordsDone = index + 1;
+
+                    }
+
+                }
+                else
+                {
+                    lock (_locker)
+                    {
+                        OnProgressChanged(index, fileNumber);
+                    }
+                    //int recordsDone = index + 1;
+
+                }
+                index++; // Increment the index for each item
+
+            }
+
+
+
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
+
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
+
+
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+            try
+            {
+                File.WriteAllBytes(filePath, stream.ToArray());
+                lock (_locker)
+                {
+                    OnProgressChanged(index, fileNumber);
+                }
                 return true;
             }
 

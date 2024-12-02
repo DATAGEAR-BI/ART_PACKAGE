@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System.Text;
-using AuthContext = ART_PACKAGE.Areas.Identity.Data.AuthContext;
+using CustomReportsContext = ART_PACKAGE.Areas.Identity.Data.AuthContext;
 
 namespace ART_PACKAGE.Helpers.DgUserManagement
 {
@@ -10,17 +10,17 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
         private readonly HttpClient _httpClient;
 
         private readonly string authUrl;
+        private readonly string authPath;
         private readonly ILogger<DgUserManager> _logger;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AuthContext authContext;
-        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, RoleManager<IdentityRole> roleManager, AuthContext authContext, IHttpClientFactory httpClientFactory)
+
+        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, IHttpClientFactory httpClientFactory)
         {
-            authUrl = config.GetSection("DgUserManagementAuth:authUrl").Value;
+            authUrl = config.GetSection("TenantSettings:Defaults:DgUserManagementAuth:authUrl").Value;
+            authPath = config.GetSection("TenantSettings:Defaults:DgUserManagementAuth:postUrl").Value ?? "/dg-userManagement-console/security/signIn";
 
             _httpClient = httpClientFactory.CreateClient("CertificateClient"); ;
             _logger = logger;
-            _roleManager = roleManager;
-            this.authContext = authContext;
+
         }
 
         public async Task<DgResponse?> Authnticate(string name, string password)
@@ -41,7 +41,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
                 _logger.LogWarning("sending req to DGUM with body  : {ReqBody}", await content.ReadAsStringAsync());
-                HttpResponseMessage response = await _httpClient.PostAsync(authUrl + "/dg-userManagement-console/security/signIn", content);
+                HttpResponseMessage response = await _httpClient.PostAsync(authUrl + authPath , content);
                 if (response.IsSuccessStatusCode)
                 {
 

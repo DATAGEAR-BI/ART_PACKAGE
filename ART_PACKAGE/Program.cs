@@ -21,6 +21,7 @@ using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
+using Data.Setting;
 using Hangfire;
 using Hangfire.LiteDB;
 using Microsoft.AspNetCore.Identity;
@@ -35,12 +36,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 
 builder.Services.AddDbs(builder.Configuration);
-
 builder.Services.AddSignalR();
-//builder.Services.AddHostedService<LicenseWatcher>();
-builder.Services.AddScoped<IDropDownService, DropDownService>();
-builder.Services.AddScoped<IPdfService, PdfService>();
 
+//builder.Services.AddHostedService<LicenseWatcher>();
+
+builder.Services.AddScoped<IDropDownService, DropDownService>();
+
+builder.Services.Configure<PDF>(builder.Configuration.GetSection("PDF"));
+builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
@@ -61,6 +64,7 @@ builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 builder.Services.AddReportsConfiguratons();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
+
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
@@ -121,11 +125,8 @@ _recurringService.AddOrUpdate("clean-csv-directory", () =>
     csvJobs.CleanDirectory(), $"0 0 * * *");
 
 WebApplication app = builder.Build();
-
-app.ApplyModulesMigrations();
-
-app.SeedModuleRoles();
-
+//app.ApplyModulesMigrations();
+//app.SeedModuleRoles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -32,6 +32,11 @@ using Data.Services.AmlAnalysis;
 using Data.TIZONE2;
 using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
+using Data.Setting;
+using Data.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -41,6 +46,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
         {
             string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
+
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
 
@@ -63,8 +69,9 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
                     _ => throw new Exception($"Unsupported provider: {dbType}")
                 };
             }
+            
 
-            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt, connectionString));
+            _ = services.AddDbContext<AuthContext>(opt => contextBuilder(opt,conn: connectionString));
 
 
             if (modulesToApply is null)
@@ -242,7 +249,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             _ = services.AddHostedService<AmlAnalysisTableCreateService>();
             return services;
         }
-
+     
 
         public static IServiceCollection AddReportsConfiguratons(this IServiceCollection services)
         {

@@ -53,11 +53,14 @@ class Grid extends HTMLElement {
     filtersModal = document.createElement("div");
     csvExportId = "";
     isExporting = false;
+    isExportingPDF = false;
     isPDFExporting = false;
     isDownloaded = true;
     selectProp = "";
     excelFileName = "";
     buttonExportClicked = false;
+    exRules = null;
+    queryBuilderRules = null;
 
     constructor() {
         super();
@@ -124,8 +127,33 @@ class Grid extends HTMLElement {
         if (this.dataset.prop) {
             this.selectProp = this.dataset.prop;
         }
-        if (Object.keys(this.dataset).includes("stored"))
+        if (Object.keys(this.dataset).includes("stored")) {
             this.isStoredProc = true;
+            var filterEelement = document.getElementById(this.dataset.stored);
+            
+
+            console.log(filterEelement)
+            if (filterEelement) {
+                filterEelement.addEventListener('apply', (event) => {
+                    // Access the data from event.detail
+                    this.exRules = event.detail.procesedRules;
+                    this.queryBuilderRules = event.detail.rules;
+                    console.log('Data from event:', event.procesedRules);
+                    var grid = $(this.gridDiv).data("kendoGrid");
+                    grid.dataSource.read();
+                });
+                this.exRules = filterEelement.getexRules();
+                this.queryBuilderRules = filterEelement.getRules();
+                /*filterEelement.onApplyFilters = (filters) => {
+                    var grid = $(this.gridDiv).data("kendoGrid");
+                    grid.dataSource.read();
+                    this.exRules = filter;
+                    console.log("Custom filters applied:", filters);
+                    // Additional custom behavior goes here
+                };*/
+            }
+        }
+            
         this.isCustom = Object.keys(this.dataset).includes("custom");
         if (this.dataset.handlerkey) {
             this.handlerkey = this.dataset.handlerkey;
@@ -176,6 +204,8 @@ class Grid extends HTMLElement {
 
         }
 
+        
+        
 
 
         this.filtersModal.classList.add("modal", "fade");
@@ -222,42 +252,42 @@ class Grid extends HTMLElement {
 
             this.storedConfig.isStoredProc = true;
             this.storedConfig.builder = document.getElementById(this.dataset.stored);
-            this.storedConfig.builder.dateFormat = 'yyyy-MM-dd'
-            this.storedConfig.applyBtn = document.getElementById(this.storedConfig.builder.dataset.applybtn);
-            var rep = parametersConfig.find(x => x.reportName == this.storedConfig.builder.dataset.params);
-            var customOps = [];
-            var multifields = rep.parameters.filter(x => x.isMulti);
-            multifields.forEach(p => {
-                var vals = [];
-                if (p.values.url) {
-                    $.ajax({
-                        url: p.values.url,
-                        type: "GET",
-                        async: false,
-                        dataType: "json",
-                        success: function (data) {
-                            vals = data;
-                        }
-                    });
-                }
-                else
-                    vals = p.values.static;
+            //this.storedConfig.builder.dateFormat = 'yyyy-MM-dd'
+            //this.storedConfig.applyBtn = document.getElementById(this.storedConfig.builder.dataset.applybtn);
+            //var rep = parametersConfig.find(x => x.reportName == this.storedConfig.builder.dataset.params);
+            //var customOps = [];
+            //var multifields = rep.parameters.filter(x => x.isMulti);
+            //multifields.forEach(p => {
+            //    var vals = [];
+            //    if (p.values.url) {
+            //        $.ajax({
+            //            url: p.values.url,
+            //            type: "GET",
+            //            async: false,
+            //            dataType: "json",
+            //            success: function (data) {
+            //                vals = data;
+            //            }
+            //        });
+            //    }
+            //    else
+            //        vals = p.values.static;
 
-                customOps.push(multiSelectOperation(p.paraName, vals));
-            })
+            //    customOps.push(multiSelectOperation(p.paraName, vals));
+            //})
 
 
-            this.storedConfig.builder.customOperations = customOps;
-            var filters = mapParamtersToFilters(rep.parameters);
-            this.storedConfig.builder.fields = filters;
-            if (rep.defaultFilter) {
-                this.storedConfig.builder.value = rep.defaultFilter;
-            }
+            //this.storedConfig.builder.customOperations = customOps;
+            //var filters = mapParamtersToFilters(rep.parameters);
+            //this.storedConfig.builder.fields = filters;
+            //if (rep.defaultFilter) {
+            //    this.storedConfig.builder.value = rep.defaultFilter;
+            //}
 
-            this.storedConfig.applyBtn.addEventListener('click', () => {
-                var grid = $(this.gridDiv).data("kendoGrid");
-                grid.dataSource.read();
-            });
+            //this.storedConfig.applyBtn.addEventListener('click', () => {
+            //    var grid = $(this.gridDiv).data("kendoGrid");
+            //    grid.dataSource.read();
+            //});
 
         }
         this.gridDiv.id = this.id + "-Grid";
@@ -265,7 +295,9 @@ class Grid extends HTMLElement {
         this.intializeColumns();
 
         exportConnection.on("updateExportProgress", async (progress, folder, gridId) => {
-
+            if (!this.isExporting) {
+                return;
+            }
             if (currentCSVProcess != folder) {
                 //exportConnection.invoke("CancelPdfExport", folder);
                 return;
@@ -290,15 +322,35 @@ class Grid extends HTMLElement {
                 console.log(folder, progress)
 
                 progressBar.value = parseFloat(progress.toFixed(2));
-                if (progress >= 100) {//|| reminder <= 100
+                if (progress >= 100 && currentCSVProcess != "" && currentCSVProcess == folder) {//|| reminder <= 100
+                    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+                    currentCSVProcess = "";
                     progressBar.hidden = true;
-                    var downloadButton = document.getElementById("ExportDownloadBtn");
-                    downloadButton.style.visibility = "";
-                    downloadButton.hidden = false;
+                    //var downloadButton = document.getElementById("ExportDownloadBtn");
+                    //downloadButton.style.visibility = "";
+                    //downloadButton.hidden = false;
                     this.isExporting = false;
                     this.isDownloaded = false;
                     isExportingCSVNow = false;
-                    exportConnection.invoke("CancelPdfExport", currentCSVProcess);
+                    var downloadRes = await fetch("/Files/DownloadCsvFiles/" + this.csvExportId);
+                    if (downloadRes.ok) {
+                        
+
+                        var blob = await downloadRes.blob();
+                        var a = document.createElement("a");
+                        a.setAttribute("download", this.csvExportId + ".Zip");
+                        a.href = window.URL.createObjectURL(blob);
+                        a.click();
+                        this.csvExportId = "";
+                        this.isDownloaded = true;
+                        isExportingCSVNow = false;
+                        this.isExporting = false;
+
+                        e.target.hidden = true;
+                     
+                        e.target.style.visibility = "hidden";
+                    }
+                   
 
                 }
             }
@@ -308,6 +360,9 @@ class Grid extends HTMLElement {
             /*          console.log("curr", currentPDFReportId)
                       console.log("curr |", currentPDFReportId)
                       console.log("curr | e | P", exportinProcess)*/
+            if (!this.isExportingPDF) {
+                return;
+            }
             if (currentPDFReportId != exportinProcess ) {
                 //exportConnection.invoke("CancelPdfExport", exportinProcess);
                 return;
@@ -344,9 +399,23 @@ class Grid extends HTMLElement {
                             pdfProgressBar.hidden = true;
                             pdfProgressBar.style.visibility = "hidden";
                         }
+
+                        var downloadRes = await fetch("/Files/DownloadPDFFiles/" + exportinProcess);
+                        if (downloadRes.ok) {
+                            isExportingPDFNow = false;
+                            var blob = await downloadRes.blob();
+                            var a = document.createElement("a");
+                            a.setAttribute("download", exportinProcess + ".Zip");
+                            a.href = window.URL.createObjectURL(blob);
+                            a.click();
+                            e.target.hidden = true;
+                            e.target.style.visibility = "hidden";
+                            
+                        }
+
                         exportConnection.invoke("CancelPdfExport", currentPDFReportId);
 
-                        isExportingPDFNow = false;
+                        
                     } else {
                         if (!pdfProgressBar.hidden) {
                             pdfProgressBar.hidden = true;
@@ -369,13 +438,13 @@ class Grid extends HTMLElement {
 
         var para = { IsIntialize: true };
         if (this.isStoredProc) {
-            var flatted = this.storedConfig.builder.value.flat();
+            var flatted = this.storedConfig.builder.getexRules().flat();
             var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
-                var val = x[2];
+                //var val = x[2];
                 return {
-                    Field: x[0],
-                    Operator: x[1],
-                    Value: val
+                    Field: x.field,//x[0],
+                    Operator: x.operator,
+                    Value: x.value
                 }
 
             });
@@ -682,7 +751,9 @@ class Grid extends HTMLElement {
                         };
 
                         if (this.isStoredProc) {
-                            var flatted = this.storedConfig.builder.value.flat();
+
+                            
+                            var flatted = this.storedConfig.builder.getexRules().flat();
                             if (flatted.includes("or")) {
                                 toastObj.icon = 'error';
                                 toastObj.text = "only and logic operators are allowed";
@@ -692,11 +763,11 @@ class Grid extends HTMLElement {
                                 return;
                             }
                             var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
-                                var val = x[2];
+                                //var val = x[2];
                                 return {
-                                    Field: x[0],
-                                    Operator: x[1],
-                                    Value: val
+                                    Field: x.field,//x[0],
+                                    Operator: x.operator,
+                                    Value: x.value
                                 }
 
                             });
@@ -1238,6 +1309,7 @@ class Grid extends HTMLElement {
                 $.toast(toastObj);
 
                 isExportPdfHitted = true;
+                this.isExportingPDF = true;
                 isExportingPDFNow = true;
                 if (isExportPdfHitted) {
 
@@ -1278,14 +1350,36 @@ class Grid extends HTMLElement {
 
                 Request.DataReq = para;
                 var pdfExportHandler = undefined;
-                if (!this.isStoredProc)
-                    pdfExportHandler = Handlers["clientPdExport"];
-                else
-                    pdfExportHandler = Handlers["StoredPdExport"];
-
-                var orgin = window.location.pathname.split("/");
+               // var orgin = window.location.pathname.split("/");
+                var orgin = this.url.split("/");
                 var controller = orgin[1];
-                pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
+
+                if (!this.isStoredProc) {
+                    pdfExportHandler = Handlers["clientPdExport"];
+                    
+                    pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
+
+
+                }
+                else {
+                    pdfExportHandler = Handlers["clientPdExport"];
+                    Request.DataReq.IsStored = true;
+                    var flatted = this.storedConfig.builder.getexRules().flat();
+                    var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
+                        //var val = x[2];
+                        return {
+                            Field: x.field,//x[0],
+                            Operator: x.operator,
+                            Value: x.value
+                        }
+
+                    });
+                    Request.DataReq.QueryBuilderFilters = val;
+                    pdfExportHandler(e, controller, this.url, this.gridDiv, Request);
+
+                }
+
+                
 
             }
             else {
@@ -1589,15 +1683,40 @@ class Grid extends HTMLElement {
         }
         para.IdColumn = this.selectProp;
         para.SelectedValues = this.isAllSelected ? [] : Object.values(this.selectedRows).flat().map(x => x[this.selectProp].toString());
+        if (this.isStoredProc) {
+            if (this.isStoredProc) {
 
+
+                var flatted = this.storedConfig.builder.getexRules().flat();
+                if (flatted.includes("or")) {
+                    toastObj.icon = 'error';
+                    toastObj.text = "only and logic operators are allowed";
+                    toastObj.heading = "Filters Status";
+                    $.toast(toastObj);
+                    kendo.ui.progress($(this.gridDiv), false);
+                    return;
+                }
+                var val = flatted.filter(x => x !== "or" && x !== "and").map(x => {
+                    //var val = x[2];
+                    return {
+                        Field: x.field,//x[0],
+                        Operator: x.operator,
+                        Value: x.value
+                    }
+
+                });
+                para.QueryBuilderFilters = val;
+                para.IsStored = true;
+            }
+        }
         // This gets the full URL of the current page
         var fullUrl = window.location.href;
 
-        // This extracts the path after the domain
-        var path = new URL(fullUrl).pathname;
+        //// This extracts the path after the domain
+        //var path = new URL(fullUrl).pathname;
 
         // Split the path into its segments
-        var pathSegments = path.split('/').filter(function (segment) {
+        var pathSegments = this.url.split('/').filter(function (segment) {
             return segment.length > 0;
         });
 
@@ -1652,11 +1771,25 @@ class Grid extends HTMLElement {
         let options = localStorage.getItem(key);
         if (options) {
             console.log("dddddddd")
+            if (this.isStoredProc ) {
+                let queryBuilderKey = `${this.dataset.stored}-QueryBuilderOptions`;
+                let queryBuilderOptions = localStorage.getItem(queryBuilderKey)
+                if (queryBuilderOptions) {
+                    localStorage.removeItem(key);
+                }
+            }
             localStorage.removeItem(key);
             window.location.reload();
         }
     }
     saveState() {
+        if (this.isStoredProc) {
+            let queryBuilderKey = `${this.dataset.stored}-QueryBuilderOptions`;
+            if (localStorage.getItem(queryBuilderKey)) {
+                localStorage.removeItem(queryBuilderKey)
+            }
+            localStorage.setItem(queryBuilderKey, JSON.stringify(this.queryBuilderRules));
+        }
         let key = `${this.gridDiv.id}-Options`;
         if (this.isCustom)
             key += `-${this.dataset.reportid}`;
@@ -1856,8 +1989,79 @@ class Grid extends HTMLElement {
 
         });
     }
+    getExRules() {
 
+    var checkinterval = setInterval(check, 1000);
+
+
+    function check() {
+
+        var isFiltersExist = document.getElementById("filters");
+        if (isFiltersExist) {
+            console.log("check");
+            internal();
+            clearInterval(checkinterval);
+        }
+    }
+    function internal() {
+
+        var rules = $('#filters').queryBuilder('getRules');
+
+        var g = [...rules.rules].reduce((group, product) => {
+            const { id } = product;
+            group[id] = !group[id] ? [] : group[id];
+            group[id].push(product);
+            return group;
+        }, {});
+        var arr = [];
+        for (var prop in g) {
+            arr.push(g[prop]);
+        }
+        if (arr.some(x => x.length > 1)) {
+            console.log("error");
+        } else {
+            this.exRules = Array.prototype.concat.apply([], arr);
+            this.exRules = [...exRules].map(x => {
+                if (Array.isArray(x.value)) {
+                    x.value = [...x.value].join(",");
+                }
+                return x;
+            });
+            isextractRulesFinished = true;
+            console.log(exRules);
+
+        }
+    }
+    }
+     getQueryBuilderRules() {
+    var rules = $('#filters').queryBuilder('getRules');
+
+    var g = [...rules.rules].reduce((group, product) => {
+        const { id } = product;
+        group[id] = !group[id] ? [] : group[id];
+        group[id].push(product);
+        return group;
+    }, {});
+    var arr = [];
+    for (var prop in g) {
+        arr.push(g[prop]);
+    }
+    if (arr.some(x => x.length > 1)) {
+        console.log("error");
+    } else {
+        this.exRules = Array.prototype.concat.apply([], arr);
+        this.exRules = [...(this.exRules)].map(x => {
+            if (Array.isArray(x.value)) {
+                x.value = [...x.value].join(",");
+            }
+            return x;
+        });
+        console.log(this.exRules);
+        return this.exRules;
+    }
 }
+}
+
 function copyText(textToCopy) {
     //const textToCopy = "This is the text to copy";
 

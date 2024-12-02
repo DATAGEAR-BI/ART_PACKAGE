@@ -22,7 +22,17 @@ using iText.Layout.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Path = System.IO.Path;
-
+using System.Diagnostics;
+using iText.Layout.Borders;
+using iText.Kernel.Colors;
+using ART_PACKAGE.Hubs;
+using static com.sun.tools.@internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+using ART_PACKAGE.Extentions.PDF;
+using System.Linq;
+using static iTextSharp.text.pdf.AcroFields;
+using iText.Kernel.Font;
+using iTextSharp.text.pdf;
+using ART_PACKAGE.Extentions.StringExtentions;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -33,11 +43,17 @@ namespace ART_PACKAGE.Helpers.Pdf
         private readonly ILogger<PdfService> _logger;
         private readonly object _locker = new();
         public event Action<int, int> OnProgressChanged;
-        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger)
+        public event Action<int, int> OnLastProgressChanged;
+        private readonly IWebHostEnvironment _env;
+
+        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger, IWebHostEnvironment env)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _processesHandler = processesHandler;
             _logger = logger;
+            OnProgressChanged = (rd, fn) => _logger.LogInformation("file ({fn}) is being exported : {p}", fn, rd);
+            OnLastProgressChanged = (rd, fn) => _logger.LogInformation("file is being exported : ({fn}) /  {p} ", fn, rd);
+            _env = env;
 
 
 
@@ -462,172 +478,378 @@ namespace ART_PACKAGE.Helpers.Pdf
 
         }
 
-        public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportPDFRequest req, int fileNumber, string folderPath, string fileName,string reportGUID, string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
         {
-            //data prep
-            TRepo Repo = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<TRepo>();
-            GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
-            IQueryable<TModel>? data = dataRes.data;
-            int total = dataRes.total;
-            List<testttttt> s = new();
-            for (int i = 0; i < 1000; i++)
-            {
-                s.Add(new() { id = i, name = "name" + i, phone = "0101088667" + i });
-            }
-            //file prep
-            if (!Directory.Exists(folderPath))
-                _ = Directory.CreateDirectory(folderPath);
-            
 
-            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
-            
-            //string pdfPath = "exported_data.pdf";
-            bool isLandscape = true; 
-            // Create a PDF document
-            
-                  
+            var filters = req.DataReq.Filter;
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+               
+
+
+
+                //data prep
+                TRepo Repo = scope.ServiceProvider.GetRequiredService<TRepo>();
+                GridResult<TModel> dataRes = Repo.GetGridData(req.DataReq, baseCondition: baseCondition, defaultSort: defaultSort);
+                IQueryable<TModel>? data = dataRes.data;
+                int total = dataRes.total;
+               var reportConfigs= ReportConfigResolver2.GetConfigs<TModel>();
+                var displayNames = reportConfigs?.DisplayNames;
+                // Ensure the folder path exists
+                if (!Directory.Exists(folderPath))
+                    _ = Directory.CreateDirectory(folderPath);
+
+                string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+                bool isLandscape = req.PdfOptions.IsLandScape;
 
                 try
-            {
-                // Create a PDF writer
-                using (var writer = new PdfWriter(filePath))
                 {
-                using (var pdf = new PdfDocument(writer))
-                {
-                    var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
-                    var document = new Document(pdf, pageSize);
-
-                        // Add an image on the first page
-                        /*var imagePath = "path_to_image.jpg";
-                        var image = new iText.Layout.Element.Image(ImageDataFactory.Create(imagePath))
-                            .SetFixedPosition(50, pageSize.GetHeight() - 150, 200)
-                            .SetAutoScale(true);
-                        document.Add(image);#1#
-                        */
-                        // Get model properties for dynamic table headers
-                        // var modelType = typeof(TModel);
-                         var modelType = typeof(testttttt);
-
-                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                    var columnHeaders = properties.Select(p => p.Name).ToArray();
-
-                    // Define table layout
-                    var table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Dynamic number of columns
-                    table.SetWidth(UnitValue.CreatePercentValue(100));
-
-                    // Add headers
-                    foreach (var header in columnHeaders)
+                    Stopwatch bdstopwatch = new Stopwatch();//
+                    bdstopwatch.Start();
+                    Stopwatch adstopwatch = new Stopwatch();
+                    adstopwatch.Start();
+                    using (var writer = new iText.Kernel.Pdf.PdfWriter(filePath))
+                    using (var pdf = new iText.Kernel.Pdf.PdfDocument(writer))
                     {
-                        table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
-                    }
+                        var pageSize = isLandscape ? PageSize.A4.Rotate() : PageSize.A4;
+                        var document = new Document(pdf, pageSize);
+                        // Define document margins
+                        float documentTopMargin = 32f;    // Points
+                        float documentBottomMargin = 32f; // Points
+                        float documentLeftMargin = 32f;   // Points
+                        float documentRightMargin = 32f;  // Points
+                        document.SetMargins(documentTopMargin, documentRightMargin, documentBottomMargin, documentLeftMargin);
 
-                    // Adjust font size dynamically
-                    float fontSize = 8f; // Start with a smaller font size
-                    if (columnHeaders.Length > 20)
-                    {
-                        fontSize = 8f; // Adjust font size if necessary
-                    }
-                    else
-                    {
-                        fontSize = 12f; // Default font size
-                    }
+                        // Get the properties of the TModel class for headers and data extraction
+                        var modelType = typeof(TModel);
+                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(S=>req.IncludedColumns.Contains( S.Name)).OrderBy(p => req.IncludedColumns.IndexOf(p.Name));
+                        string[] columnHeaders = displayNames is null?req.IncludedColumns.Select(s=>s.MapToHeaderName()).ToArray() : req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s.MapToHeaderName() : s.MapToHeaderName()).ToArray();//properties.Select(p => p.Name).ToArray();
 
-                    // Add footer with page numbers
-                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new PDFPageEventHandler());
+                        // Partition settings
+                        int partitionSize = columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
+                        int totalColumns = columnHeaders.Count();
+                        int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
-                    // Retrieve data from IQueryable and add it to the table
-                    int rowCount = 0;
-                    if (!data.Any())
-                        OnProgressChanged(0, fileNumber);
-                    int index = 0;
-                    int dataCount = data.Count();
-                    float progress = 0;
-                    foreach (var item in s)
-                    {
-                        if (_processesHandler.isProcessCanceld(reportGUID))
+                        int recordsPerPage = req.PdfOptions.NumberOfRowsInPage; // Set the number of records per page, this can be dynamic as needed
+                        int rowCount = 0;
+                        int index = 0;
+                        int dataCount = data.Count();
+                        bool newPageRequired = false;
+                        int totalrec = totalPagesForColumns * dataCount;
+                        int pdfRec = 0;
+                        var pageHeight = pdf.GetDefaultPageSize().GetHeight();
+                        float headerHeight = 20f; // Set a fixed height for the header row
+                        float availableHeight = pageSize.GetHeight() - documentTopMargin - documentBottomMargin - headerHeight - 75 - (2 * recordsPerPage);
+                        float availableWidth = pageSize.GetWidth() - documentLeftMargin - documentRightMargin  - 75 - (2 * recordsPerPage);
+
+                        float rowHeight = availableHeight / recordsPerPage;
+                        float rowWidth = availableWidth / partitionSize;
+                        float calculatedFontSize = CalculateFontSize(rowHeight, rowWidth);//CalculateFontSize(rowHeight, lines: 2);
+
+                        List<Table> tableList = new List<Table>();
+                        var allElements = new List<IBlockElement>();
+
+                        int elementDone = 0;
+
+                        // Define the paths to the images in wwwroot
+                        string wwwrootPath = _env.WebRootPath;
+
+                        string fontPath = Path.Combine(wwwrootPath, "fonts", "ARIAL.TTF");
+                        iText.Kernel.Font.PdfFont defaultFont = PdfFontFactory.CreateFont(fontPath, "Identity-H");
+                        // Set the default font for the entire document
+                        document.SetFont(defaultFont);
+
+                        var arabicLanguageProcessor = new ArabicLigaturizer();
+
+                        string imagePath1 = Path.Combine(wwwrootPath, "imgs", "LOGO.png");
+                        string imagePath2 = Path.Combine(wwwrootPath, "imgs", "bank_logo.png");
+
+                        string watermarkPath = Path.Combine(wwwrootPath, "imgs", "watermark.png");
+
+                        float logoMaxWidth = pdf.GetDefaultPageSize().GetWidth() * 0.1f;
+
+                        document.AddLogos(imagePath1 ,imagePath2, logoMaxWidth);
+
+                        document.AddTitle<TModel>();
+
+                        document.AddDescription<TModel>();
+                        document.AddQueryBuilderFilters(req.DataReq.QueryBuilderFilters);
+
+                        document.AddFilters<TModel>(filters);
+
+                        document.AddWatermark(watermarkPath);
+
+                        if (!req.PdfOptions.UsingPartitionApproach)
                         {
-                            if (!Directory.Exists(folderPath))
-                                _ = Directory.CreateDirectory(folderPath);
-                            try
+
+                            float[] columnWidths = new float[columnHeaders.Count()];
+                            for (int i = 0; i < columnHeaders.Count(); i++)
                             {
-                                _logger.LogInformation("Pdf Process Cancled");
-                                document.Add(table);
-                                // Close the document
-                                document.Close();
-                                return true;
+                                columnWidths[i] = 1; // Equal distribution
                             }
-                            catch (Exception ex)
-                            {
-                                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
-                                return false;
-                            }
-                        }
-
-
-
-
-                        if (rowCount % 50 == 0 && rowCount > 0) // Example for page break
-                        {
-                            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                            table = new Table(UnitValue.CreatePercentArray(columnHeaders.Length)); // Recreate table to continue on new page
+                            Table table = new Table(UnitValue.CreatePercentArray(columnHeaders.Count()));
                             table.SetWidth(UnitValue.CreatePercentValue(100));
 
-                            // Re-add headers
+                            table.SetMaxWidth(UnitValue.CreatePercentValue(100));
                             foreach (var header in columnHeaders)
                             {
-                                table.AddHeaderCell(new Cell().Add(new Paragraph(header)));
+                                table.AddHeaderCell(new Cell().Add(new Paragraph(header).SetFontSize(calculatedFontSize).SetTextAlignment(TextAlignment.RIGHT)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                                .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
                             }
-                        }
-
-                        // Add data cells
-                        foreach (var property in properties)
-                        {
-                            var value = property.GetValue(item)?.ToString();
-                            table.AddCell(new Cell().Add(new Paragraph(value).SetFontSize(fontSize)));
-                        }
-                        rowCount++;
-
-                        index++; // Increment the index for each item
-                        if (dataCount > 100)
-                        {
-                            if (index % 100 == 0 || index == dataCount) // Also check progress at the last item
+                            foreach (var row in data)
                             {
-                                //progress = (float)(index / (float)total * 100);
-                                int recordsDone = index + 1;
-                                lock (_locker)
+
+                                foreach (var prop in properties)
                                 {
-                                    OnProgressChanged(recordsDone, fileNumber);
+                                    var value = prop.GetValue(row)?.ToString();
+
+                                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? "")).SetFontSize(calculatedFontSize)
+                                            .SetTextAlignment(TextAlignment.CENTER).SetFont(defaultFont)
+                                            .SetMultipliedLeading(1f))
+                                        //.SetHeight(rowHeight)
+                                        .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
+                                        .SetMaxWidth(rowWidth)
+                                        .SetTextAlignment(TextAlignment.CENTER)
+                                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                        .SetFontSize(calculatedFontSize)
+                                        .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
+                                        .SetBorder(Border.NO_BORDER)
+                                        .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                        .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
                                 }
+                                pdfRec++;
+                                if (totalrec > 100 && (pdfRec % 100 == 0 || pdfRec == totalrec))
+                                {
+                                    int recordsDone = pdfRec + 1;
+                                    lock (_locker)
+                                    {
+                                        OnProgressChanged(recordsDone, fileNumber);
+                                    }
+                                }
+                                /*else
+                                {
+                                    int recordsDone = pdfRec + 1;
+                                    lock (_locker)
+                                    {
+                                        OnProgressChanged(recordsDone, fileNumber);
+                                    }
+                                }*/
                             }
+                            lock (_locker)
+                            {
+                                OnProgressChanged(pdfRec + 1, fileNumber);
+                                OnLastProgressChanged(0, fileNumber);
+
+                            }
+                            document.Add(table);
+                            /*lock (_locker)
+                            {
+                                OnLastProgressChanged(1, 1);
+
+                            }*/
                         }
                         else
                         {
-                            int recordsDone = index + 1;
-                            lock (_locker)
+                           
+                            foreach (var item in data)
                             {
-                                //OnProgressChanged(recordsDone, fileNumber);
+                                if (rowCount % recordsPerPage == 0)
+                                {
+
+                                    foreach (var tabl in tableList)
+                                    {
+                                        allElements.Add(tabl);
+                                        //allElements.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                                        /*document.Add(tabl);
+                                        document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Add a new page when a new partition starts
+                                        */
+                                    }
+                                    tableList = new();
+                                    float[] widths = Enumerable.Repeat(1f, partitionSize).ToArray();
+                                    float[] lastPageWidths = Enumerable.Repeat(1f, totalColumns % partitionSize == 0 ? partitionSize : totalColumns % partitionSize).ToArray();
+
+                                    for (int i = 0; i < totalPagesForColumns - 1; i++)
+                                    {
+
+                                        //Table table = new Table(UnitValue.CreatePercentArray(partitionSize));
+                                        Table table = new Table(UnitValue.CreatePercentArray(widths));
+                                        table.SetWidth(UnitValue.CreatePercentValue(100));
+                                        //table.SetMaxWidth(UnitValue.CreatePercentValue(100));
+                                        for (int h = (tableList.Count()) * partitionSize; h < ((tableList.Count() + 1) * partitionSize); h++)
+                                        {
+                                            table.AddHeaderCell(new Cell().Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                                            .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                            .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                        }
+                                        tableList.Add(table);
+
+                                    }
+                                    Table lastTable = new Table(UnitValue.CreatePercentArray(lastPageWidths));
+                                    lastTable.SetWidth(UnitValue.CreatePercentValue(100));
+                                    //lastTable.SetMaxWidth(UnitValue.CreatePercentValue(100));
+                                    for (int h = (tableList.Count()) * partitionSize; h < totalColumns; h++)
+                                    {
+                                        lastTable.AddHeaderCell(new Cell()
+                                            .Add(new Paragraph(columnHeaders[h]).SetFontSize(calculatedFontSize))
+                                            .SetHeight(headerHeight)
+                                            .SetTextAlignment(TextAlignment.CENTER)
+                                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                            .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                                            .SetBorder(Border.NO_BORDER)
+                                            .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                            .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                    }
+                                    tableList.Add(lastTable);
+                                }
+                                int columnNumber = 1;
+                                int tableIndex = 0;
+                                foreach (var property in properties)
+                                {
+                                    var value = property.GetValue(item)?.ToString();
+
+                                    tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process( value ?? "")).SetFont(defaultFont).SetFontSize(calculatedFontSize)
+                                            .SetTextAlignment(TextAlignment.CENTER)
+                                            .SetMultipliedLeading(1f))
+                                        //.SetHeight(rowHeight)
+                                        .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
+                                        .SetMaxWidth(rowWidth)
+                                        .SetTextAlignment(TextAlignment.CENTER)
+                                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                        .SetFontSize(calculatedFontSize)
+                                        .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
+                                        .SetBorder(Border.NO_BORDER)
+                                        .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                        .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+
+                                    if (columnNumber != 1 && columnNumber % partitionSize == 0)
+                                    {
+                                        tableIndex++;
+                                        pdfRec++;
+                                        if (totalrec > 100 && (pdfRec % 100 == 0 || pdfRec == totalrec))
+                                        {
+                                            int recordsDone = pdfRec + 1;
+                                            lock (_locker)
+                                            {
+                                                OnProgressChanged(recordsDone, fileNumber);
+                                            }
+                                        }
+                                    }
+                                    columnNumber++;
+                                }
+
+
+                                index++; // Increment the index for each item
+
+                                // Log progress or handle process cancellation
+                                /* if (dataCount > 100 && (index % 100 == 0 || index == dataCount))
+                                 {
+                                     int recordsDone = index + 1;
+                                     lock (_locker)
+                                     {
+                                         OnProgressChanged(recordsDone, fileNumber);
+                                     }
+                                 }*/
+                                rowCount++;
+                               
+                                // If all records are added, break out of the loop
+                                if (rowCount >= dataCount)
+                                {
+                                    foreach (var tabl in tableList)
+                                    {
+                                        allElements.Add(tabl);
+                                        //allElements.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                                        /*document.Add(tabl);
+                                        document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Add a new page when a new partition starts
+                                        */
+                                    }
+                                    break;
+
+                                }
                             }
+                            bdstopwatch.Stop();
+
+                            // Get the elapsed time as a TimeSpan
+                            TimeSpan bdelapsedTime = bdstopwatch.Elapsed;
+
+                            Console.WriteLine($@"until before close document takes {bdelapsedTime}");
+                            int totalElements = allElements.Count();
+                            foreach (var elem in allElements)
+                            {
+
+                                document.Add(elem);
+                                document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                                lock (_locker)
+                                {
+                                    OnLastProgressChanged(elementDone, fileNumber);
+
+                                }
+                                elementDone++;
+                            }
+                           
+
                         }
 
-                    }
+                        // Close the document once done
+                        document.Close();
+                        adstopwatch.Stop();
+                        lock (_locker)
+                        {
+                            OnLastProgressChanged(elementDone==0? 1: elementDone, fileNumber);
 
-                    document.Add(table);
+                        }
+                        // Get the elapsed time as a TimeSpan
+                        TimeSpan adelapsedTime = adstopwatch.Elapsed;
+                        Console.WriteLine($@"until after close document takes {adelapsedTime}");
 
-                    // Close the document
-                    document.Close();
-                }
-                }
-            }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred: {ex.Message}");
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    return false;
+                }
+
                 return true;
-        }
+            }
 
+               
+        }
+        private float CalculateFontSize(float cellHeight, int lines)
+        {
+            // Assuming a basic factor for line spacing and padding/margin inside the cell
+            float lineSpacingFactor = 1.2f; // A factor to include space between lines
+            float paddingFactor = 1.0f; // A factor for padding/margin within the cell
+
+            // Calculate the approximate font size that fits the number of lines
+            float calculatedFontSize = (cellHeight / (lines * lineSpacingFactor)) - paddingFactor;
+
+            return Math.Max(calculatedFontSize, 6); // Set a minimum font size limit (e.g., 6pt)
+        }
+        private float CalculateFontSize(float cellHeight, float cellWidth, int maxCharsOnLine=20, int lines = 2, float lineSpacingFactor = 1f, float characterSpacingFactor = 1.0f)
+        {
+            // Calculate font size based on height
+            float fontSizeBasedOnHeight = (cellHeight / (lines * lineSpacingFactor)) - 1.0f; // 1.0f is a padding factor
+
+            // Calculate font size based on width
+            float fontSizeBasedOnWidth = (cellWidth / (maxCharsOnLine * characterSpacingFactor))*2.65f;
+
+            // Return the smaller of the two, ensuring a minimum font size
+            //return Math.Min(fontSizeBasedOnHeight, fontSizeBasedOnWidth);
+            return Math.Max(Math.Min(fontSizeBasedOnHeight, fontSizeBasedOnWidth), 1.4f);
+        }
+        private float CalculateFontSize(float cellWidth, int charactersPerLine=70, float characterSpacingFactor = 1.0f)
+        {
+            // Calculate font size based on the number of characters that should fit in a single line
+            float fontSizeBasedOnWidth = cellWidth / (charactersPerLine * characterSpacingFactor);
+
+            // Return the calculated font size, ensuring a minimum value
+            return Math.Max(fontSizeBasedOnWidth, 6); // Set a minimum font size of 6
+        }
 
     }
     class testttttt

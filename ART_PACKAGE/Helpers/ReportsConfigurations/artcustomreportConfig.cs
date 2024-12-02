@@ -2,9 +2,9 @@ using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
-    public class artsavedcustomreportConfig : ReportConfig
+    public class artcustomreportConfig : ReportConfig
     {
-        public artsavedcustomreportConfig()
+        public artcustomreportConfig()
         {
 
             SkipList = new List<string>(){ "Users",

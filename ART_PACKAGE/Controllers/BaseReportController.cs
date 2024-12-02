@@ -27,7 +27,7 @@ namespace ART_PACKAGE.Controllers
 
 
         }
-
+        
         public abstract IActionResult Index();
         [HttpPost]
         public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
@@ -55,17 +55,17 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{gridId}")]
-        public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
+        public virtual async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
 
-            //var fileame=  await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportGUID,reportGUID);
-            //return new ContentResult
-            //{
-            //    ContentType = "application/json",
-            //    Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
-            //};
-            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
-            return File(pdfBytes, "application/pdf");
+            var fileame = await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportGUID, reportGUID);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+            /*byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
+            return File(pdfBytes, "application/pdf");*/
         }
 
 
@@ -75,8 +75,7 @@ namespace ART_PACKAGE.Controllers
         public virtual async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
 
-            AppUser user = await GetUser();
-            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, user.UserName, gridId, baseCondition);
+            string folderGuid = reportGUID != null ? _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId, reportGUID, baseCondition) : _gridConstructor.ExportGridToCsv(req, User.Identity.Name, gridId, baseCondition);
 
             return Ok(new { folder = folderGuid });
         }

@@ -11,11 +11,15 @@ var addedCharts = [];
 var form = document.getElementById("CustomReportForm");
 var errosDiv = document.getElementById("errors");
 var ShcemaSelect = document.getElementById("Shcema");
+const categoryTree = document.querySelector('category-tree');
+let previousSelectedValues = new Set();
+let entities=[]
 
 ShcemaSelect.onchange = (e) => {
     var value = parseInt(e.target.value);
     if (value != -1) {
         Fetch(`/CustomReport/GetDbObjects/${value}`, null, "GET").then(d => {
+            entities = d;
             TableSelect.innerHTML = "";
             var opt = document.createElement("option");
             opt.innerText = "Select a Table";
@@ -35,6 +39,19 @@ ShcemaSelect.onchange = (e) => {
     }
 
 }
+
+/*Fetch(`/ReportCategory/Getcategorieslist`, null, "GET").then(d => {
+    // Define a function for when a category is selected
+    function onCategoryChange(name, id) {
+
+        console.log(`Selected Category:  ${id}`)
+        //alert(`Selected Category: ${name}\nID: ${id}`);
+    }
+    console.log(JSON.stringify(d));
+    // Set attributes on the custom element
+    categoryTree.setAttribute('categories', JSON.stringify(d));
+    categoryTree.setAttribute('oncategorychange', onCategoryChange.toString());
+})*/
 
 
 
@@ -71,7 +88,151 @@ TableSelect.onchange = async (e) => {
     $('#chartColumn').selectpicker('refresh');
 
 }
+//createTable('dynamic-table-container');
 
+ColumnsSelect.onchange = async (e) => {
+
+
+    const currentSelectedValues = new Set(
+        [...e.target.selectedOptions].filter(option => option.value).map(option => { return JSON.stringify({ name: option.value, type: option.dataset.type }) })
+    );
+    console.log("selected options pure", [...e.target.selectedOptions]);
+    console.log("current options ",currentSelectedValues);
+    console.log("prev options ", previousSelectedValues);
+    let newlySelected = [...currentSelectedValues].filter(
+        value => !previousSelectedValues.has(value)
+    );
+    newlySelected = JSON.parse(newlySelected);
+    console.log("Newly options ", newlySelected);
+    console.log("entities ",entities)
+    previousSelectedValues = currentSelectedValues;
+    var dropdowntable = document.getElementById("dropdown-table");
+    dropdowntable.addOrRemoveItem({ name: newlySelected.name, type: newlySelected.type, entities: entities.map(s => { return { value: s.vieW_NAME, text: s.vieW_NAME, type: s.type } }) })
+/*
+    const containerId = 'dynamic-table-container'; // The ID of the container div
+    const tableBody = document.getElementById("options-table").querySelector("tbody");
+
+
+
+    // Determine newly selected options
+    const newlySelected = [...currentSelectedValues].filter(
+        value => !previousSelectedValues.has(value)
+    );
+
+    // Determine recently deselected options
+    const recentlyDeselected = [...previousSelectedValues].filter(
+        value => !currentSelectedValues.has(value)
+    );
+    console.log(" recentlty",recentlyDeselected);
+    // Remove rows for deselected options
+    recentlyDeselected.forEach(value => {
+        const row = document.getElementById(`row-${value}`);
+        if (row) row.remove();
+    });
+
+    // Add rows for newly selected options
+    newlySelected.forEach(value => {
+        const option = [...e.target.options].find(opt => opt.value === value);
+        const type = option.dataset.type;
+
+        const row = document.createElement("tr");
+        row.id = `row-${value}`;
+
+        // Create the Name and Type inputs (disabled)
+        const nameCell = document.createElement("td");
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.value = option.textContent;
+        nameInput.disabled = true;
+        nameCell.appendChild(nameInput);
+
+        const typeCell = document.createElement("td");
+        const typeInput = document.createElement("input");
+        typeInput.type = "text";
+        typeInput.value = type;
+        typeInput.disabled = true;
+        typeCell.appendChild(typeInput);
+
+        // Create the Select columns using m-select elements
+        const selectColumns = [];
+        for (let i = 1; i <= 3; i++) {
+            const selectCell = document.createElement("td");
+            const mSelect = document.createElement("m-select");
+            mSelect.id = `${value}-Select-${i}`;
+            mSelect.dataset.title = `Select ${i}`;
+            mSelect.dataset.searchable = true;
+
+            // Add options to m-select
+            ["Option 1", "Option 2", "Option 3"].forEach((optText, index) => {
+                const optionElement = document.createElement("option");
+                optionElement.value = `select${i}-${index}`;
+                optionElement.textContent = optText;
+                mSelect.appendChild(optionElement);
+            });
+
+            if (type !== "number" && type !== "decimal") {
+                mSelect.disabled = true;
+            }
+
+            selectCell.appendChild(mSelect);
+            selectColumns.push(selectCell);
+        }
+
+        // Append all cells to the row
+        row.appendChild(nameCell);
+        row.appendChild(typeCell);
+        selectColumns.forEach(cell => row.appendChild(cell));
+
+        // Append the row to the table body
+        tableBody.appendChild(row);
+    });
+
+    // Update previousSelectedValues
+    previousSelectedValues = currentSelectedValues;*/
+
+
+// Example usage on a multi-select element
+//document.getElementById("multi-select").addEventListener("change", handleSelectChange);
+
+// Create the table when the page loads (or when the div is available)
+
+    /*var selected = [...e.target.selectedOptions].filter(option => option.value).map(option => ({
+        value: option.value,
+        t: option.dataset.type
+    }));  //var type = selected.dataset.type;
+    //var name = selected.value;
+    console.log(`selected item is ${JSON.stringify( selected)}`);
+    console.log(e);*/
+}
+
+function createTable(containerId) {
+    // Create the table
+    const table = document.createElement('table');
+    table.id = 'options-table';
+    table.border = '1';
+
+    // Create the table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Type', 'Select 1', 'Select 2', 'Select 3'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create the table body (empty initially)
+    const tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    // Find the container div by id and append the table
+    const container = document.getElementById(containerId);
+    container.appendChild(table);
+}
 function deleteCard(event) {
     var id = event.dataset.id;
     var cardToDlt = document.getElementById(id);
@@ -187,6 +348,7 @@ form.onsubmit = async (e) => {
     }));
     var reportTitle = document.getElementById("title").value;
     var reportDesc = document.getElementById("desc").value;
+    //var category = categoryTree.selectedValue;
 
     if (!table || table == undefined || table == "" || table.length == 0) {
         errors.push("you must select a table");
@@ -236,6 +398,7 @@ form.onsubmit = async (e) => {
         Charts: charts,
         Description: reportDesc,
         Title: reportTitle,
+        //CategoryId: parseInt(category)  ,
         Schema: parseInt(ShcemaSelect.value)
     }
 
