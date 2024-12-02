@@ -647,6 +647,16 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.DGMGMT.RoleDgs.Where(x => !string.IsNullOrEmpty(x.RoleType)).Select(x => x.RoleType).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetActionForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("AUDIT_EVENT") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetAlertStatusForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(x => x.LkpName.StartsWith("ALARM_STATUS") && x.LkpLangDesc.Contains("en")).Select(x => x.LkpValDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
 
         public List<SelectItem> GetDGScenarioCategoryDropDown()
         {

@@ -121,6 +121,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetActionEcmFilter();
         public List<SelectItem> GetActionNameSanctionSensitivityFilter();
         public List<SelectItem> GetCategorySanctionSensitivityFilter();
+        public List<SelectItem> GetActionForDGAMLDropDown();
+        public List<SelectItem> GetAlertStatusForDGAMLDropDown();
         //
 
 
