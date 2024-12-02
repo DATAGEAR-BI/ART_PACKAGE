@@ -9005,7 +9005,75 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Tel_No_2");
             });
 
+            modelBuilder.Entity<Branch>(entity =>
+            {
+                entity.HasKey(e => e.BranchKey);
 
+                entity.ToTable("Branch", "DGAMLCORE");
+
+                entity.Property(e => e.BranchKey).HasColumnName("Branch_Key");
+
+                entity.Property(e => e.Addr1)
+                    .HasMaxLength(35)
+                    .HasColumnName("Addr_1");
+
+                entity.Property(e => e.Addr2)
+                    .HasMaxLength(35)
+                    .HasColumnName("Addr_2");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(35)
+                    .HasColumnName("Branch_Name");
+
+                entity.Property(e => e.BranchNo)
+                    .HasMaxLength(25)
+                    .HasColumnName("Branch_No");
+
+                entity.Property(e => e.BranchTypeDesc)
+                    .HasMaxLength(50)
+                    .HasColumnName("Branch_Type_Desc");
+
+                entity.Property(e => e.ChgBeginDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Chg_Begin_Date")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ChgCurrentInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Chg_Current_Ind")
+                    .HasDefaultValueSql("('Y')")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ChgEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Chg_End_Date")
+                    .HasDefaultValueSql("('5999-01-01 00:00:00.000')");
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(35)
+                    .HasColumnName("City_Name");
+
+                entity.Property(e => e.CntryCd)
+                    .HasMaxLength(3)
+                    .HasColumnName("Cntry_Cd");
+
+                entity.Property(e => e.CntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Cntry_Name");
+
+                entity.Property(e => e.PostCd)
+                    .HasMaxLength(50)
+                    .HasColumnName("Post_Cd");
+
+                entity.Property(e => e.StateCd)
+                    .HasMaxLength(10)
+                    .HasColumnName("State_Cd");
+
+                entity.Property(e => e.StateName)
+                    .HasMaxLength(35)
+                    .HasColumnName("State_Name");
+            });
         }
 
         public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)

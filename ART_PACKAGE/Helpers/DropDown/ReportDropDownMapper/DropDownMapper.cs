@@ -57,6 +57,8 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 var value when value == nameof(ArtDgamlAlertDetailViewNonStaffConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CustTypeDesc".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
                 },
                 var value when value == nameof(ArtAmlUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

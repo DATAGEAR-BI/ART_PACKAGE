@@ -728,7 +728,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGScenarioNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Select(x => x.RoutineName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
@@ -740,7 +740,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGBranchNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Accounts.Where(x => !string.IsNullOrEmpty(x.AcctPrimBranchName)).Select(x => x.AcctPrimBranchName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.Branches.Where(x => !string.IsNullOrEmpty(x.BranchName)).Select(x => x.BranchName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetDGProfileRiskDropDown()
