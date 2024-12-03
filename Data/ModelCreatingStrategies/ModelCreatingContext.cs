@@ -142,5 +142,14 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnDGECMFiltersModelCreating(modelBuilder);
         }
+        public void OnDGAMLFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGAMLFiltersModelCreating(modelBuilder);
+        }
+
+        public void OnDGAMLAdminModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGAMLAdminModelCreating(modelBuilder);
+        }
     }
 }

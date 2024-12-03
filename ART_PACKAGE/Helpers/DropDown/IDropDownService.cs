@@ -124,6 +124,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetActionForDGAMLDropDown();
         public List<SelectItem> GetAlertStatusForDGAMLDropDown();
         public List<SelectItem> GetCustTypeDescForDGAMLDropDown();
+        public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown();
+        public List<SelectItem> GetCloseUserNameForDGAMLDropDown();
         //
 
 

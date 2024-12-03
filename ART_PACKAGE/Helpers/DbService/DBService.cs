@@ -12,6 +12,8 @@ using Data.GOAML;
 using Data.TIZONE2;
 using Data.DGCRP;
 using Data.DGECMFilters;
+using Data.DGAMLFilters;
+using Data.DGAMLAdmin;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -42,12 +44,16 @@ namespace ART_PACKAGE.Helpers.DBService
                 }
                 if (modules.Contains("DGAML"))
                 {
-                    IServiceScope coreScope = _serviceScopeFactory.CreateScope();
-                    DGAMLCOREContext dgAmlCore = coreScope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
+                    IServiceScope scope = _serviceScopeFactory.CreateScope();
+                    DGAMLCOREContext dgAmlCore = scope.ServiceProvider.GetRequiredService<DGAMLCOREContext>();
                     DGAMLCORE = dgAmlCore;
-                    IServiceScope ACscope = _serviceScopeFactory.CreateScope();
-                    DGAMLACContext dgAmlAc = ACscope.ServiceProvider.GetRequiredService<DGAMLACContext>();
+                    DGAMLACContext dgAmlAc = scope.ServiceProvider.GetRequiredService<DGAMLACContext>();
                     DGAMLAC = dgAmlAc;
+                    DGAMLFiltersContext dgAmlFilters = scope.ServiceProvider.GetRequiredService<DGAMLFiltersContext>();
+                    DGAMLFilters = dgAmlFilters;
+                    DGAMLAdminContext dgAdmin = scope.ServiceProvider.GetRequiredService<DGAMLAdminContext>();
+                    DGAMLAdmin = dgAdmin;
+
                 }
                 if (modules.Contains("GOAML"))
                 {
@@ -119,5 +125,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGCRPContext DGCRP { get; }
 
         public DGECMFiltersContext DGECMFilters { get; }
+        public DGAMLFiltersContext DGAMLFilters { get; }
+        public DGAMLAdminContext DGAMLAdmin { get; }
+
     }
 }

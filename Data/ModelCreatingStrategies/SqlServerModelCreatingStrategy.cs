@@ -23,6 +23,8 @@ using Data.DGAMLAC;
 using Data.Data.KYC;
 using Data.DGCRP;
 using Data.DGECMFilters;
+using Data.DGAMLFilters;
+using Data.DGAMLAdmin;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -1800,9 +1802,9 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.MoneyLaunderingRiskScore).HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
 
-                entity.Property(e => e.OwnerUid)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("Owner_UID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.PoliticallyExposedPersonInd)
                     .HasMaxLength(1)
@@ -11581,6 +11583,58 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("CATEGORY")
                     .UseCollation("Arabic_CI_AI");
+            });
+        }
+
+        public void OnDGAMLFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtMoneyLaunderingRiskScoreFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_MONEY_LAUNDERING_RISK_SCORE_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.MoneyLaunderingRiskScore)
+                    .HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
+            });
+        }
+
+        public void OnDGAMLAdminModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User", "DG_AML_ADMIN");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Enabled)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.LastPasswordResetDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
         }
     }

@@ -1,6 +1,7 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
 using Data.Services.Grid;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ART_PACKAGE.Helpers.DropDown
 {
@@ -14,9 +15,21 @@ namespace ART_PACKAGE.Helpers.DropDown
         {
             _dbSrv = dbSrv;
         }
+        public List<SelectItem> GetCloseUserNameForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAdmin.Users.Select(x => x.UserName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
         public List<SelectItem> GetActionNameSanctionSensitivityFilter()
         {
             List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtSanctionSensitivityActionNameFilterTbs.Select(x => x.ActionName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList();
 
             return distinct_value;
         }

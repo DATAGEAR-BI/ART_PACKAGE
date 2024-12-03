@@ -11,6 +11,8 @@ namespace Data.ModelCreatingStrategies
         public void OnDGFATCAModelCreating(ModelBuilder modelBuilder);
         public void OnDGCRPModelCreating(ModelBuilder modelBuilder);
         public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder);
+        public void OnDGAMLFiltersModelCreating(ModelBuilder modelBuilder);
+        public void OnDGAMLAdminModelCreating(ModelBuilder modelBuilder);
 
         public void OnDGMGMGModelCreating(ModelBuilder modelBuilder);
         public void OnDGMGMGMAUDodelCreating(ModelBuilder modelBuilder);

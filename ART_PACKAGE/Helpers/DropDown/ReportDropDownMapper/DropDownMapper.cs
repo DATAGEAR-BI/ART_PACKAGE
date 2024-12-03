@@ -59,6 +59,15 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CustTypeDesc".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
                     {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
                     {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                    {"AlertType".ToLower(),_dropDown.GetDGAlarmTypeDropDown() },
+                    {"AlertCategory".ToLower(),_dropDown.GetDGAlarmCategoryDropDown() },
+                    {"AlertSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown() },
+                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusForDGAMLDropDown() },
+                    {"MoneyLaunderingRiskScore".ToLower(),_dropDown.GetMoneyLaunderingScoreForDGAMLDropDown() },
+                    {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"PoliticallyExposedPersonInd".ToLower(),pipList },
+                    {"ClosedUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"CloseUserName".ToLower(),_dropDown.GetCloseUserNameForDGAMLDropDown() },
                 },
                 var value when value == nameof(ArtAmlUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

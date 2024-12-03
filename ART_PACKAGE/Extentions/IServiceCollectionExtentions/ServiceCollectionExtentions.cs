@@ -34,6 +34,8 @@ using Microsoft.EntityFrameworkCore;
 using Data.DGAMLAC;
 using Data.DGCRP;
 using Data.DGECMFilters;
+using Data.DGAMLFilters;
+using Data.DGAMLAdmin;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -100,9 +102,12 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             {
                 string DGAMLCOREContextConnection = config.GetConnectionString("DGAMLCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
                 string DGAMLACContextConnection = config.GetConnectionString("DGAMLACContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLACContextConnection' not found.");
+                string DGAMLAdminContextConnection = config.GetConnectionString("DGAMLAdminContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLAdminContextConnection' not found.");
                 _ = services.AddDbContext<DGAMLCOREContext>(opt => contextBuilder(opt, DGAMLCOREContextConnection));
                 _ = services.AddDbContext<DGAMLACContext>(opt => contextBuilder(opt, DGAMLACContextConnection));
                 _ = services.AddDbContext<ArtDgAmlContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGAMLFiltersContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGAMLAdminContext>(opt => contextBuilder(opt, DGAMLAdminContextConnection));
             }
 
             if (modulesToApply.Contains("ECM"))
