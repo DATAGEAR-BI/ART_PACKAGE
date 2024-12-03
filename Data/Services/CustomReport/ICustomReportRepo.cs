@@ -8,6 +8,7 @@ public interface ICustomReportRepo : IBaseRepo<AuthContext, Dictionary<string, o
 {
     public IEnumerable<GridColumn> GetReportColumns(int reportId);
     public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report,KendoGridRequest request);
+    public Dictionary<string, string?> GetDataType(DbContext schemaContext, ArtSavedCustomReport report);
     public DbSchema GetReportSchema(int reportId);
 
     public IEnumerable<DbObject> GetDbObjectsOf(DbContext schemaContext);

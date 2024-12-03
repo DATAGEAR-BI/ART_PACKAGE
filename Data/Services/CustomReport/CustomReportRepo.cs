@@ -51,7 +51,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
             menu = GetDropDownMenu(x.DropDownView, x.DropDownText, x.DropDownValue)*/
         }); ;
     }
-    
+
     public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
@@ -65,7 +65,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                 var result = new List<Dictionary<string, object>>();
                 using var command = connection.CreateCommand();
                 command.CommandText = GenerateSql(report, request, dbType);
-                IQueryable< Dictionary<string, object>> resultData ;
+                IQueryable<Dictionary<string, object>> resultData;
                 using (var reader = command.ExecuteReader())
                 {
 
@@ -77,15 +77,17 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                         {
                             obj.Add(reader.GetName(i), reader.IsDBNull(i) ? null : reader.GetValue(i));
                         }
-                       result.Add(obj);
+                        result.Add(obj);
                     }
                     resultData = result.AsQueryable();
                 }
+                var dataTypeColumns = GetDataType(schemaContext, report);
                 var count = GetDataCount(schemaContext, report, request);
                 return new GridResult<Dictionary<string, object>>
                 {
                     data = resultData,
-                    total = count
+                    total = count,
+                    dataTypeColumns = dataTypeColumns
                 };
             }
             finally
@@ -93,9 +95,43 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                 if (connection.State == System.Data.ConnectionState.Open)
                     connection.Close();
             }
+        } 
+    }
+    public Dictionary<string, string?> GetDataType(DbContext schemaContext, ArtSavedCustomReport report)
+    {
+        var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
+
+        var connection = schemaContext.Database.GetDbConnection();
+        {
+            try
+            {
+                if (connection.State != System.Data.ConnectionState.Open)
+                    connection.Open();
+                using var command = connection.CreateCommand();
+                command.CommandText = GenerateSqlForGetColumnsDataType(report, dbType);
+                Dictionary<string, string?> resultData = new Dictionary<string, string?>();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string? ColumnName = reader["COLUMN_NAME"] != null ? reader["COLUMN_NAME"].ToString() : null;
+                        string? DataType = reader["DATA_TYPE"] != null ? reader["DATA_TYPE"].ToString() : null;
+                        if (ColumnName != null)
+                        {
+                            resultData.Add(ColumnName, DataType);
+                        }
+                        //Console.WriteLine($"Column: {reader["COLUMN_NAME"]}, Type: {reader["DATA_TYPE"]}");
+                    }
+                }
+                return resultData;
+            }
+            finally
+            {
+                //if (connection.State == System.Data.ConnectionState.Open)
+                //    connection.Close();
+            }
         }
     }
-
     public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
@@ -155,6 +191,29 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                   {oderByLine}
                   {skipLine}
                   {takeLine}";
+    }
+    private string GenerateSqlForGetColumnsDataType(ArtSavedCustomReport report, string dbType)
+    {
+
+        string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
+
+        List<string> Columns = new List<string>() { "COLUMN_NAME", "DATA_TYPE" };
+
+        var TableName = dbType == DbTypes.SqlServer ? "INFORMATION_SCHEMA.COLUMNS" : "";
+
+        var leftSide = dbType == DbTypes.SqlServer ? "TABLE_NAME" : "";
+        var rightSide = dbType == DbTypes.SqlServer ? $"'{report.Table.Split('.')[1]}'" : "";
+
+        var selectLine =  $"SELECT {string.Join(",", Columns.Select(x => x))}";
+        
+        var fromLine = $@"FROM {TableName}";
+
+        var whereLine = $@"{leftSide} = {rightSide}";
+
+        whereLine = string.IsNullOrEmpty(whereLine) ? whereLine : $"WHERE {whereLine}";
+        return $@"{selectLine}
+                  {fromLine}
+                  {whereLine}";
     }
 
     private string GenerateWhere(Filter filter, string dbType, IEnumerable<ArtSavedReportsColumns> columns)
