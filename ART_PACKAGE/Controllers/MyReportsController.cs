@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Security.Claims;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services.CustomReport;
@@ -97,7 +98,7 @@ namespace ART_PACKAGE.Controllers
 
         public override async Task<IActionResult> GetData(GridRequest request)
         {
-            baseCondition = x => x.UserId.Contains(User.Identity.Name);
+            baseCondition = x => x.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier));
             includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
             {
                 x => x.Users,

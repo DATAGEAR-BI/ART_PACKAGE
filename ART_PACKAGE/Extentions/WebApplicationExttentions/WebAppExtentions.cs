@@ -134,9 +134,9 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 
                 var allRoles = roleManager.Roles.Select(r => r.Name).ToList();
                 var adminUser = await userManager.Users
-                    .FirstOrDefaultAsync(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM");
+                    .FirstOrDefaultAsync(u => u.NormalizedEmail == app.Configuration["AdminUser"]);
 
-            if (adminUser == null || modulesNameSpaces == null || modulesNameSpaces.Count == 0)
+            if ( modulesNameSpaces == null || modulesNameSpaces.Count == 0)
                 return;
 
             var modulesRolesToAdd = currentModuleTypes.Except(allRoles).ToList();
@@ -146,7 +146,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     var roleToAdd = new IdentityRole(role);
                     await roleManager.CreateAsync(roleToAdd);
                 }
-
+            if (adminUser != null )
                 await userManager.AddToRolesAsync(adminUser, allRoles.Union(modulesRolesToAdd));
             
         }

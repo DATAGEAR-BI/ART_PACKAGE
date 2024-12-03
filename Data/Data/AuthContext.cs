@@ -15,10 +15,8 @@ public class AuthContext : IdentityDbContext<AppUser>
     public virtual DbSet<UserReport> UserReports { get; set; } = null!;
 
 
-
-
     public AuthContext(DbContextOptions<AuthContext> options)
-        : base(options)
+       : base(options)
     {
     }
 
@@ -82,6 +80,5 @@ public class AuthContext : IdentityDbContext<AppUser>
         modelCreatingStrategy.OnModelCreating(modelBuilder);
 
     }
-
 
 }

@@ -122,11 +122,13 @@ var serviceProvider = builder.Services.BuildServiceProvider();
 var _recurringService = serviceProvider.GetRequiredService<IRecurringJobManager>();
 var csvJobs = serviceProvider.GetRequiredService<CSVJobs>();
 _recurringService.AddOrUpdate("clean-csv-directory", () =>
-    csvJobs.CleanDirectory(), $"0 0 * * *");
+    csvJobs.CleanDirectory("CSV"), $"0 0 * * *");
+_recurringService.AddOrUpdate("clean-pdf-directory", () =>
+    csvJobs.CleanDirectory("PDF"), $"0 0 * * *");
 
 WebApplication app = builder.Build();
 //app.ApplyModulesMigrations();
-//app.SeedModuleRoles();
+app.SeedModuleRoles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -144,7 +146,7 @@ app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
-app.MapHub<LicenseHub>("/LicHub");
+//app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
 app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -155,7 +156,7 @@ namespace ART_PACKAGE.Controllers
 
             //AppUser currentUser = await GetUser();
 
-            if (!report.UserId.Contains(User.Identity.Name))
+            if (!report.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Forbid();
 
             ViewBag.id = reportId;
