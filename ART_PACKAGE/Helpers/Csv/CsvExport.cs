@@ -158,7 +158,7 @@ namespace ART_PACKAGE.Helpers.Csv
 
         }
 
-        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber,string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
+        public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>
@@ -172,7 +172,7 @@ namespace ART_PACKAGE.Helpers.Csv
                 int total = dataRes.total;
                 return ExportToFolder(data, exportRequest.IncludedColumns, dataRes.total, folderPath, fileName, exportRequest.DataReq.Filter, fileNumber);
             }
-        }
+}
         public bool ExportData<TRepo, TContext, TModel>(ExportRequest exportRequest, string folderPath, string fileName, int fileNumber, string reportGUID, string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
@@ -298,7 +298,93 @@ namespace ART_PACKAGE.Helpers.Csv
 
             }
         }
+        private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, string folderPath, string fileName, Filter filters, int fileNumber = 1)
+        {
 
+            CsvConfiguration config = new(CultureInfo.CurrentCulture)
+            {
+                IgnoreReferences = true,
+            };
+            using MemoryStream stream = new();
+            using StreamWriter sw = new(stream, new UTF8Encoding(true));
+            using CsvWriter cw = new(sw, config);
+
+            ClassMap mapperInstance = new CsvClassMapFactory(inculdedColumns).CreateInstance<TModel>(_reportConfigService);
+
+            cw.Context.RegisterClassMap(mapperInstance);
+            cw.WriteFilters<TModel>(filters);
+            cw.WriteHeader<TModel>();
+            cw.NextRecord();
+
+
+            if (!data.Any())
+                OnProgressChanged(0, fileNumber);
+            int index = 0;
+            int datacount = data.Count();
+            float progress = 0;
+
+            foreach (TModel item in data)
+            {
+
+                //_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+                cw.WriteRecord(item);
+                cw.NextRecord();
+                //d_logger.LogCritical("csv debug " + DateTime.Now.ToString());
+
+                index++; // Increment the index for each item
+                if (dataCount > 100)
+                {
+
+                    if (index % 100 == 0 || index == datacount) // Also check progress at the last item
+                    {
+
+                        //progress = (float)(index / (float)total * 100);
+                        int recordsDone = index + 1;
+                        lock (_locker)
+                        {
+                            OnProgressChanged(recordsDone, fileNumber);
+                        }
+                    }
+
+                }
+                else
+                {
+                    int recordsDone = index + 1;
+                    lock (_locker)
+                    {
+                        OnProgressChanged(recordsDone, fileNumber);
+                    }
+                }
+
+            }
+
+
+
+            cw.Flush();
+            sw.Flush();
+            stream.Flush();
+
+            // Reset the position of the MemoryStream to the beginning
+            stream.Position = 0;
+
+
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, $"{fileNumber}.{fileName}");
+            try
+            {
+                File.WriteAllBytes(filePath, stream.ToArray());
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("some thing wrong happend while saving the file : {err}", ex.Message);
+                return false;
+
+            }
+        }
         private bool ExportToFolder<TModel>(IQueryable<TModel> data, List<string> inculdedColumns, int dataCount, Dictionary<string, string?> dataTypeColumns, string dbType, string folderPath, string fileName, Filter filters, int fileNumber = 1)
         {
 
