@@ -1272,7 +1272,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NAME");
 
                 entity.Property(e => e.AlertedEntityNumber)
-                    .HasMaxLength(50)
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.AlertsCntSum).HasColumnName("ALERTS_CNT_SUM");
@@ -1281,9 +1280,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .HasColumnName("BRANCH_NAME");
 
-                entity.Property(e => e.OwnerUserid)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("OWNER_USERID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.QueueCode)
                     .HasMaxLength(50)
@@ -11020,7 +11019,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ASSSIGNED_TIME");
 
                 entity.Property(e => e.CaseCurrentRate)
-                    .HasMaxLength(1)
+                    .HasMaxLength(7)
                     .IsUnicode(false)
                     .HasColumnName("CASE_CURRENT_RATE");
 
@@ -11040,7 +11039,7 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Casetargetrate)
-                    .HasMaxLength(1)
+                    .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("CASE_TARGET_RATE");
 
@@ -11725,6 +11724,30 @@ namespace Data.ModelCreatingStrategies
                      .HasMaxLength(35)
                     .IsUnicode(false)
                     .HasColumnName("City_name")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtDgAmlRiskScoreFilter>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_RISK_SCORE_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.RiskScore)
+                     .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("RISK_SCORE")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtDgAmlAlertedEntityLevelFilter>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_ALERTED_ENTITY_LEVEL_FILTER", "ART_DB");
+
+                entity.Property(e => e.AlertedEntityLevel)
+                     .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("ALERTED_ENTITY_LEVEL")
                     .UseCollation("Arabic_CI_AI");
             });
         }

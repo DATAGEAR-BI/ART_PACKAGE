@@ -28,6 +28,18 @@ namespace ART_PACKAGE.Helpers.DropDown
 
             return distinct_value;
         }
+        public List<SelectItem> GetAlertedEntityLevelForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlAlertedEntityLevelFilters.Where(x => x.AlertedEntityLevel != null && x.AlertedEntityLevel != "").Select(x => x.AlertedEntityLevel).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetRiskScoreDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlRiskScoreFilters.Where(x => x.RiskScore != null && x.RiskScore != "").Select(x => x.RiskScore).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
         public List<SelectItem> GetCustomerStatusForDGAMLDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerStatusFilterTbs.Where(x => x.CustomerStatus != null && x.CustomerStatus != "").Select(x => x.CustomerStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();

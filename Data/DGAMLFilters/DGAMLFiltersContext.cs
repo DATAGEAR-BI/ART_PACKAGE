@@ -26,6 +26,8 @@ namespace Data.DGAMLFilters
         public virtual DbSet<ArtCustomerOccupationFilterTb> ArtCustomerOccupationFilterTbs { get; set; } = null!;
         public virtual DbSet<ArtCustomerStatusFilterTb> ArtCustomerStatusFilterTbs { get; set; } = null!;
         public virtual DbSet<ArtCustomerCityFilterTb> ArtCustomerCityFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlRiskScoreFilter> ArtDgAmlRiskScoreFilters { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlAlertedEntityLevelFilter> ArtDgAmlAlertedEntityLevelFilters { get; set; } = null!;
 
 
 

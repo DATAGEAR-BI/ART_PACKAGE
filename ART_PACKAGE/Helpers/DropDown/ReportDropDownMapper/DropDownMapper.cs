@@ -61,6 +61,13 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Maker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"Checker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
+                var value when value == nameof(artdgamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"RiskScore".ToLower(),_dropDown.GetRiskScoreDropDown() },
+                    {"AlertedEntityLevel".ToLower(),_dropDown.GetAlertedEntityLevelForDGAMLDropDown() },
+                    {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                },
                 var value when value == nameof(artdgamlcustomerdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CustomerType".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
@@ -545,21 +552,6 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"NonProfitOrgInd".ToLower(),new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
                     {"PoliticallyExposedPersonInd".ToLower(),new List<SelectItem>(){ new SelectItem { text = "Y", value = "Y" } ,new SelectItem { text = "N", value = "N" }}.ToList() },
 
-                },
-
-                nameof(DGAMLTriageController) => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"BranchName".ToLower()         ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName)                   .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"RiskScore".ToLower()          ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore)                    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"OwnerUserid".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid)                  .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          },
-                    {"AlertedEntityLevel".ToLower()        ,artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel)    .Distinct()     .Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()          }
-                },
-                var value when value == nameof(artdgamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
-                 {
-                    {"BranchName".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.BranchName).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
-                    {"RiskScore".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.RiskScore).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
-                    {"OwnerUserid".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.OwnerUserid).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()},
-                    {"AlertedEntityLevel".ToLower(),artDgaml_.ArtDGAMLTriageViews.Select(x=>x.AlertedEntityLevel).Distinct().Where(x=> x != null).Select(x => new SelectItem { text = x, value = x }).ToList()}
                 },
                 var value when value == nameof(ArtSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

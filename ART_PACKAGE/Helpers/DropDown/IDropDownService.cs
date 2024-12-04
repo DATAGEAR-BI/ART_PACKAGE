@@ -139,6 +139,8 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCustomerCityNameForDGAMLDropDown();
 
         public List<SelectItem> GetCountryNameDropDown();
+        public List<SelectItem> GetRiskScoreDropDown();
+        public List<SelectItem> GetAlertedEntityLevelForDGAMLDropDown();
         //
 
 
