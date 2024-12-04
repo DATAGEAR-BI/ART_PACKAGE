@@ -14,8 +14,8 @@ namespace Data.Data.CRP
         public string? ActionUser { get; set; }
         public string? CustomerName { get; set; }
         public string? CustomerNumber { get; set; }
-        public string CaseCurrentRate { get; set; } = null!;
-        public string Casetargetrate { get; set; } = null!;
+        public string? CaseCurrentRate { get; set; } 
+        public string? Casetargetrate { get; set; } 
         public string? Action { get; set; }
         public DateTime? ReleasedDate { get; set; }
         public int? DurationsInSeconds { get; set; }

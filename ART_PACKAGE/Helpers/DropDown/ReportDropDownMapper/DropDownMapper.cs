@@ -46,6 +46,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         {
             List<SelectItem> pipList = new() { new SelectItem { text = "Y", value = "Y" }, new SelectItem { text = "N", value = "N" } };
             List<SelectItem> martialStatusList = new() { new SelectItem { text = "S", value = "S" }, new SelectItem { text = "M", value = "M" } };
+            List<SelectItem> priorityList = new() { new SelectItem { text = "LOW", value = "LOW" }, new SelectItem { text = "MEDIUM", value = "MEDIUM" }, new SelectItem { text = "HIGH", value = "HIGH" } };
             List<SelectItem> actionList = new() { new SelectItem { text = "Add", value = "Add" }, new SelectItem { text = "Update", value = "Update" }, new SelectItem { text = "Delete", value = "Delete" } };
             Dictionary<string, List<SelectItem>>? ftiReportDropDown = GetFtiDropDowns(controller);
             if (ftiReportDropDown is not null)
@@ -136,12 +137,16 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"CaseType".ToLower(),_dropDown.GetCrpCaseTypeFilter() },
                     {"CreateUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"ActionUser".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"CaseCurrentRate".ToLower(),priorityList },
+                    {"Casetargetrate".ToLower(),priorityList },
                 },
                 var value when value == nameof(ArtCrpSystemPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CaseStatus".ToLower(),_dropDown.GetCrpCaseStatusFilter() },
                     {"CaseType".ToLower(),_dropDown.GetCrpCaseTypeFilter() },
                     {"CreateUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"CaseCurrentRate".ToLower(),priorityList },
+                    {"Casetargetrate".ToLower(),priorityList },
                 },
 
                 var value when value == nameof(artamlalertdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>

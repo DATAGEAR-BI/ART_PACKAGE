@@ -10883,60 +10883,60 @@ namespace Data.ModelCreatingStrategies
 
         public void OnCRPModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ArtCrpCase>(entity =>
-            {
-                entity.HasNoKey();
+            //modelBuilder.Entity<ArtCrpCase>(entity =>
+            //{
+            //    entity.HasNoKey();
 
-                entity.ToView("ART_CRP_CASES", "ART_DB");
+            //    entity.ToView("ART_CRP_CASES", "ART_DB");
 
-                entity.Property(e => e.CaseId)
-                    .HasMaxLength(64)
-                    .HasColumnName("case_id")
-                    .UseCollation("Arabic_100_CI_AI");
+            //    entity.Property(e => e.CaseId)
+            //        .HasMaxLength(64)
+            //        .HasColumnName("case_id")
+            //        .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.CaseRk)
-                    .HasColumnType("numeric(10, 0)")
-                    .HasColumnName("case_rk");
+            //    entity.Property(e => e.CaseRk)
+            //        .HasColumnType("numeric(10, 0)")
+            //        .HasColumnName("case_rk");
 
-                entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
-                    .HasColumnName("Case_Status")
-                    .UseCollation("Arabic_100_CI_AI");
+            //    entity.Property(e => e.CaseStatus)
+            //        .HasMaxLength(4000)
+            //        .HasColumnName("Case_Status")
+            //        .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.CloseDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Close_Date");
+            //    entity.Property(e => e.CloseDate)
+            //        .HasColumnType("datetime")
+            //        .HasColumnName("Close_Date");
 
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Create_Date");
+            //    entity.Property(e => e.CreateDate)
+            //        .HasColumnType("datetime")
+            //        .HasColumnName("Create_Date");
 
-                entity.Property(e => e.LastRiskAssessmentDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("last_risk_assessment_date");
+            //    entity.Property(e => e.LastRiskAssessmentDate)
+            //        .HasColumnType("datetime")
+            //        .HasColumnName("last_risk_assessment_date");
 
-                entity.Property(e => e.PartyName)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("party_name")
-                    .UseCollation("Arabic_CI_AI");
+            //    entity.Property(e => e.PartyName)
+            //        .HasMaxLength(200)
+            //        .IsUnicode(false)
+            //        .HasColumnName("party_name")
+            //        .UseCollation("Arabic_CI_AI");
 
-                entity.Property(e => e.PartyNumber)
-                    .HasMaxLength(100)
-                    .HasColumnName("Party_Number")
-                    .UseCollation("Arabic_100_CI_AI");
+            //    entity.Property(e => e.PartyNumber)
+            //        .HasMaxLength(100)
+            //        .HasColumnName("Party_Number")
+            //        .UseCollation("Arabic_100_CI_AI");
 
-                entity.Property(e => e.PartyTypeDesc)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("party_type_desc")
-                    .UseCollation("Arabic_CI_AI");
+            //    entity.Property(e => e.PartyTypeDesc)
+            //        .HasMaxLength(20)
+            //        .IsUnicode(false)
+            //        .HasColumnName("party_type_desc")
+            //        .UseCollation("Arabic_CI_AI");
 
-                entity.Property(e => e.RiskClassification)
-                    .HasMaxLength(100)
-                    .HasColumnName("risk_classification")
-                    .UseCollation("Arabic_CI_AI");
-            });
+            //    entity.Property(e => e.RiskClassification)
+            //        .HasMaxLength(100)
+            //        .HasColumnName("risk_classification")
+            //        .UseCollation("Arabic_CI_AI");
+            //});
             modelBuilder.Entity<ArtCrpSystemPerformance>(entity =>
             {
                 entity.HasNoKey();
@@ -10944,7 +10944,7 @@ namespace Data.ModelCreatingStrategies
                 entity.ToView("ART_CRP_SYSTEM_PERFORMANCE", "ART_DB");
 
                 entity.Property(e => e.CaseCurrentRate)
-                    .HasMaxLength(1)
+                    .HasMaxLength(7)
                     .IsUnicode(false)
                     .HasColumnName("CASE_CURRENT_RATE");
 
@@ -10964,9 +10964,9 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.Casetargetrate)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("CASE_TARGET_RATE");
+                    .HasMaxLength(4000)
+                    .HasColumnName("CASE_TARGET_RATE")
+                    .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -10984,7 +10984,6 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.CustomerNumber)
                     .HasMaxLength(4000)
-                    .IsUnicode(false)
                     .HasColumnName("CUSTOMER_NUMBER")
                     .UseCollation("Arabic_100_CI_AI");
 
