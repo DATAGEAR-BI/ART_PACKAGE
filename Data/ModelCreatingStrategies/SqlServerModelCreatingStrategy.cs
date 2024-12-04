@@ -10952,7 +10952,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.Casetargetrate)
                     .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasColumnName("CASETARGETRATE");
+                    .HasColumnName("CASE_TARGET_RATE");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
@@ -11029,7 +11029,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.Casetargetrate)
                     .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasColumnName("CASETARGETRATE");
+                    .HasColumnName("CASE_TARGET_RATE");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnType("datetime")
