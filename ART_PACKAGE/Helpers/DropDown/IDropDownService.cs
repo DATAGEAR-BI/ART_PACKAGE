@@ -118,9 +118,29 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCaseTypeEcmFilter();
         public List<SelectItem> GetCaseStatusEcmFilter();
         public List<SelectItem> GetDisplayNameForUserManagement();
+        public List<SelectItem> GetNameForUserManagement();
         public List<SelectItem> GetActionEcmFilter();
         public List<SelectItem> GetActionNameSanctionSensitivityFilter();
         public List<SelectItem> GetCategorySanctionSensitivityFilter();
+        public List<SelectItem> GetActionForDGAMLDropDown();
+        public List<SelectItem> GetAlertStatusForDGAMLDropDown();
+        public List<SelectItem> GetCustTypeDescForDGAMLDropDown();
+        public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown();
+        public List<SelectItem> GetCloseUserNameForDGAMLDropDown();
+        public List<SelectItem> GetCasePriorityForDGAMLDropDown();
+        public List<SelectItem> GetCaseStatusForDGAMLDropDown();
+        public List<SelectItem> GetCaseCategoryForDGAMLDropDown();
+        public List<SelectItem> GetEntityLevelForDGAMLDropDown();
+        public List<SelectItem> GetCustomerIdentificationTypeForDGAMLDropDown();
+        public List<SelectItem> GetCustomerIndustryForDGAMLDropDown();
+        public List<SelectItem> GetCustomerOccupationForDGAMLDropDown();
+        public List<SelectItem> GetCustomerRiskClassificationForDGAMLDropDown();
+        public List<SelectItem> GetCustomerStatusForDGAMLDropDown();
+        public List<SelectItem> GetCustomerCityNameForDGAMLDropDown();
+
+        public List<SelectItem> GetCountryNameDropDown();
+        public List<SelectItem> GetRiskScoreDropDown();
+        public List<SelectItem> GetAlertedEntityLevelForDGAMLDropDown();
         //
 
 

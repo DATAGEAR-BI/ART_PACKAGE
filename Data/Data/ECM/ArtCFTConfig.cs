@@ -3,8 +3,8 @@
     public partial class ArtCFTConfig
     {
 
-        public string CaseId { get; set; }
-        public string Maker { get; set; }
+        public string CaseId { get; set; } = null!;
+        public string? Maker { get; set; }
         public DateTime MakerDate { get; set; }
         public string? Checker { get; set; }
         public DateTime? CheckerDate { get; set; }

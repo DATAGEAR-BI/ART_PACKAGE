@@ -17,7 +17,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "Art Scenario History";
+            ReportDescription = "Presents the art scenario history details";
 
 
 

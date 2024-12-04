@@ -13,8 +13,8 @@ namespace Data.Data.CRP
         public DateTime? EcmLastStatusDate { get; set; }
         public string? CustomerName { get; set; }
         public string? CustomerNumber { get; set; }
-        public string CaseCurrentRate { get; set; } = null!;
-        public string Casetargetrate { get; set; } = null!;
+        public string? CaseCurrentRate { get; set; }
+        public string? Casetargetrate { get; set; } 
         public int? DurationsInSeconds { get; set; }
         public int? DurationsInMinutes { get; set; }
         public int? DurationsInHours { get; set; }

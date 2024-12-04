@@ -12,6 +12,8 @@ using Data.GOAML;
 using Data.TIZONE2;
 using Data.DGCRP;
 using Data.DGECMFilters;
+using Data.DGAMLFilters;
+using Data.DGAMLAdmin;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -33,6 +35,8 @@ namespace ART_PACKAGE.Helpers.DBService
         public SasAmlContext SasAML { get; }
         public DGCRPContext DGCRP { get; }
         public DGECMFiltersContext DGECMFilters { get; }
+        public DGAMLFiltersContext DGAMLFilters { get; }
+        public DGAMLAdminContext DGAMLAdmin { get; }
 
 
     }

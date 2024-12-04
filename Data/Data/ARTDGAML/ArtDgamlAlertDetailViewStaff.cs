@@ -6,7 +6,7 @@ namespace Data.Data.ARTDGAML
     public partial class ArtDgamlAlertDetailViewStaff
     {
         public decimal AlarmId { get; set; }
-        public string AlertedEntityNumber { get; set; } = null!;
+        public int? AlertedEntityNumber { get; set; }
         public string? AlertedEntityName { get; set; }
         public string? CustTypeDesc { get; set; }
         public string AlertDescription { get; set; } = null!;
@@ -22,7 +22,7 @@ namespace Data.Data.ARTDGAML
         public string? AlertStatus { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime RunDate { get; set; }
-        public string? OwnerUid { get; set; }
+        public string? OwnerUserName { get; set; }
         public string? PoliticallyExposedPersonInd { get; set; }
         public string? EmpInd { get; set; }
         public string? ClosedUserId { get; set; }

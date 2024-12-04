@@ -26,7 +26,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 {"AlertStatus" , new GridColumnConfiguration { DisplayName = "Alert Status"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"RunDate" , new GridColumnConfiguration { DisplayName = "Run Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-                {"OwnerUid" , new GridColumnConfiguration { DisplayName = "Owner Uid"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+                {"OwnerUserName" , new GridColumnConfiguration { DisplayName = "Owner User Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"PoliticallyExposedPersonInd" , new GridColumnConfiguration { DisplayName = "Politically Exposed Person Ind"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"EmpInd" , new GridColumnConfiguration { DisplayName = "Emp Ind"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"ClosedUserId" , new GridColumnConfiguration { DisplayName = "Closed User ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },

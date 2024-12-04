@@ -394,7 +394,6 @@ class Grid extends HTMLElement {
             .then((d) => {
                 this.total = d.total;
                 this.reportName = d.reportname;
-
                 //if (isHierarchy == "true") {
                 //    groupList = d.grouplist;
                 //    valList = d.vallist;
@@ -479,8 +478,9 @@ class Grid extends HTMLElement {
                 this.MultiSelectWithMenu.push(column);
             }
 
+            
 
-
+            console.log(column);
 
             if (this.isDateField[column.name])
                 filter = columnFilters.dateFilter();
@@ -496,8 +496,9 @@ class Grid extends HTMLElement {
             var columnF = column.filter;
             var hasFilters = columnF && columnF != ""
 
-            if (hasFilters)
+            if (hasFilters) {
                 filter = columnFilters[columnF]();
+            }
 
             if (!column.isNullable) {
                 if (this.isNumberField[column.name]) {
@@ -527,8 +528,14 @@ class Grid extends HTMLElement {
                 }
             }
 
-
-
+            if (column.name == "ActionDetail" && column.template =="actionDetailTable") {
+                filter["operators"] = {
+                    string: {
+                        contains: "Contains",
+                        doesnotcontain: "Does Not Contain",
+                    },
+                };
+            }
 
             return {
                 field: column.name,

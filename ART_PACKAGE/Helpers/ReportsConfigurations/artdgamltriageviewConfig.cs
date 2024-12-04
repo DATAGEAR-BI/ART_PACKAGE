@@ -14,7 +14,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"BranchName" , new GridColumnConfiguration { DisplayName = "Branch Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"RiskScore" , new GridColumnConfiguration { DisplayName = "Risk Score"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"QueueCode" , new GridColumnConfiguration { DisplayName = "Queue Code"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"OwnerUserid" , new GridColumnConfiguration { DisplayName = "Owner User ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"OwnerUserName" , new GridColumnConfiguration { DisplayName = "Owner User Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AlertedEntityLevel" , new GridColumnConfiguration { DisplayName = "Alerted Entity Level"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AggregateAmt" , new GridColumnConfiguration { DisplayName = "Aggregate Amount"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AgeOldestAlert" , new GridColumnConfiguration { DisplayName = "Age Oldest Alert"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
@@ -22,7 +22,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "Triage Report";
+            ReportDescription = "Presents each entity with the related active alerts count";
 
 
 

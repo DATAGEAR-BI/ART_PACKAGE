@@ -325,6 +325,7 @@ public static class FilterExtensions
             MethodInfo? method = typeof(FilterExtensions)
                 ?.GetMethod(nameof(FilterExtensions.ToObject))
                 ?.MakeGenericMethod(fieldType);
+
             @const = method?.Invoke(null, new object[] { (JsonElement)value });
             return Expression.Constant(ConvertToNullableType(@const, fieldType), fieldType);
         }

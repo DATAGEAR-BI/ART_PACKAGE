@@ -26,7 +26,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours"}},
                     { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days"}}
             };
-            SkipList = new List<string> { "CaseCurrentRate", "Casetargetrate" };
+            SkipList = new List<string> {  };
+            ReportTitle = "CRP User Performance Details Report";
         }
     }
 }

@@ -2388,9 +2388,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .HasColumnName("BRANCH_NAME");
 
-                entity.Property(e => e.OwnerUserid)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("OWNER_USERID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.QueueCode)
                     .HasMaxLength(50)
@@ -18749,6 +18749,16 @@ namespace Data.ModelCreatingStrategies
         }
 
         public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDGAMLFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDGAMLAdminModelCreating(ModelBuilder modelBuilder)
         {
             throw new NotImplementedException();
         }

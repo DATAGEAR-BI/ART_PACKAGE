@@ -17,6 +17,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail", Template = "actionDetailTable"}},
 
             };
+            ReportTitle = "CFT Configs Report";
 
         }
     }
