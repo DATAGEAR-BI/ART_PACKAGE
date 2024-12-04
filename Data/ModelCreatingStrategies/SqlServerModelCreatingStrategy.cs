@@ -1913,7 +1913,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("ALERTED_ENTITY_NAME");
 
                 entity.Property(e => e.AlertedEntityNumber)
-                    .HasMaxLength(50)
                     .HasColumnName("ALERTED_ENTITY_NUMBER");
 
                 entity.Property(e => e.BranchName)
@@ -1955,9 +1954,9 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.MoneyLaunderingRiskScore).HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
 
-                entity.Property(e => e.OwnerUid)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("Owner_UID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.PoliticallyExposedPersonInd)
                     .HasMaxLength(1)

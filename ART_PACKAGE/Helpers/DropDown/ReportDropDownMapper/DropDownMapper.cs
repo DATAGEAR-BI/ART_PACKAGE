@@ -59,6 +59,21 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Maker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"Checker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
+                var value when value == nameof(ArtDgamlAlertDetailViewStaffConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"CustTypeDesc".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                    {"AlertType".ToLower(),_dropDown.GetDGAlarmTypeDropDown() },
+                    {"AlertCategory".ToLower(),_dropDown.GetDGAlarmCategoryDropDown() },
+                    {"AlertSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown() },
+                    {"AlertStatus".ToLower(),_dropDown.GetAlertStatusForDGAMLDropDown() },
+                    {"MoneyLaunderingRiskScore".ToLower(),_dropDown.GetMoneyLaunderingScoreForDGAMLDropDown() },
+                    {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"PoliticallyExposedPersonInd".ToLower(),pipList },
+                    {"ClosedUserId".ToLower(),_dropDown.GetNameForUserManagement() },
+                    {"CloseUserName".ToLower(),_dropDown.GetCloseUserNameForDGAMLDropDown() },
+                },
                 var value when value == nameof(ArtDgamlAlertDetailViewNonStaffConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CustTypeDesc".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
@@ -71,7 +86,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"MoneyLaunderingRiskScore".ToLower(),_dropDown.GetMoneyLaunderingScoreForDGAMLDropDown() },
                     {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"PoliticallyExposedPersonInd".ToLower(),pipList },
-                    {"ClosedUserId".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"ClosedUserId".ToLower(),_dropDown.GetNameForUserManagement() },
                     {"CloseUserName".ToLower(),_dropDown.GetCloseUserNameForDGAMLDropDown() },
                 },
                 var value when value == nameof(ArtAmlUserPerformanceConfig).ToLower() => new Dictionary<string, List<SelectItem>>

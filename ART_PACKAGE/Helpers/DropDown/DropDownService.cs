@@ -620,6 +620,11 @@ namespace ART_PACKAGE.Helpers.DropDown
             List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.DisplayName)).Distinct().Select(x => x.DisplayName).Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
+        public List<SelectItem> GetNameForUserManagement()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.Name)).Distinct().Select(x => x.Name).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
 
         public List<SelectItem> GetRoleNameDropDown()
         {
