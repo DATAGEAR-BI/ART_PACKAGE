@@ -36,7 +36,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"ScorDependAttribute" , new GridColumnConfiguration { DisplayName = "Score Depend Attribute"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
-
+            ReportTitle = "Art Scenario Admin";
+            ReportDescription = "Presents the art scenario admin details";
 
 
 

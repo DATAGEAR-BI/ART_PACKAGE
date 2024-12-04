@@ -22,7 +22,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "Triage Report";
+            ReportDescription = "Presents each entity with the related active alerts count";
 
 
 

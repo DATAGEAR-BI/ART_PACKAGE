@@ -24,7 +24,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
             ReportTitle = "Cases Details Report";
-
+            ReportDescription = "Presents the cases details in the table below";
 
 
 

@@ -29,7 +29,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"CustSinceDate" , new GridColumnConfiguration { DisplayName = "Customer Since Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } } };
 
 
-
+            ReportTitle = "Art Suspect Details";
+            ReportDescription = "Presents the art suspect details";
 
 
 
