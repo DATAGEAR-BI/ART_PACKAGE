@@ -1120,7 +1120,6 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("customer_name");
 
                 entity.Property(e => e.CustomerNumber)
-                    .HasMaxLength(50)
                     .HasColumnName("customer_number");
 
                 entity.Property(e => e.CustomerSinceDate)
@@ -1360,9 +1359,7 @@ namespace Data.ModelCreatingStrategies
                     .UseCollation("Arabic_100_CI_AI");
 
                 entity.Property(e => e.EntityNumber)
-                    .HasMaxLength(1000)
-                    .HasColumnName("ENTITY_NUMBER")
-                    .UseCollation("Arabic_100_CI_AI");
+                    .HasColumnName("ENTITY_NUMBER");
             });
 
             modelBuilder.Entity<ArtExternalCustomerDetailView>(entity =>
@@ -11595,6 +11592,54 @@ namespace Data.ModelCreatingStrategies
 
                 entity.Property(e => e.MoneyLaunderingRiskScore)
                     .HasColumnName("MONEY_LAUNDERING_RISK_SCORE");
+            });
+            modelBuilder.Entity<ArtDgAmlCasePriorityFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_CASE_PRIORITY_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CasePriority)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_PRIORITY")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtDgAmlCaseStatusFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_CASE_STATUS_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtDgAmlCaseCategoryFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_CASE_CATEGORY_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CaseCategory)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_CATEGORY")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtDgAmlEntityLevelFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_DGAML_ENTITY_LEVEL_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.EntityLevel)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("ENTITY_LEVEL")
+                    .UseCollation("Arabic_CI_AI");
             });
         }
 

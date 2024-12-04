@@ -127,6 +127,10 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCustTypeDescForDGAMLDropDown();
         public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown();
         public List<SelectItem> GetCloseUserNameForDGAMLDropDown();
+        public List<SelectItem> GetCasePriorityForDGAMLDropDown();
+        public List<SelectItem> GetCaseStatusForDGAMLDropDown();
+        public List<SelectItem> GetCaseCategoryForDGAMLDropDown();
+        public List<SelectItem> GetEntityLevelForDGAMLDropDown();
         //
 
 

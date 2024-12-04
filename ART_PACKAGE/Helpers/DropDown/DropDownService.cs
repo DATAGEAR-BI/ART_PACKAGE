@@ -1,5 +1,6 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
+using Castle.Core.Internal;
 using Data.Services.Grid;
 using Microsoft.IdentityModel.Tokens;
 
@@ -30,6 +31,30 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCasePriorityForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlCasePriorityFilterTbs.Select(x => x.CasePriority).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCaseStatusForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCaseCategoryForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlCaseCategoryFilterTbs.Select(x => x.CaseCategory).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetEntityLevelForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlEntityLevelFilterTbs.Select(x => x.EntityLevel).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }

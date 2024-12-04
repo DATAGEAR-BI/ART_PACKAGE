@@ -16,6 +16,10 @@ namespace Data.DGAMLFilters
         }
 
         public virtual DbSet<ArtMoneyLaunderingRiskScoreFilterTb> ArtMoneyLaunderingRiskScoreFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlCasePriorityFilterTb> ArtDgAmlCasePriorityFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlCaseStatusFilterTb> ArtDgAmlCaseStatusFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlCaseCategoryFilterTb> ArtDgAmlCaseCategoryFilterTbs { get; set; } = null!;
+        public virtual DbSet<ArtDgAmlEntityLevelFilterTb> ArtDgAmlEntityLevelFilterTbs { get; set; } = null!;
 
 
 

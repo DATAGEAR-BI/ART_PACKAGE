@@ -7,7 +7,7 @@ namespace Data.Data.ARTDGAML
     {
         public string CaseId { get; set; } = null!;
         public string? EntityName { get; set; }
-        public string? EntityNumber { get; set; }
+        public int? EntityNumber { get; set; }
         public string? BranchName { get; set; }
         public string? CasePriority { get; set; }
         public string? CaseStatusCode { get; set; }
