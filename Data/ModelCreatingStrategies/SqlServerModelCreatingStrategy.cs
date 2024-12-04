@@ -2297,40 +2297,40 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("VALID_FROM_DATE");
             });
-            modelBuilder.Entity<ArtSanctionSensitivityView>(entity =>
-            {
-                entity.HasNoKey();
+            //modelBuilder.Entity<ArtSanctionSensitivityView>(entity =>
+            //{
+            //    entity.HasNoKey();
 
-                entity.ToView("ART_SANCTION_SENSITIVITY_VIEW", "ART_DB");
+            //    entity.ToView("ART_SANCTION_SENSITIVITY_VIEW", "ART_DB");
 
-                entity.Property(e => e.ActionDetails)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTION_DETAILS");
+            //    entity.Property(e => e.ActionDetails)
+            //        .HasMaxLength(255)
+            //        .IsUnicode(false)
+            //        .HasColumnName("ACTION_DETAILS");
 
-                entity.Property(e => e.ActionName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTION_NAME");
+            //    entity.Property(e => e.ActionName)
+            //        .HasMaxLength(100)
+            //        .IsUnicode(false)
+            //        .HasColumnName("ACTION_NAME");
 
-                entity.Property(e => e.Category)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("CATEGORY");
+            //    entity.Property(e => e.Category)
+            //        .HasMaxLength(100)
+            //        .IsUnicode(false)
+            //        .HasColumnName("CATEGORY");
 
-                entity.Property(e => e.Date)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DATE_");
+            //    entity.Property(e => e.Date)
+            //        .HasColumnType("datetime")
+            //        .HasColumnName("DATE_");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ID");
+            //    entity.Property(e => e.Id)
+            //        .ValueGeneratedOnAdd()
+            //        .HasColumnName("ID");
 
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("USER_NAME");
-            });
+            //    entity.Property(e => e.UserName)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false)
+            //        .HasColumnName("USER_NAME");
+            //});
             modelBuilder.Entity<ArtCaseIncidentsInfo>(entity =>
             {
                 entity.HasNoKey();
@@ -2424,7 +2424,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("X_SOURCE_NAME")
                     .UseCollation("Arabic_100_CI_AI");
             });
-            /*modelBuilder.Entity<ArtCFTConfig>(entity =>
+            modelBuilder.Entity<ArtCFTConfig>(entity =>
             {
                 entity.ToView("ART_CFT_CONFIG", "ART_DB");
                 entity.HasNoKey();
@@ -2457,7 +2457,7 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.ActionDetail)
                     .HasColumnName("Action_Detail")
                     .HasColumnType("nvarchar(max)");
-            });*/
+            });
 
             /* modelBuilder.Entity<ArtClearDetect>(entity =>
              {
