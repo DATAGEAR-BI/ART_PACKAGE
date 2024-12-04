@@ -28,6 +28,18 @@ namespace ART_PACKAGE.Helpers.DropDown
 
             return distinct_value;
         }
+        public List<SelectItem> GetCustomerStatusForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerStatusFilterTbs.Where(x => x.CustomerStatus != null && x.CustomerStatus != "").Select(x => x.CustomerStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerCityNameForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerCityFilterTbs.Where(x => x.CityName != null && x.CityName != "").Select(x => x.CityName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
         public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList();
@@ -55,6 +67,30 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetEntityLevelForDGAMLDropDown()
         {
             List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtDgAmlEntityLevelFilterTbs.Select(x => x.EntityLevel).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerIdentificationTypeForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerIdentificationTypeFilterTbs.Select(x => x.CustomerIdentificationType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerRiskClassificationForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerRiskClassificationFilterTbs.Where(x => x.CustomerRiskClassification != null).Select(x => x.CustomerRiskClassification).Distinct().Select(x => new SelectItem { text = x.Value.ToString(), value = x.Value.ToString() }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerIndustryForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerIndustryFilterTbs.Where(x => x.IndustryDesc != null && x.IndustryDesc != "").Select(x => x.IndustryDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCustomerOccupationForDGAMLDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerOccupationFilterTbs.Where(x => x.OccupationDesc != null && x.OccupationDesc != "").Select(x => x.OccupationDesc).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }
@@ -929,7 +965,8 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetCountryNameDropDown()
         {
-            throw new NotImplementedException();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CountryLkps.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
         }
 
         public List<SelectItem> GetPartyType_AlertDropDown()

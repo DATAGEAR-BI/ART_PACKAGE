@@ -23,6 +23,7 @@ namespace Data.DGAMLCORE
 
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<Branch> Branches { get; set; } = null!;
+        public virtual DbSet<CountryLkp> CountryLkps { get; set; } = null!;
 
         //public virtual DbSet<AcRoutineParameter> AcRoutineParameters { get; set; } = null!;
 

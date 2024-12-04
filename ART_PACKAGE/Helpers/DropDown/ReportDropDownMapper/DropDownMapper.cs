@@ -45,6 +45,7 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
         public Dictionary<string, List<SelectItem>>? GetDorpDownForReport(string controller)
         {
             List<SelectItem> pipList = new() { new SelectItem { text = "Y", value = "Y" }, new SelectItem { text = "N", value = "N" } };
+            List<SelectItem> martialStatusList = new() { new SelectItem { text = "S", value = "S" }, new SelectItem { text = "M", value = "M" } };
             List<SelectItem> actionList = new() { new SelectItem { text = "Add", value = "Add" }, new SelectItem { text = "Update", value = "Update" }, new SelectItem { text = "Delete", value = "Delete" } };
             Dictionary<string, List<SelectItem>>? ftiReportDropDown = GetFtiDropDowns(controller);
             if (ftiReportDropDown is not null)
@@ -62,6 +63,21 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                 var value when value == nameof(artdgamlcustomerdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"CustomerType".ToLower(),_dropDown.GetCustTypeDescForDGAMLDropDown() },
+                    {"CustomerIdentificationType".ToLower(),_dropDown.GetCustomerIdentificationTypeForDGAMLDropDown() },
+                    {"RiskClassification".ToLower(),_dropDown.GetCustomerRiskClassificationForDGAMLDropDown() },
+                    {"IndustryDesc".ToLower(),_dropDown.GetCustomerIndustryForDGAMLDropDown() },
+                    {"OccupationDesc".ToLower(),_dropDown.GetCustomerOccupationForDGAMLDropDown() },
+                    {"CitizenshipCountryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"MailingCountryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"ResidenceCountryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"StreetCountryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"CustomerStatus".ToLower(),_dropDown.GetCustomerStatusForDGAMLDropDown() },
+                    {"CityName".ToLower(),_dropDown.GetCustomerCityNameForDGAMLDropDown() },
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"PoliticallyExposedPersonInd".ToLower(),pipList },
+                    {"NonProfitOrgInd".ToLower(),pipList },
+                    {"IsEmployee".ToLower(),pipList },
+                    {"MaritalStatusDesc".ToLower(),martialStatusList },
                 },
                 var value when value == nameof(artdgamlcasedetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {

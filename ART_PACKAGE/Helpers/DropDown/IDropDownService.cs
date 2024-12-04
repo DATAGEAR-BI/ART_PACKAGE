@@ -131,6 +131,14 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCaseStatusForDGAMLDropDown();
         public List<SelectItem> GetCaseCategoryForDGAMLDropDown();
         public List<SelectItem> GetEntityLevelForDGAMLDropDown();
+        public List<SelectItem> GetCustomerIdentificationTypeForDGAMLDropDown();
+        public List<SelectItem> GetCustomerIndustryForDGAMLDropDown();
+        public List<SelectItem> GetCustomerOccupationForDGAMLDropDown();
+        public List<SelectItem> GetCustomerRiskClassificationForDGAMLDropDown();
+        public List<SelectItem> GetCustomerStatusForDGAMLDropDown();
+        public List<SelectItem> GetCustomerCityNameForDGAMLDropDown();
+
+        public List<SelectItem> GetCountryNameDropDown();
         //
 
 

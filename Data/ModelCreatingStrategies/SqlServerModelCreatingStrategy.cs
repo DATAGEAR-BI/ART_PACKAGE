@@ -9072,6 +9072,24 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .HasColumnName("State_Name");
             });
+            modelBuilder.Entity<CountryLkp>(entity =>
+            {
+                entity.HasKey(e => e.CntryKey);
+
+                entity.ToTable("Country_LKP", "DGAMLCORE");
+
+                entity.Property(e => e.CntryKey).HasColumnName("Cntry_Key");
+
+                entity.Property(e => e.CntryCd2)
+                    .HasMaxLength(50)
+                    .HasColumnName("Cntry_CD_2");
+                entity.Property(e => e.CntryCd3)
+                    .HasMaxLength(50)
+                    .HasColumnName("Cntry_CD_3");
+                entity.Property(e => e.CntryName)
+                    .HasMaxLength(100)
+                    .HasColumnName("Cntry_Name");
+            });
         }
 
         public void OnDgAMLACModelCreating(ModelBuilder modelBuilder)
@@ -11639,6 +11657,75 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(4000)
                     .IsUnicode(false)
                     .HasColumnName("ENTITY_LEVEL")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomerIdentificationTypeFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_IDENTIFICATION_TYPE_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CustomerIdentificationType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("customer_identification_type")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomerRiskClassificationFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_RISK_CLASSIFICATION_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CustomerRiskClassification)
+                    .HasColumnName("RISK_CLASSIFICATION");
+            });
+            modelBuilder.Entity<ArtCustomerIndustryFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_INDUSTRY_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.IndustryDesc)
+                     .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("industry_desc")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomerOccupationFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_OCCUPATION_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.OccupationDesc)
+                     .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("occupation_desc")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomerStatusFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_STATUS_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CustomerStatus)
+                     .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Customer_status")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCustomerCityFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CUSTOMER_CITY_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CityName)
+                     .HasMaxLength(35)
+                    .IsUnicode(false)
+                    .HasColumnName("City_name")
                     .UseCollation("Arabic_CI_AI");
             });
         }
