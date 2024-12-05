@@ -1,6 +1,6 @@
 ﻿using Data.Services.Grid;
 
-namespace ART_PACKAGE.Helpers.ReportsConfigurations.ECM
+namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
     public class ArtUserPerformanceConfig : ReportConfig
     {

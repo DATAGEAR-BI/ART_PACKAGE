@@ -36,20 +36,20 @@ namespace ART_PACKAGE.Controllers.ECM
         {
 
 
-            IEnumerable<ArtSystemPrefPerDirection> chart3Data = Enumerable.Empty<ArtSystemPrefPerDirection>().AsQueryable();
-            IEnumerable<ArtSystemPerfPerDate> chart4Data = Enumerable.Empty<ArtSystemPerfPerDate>().AsQueryable();
+/*            IEnumerable<ArtSystemPrefPerDirection> chart3Data = Enumerable.Empty<ArtSystemPrefPerDirection>().AsQueryable();
+*/            IEnumerable<ArtSystemPerfPerDate> chart4Data = Enumerable.Empty<ArtSystemPerfPerDate>().AsQueryable();
             IEnumerable<ArtSystemPrefPerStatus> chart1Data = Enumerable.Empty<ArtSystemPrefPerStatus>().AsQueryable();
             IEnumerable<ArtSystemPerfPerType> chart2data = Enumerable.Empty<ArtSystemPerfPerType>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> chart1Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
-            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
+/*            IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
+*/            IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
 
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
-                chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
+/*                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+*/                chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(SQLSERVERSPNames.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
 
             }
@@ -58,15 +58,15 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(ORACLESPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(ORACLESPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
-
+/*                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(ORACLESPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+*/
             }
             if (dbType == DbTypes.MySql)
             {
                 chart1Data = context.ExecuteProc<ArtSystemPrefPerStatus>(MYSQLSPName.ST_SYSTEM_PERF_PER_STATUS, chart1Params.ToArray());
                 chart2data = context.ExecuteProc<ArtSystemPerfPerType>(MYSQLSPName.ST_SYSTEM_PERF_PER_TYPE, chart2Params.ToArray());
-                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
-
+/*                chart3Data = context.ExecuteProc<ArtSystemPrefPerDirection>(MYSQLSPName.ST_SYSTEM_PERF_PER_DIRECTION, chart3Params.ToArray());
+*/
             }
 
             //var Data = data.CallData<StSystemCasesPerYearMonth>(para.req);
@@ -107,7 +107,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Type = ChartType.curvedline
                 });
             }*/
-            if (dbType is DbTypes.SqlServer or DbTypes.MySql)
+            /*if (dbType is DbTypes.SqlServer or DbTypes.MySql)
             {
                 _ = chartData.Add(new ChartData<ArtSystemPrefPerDirection>
                 {
@@ -122,7 +122,7 @@ namespace ART_PACKAGE.Controllers.ECM
                     Val = "TOTAL_NUMBER_OF_CASES",
                     Type = ChartType.donut
                 });
-            }
+            }*/
             return new ContentResult
             {
                 ContentType = "application/json",
