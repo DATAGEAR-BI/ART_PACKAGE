@@ -31,7 +31,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-
+            ReportTitle = "User Performance Report";
+            ReportDescription = "This report presents all sanction closed and terminated cases without the manually closed cases with the related information on user level as below";
 
 
         }
