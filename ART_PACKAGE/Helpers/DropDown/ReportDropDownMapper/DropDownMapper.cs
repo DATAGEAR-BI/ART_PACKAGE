@@ -6,7 +6,6 @@ using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.KYC;
 using ART_PACKAGE.Controllers.SASAML;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
-using ART_PACKAGE.Helpers.ReportsConfigurations.ECM;
 using Data.Data.ARTDGAML;
 using Data.Data.Audit;
 using Data.Data.FTI;
