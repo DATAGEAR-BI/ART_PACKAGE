@@ -48,7 +48,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             {
                    "CaseRk",
     "ValidFromDate",
-    "LastCommentSubject","EcmEventDesc" ,"LastStatus" , "SwiftReference " , "TransactionDirection", "TransactionType","TransactionAmount","TransactionCurrency"     };
+    "LastCommentSubject","EcmEventDesc" ,"LastStatus" , "SwiftReference" , "TransactionDirection", "TransactionType","TransactionAmount","TransactionCurrency"     };
         }
     }
 }
