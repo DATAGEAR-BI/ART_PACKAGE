@@ -30,7 +30,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "XIncidentDesc", new GridColumnConfiguration { DisplayName = "XIncident Desc"}},
             };
 
-            ReportTitle = "Case Incidents Info Report";
+            ReportTitle = "ACH Case Details Report";
             ReportDescription = "";
             SkipList = new List<string>
             {"CaseRk" };
