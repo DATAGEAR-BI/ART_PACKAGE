@@ -1784,13 +1784,21 @@ class Grid extends HTMLElement {
     }
     saveState() {
         if (this.isStoredProc) {
+            var filterEelement = document.getElementById(this.dataset.stored);
+            var rules = filterEelement.getexRules();
             let queryBuilderKey = `${this.dataset.stored}-QueryBuilderOptions`;
             if (localStorage.getItem(queryBuilderKey)) {
                 localStorage.removeItem(queryBuilderKey)
             }
-            localStorage.setItem(queryBuilderKey, JSON.stringify(this.queryBuilderRules));
+            localStorage.setItem(queryBuilderKey, JSON.stringify(rules));
         }
+
+        
         let key = `${this.gridDiv.id}-Options`;
+        if (localStorage.getItem(key)) {
+            localStorage.removeItem(key)
+        }
+
         if (this.isCustom)
             key += `-${this.dataset.reportid}`;
 
