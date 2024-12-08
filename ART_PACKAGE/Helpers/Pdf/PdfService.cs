@@ -1168,7 +1168,8 @@ namespace ART_PACKAGE.Helpers.Pdf
                             {
 
                                 document.Add(elem);
-                                document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+                                if (elementDone < totalElements - 1)
+                                    document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
                                 lock (_locker)
                                 {
                                     OnLastProgressChanged(elementDone, fileNumber);
