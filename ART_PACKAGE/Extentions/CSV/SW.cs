@@ -1,4 +1,5 @@
-﻿using ART_PACKAGE.Extentions.StringExtentions;
+﻿using ART_PACKAGE.Extentions.Filters;
+using ART_PACKAGE.Extentions.StringExtentions;
 using ART_PACKAGE.Helpers.CSVMAppers;
 using CsvHelper;
 using Data.Services.Grid;
@@ -102,7 +103,7 @@ namespace ART_PACKAGE.Extentions.CSV
 
         };
 
-        public static void WriteFilters<TModel>(this CsvWriter cw, Filter filters)
+        public static void WriteFilters<TModel>(this CsvWriter cw, Filter filters, Dictionary<string, GridColumnConfiguration>? displayNames = null)
         {
             if (filters is null ) return ;
             cw.WriteField("Table Filters");
@@ -111,7 +112,7 @@ namespace ART_PACKAGE.Extentions.CSV
             cw.WriteField("Operator");
             cw.WriteField("Value");
             cw.NextRecord();
-            foreach (var filter in filters.GetFilterTextForCsv<TModel>())
+            foreach (var filter in filters.ToList(displayNames))
             {
                 foreach (var filterGrediant in filter)
                 {

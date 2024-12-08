@@ -21,6 +21,7 @@ using iText.Kernel.Font;
 using iText.Kernel.Pdf.Canvas;
 using Data.Services.QueryBuilder;
 using ART_PACKAGE.Extentions.StringExtentions;
+using ART_PACKAGE.Extentions.Filters;
 
 namespace ART_PACKAGE.Extentions.PDF
 {
@@ -124,7 +125,7 @@ namespace ART_PACKAGE.Extentions.PDF
         /// <param name="document">The iText document to modify.</param>
         /// <param name="imagePath">The path to the watermark image.</param>
         /// <param name="opacity">The opacity of the watermark (0.0 to 1.0).</param>
-        public static Document AddWatermark(this Document document, string imagePath, float opacity = 0.2f)
+        public static Document AddWatermark(this Document document, string imagePath, float opacity = 0.1f)
         {
             var pdfDoc = document.GetPdfDocument();
             if (pdfDoc.GetNumberOfPages() < 1)
@@ -138,42 +139,25 @@ namespace ART_PACKAGE.Extentions.PDF
             float pageWidth = pageSize.GetWidth();
             float pageHeight = pageSize.GetHeight();
 
-            // Calculate margins (30% of width and height)
-            float marginLeft = pageWidth * 0.3f;
-            float marginTop = pageHeight * 0.3f;
-
-            // Calculate available width and height
-            float availableWidth = pageWidth - marginLeft * 2;
-            float availableHeight = pageHeight - marginTop * 2;
-
             // Load the image
             var imageData = ImageDataFactory.Create(imagePath);
             var image = new Image(imageData);
 
-            // Scale image to fit within the available space
-            float scaleX = availableWidth / image.GetImageWidth();
-            float scaleY = availableHeight / image.GetImageHeight();
-            float scale = Math.Min(scaleX, scaleY);
-
-            float scaledWidth = image.GetImageWidth() * scale;
-            float scaledHeight = image.GetImageHeight() * scale;
-
-            // Set position
-            float xPosition = marginLeft;
-            float yPosition = marginTop;
+            // Scale image to fill the entire page size
+            image
+                .SetOpacity(opacity)
+                .ScaleAbsolute(pageWidth, pageHeight) // Set the image size to match the page size
+                .SetFixedPosition(0, 0); // Position the image at the bottom-left corner of the page
 
             // Draw the watermark image
             var pdfCanvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
-            image
-                .SetOpacity(opacity)
-                .ScaleAbsolute(scaledWidth, scaledHeight)
-                .SetFixedPosition(xPosition, yPosition);
-
             var canvas = new Canvas(pdfCanvas, pageSize);
             canvas.Add(image);
+
             return document;
         }
-        public static Document AddQueryBuilderFilters(this Document document, List<BuilderFilter> filters)
+
+       public static Document AddQueryBuilderFilters(this Document document, List<BuilderFilter> filters)
         {
 
             if (filters == null) return document;
@@ -230,6 +214,43 @@ namespace ART_PACKAGE.Extentions.PDF
             table.AddHeaderCell(new Cell().Add(new Paragraph("Operator")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
             table.AddHeaderCell(new Cell().Add(new Paragraph("Value")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
             foreach (var filter in filters.GetFilterTextForCsv<TModel>())
+            {
+                foreach (var filterGrediant in filter)
+                {
+                    table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(filterGrediant.ToString() ?? ""))
+                              .SetTextAlignment(TextAlignment.CENTER)));
+
+                }
+            }
+            document.Add(table);
+            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+            return document;
+
+        }
+        public static Document AddFilters(this Document document, Filter filters, Dictionary<string, GridColumnConfiguration>? displayNames=null)
+        {
+
+            if (filters == null) return document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+
+            List unorderedList = new List()
+                        .SetSymbolIndent(12)           // Indent for symbols
+                        .SetListSymbol("\u2022")       // Bullet point symbol
+                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+            unorderedList.Add(new ListItem("Table Filters"));
+            document.Add(unorderedList);
+            var arabicLanguageProcessor = new ArabicLigaturizer();
+
+
+            Table table = new Table(UnitValue.CreatePercentArray(3));
+            table.SetWidth(UnitValue.CreatePercentValue(70));
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Column")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Operator")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Value")).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+            foreach (var filter in filters.ToList(displayNames))
             {
                 foreach (var filterGrediant in filter)
                 {
@@ -556,7 +577,7 @@ namespace ART_PACKAGE.Extentions.PDF
                         else
                         {
                             MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
-                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
                             object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
 
                             object? value = ConvertToNullableType(deserializedValue, propType);
@@ -581,12 +602,188 @@ namespace ART_PACKAGE.Extentions.PDF
 
 
         }
-       /* public static T ToObjectJE<T>(this JsonElement element)
-        {
-            string json = element.GetRawText();
+        public static List<List<object>> GetFilterTextForCsv(this Filter Filters)
+        {/*
+            Dictionary<string, GridColumnConfiguration> displayNames = new();
+            displayNames = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().DisplayNames : null;
+            List<List<object>> returnList = new();
+            if (Filters is null)
+            {
+                return returnList;
+            }
 
-            return JsonSerializer.Deserialize<T>(json);
-        }*/
+            string? logic = Filters.logic;
+
+            if (logic is null)
+            {
+                return returnList;
+            }
+
+
+            foreach (object? item in Filters.filters)
+            {
+                string t = JsonSerializer.Serialize(item);
+                ///JsonElement t = JsonSerializer.Serialize(item);
+                KendoFilterExtention.FilterData i = t.ToObject<KendoFilterExtention.FilterData>();
+                if (i.field == null)
+                {
+                    Filter filter = t.ToObject<Filter>();
+                    returnList.AddRange(GetFilterTextForCsv(filter));
+
+                }
+                else
+                {
+
+                    Type propType = typeof(TModel).GetProperty(i.field).PropertyType;
+                    Type? underlyingType = Nullable.GetUnderlyingType(propType);
+                    if (underlyingType != null)
+                    {
+
+                        if (underlyingType.Name == nameof(String))
+                        {
+
+
+
+
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
+                                returnList.Add(v);
+
+                            }
+                            else
+                            {
+                                string value = ((JsonElement)i.value).ToObject<string>();
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                returnList.Add(v);
+
+                            }
+                        }
+                        else if (underlyingType.Name == nameof(DateTime))
+                        {
+
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
+                                returnList.Add(v);
+                            }
+                            else
+                            {
+                                DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
+                                value = value.ToLocalTime();
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                returnList.Add(v);
+                            }
+                        }
+                        else if (underlyingType.IsEnum)
+                        {
+
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
+                                returnList.Add(v);
+                            }
+                            else
+                            {
+                                MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                                MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                                object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), underlyingType);
+
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                returnList.Add(v);
+                            }
+                        }
+                        else
+                        {
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+
+
+                            if (i.@operator.ToLower().Contains("null".ToLower()))
+                            {
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], "" };
+                                returnList.Add(v);
+
+                            }
+                            else
+                            {
+                                *//*MethodInfo? vmethod = typeof(PDF)
+                ?.GetMethod(nameof(FilterExtensions.ToObjectJE))
+                ?.MakeGenericMethod(underlyingType);
+                                var vv = vmethod?.Invoke(null, new object[] { (JsonElement)i.value });
+                                var vvv = ConvertToNullableType(vv, underlyingType);*//*
+
+
+                                object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
+
+                                object? value = ConvertToNullableType(deserializedValue, underlyingType);
+                                List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                                returnList.Add(v);
+
+
+
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (propType.Name == nameof(String))
+                        {
+                            string value = ((JsonElement)i.value).ToObject<string>();
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                            returnList.Add(v);
+                        }
+                        else if (propType.Name == nameof(DateTime))
+                        {
+                            DateTime value = ((JsonElement)i.value).ToObject<DateTime>();
+                            value = value.ToLocalTime();
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                            returnList.Add(v);
+                        }
+                        else if (propType.IsEnum)
+                        {
+                            MethodInfo? method = typeof(SW).GetMethod(nameof(ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(propType);
+                            object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                            returnList.Add(v);
+                        }
+                        else
+                        {
+                            MethodInfo? method = typeof(FilterExtensions).GetMethod(nameof(FilterExtensions.ToObject), BindingFlags.Static | BindingFlags.Public);
+                            MethodInfo Gmethod = method.MakeGenericMethod(underlyingType);
+                            object? deserializedValue = Gmethod.Invoke(null, new object[] { (JsonElement)i.value });
+
+                            object? value = ConvertToNullableType(deserializedValue, propType);
+                            //object? value = Convert.ChangeType(Gmethod.Invoke(null, new object[] { i.value }), propType);
+                            List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], value };
+                            returnList.Add(v);
+                        }
+                    }
+
+                    ///////////////
+                    *//*  List<object> v = new() { displayNames is not null && displayNames.ContainsKey(i.field) ? displayNames[i.field].DisplayName : i.field.MapToHeaderName(), readableOperators[i.@operator], i.value };
+                      returnList.Add(v);*//*
+                }
+
+
+            }
+
+*/
+            return new();//returnList;
+
+
+
+
+        }
+        /* public static T ToObjectJE<T>(this JsonElement element)
+         {
+             string json = element.GetRawText();
+
+             return JsonSerializer.Deserialize<T>(json);
+         }*/
 
         private static object ConvertToNullableType(object value, Type targetType)
         {
@@ -615,6 +812,18 @@ namespace ART_PACKAGE.Extentions.PDF
             document.Add(title);
             return document;
         }
+        public static Document AddTitle(this Document document, string reportTitle)
+        {
+            
+
+            Paragraph title = new Paragraph(string.IsNullOrEmpty(reportTitle) ? "No Title" : reportTitle)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(20)
+                .SetBold();
+
+            document.Add(title);
+            return document;
+        }
 
         public static Document AddDescription<TModel>(this Document document, string? reportDescription = null)
         {
@@ -623,8 +832,20 @@ namespace ART_PACKAGE.Extentions.PDF
                 reportDescription = ReportConfigService.GetConfigs<TModel>() is not null ? ReportConfigService.GetConfigs<TModel>().ReportDescription : "";
             }
 
+            
+              
             // Add a description
-            Paragraph description = new Paragraph(string.IsNullOrEmpty(reportDescription)? "No Description": reportDescription)
+            Paragraph description = new Paragraph(string.IsNullOrEmpty(reportDescription)? "": reportDescription)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(12);
+            document.Add(description);
+            return document;
+        }
+        public static Document AddDescription(this Document document, string? reportDescription )
+        {
+           
+            // Add a description
+            Paragraph description = new Paragraph(string.IsNullOrEmpty(reportDescription) ? "" : reportDescription)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(12);
             document.Add(description);

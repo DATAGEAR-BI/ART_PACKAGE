@@ -19,6 +19,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
             };
+            ReportTitle = "FATCA Cases Details";
+            ReportDescription = "Presents all FATCA cases details";
         }
     }
 }

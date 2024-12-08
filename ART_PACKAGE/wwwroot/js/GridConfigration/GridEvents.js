@@ -549,7 +549,7 @@ export const Handlers = {
        // kendo.ui.progress($("#"+gridDiv.id), true);
         var ds = $("#"+gridDiv.id).data("kendoGrid");
         var total = ds.dataSource.total();
-        var take = 20000;
+        var take = total;
         var skip = 0;
         var id = gridDiv.id; //document.getElementById("script").dataset.id;
 

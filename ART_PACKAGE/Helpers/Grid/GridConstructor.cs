@@ -303,7 +303,7 @@ namespace ART_PACKAGE.Helpers.Grid
             return folderGuid;
         }
 
-        private  int CalculateTotalChunks(int totalRows, int totalColumns, int rowsPerFile, int columnsPerChunk, int rowsPerChunk)
+        protected  int CalculateTotalChunks(int totalRows, int totalColumns, int rowsPerFile, int columnsPerChunk, int rowsPerChunk)
         {
             // Calculate the number of files
             int numberOfFiles = (int)Math.Ceiling((double)totalRows / rowsPerFile);
@@ -327,6 +327,11 @@ namespace ART_PACKAGE.Helpers.Grid
             }
 
             return totalChunks;
+        }
+
+        public Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, int gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

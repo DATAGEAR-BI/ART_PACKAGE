@@ -44,5 +44,6 @@ namespace ART_PACKAGE.Helpers.Pdf
         public Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportPDFRequest req, int fileNumber, string folderPath, string fileName,string reportGUID,string tenantId,Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)    where TContext : DbContext
             where TModel : class
             where TRepo : IBaseRepo<TContext, TModel>;
+        public Task<bool> ITextPdf(ExportPDFRequest req, int fileNumber, string folderPath, string fileName, string reportGUID, int reportId);
     }
 }

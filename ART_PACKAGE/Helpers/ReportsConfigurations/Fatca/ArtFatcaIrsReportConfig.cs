@@ -47,6 +47,10 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "SignW8", new GridColumnConfiguration { DisplayName = "SignW8" } },
                 { "SignW9", new GridColumnConfiguration { DisplayName = "SignW9" } }
             };
+
+
+            ReportTitle = "FATCA IRS Report Details";
+            ReportDescription = "Presents all FATCA IRS Report details";
         }
     }
 }

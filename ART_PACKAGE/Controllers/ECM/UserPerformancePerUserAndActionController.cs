@@ -1,10 +1,14 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ECM;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -12,13 +16,13 @@ using Newtonsoft.Json;
 namespace ART_PACKAGE.Controllers.ECM
 {
     //[Authorize(Roles = "UserPerformancePerUserAndAction")]
-    public class UserPerformancePerUserAndActionController : Controller/* BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>, IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>*/
+    public class UserPerformancePerUserAndActionController :  BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>, IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>
     {
-        /*public UserPerformancePerUserAndActionController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
-        {
-        }*/
-
-        private readonly IMemoryCache _cache;
+        public UserPerformancePerUserAndActionController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+    {
+    }
+/*
+    private readonly IMemoryCache _cache;
         private readonly EcmContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
@@ -75,11 +79,11 @@ namespace ART_PACKAGE.Controllers.ECM
                 }),
 
             };
-        }
-        public IActionResult Index()
+        }*/
+        public override IActionResult Index()
         {
             return View();
-        }
+        }/*
 
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
@@ -126,6 +130,6 @@ namespace ART_PACKAGE.Controllers.ECM
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
-        }
+        }*/
     }
 }

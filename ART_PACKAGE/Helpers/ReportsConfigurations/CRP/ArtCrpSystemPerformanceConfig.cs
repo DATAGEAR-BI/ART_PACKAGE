@@ -22,7 +22,10 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "DurationsInHours", new GridColumnConfiguration { DisplayName = "Durations In Hours" }},
                     { "DurationsInDays", new GridColumnConfiguration { DisplayName = "Durations In Days" }} };
             SkipList = new List<string> { "CaseCurrentRate", "Casetargetrate" };
+            ReportTitle = "CRP System Performance Details";
+            ReportDescription = "CRP System Performance Details";
         }
+
 
     }
 }

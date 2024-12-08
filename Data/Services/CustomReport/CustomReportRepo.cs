@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.Constants.db;
+using Data.Extentions;
 using Data.GOAML;
 using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         { "gt"   ,("{0} > {1}"  ,true)},
         { "lte"  ,("{0} <= {1}" ,true)},
         { "lt"  , ("{0} < {1}"  ,true)},
+        { "isnullorempty"  ,( "{0} = '' or {0} IS NULL",false) },
+        { "isnotnullorempty"  , ("{0} != '' and {0} IS NOT NULL",false) }
     };
     public CustomReportRepo(AuthContext context) : base(context)
     {
@@ -45,7 +48,8 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         {
             name = x.Column,
             isNullable = x.IsNullable,
-            type = x.JsType/*,
+            type = x.JsType,
+            displayName = x.Column.MapToHeaderName(),/*,
             isDropDown = !string.IsNullOrEmpty(x.DropDownView),
             displayName = x.DisplayName,
             menu = GetDropDownMenu(x.DropDownView, x.DropDownText, x.DropDownValue)*/
@@ -87,6 +91,11 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                     data = resultData,
                     total = count
                 };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw ex;
             }
             finally
             {

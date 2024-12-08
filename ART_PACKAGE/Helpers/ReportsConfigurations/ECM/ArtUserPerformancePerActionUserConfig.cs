@@ -4,7 +4,8 @@
     {
         public ArtUserPerformancePerActionUserConfig()
         {
-            
+            ReportTitle = "User Performance Per Action User Report";
+            ReportDescription = "User Performance Per Action User Report";
         }
     }
 }

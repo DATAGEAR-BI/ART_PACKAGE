@@ -1,10 +1,14 @@
-﻿using ART_PACKAGE.Helpers.CustomReport;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ARTDGAML;
 using Data.Data.SASAml;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -12,12 +16,12 @@ using Newtonsoft.Json;
 namespace ART_PACKAGE.Controllers.ECM
 {
     //[Authorize(Roles = "AlertAgeSummery")]
-    public class AlertAgeSummaryController : Controller/* BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>, IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>*/
+    public class AlertAgeSummaryController :  BaseReportController<IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>, IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery>
     {
-        /*public AlertAgeSummeryController(IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        public AlertAgeSummaryController(IGridConstructor<IBaseRepo<SasAmlContext, ArtStAmlAlertAgeSummery>, SasAmlContext, ArtStAmlAlertAgeSummery> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
         {
-        }*/
-
+        }
+/*
         private readonly IMemoryCache _cache;
         private readonly SasAmlContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
@@ -74,12 +78,12 @@ namespace ART_PACKAGE.Controllers.ECM
                 }),
 
             };
-        }
-        public IActionResult Index()
+        }*/
+        public override IActionResult Index()
         {
             return View();
         }
-
+/*
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
@@ -127,6 +131,6 @@ namespace ART_PACKAGE.Controllers.ECM
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                         , User.Identity.Name);
             return File(bytes, "text/csv");
-        }
+        }*/
     }
 }

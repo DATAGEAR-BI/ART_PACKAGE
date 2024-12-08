@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
+using ART_PACKAGE.Extentions.Filters;
 using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Handlers;
 using Data.Services.CustomReport;
@@ -134,6 +135,7 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
+
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, User.Identity.Name, reportGUID);
             return Ok(new { folder = folderGuid });
@@ -141,10 +143,18 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public override async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
+            Console.WriteLine(JsonConvert.SerializeObject(req.DataReq.Filter.ToList()));
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             ViewData["reportId"] = reportGUID;
-            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
-            return File(pdfBytes, "application/pdf");
+            var fileame = await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportId, reportGUID);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+            /*
+                        byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
+                        return File(pdfBytes, "application/pdf");*/
         }// Task<IActionResult>
 
         [HttpGet("[controller]/{reportId}")]
@@ -160,6 +170,8 @@ namespace ART_PACKAGE.Controllers
                 return Forbid();
 
             ViewBag.id = reportId;
+            ViewBag.name = report.Name;
+            ViewBag.desc = report.Description;
             return View("Index");
         }
         [HttpGet("[controller]/[action]")]
@@ -181,7 +193,7 @@ namespace ART_PACKAGE.Controllers
                 return NotFound();
 
 
-            if (!report.UserId.Contains(User.Identity.Name))
+            if (!report.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Forbid();
             IEnumerable<ReportChartDto> charts = report.Charts.Select((x, i) => new ReportChartDto
             {

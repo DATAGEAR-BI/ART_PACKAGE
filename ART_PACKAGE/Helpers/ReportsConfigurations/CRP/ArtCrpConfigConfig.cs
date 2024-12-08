@@ -17,6 +17,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail", Template = "actionDetailTable"}},
 
             };
+            ReportTitle = "CRP Config. Details";
+            ReportDescription = "CRP Config. Details";
         }
     }
 }

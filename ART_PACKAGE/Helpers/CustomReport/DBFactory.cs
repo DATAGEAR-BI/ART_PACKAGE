@@ -13,12 +13,13 @@ namespace ART_PACKAGE.Helpers.CustomReport
         public DBFactory(IDbService db)
         {
             _db = db;
+            var con= _db.ARTCustomReport.Database.GetDbConnection();
 
         }
 
         public DbContext? GetDbInstance(string schemaName)
         {
-
+            var con = _db.ARTCustomReport.Database.GetDbConnection();
             return schemaName == DbSchema.DGCMGMT.ToString()
                 ? _db.ECM
                 : schemaName == DbSchema.KC.ToString() ? _db.KC

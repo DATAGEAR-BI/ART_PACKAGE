@@ -3,6 +3,7 @@
 @{
     var Modules = Configuration.GetSection("Modules")
                         .Get<List<string>>();
+    var showAdminPanal = Configuration["ShowAdminPanelInSideBar"] is not null ? (bool) Convert.ChangeType(Configuration["ShowAdminPanelInSideBar"], typeof(bool)) : false;
 }
 <style>
     .treeview-menu{
@@ -82,9 +83,9 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    @*<li class="active ">
+                                    <li class="active ">
                                         <a href="@Url.Action("Index", "CFTConfig")"><i class="glyphicon glyphicon-globe"></i> <span>CFT Config</span></a>
-                                    </li>*@
+                                    </li>
                                   @*  <li class="active ">
                                         <a href="@Url.Action("Index", "ClearDetect")"><i class="glyphicon glyphicon-globe"></i> <span>Clear Detect</span></a>
                                     </li>*@
@@ -773,7 +774,7 @@
                     </ul>
                 </li>
             }
-            @if (User.IsInRole("art_admin"))
+            @if (User.IsInRole("art_admin") && showAdminPanal)
             {
                 <li class="treeview ">
                     <a href="#">
