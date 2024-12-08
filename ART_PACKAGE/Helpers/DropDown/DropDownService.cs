@@ -54,7 +54,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x }).ToList();
 
             return distinct_value;
         }
