@@ -32,7 +32,6 @@ namespace ART_PACKAGE.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> GetData([FromBody] GridRequest request)
         {
-
             if (request.IsIntialize)
             {
 
