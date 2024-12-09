@@ -825,7 +825,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGRiskFactDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
