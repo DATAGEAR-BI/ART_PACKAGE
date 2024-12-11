@@ -2646,9 +2646,9 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("DATE")
                     .HasColumnName("CREATE_DATE");
 
-                entity.Property(e => e.CreateUserId)
+                entity.Property(e => e.CreateUserName)
                     .HasMaxLength(60)
-                    .HasColumnName("CREATE_USER_ID");
+                    .HasColumnName("CREATE_USER_NAME");
 
                 entity.Property(e => e.EventDesc)
                     .HasMaxLength(255)
@@ -2717,9 +2717,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .HasColumnName("OCCUP_DESC");
 
-                entity.Property(e => e.OwnerUserId)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("OWNER_USER_ID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.PoliticalExpPrsnInd)
                     .HasMaxLength(1)
