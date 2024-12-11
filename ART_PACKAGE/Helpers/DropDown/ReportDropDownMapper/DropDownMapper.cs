@@ -60,6 +60,11 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Maker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"Checker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
+                var value when value == nameof(artscenariohistoryviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                    {"CreateUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                },
                 var value when value == nameof(artscenarioadminviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },

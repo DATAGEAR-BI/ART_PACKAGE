@@ -821,9 +821,9 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("Create_Date");
 
-                entity.Property(e => e.CreateUserId)
+                entity.Property(e => e.CreateUserName)
                     .HasMaxLength(60)
-                    .HasColumnName("Create_User_Id");
+                    .HasColumnName("CREATE_USER_NAME");
 
                 entity.Property(e => e.EventDesc)
                     .HasMaxLength(255)
