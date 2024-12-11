@@ -60,6 +60,17 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Maker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"Checker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
+                var value when value == nameof(artsuspectdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"ProfileRisk".ToLower(),_dropDown.GetRiskScoreDropDown() },
+                    {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"RiskClassification".ToLower(),_dropDown.GetCustomerRiskClassificationForDGAMLDropDown() },
+                    {"CitizenCntryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown.GetCustomerIdentificationTypeForDGAMLDropDown() },
+                    {"OccupDesc".ToLower(),_dropDown.GetCustomerOccupationForDGAMLDropDown() },
+                    {"PoliticalExpPrsnInd".ToLower(),pipList },
+                },
                 var value when value == nameof(artscenariohistoryviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },

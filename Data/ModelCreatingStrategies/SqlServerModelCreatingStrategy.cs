@@ -1630,9 +1630,9 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(35)
                     .HasColumnName("Occup_Desc");
 
-                entity.Property(e => e.OwnerUserId)
+                entity.Property(e => e.OwnerUserName)
                     .HasMaxLength(240)
-                    .HasColumnName("OWNER_USER_ID");
+                    .HasColumnName("OWNER_USER_NAME");
 
                 entity.Property(e => e.PoliticalExpPrsnInd)
                     .HasMaxLength(1)
