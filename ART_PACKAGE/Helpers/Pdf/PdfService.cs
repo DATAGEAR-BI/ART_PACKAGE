@@ -22,7 +22,13 @@ using iText.Layout.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Path = System.IO.Path;
-
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using iText.Html2pdf;
+using sun.swing;
+using com.sun.org.apache.bcel.@internal.classfile;
+using java.nio.file.attribute;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -33,12 +39,21 @@ namespace ART_PACKAGE.Helpers.Pdf
         private readonly ILogger<PdfService> _logger;
         private readonly object _locker = new();
         public event Action<int, int> OnProgressChanged;
-        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger)
+
+        private readonly ICompositeViewEngine _viewEngine;
+        private readonly ITempDataProvider _tempDataProvider;
+        private readonly IWebHostEnvironment _env;
+
+
+
+        public PdfService(IServiceScopeFactory serviceScopeFactory, ProcessesHandler processesHandler,ILogger<PdfService> logger, ICompositeViewEngine viewEngine, ITempDataProvider tempDataProvider, IWebHostEnvironment env)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _processesHandler = processesHandler;
             _logger = logger;
-
+            _viewEngine = viewEngine;
+            _tempDataProvider = tempDataProvider;
+            _env = env;
 
 
         }
@@ -384,9 +399,61 @@ namespace ART_PACKAGE.Helpers.Pdf
                                                        .ToList();
             return props;
         }
+        // Method to render Razor view to HTML string
+        public async Task<string> RenderViewToStringAsync(ActionContext ControllerContext,string viewName, object model, ViewDataDictionary controllerViewData = null)
+        {
+            // Simulated ActionContext
+            HttpContext httpContext = ControllerContext.HttpContext;
+            var actionContext = new ActionContext(httpContext, new Microsoft.AspNetCore.Routing.RouteData(), new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor());
 
+            // Find the view
+            var viewEngineResult = _viewEngine.FindView(actionContext, viewName, isMainPage: false);
+            if (!viewEngineResult.Success)
+            {
+                throw new FileNotFoundException($"View '{viewName}' not found.");
+            }
+
+            using var sw = new StringWriter();
+            var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            {
+                Model = model
+            };
+
+            // Merge ViewData from the controller
+            if (controllerViewData != null)
+            {
+                foreach (var key in controllerViewData.Keys)
+                {
+                    viewData[key] = controllerViewData[key];
+                }
+            }
+
+            var tempData = new TempDataDictionary(actionContext.HttpContext, _tempDataProvider);
+            var viewContext = new ViewContext(
+                actionContext,
+                viewEngineResult.View,
+                viewData,
+                tempData,
+                sw,
+                new HtmlHelperOptions()
+            );
+
+            await viewEngineResult.View.RenderAsync(viewContext);
+            return sw.ToString();
+        }
+
+       /* public void ConvertHtmlToPdf(string htmlContent)
+        {
+            var converter = new HtmlToPdf();
+            var doc = converter.RenderHtmlAsPdf(htmlContent);
+            doc.SaveAs("mmmmmmmmmmmmmmmmmmmmmmmmm");
+            
+            
+        }*/
         public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData, ActionContext ControllerContext, int ColumnsPerPage, string UserName, string reportId, List<string> ColumnsToSkip = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
+           
+
             ViewData["user"] = UserName;
             ViewData["reportId"] = reportId;
             List<IEnumerable<Dictionary<string, object>>> dataColumnsParts = new();
@@ -407,9 +474,63 @@ namespace ART_PACKAGE.Helpers.Pdf
             //    CustomSwitches = footer,
             //    PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
             //});
+            
+            var s = await RenderViewToStringAsync(ControllerContext, "GenericReportAsPdf", dataColumnsParts,ViewData);
+            /*string filePath = Path.Combine(_env.WebRootPath,"htpdf.pdf");
+            using (var writer = new iText.Kernel.Pdf.PdfWriter(filePath))
+            using (var pd = new iText.Kernel.Pdf.PdfDocument(writer))
+            {
+                var pageSize = PageSize.A4.Rotate();
+                var document = new Document(pd, pageSize);
+
+                var htmlElements = HtmlConverter.ConvertToElements(s);
+
+                foreach (IElement element in htmlElements)
+                {
+                    var div = (Div)element;
+                    // Resize the content to fit the cell
+                    div.SetWidth(UnitValue.CreatePercentValue(100)); // Fit to cell width
+                    div.SetFontSize(8); // Reduce font size to fit
+
+                    document.Add(div);
+                    // htmlCell.Add((IBlockElement)element);
+                }
+                document.Close();
+            }*/
 
 
-            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
+            using (var memoryStream = new MemoryStream()) // Create a MemoryStream
+            {
+                // Initialize PDF writer to write to the MemoryStream
+                using (var writer = new PdfWriter(memoryStream))
+                using (var pdfDocument = new PdfDocument(writer))
+                {
+                    var pageSize = PageSize.A4.Rotate();
+                    var document = new Document(pdfDocument, pageSize);
+
+                    // Convert HTML to iText elements
+                    var htmlElements = HtmlConverter.ConvertToElements(s);
+
+                    foreach (IElement element in htmlElements)
+                    {
+                        var div = (Div)element;
+                        // Resize the content to fit the page
+                        div.SetWidth(UnitValue.CreatePercentValue(100));
+                        div.SetFontSize(8); // Adjust font size if needed
+
+                        document.Add(div);
+                    }
+
+                    document.Close(); // Finalize the document
+                }
+
+                return memoryStream.ToArray(); // Return PDF as byte array
+
+            }
+            //ConvertHtmlToPdf(s);
+
+
+            /*ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
             {
                 ViewData = ViewData,
                 //CustomSwitches = footer,
@@ -418,9 +539,9 @@ namespace ART_PACKAGE.Helpers.Pdf
 
 
 
+          
 
-
-            return await pdf.BuildFile(ControllerContext);
+            return await pdf.BuildFile(ControllerContext);*/
 
             //var outputStream = new MemoryStream();
             //var document = new Document();
