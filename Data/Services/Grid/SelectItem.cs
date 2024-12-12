@@ -1,8 +1,8 @@
 ﻿namespace Data.Services.Grid
 {
-    public class SelectItem
+    public class SelectItem 
     {
         public string text { get; set; } = null!;
-        public string value { get; set; } = null!;
+        public dynamic value { get; set; } 
     }
 }

@@ -18,7 +18,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"RiskFact" , new GridColumnConfiguration { DisplayName = "Risk Fact"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CreateDate" , new GridColumnConfiguration { DisplayName = "Create Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"EndDate" , new GridColumnConfiguration { DisplayName = "End Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"CreateUserId" , new GridColumnConfiguration { DisplayName = "Create User ID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"CreateUserName" , new GridColumnConfiguration { DisplayName = "Create User Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ScenarioType" , new GridColumnConfiguration { DisplayName = "Scenario Type"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ScenarioFrequency" , new GridColumnConfiguration { DisplayName = "Scenario Frequency"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"ScenarioMessage" , new GridColumnConfiguration { DisplayName = "Scenario Message"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },

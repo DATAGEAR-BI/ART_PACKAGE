@@ -60,6 +60,37 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Maker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                     {"Checker".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
                 },
+                var value when value == nameof(artsuspectdetailviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },
+                    {"ProfileRisk".ToLower(),_dropDown.GetRiskScoreDropDown() },
+                    {"OwnerUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                    {"RiskClassification".ToLower(),_dropDown.GetCustomerRiskClassificationForDGAMLDropDown() },
+                    {"CitizenCntryName".ToLower(),_dropDown.GetCountryNameDropDown() },
+                    {"CustIdentTypeDesc".ToLower(),_dropDown.GetCustomerIdentificationTypeForDGAMLDropDown() },
+                    {"OccupDesc".ToLower(),_dropDown.GetCustomerOccupationForDGAMLDropDown() },
+                    {"PoliticalExpPrsnInd".ToLower(),pipList },
+                },
+                var value when value == nameof(artscenariohistoryviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"RoutineName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                    {"CreateUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                },
+                var value when value == nameof(artscenarioadminviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    {"ScenarioName".ToLower(),_dropDown.GetDGScenarioNameDropDown() },
+                    {"ScenarioStatus".ToLower(),_dropDown.GetDGScenarioStatusDropDown() },
+                    {"ScenarioCategory".ToLower(),_dropDown.GetDGScenarioCategoryDropDown() },
+                    {"ProductType".ToLower(),_dropDown.GetDGProductTypeDropDown() },
+                    {"ScenarioType".ToLower(),_dropDown.GetDGScenarioTypeDropDown() },
+                    {"ScenarioFrequency".ToLower(),_dropDown.GetDGScenarioFrequencyDropDown() },
+                    {"ObjectLevel".ToLower(),_dropDown.GetDGObjectLevelDropDown() },
+                    {"AlarmType".ToLower(),_dropDown.GetDGAlarmTypeDropDown() },
+                    {"AlarmCategory".ToLower(),_dropDown.GetDGAlarmCategoryDropDown() },
+                    {"AlarmSubcategory".ToLower(),_dropDown.GetDGAlarmSubcategoryDropDown() },
+                    {"RiskFact".ToLower(),_dropDown.GetDGRiskFactDropDown() },
+                    {"CreateUserName".ToLower(),_dropDown.GetDisplayNameForUserManagement() },
+                },
                 var value when value == nameof(artdgamltriageviewConfig).ToLower() => new Dictionary<string, List<SelectItem>>
                 {
                     {"BranchName".ToLower(),_dropDown.GetDGBranchNameDropDown() },

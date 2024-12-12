@@ -18,7 +18,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {"ProfileRisk" , new GridColumnConfiguration { DisplayName = "Profile Risk"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"NumberOfAlarms" , new GridColumnConfiguration { DisplayName = "Number Of Alerts"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"AgeOfOldestAlert" , new GridColumnConfiguration { DisplayName = "Age Of Oldest Alert"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
-{"OwnerUserId" , new GridColumnConfiguration { DisplayName = "Owner User Id"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+{"OwnerUserName" , new GridColumnConfiguration { DisplayName = "Owner User Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"CustBirthDate" , new GridColumnConfiguration { DisplayName = "Customer Birth Of Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"PoliticalExpPrsnInd" , new GridColumnConfiguration { DisplayName = "PEP"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
 {"RiskClassification" , new GridColumnConfiguration { DisplayName = "Risk Classification"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },

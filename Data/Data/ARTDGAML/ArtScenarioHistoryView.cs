@@ -9,6 +9,6 @@ namespace Data.Data.ARTDGAML
         public string? RoutineShortDesc { get; set; }
         public string? EventDesc { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreateUserId { get; set; } = null!;
+        public string? CreateUserName { get; set; }
     }
 }

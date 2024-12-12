@@ -999,6 +999,8 @@ class Grid extends HTMLElement {
         grid.bind("columnMenuOpen", (e) => {
             console.log("collumn menu hitted ")
 
+            e.container.find("[type='submit']").off("click");
+
             previousScrollPosition = grid.element.find(".k-grid-content").scrollLeft();
             console.log(previousScrollPosition);
             isSortingOrFiltering = true;

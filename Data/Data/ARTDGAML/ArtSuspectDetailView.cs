@@ -11,7 +11,7 @@ namespace Data.Data.ARTDGAML
         public string? ProfileRisk { get; set; }
         public int? NumberOfAlarms { get; set; }
         public int? AgeOfOldestAlert { get; set; }
-        public string? OwnerUserId { get; set; }
+        public string? OwnerUserName { get; set; }
         public DateTime? CustBirthDate { get; set; }
         public string? PoliticalExpPrsnInd { get; set; }
         public int? RiskClassification { get; set; }

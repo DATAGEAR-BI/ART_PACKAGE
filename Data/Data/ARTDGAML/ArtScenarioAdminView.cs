@@ -14,7 +14,7 @@ namespace Data.Data.ARTDGAML
         public string? RiskFact { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string CreateUserId { get; set; } = null!;
+        public string? CreateUserName { get; set; } 
         public string? ScenarioType { get; set; }
         public string? ScenarioFrequency { get; set; }
         public string ScenarioMessage { get; set; } = null!;

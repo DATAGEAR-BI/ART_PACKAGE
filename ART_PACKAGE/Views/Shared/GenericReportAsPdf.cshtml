@@ -5,13 +5,14 @@
 @inject ART_PACKAGE.Helpers.UsersConnectionIds connections
 @inject ART_PACKAGE.Helpers.Handlers.ProcessesHandler _pdfHAndler
 @using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvironment
+
 
 @{
     Layout = null;
     var recordPerPage = 17;
     var user = User.Identity.Name;
-    string exportinProcess = (string)ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-
+    string exportinProcess = (string)ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")
 }
 
 
@@ -20,8 +21,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@(Context.Request.Scheme + "://" + Context.Request.Host + Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css"))" />
+    <link rel="stylesheet" href="@(Context.Request.Scheme + "://" + Context.Request.Host + Url.Content("~/lib/bootstrap/dist/css/bootstrap.css"))" />
+
+    
     <style>
 
         body {
@@ -45,7 +48,7 @@
         }
 
         tr {
-            page-break-inside: avoid;
+            page-break-inside: inherit
         }
 
         td {
@@ -67,7 +70,7 @@
             <p class="lead">@ViewData["desc"]</p>
             <hr class="my-4">
             <div class="d-flex justify-content-between">
-                <img src="~/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
+                <img src="@(Context.Request.Scheme + "://" + Context.Request.Host + Url.Content("~/imgs/LOGO.png"))" class="rounded col-4" alt="DataGear Logo">
             </div>
         </div>
 

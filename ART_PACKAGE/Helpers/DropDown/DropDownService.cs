@@ -54,7 +54,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetMoneyLaunderingScoreForDGAMLDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x.ToString() }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtMoneyLaunderingRiskScoreFilterTbs.Select(x => x.MoneyLaunderingRiskScore).Distinct().Select(x => new SelectItem { text = x.ToString(), value = x }).ToList();
 
             return distinct_value;
         }
@@ -84,13 +84,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         }
         public List<SelectItem> GetCustomerIdentificationTypeForDGAMLDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerIdentificationTypeFilterTbs.Select(x => x.CustomerIdentificationType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerIdentificationTypeFilterTbs.Where(x => x.CustomerIdentificationType != null && x.CustomerIdentificationType != "").Select(x => x.CustomerIdentificationType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }
         public List<SelectItem> GetCustomerRiskClassificationForDGAMLDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerRiskClassificationFilterTbs.Where(x => x.CustomerRiskClassification != null).Select(x => x.CustomerRiskClassification).Distinct().Select(x => new SelectItem { text = x.Value.ToString(), value = x.Value.ToString() }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLFilters.ArtCustomerRiskClassificationFilterTbs.Where(x => x.CustomerRiskClassification != null).Select(x => x.CustomerRiskClassification).Distinct().Select(x => new SelectItem { text = x.Value.ToString(), value = x.Value }).ToList();
 
             return distinct_value;
         }
@@ -825,7 +825,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetDGRiskFactDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(x => !string.IsNullOrEmpty(x.RiskFactInd)).Select(x => x.RiskFactInd).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
@@ -977,7 +977,7 @@ namespace ART_PACKAGE.Helpers.DropDown
 
         public List<SelectItem> GetCountryNameDropDown()
         {
-            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CountryLkps.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLCORE.CountryLkps.Where(x => !string.IsNullOrEmpty(x.CntryName)).Select(x => x.CntryName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 
