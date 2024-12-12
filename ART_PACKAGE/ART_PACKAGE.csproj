@@ -2518,8 +2518,10 @@
 		<PackageReference Include="Hangfire.LiteDB" Version="0.4.1" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
 		<PackageReference Include="IKVM" Version="8.6.2" />
+		<PackageReference Include="itext.pdf2data" Version="5.0.0" />
 		<PackageReference Include="itext7" Version="8.0.5" />
 		<PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
+		<PackageReference Include="itext7.pdfhtml" Version="5.0.5" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.30" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />

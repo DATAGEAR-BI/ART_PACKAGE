@@ -13,7 +13,7 @@ using System.Reflection;
 using ART_PACKAGE.Helpers.Handlers;
 using Data.Services;
 using iText.IO.Image;
-using iText.Kernel.Events;
+//using iText.Kernel.Events;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -37,6 +37,12 @@ using ART_PACKAGE.Areas.Identity.Data;
 using System.Data.Odbc;
 using Data.Services.CustomReport;
 using ART_PACKAGE.Helpers.CSVMAppers;
+using iText.Html2pdf;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using iText.Kernel.Pdf.Canvas.Parser;
+using PdfReader = iText.Kernel.Pdf.PdfReader;
+using PdfDocument = iText.Kernel.Pdf.PdfDocument;
+using System.Text;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -484,7 +490,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             //return outputStream.ToArray();
 
         }
-
+       
         public async Task<bool> ITextPdf<TRepo, TContext, TModel>(ExportPDFRequest req, int fileNumber, string folderPath, string fileName, string reportGUID, string tenantId, Expression<Func<TModel, bool>> baseCondition = null, SortOption? defaultSort = null)
             where TContext : DbContext
             where TModel : class
@@ -533,11 +539,11 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                         // Get the properties of the TModel class for headers and data extraction
                         var modelType = typeof(TModel);
-                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(S => req.IncludedColumns.Contains(S.Name)).OrderBy(p => req.IncludedColumns.IndexOf(p.Name));
+                        var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(S => req.IncludedColumns.Contains(S.Name)).OrderBy(x => x.Name == "ActionDetail").ThenBy(p => req.IncludedColumns.IndexOf(p.Name)).Select(s=>new { property=s,format= displayNames is null?"": displayNames.ContainsKey(s.Name) ? displayNames[s.Name].Format:"" });
                         string[] columnHeaders = displayNames is null ? req.IncludedColumns.Select(s => s.MapToHeaderName()).ToArray() : req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s.MapToHeaderName() : s.MapToHeaderName()).ToArray();//properties.Select(p => p.Name).ToArray();
 
                         // Partition settings
-                        int partitionSize = columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
+                        int partitionSize = (reportConfigs.MapperType.Name==typeof(ArtCFTConfigMapper).Name|| reportConfigs.MapperType.Name == typeof(ArtCRPConfigMapper).Name)&&req.IncludedColumns.Count()>2 ? columnHeaders.Count()-1: columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
                         int totalColumns = columnHeaders.Count();
                         int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
@@ -613,7 +619,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                                 foreach (var prop in properties)
                                 {
-                                    var value = prop.GetValue(row)?.ToString();
+                                    var value = prop.property.GetValue(row)?.ToString();
 
                                     table.AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? "")).SetFontSize(calculatedFontSize)
                                             .SetTextAlignment(TextAlignment.CENTER).SetFont(defaultFont)
@@ -717,21 +723,58 @@ namespace ART_PACKAGE.Helpers.Pdf
                                 int tableIndex = 0;
                                 foreach (var property in properties)
                                 {
-                                    var value = property.GetValue(item)?.ToString();
+                                    var value = property.property.GetValue(item)?.ToString();
+                                    if (!string.IsNullOrEmpty(property.format)&& property.format=="html")
+                                    {
 
-                                    tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? "")).SetFont(defaultFont).SetFontSize(calculatedFontSize)
-                                            .SetTextAlignment(TextAlignment.CENTER)
-                                            .SetMultipliedLeading(1f))
-                                        //.SetHeight(rowHeight)
-                                        .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
-                                        .SetMaxWidth(rowWidth)
-                                        .SetTextAlignment(TextAlignment.CENTER)
-                                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                                        .SetFontSize(calculatedFontSize)
-                                        .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
-                                        .SetBorder(Border.NO_BORDER)
-                                        .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
-                                        .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+
+
+                                        var style = "<style>\r\n                * { font-size: 8px; } /* Enforce font size globally */\r\n               \r\n                td, th { border: 1px solid black; padding: 2px; text-align: center; }\r\n            </style>";
+
+                                        var htmlElements = HtmlConverter.ConvertToElements(style +value);
+                                        Cell htmlCell = new Cell();
+                                        htmlCell.SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
+                                      .SetMaxWidth(rowWidth)
+                                      .SetTextAlignment(TextAlignment.CENTER)
+                                      .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                      //.SetFontSize(calculatedFontSize)
+                                      .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
+                                      .SetBorder(Border.NO_BORDER)
+                                      .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                      .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1));
+
+                                        foreach (IElement element in htmlElements)
+                                        {
+                                            var div = (Div)element;
+                                            // Resize the content to fit the cell
+                                            div.SetWidth(UnitValue.CreatePercentValue(100)); // Fit to cell width
+                                            div.SetFontSize(8); // Reduce font size to fit
+
+                                            htmlCell.Add(div);
+                                           // htmlCell.Add((IBlockElement)element);
+                                        }
+                                        htmlCell.SetHeight(UnitValue.CreatePercentValue(100));
+                                        tableList[tableIndex].AddCell(htmlCell);
+                                      //.SetHeight(rowHeight)
+                                      
+                                    }
+                                    else
+                                    {
+                                        tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? "")).SetFont(defaultFont).SetFontSize(calculatedFontSize)
+                                          .SetTextAlignment(TextAlignment.CENTER)
+                                          .SetMultipliedLeading(1f))
+                                      //.SetHeight(rowHeight)
+                                      .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
+                                      .SetMaxWidth(rowWidth)
+                                      .SetTextAlignment(TextAlignment.CENTER)
+                                      .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                      .SetFontSize(calculatedFontSize)
+                                      .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
+                                      .SetBorder(Border.NO_BORDER)
+                                      .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
+                                      .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                    }
+                                  
 
                                     if (columnNumber != 1 && columnNumber % partitionSize == 0)
                                     {
@@ -827,7 +870,9 @@ namespace ART_PACKAGE.Helpers.Pdf
             }
 
 
+
         }
+        
         private float CalculateFontSize(float cellHeight, int lines)
         {
             // Assuming a basic factor for line spacing and padding/margin inside the cell
