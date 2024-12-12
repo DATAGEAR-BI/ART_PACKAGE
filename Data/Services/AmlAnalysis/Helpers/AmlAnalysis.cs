@@ -270,6 +270,23 @@ namespace Data.Services.AmlAnalysis
             );
             return res > 0;
         }
+        public async Task<bool> UpdateEntitiesRoutingOnBkTable(IEnumerable<string> AlertedEntities,string? queue, string? user)
+        {
+            var tableEntityType = _context.Model.FindEntityType(typeof(ArtAmlAnalysisViewTb));
+            var tableName = string.Join(
+                ".",
+                tableEntityType.GetSchema(),
+                tableEntityType.GetTableName()
+            );
+
+            int res = await _context.Database.ExecuteSqlRawAsync(
+                $@"Update  {tableName}
+                    SET OWNER_USERID = '{user}', BRANCH_NAME = '{queue}'
+                                                                        WHERE PARTY_NUMBER IN ({string.Join(",", AlertedEntities)})"
+            );
+            return res > 0;
+        }
+
 
         private async Task<bool> CreateAlertsEvents(
             IEnumerable<decimal>? alertsIds,
@@ -423,6 +440,14 @@ namespace Data.Services.AmlAnalysis
 
                 if (res.All(x => x.isSucceed))
                 {
+                    foreach (RouteRequest request in requests)
+                    {
+                        bool deleteFromBkRes = await UpdateEntitiesRoutingOnBkTable(request.Entities,request.QueueCode, request.OwnerId);
+                        if (!deleteFromBkRes)
+                            throw new InvalidOperationException(
+                                $"Error While Updating entities from Table : ({string.Join(",", request.Entities)})"
+                            );
+                    }
                     trans.Commit();
                     return (true, null);
                 }
