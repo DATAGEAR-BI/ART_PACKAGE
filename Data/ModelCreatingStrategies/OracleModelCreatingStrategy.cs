@@ -7402,6 +7402,14 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("PARTY_NAME");
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+                entity.Property(e => e.OwnerUserId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("OWNER_USERID");
 
                 entity.Property(e => e.PartyNumber)
                     .HasMaxLength(50)

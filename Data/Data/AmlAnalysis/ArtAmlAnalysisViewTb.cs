@@ -2,20 +2,38 @@
 {
     public partial class ArtAmlAnalysisViewTb
     {
+        public double? Prediction { get; set; }
         public string? MonthKey { get; set; }
         public string PartyNumber { get; set; } = null!;
+        public string? PartyName { get; set; }
         public int? RiskClassification { get; set; }
         public string PartyTypeDesc { get; set; } = null!;
         public string? IndustryCode { get; set; }
         public string? IndustryDesc { get; set; }
         public string? OccupationCode { get; set; }
         public string? OccupationDesc { get; set; }
-        public double? TotalCreditAmount { get; set; }
-        public double? TotalDebitAmount { get; set; }
-        public double? TotalCreditCnt { get; set; }
-        public double? TotalDebitCnt { get; set; }
+        public string? BranchName { get; set; }
+        public string? OwnerUserId { get; set; }
+
+
+        public int? MaxMls { get; set; }
+        public double? AlertsCnt { get; set; }
+        
+      
+        public int? AlertsCount { get; set; }
+        public double? ClosedAlertsCount { get; set; }
+        public double? Segment { get; set; }
+        public double? SegmentSorted { get; set; }
+
         public double? TotalAmount { get; set; }
         public double? TotalCnt { get; set; }
+            
+        public double? TotalCreditAmount { get; set; }
+        public double? TotalCreditCnt { get; set; }
+
+        public double? TotalDebitAmount { get; set; }
+        public double? TotalDebitCnt { get; set; }
+
         public double? NumberOfLocations { get; set; }
         public double? AvgWireCAmt { get; set; }
         public double? MaxWireCAmt { get; set; }
@@ -217,13 +235,6 @@
         public double? TotalTtissuanceDAmt { get; set; }
         public double? TotalTtissuanceDCnt { get; set; }
         public double? MinTtissuanceDAmt { get; set; }
-        public int? MaxMls { get; set; }
-        public double? AlertsCnt { get; set; }
-        public string? PartyName { get; set; }
-        public double? Prediction { get; set; }
-        public int? AlertsCount { get; set; }
-        public double? ClosedAlertsCount { get; set; }
-        public double? Segment { get; set; }
-        public double? SegmentSorted { get; set; }
+        
     }
 }
