@@ -13,6 +13,8 @@
     var recordPerPage = 17;
     var user = User.Identity.Name;
     string exportinProcess = (string)ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")
+    var M = Model;
+    var s = "hamada";
 }
 
 
@@ -92,9 +94,10 @@
                 {
                     Console.WriteLine(counter);
                     counter++;
+
                     var keys = Model[j].First().Keys;
                     var data = Model[j].Skip((i / recordPerPage) * recordPerPage).Take(recordPerPage);
-
+                    //IEnumerable<Dictionary<string, object>> ss = new();
                     <table class="table table-striped">
                         <thead class="thead-light">
                             <tr>

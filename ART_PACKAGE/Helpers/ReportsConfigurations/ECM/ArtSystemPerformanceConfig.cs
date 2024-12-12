@@ -43,6 +43,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             };
 
             ReportTitle = "System Performance Report";
+            defaultSortOption = new() { field = "CaseId", dir = "asc" };
             ReportDescription = "This report presents all sanction cases with the related information on case level as below";
             SkipList = new List<string>
             {
