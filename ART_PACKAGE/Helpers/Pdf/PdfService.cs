@@ -26,9 +26,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using iText.Html2pdf;
-using sun.swing;
-using com.sun.org.apache.bcel.@internal.classfile;
-using java.nio.file.attribute;
+
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
