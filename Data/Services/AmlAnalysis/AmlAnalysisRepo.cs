@@ -17,7 +17,7 @@ public class AmlAnalysisRepo : BaseRepo<AmlAnalysisContext,ArtAmlAnalysisViewTb>
         //var result = fcfcore.ArtSasQueues.Select(Q => Q.Queuecode);
         var result = _context.VaGroupInfos.Where(x => x.Name.ToLower().StartsWith("branch_") && !x.Name.ToLower().EndsWith("_role")).Select(x => new { x.Name, x.Displayname });
         
-        return result.Select(s => new SelectItem(){text = s.Name, value = s.Displayname });
+        return result.Select(s => new SelectItem(){text = s.Displayname , value = s.Name });
     }
 
     public IEnumerable<SelectItem> GetUsers(string queue)
@@ -25,14 +25,14 @@ public class AmlAnalysisRepo : BaseRepo<AmlAnalysisContext,ArtAmlAnalysisViewTb>
 
         if (string.IsNullOrEmpty(queue) ||queue.Equals("all"))
         {
-            var result = _context.VaPersonInfos.Select(U => string.IsNullOrEmpty(U.Displayname) ? U.Name : U.Name + " , " + U.Displayname).Distinct();
-            return result.Select(s => new SelectItem() { text = s, value = s });
+            var result = _context.VaPersonInfos.Select(U => string.IsNullOrEmpty(U.Displayname) ? new { Name=U.Name,Displayname=U.Name   } : new { Name = U.Name, Displayname = U.Name + " , " + U.Displayname }).Distinct();
+            return result.Select(s => new SelectItem() { text = s.Displayname, value = s.Name });
 
         }
         else
         {
-            var result = _context.LstOfUsersAndGroupsRoles.Where(Q => Q.GroupName.ToLower() == queue.ToLower()).Select(U => string.IsNullOrEmpty(U.DisplayName) ? U.UserName : U.UserName + " , " + U.DisplayName);
-            return result.Select(s => new SelectItem() { text = s, value = s });
+            var result = _context.LstOfUsersAndGroupsRoles.Where(Q => Q.GroupName.ToLower() == queue.ToLower()).Select(U => string.IsNullOrEmpty(U.DisplayName) ? new { Name=U.UserName,Displayname=U.UserName   } : new { Name = U.UserName, Displayname = U.UserName + " , " + U.DisplayName });
+            return result.Select(s => new SelectItem() {text = s.Displayname, value = s.Name });
         }
               
     }
