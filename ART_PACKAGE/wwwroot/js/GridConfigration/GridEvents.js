@@ -125,6 +125,7 @@ export const Handlers = {
                 }).then(x => {
                     comment.value = "";
                     localStorage.removeItem("selectedidz");
+                    window.location.reload();
                     /* $("#grid").data("kendoGrid").dataSource.read();
                      $("#grid").data("kendoGrid").refresh();
                      toastObj.text = "Alert Closed Succesfully";
@@ -262,6 +263,8 @@ export const Handlers = {
                 }).then(x => {
                     comment.value = "";
                     localStorage.removeItem("selectedidz");
+                    window.location.reload();
+
                     /*  $("#grid").data("kendoGrid").refresh();
                       
                       toastObj.text = "Alert Routed Succesfully";
