@@ -7,6 +7,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public ArtUserPerformanceConfig()
         {
             SkipList = new List<string>() { "CaseRk", "ValidFromDate" };
+            defaultSortOption = new() { field = "CaseId", dir = "asc" };
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
                                                         {
                                                                 { "CaseId", new GridColumnConfiguration { DisplayName = "Case ID"}},
