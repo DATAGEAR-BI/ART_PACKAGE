@@ -6,7 +6,7 @@ namespace Data.Data.ARTDGAML
     public partial class ArtDgAmlCustomerDetailView
     {
         public string? CustomerName { get; set; }
-        public int? CustomerNumber { get; set; } 
+        public string? CustomerNumber { get; set; } 
         public string? CustomerType { get; set; }
         public string? CustomerIdentificationId { get; set; }
         public string? CustomerIdentificationType { get; set; }

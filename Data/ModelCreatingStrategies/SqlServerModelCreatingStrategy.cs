@@ -1120,6 +1120,7 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("customer_name");
 
                 entity.Property(e => e.CustomerNumber)
+                    .HasMaxLength(50)
                     .HasColumnName("customer_number");
 
                 entity.Property(e => e.CustomerSinceDate)
