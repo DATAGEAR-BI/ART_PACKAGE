@@ -1090,6 +1090,9 @@ namespace Data.ModelCreatingStrategies
                 entity.Property(e => e.AnnualIncomeAmount)
                     .HasColumnType("numeric(10, 0)")
                     .HasColumnName("ANNUAL_INCOME_AMOUNT");
+                entity.Property(e => e.CustKey)
+                   .HasColumnType("numeric(10, 0)")
+                   .HasColumnName("CUST_KEY");
 
                 entity.Property(e => e.BranchName)
                     .HasMaxLength(35)

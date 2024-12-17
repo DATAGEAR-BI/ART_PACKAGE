@@ -50,6 +50,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             void contextBuilder(DbContextOptionsBuilder options, string conn, int commandTimeOut = 120)
             {
+                var timeout = config.GetValue<int>("dbCommendTimeOut", commandTimeOut);
+                commandTimeOut = timeout;
                 _ = dbType switch
                 {
                     DbTypes.SqlServer => options.UseSqlServer(

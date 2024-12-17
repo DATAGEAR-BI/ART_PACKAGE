@@ -8,6 +8,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         {
 
             SkipList = new List<string>(){ "CustomerTaxId",
+                "CustKey",
 "GovernorateName",
 "DoingBusinessAsName",
 "StreetPostalCode",
@@ -53,7 +54,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
             ReportTitle = "Customers Details Report";
             ReportDescription = "Presents all customers details";
-
+            defaultSortOption = new() { field = "CustKey", dir = "asc" };
 
 
         }
