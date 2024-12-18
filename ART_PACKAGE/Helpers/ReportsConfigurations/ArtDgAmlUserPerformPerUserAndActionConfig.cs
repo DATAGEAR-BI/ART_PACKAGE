@@ -21,6 +21,9 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
                 { "AVG_DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
             };
+            ReportTitle = "DGAML User Performance Per User and Action";
+            ReportDescription = "Presents all DGAML User Performance Per User and Action details";
+
         }
     }
 }

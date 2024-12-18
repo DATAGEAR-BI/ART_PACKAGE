@@ -21,6 +21,11 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Durations In Days" } },
                 { "AVG_DURATIONS_IN_DAYS", new GridColumnConfiguration { DisplayName = "Avg Durations In Days" } }
             };
+
+            ReportTitle = "User Performance Per Action User";
+            ReportDescription = "Presents all User Performance Per Action User details";
+
+
         }
     }
 }

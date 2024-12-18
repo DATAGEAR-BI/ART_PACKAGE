@@ -3,6 +3,7 @@
 @{
     var Modules = Configuration.GetSection("Modules")
                         .Get<List<string>>();
+    var showAdminPanal = Configuration["ShowAdminPanelInSideBar"] is not null ? (bool) Convert.ChangeType(Configuration["ShowAdminPanelInSideBar"], typeof(bool)) : false;
 }
 <style>
     .treeview-menu{
@@ -831,7 +832,7 @@
                     </ul>
                 </li>
             }
-            @if (User.IsInRole("art_admin"))
+            @if (User.IsInRole("art_admin") && showAdminPanal)
             {
                 <li class="treeview ">
                     <a href="#">

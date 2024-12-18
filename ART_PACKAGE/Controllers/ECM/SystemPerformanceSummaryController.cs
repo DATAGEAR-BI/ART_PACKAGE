@@ -117,7 +117,7 @@ namespace ART_PACKAGE.Controllers.ECM
                         x.TRANSACTION_DIRECTION ??= "UNKOWN";
                         return x;
                     }).ToList(),
-                    Title = "Swift Cases Per Direction",
+                    Title = "Cases Per Direction",
                     Cat = "TRANSACTION_DIRECTION",
                     Val = "TOTAL_NUMBER_OF_CASES",
                     Type = ChartType.donut

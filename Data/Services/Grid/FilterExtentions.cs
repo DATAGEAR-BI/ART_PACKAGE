@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Services.Grid;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -8,6 +9,7 @@ using Filter = Data.Services.Grid.Filter;
 
 public static class FilterExtensions
 {
+    
     private static readonly Dictionary<string, string> QueryBuilderOperationsMap =
         new()
         {
@@ -43,6 +45,20 @@ public static class FilterExtensions
 
         return Expression.Lambda<Func<T, bool>>(exp, param);
     }
+    
+    
+    /*public static List<List<string>> ToList(this Filter filter)
+    {
+        if (filter == null)
+            return new();
+        if (filter.filters == null || !filter.filters.Any())
+            return new();
+
+       
+        Expression exp = BuildExpression<T>(param, filter);
+
+        return Expression.Lambda<Func<T, bool>>(exp, param);
+    }*/
 
     private static Expression BuildExpression<T>(ParameterExpression param, Filter filter)
     {

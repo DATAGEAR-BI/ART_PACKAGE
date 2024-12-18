@@ -16,7 +16,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "Total", new GridColumnConfiguration { DisplayName = "Total" } },
                 { "RISK_APPETITE", new GridColumnConfiguration { DisplayName = "Risk Appetite" } }
             };
-
+            ReportTitle = "Alert Age Summary Report";
+            ReportDescription = "Alert Age Summary Report";
         }
     }
 }

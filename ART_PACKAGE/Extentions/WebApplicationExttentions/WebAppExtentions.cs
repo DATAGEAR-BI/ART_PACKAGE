@@ -1,6 +1,8 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
+using Data.Services;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -17,7 +19,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             {
                 //authContext.Database.Migrate();
             }*/
-
+            /*
             //if (modules.Contains("ECM"))
             //{
             //    EcmContext ecmContext = scope.ServiceProvider.GetRequiredService<EcmContext>();
@@ -100,48 +102,54 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //    {
             //        kyc.Database.Migrate();
             //    }
-            //}
+            //}*/
         }
 
-        public static async void SeedModuleRoles(this WebApplication app)
+
+        
+        public static async Task SeedModuleRoles(this WebApplication app)
         {
+            var modulesNameSpaces = app.Configuration
+                .GetSection("Modules")
+                .Get<List<string>>()
+                .Select(s => $"ART_PACKAGE.Controllers.{s}")
+                .ToList();
 
             IEnumerable<Type> types = AppDomain.CurrentDomain
-                        .GetAssemblies()
-                        .SelectMany(a => a.GetTypes())
-                        .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
-            List<string>? modules = app.Configuration.GetSection("Modules").Get<List<string>>();
-            RoleManager<IdentityRole>? rm = app.Services.CreateScope().ServiceProvider.GetService<RoleManager<IdentityRole>>();
-            UserManager<AppUser>? um = app.Services.CreateScope().ServiceProvider.GetService<UserManager<AppUser>>();
-            var adminUser=um.Users.Where(u => u.NormalizedEmail == "ART_ADMIN@DATAGEARBI.COM").FirstOrDefault();
-            if (modules is null || modules.Count == 0)
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+
+            var currentModuleTypes = types
+                .Where(s => modulesNameSpaces.Contains(s.Namespace))
+                .Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
+
+        
+
+           
+                using var scope = app.Services.CreateScope();
+
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                var allRoles = roleManager.Roles.Select(r => r.Name).ToList();
+                var adminUser = await userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedEmail == app.Configuration["AdminUser"]);
+
+            if ( modulesNameSpaces == null || modulesNameSpaces.Count == 0)
                 return;
 
-            List<string> rolesAdminDoesnotHave = new List<string>();  
-            foreach (string module in modules)
-            {
-                IEnumerable<string> moduleRoles = types.Where(a => a.Namespace.Contains($"ART_PACKAGE.Controllers.{module}")).Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower());
-                foreach (string role in moduleRoles)
+            var modulesRolesToAdd = currentModuleTypes.Except(allRoles).ToList();
+
+                foreach (var role in modulesRolesToAdd)
                 {
-                    //Console.WriteLine(module + "---" + role);
-
-                    if (!await rm.RoleExistsAsync(role))
-                    {
-                        IdentityRole roleToadd = new(role);
-                        _ = await rm.CreateAsync(roleToadd);
-                    }
-                    if (!await um.IsInRoleAsync(adminUser, role))
-                    {
-                        rolesAdminDoesnotHave.Add(role);
-                    }
-
+                    var roleToAdd = new IdentityRole(role);
+                    await roleManager.CreateAsync(roleToAdd);
                 }
-            }
-            await um.AddToRolesAsync(adminUser, rolesAdminDoesnotHave);
-
+            if (adminUser != null )
+                await userManager.AddToRolesAsync(adminUser, allRoles.Union(modulesRolesToAdd));
+            
         }
-
-
     }
 
 

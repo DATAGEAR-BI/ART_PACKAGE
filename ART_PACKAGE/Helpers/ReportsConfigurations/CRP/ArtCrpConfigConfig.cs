@@ -1,4 +1,5 @@
-﻿using Data.Services.Grid;
+﻿using ART_PACKAGE.Helpers.CSVMAppers;
+using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.ReportsConfigurations
 {
@@ -14,10 +15,12 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "Checker", new GridColumnConfiguration { DisplayName = "Checker"}},
                     { "CheckerDate", new GridColumnConfiguration { DisplayName = "Checker Date"}},
                     { "CheckerAction", new GridColumnConfiguration { DisplayName = "Checker Action"}},
-                    { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail", Template = "actionDetailTable"}},
+                    { "ActionDetail", new GridColumnConfiguration { DisplayName = "Action Detail", Template = "actionDetailTable",Format="html"}},
 
             };
-            ReportTitle = "CRP Configs Report";
+            MapperType = typeof(ArtCRPConfigMapper);
+            ReportTitle = "CRP Config. Details";
+            ReportDescription = "CRP Config. Details";
         }
     }
 }

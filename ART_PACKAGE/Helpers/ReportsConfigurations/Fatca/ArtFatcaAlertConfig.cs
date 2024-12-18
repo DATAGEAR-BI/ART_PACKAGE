@@ -17,6 +17,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                 { "Type", new GridColumnConfiguration { DisplayName = "Type" } },
                 { "Description", new GridColumnConfiguration { DisplayName = "Description" } },
             };
+            ReportTitle = "FATCA Alerts Details";
+            ReportDescription = "Presents all FATCA alerts details";
         }
     }
 }

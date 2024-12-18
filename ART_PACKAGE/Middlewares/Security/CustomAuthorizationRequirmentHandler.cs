@@ -7,16 +7,11 @@
     public class CustomAuthorizationRequirmentHandler : AuthorizationHandler<CustomAuthorizationRequirment>
     {
 
-        private readonly RoleManager<IdentityRole> _roleManger;
-        private readonly UserManager<AppUser> _userManger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomAuthorizationRequirmentHandler(RoleManager<IdentityRole> roleManger, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManger)
+        public CustomAuthorizationRequirmentHandler( IHttpContextAccessor httpContextAccessor)
         {
-
-            _roleManger = roleManger;
             _httpContextAccessor = httpContextAccessor;
-            _userManger = userManger;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirment requirement)
@@ -32,17 +27,16 @@
             }
 
             string roleName = GetControllerRole(controller + "controller");
-
             //IEnumerable<string> groups = (await _roleManger.GetClaimsAsync(routeRole)).Where(c => c.Type == "GROUP").Select(x => x.Value);
             //&& context.User.Claims.Where(c => c.Type == "GROUP").Select(x => x.Value).Distinct().All(x => !groups.Contains(x))
+
             if (string.IsNullOrEmpty(roleName))
             {
                 context.Succeed(requirement);
                 return;
             }
-            
-            AppUser user = await _userManger.GetUserAsync(context.User);
-            if (!await _userManger.IsInRoleAsync(user, roleName))
+
+            if (!_httpContextAccessor.HttpContext.User.IsInRole( roleName))
             {
                 context.Fail();
                 return;
@@ -56,12 +50,11 @@
                 return "";
 
 
-            if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower())
+            if (controller.ToLower() == nameof(CustomReportController).ToLower() || controller.ToLower() == nameof(MyReportsController).ToLower() )
                 return "art_customreport".ToLower();
 
             if (controller.ToLower() == nameof(UserRoleController).ToLower())
                 return "art_admin".ToLower();
-
             if (controller.ToLower() == nameof(LicenseController).ToLower())
                 return "art_superadmin".ToLower();
             

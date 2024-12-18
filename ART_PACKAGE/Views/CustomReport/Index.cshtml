@@ -12,6 +12,13 @@
 @section KendoScripts{
     <partial name="_GridScripts" />
 }
+<section class="content-header">
+    <h1>
+        @ViewBag.name
+        <small>@ViewBag.desc</small>
+        <br />
+    </h1>
+</section>
 <m-grid id="customreport" data-custom data-reportid="@ViewBag.id"></m-grid>
 <div id="chartContainer" class="row"></div>
 @section scripts {

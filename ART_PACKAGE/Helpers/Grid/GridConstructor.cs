@@ -1,16 +1,21 @@
 ﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.ReportsConfigurations;
 using ART_PACKAGE.Hubs;
+using com.sun.org.apache.bcel.@internal.classfile;
 using Data.Services;
 using Data.Services.Grid;
+using Data.Setting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Org.BouncyCastle.Ocsp;
 using System.Linq.Expressions;
 using System.Security.Claims;
 
@@ -26,12 +31,15 @@ namespace ART_PACKAGE.Helpers.Grid
         private readonly IHubContext<ExportHub> _exportHub;
         private readonly UsersConnectionIds connections;
         private static Dictionary<int, int> fileProgress = new();
+        private static Dictionary<int, int> chunksProgress = new();
         private readonly ReportConfigResolver _reportsConfigResolver;
         private readonly ProcessesHandler _processesHandler;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
+        private readonly PDF _pdfSettings;
 
-        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, ProcessesHandler processesHandler, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger)
+
+        public GridConstructor(TRepo repo, IDropDownMapper dropDownMap, IWebHostEnvironment webHostEnvironment, ICsvExport csvSrv, IHubContext<ExportHub> exportHub, UsersConnectionIds connections, ReportConfigResolver reportsConfigResolver, IPdfService pdfSrv, ProcessesHandler processesHandler, IConfiguration _config, ILogger<GridConstructor<TRepo, TContext, TModel>> logger, IOptions< PDF> pdfSettings)
         {
             Repo = repo;
             _dropDownMap = dropDownMap;
@@ -44,6 +52,7 @@ namespace ART_PACKAGE.Helpers.Grid
             this._config = _config;
             _logger = logger;
             _processesHandler = processesHandler;
+            _pdfSettings = pdfSettings.Value;
         }
         public TRepo Repo { get; private set; }
 
@@ -61,6 +70,7 @@ namespace ART_PACKAGE.Helpers.Grid
             int round = 0;
             fileProgress = new();
 
+
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
@@ -71,7 +81,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -89,7 +99,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, baseCondition));
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound,"tenantId", baseCondition));
 
                 total -= batch;
                 round++;
@@ -113,6 +123,7 @@ namespace ART_PACKAGE.Helpers.Grid
             int round = 0;
             fileProgress = new();
 
+
             _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
@@ -124,7 +135,7 @@ namespace ART_PACKAGE.Helpers.Grid
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -134,6 +145,8 @@ namespace ART_PACKAGE.Helpers.Grid
                     All = exportRequest.DataReq.All,
                     IdColumn = exportRequest.DataReq.IdColumn,
                     SelectedValues = exportRequest.DataReq.SelectedValues,
+                    IsStored = exportRequest.DataReq.IsStored,
+                    QueryBuilderFilters = exportRequest.DataReq.QueryBuilderFilters,
                 };
                 ExportRequest roundReq = new()
                 {
@@ -142,7 +155,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, baseCondition, defaultSort: reportConfig.defaultSortOption));
+                _ = Task.Run(() => _csvSrv.ExportData<TRepo, TContext, TModel>(roundReq, folderPath, "Report.csv", localRound, reportGUID, "tenantId", baseCondition, defaultSort: reportConfig.defaultSortOption));
 
                 total -= batch;
                 round++;
@@ -204,10 +217,12 @@ namespace ART_PACKAGE.Helpers.Grid
             return pdfBytes;
         }
         
-        public async Task<string> ExportGridToPDFUsingIText(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
+        public async Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
+            exportRequest.PdfOptions = _pdfSettings;//while not using user configs
+            exportRequest.PdfOptions.NumberOfColumnsInPage = exportRequest.IncludedColumns.Count();
             _processesHandler.AddProcess(reportGUID, "CSV");
             string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "PDF"), folderGuid);
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
@@ -215,23 +230,58 @@ namespace ART_PACKAGE.Helpers.Grid
             int totalcopy = total;
             var d = _config.GetValue<int>("export_Patch", 50000);// is not null ? _config.GetSection("export_Patch").ToString() : "500_000";
             //var saved_batch = Int32.Parse(_config.GetSection("export_Patch") is not null ? _config.GetSection("export_Patch").ToString() : "500_000");
-            int batch = d;
+            int batch = exportRequest.PdfOptions.NumberOfRowsInFile;// d;
             //500_000:
             int round = 0;
             fileProgress = new();
+            chunksProgress = new();
+            int totalchunks = 0;
 
-            _csvSrv.OnProgressChanged += (recordsDone, fileNumber) =>
+            if (exportRequest.PdfOptions.UsingPartitionApproach)
+                totalchunks = CalculateTotalChunks(total,
+
+                    exportRequest.IncludedColumns.Count()
+                    ,
+                    batch,
+                    reportConfig.MapperType != null && (reportConfig.MapperType.Name == typeof(ArtCFTConfigMapper).Name || reportConfig.MapperType.Name == typeof(ArtCRPConfigMapper).Name) && exportRequest.IncludedColumns.Count() > 2 ? exportRequest.IncludedColumns.Count() - 1 : exportRequest.IncludedColumns.Count()
+                    ,
+                    exportRequest.PdfOptions.NumberOfRowsInPage);
+            else
+                totalchunks = (int)Math.Ceiling((double)total / batch);
+
+            _pdfSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
                 var done = fileProgress.Values.Sum();
-                decimal progress = done / (decimal)totalcopy;
+                decimal progress = done / (decimal)(totalcopy+ totalchunks);
+                _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
+                /*if (progress<1)
+                {*/
+                    _ = _exportHub.Clients.Clients(connections.GetConnections(user))
+                                                   .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
+                //}
+                
+
+                
+            };
+            
+
+            _pdfSrv.OnLastProgressChanged += (elementDone, fileNumber) =>
+            {
+                chunksProgress[fileNumber] = elementDone;
+                var done = chunksProgress.Values.Sum();
+                decimal progress = done / (decimal)totalchunks;
+                if (fileProgress.Values.Sum() == totalcopy) { 
                 _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
                 _ = _exportHub.Clients.Clients(connections.GetConnections(user))
-                               .SendAsync("updateExportProgress", progress * 100, folderGuid, gridId);
+                               .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
+                }
+
+
             };
             while (total > 0)
             {
-                GridRequest dataReq = new()
+                KendoGridRequest dataReq = new()
                 {
                     Skip = round * batch,
                     Take = batch,
@@ -241,15 +291,18 @@ namespace ART_PACKAGE.Helpers.Grid
                     All = exportRequest.DataReq.All,
                     IdColumn = exportRequest.DataReq.IdColumn,
                     SelectedValues = exportRequest.DataReq.SelectedValues,
+                    IsStored = exportRequest.DataReq.IsStored,
+                    QueryBuilderFilters=exportRequest.DataReq.QueryBuilderFilters,
                 };
-                ExportRequest roundReq = new()
+                ExportPDFRequest roundReq = new()
                 {
                     DataReq = dataReq,
-                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList(),
+                    PdfOptions= exportRequest.PdfOptions
                 };
                 int localRound = round + 1;
 
-                _ = Task.Run(() => _pdfSrv.ITextPdf<TRepo, TContext, TModel>(roundReq,localRound, folderPath, "Report.pdf", reportGUID, baseCondition, defaultSort: reportConfig.defaultSortOption));
+                _ = Task.Run(() => _pdfSrv.ITextPdf<TRepo, TContext, TModel>(roundReq,localRound, folderPath, "Report.pdf", reportGUID, "tenantId", baseCondition, defaultSort: reportConfig.defaultSortOption));
 
                 total -= batch;
                 round++;
@@ -257,6 +310,35 @@ namespace ART_PACKAGE.Helpers.Grid
             return folderGuid;
         }
 
-        
+        protected  int CalculateTotalChunks(int totalRows, int totalColumns, int rowsPerFile, int columnsPerChunk, int rowsPerChunk)
+        {
+            // Calculate the number of files
+            int numberOfFiles = (int)Math.Ceiling((double)totalRows / rowsPerFile);
+            int totalChunks = 0;
+
+            for (int fileIndex = 0; fileIndex < numberOfFiles; fileIndex++)
+            {
+                // Calculate the number of rows in the current file
+                int remainingRows = totalRows - (fileIndex * rowsPerFile);
+                int rowsInFile = Math.Min(remainingRows, rowsPerFile);
+
+                // Calculate the number of column groups (chunks by column)
+                int columnGroups = (int)Math.Ceiling((double)totalColumns / columnsPerChunk);
+
+                for (int columnGroup = 0; columnGroup < columnGroups; columnGroup++)
+                {
+                    // Calculate the number of chunks in the current column group
+                    int rowChunks = (int)Math.Ceiling((double)rowsInFile / rowsPerChunk);
+                    totalChunks += rowChunks;
+                }
+            }
+
+            return totalChunks;
+        }
+
+        public Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, int gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

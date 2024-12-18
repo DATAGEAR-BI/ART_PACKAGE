@@ -18,7 +18,7 @@ namespace ART_PACKAGE.Data.Attributes
 
         public string ModuleNames { get; set; }
         public string DisplayName { get; set; } = string.Empty;
-        public bool IsHidden => !(modules != null && !string.IsNullOrEmpty(ModuleNames) && modules.Any(x => ModuleNames.Split(",").Contains(x)));
+        public bool IsHidden => !(modules != null && !string.IsNullOrEmpty(ModuleNames) && modules.Any(x => ModuleNames.Split(",").Contains(x))|| ModuleNames=="ART");
 
 
     }

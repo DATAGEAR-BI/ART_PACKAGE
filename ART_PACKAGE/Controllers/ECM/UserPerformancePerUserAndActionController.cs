@@ -1,21 +1,29 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.CustomReport;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
-using Data.Data.ARTDGAML;
+using Data.Data.ECM;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
-    //[Authorize(Roles = "DGAMLUserPerformancePerUserAndAction")]
-    public class DGAMLUserPerformancePerUserAndActionController : Controller
+    //[Authorize(Roles = "UserPerformancePerUserAndAction")]
+    public class UserPerformancePerUserAndActionController :  BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>, IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>
     {
-        private readonly IMemoryCache _cache;
-        private readonly ArtDgAmlContext context;
+        public UserPerformancePerUserAndActionController(IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+    {
+    }
+/*
+    private readonly IMemoryCache _cache;
+        private readonly EcmContext context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
         private readonly IPdfService _pdfSrv;
         private readonly IConfiguration _config;
@@ -71,11 +79,11 @@ namespace ART_PACKAGE.Controllers.DGAML
                 }),
 
             };
-        }
-        public IActionResult Index()
+        }*/
+        public override IActionResult Index()
         {
             return View();
-        }
+        }/*
 
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
@@ -122,6 +130,6 @@ namespace ART_PACKAGE.Controllers.DGAML
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
-        }
+        }*/
     }
 }
