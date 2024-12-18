@@ -110,6 +110,21 @@ namespace Data.Constants.StoredProcs
                 Type t when t == typeof(ArtUserPerformPerAction) && dbType == DbTypes.Oracle => ORACLESPName.ST_USER_PERFORMANCE_PER_ACTION,
                 Type t when t == typeof(ArtUserPerformPerAction) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION,
 
+                Type t when t == typeof(ArtDgAmlUserPerformancePerActionUser) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_USER,
+                Type t when t == typeof(ArtDgAmlUserPerformancePerActionUser) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_USER_PERFORMANCE_PER_USER,
+                Type t when t == typeof(ArtDgAmlUserPerformancePerActionUser) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION_USER,
+
+
+                Type t when t == typeof(ArtDgAmlUserPerformPerUserAndAction) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION,
+                Type t when t == typeof(ArtDgAmlUserPerformPerUserAndAction) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION,
+                Type t when t == typeof(ArtDgAmlUserPerformPerUserAndAction) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION,
+
+
+                Type t when t == typeof(ArtDgAmlUserPerformPerAction) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_ACTION,
+                Type t when t == typeof(ArtDgAmlUserPerformPerAction) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_USER_PERFORMANCE_PER_ACTION,
+                Type t when t == typeof(ArtDgAmlUserPerformPerAction) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_ACTION,
+
+
                 Type t when t == typeof(ArtStAmlAlertAgeSummery) && dbType == DbTypes.Oracle => ORACLESPName.ART_ST_DGAML_ALERT_AGE_SUMMARY,
                 Type t when t == typeof(ArtStAmlAlertAgeSummery) && dbType == DbTypes.SqlServer => SQLSERVERSPNames.ART_ST_AML_ALERT_AGE_SUMMARY,
                 Type t when t == typeof(ArtStAmlAlertAgeSummery) && dbType == DbTypes.MySql => MYSQLSPName.ART_ST_AML_ALERT_AGE_SUMMARY,
