@@ -79,6 +79,15 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Val = "ALERTS_COUNT",
                     Type = ChartType.donut
                 },
+                new ChartData<ArtStDgAmlAlertsPerScenario>
+                {
+                    ChartId = "StAlertPerScenario",
+                    Data = chart4data.ToList(),
+                    Title = "Alerts Per Scenario",
+                    Cat = "SCENARIO_NAME",
+                    Val = "ALERTS_COUNT",
+                    Type = ChartType.bar
+                },
                 new ChartData<ArtStDgAmlAlertPerOwner>
                 {
                     ChartId = "StAlertPerOwner",
@@ -86,7 +95,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
                     Val = "ALERTS_CNT_SUM",
-                    Type = ChartType.donut
+                    Type = ChartType.bar
                 },
                 new ChartData<ArtStDgAmlAlertsPerBranch>
                 {
@@ -96,15 +105,6 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Cat = "BRANCH_NAME",
                     Val = "ALERTS_COUNT",
                     Type = ChartType.bar
-                },
-                new ChartData<ArtStDgAmlAlertsPerScenario>
-                {
-                    ChartId = "StAlertPerScenario",
-                    Data = chart4data.ToList(),
-                    Title = "Alerts Per Scenario",
-                    Cat = "SCENARIO_NAME",
-                    Val = "ALERTS_COUNT",
-                    Type = ChartType.donut
                 },
             };
 
