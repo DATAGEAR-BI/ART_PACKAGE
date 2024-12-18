@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Org.BouncyCastle.Ocsp;
 using System.Linq.Expressions;
 using System.Security.Claims;
 
@@ -237,9 +239,12 @@ namespace ART_PACKAGE.Helpers.Grid
 
             if (exportRequest.PdfOptions.UsingPartitionApproach)
                 totalchunks = CalculateTotalChunks(total,
-                    exportRequest.IncludedColumns.Count(),
+
+                    exportRequest.IncludedColumns.Count()
+                    ,
                     batch,
-                    exportRequest.PdfOptions.NumberOfColumnsInPage,
+                    reportConfig.MapperType != null && (reportConfig.MapperType.Name == typeof(ArtCFTConfigMapper).Name || reportConfig.MapperType.Name == typeof(ArtCRPConfigMapper).Name) && exportRequest.IncludedColumns.Count() > 2 ? exportRequest.IncludedColumns.Count() - 1 : exportRequest.IncludedColumns.Count()
+                    ,
                     exportRequest.PdfOptions.NumberOfRowsInPage);
             else
                 totalchunks = (int)Math.Ceiling((double)total / batch);

@@ -1,21 +1,28 @@
-﻿using ART_PACKAGE.Extentions.DbContextExtentions;
+﻿using ART_PACKAGE.Areas.Identity.Data;
+using ART_PACKAGE.Extentions.DbContextExtentions;
 using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Helpers.StoredProcsHelpers;
 using Data.Constants.db;
 using Data.Constants.StoredProcs;
 using Data.Data.ARTDGAML;
+using Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace ART_PACKAGE.Controllers.DGAML
 {
     //[Authorize(Roles = "DGAMLUserPerformancePerActionUser")]
-    public class DGAMLUserPerformancePerActionUserController : Controller
+    public class DGAMLUserPerformancePerActionUserController : /*Controller*/ BaseReportController<IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser>, ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser>, IBaseRepo<ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser>, ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser>
     {
-        private readonly ArtDgAmlContext context;
+        public DGAMLUserPerformancePerActionUserController(IGridConstructor<IBaseRepo<ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser>, ArtDgAmlContext, ArtDgAmlUserPerformancePerActionUser> gridConstructor, UserManager<AppUser> um) : base(gridConstructor, um)
+        {
+        }
+        /*private readonly ArtDgAmlContext context;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService _dropSrv;
         private readonly ICsvExport _csvSrv;
@@ -121,12 +128,12 @@ namespace ART_PACKAGE.Controllers.DGAML
                                                     , User.Identity.Name);
             return File(bytes, "application/pdf");
         }
+*/
 
 
 
 
-
-        public IActionResult Index()
+        public override IActionResult Index()
         {
             return View();
         }

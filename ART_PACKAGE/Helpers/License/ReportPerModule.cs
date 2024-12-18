@@ -60,7 +60,7 @@ namespace ART_PACKAGE.Helpers.License
             //nameof(SystemPerformanceNewSummaryController).ToLower() ,
             nameof(UserPerformanceController).ToLower() ,
             nameof(UserPerformancePerActionUserController).ToLower() ,
-            nameof(Controllers.ECM.UserPerformancePerUserAndActionController).ToLower() ,
+            nameof(UserPerformancePerUserAndActionController).ToLower() ,
             nameof(UserPerformPerActionController).ToLower() ,
             //nameof(AlertedEntitiesController).ToLower() ,
         };

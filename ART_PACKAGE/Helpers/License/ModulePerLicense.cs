@@ -3,7 +3,6 @@ using ART_PACKAGE.Controllers.DGAML;
 using ART_PACKAGE.Controllers.ECM;
 using ART_PACKAGE.Controllers.GOAML;
 using ART_PACKAGE.Controllers.SASAML;
-using UserPerformancePerUserAndActionController = ART_PACKAGE.Controllers.ECM.UserPerformancePerUserAndActionController;
 
 namespace ART_PACKAGE.Helpers.License
 {
