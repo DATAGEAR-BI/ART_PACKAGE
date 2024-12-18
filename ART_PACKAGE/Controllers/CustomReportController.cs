@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Data.Attributes;
+using ART_PACKAGE.Extentions.Filters;
 using ART_PACKAGE.Helpers.Grid;
 using ART_PACKAGE.Helpers.Handlers;
 using Data.Services.CustomReport;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -17,13 +19,13 @@ namespace ART_PACKAGE.Controllers
         private readonly ProcessesHandler _processHanandler;
 
 
-        public CustomReportController(ICustomReportGridConstructor gridConstructor, UserManager<AppUser> um, ProcessesHandler processesHandler) : base(gridConstructor, um)
+        public CustomReportController(ICustomReportGridConstructor gridConstructor,  ProcessesHandler processesHandler, UserManager<AppUser> um) : base(gridConstructor,um)
         {
             _processHanandler = processesHandler;
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             if (request.IsIntialize)
             {
@@ -46,7 +48,7 @@ namespace ART_PACKAGE.Controllers
         }
 
         [HttpPost("[controller]/[action]/{id}")]
-        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] GridRequest request)
+        public IActionResult GetReportChartsData([FromRoute] int id, [FromBody] KendoGridRequest request)
         {
             try
             {
@@ -88,7 +90,7 @@ namespace ART_PACKAGE.Controllers
             }
         }
 
-        [HttpGet("[controller]/[action]")]
+       /* [HttpGet("[controller]/[action]")]
         public IActionResult GetChartsTypes()
         {
             IEnumerable<SelectListItem> result = typeof(ChartType).GetMembers(BindingFlags.Static | BindingFlags.Public).Where(x =>
@@ -108,7 +110,7 @@ namespace ART_PACKAGE.Controllers
 
             });
             return Ok(result);
-        }
+        }*/
         [HttpGet("[controller]/[action]")]
         public IActionResult GetDbSchemas()
         {
@@ -133,18 +135,26 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public override async Task<IActionResult> ExportToCsv([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-            AppUser user = await GetUser();
+
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
-            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, user.UserName, reportGUID);
+            string folderGuid = _gridConstructor.ExportGridToCsv(reportId, req, User.Identity.Name, reportGUID);
             return Ok(new { folder = folderGuid });
         }
         [HttpPost("[controller]/[action]/{gridId}")]
-        public override async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
+        public override async Task<IActionResult> ExportPdf([FromBody] ExportPDFRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
+            Console.WriteLine(JsonConvert.SerializeObject(req.DataReq.Filter.ToList()));
             int reportId = Convert.ToInt32(gridId.Split("-")[1]);
             ViewData["reportId"] = reportGUID;
-            byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
-            return File(pdfBytes, "application/pdf");
+            var fileame = await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportId, reportGUID);
+            return new ContentResult
+            {
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+            };
+            /*
+                        byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(reportId, req, User.Identity.Name, ControllerContext, ViewData);
+                        return File(pdfBytes, "application/pdf");*/
         }// Task<IActionResult>
 
         [HttpGet("[controller]/{reportId}")]
@@ -154,16 +164,23 @@ namespace ART_PACKAGE.Controllers
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
+            //AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
+            if (!report.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Forbid();
 
             ViewBag.id = reportId;
+            ViewBag.name = report.Name;
+            ViewBag.desc = report.Description;
             return View("Index");
         }
         [HttpGet("[controller]/[action]")]
         public IActionResult CreateReport()
+        {
+            return View();
+        }
+        [HttpGet("[controller]/[action]")]
+        public IActionResult CreateNewReport()
         {
             return View();
         }
@@ -175,9 +192,8 @@ namespace ART_PACKAGE.Controllers
             if (report == null)
                 return NotFound();
 
-            AppUser currentUser = await GetUser();
 
-            if (!report.Users.Contains(currentUser))
+            if (!report.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Forbid();
             IEnumerable<ReportChartDto> charts = report.Charts.Select((x, i) => new ReportChartDto
             {

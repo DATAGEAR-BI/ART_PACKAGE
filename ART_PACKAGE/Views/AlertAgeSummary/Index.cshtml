@@ -2,30 +2,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
-<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" />
-<link href="~/lib/jQuery-QueryBuilder/css/query-builder.dark.css" rel="stylesheet" />
-<link href="~/lib/jQuery-QueryBuilder/css/query-builder.dark.min.css" rel="stylesheet" />
-<link href="~/lib/Plugins/Kendo/kendo.default-v2.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.css" rel="stylesheet" />
-<link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
-<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
-<script src="~/lib/Plugins/Kendo/jquery.min.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.js"></script>
-<script src="~/lib/Plugins/Kendo/jszip.min.js"></script>
-<script src="~/lib/Plugins/Kendo/kendo.all.min.js"></script>
-<script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
-<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="~/lib/jQuery-QueryBuilder/js/query-builder.min.js"></script>
-<script src="~/lib/jQuery-QueryBuilder/js/query-builder.standalone.min.js"></script>
-<script src="~/lib/jQuery-QueryBuilder/js/query-builder.standalone.js"></script>
-<script src="~/lib/jQuery-QueryBuilder/js/query-builder.js"></script>
-
+@section KendoScripts{
+    <partial name="_QueryBuilderGridScripts" />
+}
 <section class="content-header">
     <h1>
         Alert Age Summary Report
@@ -35,13 +14,13 @@
 </section>
 
 
-<filters-control data-key="AlertAgeSummery"></filters-control>
-<div id="grid"></div>
-
+<art-filters-control id="AlertAgeSummary" data-key="AlertAgeSummary"></art-filters-control>
+<m-grid id="AlertAgeSummary" data-urlkey="AlertAgeSummary" data-handlerkey="AlertAgeSummary" data-stored="AlertAgeSummary"></m-grid>
 
 @section Scripts {
-    <script src="~/js/Dynamic.js" id="script" defer type="module" data-stored="true" data-urlkey="AlertAgeSummary" data-handlerkey="AlertAgeSummary"></script>
 
 
-    <script src="~/js/ConstructFilters.js" defer type="module"></script>
+    <script src="~/js/Components/ARTQBuilder/QueryBuilder.js" defer type="module"></script>
+
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
 }

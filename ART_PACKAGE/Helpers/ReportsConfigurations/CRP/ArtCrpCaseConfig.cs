@@ -4,7 +4,8 @@
     {
         public ArtCrpCaseConfig()
         {
-
+            ReportTitle = "CRP Cases Details";
+            ReportDescription = "CRP Cases Details";
         }
     }
 }

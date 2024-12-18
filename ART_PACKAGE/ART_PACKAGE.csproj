@@ -24,6 +24,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Remove="Views\AML_ANALYSIS\Rules.cshtml" />
+		<Content Remove="wwwroot\js\Components\ARTMSelect\ARTMSelect.js" />
+		<Content Remove="wwwroot\js\Components\ARTQBuilder\QueryBuilder.js" />
 		<Content Remove="wwwroot\js\components\ChartUtils.js" />
 		<Content Remove="wwwroot\js\HubUtils.js" />
 		<Content Remove="wwwroot\js\segmentReport.js" />
@@ -1915,6 +1917,8 @@
 		<None Include="wwwroot\bower_components\Ionicons\src\wrench.svg" />
 		<None Include="wwwroot\bower_components\Ionicons\src\xbox.svg" />
 		<None Include="wwwroot\js\AmlAnalysisScripts\AutoRules.js" />
+		<None Include="wwwroot\js\Components\ARTMSelect\ARTMSelect.js" />
+		<None Include="wwwroot\js\Components\ARTQBuilder\QueryBuilder.js" />
 		<None Include="wwwroot\js\Components\Card\Card.js" />
 		<None Include="wwwroot\js\Components\Charts\Charts.js" />
 		<None Include="wwwroot\js\Components\Card\ChartUtils.js" />
@@ -2514,10 +2518,12 @@
 		<PackageReference Include="Hangfire.LiteDB" Version="0.4.1" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
 		<PackageReference Include="IKVM" Version="8.6.2" />
+		<PackageReference Include="itext.pdf2data" Version="5.0.0" />
 		<PackageReference Include="itext7" Version="8.0.5" />
 		<PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
-		<PackageReference Include="itext7.pdfhtml" Version="5.0.1" />
+		<PackageReference Include="itext7.pdfhtml" Version="5.0.5" />
 		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.30" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
@@ -2556,10 +2562,14 @@
 	<ItemGroup>
 		<Folder Include="Extentions\NewFolder\" />
 		<Folder Include="Licenses\" />
+		<Folder Include="Services\NewFolder\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\js\Components\CategoryTree\" />
+		<Folder Include="wwwroot\js\Components\ARTMTables\" />
 		<Folder Include="wwwroot\js\SegmentationScripts\" />
 		<Folder Include="wwwroot\CSV\" />
 		<Folder Include="wwwroot\CSV\" />
+		<Folder Include="wwwroot\PDF\" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>

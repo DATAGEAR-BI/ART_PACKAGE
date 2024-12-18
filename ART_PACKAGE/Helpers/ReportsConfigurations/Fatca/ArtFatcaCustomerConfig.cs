@@ -25,6 +25,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
             };
+            ReportTitle = "FATCA Customers Details";
+            ReportDescription = "Presents all FATCA Customers details";
         }
     }
 }

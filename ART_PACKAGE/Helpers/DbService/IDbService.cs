@@ -14,6 +14,7 @@ using Data.DGCRP;
 using Data.DGECMFilters;
 using Data.DGAMLFilters;
 using Data.DGAMLAdmin;
+using ART_PACKAGE.Areas.Identity.Data;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -38,6 +39,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGAMLFiltersContext DGAMLFilters { get; }
         public DGAMLAdminContext DGAMLAdmin { get; }
 
+        public AuthContext ARTCustomReport { get; }
 
     }
 }

@@ -3177,6 +3177,41 @@ namespace Data.ModelCreatingStrategies
                     .IsUnicode(false)
                     .HasColumnName("UPDATE_USER_ID");
             });
+
+            modelBuilder.Entity<ArtCFTConfig>(entity =>
+            {
+                entity.ToView("ART_CFT_CONFIG");
+                entity.HasNoKey();
+                entity.Property(e => e.CaseId)
+                 .HasColumnName("case_id")
+                 .HasMaxLength(64)
+                 .IsRequired();
+
+                entity.Property(e => e.Maker)
+                    .HasColumnName("Maker")
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.MakerDate)
+                    .HasColumnName("Maker_Date")
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                entity.Property(e => e.Checker)
+                    .HasColumnName("Checker")
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.CheckerDate)
+                    .HasColumnName("Checker_Date")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerAction)
+                    .HasColumnName("Checker_Action")
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.ActionDetail)
+                    .HasColumnName("Action_Detail")
+                    .HasColumnType("VARCHAR2(12000)");
+            });
         }
 
         public void OnSasAmlModelCreating(ModelBuilder modelBuilder)

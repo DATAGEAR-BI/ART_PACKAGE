@@ -114,11 +114,11 @@ namespace ART_PACKAGE.Areas.Identity.Pages.Account
                                         return Page();
                                     }
                                 }
-                             /*   if (user.DgUserId == null)
-                                {
-                                    user.DgUserId = info.DgUserManagementResponse.Id;
-                                }
-                                user.LastLoginDate = DateTime.Now;*/
+                                /*   if (user.DgUserId == null)
+                                   {
+                                       user.DgUserId = info.DgUserManagementResponse.Id;
+                                   }
+                                   user.LastLoginDate = DateTime.Now;*/
                                 _ = await _userManager.AddLoginAsync(user, info.UserLoginInfo);
                                 _logger.LogWarning($"Adding roles to user");
                                 await AddRolesAndGroupsToUser(user.Email, artRoles);

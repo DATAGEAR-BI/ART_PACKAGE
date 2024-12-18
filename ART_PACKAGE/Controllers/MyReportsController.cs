@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Security.Claims;
 using ART_PACKAGE.Areas.Identity.Data;
 using ART_PACKAGE.Helpers.Grid;
 using Data.Services.CustomReport;
@@ -72,7 +73,7 @@ namespace ART_PACKAGE.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveReport([FromBody] SaveReportDto model)
         {
-            bool isSaved = await _gridConstructor.Repo.SaveReport(model, await GetUser());
+            bool isSaved = await _gridConstructor.Repo.SaveReport(model,await GetUser());
             if (isSaved)
                 return Ok();
             else
@@ -97,8 +98,7 @@ namespace ART_PACKAGE.Controllers
 
         public override async Task<IActionResult> GetData(GridRequest request)
         {
-            AppUser user = await _um.GetUserAsync(User);
-            baseCondition = x => x.Users.Contains(user);
+            baseCondition = x => x.UserId.Contains(User.FindFirstValue(ClaimTypes.NameIdentifier));
             includes = new List<Expression<Func<ArtSavedCustomReport, object>>>()
             {
                 x => x.Users,

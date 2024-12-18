@@ -21,6 +21,7 @@ using ART_PACKAGE.Services;
 using Data.Services;
 using Data.Services.AmlAnalysis;
 using Data.Services.CustomReport;
+using Data.Setting;
 using Hangfire;
 using Hangfire.LiteDB;
 using Microsoft.AspNetCore.Identity;
@@ -35,12 +36,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(new WebApplicationO
 });
 
 builder.Services.AddDbs(builder.Configuration);
-
 builder.Services.AddSignalR();
-//builder.Services.AddHostedService<LicenseWatcher>();
-builder.Services.AddScoped<IDropDownService, DropDownService>();
-builder.Services.AddScoped<IPdfService, PdfService>();
 
+//builder.Services.AddHostedService<LicenseWatcher>();
+
+builder.Services.AddScoped<IDropDownService, DropDownService>();
+
+builder.Services.Configure<PDF>(builder.Configuration.GetSection("PDF"));
+builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 builder.Services.AddScoped<IDgUserManager, DgUserManager>();
@@ -61,6 +64,7 @@ builder.Services.AddScoped<IDropDownMapper, DropDownMapper>();
 builder.Services.AddReportsConfiguratons();
 
 builder.Services.AddScoped<ICsvExport, CsvExport>();
+
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
@@ -118,14 +122,13 @@ var serviceProvider = builder.Services.BuildServiceProvider();
 var _recurringService = serviceProvider.GetRequiredService<IRecurringJobManager>();
 var csvJobs = serviceProvider.GetRequiredService<CSVJobs>();
 _recurringService.AddOrUpdate("clean-csv-directory", () =>
-    csvJobs.CleanDirectory(), $"0 0 * * *");
+    csvJobs.CleanDirectory("CSV"), $"0 0 * * *");
+_recurringService.AddOrUpdate("clean-pdf-directory", () =>
+    csvJobs.CleanDirectory("PDF"), $"0 0 * * *");
 
 WebApplication app = builder.Build();
-
-app.ApplyModulesMigrations();
-
+//app.ApplyModulesMigrations();
 app.SeedModuleRoles();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -143,7 +146,7 @@ app.UseAuthorization();
 app.UseCustomAuthorization();
 //app.UseLicense();
 app.MapRazorPages();
-app.MapHub<LicenseHub>("/LicHub");
+//app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
 app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(

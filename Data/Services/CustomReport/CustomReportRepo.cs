@@ -1,7 +1,12 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Data.Constants.db;
+using Data.Extentions;
+using Data.GOAML;
 using Data.Services.Grid;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Collections.Generic;
+using System.Data;
 using System.Text.Json;
 
 
@@ -28,6 +33,8 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         { "gt"   ,("{0} > {1}"  ,true)},
         { "lte"  ,("{0} <= {1}" ,true)},
         { "lt"  , ("{0} < {1}"  ,true)},
+        { "isnullorempty"  ,( "{0} = '' or {0} IS NULL",false) },
+        { "isnotnullorempty"  , ("{0} != '' and {0} IS NOT NULL",false) }
     };
     public CustomReportRepo(AuthContext context) : base(context)
     {
@@ -41,11 +48,15 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         {
             name = x.Column,
             isNullable = x.IsNullable,
-            type = x.JsType
-        });
+            type = x.JsType,
+            displayName = x.Column.MapToHeaderName(),/*,
+            isDropDown = !string.IsNullOrEmpty(x.DropDownView),
+            displayName = x.DisplayName,
+            menu = GetDropDownMenu(x.DropDownView, x.DropDownText, x.DropDownValue)*/
+        }); ;
     }
-
-    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    
+    public GridResult<Dictionary<string, object>> GetGridData(DbContext schemaContext, ArtSavedCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
 
@@ -81,6 +92,11 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
                     total = count
                 };
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw ex;
+            }
             finally
             {
                 if (connection.State == System.Data.ConnectionState.Open)
@@ -89,7 +105,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         }
     }
 
-    public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public int GetDataCount(DbContext schemaContext, ArtSavedCustomReport report, KendoGridRequest request)
     {
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
         using (var connection = schemaContext.Database.GetDbConnection())
@@ -127,7 +143,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         }
 
     }
-    private string GenerateSql(ArtSavedCustomReport report, GridRequest request, string dbType, bool isCount = false)
+    private string GenerateSql(ArtSavedCustomReport report, KendoGridRequest request, string dbType, bool isCount = false)
     {
 
         string dbLitral = dbType == DbTypes.Oracle ? @"""{0}""" : dbType == DbTypes.MySql ? @"`{0}`" : "[{0}]";
@@ -307,7 +323,7 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         return _context.ArtSavedCustomReports.Any(x => x.Id == reportId);
     }
 
-    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtSavedCustomReport report, GridRequest request)
+    public IEnumerable<ChartDataDto> GetReportChartsData(DbContext schemaContext, ArtSavedCustomReport report, KendoGridRequest request)
     {
 
         var dbType = schemaContext.Database.IsOracle() ? DbTypes.Oracle : schemaContext.Database.IsSqlServer() ? DbTypes.SqlServer : DbTypes.MySql;
@@ -466,4 +482,6 @@ public class CustomReportRepo : BaseRepo<AuthContext, Dictionary<string, object>
         _context.Entry(report).Collection(u => u.Users).Load();
         return report;
     }
+
+
 }
