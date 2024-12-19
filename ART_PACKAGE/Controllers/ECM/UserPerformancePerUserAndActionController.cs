@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers.DGAML
+namespace ART_PACKAGE.Controllers.ECM
 {
     //[Authorize(Roles = "UserPerformancePerUserAndAction")]
     public class UserPerformancePerUserAndActionController :  BaseReportController<IGridConstructor<IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>, IBaseRepo<EcmContext, ArtUserPerformPerUserAndAction>, EcmContext, ArtUserPerformPerUserAndAction>
@@ -31,7 +31,7 @@ namespace ART_PACKAGE.Controllers.DGAML
 
 
 
-        public DGAMLUserPerformancePerUserAndActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, ArtDgAmlContext context, IConfiguration config)
+        public UserPerformancePerUserAndActionController(Microsoft.AspNetCore.Hosting.IHostingEnvironment env, IMemoryCache cache, IPdfService pdfSrv, EcmContext context, IConfiguration config)
         {
             _env = env;
             _cache = cache;
@@ -43,23 +43,23 @@ namespace ART_PACKAGE.Controllers.DGAML
 
         public IActionResult GetData([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgAmlUserPerformPerUserAndAction> data = Enumerable.Empty<ArtDgAmlUserPerformPerUserAndAction>().AsQueryable();
+            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
 
-            KendoDataDesc<ArtDgAmlUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req);
+            KendoDataDesc<ArtUserPerformPerUserAndAction> Data = data.AsQueryable().CallData(para.req);
 
 
             var result = new
@@ -88,20 +88,20 @@ namespace ART_PACKAGE.Controllers.DGAML
 
         public async Task<IActionResult> Export([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgAmlUserPerformPerUserAndAction> data = Enumerable.Empty<ArtDgAmlUserPerformPerUserAndAction>().AsQueryable();
+            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             para.req.IsExport = true;
             byte[] bytes = await data.AsQueryable().ExportToCSV(para.req);
@@ -110,20 +110,20 @@ namespace ART_PACKAGE.Controllers.DGAML
 
         public async Task<IActionResult> ExportPdf([FromBody] StoredReq para)
         {
-            IEnumerable<ArtDgAmlUserPerformPerUserAndAction> data = Enumerable.Empty<ArtDgAmlUserPerformPerUserAndAction>().AsQueryable();
+            IEnumerable<ArtUserPerformPerUserAndAction> data = Enumerable.Empty<ArtUserPerformPerUserAndAction>().AsQueryable();
 
             IEnumerable<System.Data.Common.DbParameter> summaryParams = para.procFilters.MapToParameters(dbType);
             if (dbType == DbTypes.SqlServer)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(SQLSERVERSPNames.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(SQLSERVERSPNames.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.Oracle)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(ORACLESPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(ORACLESPName.ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             else if (dbType == DbTypes.MySql)
             {
-                data = context.ExecuteProc<ArtDgAmlUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
+                data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
