@@ -656,7 +656,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                             lock (_locker)
                             {
                                 OnProgressChanged(pdfRec + 1, fileNumber);
-                                OnLastProgressChanged(0, fileNumber);
+                                OnProgressChanged(0, fileNumber * (-1));
 
                             }
                             document.Add(table);
@@ -780,9 +780,20 @@ namespace ART_PACKAGE.Helpers.Pdf
                                     {
                                         tableIndex++;
                                         pdfRec++;
+                                        tableIndex++;
+                                        pdfRec++;
+                                        if (totalrec <= 100)
+                                        {
+                                            int recordsDone = pdfRec;
+                                            lock (_locker)
+                                            {
+                                                OnProgressChanged(recordsDone, fileNumber);
+                                            }
+                                        }
+
                                         if (totalrec > 100 && (pdfRec % 100 == 0 || pdfRec == totalrec))
                                         {
-                                            int recordsDone = pdfRec + 1;
+                                            int recordsDone = pdfRec ;
                                             lock (_locker)
                                             {
                                                 OnProgressChanged(recordsDone, fileNumber);
@@ -837,7 +848,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                 
                                 lock (_locker)
                                 {
-                                    OnLastProgressChanged(elementDone, fileNumber);
+                                    OnProgressChanged(elementDone, fileNumber * (-1));
 
                                 }
                                 elementDone++;
@@ -851,8 +862,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         adstopwatch.Stop();
                         lock (_locker)
                         {
-                            OnLastProgressChanged(elementDone == 0 ? 1 : elementDone, fileNumber);
-
+                            OnProgressChanged(elementDone == 0 ? 1 : elementDone, fileNumber * (-1));
                         }
                         // Get the elapsed time as a TimeSpan
                         TimeSpan adelapsedTime = adstopwatch.Elapsed;
@@ -1073,7 +1083,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                             lock (_locker)
                             {
                                 OnProgressChanged(pdfRec + 1, fileNumber);
-                                OnLastProgressChanged(0, fileNumber);
+                                OnProgressChanged(0, fileNumber*(-1));
 
                             }
                             document.Add(table);
@@ -1174,11 +1184,18 @@ namespace ART_PACKAGE.Helpers.Pdf
 
 
                                 index++; // Increment the index for each item
-
+                                if (totalrec <= 100)
+                                {
+                                    int recordsDone = index;
+                                    lock (_locker)
+                                    {
+                                        OnProgressChanged(recordsDone, fileNumber);
+                                    }
+                                }
                                 // Log progress or handle process cancellation
                                 if (dataCount > 100 && (index % 100 == 0 || index == dataCount))
                                 {
-                                    int recordsDone = index + 1;
+                                    int recordsDone = index ;
                                     lock (_locker)
                                     {
                                         OnProgressChanged(recordsDone, fileNumber);
@@ -1217,8 +1234,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                     document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
                                 lock (_locker)
                                 {
-                                    OnLastProgressChanged(elementDone, fileNumber);
-
+                                    OnProgressChanged(elementDone, fileNumber * (-1));
                                 }
                                 elementDone++;
                             }
@@ -1231,8 +1247,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         adstopwatch.Stop();
                         lock (_locker)
                         {
-                            OnLastProgressChanged(elementDone == 0 ? 1 : elementDone, fileNumber);
-
+                            OnProgressChanged(elementDone == 0 ? 1 : elementDone, fileNumber * (-1));
                         }
                         // Get the elapsed time as a TimeSpan
                         TimeSpan adelapsedTime = adstopwatch.Elapsed;

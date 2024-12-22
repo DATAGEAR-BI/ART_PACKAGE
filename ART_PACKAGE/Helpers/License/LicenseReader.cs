@@ -18,13 +18,14 @@ namespace ART_PACKAGE.Helpers.License
         private readonly ILogger<LicenseReader> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-        public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment)
+        public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment, IConfiguration config)
         {
             _cipher = Cipher.getInstance("RSA");
             _publicKey = getDecodedPublicKey(LicenseConstants.PUBLIC_KEY);
             _cipher.init(2, _publicKey);
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _configuration = config;
         }
         public Middlewares.License.License ReadFromPath(string path)
         {
@@ -158,7 +159,7 @@ namespace ART_PACKAGE.Helpers.License
             Expression<Func<Middlewares.License.License, bool>> ex = request.Filter.ToExpression<Middlewares.License.License>();
 
             data = data.Where(ex);
-            if (!request.All)
+            /*if (!request.All)
             {
                 ParameterExpression parameter = Expression.Parameter(typeof(Middlewares.License.License), "item");
                 MemberExpression property = Expression.Property(parameter, request.IdColumn);
@@ -178,7 +179,7 @@ namespace ART_PACKAGE.Helpers.License
 
                 Expression<Func<Middlewares.License.License, bool>> predicate = Expression.Lambda<Func<Middlewares.License.License, bool>>(containsExpression, parameter);
                 data = data.Where(predicate);
-            }
+            }*/
             int count = data.Count();
 
 

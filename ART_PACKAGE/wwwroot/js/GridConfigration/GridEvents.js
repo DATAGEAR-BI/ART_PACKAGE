@@ -28,7 +28,9 @@ export function generateGUID() {
         s4() + '-' + s4() + s4() + s4();
 }
 export var currentPDFReportId = '';
-
+export function removeGUID() {
+    currentPDFReportId=''
+}
 export const Handlers = {
     AlertSearch: {
         test1: (e) => {

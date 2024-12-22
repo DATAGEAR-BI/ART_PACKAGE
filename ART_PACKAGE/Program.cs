@@ -91,7 +91,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 });
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
-//builder.Services.AddLicense(builder.Configuration);
+builder.Services.AddLicense(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 builder.Services.AddSingleton<UsersConnectionIds>();
 IHttpContextAccessor HttpContextAccessor = builder.Services.BuildServiceProvider().GetRequiredService<IHttpContextAccessor>();
@@ -144,7 +144,7 @@ app.UseAuthentication();
 app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
 app.UseCustomAuthorization();
-//app.UseLicense();
+app.UseLicense();
 app.MapRazorPages();
 //app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");

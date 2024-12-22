@@ -6,17 +6,20 @@ namespace ART_PACKAGE.Middlewares.License
     {
         private readonly ILicenseReader licenseReader;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _config;
 
-        public LicenseHandler(ILicenseReader licenseReader, IHttpContextAccessor httpContextAccessor)
+        public LicenseHandler(ILicenseReader licenseReader, IHttpContextAccessor httpContextAccessor, IConfiguration _config)
         {
             this.licenseReader = licenseReader;
             _httpContextAccessor = httpContextAccessor;
+            this._config = _config;
+
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, LicenseRequirment requirement)
         {
             //check if Datagear admin user 
-            if (context.User is not null && context.User?.Identity?.Name?.ToLower() == "art_admin@datagearbi.com")
+            if (context.User is not null && context.User?.Identity?.Name?.ToLower() == _config["AdminUser"]?.ToLower())
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;

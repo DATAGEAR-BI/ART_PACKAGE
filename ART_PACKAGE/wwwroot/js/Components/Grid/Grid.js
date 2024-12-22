@@ -2,7 +2,7 @@ import { URLS } from "../../URLConsts.js"
 import { EXPORT_URLS } from "../../GridConfigration/ExportUrls.js"
 import { Templates } from "../../GridConfigration/ColumnsTemplate.js"
 import { columnFilters } from "../../GridConfigration/ColumnsFilters.js"
-import { Handlers, dbClickHandlers, changeRowColorHandlers, currentPDFReportId, generateGUID } from "../../GridConfigration/GridEvents.js"
+import { Handlers, dbClickHandlers, changeRowColorHandlers, currentPDFReportId, generateGUID, removeGUID } from "../../GridConfigration/GridEvents.js"
 import { Actions, ActionsConditions } from "../../GridConfigration/GridActions.js"
 import { getChartType } from "../Charts/Charts.js"
 
@@ -399,9 +399,10 @@ class Grid extends HTMLElement {
                             pdfProgressBar.hidden = true;
                             pdfProgressBar.style.visibility = "hidden";
                         }
-
+                        removeGUID();
                         var downloadRes = await fetch("/Files/DownloadPDFFiles/" + exportinProcess);
                         if (downloadRes.ok) {
+                           
                             isExportingPDFNow = false;
                             var blob = await downloadRes.blob();
                             var a = document.createElement("a");
@@ -410,10 +411,11 @@ class Grid extends HTMLElement {
                             a.click();
                             e.target.hidden = true;
                             e.target.style.visibility = "hidden";
-                            
+                           
                         }
+                        
+                        exportConnection.invoke("CancelPdfExport", exportinProcess);
 
-                        exportConnection.invoke("CancelPdfExport", currentPDFReportId);
 
                         
                     } else {

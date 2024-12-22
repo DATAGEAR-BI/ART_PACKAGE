@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Extentions.IServiceCollectionExtentions;
 using ART_PACKAGE.Helpers.Csv;
+using ART_PACKAGE.Helpers.CSVMAppers;
 using ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper;
 using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.Pdf;
@@ -233,45 +234,38 @@ namespace ART_PACKAGE.Helpers.Grid
             int round = 0;
             fileProgress = new();
             chunksProgress = new();
+            int totalchunks = 0;
+            if (exportRequest.PdfOptions.UsingPartitionApproach)
+                totalchunks = CalculateTotalChunks(total,
+
+                    exportRequest.IncludedColumns.Count()
+                    ,
+                    batch,
+                    reportConfig.MapperType != null && (reportConfig.MapperType.Name == typeof(ArtCFTConfigMapper).Name || reportConfig.MapperType.Name == typeof(ArtCRPConfigMapper).Name) && exportRequest.IncludedColumns.Count() > 2 ? exportRequest.IncludedColumns.Count() - 1 : exportRequest.IncludedColumns.Count()
+                    ,
+                    exportRequest.PdfOptions.NumberOfRowsInPage);
+            else
+                totalchunks = (int)Math.Ceiling((double)total / batch);
 
             _pdfSrv.OnProgressChanged += (recordsDone, fileNumber) =>
             {
                 fileProgress[fileNumber] = recordsDone;
                 var done = fileProgress.Values.Sum();
-                decimal progress = done / (decimal)totalcopy;
+                decimal progress = done / (decimal)(totalcopy + totalchunks);
                 _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
-                if (progress<1)
-                {
+                /*if (progress<1)
+                {*/
                     _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                                    .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
-                }
+                //}
                 
 
                 
             };
-            int totalchunks = 0;
-
-            if (exportRequest.PdfOptions.UsingPartitionApproach)
-                totalchunks = CalculateTotalChunks(total,
-                    exportRequest.IncludedColumns.Count(),
-                    batch,
-                    exportRequest.PdfOptions.NumberOfColumnsInPage,
-                    exportRequest.PdfOptions.NumberOfRowsInPage);
-            else
-                totalchunks = (int)Math.Ceiling((double)total / batch);
-
-            _pdfSrv.OnLastProgressChanged += (elementDone, fileNumber) =>
-            {
-                chunksProgress[fileNumber] = elementDone;
-                var done = chunksProgress.Values.Sum();
-                decimal progress = done / (decimal)totalchunks;
-                if (fileProgress.Values.Sum() == totalcopy) 
-                _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
-                _ = _exportHub.Clients.Clients(connections.GetConnections(user))
-                               .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
+            
 
 
-            };
+           
             while (total > 0)
             {
                 KendoGridRequest dataReq = new()
