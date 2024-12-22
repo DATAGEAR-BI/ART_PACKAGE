@@ -17,8 +17,8 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
 
 
-            ReportTitle = "DGAML Art Scenario History";
-            ReportDescription = "Presents the art scenario history details";
+            ReportTitle = "DGAML Scenario History";
+            ReportDescription = "Presents scenario history details";
 
 
 
