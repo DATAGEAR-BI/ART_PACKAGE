@@ -11,6 +11,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
 
             DisplayNames = new Dictionary<string, GridColumnConfiguration>(){ 
                 {"Cid" , new GridColumnConfiguration { DisplayName = "CID"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
+                {"CustomerName" , new GridColumnConfiguration { DisplayName = "Customer Name"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"IdentificationNumber" , new GridColumnConfiguration { DisplayName = "Identification Number"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"CustIdentExpDate" , new GridColumnConfiguration { DisplayName = "Cust Ident Exp Date"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },
                 {"DateOfBirthOrIncorporation" , new GridColumnConfiguration { DisplayName = "Date Of Birth Or Incorporation"  , Format = ""  ,  Filter = "" , Template = "" , AggText = ""  , isLargeText = false   } },

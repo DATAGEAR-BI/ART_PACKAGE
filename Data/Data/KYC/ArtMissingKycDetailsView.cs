@@ -9,6 +9,7 @@ namespace Data.Data.KYC
     public class ArtMissingKycDetailsView
     {
         public string Cid { get; set; } = null!;
+        public string? CustomerName { get; set; }
         public string? IdentificationNumber { get; set; }
         public DateTime? CustIdentExpDate { get; set; }
         public DateTime? DateOfBirthOrIncorporation { get; set; }

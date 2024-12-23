@@ -7403,6 +7403,10 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("CID");
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("CUSTOMER_NAME");
 
                 entity.Property(e => e.IdentificationNumber)
                     .HasMaxLength(100)
