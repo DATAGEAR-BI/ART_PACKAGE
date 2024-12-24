@@ -318,14 +318,19 @@ namespace ART_PACKAGE.Helpers.DropDown
                         on b equals  a.LkpValCd
                         select new SelectItem { text = a.LkpValDesc, value = a.LkpValCd };*/
 
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null&&s.LkpName == "ALARM_STATUS" && s.LkpValCd!="MAN").Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpName != null && s.LkpName == "ALARM_STATUS" && s.LkpValCd != "MAN").Distinct().Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValCd }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetAlarmLevelDropDown()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcLkpTables.Where(s => s.LkpValDesc != null && s.LkpValDesc != "" && s.LkpName == "OBJECT_LEVEL" && s.LkpLangDesc == "en").Distinct().Select(x => new SelectItem { text = x.LkpValDesc, value = x.LkpValDesc }).ToList();
             return distinct_value;
         }
         public List<SelectItem> GetRoutineNameDropDown()
         {
             //var distinct_value = dbfcfcore.ScenarioNmMatviews.Select(x => x.ScenarioName).ToList();
             //return distinct_value;
-            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(s => s.RoutineName != null&&s.LogicDelInd=="N" && s.RoutineStatusCd=="ACT"&&s.CurrentInd=="Y").Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+            List<SelectItem> distinct_value = _dbSrv.DGAMLAC.AcRoutines.Where(s => s.RoutineName != null && s.LogicDelInd == "N" && s.CurrentInd == "Y").Select(x => x.RoutineName).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
             return distinct_value;
         }
 

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using System.Net;
+using System.Net.Sockets;
 
 namespace ART_PACKAGE.Controllers
 {
@@ -57,7 +59,18 @@ namespace ART_PACKAGE.Controllers
         [HttpPost("[controller]/[action]/{gridId}")]
         public virtual async Task<IActionResult> ExportPdf([FromBody] ExportRequest req, [FromRoute] string gridId, [FromQuery] string reportGUID)
         {
-            ViewData["Domain"] = $"{Request.Scheme}://{Request.Host}";
+            string Url = $"{Request.Scheme}://{Request.Host}";
+            string hostName = Request.Host.Host;
+            int? port = Request.Host.Port;
+            IPAddress[] ipAddresses = Dns.GetHostAddresses(hostName);
+            IPAddress? ipv4Address = ipAddresses.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+
+            if (ipv4Address != null)
+            {
+                Url = $"{Request.Scheme}://{ipv4Address}:{port}";
+            }
+            ViewData["Domain"] = Url;
+
             byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
 
             return File(pdfBytes, "application/pdf");
