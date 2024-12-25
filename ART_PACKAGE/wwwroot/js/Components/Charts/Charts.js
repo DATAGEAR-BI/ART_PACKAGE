@@ -370,12 +370,12 @@ class BarChart extends BaseCatValChart {
         var valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.renderer.labels.template.fontSize = 20;
         var series = this.chart.series.push(new am4charts.ColumnSeries());
-        series.columns.template.fill = am4core.color("#104547");
+        series.columns.template.fill = am4core.color("#67b7dc");
         series.dataFields.valueY = this.chartValue;
         series.dataFields.categoryX = this.chartCategory;
-        series.columns.template.adapter.add("fill", (fill, target) => {
-            return this.chart.colors.getIndex(target.dataItem.index);
-        });
+        //series.columns.template.adapter.add("fill", (fill, target) => {
+        //    return this.chart.colors.getIndex(target.dataItem.index);
+        //});
         this.chart.maskBullets = false;
         this.chart.paddingTop = 25;
         var labelBullet = series.bullets.push(new am4charts.LabelBullet());
@@ -405,6 +405,7 @@ class BarChart extends BaseCatValChart {
         var series = this.chart.series.push(new am4charts.ColumnSeries());
         series.dataFields.valueX = this.chartValue;
         series.dataFields.categoryY = this.chartCategory;
+        series.columns.template.fill = am4core.color("#67b7dc");
         series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/]";
         series.sequencedInterpolation = true;
         series.defaultState.transitionDuration = 1000;
@@ -981,6 +982,9 @@ class DonutChart extends BaseCatValChart {
         this.chart.innerRadius = am4core.percent(40);
         var pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
         pieSeries.dataFields.value = this.chartValue;
+        pieSeries.slices.template.adapter.add("fill", (fill, target) => {
+            return this.chart.colors.getIndex(target.dataItem.index);
+        });
         pieSeries.dataFields.category = this.chartCategory; // Disable ticks and labels
         // Disable ticks and labels
         pieSeries.labels.template.disabled = true;

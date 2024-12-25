@@ -17,6 +17,10 @@ class ARTExternalFilter extends HTMLElement {
         this.initializeComponent();
     }
 
+    connectedCallback() { // this function is called when DOM is Created 
+        this.initialFiltersRule();
+        this.updateHiddenFilters();
+    }
     initializeComponent() {
         this.applyStyle();
         this.createSpinnerStyle();
@@ -77,6 +81,8 @@ class ARTExternalFilter extends HTMLElement {
             allow_groups: false,
             operators: ['equal', 'in'],
         });
+
+       
 
         this.bindQueryBuilderEvents();
     }
@@ -174,13 +180,67 @@ class ARTExternalFilter extends HTMLElement {
         this.filterRulesObject[index] = { field: rule.filter.field, id: rule.id };
         return prevRule;
     }
+    getAppliedFiltersNames() {
+        var filtercontrol = document.getElementById('filters');
+        var rules = $(filtercontrol).queryBuilder('getRules');
 
+        if (rules) {
+            var g = [...rules.rules].reduce((group, product) => {
+                const { id } = product;
+                group[id] = !group[id] ? [] : group[id];
+                group[id].push(product);
+                return group;
+            }, {});
+            var arr = [];
+            for (var prop in g) {
+                arr.push(g[prop]);
+            }
+            var flattened = arr.reduce((acc, val) => acc.concat(val), []);
+            var f = flattened.map(x => x.id);
+            return f;
+
+            //$(filtercontrol).queryBuilder('removeFilter', f, true);
+            //$(filtercontrol).queryBuilder('setRules', rules);
+            //$(filtercontrol).queryBuilder('ChangeFilters',newFilters);
+
+        }
+        return [];
+    }
+    initialFiltersRule() {
+        var rules = this.getAppliedFiltersNames();
+        var selects = this.getElementsByTagName(`select`);
+
+        [...rules].forEach((x) => {
+            var index;
+            [...selects].forEach(y => {
+                if (x == y.value)
+                    index = y.name.replace("filters_rule_", "").replace("_filter", "");
+            });
+
+
+            this.filterRulesObject.push({ field: x, id: `filters_rule_${index}` });
+        }
+        );
+    }
     updateHiddenFilters() {
-        const rulesField = this.filterRulesObject.map(rule => rule.field);
+       /* const rulesField = this.filterRulesObject.map(rule => rule.field);
         this.filterRulesObject.forEach(rule => {
             const otherFields = rulesField.filter(field => field !== rule.field);
             this.toggleOptions(rule.id, otherFields, false);
+        });*/
+
+        console.log(this.filterRulesObject);
+        var rulesField = [...this.filterRulesObject].map(x => x.field);
+        [...this.filterRulesObject].forEach(x => {
+            var arrRulesField = [...rulesField].filter(t => t != x.field);
+            [...arrRulesField].forEach(t => {
+                var opts = $(`#${x.id}`).find(`option[value=${t}]`);
+                [...opts].forEach(opt => {
+                    $(opt).hide();
+                })
+            });
         });
+
     }
 
     showFilterOption(field) {

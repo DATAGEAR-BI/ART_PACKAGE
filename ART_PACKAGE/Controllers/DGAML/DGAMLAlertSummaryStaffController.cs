@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Title = "Alerts Per Scenario",
                     Cat = "SCENARIO_NAME",
                     Val = "ALERTS_COUNT",
-                    Type = ChartType.donut
+                    Type = ChartType.bar
                 },
                 new ChartData<ArtStDgAmlAlertPerOwnerStaff>
                 {
@@ -94,7 +94,7 @@ namespace ART_PACKAGE.Controllers.DGAML
                     Title = "Alerts Per Owner",
                     Cat = "OWNER_QUEUE",
                     Val = "ALERTS_CNT_SUM",
-                    Type = ChartType.donut
+                    Type = ChartType.bar
                 },
                 new ChartData<ArtStDgAmlAlertsPerBranchStaff>
                 {

@@ -47,6 +47,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using PdfWriter = iText.Kernel.Pdf.PdfWriter;
+using iText.Layout.Font;
+using iText.Layout.Splitting;
+
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -685,12 +688,20 @@ namespace ART_PACKAGE.Helpers.Pdf
                         // Define the paths to the images in wwwroot
                         string wwwrootPath = _env.WebRootPath;
 
-                        string fontPath = Path.Combine(wwwrootPath, "fonts", "ARIAL.TTF");
+                        string fontPath = Path.Combine(wwwrootPath, "fonts", "Tahoma.ttf");
                         iText.Kernel.Font.PdfFont defaultFont = PdfFontFactory.CreateFont(fontPath, "Identity-H");
                         // Set the default font for the entire document
                         document.SetFont(defaultFont);
 
-                        var arabicLanguageProcessor = new ArabicLigaturizer();
+                        // Use pdfCalligraph's TextShaper to handle bidirectional text
+                        FontSet fontSet = new FontSet();
+                        fontSet.AddFont(fontPath);
+
+                        document.SetFontProvider(new FontProvider(fontSet));
+
+
+
+                        var arabicLanguageProcessor = new ArabicLigaturizer(0, 1);
 
                         string imagePath1 = Path.Combine(wwwrootPath, "imgs", "LOGO.png");
                         string imagePath2 = Path.Combine(wwwrootPath, "imgs", "bank_logo.png");
@@ -709,6 +720,9 @@ namespace ART_PACKAGE.Helpers.Pdf
                         document.AddFilters(filters,displayNames);
 
                         document.AddWatermark(watermarkPath);
+                        document.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
+                        document.SetTextAlignment(TextAlignment.RIGHT);
+
 
                         if (!req.PdfOptions.UsingPartitionApproach)
                         {
@@ -810,6 +824,9 @@ namespace ART_PACKAGE.Helpers.Pdf
                                             //Table table = new Table(UnitValue.CreatePercentArray(partitionSize));
                                             Table table = new Table(UnitValue.CreatePercentArray(widths));
                                             table.SetWidth(UnitValue.CreatePercentValue(100));
+                                            table.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
+                                            table.SetTextAlignment(TextAlignment.RIGHT);
+                                             
                                             //table.SetMaxWidth(UnitValue.CreatePercentValue(100));
                                             for (int h = (tableList.Count()) * partitionSize; h < ((tableList.Count() + 1) * partitionSize); h++)
                                             {
@@ -822,6 +839,8 @@ namespace ART_PACKAGE.Helpers.Pdf
                                         }
                                         Table lastTable = new Table(UnitValue.CreatePercentArray(lastPageWidths));
                                         lastTable.SetWidth(UnitValue.CreatePercentValue(100));
+                                        lastTable.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
+                                        lastTable.SetTextAlignment(TextAlignment.RIGHT);
                                         //lastTable.SetMaxWidth(UnitValue.CreatePercentValue(100));
                                         for (int h = (tableList.Count()) * partitionSize; h < totalColumns; h++)
                                         {
@@ -878,15 +897,22 @@ namespace ART_PACKAGE.Helpers.Pdf
                                         }
                                         else
                                         {
-                                            tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? "")).SetFont(defaultFont).SetFontSize(calculatedFontSize)
-                                              .SetTextAlignment(TextAlignment.CENTER)
+                                            Div d = new Div();
+                                            d.SetBaseDirection(BaseDirection.DEFAULT_BIDI);
+                                            tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? ""))
+                                                .SetFont(defaultFont).SetFontSize(calculatedFontSize)
+                                                .SetBaseDirection(BaseDirection.RIGHT_TO_LEFT)
+                                              .SetTextAlignment(TextAlignment.RIGHT)
+
                                               .SetMultipliedLeading(1f))
                                           //.SetHeight(rowHeight)
                                           .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
-                                          .SetMaxWidth(rowWidth)
+                                          .SetMaxWidth(rowWidth/ partitionSize)
+                                          .SetWidth(rowWidth / partitionSize) 
                                           .SetTextAlignment(TextAlignment.CENTER)
-                                          .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                                          .SetVerticalAlignment(VerticalAlignment.TOP)
                                           .SetFontSize(calculatedFontSize)
+                                           .SetBaseDirection(BaseDirection.RIGHT_TO_LEFT)
                                           .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
                                           .SetBorder(Border.NO_BORDER)
                                           .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))

@@ -10,7 +10,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             DisplayNames = new Dictionary<string, GridColumnConfiguration>
             {
                 { "action", new GridColumnConfiguration { DisplayName = "Action" } },
-                { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                { "Total_Number_Of_Cases", new GridColumnConfiguration { DisplayName = "Total Number Of Alerts" } },
                 { "durations_in_seconds", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
                 { "AVG_durations_in_seconds", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
                 { "durations_in_minutes", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },

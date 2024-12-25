@@ -11,7 +11,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
             {
                 { "ACTION_USER", new GridColumnConfiguration { DisplayName = "Action User" } },
                 { "ACTION", new GridColumnConfiguration { DisplayName = "Action" } },
-                { "TOTAL_NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Total Number Of Cases" } },
+                { "TOTAL_NUMBER_OF_CASES", new GridColumnConfiguration { DisplayName = "Total Number Of Alerts" } },
                 { "DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Durations In Seconds" } },
                 { "AVG_DURATIONS_IN_SECONDS", new GridColumnConfiguration { DisplayName = "Avg Durations In Seconds" } },
                 { "DURATIONS_IN_MINUTES", new GridColumnConfiguration { DisplayName = "Durations In Minutes" } },

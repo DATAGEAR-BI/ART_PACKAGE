@@ -26,7 +26,7 @@ class ExternalFilter extends HTMLElement {
         var filtercontrol = document.createElement("div");
         var errorInRules = false;
         var btn = document.createElement("button");
-        btn.innerText = "apply";
+        btn.innerText = "Apply";
         filtercontrol.classList.add("col-xs-8", "col-md-8", "col-sm-8");
         btn.classList.add("col-xs-2", "col-md-2", "col-sm-2", "btn", "btn-primary");
         filtercontrol.id = "filters";
