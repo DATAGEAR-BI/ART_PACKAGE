@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Ocsp;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Security.Claims;
 
@@ -219,6 +220,7 @@ namespace ART_PACKAGE.Helpers.Grid
         
         public async Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
+            var stopwatch1 = Stopwatch.StartNew();
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
             exportRequest.PdfOptions = _pdfSettings;//while not using user configs

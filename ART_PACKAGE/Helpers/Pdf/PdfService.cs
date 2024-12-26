@@ -721,7 +721,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                         document.AddWatermark(watermarkPath);
                         document.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
-                        document.SetTextAlignment(TextAlignment.RIGHT);
+                        document.SetTextAlignment(TextAlignment.CENTER);
 
 
                         if (!req.PdfOptions.UsingPartitionApproach)
@@ -738,7 +738,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                             table.SetMaxWidth(UnitValue.CreatePercentValue(100));
                             foreach (var header in columnHeaders)
                             {
-                                table.AddHeaderCell(new Cell().Add(new Paragraph(header).SetFontSize(calculatedFontSize).SetTextAlignment(TextAlignment.RIGHT)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
+                                table.AddHeaderCell(new Cell().Add(new Paragraph(header).SetFontSize(calculatedFontSize).SetTextAlignment(TextAlignment.CENTER)).SetHeight(headerHeight).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE).SetBackgroundColor(ColorConstants.LIGHT_GRAY).SetBorder(Border.NO_BORDER)
                                 .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
                                 .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
                             }
@@ -825,7 +825,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                             Table table = new Table(UnitValue.CreatePercentArray(widths));
                                             table.SetWidth(UnitValue.CreatePercentValue(100));
                                             table.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
-                                            table.SetTextAlignment(TextAlignment.RIGHT);
+                                            table.SetTextAlignment(TextAlignment.CENTER);
                                              
                                             //table.SetMaxWidth(UnitValue.CreatePercentValue(100));
                                             for (int h = (tableList.Count()) * partitionSize; h < ((tableList.Count() + 1) * partitionSize); h++)
@@ -840,7 +840,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                         Table lastTable = new Table(UnitValue.CreatePercentArray(lastPageWidths));
                                         lastTable.SetWidth(UnitValue.CreatePercentValue(100));
                                         lastTable.SetBaseDirection(BaseDirection.RIGHT_TO_LEFT);
-                                        lastTable.SetTextAlignment(TextAlignment.RIGHT);
+                                        lastTable.SetTextAlignment(TextAlignment.CENTER);
                                         //lastTable.SetMaxWidth(UnitValue.CreatePercentValue(100));
                                         for (int h = (tableList.Count()) * partitionSize; h < totalColumns; h++)
                                         {
@@ -898,17 +898,16 @@ namespace ART_PACKAGE.Helpers.Pdf
                                         else
                                         {
                                             Div d = new Div();
-                                            d.SetBaseDirection(BaseDirection.DEFAULT_BIDI);
-                                            tableList[tableIndex].AddCell(new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? ""))
+                                            var cell = new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? ""))
                                                 .SetFont(defaultFont).SetFontSize(calculatedFontSize)
                                                 .SetBaseDirection(BaseDirection.RIGHT_TO_LEFT)
-                                              .SetTextAlignment(TextAlignment.RIGHT)
+                                              .SetTextAlignment(TextAlignment.CENTER)
 
                                               .SetMultipliedLeading(1f))
                                           //.SetHeight(rowHeight)
                                           .SetMinHeight(rowHeight) // Use SetMinHeight instead of SetHeight to allow wrapping.
-                                          .SetMaxWidth(rowWidth/ partitionSize)
-                                          .SetWidth(rowWidth / partitionSize) 
+                                          .SetMaxWidth(rowWidth / partitionSize)
+                                          .SetWidth(rowWidth / partitionSize)
                                           .SetTextAlignment(TextAlignment.CENTER)
                                           .SetVerticalAlignment(VerticalAlignment.TOP)
                                           .SetFontSize(calculatedFontSize)
@@ -916,7 +915,10 @@ namespace ART_PACKAGE.Helpers.Pdf
                                           .SetBackgroundColor((rowCount % recordsPerPage) % 2 == 0 ? new DeviceRgb(244, 244, 244) : ColorConstants.WHITE)
                                           .SetBorder(Border.NO_BORDER)
                                           .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
-                                          .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1)));
+                                          .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1));
+                                            d.SetBaseDirection(BaseDirection.DEFAULT_BIDI);
+                                            
+                                            tableList[tableIndex].AddCell(cell);
                                         }
 
 
