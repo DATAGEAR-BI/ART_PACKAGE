@@ -7,6 +7,7 @@
         public string? CaseDesc { get; set; }
         public string? CaseStatus { get; set; }
         public string? Priority { get; set; }
+
         public string? HitsCount { get; set; }
         public string? TransactionDirection { get; set; }
         public string? TransactionType { get; set; }

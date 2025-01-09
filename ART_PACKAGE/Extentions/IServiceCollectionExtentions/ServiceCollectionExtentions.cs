@@ -37,6 +37,7 @@ using Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Data.DGECMFilters;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -113,7 +114,11 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("ECM"))
             {
                 string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
+                _ = services.AddDbContext<DGECMFiltersContext>(opt => contextBuilder(opt, connectionString));
+                _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
+
                 _ = services.AddDbContext<EcmContext>(opt => contextBuilder(opt, connectionString));
             }
 

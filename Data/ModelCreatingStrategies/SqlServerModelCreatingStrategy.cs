@@ -11027,5 +11027,10 @@ namespace Data.ModelCreatingStrategies
         {
             throw new NotImplementedException();
         }
+
+        public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18782,6 +18782,11 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("PRO_TYPE");
             });
         }
+        public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
 
     }
 }

@@ -134,5 +134,10 @@ namespace Data.ModelCreatingStrategies
         {
             _strategy.OnSasAuditModelCreating(modelBuilder);
         }
+
+        public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
+        {
+            _strategy.OnDGECMFiltersModelCreating(modelBuilder);
+        }
     }
 }

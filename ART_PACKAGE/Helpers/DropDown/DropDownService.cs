@@ -809,5 +809,30 @@ namespace ART_PACKAGE.Helpers.DropDown
             return distinct_value;
 
         }
+
+
+        public List<SelectItem> GetCaseTypeEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtCaseTypeFilterTbs.Select(x => x.CaseType).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetCaseStatusEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtCaseStatusFilterTbs.Select(x => x.CaseStatus).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetDisplayNameForUserManagement()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGMGMT.UserDgs.Where(x => !string.IsNullOrEmpty(x.DisplayName)).Distinct().Select(x => x.DisplayName).Select(x => new SelectItem { text = x, value = x }).ToList();
+            return distinct_value;
+        }
+        public List<SelectItem> GetActionEcmFilter()
+        {
+            List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtActionFilterTbs.Select(x => x.Action).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
     }
 }

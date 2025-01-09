@@ -13,6 +13,7 @@ using Data.TIZONE2;
 using ART_PACKAGE.Areas.Identity.Data;
 using Data.Services;
 using com.sun.xml.@internal.ws.wsdl.writer;
+using Data.DGECMFilters;
 
 namespace ART_PACKAGE.Helpers.DBService
 {
@@ -58,8 +59,13 @@ namespace ART_PACKAGE.Helpers.DBService
                     {
                         DGECMContext ecmService = scope.ServiceProvider.GetRequiredService<DGECMContext>();
                         ECM = ecmService;
-                    }
-                    if (modules.Contains("FATCA"))
+                    DGECMFiltersContext ecmFiltersService = scope.ServiceProvider.GetRequiredService<DGECMFiltersContext>();
+                    DGECMFilters = ecmFiltersService;
+                    DGMGMTContext dgmgmt = scope.ServiceProvider.GetRequiredService<DGMGMTContext>();
+                    DGMGMT = dgmgmt;
+
+                }
+                if (modules.Contains("FATCA"))
                     {
                         DGFATCAContext fatcaService = scope.ServiceProvider.GetRequiredService<DGFATCAContext>();
                         FATCA = fatcaService;
@@ -187,6 +193,7 @@ namespace ART_PACKAGE.Helpers.DBService
         public DGMGMTAUDContext DGMGMTAUD { get; }
         public SasAmlContext SasAML { get; }
         public AuthContext ARTCustomReport { get; }
+        public DGECMFiltersContext DGECMFilters { get; }
 
     }
 }
