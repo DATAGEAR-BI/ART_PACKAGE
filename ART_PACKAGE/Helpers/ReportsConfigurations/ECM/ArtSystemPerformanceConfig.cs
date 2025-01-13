@@ -16,6 +16,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
                     { "CaseStatus", new GridColumnConfiguration { DisplayName = "Case Status"}},
                     { "Priority", new GridColumnConfiguration { DisplayName = "Priority"}},
                     { "HitsCount", new GridColumnConfiguration { DisplayName = "Hits Count"}},
+                    { "MaxRank", new GridColumnConfiguration { DisplayName = "Max Rank"}},
                     { "TransactionDirection", new GridColumnConfiguration { DisplayName = "Transaction Direction"}},
                     { "TransactionType", new GridColumnConfiguration { DisplayName = "Transaction Type"}},
                     { "TransactionAmount", new GridColumnConfiguration { DisplayName = "Transaction Amount"}},

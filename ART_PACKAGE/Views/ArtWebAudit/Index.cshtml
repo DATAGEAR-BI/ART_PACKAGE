@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section KendoScripts {
+    <partial name="_GridScripts" />
+}
+
+<section class="content-header">
+    <h1>
+        Web Search Audit Report
+        
+        <small>This report presents web search attempts with the related information below</small>
+    </h1>
+</section>
+<m-grid id="ArtWebAudit" data-urlkey="ArtWebAudit" data-handlerkey="ArtWebAudit"></m-grid>
+
+@*<div id="grid"></div>*@
+@section Scripts {
+    <script type="module" defer src="~/js/Components/Grid/Grid.js"></script>
+
+
+    @* <script src="~/js/Dynamic.js" type="module" defer id="script" data-urlkey="ArtWebAudit"></script>*@
+}
+
+

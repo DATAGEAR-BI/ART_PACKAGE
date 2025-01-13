@@ -543,7 +543,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                         string[] columnHeaders = displayNames is null ? req.IncludedColumns.Select(s => s.MapToHeaderName()).ToArray() : req.IncludedColumns.Select(s => (displayNames.ContainsKey(s)) ? !string.IsNullOrEmpty(displayNames[s].DisplayName) ? displayNames[s].DisplayName : s.MapToHeaderName() : s.MapToHeaderName()).ToArray();//properties.Select(p => p.Name).ToArray();
 
                         // Partition settings
-                        int partitionSize = (reportConfigs.MapperType.Name==typeof(ArtCFTConfigMapper).Name|| reportConfigs.MapperType.Name == typeof(ArtCRPConfigMapper).Name)&&req.IncludedColumns.Count()>2 ? columnHeaders.Count()-1: columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
+                        int partitionSize = (reportConfigs.MapperType !=null&&(reportConfigs.MapperType.Name==typeof(ArtCFTConfigMapper).Name|| reportConfigs.MapperType.Name == typeof(ArtCRPConfigMapper).Name))&&req.IncludedColumns.Count()>2 ? columnHeaders.Count()-1: columnHeaders.Count();//req.PdfOptions.NumberOfColumnsInPage; // Number of columns per page
                         int totalColumns = columnHeaders.Count();
                         int totalPagesForColumns = (int)Math.Ceiling((double)totalColumns / partitionSize);
 
@@ -780,8 +780,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                                     {
                                         tableIndex++;
                                         pdfRec++;
-                                        tableIndex++;
-                                        pdfRec++;
+                                        
                                         if (totalrec <= 100)
                                         {
                                             int recordsDone = pdfRec;

@@ -8191,66 +8191,7 @@ namespace Data.ModelCreatingStrategies
         }
         public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ArtCaseStatusFilterTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_CASE_STATUS_FILTER_TB", "ART_DB");
-
-                entity.Property(e => e.CaseStatus)
-                    .HasMaxLength(4000)
-                    .IsUnicode(false)
-                    .HasColumnName("CASE_STATUS")
-                    .UseCollation("Arabic_CI_AI");
-            });
-            modelBuilder.Entity<ArtCaseTypeFilterTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_CASE_TYPE_FILTER_TB", "ART_DB");
-
-                entity.Property(e => e.CaseType)
-                    .HasMaxLength(4000)
-                    .IsUnicode(false)
-                    .HasColumnName("CASE_TYPE")
-                    .UseCollation("Arabic_CI_AI");
-            });
-            modelBuilder.Entity<ArtActionFilterTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_ACTION_FILTER_TB", "ART_DB");
-
-                entity.Property(e => e.Action)
-                    .HasMaxLength(256)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTION")
-                    .UseCollation("Arabic_CI_AI");
-            });
-            modelBuilder.Entity<ArtSanctionSensitivityActionNameFilterTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_SANCTION_SENSITIVITY_ACTION_NAME_FILTER_TB", "ART_DB");
-
-                entity.Property(e => e.ActionName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("ACTION_NAME")
-                    .UseCollation("Arabic_CI_AI");
-            });
-            modelBuilder.Entity<ArtSanctionSensitivityCategoryFilterTb>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ART_SANCTION_SENSITIVITY_CATEGORY_FILTER_TB", "ART_DB");
-
-                entity.Property(e => e.Category)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("CATEGORY")
-                    .UseCollation("Arabic_CI_AI");
-            });
+            throw new NotImplementedException();
         }
 
 

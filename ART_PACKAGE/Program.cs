@@ -146,7 +146,7 @@ app.UseAuthorization();
 app.UseCustomAuthorization();
 app.UseLicense();
 app.MapRazorPages();
-//app.MapHub<LicenseHub>("/LicHub");
+app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
 app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(

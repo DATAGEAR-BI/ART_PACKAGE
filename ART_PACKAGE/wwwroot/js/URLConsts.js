@@ -143,6 +143,7 @@
     TradeBaseAMLSummary: "TradeBaseAMLSummary/GetData",
     test: "Test/GetData",
     autorules: "AutoRules/GetData",
+    ArtWebAudit: "ArtWebAudit/GetData",
 
 
 };

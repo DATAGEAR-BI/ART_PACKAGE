@@ -15,8 +15,8 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
 
         public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, IHttpClientFactory httpClientFactory)
         {
-            authUrl = config.GetSection("TenantSettings:Defaults:DgUserManagementAuth:authUrl").Value;
-            authPath = config.GetSection("TenantSettings:Defaults:DgUserManagementAuth:postUrl").Value ?? "/dg-userManagement-console/security/signIn";
+            authUrl = config.GetSection("DgUserManagementAuth:authUrl").Value;
+            authPath = config.GetSection("DgUserManagementAuth:postUrl").Value ?? "/dg-userManagement-console/security/signIn";
 
             _httpClient = httpClientFactory.CreateClient("CertificateClient"); ;
             _logger = logger;
@@ -40,8 +40,11 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
 
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
+                _logger.LogWarning("sending req to DGUM with URL  : "+ authUrl + authPath);
                 _logger.LogWarning("sending req to DGUM with body  : {ReqBody}", await content.ReadAsStringAsync());
                 HttpResponseMessage response = await _httpClient.PostAsync(authUrl + authPath , content);
+                _logger.LogWarning("Response From DGUM is :{response}", JsonConvert.SerializeObject(response));
+
                 if (response.IsSuccessStatusCode)
                 {
 

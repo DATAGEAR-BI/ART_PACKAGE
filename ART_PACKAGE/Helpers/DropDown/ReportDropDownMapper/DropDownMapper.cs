@@ -498,6 +498,11 @@ namespace ART_PACKAGE.Helpers.DropDown.ReportDropDownMapper
                     {"Action".ToLower()           ,_dropDown.GetActionEcmFilter()        },
                     {"ActionUser".ToLower()           ,_dropDown.GetDisplayNameForUserManagement()        },
                 },
+                var value when value == nameof(ArtWebAuditConfig).ToLower() => new Dictionary<string, List<SelectItem>>
+                {
+                    { "MatchStatus".ToLower()              , _dropDown.GetSearchMatchStatus()            },
+                   
+                },
                 _ => null
             };
         }

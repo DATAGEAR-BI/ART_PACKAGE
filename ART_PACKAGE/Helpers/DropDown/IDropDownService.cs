@@ -119,6 +119,7 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetCaseStatusEcmFilter();
         public List<SelectItem> GetDisplayNameForUserManagement();
         public List<SelectItem> GetActionEcmFilter();
+        public List<SelectItem> GetSearchMatchStatus();
 
 
     }

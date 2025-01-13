@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Data.AmlAnalysis;
 using Data.DGAMLAC;
 using Data.Data.KYC;
+using Data.DGECMFilters;
 
 namespace Data.ModelCreatingStrategies
 {
@@ -1945,6 +1946,12 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnType("datetime")
                     .HasColumnName("ECM_LAST_STATUS_DATE");
 
+                entity.Property(e => e.MaxRank)
+                    .HasMaxLength(1000)
+                    .HasColumnName("MAX_RANK")
+                    .UseCollation("Arabic_100_CI_AI");
+
+
                 entity.Property(e => e.HitsCount)
                     .HasMaxLength(250)
                     .IsUnicode(false)
@@ -2071,6 +2078,38 @@ namespace Data.ModelCreatingStrategies
                     .HasColumnName("Action_Detail")
                     .HasColumnType("nvarchar(max)");
             });
+
+            modelBuilder.Entity<ArtWebAudit>(entity =>
+            {
+                entity.ToTable("ART_WEB_AUDIT","ART_DB"); // Replace with your actual view name
+                entity.HasNoKey(); // Views typically don't have a primary key
+
+                entity.Property(v => v.RequestDate)
+                    .HasColumnName("REQUEST_DATE")
+                    .HasColumnType("datetime")
+                    .IsRequired(false); // NULLABLE
+
+                entity.Property(v => v.MatchStatus)
+                    .HasColumnName("Match_Status")
+                    .HasColumnType("varchar(9)")
+                    .IsRequired(); // NOT NULL
+
+                entity.Property(v => v.Name)
+                    .HasColumnName("name")
+                    .HasColumnType("varchar(8000)")
+                    .IsRequired(false); // NULLABLE
+
+                entity.Property(v => v.Branch)
+                    .HasColumnName("Branch")
+                    .HasColumnType("varchar(1000)")
+                    .IsRequired(false); // NULLABLE
+
+                entity.Property(v => v.SearchUser)
+                    .HasColumnName("Search_User")
+                    .HasColumnType("varchar(1000)")
+                    .IsRequired(false); // NULLABLE
+            });
+
 
             /* modelBuilder.Entity<ArtClearDetect>(entity =>
              {
@@ -11030,7 +11069,67 @@ namespace Data.ModelCreatingStrategies
 
         public void OnDGECMFiltersModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+
+            modelBuilder.Entity<ArtCaseStatusFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CASE_STATUS_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CaseStatus)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_STATUS")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtCaseTypeFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_CASE_TYPE_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_TYPE")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtActionFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_ACTION_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.Action)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtSanctionSensitivityActionNameFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_SANCTION_SENSITIVITY_ACTION_NAME_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.ActionName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ACTION_NAME")
+                    .UseCollation("Arabic_CI_AI");
+            });
+            modelBuilder.Entity<ArtSanctionSensitivityCategoryFilterTb>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ART_SANCTION_SENSITIVITY_CATEGORY_FILTER_TB", "ART_DB");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CATEGORY")
+                    .UseCollation("Arabic_CI_AI");
+            });
         }
     }
 }

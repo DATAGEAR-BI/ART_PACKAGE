@@ -1,5 +1,6 @@
 ﻿
 using ART_PACKAGE.Helpers.DBService;
+using com.sun.tools.corba.se.idl.constExpr;
 using Data.Services.Grid;
 
 namespace ART_PACKAGE.Helpers.DropDown
@@ -831,6 +832,13 @@ namespace ART_PACKAGE.Helpers.DropDown
         public List<SelectItem> GetActionEcmFilter()
         {
             List<SelectItem> distinct_value = _dbSrv.DGECMFilters.ArtActionFilterTbs.Select(x => x.Action).Distinct().Select(x => new SelectItem { text = x, value = x }).ToList();
+
+            return distinct_value;
+        }
+        public List<SelectItem> GetSearchMatchStatus()
+        {
+            List<SelectItem> distinct_value = new List<string> (){ "Not Found",
+"Found"}.Select(x => new SelectItem { text = x, value = x }).ToList();
 
             return distinct_value;
         }

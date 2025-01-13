@@ -43,20 +43,27 @@ namespace ART_PACKAGE.Middlewares.License
                 return Task.CompletedTask;
             }
             //getting the module the route is in
-            string module = ModulePerLicense.GetModule(controller);
+            string module = ModulePerLicense.GetControllerModule(controller);
             //checking if the app configuration supports that module
             if (!requirement.Modules.Contains(module))
             {
                 context.Fail();
                 return Task.CompletedTask;
             }
-            //getting module license since all modlue lisenes should be (modulename+"license.dg")
-            License? moduleLic = licenseReader.ReadFromPath(module + "license.dg");
-            //checking if the license is valid
-            if (moduleLic is null || !moduleLic.IsValid())
+            string path = module + "license.dg";
+
+            if (File.Exists(path))
             {
-                context.Fail();
-                return Task.CompletedTask;
+
+
+                //getting module license since all modlue lisenes should be (modulename+"license.dg")
+                License? moduleLic = licenseReader.ReadFromPath(module + "license.dg");
+                //checking if the license is valid
+                if (moduleLic is null || !moduleLic.IsValid())
+                {
+                    context.Fail();
+                    return Task.CompletedTask;
+                }
             }
             //all license are correct and valid
             context.Succeed(requirement);

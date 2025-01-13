@@ -169,7 +169,7 @@ namespace ART_PACKAGE.Helpers.Grid
             Dictionary<string, List<SelectItem>> DropDownColumn = _dropDownMap.GetDorpDownForReport(controller);
             List<string>? ColumnsToSkip = reportConfig?.SkipList;
             Dictionary<string, GridColumnConfiguration>? DisplayNames = reportConfig?.DisplayNames;
-
+            var showPdfButton = _config.GetValue<bool>("AllowPDFExport", false);
             GridIntializationConfiguration conf = new()
             {
                 columns = GridHelprs.GetColumns<TModel>(DropDownColumn, DisplayNames, ColumnsToSkip),
@@ -178,7 +178,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 actions = hasConfig ? reportConfig.Actions : null,
                 containsActions = hasConfig && reportConfig.ContainsActions,
                 showCsvBtn = hasConfig && (reportConfig.ShowExportCsv is null || reportConfig.ShowExportCsv(User)),
-                showPdfBtn = hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User)),
+                showPdfBtn = showPdfButton,//hasConfig && (reportConfig.ShowExportPdf is null || reportConfig.ShowExportPdf(User)),
                 hasFixedWidth = hasConfig ? reportConfig.HasFixedWidth : false,
             };
             return conf;

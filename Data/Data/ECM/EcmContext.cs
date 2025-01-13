@@ -19,6 +19,7 @@ namespace Data.Data.ECM
         public virtual DbSet<ArtAlertedEntity> ArtAlertedEntities { get; set; } = null!;
         public virtual DbSet<ArtSystemPerformance> ArtSystemPerformances { get; set; } = null!;
         public virtual DbSet<ArtCFTConfig> ArtCFTConfigs { get; set; } = null!;
+        public virtual DbSet<ArtWebAudit> ArtWebAudits { get; set; } = null!;
        // public virtual DbSet<ArtClearDetect> ArtClearDetects { get; set; } = null!;
 
         //public virtual DbSet<ArtSystemPerformanceNcba> ArtSystemPerformanceNcbas { get; set; } = null!;
@@ -35,6 +36,7 @@ namespace Data.Data.ECM
             modelBuilder.Entity<ArtUserPerformancePerActionUser>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerAction>().HasNoKey().ToView(null);
             modelBuilder.Entity<ArtUserPerformPerUserAndAction>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ArtWebAudit>().HasNoKey().ToView(null);
 
             var modelCreatingStrategy = new ModelCreatingContext(new ModelCreatingStrategyFactory(this).CreateModelCreatingStrategyInstance());
             modelCreatingStrategy.OnEcmModelCreating(modelBuilder);

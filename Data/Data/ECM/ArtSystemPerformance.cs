@@ -9,6 +9,8 @@
         public string? Priority { get; set; }
 
         public string? HitsCount { get; set; }
+        public string? MaxRank { get; set; }
+
         public string? TransactionDirection { get; set; }
         public string? TransactionType { get; set; }
         public double? TransactionAmount { get; set; }
