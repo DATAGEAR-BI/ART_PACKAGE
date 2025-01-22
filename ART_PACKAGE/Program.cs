@@ -7,11 +7,13 @@ using ART_PACKAGE.Helpers.Csv;
 using ART_PACKAGE.Helpers.CustomReport;
 using ART_PACKAGE.Helpers.DgUserManagement;
 using ART_PACKAGE.Helpers.DropDown;
+using ART_PACKAGE.Helpers.Handlers;
 using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
 using ART_PACKAGE.Middlewares;
 using ART_PACKAGE.Middlewares.Logging;
+using ART_PACKAGE.Services;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -37,6 +39,14 @@ builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AuthContext>();
 
+
+var cerPath = Path.Combine(builder.Environment.ContentRootPath, "dgum_cer", "DG-DEMO.Datagearbi.local.crt");
+var cerPass = builder.Configuration.GetSection("DgUserManagementAuth").GetSection("CertificatePassword").Value;
+var certificate = Certificate.LoadCertificate(cerPath, cerPass);
+
+builder.Services.AddHttpClient("CertificateClient")
+        .ConfigurePrimaryHttpMessageHandler(() => new CertificateHttpClientHandler(certificate));
+
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
@@ -44,6 +54,23 @@ builder.Services.ConfigureApplicationCookie(opt =>
     else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
 
 });
+var maxHeaderSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeadersTotalSize", 32768);
+var maxLineSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestLineSize", 8192);
+var maxHeaderCount = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeaderCount", 100);
+
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+
+    options.Limits.MaxRequestHeadersTotalSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeadersTotalSize", 1048576);; // Default is 32 KB, increase as needed
+    options.Limits.MaxRequestLineSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestLineSize", 8192);  ; // Default is 8 KB
+    options.Limits.MaxRequestHeaderCount = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeaderCount", 100);  ; // Default is 100
+});
+
+
+Console.WriteLine($"MaxRequestHeadersTotalSize: {maxHeaderSize}");
+Console.WriteLine($"MaxRequestLineSize: {maxLineSize}");
+Console.WriteLine($"MaxRequestHeaderCount: {maxHeaderCount}");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -86,7 +113,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCustomAuthorization();
 app.UseMiddleware<LogUserNameMiddleware>();
-//app.UseLicense();
+app.UseLicense();
 app.MapRazorPages();
 app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
@@ -94,6 +121,18 @@ app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.Use(async (context, next) =>
+{
+    var totalHeaderSize = context.Request.Headers.Sum(h => h.Key.Length + h.Value.Sum(v => v.Length));
+    Console.WriteLine($"Total Header Size: {totalHeaderSize} bytes");
+
+    foreach (var header in context.Request.Headers)
+    {
+        Console.WriteLine($"{header.Key}: {header.Value} (Size: {header.Value.Sum(v => v.Length)} bytes)");
+    }
+
+    await next();
+});
 
 app.Run();
 

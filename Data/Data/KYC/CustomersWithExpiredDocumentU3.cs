@@ -18,5 +18,12 @@ namespace Data.Data.KYC
         public DateTime? WorkPermitExpirationDate { get; set; }
 
 
+        public string? CustomerBranch { get; set; }
+        public string? AccountOfficer { get; set; }
+        public string? CustomerBusinessSegment { get; set; }
+
+
+
+
     }
 }

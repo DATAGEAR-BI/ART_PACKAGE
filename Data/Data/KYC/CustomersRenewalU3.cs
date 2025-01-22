@@ -14,5 +14,11 @@
         public string? ChangeCurrentIND { get; set; } = null!;
         public string? KYCExpiryIND { get; set; }
         public string? RiskClassification { get; set; }
+
+
+        public string? CustomerBranch { get; set; }
+        public string? AccountOfficer { get; set; }
+        public string? CustomerBusinessSegment { get; set; }
+
     }
 }

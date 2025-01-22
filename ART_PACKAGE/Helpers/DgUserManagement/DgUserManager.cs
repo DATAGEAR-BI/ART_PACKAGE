@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
 using AuthContext = ART_PACKAGE.Areas.Identity.Data.AuthContext;
 
@@ -10,14 +11,18 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
         private readonly HttpClient _httpClient;
 
         private readonly string authUrl;
+        private readonly string authPostUrl;
         private readonly ILogger<DgUserManager> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AuthContext authContext;
-        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, RoleManager<IdentityRole> roleManager, AuthContext authContext)
+        public DgUserManager(IConfiguration config, ILogger<DgUserManager> logger, HttpClient httpClient, RoleManager<IdentityRole> roleManager, AuthContext authContext, IHttpClientFactory httpClientFactory)
         {
             authUrl = config.GetSection("DgUserManagementAuth:authUrl").Value;
+            authPostUrl = config.GetSection("DgUserManagementAuth:postUrl").Value;
 
             _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient("CertificateClient"); ;
+
             _logger = logger;
             _roleManager = roleManager;
             this.authContext = authContext;
@@ -34,6 +39,8 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                     password
                 };
 
+                if (string.IsNullOrEmpty(authPostUrl)) _logger.LogError($@"Invalid post DGUM URL '{authPostUrl}'");
+                if (string.IsNullOrEmpty(authUrl)) _logger.LogError($@"Invalid DGUM Base URL '{authUrl}'");
 
                 // Serialize the model to JSON
                 string jsonModel = JsonConvert.SerializeObject(model);
@@ -41,7 +48,7 @@ namespace ART_PACKAGE.Helpers.DgUserManagement
                 // Create StringContent from JSON
                 StringContent content = new(jsonModel, Encoding.UTF8, "application/json");
                 _logger.LogWarning("sending req to DGUM with body  : {ReqBody}", await content.ReadAsStringAsync());
-                HttpResponseMessage response = await _httpClient.PostAsync(authUrl + "/dg-userManagement-console/security/signIn", content);
+                HttpResponseMessage response = await _httpClient.PostAsync(authUrl + authPostUrl, content);
                 if (response.IsSuccessStatusCode)
                 {
 

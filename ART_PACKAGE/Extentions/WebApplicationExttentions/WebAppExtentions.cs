@@ -1,5 +1,6 @@
 ﻿using ART_PACKAGE.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ART_PACKAGE.Extentions.WebApplicationExttentions
 {
@@ -103,7 +104,7 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
             //}
         }
 
-        public static async void SeedModuleRoles(this WebApplication app)
+        public static async void SeedModuleRolesOld(this WebApplication app)
         {
 
             IEnumerable<Type> types = AppDomain.CurrentDomain
@@ -125,6 +126,57 @@ namespace ART_PACKAGE.Extentions.WebApplicationExttentions
                     }
 
                 }
+            }
+
+        }
+
+        public static async Task SeedModuleRoles(this WebApplication app)
+        {
+            var modulesNameSpaces = app.Configuration
+                .GetSection("Modules")
+                .Get<List<string>>()
+                .Select(s => $"ART_PACKAGE.Controllers.{s}")
+                .ToList();
+
+            IEnumerable<Type> types = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(a => !string.IsNullOrEmpty(a.Namespace) && a.IsClass && !a.IsNested);
+
+            var currentModuleTypes = types
+                .Where(s => modulesNameSpaces.Contains(s.Namespace))
+                .Select(x => $"ART_{x.Name.Replace("Controller", "")}".ToLower())
+                .Concat(new[] { "art_license", "art_superadmin", "art_customreport", "art_admin" });  // Add your hardcoded values here
+            
+
+
+
+
+
+            using var scope = app.Services.CreateScope();
+
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+            var allRoles = roleManager.Roles.Select(r => r.Name).ToList();
+            var adminUser = await userManager.Users
+                .FirstOrDefaultAsync(u => u.NormalizedEmail.ToLower() == "art_admin@datagearbi.com");
+            var adminRoles = await userManager.GetRolesAsync(adminUser);
+
+            if (modulesNameSpaces == null || modulesNameSpaces.Count == 0)
+                return;
+
+            var modulesRolesToAdd = currentModuleTypes.Except(allRoles).ToList();
+
+            foreach (var role in modulesRolesToAdd)
+            {
+                var roleToAdd = new IdentityRole(role);
+                await roleManager.CreateAsync(roleToAdd);
+            }
+            if (adminUser != null&& allRoles.Union(modulesRolesToAdd).Except(adminRoles).Count()>0)
+            {
+               var res= await userManager.AddToRolesAsync(adminUser, allRoles.Union(modulesRolesToAdd).Except(adminRoles));
+
             }
 
         }

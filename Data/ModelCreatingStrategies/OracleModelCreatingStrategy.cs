@@ -11465,6 +11465,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+                      .HasMaxLength(255)
+                      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycHighOneMonthU3>(entity =>
@@ -11505,6 +11517,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycHighThreeMonthU3>(entity =>
@@ -11545,6 +11568,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycHighTwoMonthU3>(entity =>
@@ -11585,6 +11619,16 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycLowExpiredU3>(entity =>
@@ -11621,6 +11665,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycLowOneMonthU3>(entity =>
@@ -11661,6 +11716,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycLowThreeMonthU3>(entity =>
@@ -11701,6 +11767,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycLowTwoMonthU3>(entity =>
@@ -11741,6 +11819,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycMediumExpiredU3>(entity =>
@@ -11777,6 +11866,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycMediumOneMonthU3>(entity =>
@@ -11817,6 +11918,17 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycMediumThreeMonthU3>(entity =>
@@ -11857,6 +11969,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
 
             modelBuilder.Entity<ArtKycMediumTwoMonthU3>(entity =>
@@ -11897,6 +12021,18 @@ namespace Data.ModelCreatingStrategies
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+      .HasMaxLength(255)
+      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
             modelBuilder.Entity<CustomersWithExpiredDocumentU3>(entity =>
                  {
@@ -11925,6 +12061,19 @@ namespace Data.ModelCreatingStrategies
                      entity.Property(e => e.WorkPermitExpirationDate)
                          .HasPrecision(6)
                          .HasColumnName("WORK_PERMIT_EXPIRY_DATE");
+
+
+                     entity.Property(e => e.CustomerBranch)
+                    .HasMaxLength(255)
+                    .HasColumnName("CUSTOMER_BRANCH");
+                     entity.Property(e => e.AccountOfficer)
+                   .HasMaxLength(200)
+                   .HasColumnName("ACCOUNT_OFFICER");
+                     entity.Property(e => e.CustomerBusinessSegment)
+                   .HasMaxLength(100)
+                   .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
+
+
                  });
             modelBuilder.Entity<CustomersRenewalU3>(entity =>
             {
@@ -11975,6 +12124,18 @@ namespace Data.ModelCreatingStrategies
                    .HasMaxLength(200)
                    .IsUnicode(false)
                    .HasColumnName("ACTION_REQUIRED");
+
+
+
+                entity.Property(e => e.CustomerBranch)
+                      .HasMaxLength(255)
+                      .HasColumnName("CUSTOMER_BRANCH");
+                entity.Property(e => e.AccountOfficer)
+                      .HasMaxLength(200)
+                      .HasColumnName("ACCOUNT_OFFICER");
+                entity.Property(e => e.CustomerBusinessSegment)
+                      .HasMaxLength(100)
+                      .HasColumnName("CUSTOMER_BUSINESS_SEGMENT");
             });
             //------------------------------------------------------------------//
             modelBuilder.Entity<ArtKycHighExpiredU1>(entity =>

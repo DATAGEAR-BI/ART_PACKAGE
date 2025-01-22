@@ -26,7 +26,19 @@ namespace ART_PACKAGE.Controllers
         public async Task<IActionResult> UploadLic([FromForm] LicenseUpload lic)
         {
 
-            string? client = _configuration.GetSection("Client")
+            try
+            {
+                await AddOrUpdateLicense(lic);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
+
+            /*string? client = _configuration.GetSection("Client")
                 .Get<string>()?.ToLower();
             IEnumerable<string>? LicenseModules = _configuration.GetSection("Modules")
                 .Get<List<string>>()?.Select(x => x.ToLower());
@@ -76,11 +88,53 @@ namespace ART_PACKAGE.Controllers
                 _logger.LogError(ex.Message);
                 return BadRequest(new Error("LiceError", description: "Something wrong happened while saving the license"));
 
-            }
+            }*/
 
         }
 
+        private async Task AddOrUpdateLicense(LicenseUpload lic)
+        {
+            string? client = _configuration.GetSection("Client")
+                .Get<string>()?.ToLower();
+            IEnumerable<string>? LicenseModules = _configuration.GetSection("Modules")
+                .Get<List<string>>()?.Select(x => x.ToLower());
+            using StreamReader reader = new(lic.License.OpenReadStream());
+            string licText = reader.ReadToEnd();
 
+            Middlewares.License.License license = _licReader.ReadFromText(licText);
+
+            if (lic.Module == "base" && client != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && client + lic.Module.ToLower() != license.Client.ToLower())
+            {
+                throw new Exception();
+            }
+
+            if (lic.Module != "base" && !LicenseModules.Contains(lic.Module.ToLower()))
+            {
+                throw new Exception();
+            }
+
+            if (!license.IsValid())
+            {
+                throw new Exception();
+            }
+
+            string licPath = Path.Combine(_webHostEnvironment.ContentRootPath, Path.Combine("Licenses", lic.License.FileName));
+            bool isLicExist = System.IO.File.Exists(licPath);
+
+            if (isLicExist)
+            {
+                System.IO.File.Delete(licPath);
+            }
+
+            using FileStream fileStream = new(licPath, FileMode.Create, FileAccess.ReadWrite);
+            await lic.License.CopyToAsync(fileStream);
+
+        }
         public IActionResult Index()
         {
             return View();

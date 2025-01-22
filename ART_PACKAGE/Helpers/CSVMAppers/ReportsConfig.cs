@@ -2739,6 +2739,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
+
                     }
                 }
             },
@@ -2754,6 +2760,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
             },
@@ -2769,6 +2781,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
 
                     }
                 }
@@ -2786,6 +2803,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
             },
@@ -2800,6 +2822,11 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }
@@ -2817,6 +2844,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
             },
@@ -2832,6 +2865,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }
@@ -2849,6 +2888,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
             },
@@ -2863,6 +2908,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }
@@ -2880,6 +2931,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
              },
@@ -2895,6 +2954,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "Type",new DisplayNameAndFormat { DisplayName ="Type"}},
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }
@@ -2912,6 +2977,12 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "RiskClassIndustry",new DisplayNameAndFormat { DisplayName ="Risk Class"}},
                         {  "NextUpdateDate",new DisplayNameAndFormat { DisplayName ="Next Update Date"}},
 
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
+
                     }
                 }
              },
@@ -2926,6 +2997,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "PassportExpirationDate",new DisplayNameAndFormat { DisplayName ="Passport Expiration Date"}},
                         {  "BusinessLicenseExpirationDate",new DisplayNameAndFormat { DisplayName ="Business License Expiration Date"}},
                         {  "WorkPermitExpirationDate",new DisplayNameAndFormat { DisplayName ="Work Permit Expiration Date"}},
+
+
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }
@@ -2947,6 +3026,14 @@ namespace ART_PACKAGE.Helpers.CSVMAppers
                         {  "ChangeCurrentIND",new DisplayNameAndFormat { DisplayName ="Change Current IND"}},
                         {  "KYCExpiryIND",new DisplayNameAndFormat { DisplayName ="KYC Expiry IND"}},
                         {  "RiskClassification",new DisplayNameAndFormat { DisplayName ="Risk Classification"}},
+
+
+
+
+
+                        {  "CustomerBranch",new DisplayNameAndFormat { DisplayName ="Customer Branch"}},
+                        {  "AccountOfficer",new DisplayNameAndFormat { DisplayName ="Account Officer"}},
+                        {  "CustomerBusinessSegment",new DisplayNameAndFormat { DisplayName ="Customer Business Segment"}},
 
                     }
                 }

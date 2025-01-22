@@ -11,5 +11,11 @@ namespace Data.Data.KYC
         public string? EntityName { get; set; }
         public string? RiskClassIndustry { get; set; }
         public DateTime? NextUpdateDate { get; set; }
+
+
+
+        public string? CustomerBranch { get; set; }
+        public string? AccountOfficer { get; set; }
+        public string? CustomerBusinessSegment { get; set; }
     }
 }
