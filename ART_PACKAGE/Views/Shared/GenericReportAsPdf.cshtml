@@ -39,6 +39,8 @@
 
         table {
             width: 100%;
+            table-layout: fixed;
+            page-break-after: always;
         }
 
         thead {
@@ -50,7 +52,8 @@
         }
 
         tr {
-            page-break-inside: inherit
+            /*page-break-inside: inherit*/
+            page-break-inside: avoid;
         }
 
         td {
@@ -63,11 +66,17 @@
                 height: auto;
                 font-size: 12px;
             }
+            .dynamic-font {
+            display: inline-block;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
     </style>
 </head>
 <body>
     <div class="container-fluid">
-        <div class="jumbotron" style="height: 100%">
+        <div class="jumbotron brk" style="height: 100%">
             <h1 class="display-4">@ViewData["title"]</h1>
             <p class="lead">@ViewData["desc"]</p>
             <hr class="my-4">
@@ -97,7 +106,17 @@
 
                     var keys = Model[j].First().Keys;
                     var data = Model[j].Skip((i / recordPerPage) * recordPerPage).Take(recordPerPage);
-                    //IEnumerable<Dictionary<string, object>> ss = new();
+                    // Calculate column width based on number of columns
+                    var columnWidth = 100.0 / keys.Count();
+
+                    // Set font size based on column width
+                    // Calculate font size based on column width, with base font size of 14px
+                    var baseFontSize = 14; // Starting base font size
+                    var maxColumnWidth = 25; // Maximum allowed column width (in %)
+                    var fontSize = Math.Max(10, baseFontSize * (columnWidth / maxColumnWidth));
+
+                    // Limit the font size to a minimum of 10px
+                    var fontSizePx = $"{fontSize}px";                    //IEnumerable<Dictionary<string, object>> ss = new();
                     <table class="table table-striped">
                         <thead class="thead-light">
                             <tr>
@@ -111,7 +130,7 @@
                             @foreach (var item in data)
                             {
                                 tcounter++;
-                                var pregress = (Convert.ToDouble(tcounter) / Convert.ToDouble(tttotalRecords)) * 100;
+                                var pregress = (Convert.ToDouble(tcounter-1) / Convert.ToDouble(tttotalRecords)) * 100;
                                 //Console.WriteLine(pregress);
                                 _pdfHAndler.UpdateCompletionPercentage(exportinProcess, Convert.ToDecimal(pregress));
 
@@ -125,7 +144,7 @@
                                             return;*@
 
                                         <td>
-                                            <div>
+                                            <div style="width:@columnWidth%; font-size:@fontSizePx;">
 
                                                 @if (item[key] is not null && item[key].GetType() == typeof(double))
                                                 {
@@ -158,5 +177,25 @@
         }
 
     </div>
+       <script>
+        // Function to adjust font size dynamically based on column width
+        function adjustFontSize() {
+            var tables = document.querySelectorAll("table");
+            tables.forEach(function (table) {
+                var columns = table.querySelectorAll("td");
+                columns.forEach(function (column) {
+                    var columnWidth = column.offsetWidth;
+                    var newFontSize = columnWidth / 4;  // Adjust the factor based on your requirement
+                    
+                    // Set the new font size
+                    column.querySelector(".dynamic-font").style.fontSize = newFontSize + "px";
+                });
+            });
+        }
+
+        window.onload = adjustFontSize;
+        window.onresize = adjustFontSize;  // Recalculate when the window is resized
+    </script>
+
 </body>
 </html>

@@ -164,7 +164,7 @@ namespace ART_PACKAGE.Extentions.PDF
             List unorderedList = new List()
                         .SetSymbolIndent(12)           // Indent for symbols
                         .SetListSymbol("\u2022")       // Bullet point symbol
-                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+                        .SetMarginLeft(20).SetFontSize(16);
             unorderedList.Add(new ListItem("Global Filters"));
             document.Add(unorderedList);
             var arabicLanguageProcessor = new ArabicLigaturizer();
@@ -200,7 +200,7 @@ namespace ART_PACKAGE.Extentions.PDF
             List unorderedList = new List()
                         .SetSymbolIndent(12)           // Indent for symbols
                         .SetListSymbol("\u2022")       // Bullet point symbol
-                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+                        .SetMarginLeft(20).SetFontSize(16);
             unorderedList.Add(new ListItem("Table Filters"));
             document.Add(unorderedList);
             var arabicLanguageProcessor = new ArabicLigaturizer();
@@ -237,7 +237,7 @@ namespace ART_PACKAGE.Extentions.PDF
             List unorderedList = new List()
                         .SetSymbolIndent(12)           // Indent for symbols
                         .SetListSymbol("\u2022")       // Bullet point symbol
-                        .SetMarginLeft(20).SetFontSize(16).SetBold();
+                        .SetMarginLeft(20).SetFontSize(16);
             unorderedList.Add(new ListItem("Table Filters"));
             document.Add(unorderedList);
             var arabicLanguageProcessor = new ArabicLigaturizer();
@@ -807,7 +807,7 @@ namespace ART_PACKAGE.Extentions.PDF
             Paragraph title = new Paragraph(string.IsNullOrEmpty( reportTitle)?"No Title": reportTitle)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(20)
-                .SetBold();
+                ;
 
             document.Add(title);
             return document;
@@ -819,7 +819,7 @@ namespace ART_PACKAGE.Extentions.PDF
             Paragraph title = new Paragraph(string.IsNullOrEmpty(reportTitle) ? "No Title" : reportTitle)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(20)
-                .SetBold();
+                ;
 
             document.Add(title);
             return document;

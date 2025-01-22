@@ -19,7 +19,7 @@ namespace ART_PACKAGE.Helpers.Pdf
             , string UserName
             , List<string> ColumnsToSkip = null
             , Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null);
-        public Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
+        public Task<bool> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData
             , ActionContext ControllerContext
             , int ColumnsPerPage
             , string UserName,

@@ -19,7 +19,7 @@ namespace ART_PACKAGE.Helpers.Grid
         public string ExportGridToCsv(ExportRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null);
         public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, Expression<Func<TModel, bool>>? baseCondition = null);
 
-        public Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null);
+        public Task<byte[]> ExportGridToPdf(ExportPDFRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null);
         public Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null);
         public Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, int gridId, string reportGUID, Expression<Func<TModel, bool>>? baseCondition = null);
 

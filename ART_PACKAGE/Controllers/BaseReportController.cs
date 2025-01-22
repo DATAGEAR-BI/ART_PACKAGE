@@ -63,8 +63,15 @@ namespace ART_PACKAGE.Controllers
                 ContentType = "application/json",
                 Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
             };
-            /*byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
-            return File(pdfBytes, "application/pdf");*/
+            /* var fileame = await _gridConstructor.ExportGridToPDFUsingIText(req, User.Identity.Name, reportGUID, reportGUID);
+     return new ContentResult
+     {
+         ContentType = "application/json",
+         Content = JsonConvert.SerializeObject(fileame, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+     };*/
+
+            //byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
+            //return File(pdfBytes, "application/pdf");
         }
 
 

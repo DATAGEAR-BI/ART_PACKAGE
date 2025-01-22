@@ -367,7 +367,10 @@ namespace ART_PACKAGE.Helpers.Grid
         {
             throw new NotImplementedException();
         }
-      
 
+        public Task<byte[]> ExportGridToPdf(ExportPDFRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<Dictionary<string, object>, bool>>? baseCondition = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

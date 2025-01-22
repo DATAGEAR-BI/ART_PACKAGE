@@ -49,7 +49,16 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using PdfWriter = iText.Kernel.Pdf.PdfWriter;
 using iText.Layout.Font;
 using iText.Layout.Splitting;
-
+using sun.net;
+using System.Security.Policy;
+using javax.swing.text.html;
+using iText.Html2pdf.Resolver.Font;
+using PdfiumViewer;
+using com.sun.org.apache.bcel.@internal.classfile;
+using Microsoft.AspNetCore.Hosting;
+using sun.swing;
+using System.Drawing;
+using iText.IO.Font.Constants;
 
 namespace ART_PACKAGE.Helpers.Pdf
 {
@@ -103,7 +112,7 @@ namespace ART_PACKAGE.Helpers.Pdf
                 ViewData = ViewData,
                 //CustomSwitches = footer,
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
-                PageSize = Size.B0
+                PageSize = Rotativa.AspNetCore.Options.Size.B0
             };
 
 
@@ -475,9 +484,10 @@ namespace ART_PACKAGE.Helpers.Pdf
             
             
         }*/
-        public async Task<byte[]> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData, ActionContext ControllerContext, int ColumnsPerPage, string UserName, string reportId, List<string> ColumnsToSkip = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
+        public async Task<bool> ExportToPdf<T>(IEnumerable<T> data, ViewDataDictionary ViewData, ActionContext ControllerContext, int ColumnsPerPage, string UserName, string reportId, List<string> ColumnsToSkip = null, Dictionary<string, GridColumnConfiguration> DisplayNamesAndFormat = null)
         {
-           
+            Stopwatch bdstopwatch = new Stopwatch();//
+            bdstopwatch.Start();
 
             ViewData["user"] = UserName;
             ViewData["reportId"] = reportId;
@@ -488,19 +498,20 @@ namespace ART_PACKAGE.Helpers.Pdf
                 dataColumnsParts.Add(GetDataPArtitionedByColumns(data, group, DisplayNamesAndFormat));
             }
             //string footer = "--footer-center \"Printed on: " + DateTime.UtcNow.ToString("dd/MM/yyyyy hh:mm:ss") + "  Page: [page]/[toPage]" + "  Printed By : " + UserName + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
-            _ = new ViewAsPdf("ReportPdfCover")
-            {
-                ViewData = ViewData,
-                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
-            };
+            /* _ = new ViewAsPdf("ReportPdfCover")
+             {
+                 ViewData = ViewData,
+                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+             };*/
             //IEnumerable<ViewAsPdf> pdfs = dataColumnsParts.Select(x => new ViewAsPdf("GenericReportAsPdf", x)
             //{
             //    ViewData = ViewData,
             //    CustomSwitches = footer,
             //    PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
             //});
-            
-            var s = await RenderViewToStringAsync(ControllerContext, "GenericReportAsPdf", dataColumnsParts,ViewData);
+
+            /*var s = await RenderViewToStringAsync(ControllerContext, "GenericReportAsPdf", dataColumnsParts,ViewData);
+            Console.WriteLine($@"takes time {bdstopwatch.Elapsed.ToString()} - before write to file ");*/
             /*string filePath = Path.Combine(_env.WebRootPath,"htpdf.pdf");
             using (var writer = new iText.Kernel.Pdf.PdfWriter(filePath))
             using (var pd = new iText.Kernel.Pdf.PdfDocument(writer))
@@ -522,9 +533,49 @@ namespace ART_PACKAGE.Helpers.Pdf
                 }
                 document.Close();
             }*/
+            /*try
+            {
+                string wwwrootPath = _env.WebRootPath;
+                string folderPath = Path.Combine(Path.Combine(_env.WebRootPath, "PDF"), reportId);
+
+                if (!Directory.Exists(folderPath))
+                    _ = Directory.CreateDirectory(folderPath);
+                string filePath = Path.Combine(folderPath, $"TESTPDF.pdf");
+
+                if (!Directory.Exists(folderPath))
+                    _ = Directory.CreateDirectory(folderPath);
+
+                using (var pdfD = new PdfWriter(filePath))  // Ensure the folder path exists
+
+                {
+                    var document = new PdfDocument(pdfD);
+                    var converterProperties = new ConverterProperties();
+
+                    // Set Arabic font to support Arabic text
+                    var dfp = new DefaultFontProvider(true, true, true);
+
+                    string fontPath = Path.Combine(wwwrootPath, "fonts", "ARIAL.TTF");
+
+                    dfp.AddFont(fontPath);
+                    converterProperties.SetFontProvider(dfp);
 
 
-            using (var memoryStream = new MemoryStream()) // Create a MemoryStream
+                    HtmlConverter.ConvertToPdf(s, document, converterProperties);
+                    pdfD.Close();
+                    bdstopwatch.Stop();
+                    Console.WriteLine($@"takes time {bdstopwatch.Elapsed.ToString()} - after written to folder pdf");
+                    return true;
+                    //return File(ms.ToArray(), "application/pdf", "export.pdf");
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+*/
+
+            /*using (var memoryStream = new MemoryStream()) // Create a MemoryStream
             {
                 // Initialize PDF writer to write to the MemoryStream
                 using (var writer = new PdfWriter(memoryStream))
@@ -548,14 +599,16 @@ namespace ART_PACKAGE.Helpers.Pdf
 
                     document.Close(); // Finalize the document
                 }
-
+                bdstopwatch.Stop();
+                var totalc = data.Count();
+                Console.WriteLine($@"Exporting Dasta of   of columns and {data.Count()} records takes {bdstopwatch.Elapsed.ToString()}");
                 return memoryStream.ToArray(); // Return PDF as byte array
 
-            }
+            }*/
             //ConvertHtmlToPdf(s);
 
 
-            /*ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
+            ViewAsPdf pdf = new("GenericReportAsPdf", dataColumnsParts)
             {
                 ViewData = ViewData,
                 //CustomSwitches = footer,
@@ -563,10 +616,17 @@ namespace ART_PACKAGE.Helpers.Pdf
             };
 
 
+            var u7 = await pdf.BuildFile(ControllerContext);
 
-          
+            string folderPath = Path.Combine(Path.Combine(_env.WebRootPath, "PDF"), reportId);
 
-            return await pdf.BuildFile(ControllerContext);*/
+            if (!Directory.Exists(folderPath))
+                _ = Directory.CreateDirectory(folderPath);
+            string filePath = Path.Combine(folderPath, $"TESTPDF.pdf");
+
+            File.WriteAllBytes(filePath, u7);
+
+            return true;
 
             //var outputStream = new MemoryStream();
             //var document = new Document();
@@ -897,8 +957,8 @@ namespace ART_PACKAGE.Helpers.Pdf
                                         }
                                         else
                                         {
-                                            Div d = new Div();
-                                            var cell = new Cell().Add(new Paragraph(arabicLanguageProcessor.Process(value ?? ""))
+                                            
+                                            var cell = new Cell().Add(new Paragraph(value.ProcessToArabic())
                                                 .SetFont(defaultFont).SetFontSize(calculatedFontSize)
                                                 .SetBaseDirection(BaseDirection.RIGHT_TO_LEFT)
                                               .SetTextAlignment(TextAlignment.CENTER)
@@ -916,7 +976,6 @@ namespace ART_PACKAGE.Helpers.Pdf
                                           .SetBorder(Border.NO_BORDER)
                                           .SetBorderTop(new SolidBorder(new DeviceRgb(222, 225, 230), 1))
                                           .SetBorderBottom(new SolidBorder(new DeviceRgb(222, 225, 230), 1));
-                                            d.SetBaseDirection(BaseDirection.DEFAULT_BIDI);
                                             
                                             tableList[tableIndex].AddCell(cell);
                                         }
@@ -1033,7 +1092,7 @@ namespace ART_PACKAGE.Helpers.Pdf
 
 
         }
-        
+       
         private float CalculateFontSize(float cellHeight, int lines)
         {
             // Assuming a basic factor for line spacing and padding/margin inside the cell
@@ -1045,17 +1104,42 @@ namespace ART_PACKAGE.Helpers.Pdf
 
             return Math.Max(calculatedFontSize, 6); // Set a minimum font size limit (e.g., 6pt)
         }
-        private float CalculateFontSize(float cellHeight, float cellWidth, int maxCharsOnLine = 20, int lines = 2, float lineSpacingFactor = 1f, float characterSpacingFactor = 1.0f)
+        private float CalculateFontSize(float cellHeight, float cellWidth, int maxCharsOnLine =70 /*20*/, int lines = 2, float lineSpacingFactor = 1f, float characterSpacingFactor = 0.25f)
         {
             // Calculate font size based on height
-            float fontSizeBasedOnHeight = (cellHeight / (lines * lineSpacingFactor)) - 1.0f; // 1.0f is a padding factor
+            //float fontSizeBasedOnHeight = (cellHeight / (lines * lineSpacingFactor)) - 1.0f; // 1.0f is a padding factor
 
             // Calculate font size based on width
-            float fontSizeBasedOnWidth = (cellWidth / (maxCharsOnLine * characterSpacingFactor)) * 2.65f;
+            float fontSizeBasedOnWidth = (cellWidth / ((maxCharsOnLine * characterSpacingFactor)/*+1 padding factor*/)) /** 2.65f*/;// 
 
             // Return the smaller of the two, ensuring a minimum font size
             //return Math.Min(fontSizeBasedOnHeight, fontSizeBasedOnWidth);
-            return Math.Max(Math.Min(fontSizeBasedOnHeight, fontSizeBasedOnWidth), 1.4f);
+            //return Math.Max(Math.Min(fontSizeBasedOnHeight, fontSizeBasedOnWidth), 1.4f);
+            return fontSizeBasedOnWidth;
+        }
+        public int CalculateMaxChars(float cellHeight, float cellWidth, float fontSize)
+        {
+            // Load the font
+            iText.Kernel.Font.PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+
+            // Create a new document for measurement (we won't write to it)
+            using (PdfDocument pdfDoc = new PdfDocument(new PdfWriter(new System.IO.MemoryStream())))
+            {
+                Document document = new Document(pdfDoc);
+
+                // Create a sample text element to measure
+                Text text = new Text("www").SetFont(font).SetFontSize(fontSize);
+
+                // Create a paragraph and add the text element to it
+                Paragraph paragraph = new Paragraph(text);
+                iText.Layout.Properties.UnitValue widthValue = paragraph.GetWidth();
+
+                // Convert UnitValue to float (in points)
+                float charWidth = widthValue.GetValue();
+
+                // Calculate and return the maximum number of characters that fit in the given width
+                return (int)(cellWidth / charWidth);
+            }
         }
         private float CalculateFontSize(float cellWidth, int charactersPerLine = 70, float characterSpacingFactor = 1.0f)
         {
@@ -1410,8 +1494,8 @@ namespace ART_PACKAGE.Helpers.Pdf
                 return true;
             }
         }
-
         
+
     }
     class testttttt
     {

@@ -11,6 +11,7 @@ using Data.Services;
 using Data.Services.Grid;
 using Data.Setting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -205,22 +206,43 @@ namespace ART_PACKAGE.Helpers.Grid
                                                     , user, reportConfig.SkipList, reportConfig.DisplayNames);
             return pdfBytes;
         }
-        public async Task<byte[]> ExportGridToPdf(ExportRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null)
+       
+        public async Task<byte[]> ExportGridToPdf(ExportPDFRequest exportRequest, string user, ActionContext actionContext, ViewDataDictionary ViewData, string reportId, Expression<Func<TModel, bool>>? baseCondition = null)
         {
-            _processesHandler.AddProcess(reportId,"PDF");
+
+            Stopwatch bdstopwatch = new Stopwatch();//
+            bdstopwatch.Start();
+            ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
+            string folderGuid = reportId;//Guid.NewGuid().ToString();
+            exportRequest.PdfOptions = _pdfSettings;//while not using user configs
+            exportRequest.PdfOptions.NumberOfColumnsInPage = exportRequest.IncludedColumns.Count();
+            _processesHandler.AddProcess(reportId, "PDF");
+            string folderPath = Path.Combine(Path.Combine(_webHostEnvironment.WebRootPath, "PDF"), folderGuid);
+            GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
+            int total = dataRes.total;
+            int batch = exportRequest.PdfOptions.NumberOfRowsInFile;// d;
+            int round = 0;
+            fileProgress = new();
+            chunksProgress = new();
+
+            ////
+           /* _processesHandler.AddProcess(reportId,"PDF");
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
-
+*/
             ViewData["title"] = reportConfig.ReportTitle;
             ViewData["desc"] = reportConfig.ReportDescription;
-            byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data.ToList(), ViewData, actionContext, 5
+
+
+            bool pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data.ToList(), ViewData, actionContext, 20
                                                     , user, reportId, reportConfig.SkipList, reportConfig.DisplayNames);
-            return pdfBytes;
+            return null;
         }
         
         public async Task<string> ExportGridToPDFUsingIText(ExportPDFRequest exportRequest, string user, string gridId, string reportGUID, Expression<Func<TModel, bool>> baseCondition = null)
         {
-            var stopwatch1 = Stopwatch.StartNew();
+            Stopwatch bdstopwatch = new Stopwatch();//
+            bdstopwatch.Start();
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             string folderGuid = reportGUID;//Guid.NewGuid().ToString();
             exportRequest.PdfOptions = _pdfSettings;//while not using user configs
@@ -257,8 +279,12 @@ namespace ART_PACKAGE.Helpers.Grid
                 var done = fileProgress.Values.Sum();
                 decimal progress = done / (decimal)(totalcopy+ totalchunks);
                 _processesHandler.UpdateCompletionPercentage(reportGUID, progress * 100);
-                /*if (progress<1)
-                {*/
+                if (progress < 1)
+                {
+                    bdstopwatch.Stop();
+                    var totalc = reportConfig.MapperType != null && (reportConfig.MapperType.Name == typeof(ArtCFTConfigMapper).Name || reportConfig.MapperType.Name == typeof(ArtCRPConfigMapper).Name) && exportRequest.IncludedColumns.Count() > 2 ? exportRequest.IncludedColumns.Count() - 1 : exportRequest.IncludedColumns.Count();
+                    Console.WriteLine($@"Exporting Dasta of {totalc} of columns and {done} records takes {bdstopwatch.Elapsed.ToString()}");
+                }
                     _ = _exportHub.Clients.Clients(connections.GetConnections(user))
                                                    .SendAsync("updateExportPDFProgress", progress * 100, folderGuid, gridId);
                 //}
