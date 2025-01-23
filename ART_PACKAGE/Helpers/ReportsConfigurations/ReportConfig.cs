@@ -12,7 +12,7 @@ namespace ART_PACKAGE.Helpers.ReportsConfigurations
         public List<GridButton>? Actions { get; set; }
         public List<GridButton>? Toolbar { get; set; }
         public Func<ClaimsPrincipal, bool>? ShowExportCsv { get; set; }
-        public Func<ClaimsPrincipal, bool>? ShowExportPdf { get; set; } = (s => false);
+        public Func<ClaimsPrincipal, bool>? ShowExportPdf { get; set; }
         public Type MapperType { get; set; }
         public string? ReportTitle { get; set; }
         public string? ReportDescription { get; set; }

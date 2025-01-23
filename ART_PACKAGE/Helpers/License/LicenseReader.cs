@@ -18,13 +18,14 @@ namespace ART_PACKAGE.Helpers.License
         private readonly ILogger<LicenseReader> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-        public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment)
+        public LicenseReader(ILogger<LicenseReader> logger, IWebHostEnvironment webHostEnvironment, IConfiguration config)
         {
             _cipher = Cipher.getInstance("RSA");
             _publicKey = getDecodedPublicKey(LicenseConstants.PUBLIC_KEY);
             _cipher.init(2, _publicKey);
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _configuration = config;
         }
         public Middlewares.License.License ReadFromPath(string path)
         {
@@ -138,86 +139,6 @@ namespace ART_PACKAGE.Helpers.License
 
         }
 
-        public GridResult<Middlewares.License.License> GetGridData(GridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null,
-            IEnumerable<Expression<Func<Middlewares.License.License, object>>>? includes = null)
-        {
-
-            IQueryable<Middlewares.License.License> data = ReadAllAppLicenses().AsQueryable();
-            if (includes is not null)
-            {
-                foreach (Expression<Func<Middlewares.License.License, object>> inculde in includes)
-                {
-                    data = data.Include(inculde);
-                }
-            }
-
-            if (baseCondition is not null)
-            {
-                data = data.Where(baseCondition);
-            }
-            Expression<Func<Middlewares.License.License, bool>> ex = request.Filter.ToExpression<Middlewares.License.License>();
-
-            data = data.Where(ex);
-            if (!request.All)
-            {
-                ParameterExpression parameter = Expression.Parameter(typeof(Middlewares.License.License), "item");
-                MemberExpression property = Expression.Property(parameter, request.IdColumn);
-                IEnumerable<ConstantExpression> constantValues = request.SelectedValues.Select(value => Expression.Constant(Convert.ChangeType(value, property.Type)));
-
-                System.Reflection.MethodInfo containsMethod = typeof(Enumerable)
-                    .GetMethods()
-                    .Where(method => method.Name == "Contains")
-                    .Single(method => method.GetParameters().Length == 2)
-                    .MakeGenericMethod(property.Type);
-
-                MethodCallExpression containsExpression = Expression.Call(
-                    containsMethod,
-                    Expression.Constant(request.SelectedValues),
-                    property
-                );
-
-                Expression<Func<Middlewares.License.License, bool>> predicate = Expression.Lambda<Func<Middlewares.License.License, bool>>(containsExpression, parameter);
-                data = data.Where(predicate);
-            }
-            int count = data.Count();
-
-
-            if (request.Sort is not null && request.Sort.Any())
-            {
-                SortOption firtsOption = request.Sort[0];
-                Expression<Func<Middlewares.License.License, object>> sortEx = firtsOption.GetSortExpression<Middlewares.License.License>();
-
-                IOrderedQueryable<Middlewares.License.License>? sortedData = firtsOption.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
-                foreach (SortOption? item in request.Sort.Skip(1))
-                {
-                    sortEx = item.GetSortExpression<Middlewares.License.License>();
-                    sortedData = item.dir.ToLower().Contains("asc") ? sortedData.ThenBy(sortEx) : sortedData.ThenByDescending(sortEx);
-                }
-                data = sortedData;
-            }
-            else
-            {
-                if (defaultSort != null)
-                {
-                    Expression<Func<Middlewares.License.License, object>> sortEx = defaultSort.GetSortExpression<Middlewares.License.License>();
-                    data = defaultSort.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
-                }
-            }
-            if (request.Skip != 0)
-                data = data.Skip(request.Skip);
-
-
-            if (request.Take < count)
-                data = data.Take(request.Take);
-
-
-            return new GridResult<Middlewares.License.License>
-            {
-                data = data,
-                total = count,
-            };
-        }
-
         public IQueryable<Middlewares.License.License> GetScheduleData(List<object> @params)
         {
             throw new NotImplementedException();
@@ -256,6 +177,84 @@ namespace ART_PACKAGE.Helpers.License
         public bool DeleteAll()
         {
             throw new NotImplementedException();
+        }
+
+        public GridResult<Middlewares.License.License> GetGridData(GridRequest request, Expression<Func<Middlewares.License.License, bool>>? baseCondition = null, SortOption? defaultSort = null, IEnumerable<Expression<Func<Middlewares.License.License, object>>>? includes = null)
+        {
+            IQueryable<Middlewares.License.License> data = ReadAllAppLicenses().AsQueryable();
+            if (includes is not null)
+            {
+                foreach (Expression<Func<Middlewares.License.License, object>> inculde in includes)
+                {
+                    data = data.Include(inculde);
+                }
+            }
+
+            if (baseCondition is not null)
+            {
+                data = data.Where(baseCondition);
+            }
+            Expression<Func<Middlewares.License.License, bool>> ex = request.Filter.ToExpression<Middlewares.License.License>();
+
+            data = data.Where(ex);
+            /*if (!request.All)
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(Middlewares.License.License), "item");
+                MemberExpression property = Expression.Property(parameter, request.IdColumn);
+                IEnumerable<ConstantExpression> constantValues = request.SelectedValues.Select(value => Expression.Constant(Convert.ChangeType(value, property.Type)));
+
+                System.Reflection.MethodInfo containsMethod = typeof(Enumerable)
+                    .GetMethods()
+                    .Where(method => method.Name == "Contains")
+                    .Single(method => method.GetParameters().Length == 2)
+                    .MakeGenericMethod(property.Type);
+
+                MethodCallExpression containsExpression = Expression.Call(
+                    containsMethod,
+                    Expression.Constant(request.SelectedValues),
+                    property
+                );
+
+                Expression<Func<Middlewares.License.License, bool>> predicate = Expression.Lambda<Func<Middlewares.License.License, bool>>(containsExpression, parameter);
+                data = data.Where(predicate);
+            }*/
+            int count = data.Count();
+
+
+            if (request.Sort is not null && request.Sort.Any())
+            {
+                SortOption firtsOption = request.Sort[0];
+                Expression<Func<Middlewares.License.License, object>> sortEx = firtsOption.GetSortExpression<Middlewares.License.License>();
+
+                IOrderedQueryable<Middlewares.License.License>? sortedData = firtsOption.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
+                foreach (SortOption? item in request.Sort.Skip(1))
+                {
+                    sortEx = item.GetSortExpression<Middlewares.License.License>();
+                    sortedData = item.dir.ToLower().Contains("asc") ? sortedData.ThenBy(sortEx) : sortedData.ThenByDescending(sortEx);
+                }
+                data = sortedData;
+            }
+            else
+            {
+                if (defaultSort != null)
+                {
+                    Expression<Func<Middlewares.License.License, object>> sortEx = defaultSort.GetSortExpression<Middlewares.License.License>();
+                    data = defaultSort.dir.ToLower().Contains("asc") ? data.OrderBy(sortEx) : data.OrderByDescending(sortEx);
+                }
+            }
+            if (request.Skip != 0)
+                data = data.Skip(request.Skip);
+
+
+            if (request.Take < count)
+                data = data.Take(request.Take);
+
+
+            return new GridResult<Middlewares.License.License>
+            {
+                data = data,
+                total = count,
+            };
         }
     }
 }

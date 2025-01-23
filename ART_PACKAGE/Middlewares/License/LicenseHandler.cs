@@ -6,17 +6,20 @@ namespace ART_PACKAGE.Middlewares.License
     {
         private readonly ILicenseReader licenseReader;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _config;
 
-        public LicenseHandler(ILicenseReader licenseReader, IHttpContextAccessor httpContextAccessor)
+        public LicenseHandler(ILicenseReader licenseReader, IHttpContextAccessor httpContextAccessor, IConfiguration _config)
         {
             this.licenseReader = licenseReader;
             _httpContextAccessor = httpContextAccessor;
+            this._config = _config;
+
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, LicenseRequirment requirement)
         {
             //check if Datagear admin user 
-            if (context.User is not null && context.User?.Identity?.Name?.ToLower() == "art_admin@datagearbi.com")
+            if (context.User is not null && context.User?.Identity?.Name?.ToLower() == _config["AdminUser"]?.ToLower())
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;
@@ -40,20 +43,27 @@ namespace ART_PACKAGE.Middlewares.License
                 return Task.CompletedTask;
             }
             //getting the module the route is in
-            string module = ModulePerLicense.GetModule(controller);
+            string module = ModulePerLicense.GetControllerModule(controller);
             //checking if the app configuration supports that module
             if (!requirement.Modules.Contains(module))
             {
                 context.Fail();
                 return Task.CompletedTask;
             }
-            //getting module license since all modlue lisenes should be (modulename+"license.dg")
-            License? moduleLic = licenseReader.ReadFromPath(module + "license.dg");
-            //checking if the license is valid
-            if (moduleLic is null || !moduleLic.IsValid())
+            string path = module + "license.dg";
+
+            if (File.Exists(path))
             {
-                context.Fail();
-                return Task.CompletedTask;
+
+
+                //getting module license since all modlue lisenes should be (modulename+"license.dg")
+                License? moduleLic = licenseReader.ReadFromPath(module + "license.dg");
+                //checking if the license is valid
+                if (moduleLic is null || !moduleLic.IsValid())
+                {
+                    context.Fail();
+                    return Task.CompletedTask;
+                }
             }
             //all license are correct and valid
             context.Succeed(requirement);
