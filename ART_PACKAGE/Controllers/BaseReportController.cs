@@ -59,6 +59,7 @@ namespace ART_PACKAGE.Controllers
         {
             string Url = $"{Request.Scheme}://{Request.Host}";
             ViewData["Domain"] = Url;
+            Console.WriteLine(Url);
             byte[] pdfBytes = await _gridConstructor.ExportGridToPdf(req, User.Identity.Name, ControllerContext, ViewData, reportGUID);
             return File(pdfBytes, "application/pdf");
         }

@@ -12,7 +12,6 @@
     var user = User.Identity.Name;
     string exportinProcess =(string) ViewData["reportId"]; //DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
     var Domain = (string)ViewData["Domain"];
-   
 }
 
 
@@ -68,7 +67,7 @@
             <p class="lead">@ViewData["desc"]</p>
             <hr class="my-4">
             <div class="d-flex justify-content-between">
-                <img src="~/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
+                <img src="@Domain/imgs/LOGO.png" class="rounded col-4" alt="DataGear Logo">
             </div>
         </div>
 
