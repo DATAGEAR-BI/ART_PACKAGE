@@ -568,21 +568,10 @@ export const Handlers = {
                 para.Group = groups;
                 para.sort = ds.dataSource.sort();
 
-                var isMyreports = window.location.href.toLowerCase().includes('myreports');
-                var res;
-                if (isMyreports) {
-                    res = await fetch(`/${controller}/ExportPdfMyReports`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify(para)
-                    });
-                } else {
                     currentPDFReportId = generateGUID();
-                    var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}` : `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}`;//`/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
-                    res = await fetch(exportUrl, {
+                var exportUrl = params ? `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}` : `/${controller}/ExportPdf/${gridDiv.id}?reportGUID=${currentPDFReportId}`;//`/${controller}/ExportPdf/${gridDiv.id}` : `/${controller}/ExportPdf/${gridDiv.id}`;
+                console.log(exportUrl);
+                var res = await fetch(exportUrl, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -591,7 +580,7 @@ export const Handlers = {
                         body: JSON.stringify(Request)
                     });
                     console.log("res",res)
-                }
+                
                 var r = await res.blob();
                 resolve({
                     blob: r

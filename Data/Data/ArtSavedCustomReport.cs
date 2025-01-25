@@ -25,6 +25,9 @@ public class ArtSavedCustomReport
         get
         {
             var owner = UserReports.FirstOrDefault(u => u.ReportId == Id && u.isOwner);
+
+            if (owner == null || owner.User == null)
+                return "";
            
             return owner.User.Email;
         }

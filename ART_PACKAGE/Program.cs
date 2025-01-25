@@ -22,6 +22,7 @@ using Data.Services;
 using Data.Services.CustomReport;
 using Hangfire;
 using Hangfire.LiteDB;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -133,7 +134,13 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     _ = app.UseHsts();
 }
+
+
 app.UseHttpsRedirection();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

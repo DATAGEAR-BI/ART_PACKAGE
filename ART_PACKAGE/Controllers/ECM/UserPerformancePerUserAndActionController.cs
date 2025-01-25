@@ -121,8 +121,10 @@ namespace ART_PACKAGE.Controllers.ECM
             {
                 data = context.ExecuteProc<ArtUserPerformPerUserAndAction>(MYSQLSPName.ART_ST_USER_PERFORMANCE_PER_USER_AND_ACTION, summaryParams.ToArray());
             }
+            string Url = $"https://{Request.Host}";
             ViewData["title"] = "User Performance Per User and Action Report";
             ViewData["desc"] = "";
+            ViewData["Domain"] = Url;
             byte[] bytes = await _pdfSrv.ExportToPdf(data.AsQueryable(), para.req, ViewData, ControllerContext, 5
                                                     , User.Identity.Name);
             return File(bytes, "text/csv");
