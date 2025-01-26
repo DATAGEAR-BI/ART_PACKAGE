@@ -9,21 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtFtiEcmTransaction")]
-
-    public class ArtFtiEcmTransactionController : Controller
+    [Authorize()]//Roles = "ArtCasesInitiatedFromBranch"
+    public class ArtCasesInitiatedFromBranchController : Controller
     {
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService _drpSrv;
+        private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiEcmTransactionController(FTIContext fti, IPdfService pdfSrv, IDropDownService drpSrv, ICsvExport csvSrv)
+        public ArtCasesInitiatedFromBranchController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.fti = fti;
             _pdfSrv = pdfSrv;
-            _drpSrv = drpSrv;
+            this.dropDownService = dropDownService;
             _csvSrv = csvSrv;
         }
 
@@ -31,7 +30,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
+            IQueryable<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -39,20 +38,19 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranch).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
-                    //commented untill resolve drop down 
-                    {"Product".ToLower(),_drpSrv.GetProductDropDown().ToDynamicList() },
-                    //{"FtiReference".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
-                    //{"FirstLineParty".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
-                    //{"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
-
+                    //{"EcmReference".ToLower(),dropDownService   .GetECMREFERNCEDropDown()   .ToDynamicList() },
+                    {"BranchName".ToLower(),dropDownService       .GetBranchNameDropDown()      .ToDynamicList() },
+                    //{"CustomerName".ToLower(),dropDownService   .GetCustomerNameDropDown()  .ToDynamicList() },
+                    {"Product".ToLower(),dropDownService        .GetProductDropDown()       .ToDynamicList() },
+                    {"ProductType".ToLower(),dropDownService    .GetProductTypeDropDown()   .ToDynamicList() },
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranch).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtFtiEcmTransaction> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtCasesInitiatedFromBranch> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -86,18 +84,18 @@ namespace ART_PACKAGE.Controllers
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
-        //    await _csvSrv.ExportAllCsv<ArtFtiEcmTransaction, ArtFtiEcmTransactionController, int>(data, User.Identity.Name, para);
+        //    IQueryable<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.AsQueryable();
+        //    await _csvSrv.ExportAllCsv<ArtCasesInitiatedFromBranch, ArtCasesInitiatedFromBranchController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].SkipList;
-            List<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.CallData(req).Data.ToList();
-            ViewData["title"] = "FTI-ECM Transaction";
-            ViewData["desc"] = "FTI Activity report showing what transaction have been created from DGECM or from FTI and their status";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranch).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtCasesInitiatedFromBranch).ToLower()].SkipList;
+            List<ArtCasesInitiatedFromBranch> data = fti.ArtCasesInitiatedFromBranches.CallData(req).Data.ToList();
+            ViewData["title"] = "Cases Initiated from Branch";
+            ViewData["desc"] = "Transaction initiated from branch, Include DGECM cases main details, created and processed to FTI";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

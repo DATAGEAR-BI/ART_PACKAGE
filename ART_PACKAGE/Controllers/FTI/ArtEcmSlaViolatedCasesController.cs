@@ -8,17 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    public class ArtEcmPendingCasesController : Controller
+    public class ArtEcmSlaViolatedCasesController : Controller
     {
 
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-
-        public ArtEcmPendingCasesController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtEcmSlaViolatedCasesController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.fti = fti; ;
             _pdfSrv = pdfSrv;
@@ -30,7 +29,7 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.AsQueryable();
+            IQueryable<ArtEcmSlaViolatedCasesTb> data = fti.ArtEcmSlaViolatedCasesTb.AsQueryable();
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
 
             Dictionary<string, List<dynamic>> DropDownColumn = null;
@@ -38,7 +37,7 @@ namespace ART_PACKAGE.Controllers
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmSlaViolatedCasesTb).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
                 };
@@ -52,10 +51,10 @@ namespace ART_PACKAGE.Controllers
                     //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmSlaViolatedCasesTb).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtEcmPendingCases> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtEcmSlaViolatedCasesTb> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -109,9 +108,9 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
-            List<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.CallData(req).Data.ToList();
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmSlaViolatedCasesTb).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmSlaViolatedCasesTb).ToLower()].SkipList;
+            List<ArtEcmSlaViolatedCasesTb> data = fti.ArtEcmSlaViolatedCasesTb.CallData(req).Data.ToList();
             ViewData["title"] = "Pending Cases report";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5

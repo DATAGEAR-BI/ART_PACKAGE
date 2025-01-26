@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtFtiSummary")]
+    [Authorize()]
+    //[Authorize(Roles = "ArtFtiSummary")]
 
     public class ArtFtiSummaryController : Controller
     {

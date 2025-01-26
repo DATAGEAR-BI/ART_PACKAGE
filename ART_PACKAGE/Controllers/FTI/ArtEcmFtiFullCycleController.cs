@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtEcmFtiFullCycle")]
+    [Authorize()]
+    //[Authorize(Roles = "ArtEcmFtiFullCycle")]
     public class ArtEcmFtiFullCycleController : Controller
     {
         private readonly FTIContext fti;

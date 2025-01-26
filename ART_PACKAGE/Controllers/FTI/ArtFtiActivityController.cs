@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtFtiActivity")]
+    [Authorize()]
+    //[Authorize(Roles = "ArtFtiActivity")]
 
     public class ArtFtiActivityController : Controller
     {

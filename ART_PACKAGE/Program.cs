@@ -9,6 +9,7 @@ using ART_PACKAGE.Helpers.LDap;
 using ART_PACKAGE.Helpers.Logging;
 using ART_PACKAGE.Helpers.Pdf;
 using ART_PACKAGE.Hubs;
+using ART_PACKAGE.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Rotativa.AspNetCore;
 using Serilog;
@@ -39,7 +40,7 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<DBFactory>();
 builder.Services.AddScoped<LDapUserManager>();
 
-
+builder.Services.AddCustomAuthorization();
 builder.Services.AddScoped<ICsvExport, CsvExport>();
 builder.Services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
@@ -49,6 +50,15 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
      opt.LoginPath = new PathString("/Account/Ldapauth/login");
  });
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    string LoginProvider = builder.Configuration.GetSection("LoginProvider").Value;
+    if (LoginProvider == "DGUM") opt.LoginPath = new PathString("/Account/DgUMAuth/login");
+    else if (LoginProvider == "LDAP") opt.LoginPath = new PathString("/Account/Ldapauth/login");
+
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -86,11 +96,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-app.UseMiddleware<LogUserNameMiddleware>();
 app.UseAuthorization();
-//app.UseLicense();
+app.UseCustomAuthorization();
+app.UseMiddleware<LogUserNameMiddleware>();
+
+
+app.UseLicense();
 app.MapRazorPages();
-app.MapHub<LicenseHub>("/LicHub");
+//app.MapHub<LicenseHub>("/LicHub");
 app.MapHub<ExportHub>("/ExportHub");
 app.MapHub<AmlAnalysisHub>("/AmlAnalysisHub");
 app.MapControllerRoute(

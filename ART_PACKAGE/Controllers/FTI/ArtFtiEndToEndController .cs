@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtFtiEndToEnd")]
+    [Authorize()]
+    //[Authorize(Roles = "ArtFtiEndToEnd")]
 
     public class ArtFtiEndToEndController : Controller
     {

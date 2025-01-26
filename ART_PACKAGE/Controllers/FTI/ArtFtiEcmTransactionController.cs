@@ -9,21 +9,22 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    [Authorize(Roles = "ArtDgecmActivity")]
+    [Authorize()]
+    //[Authorize(Roles = "ArtFtiEcmTransaction")]
 
-    public class ArtDgecmActivityController : Controller
+    public class ArtFtiEcmTransactionController : Controller
     {
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
-        private readonly IDropDownService dropDownService;
+        private readonly IDropDownService _drpSrv;
         private readonly ICsvExport _csvSrv;
-        public ArtDgecmActivityController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+        public ArtFtiEcmTransactionController(FTIContext fti, IPdfService pdfSrv, IDropDownService drpSrv, ICsvExport csvSrv)
         {
             this.fti = fti;
             _pdfSrv = pdfSrv;
-            this.dropDownService = dropDownService;
+            _drpSrv = drpSrv;
             _csvSrv = csvSrv;
         }
 
@@ -31,28 +32,28 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtDgecmActivity> data = fti.ArtDgecmActivities.AsQueryable();
+            IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
 
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
-            List<SortOptions> defaultSort = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DefaultSort;
+
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].DisplayNames;
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
-                    //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
-                    {"BranchName".ToLower(),dropDownService.GetBranchNameDropDown().ToDynamicList() },
-                    //{"CustomerName".ToLower(),dropDownService.GetCustomerNameDropDown().ToDynamicList() },
-                    //{"CaseStatus".ToLower(),dropDownService.GetCaseStatusDropDown().ToDynamicList() },
-                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
-                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
+                    {"Product".ToLower(),_drpSrv.GetProductDropDown().ToDynamicList() },
+                    //{"FtiReference".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
+                    //{"FirstLineParty".ToLower(),fti.ArtFtiEcmTransactions.Where(x=>x.FirstLineParty!=null).Select(x => x.FirstLineParty).Distinct().ToDynamicList() },
+                    //{"EcmReference".ToLower(),_drpSrv.GetECMREFERNCEDropDown().ToDynamicList() },
+
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].SkipList;
             }
-            KendoDataDesc<ArtDgecmActivity> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip, defaultSort: defaultSort);
+
+            KendoDataDesc<ArtFtiEcmTransaction> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -86,19 +87,18 @@ namespace ART_PACKAGE.Controllers
         }*/
         //public async Task<IActionResult> Export([FromBody] ExportDto<int> para)
         //{
-        //    IQueryable<ArtDgecmActivity> data = fti.ArtDgecmActivities.AsQueryable();
-        //    await _csvSrv.ExportAllCsv<ArtDgecmActivity, ArtDgecmActivityController, int>(data, User.Identity.Name, para);
+        //    IQueryable<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.AsQueryable();
+        //    await _csvSrv.ExportAllCsv<ArtFtiEcmTransaction, ArtFtiEcmTransactionController, int>(data, User.Identity.Name, para);
         //    return new EmptyResult();
         //}
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].SkipList;
-            List<SortOptions> defaultSort = ReportsConfig.CONFIG[nameof(ArtDgecmActivity).ToLower()].DefaultSort;
-            List<ArtDgecmActivity> data = fti.ArtDgecmActivities.CallData(req, defaultSort: defaultSort).Data.ToList();
-            ViewData["title"] = "DGECM-Activities";
-            ViewData["desc"] = "Transactions from FTI and their communication with DGECM, FTI Transaction main detail,The first line parties that are selected to communicate with on DGECM";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEcmTransaction).ToLower()].SkipList;
+            List<ArtFtiEcmTransaction> data = fti.ArtFtiEcmTransactions.CallData(req).Data.ToList();
+            ViewData["title"] = "FTI-ECM Transaction";
+            ViewData["desc"] = "FTI Activity report showing what transaction have been created from DGECM or from FTI and their status";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
             return File(pdfBytes, "application/pdf");

@@ -6,17 +6,19 @@ using ART_PACKAGE.Helpers.Pdf;
 using Data.Data.FTI;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
 
-namespace ART_PACKAGE.Controllers
+namespace ART_PACKAGE.Controllers.FTI
 {
-    public class ArtFtiEndToEndNewController : Controller
+    public class ArtEcmPendingCasesController : Controller
     {
 
         private readonly FTIContext fti;
         private readonly IPdfService _pdfSrv;
         private readonly IDropDownService dropDownService;
         private readonly ICsvExport _csvSrv;
-        public ArtFtiEndToEndNewController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
+
+        public ArtEcmPendingCasesController(FTIContext fti, IPdfService pdfSrv, IDropDownService dropDownService, ICsvExport csvSrv)
         {
             this.fti = fti; ;
             _pdfSrv = pdfSrv;
@@ -28,30 +30,32 @@ namespace ART_PACKAGE.Controllers
 
         public IActionResult GetData([FromBody] KendoRequest request)
         {
-            IQueryable<ArtFtiEndToEndNew> data = fti.ArtFtiEndToEndsNew.AsQueryable();
-
+            IQueryable<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.AsQueryable();
             Dictionary<string, DisplayNameAndFormat> DisplayNames = null;
+
             Dictionary<string, List<dynamic>> DropDownColumn = null;
             List<string> ColumnsToSkip = null;
 
             if (request.IsIntialize)
             {
-                DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
+                DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
                 List<string> evensteps = new()
                 {
                 };
                 DropDownColumn = new Dictionary<string, List<dynamic>>
                 {
                     //commented untill resolve drop down 
+                    {"Product".ToLower(),dropDownService.GetProductDropDown().ToDynamicList() },
+                    {"ProductType".ToLower(),dropDownService.GetProductTypeDropDown().ToDynamicList() },
                     //{"EcmReference".ToLower(),dropDownService.GetECMREFERNCEDropDown().ToDynamicList() },
                     //{"FtiReference".ToLower(),fti.ArtFtiActivities.Where(x=>x.FtiReference!=null).Select(x => x.FtiReference).Distinct().ToDynamicList() },
                     //{"EventSteps".ToLower(),evensteps.ToDynamicList() },
 
                 };
-                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
+                ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
             }
 
-            KendoDataDesc<ArtFtiEndToEndNew> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
+            KendoDataDesc<ArtEcmPendingCases> Data = data.CallData(request, DropDownColumn, DisplayNames: DisplayNames, ColumnsToSkip);
             var result = new
             {
                 data = Data.Data,
@@ -79,7 +83,7 @@ namespace ART_PACKAGE.Controllers
                         //show = User.IsInRole("Delete_Cases")
                     },*/
                 },
-                selectable = true
+                //selectable = true
 
             };
 
@@ -105,10 +109,10 @@ namespace ART_PACKAGE.Controllers
 
         public async Task<IActionResult> ExportPdf([FromBody] KendoRequest req)
         {
-            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].DisplayNames;
-            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtFtiEndToEndNew).ToLower()].SkipList;
-            List<ArtFtiEndToEndNew> data = fti.ArtFtiEndToEndsNew.CallData(req).Data.ToList();
-            ViewData["title"] = "End to end report";
+            Dictionary<string, DisplayNameAndFormat> DisplayNames = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].DisplayNames;
+            List<string> ColumnsToSkip = ReportsConfig.CONFIG[nameof(ArtEcmPendingCases).ToLower()].SkipList;
+            List<ArtEcmPendingCases> data = fti.ArtEcmPendingCases.CallData(req).Data.ToList();
+            ViewData["title"] = "Pending Cases report";
             ViewData["desc"] = "";
             byte[] pdfBytes = await _pdfSrv.ExportToPdf(data, ViewData, ControllerContext, 5
                                                     , User.Identity.Name, req.Group, ColumnsToSkip, DisplayNames);
@@ -118,36 +122,23 @@ namespace ART_PACKAGE.Controllers
         {
             return View();
         }
-        [HttpGet("[controller]/[action]/{reference}")]
-        public IActionResult GetSubCases(string? reference)
+        [HttpGet("[controller]/[action]/{caseId}")]
+        public IActionResult GetAssignees(string? caseId)
         {
-            IQueryable<ArtFtiEndToEndSubCases> subCases = fti.ArtFtiEndToEndSubCasess.Where(x => x.ParentCaseId == Uri.UnescapeDataString(reference));
+            var assignees = fti.ArtEcmAssignees.Where(x => x.CaseId == Uri.UnescapeDataString(caseId)).OrderBy(s => s.AssignedTime).Select(s => new
+            {
+                s.CaseId,
+                s.AssignedBy,
+                s.Assignee,
+                AssignedTime = s.AssignedTime == null ? "" : s.AssignedTime.Value.ToString("dd/MM/yyyy hh:mm:ss tt")
+            });
             return new ContentResult
             {
                 ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(subCases)
+                Content = JsonConvert.SerializeObject(assignees)
             };
         }
-        [HttpGet("[controller]/[action]/{reference}")]
-        public IActionResult GetEcmEvents(string? reference)
-        {
-            IQueryable<ArtFtiEndToEndEcmEventsWorkflow> events = fti.ArtFtiEndToEndEcmEventsWorkflows.Where(x => x.EcmReference == Uri.UnescapeDataString(reference));
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(events)
-            };
-        }
-        [HttpGet("[controller]/[action]/{reference}")]
-        public IActionResult GetFtiEvents(string? reference)
-        {
-            IQueryable<ArtFtiEndToEndFtiEventsWorkflow> subCases = fti.ArtFtiEndToEndFtiEventsWorkflows.Where(x => x.FtiReference == Uri.UnescapeDataString(reference));
-            return new ContentResult
-            {
-                ContentType = "application/json",
-                Content = JsonConvert.SerializeObject(subCases)
-            };
-        }
+
 
 
     }

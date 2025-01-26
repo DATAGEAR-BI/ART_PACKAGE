@@ -10,7 +10,8 @@ using System.Data;
 namespace ART_PACKAGE.Controllers
 {
 
-    [Authorize(Roles = "Preferences")]
+    [Authorize]
+    //[Authorize(Roles = "Preferences")]
     public class UserRoleController : Controller
     {
 
