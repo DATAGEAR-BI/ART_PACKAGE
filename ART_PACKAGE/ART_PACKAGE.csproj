@@ -2506,6 +2506,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="BouncyCastle" Version="1.8.9" />
+		<PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
 		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.11" />

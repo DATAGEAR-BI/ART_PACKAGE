@@ -41,6 +41,7 @@ using Data.DGAMLFilters;
 using Data.DGECMFilters;
 using Data.DGAMLAdmin;
 using Data.DGCRP;
+using ART_PACKAGE.Extentions.Configrationmanager;
 
 namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 {
@@ -49,8 +50,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
     {
         public static IServiceCollection AddDbs(this IServiceCollection services, ConfigurationManager config)
         {
-            string connectionString = config.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-
+            string connectionString = config.GetEncodedValue("ConnectionStrings:AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
             List<string>? modulesToApply = config.GetSection("Modules").Get<List<string>>();
             string dbType = config.GetValue<string>("dbType").ToUpper();
 
@@ -88,30 +88,30 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("SEG"))
             {
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                string FCFKCContextConnection = config.GetEncodedValue("ConnectionStrings:FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
                 //_ = services.AddDbContext<SEGFCFKCContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<SegmentationContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("GOAML"))
             {
-                string GOAMLContextConnection = config.GetConnectionString("GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
+                string GOAMLContextConnection = config.GetEncodedValue("ConnectionStrings:GOAMLContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
                 _ = services.AddDbContext<GoAmlContext>(opt => contextBuilder(opt, GOAMLContextConnection));
                 _ = services.AddDbContext<ArtGoAmlContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("FTI"))
             {
-                string TIZONEContextConnection = config.GetConnectionString("TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
+                string TIZONEContextConnection = config.GetEncodedValue("ConnectionStrings:TIZONEContextConnection") ?? throw new InvalidOperationException("Connection string 'GOAMLContextConnection' not found.");
                 _ = services.AddDbContext<TIZONE2Context>(opt => contextBuilder(opt, TIZONEContextConnection));
                 _ = services.AddDbContext<FTIContext>(opt => contextBuilder(opt, connectionString));
             }
 
             if (modulesToApply.Contains("DGAML"))
             {
-                string DGAMLCOREContextConnection = config.GetConnectionString("DGAMLCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
-                string DGAMLACContextConnection = config.GetConnectionString("DGAMLACContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLACContextConnection' not found.");
-                string DGAMLAdminContextConnection = config.GetConnectionString("DGAMLAdminContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLAdminContextConnection' not found.");
+                string DGAMLCOREContextConnection = config.GetEncodedValue("ConnectionStrings:DGAMLCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLContextConnection' not found.");
+                string DGAMLACContextConnection = config.GetEncodedValue("ConnectionStrings:DGAMLACContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLACContextConnection' not found.");
+                string DGAMLAdminContextConnection = config.GetEncodedValue("ConnectionStrings:DGAMLAdminContextConnection") ?? throw new InvalidOperationException("Connection string 'DGAMLAdminContextConnection' not found.");
                 _ = services.AddDbContext<DGAMLCOREContext>(opt => contextBuilder(opt, DGAMLCOREContextConnection));
                 _ = services.AddDbContext<DGAMLACContext>(opt => contextBuilder(opt, DGAMLACContextConnection));
                 _ = services.AddDbContext<ArtDgAmlContext>(opt => contextBuilder(opt, connectionString));
@@ -121,8 +121,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("ECM"))
             {
-                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
-                string DGECMContextConnection = config.GetConnectionString("DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
+                string DGMGMTContextConnection = config.GetEncodedValue("ConnectionStrings:DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
+                string DGECMContextConnection = config.GetEncodedValue("ConnectionStrings:DGECMContextConnection") ?? throw new InvalidOperationException("Connection string 'DGECMContextConnection' not found.");
                 _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
                 _ = services.AddDbContext<DGECMContext>(opt => contextBuilder(opt, DGECMContextConnection));
                 _ = services.AddDbContext<DGECMFiltersContext>(opt => contextBuilder(opt, connectionString));
@@ -131,7 +131,7 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("FATCA"))
             {
-                string DGFATCAContextConnection = config.GetConnectionString("DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
+                string DGFATCAContextConnection = config.GetEncodedValue("ConnectionStrings:DGFATCAContextConnection") ?? throw new InvalidOperationException("Connection string 'DGFATCAContextConnection' not found.");
                 _ = services.AddDbContext<DGFATCAContext>(opt => contextBuilder(opt, DGFATCAContextConnection));
                 _ = services.AddDbContext<FATCAContext>(opt => contextBuilder(opt, connectionString));
             }
@@ -146,8 +146,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             }
             if (modulesToApply.Contains("SASAML"))
             {
-                string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                string FCFCOREContextConnection = config.GetEncodedValue("ConnectionStrings:FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
+                string FCFKCContextConnection = config.GetEncodedValue("ConnectionStrings:FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
                 _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
                 _ = services.AddDbContext<FCFKC>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<SasAmlContext>(opt => contextBuilder(opt, connectionString));
@@ -155,8 +155,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
             if (modulesToApply.Contains("DGAUDIT"))
             {
 
-                string DGMGMTContextConnection = config.GetConnectionString("DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
-                string DGMGMTAUDContextConnection = config.GetConnectionString("DGMGMTAUDContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTAUDContextConnection' not found.");
+                string DGMGMTContextConnection = config.GetEncodedValue("ConnectionStrings:DGMGMTContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTContextConnection' not found.");
+                string DGMGMTAUDContextConnection = config.GetEncodedValue("ConnectionStrings:DGMGMTAUDContextConnection") ?? throw new InvalidOperationException("Connection string 'DGMGMTAUDContextConnection' not found.");
                 _ = services.AddDbContext<DGMGMTContext>(opt => contextBuilder(opt, DGMGMTContextConnection));
                 _ = services.AddDbContext<DGMGMTAUDContext>(opt => contextBuilder(opt, DGMGMTAUDContextConnection));
                 _ = services.AddDbContext<ArtAuditContext>(opt => contextBuilder(opt, connectionString));
@@ -164,8 +164,8 @@ namespace ART_PACKAGE.Extentions.IServiceCollectionExtentions
 
             if (modulesToApply.Contains("AMLANALYSIS"))
             {
-                string FCFCOREContextConnection = config.GetConnectionString("FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
-                string FCFKCContextConnection = config.GetConnectionString("FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
+                string FCFCOREContextConnection = config.GetEncodedValue("ConnectionStrings:FCFCOREContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFCOREContextConnection' not found.");
+                string FCFKCContextConnection = config.GetEncodedValue("ConnectionStrings:FCFKCContextConnection") ?? throw new InvalidOperationException("Connection string 'FCFKCContextConnection' not found.");
                 _ = services.AddDbContext<fcf71Context>(opt => contextBuilder(opt, FCFCOREContextConnection));
                 _ = services.AddDbContext<FCFKCAmlAnalysisContext>(opt => contextBuilder(opt, FCFKCContextConnection));
                 _ = services.AddDbContext<AmlAnalysisContext>(opt => contextBuilder(opt, connectionString));
