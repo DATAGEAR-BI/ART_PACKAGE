@@ -1677,6 +1677,63 @@ namespace Data.ModelCreatingStrategies
 
 
             //ECM
+            modelBuilder.Entity<ArtHomeViolatedCasesPerType>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_VIOLATED_CASES_PER_TYPE", "ART_DB");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("int")
+                    .HasColumnName("NUMBER_OF_CASES");
+
+                entity.Property(e => e.CaseType)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("CASE_TYPE");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int")
+                    .HasColumnName("Year");
+            });
+            modelBuilder.Entity<ArtHomeViolatedCasesPerDomain>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_VIOLATED_CASES_PER_DOMAIN", "ART_DB");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("int")
+                    .HasColumnName("NUMBER_OF_CASES");
+
+                entity.Property(e => e.Domain)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("DOMAIN");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int")
+                    .HasColumnName("Year");
+            });
+            modelBuilder.Entity<ArtHomePendingCasesPerUnit>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ART_HOME_PENDING_CASES_PER_UNIT", "ART_DB");
+
+                entity.Property(e => e.NumberOfCases)
+                    .HasColumnType("int")
+                    .HasColumnName("NUMBER_OF_CASES");
+
+                entity.Property(e => e.Unit)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false)
+                    .HasColumnName("UNIT");
+
+                entity.Property(e => e.Year)
+                    .HasColumnType("int")
+                    .HasColumnName("Year");
+            });
             modelBuilder.Entity<ArtHomeCasesDate>(entity =>
             {
                 entity.HasNoKey();

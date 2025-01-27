@@ -114,6 +114,10 @@ namespace ART_PACKAGE.Controllers
             var typesData = _db.ArtHomeCasesTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.YEAR });
             var productsData = _db.ArtHomeCasesProducts.Select(x => new { Product = x.Product ?? "Unkown", x.NumberOfCases, year = x.YEAR });
 
+            var violatedTypesData = _db.ArtHomeViolatedCasesPerTypes.Select(x => new { CaseType = x.CaseType ?? "Unkown", x.NumberOfCases, year = x.Year });
+            var violatedDomainsData = _db.ArtHomeViolatedCasesPerDomains.Select(x => new { Domain = x.Domain ?? "Unkown", x.NumberOfCases, year = x.Year });
+            var violatedUnitsData = _db.ArtHomePendingCasesPerUnits.Select(x => new { Unit = x.Unit ?? "Unkown", x.NumberOfCases, year = x.Year });
+
 
             return Ok(new
             {
@@ -121,7 +125,10 @@ namespace ART_PACKAGE.Controllers
                 status = statusData,
                 types = typesData,
                 products = productsData,
-                monthCaseData = monthData
+                monthCaseData = monthData,
+                violatedTypes = violatedTypesData,
+                violatedDomains = violatedDomainsData,
+                violatedUnits = violatedUnitsData
             });
 
         }

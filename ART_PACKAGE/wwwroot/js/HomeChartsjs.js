@@ -4,6 +4,9 @@ var typeData = [];
 var statusData = [];
 var monthCaseData = [];
 var productsData = [];
+var violatedTypesData = [];
+var violatedDomainsData = []; 
+var violatedUnitsData = [];
 
 getData().then(x => {
 
@@ -37,11 +40,16 @@ getData().then(x => {
         var yearedProductData = productsData.filter(x => x.year == year);
         var yearedStatuseData = statusData.filter(x => x.year == year);
         var _monthCaseData = monthCaseData.find(x => x.year == year);
-        console.log(_monthCaseData);
+        var yearedViolatedTypesData = violatedTypesData.filter(x => x.year == year);
+        var yearedViolatedDomainsData = violatedDomainsData.filter(x => x.year == year);
+        var yearedViolatedUnitsDataData = violatedUnitsData.filter(x => x.year == year);
         //makedynamicChart(8, _monthCaseData.monthData, "Cases Per Month", "month", "value", "month", true);
         makedynamicChart(8, yearedTypeData, "Volume Distribution", "type", "numberOfCases", "caseType", true);
         makedynamicChart(8, yearedProductData, "Case Per product", "product", "numberOfCases", "product", true);
         makedynamicChart(8, yearedStatuseData, "Cases Per Status", "status", "numberOfCases", "caseStatus", true);
+        makedynamicChart(8, yearedViolatedTypesData, "Violated Cases Per Type", "violatedType", "numberOfCases", "caseType", true);
+        makedynamicChart(8, yearedViolatedDomainsData, "Violated Cases Per Domain", "violatedDomain", "numberOfCases", "domain", true);
+        makedynamicChart(8, yearedViolatedUnitsDataData, "Pending Cases Per Unit", "violatedUnit", "numberOfCases", "unit", true);
     });
 
 
@@ -56,5 +64,7 @@ async function getData() {
     statusData = data.status;
     monthCaseData = data.monthCaseData;
     productsData = data.products;
-
+    violatedTypesData = data.violatedTypes;
+    violatedDomainsData = data.violatedDomains;
+    violatedUnitsData = data.violatedUnits;
 }

@@ -36,6 +36,9 @@ namespace ART_PACKAGE.Controllers.FTI
             IEnumerable<ArtStCasesPerType> chartCasesPerTypeData = Enumerable.Empty<ArtStCasesPerType>().AsQueryable();
             IEnumerable<ArtStCasesPerStatus> chartCasesPerStatusData = Enumerable.Empty<ArtStCasesPerStatus>().AsQueryable();
             IEnumerable<ArtStCasesPerProduct> chartCasesPerProductData = Enumerable.Empty<ArtStCasesPerProduct>().AsQueryable();
+            IEnumerable<ArtStViolatedCasesPerCaseType> chartViolatedCasesPerTypeData = Enumerable.Empty<ArtStViolatedCasesPerCaseType>().AsQueryable();
+            IEnumerable<ArtStViolatedCasesPerDomain> chartViolatedCasesPerDomainData = Enumerable.Empty<ArtStViolatedCasesPerDomain>().AsQueryable();
+            IEnumerable<ArtStPendingCasesPerUnit> chartCasesPerUnitData = Enumerable.Empty<ArtStPendingCasesPerUnit>().AsQueryable();
 
 
             IEnumerable<System.Data.Common.DbParameter> chart0Params = para.procFilters.MapToParameters(dbType);
@@ -43,6 +46,9 @@ namespace ART_PACKAGE.Controllers.FTI
             IEnumerable<System.Data.Common.DbParameter> chart2Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart3Params = para.procFilters.MapToParameters(dbType);
             IEnumerable<System.Data.Common.DbParameter> chart4Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart5Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart6Params = para.procFilters.MapToParameters(dbType);
+            IEnumerable<System.Data.Common.DbParameter> chart7Params = para.procFilters.MapToParameters(dbType);
 
             if (dbType == DbTypes.SqlServer)
             {
@@ -54,6 +60,9 @@ namespace ART_PACKAGE.Controllers.FTI
                 chartCasesPerTypeData = fti.ExecuteProc<ArtStCasesPerType>(SQLSERVERSPNames.ART_ST_CASES_PER_TYPE, chart2Params.ToArray());
                 chartCasesPerStatusData = fti.ExecuteProc<ArtStCasesPerStatus>(SQLSERVERSPNames.ART_ST_CASES_PER_STATUS, chart3Params.ToArray());
                 chartCasesPerProductData = fti.ExecuteProc<ArtStCasesPerProduct>(SQLSERVERSPNames.ART_ST_CASES_PER_PRODUCT, chart4Params.ToArray());
+                chartViolatedCasesPerTypeData = fti.ExecuteProc<ArtStViolatedCasesPerCaseType>(SQLSERVERSPNames.ART_ST_VIOLATED_CASES_PER_CASE_TYPE, chart5Params.ToArray());
+                chartViolatedCasesPerDomainData = fti.ExecuteProc<ArtStViolatedCasesPerDomain>(SQLSERVERSPNames.ART_ST_VIOLATED_CASES_PER_DOAMIN, chart6Params.ToArray());
+                chartCasesPerUnitData = fti.ExecuteProc<ArtStPendingCasesPerUnit>(SQLSERVERSPNames.ART_ST_PENDING_CASES_PER_UNIT, chart7Params.ToArray());
             }
 
             if (dbType == DbTypes.Oracle)
@@ -64,6 +73,9 @@ namespace ART_PACKAGE.Controllers.FTI
                 chartCasesPerTypeData = fti.ExecuteProc<ArtStCasesPerType>(ORACLESPName.ART_ST_CASES_PER_TYPE, chart2Params.ToArray());
                 chartCasesPerStatusData = fti.ExecuteProc<ArtStCasesPerStatus>(ORACLESPName.ART_ST_CASES_PER_STATUS, chart3Params.ToArray());
                 chartCasesPerProductData = fti.ExecuteProc<ArtStCasesPerProduct>(ORACLESPName.ART_ST_CASES_PER_PRODUCT, chart4Params.ToArray());
+                chartViolatedCasesPerTypeData = fti.ExecuteProc<ArtStViolatedCasesPerCaseType>(ORACLESPName.ART_ST_VIOLATED_CASES_PER_CASE_TYPE, chart5Params.ToArray());
+                chartViolatedCasesPerDomainData = fti.ExecuteProc<ArtStViolatedCasesPerDomain>(ORACLESPName.ART_ST_VIOLATED_CASES_PER_DOAMIN, chart6Params.ToArray());
+                chartCasesPerUnitData = fti.ExecuteProc<ArtStPendingCasesPerUnit>(ORACLESPName.ART_ST_PENDING_CASES_PER_UNIT, chart7Params.ToArray());
             }
             var dateData = chartCasesPerDate.ToList().GroupBy(x => x.Year).Select(x => new
             {
@@ -121,8 +133,31 @@ namespace ART_PACKAGE.Controllers.FTI
                 subval="value",
                 subListKey = "monthData",
                 ctitle = "Cases Per Year & Month"
-                }
-
+                },
+                new ChartData<ArtStViolatedCasesPerCaseType>
+                {
+                    ChartId = "StViolatedCasesPerCaseType",
+                    Data = chartViolatedCasesPerTypeData.ToList(),
+                    Title = "Violated Cases Per Type",
+                    Cat = "CASE_TYPE",
+                    Val = "NUMBER_OF_CASES"
+                },
+                new ChartData<ArtStViolatedCasesPerDomain>
+                {
+                    ChartId = "StViolatedCasesPerDomain",
+                    Data = chartViolatedCasesPerDomainData.ToList(),
+                    Title = "Violated Cases Per Domain",
+                    Cat = "DOMAIN",
+                    Val = "NUMBER_OF_CASES"
+                },
+                new ChartData<ArtStPendingCasesPerUnit>
+                {
+                    ChartId = "StPendingCasesPerUnit",
+                    Data = chartCasesPerUnitData.ToList(),
+                    Title = "Pending Cases Per Unit",
+                    Cat = "UNIT",
+                    Val = "NUMBER_OF_CASES"
+                },
             };
 
             return new ContentResult

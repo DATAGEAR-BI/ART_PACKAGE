@@ -53,6 +53,9 @@ namespace Data.Constants.StoredProcs
         public static readonly string ART_ST_CASES_PER_PRODUCT = "[ART_DB].[ART_ST_CASES_PER_PRODUCT]";
         public static readonly string ART_ST_CASES_PER_TYPE = "[ART_DB].[ART_ST_CASES_PER_TYPE]";
         public static readonly string ART_ST_CASES_PER_DATE = "[ART_DB].[ART_ST_CASES_PER_DATE]";
+        public static readonly string ART_ST_VIOLATED_CASES_PER_CASE_TYPE = "[ART_DB].[ART_ST_VIOLATED_CASES_PER_CASE_TYPE]";
+        public static readonly string ART_ST_VIOLATED_CASES_PER_DOAMIN = "[ART_DB].[ART_ST_VIOLATED_CASES_PER_DOAMIN]";
+        public static readonly string ART_ST_PENDING_CASES_PER_UNIT = "[ART_DB].[ART_ST_PENDING_CASES_PER_UNIT]";
         
 
     }
