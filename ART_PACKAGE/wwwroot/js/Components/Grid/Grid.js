@@ -1268,7 +1268,7 @@ class Grid extends HTMLElement {
                 var total = grid.dataSource.total();
                 var sort = grid.dataSource.sort();
                 let Request = {};
-                Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
+                Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden && x.field != null && x.field != ''&& x.field != undefined).map(x => x.field);
                 var para = {}
                 para.Take = total;
                 para.Skip = 0;
@@ -1602,7 +1602,7 @@ class Grid extends HTMLElement {
         var total = grid.dataSource.total();
         var sort = grid.dataSource.sort();
         let Request = {};
-        Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden).map(x => x.field);
+        Request.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden && x.field != null && x.field != '' && x.field != undefined).map(x => x.field);
         var para = {}
         para.Take = total;
         para.Skip = 0;

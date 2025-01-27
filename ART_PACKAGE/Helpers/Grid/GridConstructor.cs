@@ -85,7 +85,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 ExportRequest roundReq = new()
                 {
                     DataReq = dataReq,
-                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                    IncludedColumns = exportRequest.IncludedColumns.Where(a => !string.IsNullOrEmpty(a)).Select(x => (string)x.Clone()).ToList()
                 };
                 int localRound = round + 1;
 
@@ -138,7 +138,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 ExportRequest roundReq = new()
                 {
                     DataReq = dataReq,
-                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                    IncludedColumns = exportRequest.IncludedColumns.Where(a=>!string.IsNullOrEmpty(a)).Select(x => (string)x.Clone()).ToList()
                 };
                 int localRound = round + 1;
 
@@ -196,11 +196,11 @@ namespace ART_PACKAGE.Helpers.Grid
             _processesHandler.AddProcess(reportId,"PDF");
             ReportConfig? reportConfig = _reportsConfigResolver((typeof(TModel).Name + "Config").ToLower());
             GridResult<TModel> dataRes = Repo.GetGridData(exportRequest.DataReq, baseCondition, defaultSort: reportConfig.defaultSortOption);
-
+            var includedColumns = exportRequest.IncludedColumns.Where(a => !string.IsNullOrEmpty(a)).ToList();
             ViewData["title"] = reportConfig.ReportTitle;
             ViewData["desc"] = reportConfig.ReportDescription;
             byte[] pdfBytes = await _pdfSrv.ExportToPdf<TModel>(dataRes.data, ViewData, actionContext, 5
-                                                    , user, reportId, exportRequest.IncludedColumns, reportConfig.SkipList, reportConfig.DisplayNames);
+                                                    , user, reportId, includedColumns, reportConfig.SkipList, reportConfig.DisplayNames);
             return pdfBytes;
         }
         
@@ -245,7 +245,7 @@ namespace ART_PACKAGE.Helpers.Grid
                 ExportRequest roundReq = new()
                 {
                     DataReq = dataReq,
-                    IncludedColumns = exportRequest.IncludedColumns.Select(x => (string)x.Clone()).ToList()
+                    IncludedColumns = exportRequest.IncludedColumns.Where(a => !string.IsNullOrEmpty(a)).Select(x => (string)x.Clone()).ToList()
                 };
                 int localRound = round + 1;
 

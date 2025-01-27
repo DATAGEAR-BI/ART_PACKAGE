@@ -565,6 +565,8 @@ export const Handlers = {
                 if (id) {
                     para.Id = id;
                 }
+                //para.IncludedColumns = grid.getOptions().columns.filter(x => !x.hidden && x.field != null && x.field != '' && x.field != undefined).map(x => x.field);
+
                 para.Take = take;
                 para.Skip = skip;
                 para.Filter = filters;
