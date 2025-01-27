@@ -81,6 +81,14 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
  });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+
+    options.Limits.MaxRequestHeadersTotalSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeadersTotalSize", 1048576); ; // Default is 32 KB, increase as needed
+    options.Limits.MaxRequestLineSize = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestLineSize", 8192); ; // Default is 8 KB
+    options.Limits.MaxRequestHeaderCount = builder.Configuration.GetValue<int>("Kestrel:Limits:MaxRequestHeaderCount", 100); ; // Default is 100
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
