@@ -35,7 +35,8 @@ namespace ART_PACKAGE.Security
             string controller = string.IsNullOrWhiteSpace(controllerName) ? string.Empty : controllerName;
 
             //checking if empty route or controller is basemodule like home or custom report
-            if (string.IsNullOrEmpty(controller))
+            //checking if empty route or controller is basemodule like home or custom report
+            if (string.IsNullOrEmpty(controller) || ModulePerLicense.isBaseModule(controller))
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;
